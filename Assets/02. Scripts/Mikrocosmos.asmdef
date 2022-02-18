@@ -1,0 +1,22 @@
+{
+    "name": "Mikrocosmos",
+    "rootNamespace": "Mikrocosmos",
+    "references": [
+        "GUID:30817c1a0e6d646d99c048fc403f5979",
+        "GUID:f2b0d54d51e30694d86d80d43c7d5c90",
+        "GUID:a43262df4631c9a429c1276a4139db16",
+        "GUID:437e4b58c656582429fc66ee0c10065e",
+        "GUID:72872094b21c16e48b631b2224833d49",
+        "GUID:e720aa64e3f58fb4880566a322584340",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

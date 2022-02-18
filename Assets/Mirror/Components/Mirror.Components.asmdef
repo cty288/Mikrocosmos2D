@@ -1,0 +1,17 @@
+{
+    "name": "Mirror.Components",
+    "rootNamespace": "",
+    "references": [
+        "Mirror",
+        "MikroFramework"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
