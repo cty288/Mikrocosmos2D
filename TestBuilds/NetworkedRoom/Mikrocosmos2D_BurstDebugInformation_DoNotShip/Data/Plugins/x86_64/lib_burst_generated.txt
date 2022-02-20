@@ -168,9 +168,9 @@ Library: lib_burst_generated
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Polyglot.Scripts.dll
+--root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Mikrocosmos.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Telepathy.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.2D.SpriteShape.Runtime.dll
---root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Mikrocosmos.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.2D.PixelPerfect.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.2D.Common.Runtime.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.2D.IK.Runtime.dll
@@ -355,9 +355,9 @@ Library: lib_burst_generated
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.Timeline.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Polyglot.Scripts.dll
+--root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Mikrocosmos.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Telepathy.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.2D.SpriteShape.Runtime.dll
---root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Mikrocosmos.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.2D.PixelPerfect.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.2D.Common.Runtime.dll
 --root-assembly=D:\programming\unity\projects\Mikrocosmos2D\Temp\StagingArea\Data\Managed\Unity.2D.IK.Runtime.dll

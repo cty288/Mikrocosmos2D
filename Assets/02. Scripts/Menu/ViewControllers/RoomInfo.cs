@@ -16,6 +16,7 @@ namespace Mikrocosmos {
             TextRoomNumber.text = $"{response.ServerPlayerNum}/{response.ServerMaxPlayerNum}";
             if (response.ServerPlayerNum >= response.ServerMaxPlayerNum || response.IsGaming) {
                 BtnJoinButton.gameObject.SetActive(false);
+                TextRoomStatus.gameObject.SetActive(true);
                 if (response.IsGaming) {
                     TextRoomStatus.text = "ÓÎÏ·ÖÐ";
                 }

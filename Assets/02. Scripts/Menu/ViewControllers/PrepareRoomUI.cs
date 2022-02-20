@@ -25,8 +25,7 @@ namespace Mikrocosmos {
 
         private void OnHostStartGameButtonClicked() {
             if (NetworkServer.active) {
-                NetworkRoomManager.singleton.ServerChangeScene(((NetworkRoomManager) NetworkRoomManager.singleton)
-                    .GameplayScene);
+                this.SendCommand<ServerStartGameCommand>();
             }
         }
 

@@ -19,7 +19,7 @@ namespace Mikrocosmos
         public string Name;
         public int Team;
         public bool Prepared;
-     //   public NetworkIdentity Identity;
+        public NetworkIdentity Identity;
     }
 
     public struct OnServerRoomPlayerJoin {
@@ -68,11 +68,31 @@ namespace Mikrocosmos
         #region Server
         private List<PlayerMatchInfo> playerMatchInfos = new List<PlayerMatchInfo>();
         private Dictionary<int, NetworkIdentity> playerIdentities = new Dictionary<int, NetworkIdentity>();
+
+        private Dictionary<int, List<PlayerMatchInfo>> teamPlayers = new Dictionary<int, List<PlayerMatchInfo>>();
+
         private int maxId = 0;
-        
+
+        public override void OnStartServer() {
+            base.OnStartServer();
+            this.RegisterEvent<OnServerStartGame>(OnServerStartGame);
+        }
+
+        private void OnServerStartGame(OnServerStartGame e) {
+            Debug.Log("OnServerStartGameAddingTeamPlayers");
+            teamPlayers = new Dictionary<int, List<PlayerMatchInfo>>();
+            teamPlayers.Add(1, new List<PlayerMatchInfo>());
+            teamPlayers.Add(2, new List<PlayerMatchInfo>());
+
+            foreach (PlayerMatchInfo playerMatchInfo in playerMatchInfos) {
+                teamPlayers[playerMatchInfo.Team].Add(playerMatchInfo);
+            }
+        }
 
         public override void OnStopServer() {
             base.OnStopServer();
+            teamPlayers.Clear();
+            this.UnRegisterEvent<OnServerStartGame>(OnServerStartGame);
             Destroy(this.gameObject);
         }
 
@@ -80,7 +100,7 @@ namespace Mikrocosmos
         public void ServerRoomPlayerJoinMatch(string name, NetworkConnection conn) {
             playerIdentities.Add(maxId, conn.identity);
             PlayerMatchInfo matchInfo = new PlayerMatchInfo()
-                {ID = maxId, Name = name, Team = GetNewTeamNum(), Prepared = false};
+                {ID = maxId, Name = name, Team = GetNewTeamNum(), Prepared = false, Identity = conn.identity};
             maxId++;
             
             playerMatchInfos.Add(matchInfo);

@@ -37,8 +37,8 @@ MonoBehaviour:
     - Mirror
     - Mirror.Components
     - Polyglot.Scripts
-    - Telepathy
     - Mikrocosmos
+    - Telepathy
     - ES3Editor
     - kcp2k
     - DOTween.Modules
