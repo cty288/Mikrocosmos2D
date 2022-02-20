@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 7810009082504812623}
   - component: {fileID: 8678542272785474535}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,5 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62af2e49ec3c2d243be76db10e81bac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   following: {fileID: 0}
   lerp: 0.1
