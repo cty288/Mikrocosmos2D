@@ -11,11 +11,11 @@ namespace Mikrocosmos
         private void Update() {
             if (hasAuthority && isClient) {
                 RaycastHit2D ray = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-                if (ray.collider && ray.collider.gameObject == this.gameObject) {
-                    if (Input.GetMouseButtonDown(0)) {
-                        isControlling = true;
-                    }
+               
+                if (Input.GetMouseButtonDown(0)) {
+                    isControlling = true;
                 }
+                
 
                 if (isControlling) {
                     Debug.Log("IsControlling");

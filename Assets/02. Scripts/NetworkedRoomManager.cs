@@ -64,7 +64,7 @@ namespace Mikrocosmos
         #endregion
 
        
-
+        
         public IArchitecture GetArchitecture() {
             return Mikrocosmos.Interface;
         }
