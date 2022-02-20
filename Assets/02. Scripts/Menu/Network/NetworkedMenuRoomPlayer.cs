@@ -53,7 +53,10 @@ namespace Mikrocosmos
         
         private void ServerOnRoomMemberChange(OnRoomMemberChange e) {
             Debug.Log("Server on room member change");
-            TargetOnRoomMemberChange(e.MatchInfos,  matchInfo ,e.Host == netIdentity);
+            if (NetworkServer.active) {
+                TargetOnRoomMemberChange(e.MatchInfos, matchInfo, e.Host == netIdentity);
+            }
+         
         }
 
         private void OnMatchInfoSet(OnMatchInfoSet obj) {
