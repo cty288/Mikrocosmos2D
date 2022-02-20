@@ -47,6 +47,9 @@ namespace Mikrocosmos
 
         void ServerRoomPlayerChangeTeam(int id);
 
+        PlayerMatchInfo ServerGetHostInfo();
+
+        bool ServerGetIsTeamSizeEqual();
         void ServerRoomPlayerChangeReadyState(int id, bool isReady);
 
         [Command]
@@ -110,6 +113,32 @@ namespace Mikrocosmos
                 MatchInfos = playerMatchInfos,
                 Host = host
             });
+        }
+
+        [ServerCallback]
+        public PlayerMatchInfo ServerGetHostInfo() {
+            foreach (KeyValuePair<int, NetworkIdentity> identity in playerIdentities) {
+                if (identity.Value == host) {
+                    return playerMatchInfos[identity.Key];
+                }
+            }
+
+            return null;
+        }
+
+        [ServerCallback]
+        public bool ServerGetIsTeamSizeEqual() {
+            int t1=0, t2=0;
+            foreach (PlayerMatchInfo playerMatchInfo in playerMatchInfos) {
+                if (playerMatchInfo.Team == 1) {
+                    t1++;
+                }
+                else {
+                    t2++;
+                }
+            }
+
+            return t1 == t2;
         }
 
         public void ServerRoomPlayerChangeReadyState(int id, bool isReady) {

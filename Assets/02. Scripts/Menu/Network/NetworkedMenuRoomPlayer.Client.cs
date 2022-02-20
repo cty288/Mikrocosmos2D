@@ -39,8 +39,14 @@ namespace Mikrocosmos
         private void OnClientRequestPrepare(OnClientRequestPrepare obj) {
             if (NetworkClient.active && isLocalPlayer) {
                 Debug.Log("Client request prepare");
+                
                 CmdChangeReadyState(!readyToBegin);
-               // Debug.Log(matchInfo.ID);
+            }
+        }
+
+        public override void ReadyStateChanged(bool oldReadyState, bool newReadyState) {
+            base.ReadyStateChanged(oldReadyState, newReadyState);
+            if (isLocalPlayer) {
                 CmdUpdateReady(readyToBegin);
             }
         }

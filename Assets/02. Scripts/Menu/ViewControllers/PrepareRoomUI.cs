@@ -6,6 +6,7 @@ using MikroFramework;
 using TMPro;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using Mirror;
 
 namespace Mikrocosmos {
 	public partial class PrepareRoomUI : AbstractMikroController<Mikrocosmos> {
@@ -14,7 +15,33 @@ namespace Mikrocosmos {
         private void Awake() {
             this.RegisterEvent<OnClientPrepareRoomPlayerListChange>(OnClientPrepareRoomPlayerListChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnAllPlayersReadyStatusChanged>(OnAllPlayerReadyStatusChange)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+
             BtnChangeSide.onClick.AddListener(OnSwitchSideClicked);
+            BtnRoomLeaderStartRoom.onClick.AddListener(OnHostStartGameButtonClicked);
+            BtnRoomLeaderStartRoom.gameObject.SetActive(false);
+        }
+
+        private void OnHostStartGameButtonClicked() {
+            if (NetworkServer.active) {
+                NetworkRoomManager.singleton.ServerChangeScene(((NetworkRoomManager) NetworkRoomManager.singleton)
+                    .GameplayScene);
+            }
+        }
+
+        //only called on the host
+        private void OnAllPlayerReadyStatusChange(OnAllPlayersReadyStatusChanged e) {
+            Debug.Log($"All players ready: {e.IsAllPlayerReady}");
+            if (NetworkServer.active) {
+                if (!e.IsAllPlayerReady) {
+                    BtnRoomLeaderStartRoom.gameObject.SetActive(false);
+                }
+                else {
+                    bool isTwoSidesEqual = this.GetSystem<IRoomMatchSystem>().ServerGetIsTeamSizeEqual();
+                    BtnRoomLeaderStartRoom.gameObject.SetActive(isTwoSidesEqual);
+                }
+            }
         }
 
         private void OnSwitchSideClicked() {
@@ -40,6 +67,7 @@ namespace Mikrocosmos {
                     playerMatchInfo.Prepared, isSelf, e.IsHost);
                 if (isSelf) {
                     infoObj.transform.SetAsFirstSibling();
+                    BtnChangeSide.gameObject.SetActive(!playerMatchInfo.Prepared);
                 }
             }
 

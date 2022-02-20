@@ -7,6 +7,7 @@ using TMPro;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos {
 	public partial class MenuUI : AbstractMikroController<Mikrocosmos> {
@@ -14,11 +15,17 @@ namespace Mikrocosmos {
             BtnNameConfirmButton.onClick.AddListener(OnNameButtonConfirmClicked);
             BtnHostGame.onClick.AddListener(OnHostGameButtonClicked);
             BtnFindGame.onClick.AddListener(OnFindGameButtonClicked);
+            
+            BtnRoomSearchPanelBackToMenu.onClick.AddListener(OnRoomSearchBackToMenu);
             this.RegisterEvent<ChangeNameSuccess>(OnNameChangeSuccess).UnRegisterWhenGameObjectDestroyed(gameObject);
            
         }
 
-      
+        private void OnRoomSearchBackToMenu() {
+            ObjFindServerPanel.SetActive(false);
+            ObjMenuPanel.SetActive(true);
+            this.SendCommand<CmdRequestStopNetworkDiscoveryCommand>();
+        }
 
         private void Start()
         {
@@ -26,11 +33,16 @@ namespace Mikrocosmos {
             ShowInitialPanel();
         }
         private void OnFindGameButtonClicked() {
-            NetworkRoomManager.singleton.StartClient();
+            //NetworkRoomManager.singleton.StartClient();
+            ObjFindServerPanel.SetActive(true);
+            ObjMenuPanel.SetActive(false);
+            this.SendCommand<ClientRequestNetworkDiscoveryCommand>();
         }
 
         private void OnHostGameButtonClicked() {
+            NetworkRoomManager.singleton.GetComponent<TelepathyTransport>().port =(ushort) Random.Range(7777, 15000);
             NetworkRoomManager.singleton.StartHost();
+            Debug.Log("Start host at: " + NetworkRoomManager.singleton.GetComponent<TelepathyTransport>().port);
         }
 
         private void OnNameChangeSuccess(ChangeNameSuccess obj) {

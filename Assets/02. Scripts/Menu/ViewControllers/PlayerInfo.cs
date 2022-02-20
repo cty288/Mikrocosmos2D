@@ -32,6 +32,8 @@ namespace Mikrocosmos {
             if (isSelf) {
                 BtnPrepare.gameObject.SetActive(true);
                 BtnKick.gameObject.SetActive(false);
+                TextReadyStatus.gameObject.SetActive(false);
+
                 if (prepared) {
                     BtnPrepare.GetComponentInChildren<TMP_Text>().text = "取消准备";
                 }
@@ -40,7 +42,9 @@ namespace Mikrocosmos {
                 }
             }
             else {
+                TextReadyStatus.gameObject.SetActive(true);
                 BtnPrepare.gameObject.SetActive(false);
+                TextReadyStatus.text = (isPrepared ? "已" : "未") + "准备";
                 if (isHost) { //host
                     BtnKick.gameObject.SetActive(true);
                 }
