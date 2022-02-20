@@ -8,7 +8,7 @@ namespace Mikrocosmos
     public partial class PlayerSpaceship  : AbstractNetworkedController<Mikrocosmos> {
         private bool isControlling = false;
 
-        private void Update() {
+        private void FixedUpdate() {
             if (hasAuthority && isClient) {
                 RaycastHit2D ray = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
                
