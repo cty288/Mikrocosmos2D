@@ -38,6 +38,8 @@ namespace Mikrocosmos
             this.SendEvent<OnAllPlayersReadyStatusChanged>(new OnAllPlayersReadyStatusChanged(){IsAllPlayerReady = true});
         }
 
+
+
         public override void OnRoomServerPlayersNotReady() {
             this.SendEvent<OnAllPlayersReadyStatusChanged>(new OnAllPlayersReadyStatusChanged() { IsAllPlayerReady = false });
         }

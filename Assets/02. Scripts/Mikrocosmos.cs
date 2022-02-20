@@ -6,11 +6,20 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class Mikrocosmos : Architecture<Mikrocosmos> {
+    public class Mikrocosmos : NetworkedArchitecture<Mikrocosmos> {
         protected override void Init() {
             this.RegisterModel<ILocalPlayerInfoModel>(new LocalPlayerInfoModel());
-           // this.RegisterSystem<IRoomMatchSystem>(RoomMatchSystem.Singleton);
+            this.RegisterModel<ISpaceshipConfigurationModel>(new SpaceshipConfigurationModel());
+           // this.RegisterModel<ISpaceshipModel>(new SpaceshipModel());
             this.RegisterSystem<ITimeSystem>(new TimeSystem());
+        }
+
+        protected override void SeverInit() {
+            
+        }
+
+        protected override void ClientInit() {
+           
         }
     }
 }

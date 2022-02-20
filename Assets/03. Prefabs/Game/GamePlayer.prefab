@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5284925242799608502}
   - component: {fileID: -3526093173215320067}
+  - component: {fileID: 1507881852155513652}
   m_Layer: 0
   m_Name: GamePlayer
   m_TagString: Untagged
@@ -47,5 +48,20 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 3765a9e6322d48240a46b94e3626a4d3
+  m_AssetId: 
   hasSpawned: 0
+--- !u!114 &1507881852155513652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091793786591750142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566aae51b44c5d947a41252544f4cc9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  spaceshipPrefab: {fileID: 7986015997137912893, guid: a0dfa0b1a9bada345854ed64fed3d26b, type: 3}
