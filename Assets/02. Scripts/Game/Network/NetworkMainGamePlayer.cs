@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public struct OnLocalPlayerEnterGame { }
+   
     public partial class NetworkMainGamePlayer : AbstractNetworkedController<Mikrocosmos>, ICanSendEvent {
         [SerializeField] private GameObject spaceshipPrefab;
 
@@ -20,9 +20,11 @@ namespace Mikrocosmos
             ControlledSpaceship = spaceship.GetComponent<NetworkIdentity>();
         }
 
-        public override void OnStartAuthority() {
-            base.OnStartAuthority();
-            this.SendEvent<OnLocalPlayerEnterGame>();
+        public override void OnStartClient() {
+            base.OnStartClient();
+            if (!hasAuthority) { 
+                GetComponentInChildren<Camera>().gameObject.SetActive(false);
+            }
         }
     }
 }
