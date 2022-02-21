@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1507881852155513652}
   - component: {fileID: 2657284343110990168}
   - component: {fileID: 8278010818451434361}
+  - component: {fileID: 4888087295179512199}
   m_Layer: 0
   m_Name: GamePlayer
   m_TagString: Untagged
@@ -116,6 +117,22 @@ MonoBehaviour:
   interpolatePosition: 1
   syncScale: 1
   target: {fileID: 4525043350206678439}
+--- !u!114 &4888087295179512199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091793786591750142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62af2e49ec3c2d243be76db10e81bac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  following: {fileID: 0}
+  lerp: 0.1
 --- !u!1 &8663500309160838842
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,8 +144,6 @@ GameObject:
   - component: {fileID: 4525043350206678439}
   - component: {fileID: 7293787041373390752}
   - component: {fileID: 6560788528928379283}
-  - component: {fileID: 7684375906617838165}
-  - component: {fileID: 8678542272785474535}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -202,36 +217,3 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8663500309160838842}
   m_Enabled: 1
---- !u!114 &7684375906617838165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8663500309160838842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
---- !u!114 &8678542272785474535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8663500309160838842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62af2e49ec3c2d243be76db10e81bac6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  following: {fileID: 0}
-  lerp: 0.1
