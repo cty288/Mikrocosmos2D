@@ -22,12 +22,7 @@ namespace Mikrocosmos
 
         public override void OnStartClient() {
             base.OnStartClient();
-            if (isLocalPlayer && NetworkServer.active) {
-                GetComponentInChildren<Camera>().depth = 1;
-            }
-            if (!hasAuthority && !NetworkServer.active) { 
-                GetComponentInChildren<Camera>().gameObject.SetActive(false);
-            }
+           
         }
     }
 }
