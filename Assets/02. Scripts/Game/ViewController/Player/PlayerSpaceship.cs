@@ -19,8 +19,7 @@ namespace Mikrocosmos
         [Command]
         private void CmdAddForce(Vector2 forceDirection) {
             if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(this.GetModel<ISpaceshipConfigurationModel>().MaxSpeed, 2)) {
-                //rigidbody.AddForce(forceDirection * this.GetModel<ISpaceshipConfigurationModel>().MoveForce);
-                rigidbody.velocity += transform.up * 30 * Time.deltaTime * forceDirection;
+                rigidbody.AddForce(forceDirection * this.GetModel<ISpaceshipConfigurationModel>().MoveForce);
             }
 
            
