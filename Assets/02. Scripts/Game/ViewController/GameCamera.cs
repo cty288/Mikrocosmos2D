@@ -15,8 +15,16 @@ namespace Mikrocosmos
         [SerializeField] private float lerp = 0.1f;
         public override void OnStartServer() {
             base.OnStartServer();
-            following = transform.parent.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
-                .gameObject;
+           
+        }
+
+        private void Update() {
+            if (isServer) {
+                if (!following) {
+                    following = transform.parent.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                        .gameObject;
+                }
+            }
         }
 
         [ServerCallback]
