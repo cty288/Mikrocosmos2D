@@ -6,6 +6,7 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public partial class PlayerSpaceship  : AbstractNetworkedController<Mikrocosmos> {
+        [SerializeField]
         private bool isControlling = false;
 
         private void Update() {
@@ -24,6 +25,7 @@ namespace Mikrocosmos
 
         private void FixedUpdate() {
             if (hasAuthority && isClient) {
+                Debug.Log("Hasauthority");
                 if (isControlling) {
                     CmdAddForce((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
                 }
