@@ -15,16 +15,16 @@ namespace Mikrocosmos
         [SerializeField] private float lerp = 0.1f;
 
         private GameObject cameraGo;
+
         public override void OnStartServer() {
             base.OnStartServer();
             cameraGo = GetComponentInChildren<Camera>().gameObject;
         }
 
         private void Update() {
-            if (NetworkServer.active) {
-               // Debug.Log("Running");
+            if (isServer) {
                 if (!following) {
-                    following = GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                    following = transform.parent.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
                         .gameObject;
                 }
             }

@@ -29,17 +29,6 @@ namespace Mirror
         /// <summary>Event for when Mirror sends a message. Can be subscribed to.</summary>
         public static event Action<MessageInfo> OutMessageEvent;
 
-        /// <summary>Event for when Mirror receives a message. Can be subscribed to.</summary>
-        public static event Action<MessageInfo> InMessageEvent;
-
-        // RuntimeInitializeOnLoadMethod -> fast playmode without domain reload
-        [UnityEngine.RuntimeInitializeOnLoadMethod]
-        static void ResetStatics()
-        {
-            InMessageEvent = null;
-            OutMessageEvent = null;
-        }
-
         internal static void OnSend<T>(T message, int channel, int bytes, int count)
             where T : struct, NetworkMessage
         {
@@ -49,6 +38,9 @@ namespace Mirror
                 OutMessageEvent?.Invoke(outMessage);
             }
         }
+
+        /// <summary>Event for when Mirror receives a message. Can be subscribed to.</summary>
+        public static event Action<MessageInfo> InMessageEvent;
 
         internal static void OnReceive<T>(T message, int channel, int bytes)
             where T : struct, NetworkMessage

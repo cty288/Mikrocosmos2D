@@ -3,13 +3,14 @@
     "rootNamespace": "",
     "references": [
         "Mirror",
-        "Unity.Mirror.CodeGen"
+        "Mirror.Weaver",
+        "MikroFramework"
     ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

@@ -3,6 +3,14 @@ using UnityEngine;
 
 namespace Mirror
 {
+    // Deprecated 2020-10-06
+    [Obsolete("Implement NetworkMessage instead. Use extension methods instead of Serialize/Deserialize, see https://github.com/vis2k/Mirror/pull/2317", true)]
+    public interface IMessageBase {}
+
+    // Deprecated 2020-10-06
+    [Obsolete("Implement NetworkMessage instead. Use extension methods instead of Serialize/Deserialize, see https://github.com/vis2k/Mirror/pull/2317", true)]
+    public class MessageBase : IMessageBase {}
+
     public struct ReadyMessage : NetworkMessage {}
 
     public struct NotReadyMessage : NetworkMessage {}
@@ -27,7 +35,7 @@ namespace Mirror
     public struct CommandMessage : NetworkMessage
     {
         public uint netId;
-        public byte componentIndex;
+        public int componentIndex;
         public int functionHash;
         // the parameters for the Cmd function
         // -> ArraySegment to avoid unnecessary allocations
@@ -37,7 +45,7 @@ namespace Mirror
     public struct RpcMessage : NetworkMessage
     {
         public uint netId;
-        public byte componentIndex;
+        public int componentIndex;
         public int functionHash;
         // the parameters for the Cmd function
         // -> ArraySegment to avoid unnecessary allocations
@@ -63,13 +71,6 @@ namespace Mirror
         // serialized component data
         // ArraySegment to avoid unnecessary allocations
         public ArraySegment<byte> payload;
-    }
-
-    public struct ChangeOwnerMessage : NetworkMessage
-    {
-        public uint netId;
-        public bool isOwner;
-        public bool isLocalPlayer;
     }
 
     public struct ObjectSpawnStartedMessage : NetworkMessage {}

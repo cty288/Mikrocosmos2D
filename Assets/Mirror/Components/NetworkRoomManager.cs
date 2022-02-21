@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace Mirror
@@ -145,6 +143,7 @@ namespace Mirror
                 allPlayersReady = false;
         }
 
+
         /// <summary>
         /// Called on the server when a client is ready.
         /// <para>The default implementation of this function calls NetworkServer.SetClientReady() to continue the network setup process.</para>
@@ -167,7 +166,7 @@ namespace Mirror
 
         void SceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer)
         {
-            Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
+            // Debug.LogFormat(LogType.Log, "NetworkRoom SceneLoadedForPlayer scene: {0} {1}", SceneManager.GetActiveScene().path, conn);
 
             if (IsSceneActive(RoomScene))
             {
@@ -326,7 +325,7 @@ namespace Mirror
 
                 allPlayersReady = false;
 
-                //Debug.Log("NetworkRoomManager.OnServerAddPlayer playerPrefab: {roomPlayerPrefab.name}");
+                // Debug.LogFormat(LogType.Log, "NetworkRoomManager.OnServerAddPlayer playerPrefab:{0}", roomPlayerPrefab.name);
 
                 GameObject newRoomGameObject = OnRoomServerCreateRoomPlayer(conn);
                 if (newRoomGameObject == null)
@@ -405,13 +404,13 @@ namespace Mirror
         /// </summary>
         public override void OnStartServer()
         {
-            if (string.IsNullOrWhiteSpace(RoomScene))
+            if (string.IsNullOrEmpty(RoomScene))
             {
                 Debug.LogError("NetworkRoomManager RoomScene is empty. Set the RoomScene in the inspector for the NetworkRoomManager");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(GameplayScene))
+            if (string.IsNullOrEmpty(GameplayScene))
             {
                 Debug.LogError("NetworkRoomManager PlayScene is empty. Set the PlayScene in the inspector for the NetworkRoomManager");
                 return;
@@ -446,9 +445,9 @@ namespace Mirror
             OnRoomStopHost();
         }
 
-        #endregion
+#endregion
 
-        #region client handlers
+#region client handlers
 
         /// <summary>
         /// This is invoked when the client is started.
@@ -470,25 +469,22 @@ namespace Mirror
         /// Called on the client when connected to a server.
         /// <para>The default implementation of this function sets the client as ready and adds a player. Override the function to dictate what happens when the client connects.</para>
         /// </summary>
-        public override void OnClientConnect()
+        /// <param name="conn">Connection to the server.</param>
+        public override void OnClientConnect(NetworkConnection conn)
         {
-#pragma warning disable 618
-            // obsolete method calls new method
-            OnRoomClientConnect(NetworkClient.connection);
-#pragma warning restore 618
-            base.OnClientConnect();
+            OnRoomClientConnect(conn);
+            base.OnClientConnect(conn);
         }
 
         /// <summary>
         /// Called on clients when disconnected from a server.
         /// <para>This is called on the client when it disconnects from the server. Override this function to decide what happens when the client disconnects.</para>
         /// </summary>
-        public override void OnClientDisconnect()
+        /// <param name="conn">Connection to the server.</param>
+        public override void OnClientDisconnect(NetworkConnection conn)
         {
-#pragma warning disable 618
-            OnRoomClientDisconnect(NetworkClient.connection);
-#pragma warning restore 618
-            base.OnClientDisconnect();
+            OnRoomClientDisconnect(conn);
+            base.OnClientDisconnect(conn);
         }
 
         /// <summary>
@@ -505,7 +501,8 @@ namespace Mirror
         /// Called on clients when a scene has completed loaded, when the scene load was initiated by the server.
         /// <para>Scene changes can cause player objects to be destroyed. The default implementation of OnClientSceneChanged in the NetworkManager is to add a player object for the connection if no player object exists.</para>
         /// </summary>
-        public override void OnClientSceneChanged()
+        /// <param name="conn">Connection of the client</param>
+        public override void OnClientSceneChanged(NetworkConnection conn)
         {
             if (IsSceneActive(RoomScene))
             {
@@ -515,16 +512,13 @@ namespace Mirror
             else
                 CallOnClientExitRoom();
 
-            base.OnClientSceneChanged();
-#pragma warning disable 618
-            // obsolete method calls new method
-            OnRoomClientSceneChanged(NetworkClient.connection);
-#pragma warning restore 618
+            base.OnClientSceneChanged(conn);
+            OnRoomClientSceneChanged(conn);
         }
 
-        #endregion
+#endregion
 
-        #region room server virtuals
+#region room server virtuals
 
         /// <summary>
         /// This is called on the host when a host is started.
@@ -628,9 +622,9 @@ namespace Mirror
         /// </summary>
         public virtual void OnRoomServerPlayersNotReady() {}
 
-        #endregion
+#endregion
 
-        #region room client virtuals
+#region room client virtuals
 
         /// <summary>
         /// This is a hook to allow custom behaviour when the game client enters the room.
@@ -645,24 +639,19 @@ namespace Mirror
         /// <summary>
         /// This is called on the client when it connects to server.
         /// </summary>
-        public virtual void OnRoomClientConnect() {}
-
-        // Deprecated 2021-10-30
-        [Obsolete("Remove NetworkConnection from your override and use NetworkClient.connection instead.")]
-        public virtual void OnRoomClientConnect(NetworkConnection conn) => OnRoomClientConnect();
+        /// <param name="conn">The connection that connected.</param>
+        public virtual void OnRoomClientConnect(NetworkConnection conn) {}
 
         /// <summary>
         /// This is called on the client when disconnected from a server.
         /// </summary>
-        public virtual void OnRoomClientDisconnect() {}
-
-        // Deprecated 2021-10-30
-        [Obsolete("Remove NetworkConnection from your override and use NetworkClient.connection instead.")]
-        public virtual void OnRoomClientDisconnect(NetworkConnection conn) => OnRoomClientDisconnect();
+        /// <param name="conn">The connection that disconnected.</param>
+        public virtual void OnRoomClientDisconnect(NetworkConnection conn) {}
 
         /// <summary>
         /// This is called on the client when a client is started.
         /// </summary>
+        /// <param name="roomClient">The connection for the room.</param>
         public virtual void OnRoomStartClient() {}
 
         /// <summary>
@@ -673,11 +662,8 @@ namespace Mirror
         /// <summary>
         /// This is called on the client when the client is finished loading a new networked scene.
         /// </summary>
-        public virtual void OnRoomClientSceneChanged() {}
-
-        // Deprecated 2021-10-30
-        [Obsolete("Remove NetworkConnection from your override and use NetworkClient.connection instead.")]
-        public virtual void OnRoomClientSceneChanged(NetworkConnection conn) => OnRoomClientSceneChanged();
+        /// <param name="conn">The connection that finished loading a new networked scene.</param>
+        public virtual void OnRoomClientSceneChanged(NetworkConnection conn) {}
 
         /// <summary>
         /// Called on the client when adding a player to the room fails.
@@ -685,9 +671,9 @@ namespace Mirror
         /// </summary>
         public virtual void OnRoomClientAddPlayerFailed() {}
 
-        #endregion
+#endregion
 
-        #region optional UI
+#region optional UI
 
         /// <summary>
         /// virtual so inheriting classes can roll their own
@@ -709,6 +695,6 @@ namespace Mirror
                 GUI.Box(new Rect(10f, 180f, 520f, 150f), "PLAYERS");
         }
 
-        #endregion
+#endregion
     }
 }

@@ -1,13 +1,14 @@
 {
     "name": "Mirror.Examples",
+    "rootNamespace": "",
     "references": [
         "Mirror",
         "Mirror.Components",
-        "Unity.TextMeshPro"
+        "MikroFramework"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

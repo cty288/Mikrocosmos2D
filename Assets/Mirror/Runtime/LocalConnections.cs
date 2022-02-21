@@ -6,15 +6,14 @@ namespace Mirror
 {
     // a server's connection TO a LocalClient.
     // sending messages on this connection causes the client's handler function to be invoked directly
-    public class LocalConnectionToClient : NetworkConnectionToClient
+    class LocalConnectionToClient : NetworkConnectionToClient
     {
         internal LocalConnectionToServer connectionToServer;
 
-        public LocalConnectionToClient() : base(LocalConnectionId) {}
+        public LocalConnectionToClient() : base(LocalConnectionId, false, 0) {}
 
         public override string address => "localhost";
 
-        // Send stage two: serialized NetworkMessage as ArraySegment<byte>
         internal override void Send(ArraySegment<byte> segment, int channelId = Channels.Reliable)
         {
             // get a writer to copy the message into since the segment is only
@@ -22,7 +21,7 @@ namespace Mirror
             // => pooled writer will be returned to pool when dequeuing.
             // => WriteBytes instead of WriteArraySegment because the latter
             //    includes a 4 bytes header. we just want to write raw.
-            //Debug.Log($"Enqueue {BitConverter.ToString(segment.Array, segment.Offset, segment.Count)}");
+            //Debug.Log("Enqueue " + BitConverter.ToString(segment.Array, segment.Offset, segment.Count));
             PooledNetworkWriter writer = NetworkWriterPool.GetWriter();
             writer.WriteBytes(segment.Array, segment.Offset, segment.Count);
             connectionToServer.queue.Enqueue(writer);
@@ -49,7 +48,7 @@ namespace Mirror
 
     // a localClient's connection TO a server.
     // send messages on this connection causes the server's handler function to be invoked directly.
-    public class LocalConnectionToServer : NetworkConnectionToServer
+    internal class LocalConnectionToServer : NetworkConnectionToServer
     {
         internal LocalConnectionToClient connectionToClient;
 
@@ -64,7 +63,6 @@ namespace Mirror
         internal void QueueConnectedEvent() => connectedEventPending = true;
         internal void QueueDisconnectedEvent() => disconnectedEventPending = true;
 
-        // Send stage two: serialized NetworkMessage as ArraySegment<byte>
         internal override void Send(ArraySegment<byte> segment, int channelId = Channels.Reliable)
         {
             if (segment.Count == 0)
@@ -73,28 +71,12 @@ namespace Mirror
                 return;
             }
 
-            // OnTransportData assumes batching.
-            // so let's make a batch with proper timestamp prefix.
-            Batcher batcher = GetBatchForChannelId(channelId);
-            batcher.AddMessage(segment);
-
-            // flush it to the server's OnTransportData immediately.
-            // local connection to server always invokes immediately.
-            using (PooledNetworkWriter writer = NetworkWriterPool.GetWriter())
-            {
-                // make a batch with our local time (double precision)
-                if (batcher.MakeNextBatch(writer, NetworkTime.localTime))
-                {
-                    NetworkServer.OnTransportData(connectionId, writer.ToArraySegment(), channelId);
-                }
-                else Debug.LogError("Local connection failed to make batch. This should never happen.");
-            }
+            // handle the server's message directly
+            NetworkServer.OnTransportData(connectionId, segment, channelId);
         }
 
-        internal override void Update()
+        internal void Update()
         {
-            base.Update();
-
             // should we still process a connected event?
             if (connectedEventPending)
             {
@@ -107,22 +89,9 @@ namespace Mirror
             {
                 // call receive on queued writer's content, return to pool
                 PooledNetworkWriter writer = queue.Dequeue();
-                ArraySegment<byte> message = writer.ToArraySegment();
-
-                // OnTransportData assumes a proper batch with timestamp etc.
-                // let's make a proper batch and pass it to OnTransportData.
-                Batcher batcher = GetBatchForChannelId(Channels.Reliable);
-                batcher.AddMessage(message);
-
-                using (PooledNetworkWriter batchWriter = NetworkWriterPool.GetWriter())
-                {
-                    // make a batch with our local time (double precision)
-                    if (batcher.MakeNextBatch(batchWriter, NetworkTime.localTime))
-                    {
-                        NetworkClient.OnTransportData(batchWriter.ToArraySegment(), Channels.Reliable);
-                    }
-                }
-
+                ArraySegment<byte> segment = writer.ToArraySegment();
+                //Debug.Log("Dequeue " + BitConverter.ToString(segment.Array, segment.Offset, segment.Count));
+                NetworkClient.OnTransportData(segment, Channels.Reliable);
                 NetworkWriterPool.Recycle(writer);
             }
 
@@ -150,17 +119,11 @@ namespace Mirror
             connectionToClient.DisconnectInternal();
             DisconnectInternal();
 
-            // simulate what a true remote connection would do:
-            // first, the server should remove it:
+            // this was in NetworkClient.Disconnect 'if isLocalConnection' before
+            // but it's clearly local connection related, so put it in here.
             // TODO should probably be in connectionToClient.DisconnectInternal
             //      because that's the NetworkServer's connection!
             NetworkServer.RemoveLocalConnection();
-
-            // then call OnTransportDisconnected for proper disconnect handling,
-            // callbacks & cleanups.
-            // => otherwise OnClientDisconnected() is never called!
-            // => see NetworkClientTests.DisconnectCallsOnClientDisconnect_HostMode()
-            NetworkClient.OnTransportDisconnected();
         }
 
         // true because local connections never timeout

@@ -245,11 +245,12 @@ namespace Mirror.Discovery
         /// </summary>
         public void StartDiscovery()
         {
+          
             if (!SupportedOnThisPlatform)
                 throw new PlatformNotSupportedException("Network discovery not supported in this platform");
 
             StopDiscovery();
-
+           
             try
             {
                 // Setup port
@@ -258,18 +259,21 @@ namespace Mirror.Discovery
                     EnableBroadcast = true,
                     MulticastLoopback = false
                 };
+               
             }
             catch (Exception)
             {
                 // Free the port if we took it
                 //Debug.LogError("NetworkDiscoveryBase StartDiscovery Exception");
                 Shutdown();
+               
                 throw;
             }
 
             _ = ClientListenAsync();
-
+           
             if (enableActiveDiscovery) InvokeRepeating(nameof(BroadcastDiscoveryRequest), 0, ActiveDiscoveryInterval);
+
         }
 
         /// <summary>
@@ -287,18 +291,7 @@ namespace Mirror.Discovery
         /// <returns>ClientListenAsync Task</returns>
         public async Task ClientListenAsync()
         {
-            // while clientUpdClient to fix: 
-            // https://github.com/vis2k/Mirror/pull/2908
-            //
-            // If, you cancel discovery the clientUdpClient is set to null.
-            // However, nothing cancels ClientListenAsync. If we change the if(true)
-            // to check if the client is null. You can properly cancel the discovery, 
-            // and kill the listen thread.
-            //
-            // Prior to this fix, if you cancel the discovery search. It crashes the 
-            // thread, and is super noisy in the output. As well as causes issues on 
-            // the quest.
-            while (clientUdpClient != null)
+            while (true)
             {
                 try
                 {
@@ -321,15 +314,16 @@ namespace Mirror.Discovery
         /// </summary>
         public void BroadcastDiscoveryRequest()
         {
+            //Debug.Log("BroadcastDiscoveryRequest start 1");
             if (clientUdpClient == null)
                 return;
-
+            //Debug.Log("BroadcastDiscoveryRequest start 2");
             if (NetworkClient.isConnected)
             {
                 StopDiscovery();
                 return;
             }
-
+            //Debug.Log("BroadcastDiscoveryRequest start 3");
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Broadcast, serverBroadcastListenPort);
 
             using (PooledNetworkWriter writer = NetworkWriterPool.GetWriter())
@@ -345,10 +339,12 @@ namespace Mirror.Discovery
                     ArraySegment<byte> data = writer.ToArraySegment();
 
                     clientUdpClient.SendAsync(data.Array, data.Count, endPoint);
+                    //Debug.Log("BroadcastDiscoveryRequest start 4");
                 }
                 catch (Exception)
                 {
                     // It is ok if we can't broadcast to one of the addresses
+                    //Debug.Log("BroadcastDiscoveryRequest start 5");
                 }
             }
         }

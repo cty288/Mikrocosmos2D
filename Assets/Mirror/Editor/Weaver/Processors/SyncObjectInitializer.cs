@@ -5,15 +5,10 @@ namespace Mirror.Weaver
 {
     public static class SyncObjectInitializer
     {
-        // generates code like:
-        // this.InitSyncObject(m_sizes);
-        public static void GenerateSyncObjectInitializer(ILProcessor worker, WeaverTypes weaverTypes, FieldDefinition fd)
+        public static void GenerateSyncObjectInitializer(ILProcessor worker, FieldDefinition fd)
         {
             // register syncobject in network behaviour
-            worker.Emit(OpCodes.Ldarg_0);
-            worker.Emit(OpCodes.Ldarg_0);
-            worker.Emit(OpCodes.Ldfld, fd);
-            worker.Emit(OpCodes.Call, weaverTypes.InitSyncObjectReference);
+            GenerateSyncObjectRegistration(worker, fd);
         }
 
         public static bool ImplementsSyncObject(TypeReference typeRef)
@@ -26,7 +21,7 @@ namespace Mirror.Weaver
                     return false;
                 }
 
-                return typeRef.Resolve().IsDerivedFrom<SyncObject>();
+                return typeRef.Resolve().ImplementsInterface<SyncObject>();
             }
             catch
             {
@@ -34,6 +29,19 @@ namespace Mirror.Weaver
             }
 
             return false;
+        }
+
+        /*
+            // generates code like:
+            this.InitSyncObject(m_sizes);
+        */
+        static void GenerateSyncObjectRegistration(ILProcessor worker, FieldDefinition fd)
+        {
+            worker.Emit(OpCodes.Ldarg_0);
+            worker.Emit(OpCodes.Ldarg_0);
+            worker.Emit(OpCodes.Ldfld, fd);
+
+            worker.Emit(OpCodes.Call, WeaverTypes.InitSyncObjectReference);
         }
     }
 }

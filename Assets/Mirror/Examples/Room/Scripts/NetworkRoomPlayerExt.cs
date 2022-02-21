@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Mirror.Examples.NetworkRoom
 {
@@ -8,32 +7,24 @@ namespace Mirror.Examples.NetworkRoom
     {
         public override void OnStartClient()
         {
-            //Debug.Log($"OnStartClient {gameObject}");
+            // Debug.LogFormat(LogType.Log, "OnStartClient {0}", SceneManager.GetActiveScene().path);
+
+            base.OnStartClient();
         }
 
         public override void OnClientEnterRoom()
         {
-            //Debug.Log($"OnClientEnterRoom {SceneManager.GetActiveScene().path}");
+            // Debug.LogFormat(LogType.Log, "OnClientEnterRoom {0}", SceneManager.GetActiveScene().path);
         }
 
         public override void OnClientExitRoom()
         {
-            //Debug.Log($"OnClientExitRoom {SceneManager.GetActiveScene().path}");
-        }
-
-        public override void IndexChanged(int oldIndex, int newIndex)
-        {
-            //Debug.Log($"IndexChanged {newIndex}");
+            // Debug.LogFormat(LogType.Log, "OnClientExitRoom {0}", SceneManager.GetActiveScene().path);
         }
 
         public override void ReadyStateChanged(bool oldReadyState, bool newReadyState)
         {
-            //Debug.Log($"ReadyStateChanged {newReadyState}");
-        }
-
-        public override void OnGUI()
-        {
-            base.OnGUI();
+            // Debug.LogFormat(LogType.Log, "ReadyStateChanged {0}", newReadyState);
         }
     }
 }

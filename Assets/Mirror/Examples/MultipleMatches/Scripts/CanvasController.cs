@@ -67,17 +67,6 @@ namespace Mirror.Examples.MultipleMatch
         public RoomGUI roomGUI;
         public ToggleGroup toggleGroup;
 
-        // RuntimeInitializeOnLoadMethod -> fast playmode without domain reload
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        static void ResetStatics()
-        {
-            playerMatches.Clear();
-            openMatches.Clear();
-            matchConnections.Clear();
-            playerInfos.Clear();
-            waitingConnections.Clear();
-        }
-
         #region UI Functions
 
         // Called from several places to ensure a clean reset
@@ -317,9 +306,9 @@ namespace Mirror.Examples.MultipleMatch
             ResetCanvas();
         }
 
-        internal void OnClientConnect()
+        internal void OnClientConnect(NetworkConnection conn)
         {
-            playerInfos.Add(NetworkClient.connection, new PlayerInfo { playerIndex = this.playerIndex, ready = false });
+            playerInfos.Add(conn, new PlayerInfo { playerIndex = this.playerIndex, ready = false });
         }
 
         internal void OnStartClient()
@@ -496,7 +485,9 @@ namespace Mirror.Examples.MultipleMatch
             if (playerMatches.TryGetValue(conn, out matchId))
             {
                 GameObject matchControllerObject = Instantiate(matchControllerPrefab);
-                matchControllerObject.GetComponent<NetworkMatch>().matchId = matchId;
+#pragma warning disable 618
+                matchControllerObject.GetComponent<NetworkMatchChecker>().matchId = matchId;
+#pragma warning restore 618
                 NetworkServer.Spawn(matchControllerObject);
 
                 MatchController matchController = matchControllerObject.GetComponent<MatchController>();
@@ -506,7 +497,9 @@ namespace Mirror.Examples.MultipleMatch
                     playerConn.Send(new ClientMatchMessage { clientMatchOperation = ClientMatchOperation.Started });
 
                     GameObject player = Instantiate(NetworkManager.singleton.playerPrefab);
-                    player.GetComponent<NetworkMatch>().matchId = matchId;
+#pragma warning disable 618
+                    player.GetComponent<NetworkMatchChecker>().matchId = matchId;
+#pragma warning restore 618
                     NetworkServer.AddPlayerForConnection(playerConn, player);
 
                     if (matchController.player1 == null)
