@@ -31,5 +31,10 @@ namespace Mikrocosmos
                 CmdOnUpdateRotation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
         }
+
+        public override void OnStartAuthority() {
+            base.OnStartAuthority();
+            Camera.main.GetComponent<GameCamera>().following = this.gameObject;
+        }
     }
 }
