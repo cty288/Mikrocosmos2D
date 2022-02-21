@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -11,14 +10,6 @@ namespace Mirror.Examples.Basic
     [AddComponentMenu("")]
     public class BasicNetManager : NetworkManager
     {
-        [Header("Canvas UI")]
-
-        [Tooltip("Assign Main Panel so it can be turned on from Player:OnStartClient")]
-        public RectTransform mainPanel;
-
-        [Tooltip("Assign Players Panel for instantiating PlayerUI as child")]
-        public RectTransform playersPanel;
-
         /// <summary>
         /// Called on the server when a client adds a new player with NetworkClient.AddPlayer.
         /// <para>The default implementation for this function creates a new player object from the playerPrefab.</para>
@@ -40,6 +31,5 @@ namespace Mirror.Examples.Basic
             base.OnServerDisconnect(conn);
             Player.ResetPlayerNumbers();
         }
-
     }
 }

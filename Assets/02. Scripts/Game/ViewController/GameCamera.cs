@@ -13,15 +13,18 @@ namespace Mikrocosmos
         private GameObject following;
 
         [SerializeField] private float lerp = 0.1f;
+
+        private GameObject cameraGo;
         public override void OnStartServer() {
             base.OnStartServer();
-           
+            cameraGo = GetComponentInChildren<Camera>().gameObject;
         }
 
         private void Update() {
-            if (isServer) {
+            if (NetworkServer.active) {
+               // Debug.Log("Running");
                 if (!following) {
-                    following = transform.parent.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                    following = GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
                         .gameObject;
                 }
             }
@@ -31,8 +34,7 @@ namespace Mikrocosmos
         private void FixedUpdate() {
             
             if (NetworkServer.active && following) {
-                transform.position = Vector3.Lerp(transform.position, new Vector3( following.transform.position.x, following.transform.position.y, -10), lerp);
-
+                cameraGo.transform.position = Vector3.Lerp(transform.position, new Vector3( following.transform.position.x, following.transform.position.y, -10), lerp);
             }
         }
     }

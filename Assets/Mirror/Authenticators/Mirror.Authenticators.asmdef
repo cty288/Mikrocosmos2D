@@ -1,17 +1,14 @@
 {
     "name": "Mirror.Authenticators",
-    "rootNamespace": "",
     "references": [
-        "Mirror",
-        "MikroFramework"
+        "Mirror"
     ],
+    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+    "defineConstraints": []
 }
