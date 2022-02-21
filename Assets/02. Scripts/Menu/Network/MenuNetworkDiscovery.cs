@@ -30,21 +30,7 @@ public class DiscoveryResponse : NetworkMessage
     public string HostName;
     public IPEndPoint EndPoint { get; set; }
 
-    private sealed class ServerIdEqualityComparer : IEqualityComparer<DiscoveryResponse> {
-        public bool Equals(DiscoveryResponse x, DiscoveryResponse y) {
-            if (ReferenceEquals(x, y)) return true;
-            if (ReferenceEquals(x, null)) return false;
-            if (ReferenceEquals(y, null)) return false;
-            if (x.GetType() != y.GetType()) return false;
-            return x.ServerID == y.ServerID;
-        }
-
-        public int GetHashCode(DiscoveryResponse obj) {
-            return obj.ServerID.GetHashCode();
-        }
-    }
-
-    public static IEqualityComparer<DiscoveryResponse> ServerIdComparer { get; } = new ServerIdEqualityComparer();
+   
 }
 [Serializable]
 public class MenuServerFoundUnityEvent : UnityEvent<DiscoveryResponse> { };
