@@ -24,7 +24,7 @@ namespace Mikrocosmos
         private void Update() {
             if (isServer) {
                 if (!following) {
-                    following = transform.parent.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                    following = GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
                         .gameObject;
                 }
             }
