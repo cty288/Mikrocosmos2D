@@ -16,6 +16,6 @@ namespace Mikrocosmos
         }
 
         public float MoveForce { get; set; } = 8f;
-        public float MaxSpeed { get; set; } = 15f;
+        public float MaxSpeed { get; set; } = 20f;
     }
 }

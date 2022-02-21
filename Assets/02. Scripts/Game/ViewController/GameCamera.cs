@@ -13,13 +13,10 @@ namespace Mikrocosmos
         private GameObject following;
 
         [SerializeField] private float lerp = 0.1f;
-        private void Awake() {
-            if (isServer) {
-                //this.RegisterEvent<OnLocalPlayerEnterGame>(OnInit).UnRegisterWhenGameObjectDestroyed(gameObject);
-                following = transform.parent.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
-                    .gameObject;
-            }
-          
+        public override void OnStartServer() {
+            base.OnStartServer();
+            following = transform.parent.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                .gameObject;
         }
 
         [ServerCallback]

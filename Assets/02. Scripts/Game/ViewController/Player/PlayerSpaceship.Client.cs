@@ -15,20 +15,18 @@ namespace Mikrocosmos
                 if (Input.GetMouseButtonDown(0)) {
                     isControlling = true;
                 }
-                
-
-                if (isControlling) {
-                    Debug.Log("IsControlling");
-                    CmdAddForce((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
-                }
-
-                CmdOnUpdateRotation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-
                 if (Input.GetMouseButtonUp(0)) {
                     isControlling = false;
                 }
             }
 
+        }
+
+        private void FixedUpdate() {
+            if (isControlling) {
+                CmdAddForce((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
+            }
+            CmdOnUpdateRotation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
     }
 }
