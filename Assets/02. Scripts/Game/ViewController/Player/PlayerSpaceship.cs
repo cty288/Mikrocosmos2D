@@ -19,7 +19,7 @@ namespace Mikrocosmos
         [Command]
         private void CmdAddForce(Vector2 forceDirection) {
             if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(this.GetModel<ISpaceshipConfigurationModel>().MaxSpeed, 2)) {
-                rigidbody.AddForce(forceDirection * this.GetModel<ISpaceshipConfigurationModel>().MoveForce);
+                rigidbody.AddForce(forceDirection * this.GetModel<ISpaceshipConfigurationModel>().MoveForce * Time.deltaTime);
             }
 
            
@@ -29,7 +29,7 @@ namespace Mikrocosmos
         private void CmdOnUpdateRotation(Vector2 mousePos) {
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;
             float angle = Mathf.Atan2(dir.y, dir.x) * (180 / Mathf.PI) + 90;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.1f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 3f * Time.deltaTime);
         }
        
     }
