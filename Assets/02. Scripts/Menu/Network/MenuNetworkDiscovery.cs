@@ -12,19 +12,19 @@ using UnityEngine.Events;
     API Reference: https://mirror-networking.com/docs/api/Mirror.Discovery.NetworkDiscovery.html
 */
 
-public class DiscoveryRequest : NetworkMessage
+public struct DiscoveryRequest : NetworkMessage
 {
     // Add properties for whatever information you want sent by clients
     // in their broadcast messages that servers will consume.
 }
 
-public class DiscoveryResponse : NetworkMessage
+public struct DiscoveryResponse : NetworkMessage
 {
     // Add properties for whatever information you want the server to return to
     // clients for them to display or consume for establishing a connection.
     public long ServerID;
     public int ServerPlayerNum;
-    public int ServerMaxPlayerNum = 8;
+    public int ServerMaxPlayerNum;
     public bool IsGaming;
     public Uri Uri;
     public string HostName;
@@ -89,7 +89,8 @@ public class MenuNetworkDiscovery : NetworkDiscoveryBase<DiscoveryRequest, Disco
                 Uri = transport.ServerUri(),
                 IsGaming =  ((NetworkedRoomManager)(NetworkedRoomManager.singleton)).IsInGame,
                 ServerPlayerNum = NetworkServer.connections.Count,
-                HostName = ((NetworkedRoomManager)NetworkManager.singleton).GetHostName()
+                HostName = ((NetworkedRoomManager)NetworkManager.singleton).GetHostName(),
+                ServerMaxPlayerNum = 8
             };
         }
         catch (NotImplementedException)

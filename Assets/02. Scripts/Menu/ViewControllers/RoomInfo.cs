@@ -35,13 +35,13 @@ namespace Mikrocosmos {
         }
 
         private void OnJoinButtonClicked() {
-            if (response != null) {
+          
                 if (response.IsGaming || response.ServerPlayerNum >= response.ServerMaxPlayerNum) {
                     return;
                 }
 
                 NetworkManager.singleton.StartClient(response.Uri);
-            }
+            
         }
     }
 }
