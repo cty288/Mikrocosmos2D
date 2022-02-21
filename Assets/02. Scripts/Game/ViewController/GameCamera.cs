@@ -19,7 +19,7 @@ namespace Mikrocosmos
         private void FixedUpdate() {
             
             if (following) {
-                transform.position = Vector3.Lerp(transform.position, new Vector3( following.transform.position.x, following.transform.position.y, -10), lerp * Time.deltaTime);
+                transform.position = Vector3.Slerp(transform.position, new Vector3( following.transform.position.x, following.transform.position.y, -10), lerp * Time.deltaTime);
             }
         }
     }
