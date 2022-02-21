@@ -40,9 +40,9 @@ namespace Mikrocosmos {
                 allSearchedServers.Clear();
                 for (int i = 0; i < TrRoomLayoutGroup.childCount; i++)
                 {
-                   
+
                     TrRoomLayoutGroup.GetChild(i).gameObject.SetActive(false);
-                    
+
                 }
                 (NetworkManager.singleton.GetComponent<MenuNetworkDiscovery>()).StartDiscovery();
                 yield return new WaitForSeconds(3f);

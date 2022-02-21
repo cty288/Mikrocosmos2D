@@ -24,13 +24,12 @@ namespace Mikrocosmos
 
         private void FixedUpdate() {
             if (hasAuthority && isClient) {
-                if (isControlling)
-                {
+                if (isControlling) {
                     CmdAddForce((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
                 }
+
                 CmdOnUpdateRotation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
-               
         }
     }
 }
