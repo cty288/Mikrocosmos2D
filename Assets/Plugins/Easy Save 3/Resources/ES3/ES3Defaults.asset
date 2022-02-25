@@ -44,11 +44,13 @@ MonoBehaviour:
     - DOTween.Modules
     - Assembly-CSharp-firstpass
     - Mirror.Authenticators
+    - Elringus.SpriteGlow.Runtime
     - Mirror.Weaver
     - PsdPlugin
     - Polyglot.Editor
     - Mirror.Editor
     - Mirror.CompilerSymbols
+    - PPv2URPConverters
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1
