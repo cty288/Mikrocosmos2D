@@ -36,7 +36,7 @@ namespace Mikrocosmos
 
         public override void OnStartAuthority() {
             base.OnStartAuthority();
-            Camera.main.GetComponent<GameCamera>().following = this.gameObject;
+           // Camera.main.GetComponent<GameCamera>().following = this.gameObject;
         }
     }
 }

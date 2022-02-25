@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
@@ -14,13 +15,19 @@ namespace Mikrocosmos
 
         [SerializeField] private float lerp = 0.1f;
 
+        private CinemachineTargetGroup cinemachineTargetGroup;
+        private void Awake() {
+            cinemachineTargetGroup = GetComponent<CinemachineTargetGroup>();
+            this.RegisterEvent<OnClientMainGamePlayerConnected>(OnClientMainGamePlayerConnected)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
 
-        
-        private void FixedUpdate() {
-            
-            if (following) {
-                transform.position = Vector3.Slerp(transform.position, new Vector3( following.transform.position.x, following.transform.position.y, -10), lerp );
-            }
+        private void OnClientMainGamePlayerConnected(OnClientMainGamePlayerConnected e) {
+            AddFollowingPlayer(e.playerSpaceship.transform, true);
+        }
+
+        public void AddFollowingPlayer(Transform followingObj, bool isLocalPlayer ) {
+            cinemachineTargetGroup.AddMember(followingObj, isLocalPlayer ? 3 : 1, 10);
         }
     }
 }

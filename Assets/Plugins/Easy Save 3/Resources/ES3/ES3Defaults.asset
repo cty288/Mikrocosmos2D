@@ -29,28 +29,29 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - UniRx
-    - SimpleWebTransport
-    - MikroFramework
     - Mirror.Examples
     - ES3
     - Mirror
-    - Mirror.Components
-    - Polyglot.Scripts
-    - Mikrocosmos
+    - MikroFramework
+    - UniRx
+    - Cinemachine
     - Telepathy
+    - Mikrocosmos
     - ES3Editor
-    - kcp2k
+    - Mirror.Components
+    - SimpleWebTransport
     - DOTween.Modules
+    - Polyglot.Scripts
     - Assembly-CSharp-firstpass
     - Mirror.Authenticators
+    - kcp2k
     - Elringus.SpriteGlow.Runtime
-    - Mirror.Weaver
     - PsdPlugin
+    - PPv2URPConverters
+    - Mirror.Weaver
     - Polyglot.Editor
     - Mirror.Editor
     - Mirror.CompilerSymbols
-    - PPv2URPConverters
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

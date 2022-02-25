@@ -9,20 +9,33 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public partial class NetworkedMenuRoomPlayer : NetworkRoomPlayer, IController {
+    public struct OnRoomPlayerJoinGame {
+        public PlayerMatchInfo MatchInfo;
+        public NetworkConnection Connection;
+    }
+    public partial class NetworkedMenuRoomPlayer : NetworkRoomPlayer, IController, ICanSendEvent {
        // [SyncVar]
         private PlayerMatchInfo matchInfo = null;
 
         #region Server
-       
-        
         public override void OnStartServer() {
             base.OnStartServer();
             Debug.Log("Server Start");
             this.RegisterEvent<OnMatchInfoSet>(OnMatchInfoSet).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnRoomMemberChange>(ServerOnRoomMemberChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnNetworkedMainGamePlayerConnected)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
-        
+
+        private void OnNetworkedMainGamePlayerConnected(OnNetworkedMainGamePlayerConnected obj) {
+            if (obj.connection == connectionToClient) {
+                this.SendEvent<OnRoomPlayerJoinGame>(new OnRoomPlayerJoinGame() {
+                    Connection = obj.connection,
+                    MatchInfo = matchInfo
+                });
+            }
+        }
+
         public override void OnStopServer() {
             base.OnStopServer();
             this.GetSystem<IRoomMatchSystem>().ServerRoomPlayerLeaveMatch(matchInfo.ID);
@@ -59,6 +72,7 @@ namespace Mikrocosmos
          
         }
 
+        
         private void OnMatchInfoSet(OnMatchInfoSet obj) {
             if (obj.Connection == connectionToClient) {
                 matchInfo = obj.MatchInfo;

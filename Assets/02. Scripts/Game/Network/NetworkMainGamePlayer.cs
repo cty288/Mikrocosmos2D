@@ -6,9 +6,18 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-   
+    public struct OnNetworkedMainGamePlayerConnected {
+        public NetworkConnection connection;
+    }
+
+    public struct OnClientMainGamePlayerConnected {
+        public GameObject playerSpaceship;
+    }
+
     public partial class NetworkMainGamePlayer : AbstractNetworkedController<Mikrocosmos>, ICanSendEvent {
         [SerializeField] private GameObject spaceshipPrefab;
+        
+        private PlayerMatchInfo matchInfo = null;
 
         [SyncVar]
         public NetworkIdentity ControlledSpaceship;
@@ -18,11 +27,14 @@ namespace Mikrocosmos
             GameObject spaceship =  Instantiate(spaceshipPrefab, transform.position, Quaternion.identity);
             NetworkServer.Spawn(spaceship, connectionToClient);
             ControlledSpaceship = spaceship.GetComponent<NetworkIdentity>();
+            this.SendEvent<OnNetworkedMainGamePlayerConnected>();
         }
 
-        public override void OnStartClient() {
-            base.OnStartClient();
-           
+        public override void OnStartAuthority() {
+            base.OnStartAuthority();
+            this.SendEvent<OnClientMainGamePlayerConnected>(new OnClientMainGamePlayerConnected() {
+                playerSpaceship =  ControlledSpaceship.gameObject
+            });
         }
     }
 }
