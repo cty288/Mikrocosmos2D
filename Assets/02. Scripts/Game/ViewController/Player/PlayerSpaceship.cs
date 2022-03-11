@@ -7,7 +7,8 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public partial class PlayerSpaceship : AbstractNetworkedController<Mikrocosmos> {
+    public partial class PlayerSpaceship : BasicEntityViewController<SpaceshipModel>
+    {
         
 
 

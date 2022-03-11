@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public interface IDamagable {
-        BindableProperty<float> CurrentHP { get; }
+       float CurrentHP { get; }
         float MaxHP { get; }
 
-        BindableProperty<float> MomentumThredhold { get; }
+        float MomentumThredhold { get; }
     }
 }

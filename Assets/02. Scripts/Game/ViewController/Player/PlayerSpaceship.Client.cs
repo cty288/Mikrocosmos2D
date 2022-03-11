@@ -6,15 +6,16 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public partial class PlayerSpaceship  : AbstractNetworkedController<Mikrocosmos> {
+    public partial class PlayerSpaceship : BasicEntityViewController<SpaceshipModel> {
         [SerializeField]
         private bool isControlling = false;
         private Rigidbody2D rigidbody;
 
-        private void Awake()
-        {
+        protected override void Awake() {
+            base.Awake();
             rigidbody = GetComponent<Rigidbody2D>();
         }
+
         private void Update() {
             if (hasAuthority && isClient) {
                 RaycastHit2D ray = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
@@ -36,9 +37,9 @@ namespace Mikrocosmos
                     //CmdAddForce((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
                     Vector2 forceDir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position)
                         .normalized;
-                    if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(this.GetModel<ISpaceshipConfigurationModel>().MaxSpeed, 2))
+                    if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(model.MaxSpeed, 2))
                     {
-                        rigidbody.AddForce(forceDir * this.GetModel<ISpaceshipConfigurationModel>().MoveForce);
+                        rigidbody.AddForce(forceDir * model.MoveForce);
                     }
                 }
 

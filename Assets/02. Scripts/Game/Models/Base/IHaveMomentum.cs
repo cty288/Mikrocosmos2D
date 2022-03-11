@@ -6,10 +6,10 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public interface IHaveMomentum {
-        BindableProperty<float> SelfMass { get;}
-        BindableProperty<float> MaxSpeed { get;}
+        float SelfMass { get;}
+        float MaxSpeed { get;}
 
-        BindableProperty<float> Acceleration { get;}
+        float Acceleration { get;}
 
         float GetTotalMass();
 
