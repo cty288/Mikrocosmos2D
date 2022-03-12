@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -10,10 +11,16 @@ namespace Mikrocosmos
         [SerializeField]
         private bool isControlling = false;
         private Rigidbody2D rigidbody;
-
+    
         protected override void Awake() {
             base.Awake();
             rigidbody = GetComponent<Rigidbody2D>();
+            this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnMassChanged(OnMassChanged e)
+        {
+            Debug.Log(e.newMass);
         }
 
         private void Update() {
@@ -23,6 +30,14 @@ namespace Mikrocosmos
                 if (Input.GetMouseButtonDown(0)) {
                     isControlling = true;
                 }
+
+                if (Input.GetMouseButtonDown(1))
+                {
+                    CmdChangeMoveForce(model.MoveForce+1);
+                }
+              
+              
+
                 if (Input.GetMouseButtonUp(0)) {
                     isControlling = false;
                 }

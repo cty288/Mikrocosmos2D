@@ -8,13 +8,14 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public abstract class AbstractBasicEntity : AbstractNetworkedController<Mikrocosmos>, IEntity, ICanSendEvent {
+    public abstract class AbstractBasicEntityModel : AbstractNetworkedController<Mikrocosmos>, IEntity, ICanSendEvent {
         [field: SyncVar(hook = nameof(OnClientSelfMassChanged)), SerializeField]
         public float SelfMass { get; protected set; }
 
 
         [field: SyncVar, SerializeField]
         public float MaxSpeed { get; protected set; }
+
 
         [field: SyncVar, SerializeField]
         public float Acceleration { get; protected set; }
