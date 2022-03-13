@@ -46,12 +46,16 @@ MonoBehaviour:
     - Mirror.Authenticators
     - kcp2k
     - Elringus.SpriteGlow.Runtime
+    - Mirror.Tests.Runtime
+    - Mirror.Tests.Common
+    - where-allocations
     - PsdPlugin
     - PPv2URPConverters
-    - Mirror.Weaver
     - Polyglot.Editor
     - Mirror.Editor
     - Mirror.CompilerSymbols
+    - Mirror.Tests
+    - WeaverTestExtraAssembly
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

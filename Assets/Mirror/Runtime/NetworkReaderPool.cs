@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Mirror
 {
@@ -24,26 +25,27 @@ namespace Mirror
         );
 
         /// <summary>Get the next reader in the pool. If pool is empty, creates a new Reader</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PooledNetworkReader GetReader(byte[] bytes)
         {
             // grab from pool & set buffer
             PooledNetworkReader reader = Pool.Take();
-            reader.buffer = new ArraySegment<byte>(bytes);
-            reader.Position = 0;
+            reader.SetBuffer(bytes);
             return reader;
         }
 
         /// <summary>Get the next reader in the pool. If pool is empty, creates a new Reader</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PooledNetworkReader GetReader(ArraySegment<byte> segment)
         {
             // grab from pool & set buffer
             PooledNetworkReader reader = Pool.Take();
-            reader.buffer = segment;
-            reader.Position = 0;
+            reader.SetBuffer(segment);
             return reader;
         }
 
         /// <summary>Returns a reader to the pool.</summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Recycle(PooledNetworkReader reader)
         {
             Pool.Return(reader);

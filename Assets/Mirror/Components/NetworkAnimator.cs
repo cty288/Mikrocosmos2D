@@ -13,7 +13,7 @@ namespace Mirror
     /// <para>If the object has authority on the server, then it should be animated on the server and state information will be sent to all clients. This is common for objects not related to a specific client, such as an enemy unit.</para>
     /// <para>The NetworkAnimator synchronizes all animation parameters of the selected Animator. It does not automatically synchronize triggers. The function SetTrigger can by used by an object with authority to fire an animation trigger on other clients.</para>
     /// </remarks>
-    [AddComponentMenu("Network/NetworkAnimator")]
+    [AddComponentMenu("Network/Network Animator")]
     [RequireComponent(typeof(NetworkIdentity))]
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-animator")]
     public class NetworkAnimator : NetworkBehaviour
@@ -29,7 +29,6 @@ namespace Mirror
         [Header("Animator")]
         [Tooltip("Animator that will have parameters synchronized")]
         public Animator animator;
-
 
         /// <summary>
         /// Syncs animator.speed
@@ -48,7 +47,7 @@ namespace Mirror
         int[] animationHash;
         int[] transitionHash;
         float[] layerWeight;
-        float nextSendTime;
+        double nextSendTime;
 
         bool SendMessagesAllowed
         {
@@ -134,13 +133,6 @@ namespace Mirror
             }
         }
 
-        void CmdSetAnimatorSpeed(float newSpeed)
-        {
-            // set animator
-            animator.speed = newSpeed;
-            animatorSpeed = newSpeed;
-        }
-
         void OnAnimatorSpeedChanged(float _, float value)
         {
             // skip if host or client with authority
@@ -196,7 +188,7 @@ namespace Mirror
 
         void CheckSendRate()
         {
-            float now = Time.time;
+            double now = NetworkTime.localTime;
             if (SendMessagesAllowed && syncInterval >= 0 && now > nextSendTime)
             {
                 nextSendTime = now + syncInterval;
@@ -532,7 +524,7 @@ namespace Mirror
             if (!clientAuthority)
                 return;
 
-            // Debug.Log("OnAnimationMessage for netId=" + netId);
+            //Debug.Log($"OnAnimationMessage for netId {netId}");
 
             // handle and broadcast
             using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(parameters))
@@ -591,6 +583,14 @@ namespace Mirror
             }
 
             RpcOnAnimationResetTriggerClientMessage(hash);
+        }
+
+        [Command]
+        void CmdSetAnimatorSpeed(float newSpeed)
+        {
+            // set animator
+            animator.speed = newSpeed;
+            animatorSpeed = newSpeed;
         }
 
         #endregion

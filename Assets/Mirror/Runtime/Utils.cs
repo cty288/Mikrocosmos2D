@@ -1,5 +1,5 @@
 using System;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -16,19 +16,6 @@ namespace Mirror
     // Handles requests to unspawn objects on the client
     public delegate void UnSpawnDelegate(GameObject spawned);
 
-    // invoke type for Cmd/Rpc
-    public enum MirrorInvokeType
-    {
-        Command,
-        ClientRpc
-    }
-
-    [Obsolete("Version has never been used, neither by UNET nor by Mirror.")]
-    public enum Version
-    {
-        Current = 1
-    }
-
     // channels are const ints instead of an enum so people can add their own
     // channels (can't extend an enum otherwise).
     //
@@ -38,47 +25,8 @@ namespace Mirror
     // add custom channels anymore.
     public static class Channels
     {
-        public const int Reliable = 0;      // ordered
-        public const int Unreliable = 1;    // unordered
-
-        [Obsolete("Use Channels.Reliable instead")]
-        public const int DefaultReliable = Reliable;
-        [Obsolete("Use Channels.Unreliable instead")]
-        public const int DefaultUnreliable = Unreliable;
-    }
-
-    // -- helpers for float conversion without allocations --
-    [StructLayout(LayoutKind.Explicit)]
-    internal struct UIntFloat
-    {
-        [FieldOffset(0)]
-        public float floatValue;
-
-        [FieldOffset(0)]
-        public uint intValue;
-    }
-
-    [StructLayout(LayoutKind.Explicit)]
-    internal struct UIntDouble
-    {
-        [FieldOffset(0)]
-        public double doubleValue;
-
-        [FieldOffset(0)]
-        public ulong longValue;
-    }
-
-    [StructLayout(LayoutKind.Explicit)]
-    internal struct UIntDecimal
-    {
-        [FieldOffset(0)]
-        public ulong longValue1;
-
-        [FieldOffset(8)]
-        public ulong longValue2;
-
-        [FieldOffset(0)]
-        public decimal decimalValue;
+        public const int Reliable = 0;   // ordered
+        public const int Unreliable = 1; // unordered
     }
 
     public static class Utils
@@ -117,10 +65,39 @@ namespace Mirror
 
             if (prefab == null)
             {
-                Debug.LogError("Failed to find prefab parent for scene object [name:" + gameObject.name + "]");
+                Debug.LogError($"Failed to find prefab parent for scene object [name:{gameObject.name}]");
                 return false;
             }
             return true;
+        }
+
+        // is a 2D point in screen? (from ummorpg)
+        // (if width = 1024, then indices from 0..1023 are valid (=1024 indices)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsPointInScreen(Vector2 point) =>
+            0 <= point.x && point.x < Screen.width &&
+            0 <= point.y && point.y < Screen.height;
+
+        // universal .spawned function
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static NetworkIdentity GetSpawnedInServerOrClient(uint netId)
+        {
+            // server / host mode: use the one from server.
+            // host mode has access to all spawned.
+            if (NetworkServer.active)
+            {
+                NetworkServer.spawned.TryGetValue(netId, out NetworkIdentity entry);
+                return entry;
+            }
+
+            // client
+            if (NetworkClient.active)
+            {
+                NetworkClient.spawned.TryGetValue(netId, out NetworkIdentity entry);
+                return entry;
+            }
+
+            return null;
         }
     }
 }
