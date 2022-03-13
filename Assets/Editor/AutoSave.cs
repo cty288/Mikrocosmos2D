@@ -22,7 +22,9 @@ public class AutoSave : EditorWindow
     [MenuItem("Window/AutoSave")]
     public static void Init()
     {
+       
         AutoSave saveWindow = (AutoSave)EditorWindow.GetWindow(typeof(AutoSave));
+        saveWindow.lastSaveTimeScene = DateTime.Now;
         saveWindow.position = new Rect(300, 100, 1000, 1000);
         saveWindow.minSize = new Vector2(500, 500);
         saveWindow.Show();
@@ -30,6 +32,7 @@ public class AutoSave : EditorWindow
 
     void OnGUI()
     {
+        lastSaveTimeScene = DateTime.Now;
         GUILayout.Label("Info:", EditorStyles.boldLabel);
         EditorGUILayout.LabelField("Saving to:", "" + projectPath);
         EditorGUILayout.LabelField("Saving scene:", "" + scenePath);
@@ -67,6 +70,10 @@ public class AutoSave : EditorWindow
     {
         EditorApplication.SaveScene(scenePath);
         lastSaveTimeScene = DateTime.Now;
+        if (DateTime.Now.Minute == 59)
+        {
+            lastSaveTimeScene = DateTime.Now + new TimeSpan(0, 0, 1, 0);
+        }
         isStarted = true;
         if (showMessage)
         {
