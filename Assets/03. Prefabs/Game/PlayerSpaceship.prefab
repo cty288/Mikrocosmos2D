@@ -242,7 +242,7 @@ MonoBehaviour:
   <ClientHookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <MoveForce>k__BackingField: 18
-  <Bounceness>k__BackingField: 1.5
+  <Bounceness>k__BackingField: 2.9
 --- !u!114 &2796221509383912019
 MonoBehaviour:
   m_ObjectHideFlags: 0
