@@ -28,7 +28,7 @@ namespace Mikrocosmos
         [field: SyncVar(hook = nameof(OnClientHookedByIdentityChanged)), SerializeField]
         public NetworkIdentity HookedByIdentity { get; protected set; }
 
-        private NetworkConnectionToClient HookedByOriginalOwner;
+     
 
         [field: SerializeField]
         public Transform ClientHookedByTransform { get; protected set; }
@@ -39,20 +39,11 @@ namespace Mikrocosmos
         /// </summary>
         [ServerCallback]
         public void Hook(NetworkIdentity hookedBy) {
-            HookedByOriginalOwner = connectionToClient;
-            netIdentity.RemoveClientAuthority();
-            netIdentity.AssignClientAuthority(hookedBy.connectionToClient);
-
-            Debug.Log($"Authority assigned to {netIdentity.connectionToClient.identity.gameObject.name}");
             HookState = HookState.Hooked;
             HookedByIdentity = hookedBy;
         }
 
-        public override void OnStopServer() {
-            if (connectionToClient != HookedByOriginalOwner && HookedByOriginalOwner!=null) {
-                UnHook();
-            }
-        }
+      
 
 
         /// <summary>
@@ -60,16 +51,8 @@ namespace Mikrocosmos
         /// </summary>
         [ServerCallback]
         public void UnHook() {
-            Debug.Log(netIdentity.gameObject.name);
-            netIdentity.RemoveClientAuthority();
-            if (HookedByOriginalOwner != null) {
-                netIdentity.AssignClientAuthority(HookedByOriginalOwner);
-               // transform
-            }
-           
             HookState = HookState.Freed;
             HookedByIdentity = null;
-            HookedByOriginalOwner = null;
         }
 
      

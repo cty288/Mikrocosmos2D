@@ -8,7 +8,7 @@ namespace Mikrocosmos
 {
     public interface ISpaceshipConfigurationModel  {
          float MoveForce { get; set; }
-
+         float Bounceness { get; }
          IHookableViewController HookedItem { get; set; }
 
   

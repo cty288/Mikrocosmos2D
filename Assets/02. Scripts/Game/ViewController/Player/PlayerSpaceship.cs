@@ -30,17 +30,16 @@ namespace Mikrocosmos
                     if (hookTrigger.Triggered) {
                         List<Collider2D> colliders = hookTrigger.Colliders;
                         foreach (Collider2D collider in colliders) {
-
                             if (collider.gameObject
                                 .TryGetComponent<IHookableViewController>(out IHookableViewController vc)) {
                                 this.SendCommand<HookOrUnhookObjectCommand>(HookOrUnhookObjectCommand.Allocate(vc, true, netIdentity, Model));
+                                break;
                             }
                         }
 
                     }
                 }
-            }
-            else  { //put down item
+            }else  { //put down item 
                 this.SendCommand<HookOrUnhookObjectCommand>(HookOrUnhookObjectCommand.Allocate(Model.HookedItem, false, null, Model));
             }
 

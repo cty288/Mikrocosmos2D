@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Utilities;
+using Mirror;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -59,6 +60,14 @@ namespace Mikrocosmos
 
         protected override void FixedUpdate() {
             base.FixedUpdate();
+            if (isClient && !hasAuthority && Model.HookState == HookState.Freed) {
+                if (Model.HookedItem != null) {
+                    GetComponent<NetworkTransform>().syncPosition = false;
+                }
+                else {
+                    GetComponent<NetworkTransform>().syncPosition = true;
+                }
+            }
 
             if (hasAuthority && isClient) {
                 //Debug.Log("Hasauthority");
@@ -75,7 +84,15 @@ namespace Mikrocosmos
                 UpdateRotation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
         }
+        //
+        private void OnCollisionEnter2D(Collision2D collision) {
+            if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Player")) {
+                float x = rigidbody.velocity.magnitude / Model.MaxSpeed;
+                float normalizedForce = 0.8f * (1 - Mathf.Pow(1 - x, 2.6f));
 
+                rigidbody.AddForce( normalizedForce * -1f * rigidbody.velocity *  Model.Bounceness, ForceMode2D.Impulse);
+            }
+        }
         private void UpdateRotation(Vector2 mousePos)
         {
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;

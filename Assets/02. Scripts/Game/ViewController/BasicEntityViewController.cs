@@ -36,15 +36,23 @@ namespace Mikrocosmos
 
         protected virtual void FixedUpdate() {
             
-            if (hasAuthority && isClient) {
+            if (isClient) {
                 if (Model.HookState == HookState.Hooked) {
                     Transform hookedByTr = Model.ClientHookedByTransform;
                     if (hookedByTr) {
-                     
-                        rigidbody.MovePosition(Vector2.Lerp(transform.position,  hookedByTr.position, 0.5f));
+                        if (!hasAuthority) {
+                            GetComponent<NetworkTransform>().syncPosition = false;
+                        }
+                        rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 0.5f));
                         transform.rotation = hookedByTr.rotation;
+                        // rigidbody.velocity = hookedByTr.parent.GetComponent<Rigidbody2D>().velocity;
                     }
                    
+                }
+                else {
+                    //if (!hasAuthority) {
+                        GetComponent<NetworkTransform>().syncPosition = true;
+                    //}
                 }
             }
         }
