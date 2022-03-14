@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface ICanBeShot: IPickable, IHaveMomentum {
+    public interface ICanBeShot: IHookable, IHaveMomentum {
         
         
     }

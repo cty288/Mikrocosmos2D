@@ -29,6 +29,7 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
+    - Mikrocosmos
     - Mirror.Examples
     - ES3
     - Mirror
@@ -36,26 +37,21 @@ MonoBehaviour:
     - UniRx
     - Cinemachine
     - Telepathy
-    - Mikrocosmos
     - ES3Editor
+    - kcp2k
     - Mirror.Components
     - SimpleWebTransport
     - DOTween.Modules
     - Polyglot.Scripts
+    - where-allocations
     - Assembly-CSharp-firstpass
     - Mirror.Authenticators
-    - kcp2k
     - Elringus.SpriteGlow.Runtime
-    - Mirror.Tests.Runtime
-    - Mirror.Tests.Common
-    - where-allocations
     - PsdPlugin
     - PPv2URPConverters
     - Polyglot.Editor
     - Mirror.Editor
     - Mirror.CompilerSymbols
-    - Mirror.Tests
-    - WeaverTestExtraAssembly
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

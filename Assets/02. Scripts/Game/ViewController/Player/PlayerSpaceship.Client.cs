@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.Utilities;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -10,11 +11,13 @@ namespace Mikrocosmos
     public partial class PlayerSpaceship : BasicEntityViewController<SpaceshipModel> {
         [SerializeField]
         private bool isControlling = false;
-        private Rigidbody2D rigidbody;
-    
+      
+        private Trigger2DCheck hookTrigger;
+
         protected override void Awake() {
             base.Awake();
-            rigidbody = GetComponent<Rigidbody2D>();
+          
+            hookTrigger = GetComponentInChildren<Trigger2DCheck>();
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
@@ -28,12 +31,21 @@ namespace Mikrocosmos
                 RaycastHit2D ray = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
                
                 if (Input.GetMouseButtonDown(0)) {
-                    isControlling = true;
+                    if (Model.HookState == HookState.Freed) {
+                        isControlling = true;
+                    }
+                    else {
+                        isControlling  = false;
+                    }
                 }
 
-                if (Input.GetMouseButtonDown(1))
-                {
-                    CmdChangeMoveForce(model.MoveForce+1);
+                //take item & put item (not shoot)
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    CmdTryUseHook();
+                }
+
+                if (Input.GetMouseButtonDown(1)) {
+                    CmdChangeMoveForce(Model.MoveForce+1);
                 }
               
               
@@ -45,16 +57,18 @@ namespace Mikrocosmos
 
         }
 
-        private void FixedUpdate() {
+        protected override void FixedUpdate() {
+            base.FixedUpdate();
+
             if (hasAuthority && isClient) {
                 //Debug.Log("Hasauthority");
                 if (isControlling) {
                     //CmdAddForce((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
                     Vector2 forceDir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position)
                         .normalized;
-                    if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(model.MaxSpeed, 2))
+                    if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(Model.MaxSpeed, 2))
                     {
-                        rigidbody.AddForce(forceDir * model.MoveForce);
+                        rigidbody.AddForce(forceDir * Model.MoveForce);
                     }
                 }
 

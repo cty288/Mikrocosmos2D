@@ -12,20 +12,52 @@ namespace Mikrocosmos
     }
     public class SpaceshipModel : AbstractBasicEntityModel, ISpaceshipConfigurationModel {
         public override string Name { get; } = "Spaceship";
-        public override void OnClientSelfMassChanged(float oldMass, float newMass) {
-            
+       
+
+        #region Client
+        public override void OnHooked()
+        {
+
         }
 
-        [field: SyncVar(hook = nameof(Hook)), SerializeField]
-        public float MoveForce { get; set; } //18 30
+        public override void OnFreed()
+        {
 
+        }
 
-        public void Hook(float oldValue, float newValue) {
+        public override void OnClientSelfMassChanged(float oldMass, float newMass)
+        {
+
+        }
+        public void OnMassChanged(float oldValue, float newValue)
+        {
             if (hasAuthority)
             {
-                this.SendEvent<OnMassChanged>(new OnMassChanged(){newMass = newValue});
+                this.SendEvent<OnMassChanged>(new OnMassChanged() { newMass = newValue });
+
+
             }
         }
+        #endregion
 
+
+
+
+        #region Server
+        [field: SyncVar(hook = nameof(OnMassChanged)), SerializeField]
+        public float MoveForce { get; set; } //18 30
+
+        [field: SerializeField]
+        public IHookableViewController HookedItem { get; set; }
+
+
+       
+        #endregion
+
+
+
+      
+
+        
     }
 }

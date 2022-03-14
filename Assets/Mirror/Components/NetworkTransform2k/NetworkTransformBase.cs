@@ -498,6 +498,7 @@ namespace Mirror
 
         void Update()
         {
+            
             // if server then always sync to others.
             if (isServer) UpdateServer();
             // 'else if' because host mode shouldn't send anything to server.
