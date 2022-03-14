@@ -90,7 +90,7 @@ namespace Mikrocosmos
                 float x = rigidbody.velocity.magnitude / Model.MaxSpeed;
                 float normalizedForce = 0.8f * (1 - Mathf.Pow(1 - x, 2.6f));
 
-                rigidbody.AddForce( normalizedForce * -1f * rigidbody.velocity *  Model.Bounceness, ForceMode2D.Impulse);
+               // rigidbody.AddForce( normalizedForce * -1f * rigidbody.velocity *  Model.Bounceness, ForceMode2D.Impulse);
             }
         }
         private void UpdateRotation(Vector2 mousePos)
