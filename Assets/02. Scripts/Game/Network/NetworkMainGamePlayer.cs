@@ -17,7 +17,8 @@ namespace Mikrocosmos
     public partial class NetworkMainGamePlayer : AbstractNetworkedController<Mikrocosmos>, ICanSendEvent {
         [SerializeField] private GameObject spaceshipPrefab;
         
-        public PlayerMatchInfo matchInfo = null;
+
+       public PlayerMatchInfo matchInfo = null;
 
         [SyncVar]
         public NetworkIdentity ControlledSpaceship;
