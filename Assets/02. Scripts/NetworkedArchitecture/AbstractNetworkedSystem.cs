@@ -12,13 +12,11 @@ public abstract class AbstractNetworkedSystem: NetworkBehaviour, ISystem
         return GetComponent<T>();
     }
 
-    IArchitecture IBelongToArchitecture.GetArchitecture()
-    {
-        return architectureModel;
+    IArchitecture IBelongToArchitecture.GetArchitecture() {
+        return Mikrocosmos.Mikrocosmos.Interface;
     }
 
-    void ICanSetArchitecture.SetArchitecture(IArchitecture architecture)
-    {
+    void ICanSetArchitecture.SetArchitecture(IArchitecture architecture) {
         this.architectureModel = architecture;
     }
 

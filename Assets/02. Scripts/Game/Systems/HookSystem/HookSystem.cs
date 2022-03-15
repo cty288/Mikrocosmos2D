@@ -23,11 +23,16 @@ namespace Mikrocosmos {
 
         bool IsHooking { get; }
     }
-    public class HookSystem : AbstractNetworkedSystem, IHookSystem
+    public partial class HookSystem : AbstractNetworkedSystem, IHookSystem
     {
         [field: SerializeField]
         public IHookableViewController HookedItem { get; set; }
 
+        [SerializeField] private float shootTimeThreshold = 0.5f;
+        /// <summary>
+        /// OneCycle time; including charge / decharge
+        /// </summary>
+        [SerializeField] private float shootChargeOneCycleTime = 4f;
         
         [field: SyncVar]
         public bool IsHooking { get; private set; }
@@ -37,19 +42,47 @@ namespace Mikrocosmos {
         protected ISpaceshipConfigurationModel model;
 
         private Trigger2DCheck hookTrigger;
+
+        private bool holdingButton = false;
+
+        /// <summary>
+        /// 0-0.5: charge up; 0.5-0: charge down
+        /// </summary>
+        [SyncVar(hook = nameof(OnHookChargePercentChanged))] [SerializeField] 
+        private float hookShootChargePercent;
+
         private void Awake() {
             model = GetBindedModel<ISpaceshipConfigurationModel>();
             hookTrigger = GetComponentInChildren<Trigger2DCheck>();
         }
 
+        
 
         [Command]
         public void CmdHoldHookButton() {
-            hookHoldTimer += Time.deltaTime;
+            holdingButton = true;
+           
+        }
+
+        private void Update() {
+            if (isServer) {
+                IsHooking = HookedItem != null;
+            }
+
+            if (holdingButton) {
+                if (HookedItem != null) {
+                    hookHoldTimer += Time.deltaTime;
+                    if (hookHoldTimer >= shootTimeThreshold) {
+                        float thisCycleTime = (hookHoldTimer - shootTimeThreshold) % shootChargeOneCycleTime;
+                        hookShootChargePercent = thisCycleTime / shootChargeOneCycleTime;
+                    }
+                }
+            }
         }
 
         [Command]
         public void CmdReleaseHookButton() {
+            holdingButton = false;
             HookAction targetAction = CheckHookAction();
             switch (targetAction) {
                 case HookAction.Hook:
@@ -61,6 +94,8 @@ namespace Mikrocosmos {
                 case HookAction.Shoot:
                     break;
             }
+
+            hookShootChargePercent = 0;
             hookHoldTimer = 0;
             //start check hook type
         }
@@ -94,7 +129,7 @@ namespace Mikrocosmos {
         }
 
         private HookAction CheckHookAction() {
-            if (hookHoldTimer <= 0.5f) {
+            if (hookHoldTimer <= shootTimeThreshold) {
                 if (HookedItem == null) {
                     return HookAction.Hook;
                 }
@@ -108,10 +143,6 @@ namespace Mikrocosmos {
         }
 
 
-        private void Update() {
-            if (isServer) {
-                IsHooking = HookedItem != null;
-            }
-        }
+       
     }
 }

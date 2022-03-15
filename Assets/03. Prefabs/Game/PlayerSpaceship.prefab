@@ -313,7 +313,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
+  shootTimeThreshold: 0.5
+  shootChargeOneCycleTime: 4
+  hookShootChargePercent: 0
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0
