@@ -34,8 +34,7 @@ namespace Mikrocosmos
             if (hasAuthority)
             {
                 this.SendEvent<OnMassChanged>(new OnMassChanged() { newMass = newValue });
-
-
+                
             }
         }
         #endregion
@@ -44,7 +43,7 @@ namespace Mikrocosmos
 
 
         #region Server
-        [field: SyncVar(hook = nameof(OnMassChanged)), SerializeField]
+       // [field: SyncVar(hook = nameof(OnMassChanged)), SerializeField]
         public float MoveForce { get; set; } //18 30
 
        

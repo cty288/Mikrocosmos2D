@@ -54,7 +54,7 @@ namespace Mikrocosmos
                 }
 
                 if (Input.GetMouseButtonDown(1)) {
-                    CmdChangeMoveForce(GetModel().MoveForce+1);
+                  //  CmdChangeMoveForce(GetModel().MoveForce+1);
                 }
               
               
