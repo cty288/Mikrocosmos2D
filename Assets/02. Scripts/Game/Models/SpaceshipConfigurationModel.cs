@@ -6,12 +6,9 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface ISpaceshipConfigurationModel  {
+    public interface ISpaceshipConfigurationModel : IModel, IEntity  {
          float MoveForce { get; set; }
         
-       
-
-  
 
     }
     

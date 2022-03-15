@@ -8,6 +8,10 @@ public abstract class AbstractNetworkedSystem: NetworkBehaviour, ISystem
 {
     private IArchitecture architectureModel;
 
+    protected T GetBindedModel<T>() where T: IModel {
+        return GetComponent<T>();
+    }
+
     IArchitecture IBelongToArchitecture.GetArchitecture()
     {
         return architectureModel;

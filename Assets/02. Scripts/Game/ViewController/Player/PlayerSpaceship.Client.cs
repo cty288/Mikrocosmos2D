@@ -13,12 +13,14 @@ namespace Mikrocosmos
         [SerializeField]
         private bool isControlling = false;
       
-        private Trigger2DCheck hookTrigger;
-        
+       
+
+       
+
         protected override void Awake() {
             base.Awake();
             hookSystem = GetComponent<IHookSystem>();
-            hookTrigger = GetComponentInChildren<Trigger2DCheck>();
+          
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
@@ -41,8 +43,12 @@ namespace Mikrocosmos
                 }
 
                 //take item & put item (not shoot)
-                if (Input.GetKeyDown(KeyCode.Space)) {
-                    CmdTryUseHook();
+                if (Input.GetKey(KeyCode.Space)) {
+                   hookSystem.CmdHoldHookButton();
+                }
+
+                if (Input.GetKeyUp(KeyCode.Space)) {
+                   hookSystem.CmdReleaseHookButton();
                 }
 
                 if (Input.GetMouseButtonDown(1)) {

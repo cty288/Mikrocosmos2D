@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public abstract class AbstractBasicEntityModel : AbstractNetworkedController<Mikrocosmos>, IEntity, ICanSendEvent {
+    public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent {
         [field: SyncVar(hook = nameof(OnClientSelfMassChanged)), SerializeField]
         public float SelfMass { get; protected set; }
 
