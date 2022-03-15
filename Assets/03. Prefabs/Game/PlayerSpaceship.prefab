@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 8913116591047660154}
   - component: {fileID: 2796221509383912019}
   - component: {fileID: 6589906832623092008}
+  - component: {fileID: 5713069999858416287}
   m_Layer: 6
   m_Name: PlayerSpaceship
   m_TagString: Untagged
@@ -180,10 +181,10 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0.5
-  m_AngularDrag: 0.05
+  m_UseAutoMass: 1
+  m_Mass: 1.9218433
+  m_LinearDrag: 0.2
+  m_AngularDrag: 0.5
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 32459052cbc7fde4fb6299f8c729b72c, type: 2}
   m_Interpolate: 0
@@ -241,8 +242,7 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <ClientHookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <MoveForce>k__BackingField: 18
-  <Bounceness>k__BackingField: 2.9
+  <MoveForce>k__BackingField: 24
 --- !u!114 &2796221509383912019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,11 +259,11 @@ MonoBehaviour:
   syncInterval: 0
   clientAuthority: 1
   sendInterval: 0.01
-  syncPosition: 1
-  syncRotation: 1
+  syncPosition: 0
+  syncRotation: 0
   syncScale: 0
-  interpolatePosition: 0
-  interpolateRotation: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
   interpolateScale: 0
   bufferTimeMultiplier: 3
   bufferSizeLimit: 64
@@ -300,6 +300,20 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
+--- !u!114 &5713069999858416287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986015997137912893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8514fd46f1bd604cb7e7942d4b1335e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0

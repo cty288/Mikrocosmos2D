@@ -14,10 +14,10 @@ namespace Mikrocosmos
         private bool isControlling = false;
       
         private Trigger2DCheck hookTrigger;
-
+        
         protected override void Awake() {
             base.Awake();
-          
+            hookSystem = GetComponent<IHookSystem>();
             hookTrigger = GetComponentInChildren<Trigger2DCheck>();
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -58,16 +58,14 @@ namespace Mikrocosmos
 
         }
 
+       
+
         protected override void FixedUpdate() {
-            base.FixedUpdate();
-            if (isClient && !hasAuthority && Model.HookState == HookState.Freed) {
-                if (Model.HookedItem != null) {
-                    GetComponent<NetworkTransform>().syncPosition = false;
-                }
-                else {
-                    GetComponent<NetworkTransform>().syncPosition = true;
-                }
-            }
+            ClientUpdateSync();
+            
+
+            
+          
 
             if (hasAuthority && isClient) {
                 //Debug.Log("Hasauthority");
@@ -84,15 +82,53 @@ namespace Mikrocosmos
                 UpdateRotation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
         }
-        //
-        private void OnCollisionEnter2D(Collision2D collision) {
-            if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Player")) {
-                float x = rigidbody.velocity.magnitude / Model.MaxSpeed;
-                float normalizedForce = 0.8f * (1 - Mathf.Pow(1 - x, 2.6f));
 
-               // rigidbody.AddForce( normalizedForce * -1f * rigidbody.velocity *  Model.Bounceness, ForceMode2D.Impulse);
+        private void ClientUpdateSync() {
+          
+            if (isClient) {
+                if (Model.HookState == HookState.Hooked) {
+                    Transform hookedByTr = Model.ClientHookedByTransform;
+                    if (hookedByTr) {
+                        if (!hasAuthority)
+                        {
+                            GetComponent<NetworkTransform>().syncPosition = false;
+                        }
+                        rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 0.5f));
+                        transform.rotation = hookedByTr.rotation;
+                        // rigidbody.velocity = hookedByTr.parent.GetComponent<Rigidbody2D>().velocity;
+                    }
+
+                }
+                else
+                {
+                    if (isClient && !hasAuthority && Model.HookState == HookState.Freed)
+                    {
+                        NetworkTransform nt = GetComponent<NetworkTransform>();
+                        if (hookSystem.IsHooking) {
+                            GetComponent<NetworkTransform>().syncPosition = true;
+                        }
+                        else
+                        {
+                            GetComponent<NetworkTransform>().syncPosition = true;
+                        }
+                    }
+                    else
+                    {
+                        //if (!hasAuthority) {
+                        GetComponent<NetworkTransform>().syncPosition = true;
+                        //}
+                    }
+                }
             }
         }
+
+        IEnumerator SyncHookerPos() {
+            GetComponent<NetworkTransform>().syncPosition = true;
+            yield return null;
+            GetComponent<NetworkTransform>().syncPosition = false;
+        }
+        //
+
         private void UpdateRotation(Vector2 mousePos)
         {
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;

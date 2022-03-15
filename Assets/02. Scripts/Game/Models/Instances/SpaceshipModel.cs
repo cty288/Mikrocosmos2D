@@ -47,12 +47,6 @@ namespace Mikrocosmos
         [field: SyncVar(hook = nameof(OnMassChanged)), SerializeField]
         public float MoveForce { get; set; } //18 30
 
-        [field: SyncVar, SerializeField] public float Bounceness { get; set; } = 5;
-
-        [field: SerializeField]
-        public IHookableViewController HookedItem { get; set; }
-
-
        
         #endregion
 

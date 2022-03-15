@@ -8,23 +8,27 @@ using UnityEngine;
 namespace Mikrocosmos
 {
    
-
+    
     public partial class PlayerSpaceship : BasicEntityViewController<SpaceshipModel> {
-     
+        private IHookSystem hookSystem;
+        
+        
+        
 
         [Command]
         private void CmdChangeMoveForce(float force) {
             ChangeMoveForceCommand cmd = new ChangeMoveForceCommand(Model, force);
             this.SendCommand(cmd);
+            
         }
-
-
+        
+        
 
 
         [Command]
         private void CmdTryUseHook() {
             //take item & put down item
-            if (Model.HookedItem == null)
+            if (hookSystem.HookedItem == null)
             {
                 if (Model.HookState == HookState.Freed) {
                     if (hookTrigger.Triggered) {
@@ -32,7 +36,7 @@ namespace Mikrocosmos
                         foreach (Collider2D collider in colliders) {
                             if (collider.gameObject
                                 .TryGetComponent<IHookableViewController>(out IHookableViewController vc)) {
-                                this.SendCommand<HookOrUnhookObjectCommand>(HookOrUnhookObjectCommand.Allocate(vc, true, netIdentity, Model));
+                                this.SendCommand<HookOrUnhookObjectCommand>(HookOrUnhookObjectCommand.Allocate(vc, true,hookSystem, netIdentity, Model));
                                 break;
                             }
                         }
@@ -40,7 +44,7 @@ namespace Mikrocosmos
                     }
                 }
             }else  { //put down item 
-                this.SendCommand<HookOrUnhookObjectCommand>(HookOrUnhookObjectCommand.Allocate(Model.HookedItem, false, null, Model));
+                this.SendCommand<HookOrUnhookObjectCommand>(HookOrUnhookObjectCommand.Allocate(hookSystem.HookedItem, false, hookSystem,null, Model));
             }
 
 

@@ -12,24 +12,27 @@ namespace Mikrocosmos
         private bool isHook;
         private NetworkIdentity hookedBy;
         private ISpaceshipConfigurationModel spaceshipConfigurationModel;
+        private IHookSystem hookSystem;
         protected override void OnExecute() {
             if (isHook) {
-                spaceshipConfigurationModel.HookedItem = hookableViewController;
+                hookSystem.HookedItem = hookableViewController;
                 hookableViewController.Model.Hook(hookedBy);
             }
             else {
                 hookableViewController.Model.UnHook();
-                spaceshipConfigurationModel.HookedItem = null;
+                hookSystem.HookedItem = null;
             }
         }
 
         public HookOrUnhookObjectCommand() {
         }
 
-        public static HookOrUnhookObjectCommand Allocate(IHookableViewController vc, bool isHook, NetworkIdentity hookedBy = null, ISpaceshipConfigurationModel spaceshipConfigurationModel = null) {
+        public static HookOrUnhookObjectCommand Allocate(IHookableViewController vc, bool isHook,
+            IHookSystem hookSystem,NetworkIdentity hookedBy = null, ISpaceshipConfigurationModel spaceshipConfigurationModel = null) {
             HookOrUnhookObjectCommand cmd  = SafeObjectPool<HookOrUnhookObjectCommand>.Singleton.Allocate();
             cmd.hookableViewController = vc;
             cmd.isHook = isHook;
+            cmd.hookSystem = hookSystem;
             cmd.hookedBy = hookedBy;
             cmd.spaceshipConfigurationModel = spaceshipConfigurationModel;
             return cmd;
