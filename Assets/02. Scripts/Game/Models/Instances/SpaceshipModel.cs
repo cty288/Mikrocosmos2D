@@ -43,7 +43,7 @@ namespace Mikrocosmos
 
 
         #region Server
-       // [field: SyncVar(hook = nameof(OnMassChanged)), SerializeField]
+        [field: SyncVar, SerializeField]
         public float MoveForce { get; set; } //18 30
 
        
