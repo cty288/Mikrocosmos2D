@@ -13,13 +13,42 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
+
     [Serializable]
-    public class PlayerMatchInfo {
+    public class PlayerMatchInfo : IEquatable<PlayerMatchInfo> {
         public int ID;
         public string Name;
         public int Team;
         public bool Prepared;
         public NetworkIdentity Identity;
+      
+        
+        public bool Equals(PlayerMatchInfo other) {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return ID == other.ID && Name == other.Name && Team == other.Team && Prepared == other.Prepared && Equals(Identity, other.Identity) ;
+        }
+
+        public override bool Equals(object obj) {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((PlayerMatchInfo) obj);
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(ID, Name, Team, Prepared, Identity);
+        }
+
+        public PlayerMatchInfo Clone() {
+            return new PlayerMatchInfo() {
+                ID = this.ID,
+                Identity = this.Identity,
+                Name = this.Name,
+                Prepared = this.Prepared,
+                Team = this.Team
+            };
+        }
     }
 
     public struct OnServerRoomPlayerJoin {
@@ -56,10 +85,15 @@ namespace Mikrocosmos
         void CmdRequestKickPlayer(int id, NetworkIdentity requester);
 
         void ChangeRoomHost(NetworkIdentity identity);
+
+        PlayerMatchInfo ClientGetMatchInfoCopy();
+
+        void ClientRecordMatchInfoCopy(PlayerMatchInfo matchInfo);
     }
     public partial class RoomMatchSystem : AbstractNetworkedSystem, IRoomMatchSystem {
         private NetworkIdentity host;
         private void Awake() {
+            DontDestroyOnLoad(gameObject);
             Mikrocosmos.Interface.RegisterSystem<IRoomMatchSystem>(this);
             Debug.Log("System registered");
         }
@@ -99,10 +133,11 @@ namespace Mikrocosmos
         [ServerCallback]
         public void ServerRoomPlayerJoinMatch(string name, NetworkConnection conn) {
             playerIdentities.Add(maxId, conn.identity);
+            
             PlayerMatchInfo matchInfo = new PlayerMatchInfo()
                 {ID = maxId, Name = name, Team = GetNewTeamNum(), Prepared = false, Identity = conn.identity};
-            maxId++;
             
+            maxId++;
             playerMatchInfos.Add(matchInfo);
             
             this.SendEvent<OnMatchInfoSet>(new OnMatchInfoSet(){Connection = conn, MatchInfo = matchInfo});
@@ -194,6 +229,8 @@ namespace Mikrocosmos
             });
         }
 
+        
+
         [ServerCallback]
         private int GetNewTeamNum() {
             int team1Num = 0, team2Num = 0;
@@ -227,8 +264,8 @@ namespace Mikrocosmos
             return null;
         }
         #endregion
-       
 
+        
 
     }
 }

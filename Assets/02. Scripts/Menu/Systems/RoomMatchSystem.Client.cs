@@ -9,10 +9,23 @@ namespace Mikrocosmos
     public partial interface IRoomMatchSystem : ISystem {
         void ClientKickPlayer(int kickedId);
     }
-    public partial class RoomMatchSystem : AbstractNetworkedSystem, IRoomMatchSystem
-    {
+    public partial class RoomMatchSystem : AbstractNetworkedSystem, IRoomMatchSystem {
+        [SerializeField]
+        private PlayerMatchInfo clientSelfMatchInfo;
+        public void ClientRecordMatchInfoCopy(PlayerMatchInfo matchInfo) {
+            this.clientSelfMatchInfo = matchInfo;
+        }
+
         public void ClientKickPlayer(int kickedId) {
             CmdRequestKickPlayer(kickedId, NetworkClient.localPlayer);
         }
+
+     
+        public PlayerMatchInfo ClientGetMatchInfoCopy() {
+            return clientSelfMatchInfo;
+        }
+
+
+       
     }
 }

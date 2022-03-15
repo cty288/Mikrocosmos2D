@@ -69,9 +69,14 @@ namespace Mikrocosmos
         {
             this.SendCommand<ChangePrepareRoomPlayerListCommand>(new ChangePrepareRoomPlayerListCommand(infos,
                 selfInfo, isHost));
-           // Debug.Log("Target room member change "+infos[1].ID);
+            Debug.Log(selfInfo.Team);
+            this.GetSystem<IRoomMatchSystem>().ClientRecordMatchInfoCopy(selfInfo);
+            // Debug.Log("Target room member change "+infos[1].ID);
         }
 
-        
+        public override void OnStopClient() {
+            base.OnStopClient();
+            Destroy(this.gameObject);
+        }
     }
 }
