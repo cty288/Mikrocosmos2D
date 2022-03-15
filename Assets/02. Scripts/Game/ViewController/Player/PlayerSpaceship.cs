@@ -9,7 +9,7 @@ namespace Mikrocosmos
 {
    
     
-    public partial class PlayerSpaceship : BasicEntityViewController<SpaceshipModel> {
+    public partial class PlayerSpaceship : BasicEntityViewController {
         private IHookSystem hookSystem;
         
         
@@ -17,12 +17,13 @@ namespace Mikrocosmos
 
         [Command]
         private void CmdChangeMoveForce(float force) {
-            ChangeMoveForceCommand cmd = new ChangeMoveForceCommand(Model, force);
+            ChangeMoveForceCommand cmd = new ChangeMoveForceCommand( GetModel(), force);
             this.SendCommand(cmd);
             
         }
+
         
-        }
+    }
 
     }
 

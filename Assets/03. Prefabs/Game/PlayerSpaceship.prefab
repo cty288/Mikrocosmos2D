@@ -316,6 +316,7 @@ MonoBehaviour:
   syncInterval: 0
   shootTimeThreshold: 0.5
   shootChargeOneCycleTime: 4
+  maxShootForce: 100
   hookShootChargePercent: 0
 --- !u!1 &8295490642847367845
 GameObject:

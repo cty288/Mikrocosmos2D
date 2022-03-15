@@ -9,18 +9,20 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public partial class PlayerSpaceship : BasicEntityViewController<SpaceshipModel> {
+    public partial class PlayerSpaceship : BasicEntityViewController {
         [SerializeField]
         private bool isControlling = false;
-      
-       
 
-       
+
+        public override IEntity Model { get; protected set; }
+
+        private ISpaceshipConfigurationModel GetModel() {
+            return GetModel<ISpaceshipConfigurationModel>();
+        }
 
         protected override void Awake() {
             base.Awake();
             hookSystem = GetComponent<IHookSystem>();
-          
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
@@ -52,7 +54,7 @@ namespace Mikrocosmos
                 }
 
                 if (Input.GetMouseButtonDown(1)) {
-                    CmdChangeMoveForce(Model.MoveForce+1);
+                    CmdChangeMoveForce(GetModel().MoveForce+1);
                 }
               
               
@@ -81,7 +83,7 @@ namespace Mikrocosmos
                         .normalized;
                     if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(Model.MaxSpeed, 2))
                     {
-                        rigidbody.AddForce(forceDir * Model.MoveForce);
+                        rigidbody.AddForce(forceDir * GetModel().MoveForce);
                     }
                 }
 
@@ -128,11 +130,6 @@ namespace Mikrocosmos
             }
         }
 
-        IEnumerator SyncHookerPos() {
-            GetComponent<NetworkTransform>().syncPosition = true;
-            yield return null;
-            GetComponent<NetworkTransform>().syncPosition = false;
-        }
         //
 
         private void UpdateRotation(Vector2 mousePos)

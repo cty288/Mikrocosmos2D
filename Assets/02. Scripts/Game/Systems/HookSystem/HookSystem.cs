@@ -13,6 +13,11 @@ namespace Mikrocosmos {
         Shoot
     }
 
+    public struct OnItemShot {
+        public ICanBeShotViewController TargetShotItem;
+        public Vector2 Force;
+    }
+
     public interface IHookSystem : ISystem {
         IHookableViewController HookedItem { get; set; }
        [Command]
@@ -33,6 +38,8 @@ namespace Mikrocosmos {
         /// OneCycle time; including charge / decharge
         /// </summary>
         [SerializeField] private float shootChargeOneCycleTime = 4f;
+
+        [SerializeField] private float maxShootForce = 20f;
         
         [field: SyncVar]
         public bool IsHooking { get; private set; }
@@ -70,7 +77,8 @@ namespace Mikrocosmos {
             }
 
             if (holdingButton) {
-                if (HookedItem != null) {
+                if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
+
                     hookHoldTimer += Time.deltaTime;
                     if (hookHoldTimer >= shootTimeThreshold) {
                         float thisCycleTime = (hookHoldTimer - shootTimeThreshold) % shootChargeOneCycleTime;
@@ -92,6 +100,7 @@ namespace Mikrocosmos {
                     TryUnHook();
                     break;
                 case HookAction.Shoot:
+                    TryShoot();
                     break;
             }
 
@@ -100,8 +109,29 @@ namespace Mikrocosmos {
             //start check hook type
         }
 
-        private void TryUnHook() {
+        private void TryShoot() {
             if (HookedItem != null) {
+                HookedItem.Model.UnHook();
+               
+
+                float realPercent = (hookShootChargePercent * 2);
+                if (realPercent >= 1) {
+                    realPercent = -realPercent + 2;
+                }
+
+                Vector2 force = transform.up * maxShootForce * realPercent;
+                Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realPercent}");
+                this.SendEvent<OnItemShot>(new OnItemShot() {
+                    Force = force,
+                    TargetShotItem = HookedItem as ICanBeShotViewController
+                });
+
+                HookedItem = null;
+            }
+        }
+
+        private void TryUnHook() {
+            if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
                 HookedItem.Model.UnHook();
                 HookedItem = null;
             }
