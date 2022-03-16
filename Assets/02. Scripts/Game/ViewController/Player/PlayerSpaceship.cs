@@ -11,17 +11,19 @@ namespace Mikrocosmos
     
     public partial class PlayerSpaceship : BasicEntityViewController {
         private IHookSystem hookSystem;
-        
-        
+
+       
+        private int escapeCounter = 0;
+
+     
+
         
 
-        [Command]
-        private void CmdChangeMoveForce(float force) {
-            ChangeMoveForceCommand cmd = new ChangeMoveForceCommand( GetModel(), force);
-            this.SendCommand(cmd);
-            
+        private void OnServerUpdate() {
+           
         }
 
+      
         
     }
 

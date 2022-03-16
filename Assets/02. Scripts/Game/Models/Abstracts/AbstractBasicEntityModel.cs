@@ -50,6 +50,9 @@ namespace Mikrocosmos
         /// </summary>
         [ServerCallback]
         public void UnHook() {
+            //优化一下
+            HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
+            HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
             HookState = HookState.Freed;
             HookedByIdentity = null;
         }
@@ -83,7 +86,7 @@ namespace Mikrocosmos
             return 0.5f * GetTotalMass() * bindedRigidibody.velocity.sqrMagnitude;
         }
 
-        private void Update() {
+        protected  virtual  void Update() {
             bindedRigidibody.mass = GetTotalMass();
         }
 

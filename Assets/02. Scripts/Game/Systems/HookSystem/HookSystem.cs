@@ -139,11 +139,12 @@ namespace Mikrocosmos {
         }
 
         private void TryUnHook() {
-            if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
+            if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {//TODO: change to icanbehootvc
                 HookedItem.Model.UnHook();
-                HookedItem = null;
-                HookedNetworkIdentity = null;
+               
             }
+            HookedItem = null;
+            HookedNetworkIdentity = null;
         }
 
         private void TryHook() {

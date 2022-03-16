@@ -10,7 +10,7 @@ namespace Mikrocosmos
     {
         private IArchitecture architectureModel;
         public IArchitecture GetArchitecture() {
-            return architectureModel;
+            return Mikrocosmos.Interface;
         }
 
         public void SetArchitecture(IArchitecture architecture) {

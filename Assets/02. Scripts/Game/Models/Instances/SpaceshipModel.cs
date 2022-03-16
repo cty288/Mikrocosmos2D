@@ -11,10 +11,21 @@ namespace Mikrocosmos
     {
         public float newMass;
     }
+
+    public struct OnEscapeCounterChanged {
+        public int newValue;
+    }
     public class SpaceshipModel : AbstractBasicEntityModel, ISpaceshipConfigurationModel {
         public override string Name { get; } = "Spaceship";
         private IHookSystem hookSystem;
-        
+        #region Server
+
+        [Command]
+        private void CmdUnHook() {
+            UnHook();
+        }
+      
+        #endregion
 
         #region Client
 
@@ -32,11 +43,50 @@ namespace Mikrocosmos
         {
 
         }
+        public int EscapeNeedCount { get; } = 10;
+        public float EscapeLossTime { get; } = 0.125f;
 
+        public int EscapeCounter { get; private set; }
+
+        private float escapeLossTimer = 0f;
+
+
+        protected override void Update()
+        {
+            base.Update();
+            if (hasAuthority)
+            {
+                escapeLossTimer += Time.deltaTime;
+                if (escapeLossTimer >= EscapeLossTime)
+                {
+                    escapeLossTimer = 0;
+                    if (EscapeCounter > 0)
+                    {
+                        EscapeCounter--;
+                        this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = EscapeCounter });
+                    }
+
+                }
+            }
+
+        }
+
+        public void IncreaseEscapeCounter()
+        {
+            EscapeCounter++;
+            escapeLossTimer = 0;
+            if (EscapeCounter >= EscapeNeedCount)
+            {
+                EscapeCounter = 0;
+                CmdUnHook();
+                
+            }
+            this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = EscapeCounter });
+        }
 
         public override float SelfMass { get; } = 1;
         public float BackpackMass { get; } = 0;
-
+    
         public float GetConnectedObjectSoleMass() {
             if (hookSystem.HookedNetworkIdentity == null) {
                 return 0;
@@ -53,6 +103,8 @@ namespace Mikrocosmos
             }
         }
 
+        
+
         public override float GetTotalMass() {
             /*
              * hooked by somebody -> hookedBy.GetTotalMass() -> hookedBy.TotalMass()...
@@ -66,9 +118,10 @@ namespace Mikrocosmos
                 return (HookedByIdentity.GetComponent<IHaveMomentumViewController>()).Model.GetTotalMass();
             }
             else {
-                if (hookSystem.IsHooking)
+                if (hookSystem.IsHooking && hookSystem.HookedNetworkIdentity)
                 {//return SelfMass + backpack + ...
                     IHaveMomentum hookingModel =  hookSystem.HookedNetworkIdentity.GetComponent<IHaveMomentumViewController>().Model;
+                    
                    if (hookingModel is ISpaceshipConfigurationModel) {
                        return GetConnectedObjectSoleMass() + SelfMass + BackpackMass;
                    }else {
@@ -76,21 +129,19 @@ namespace Mikrocosmos
                    }
                 }
             }
-            return SelfMass;
+            return SelfMass + BackpackMass;
         }
 
+
+      
         #endregion
 
 
 
 
-        #region Server
       
 
-       
-        #endregion
 
 
-       
     }
 }

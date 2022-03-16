@@ -33,7 +33,7 @@ namespace Mikrocosmos
 
         protected override void Update() {
             base.Update();
-            if (hasAuthority && isClient) {
+            if (hasAuthority ) {
                 RaycastHit2D ray = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
                
                 if (Input.GetMouseButtonDown(0)) {
@@ -41,7 +41,9 @@ namespace Mikrocosmos
                         isControlling = true;
                     }
                     else {
+
                         isControlling  = false;
+                        GetModel().IncreaseEscapeCounter();
                     }
                 }
 
@@ -54,15 +56,14 @@ namespace Mikrocosmos
                    hookSystem.CmdReleaseHookButton();
                 }
 
-                if (Input.GetMouseButtonDown(1)) {
-                  //  CmdChangeMoveForce(GetModel().MoveForce+1);
-                }
-              
-              
-
+             
                 if (Input.GetMouseButtonUp(0)) {
                     isControlling = false;
                 }
+            }
+
+            if (isServer) {
+                OnServerUpdate();
             }
 
         }
@@ -141,5 +142,6 @@ namespace Mikrocosmos
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.2f);
         }
 
+        
     }
 }
