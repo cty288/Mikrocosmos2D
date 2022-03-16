@@ -10,7 +10,7 @@ namespace Mikrocosmos
         Freed,
         Hooked
     }
-    public interface IHookable
+    public interface IHookable: IHaveMomentum
     {
         HookState HookState { get; }
 

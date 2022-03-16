@@ -5,6 +5,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 namespace Mikrocosmos {
     public enum HookAction {
@@ -20,6 +21,8 @@ namespace Mikrocosmos {
 
     public interface IHookSystem : ISystem {
         IHookableViewController HookedItem { get; set; }
+
+        NetworkIdentity HookedNetworkIdentity { get; set; }
        [Command]
         void CmdHoldHookButton();
 
@@ -30,8 +33,11 @@ namespace Mikrocosmos {
     }
     public partial class HookSystem : AbstractNetworkedSystem, IHookSystem
     {
-        [field: SerializeField]
+       
         public IHookableViewController HookedItem { get; set; }
+
+        [field:SyncVar, SerializeField]
+        public NetworkIdentity HookedNetworkIdentity { get; set; }
 
         [SerializeField] private float shootTimeThreshold = 0.5f;
         /// <summary>
@@ -112,6 +118,7 @@ namespace Mikrocosmos {
         private void TryShoot() {
             if (HookedItem != null) {
                 HookedItem.Model.UnHook();
+
                
 
                 float realPercent = (hookShootChargePercent * 2);
@@ -127,6 +134,7 @@ namespace Mikrocosmos {
                 });
 
                 HookedItem = null;
+                HookedNetworkIdentity = null;
             }
         }
 
@@ -134,6 +142,7 @@ namespace Mikrocosmos {
             if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
                 HookedItem.Model.UnHook();
                 HookedItem = null;
+                HookedNetworkIdentity = null;
             }
         }
 
@@ -149,6 +158,7 @@ namespace Mikrocosmos {
                             .TryGetComponent<IHookableViewController>(out IHookableViewController vc))
                         {
                             HookedItem = vc;
+                            HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
                             vc.Model.Hook(netIdentity);
                             break;
                         }

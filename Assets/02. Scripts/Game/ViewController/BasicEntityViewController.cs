@@ -10,19 +10,20 @@ using UnityEngine;
 namespace Mikrocosmos
 {
 
-    public interface IHookableViewController
+    public interface IHookableViewController: IHaveMomentumViewController
     {
         public IHookable Model { get; }
-
     }
 
-    public interface ICanBeShotViewController {
+    public interface IHaveMomentumViewController {
+        public IHaveMomentum Model { get; }
+    }
+
+    public interface ICanBeShotViewController: IHookableViewController, IHaveMomentumViewController {
         public ICanBeShot Model { get; }
-
-       
     }
 
-    public interface IEntityViewController : IHookableViewController, ICanBeShotViewController {
+    public interface IEntityViewController :  ICanBeShotViewController {
         IEntity Model { get; }
     }
 
@@ -84,7 +85,28 @@ namespace Mikrocosmos
             }
         }
 
+        private float collideTimer = 0.3f;
 
+        protected virtual void Update() {
+            collideTimer -= Time.deltaTime;
+        }
+
+        private void OnCollisionEnter2D(Collision2D other) {
+            if (isClient) {
+                  if (other.collider.TryGetComponent<IHaveMomentumViewController>(out IHaveMomentumViewController vc)) {
+                      if (collideTimer <= 0) {
+                          Rigidbody2D otherRigidbody = other.collider.GetComponent<Rigidbody2D>();
+                        //  rigidbody.velocity *= -0.8f;
+                          //rigidbody.velocity += otherRigidbody.velocity * 0.9f;
+                          //rigidbody.velocity *= 1.2f;
+                         // Debug.Log(rigidbody.velocity);
+                          collideTimer = 0.3f;
+                      }
+                    
+                 }
+            }
+          
+        }
 
         IHookable IHookableViewController.Model
         {
@@ -99,6 +121,12 @@ namespace Mikrocosmos
             get
             {
                 return Model as ICanBeShot;
+            }
+        }
+
+        IHaveMomentum IHaveMomentumViewController.Model {
+            get {
+                return Model as IHaveMomentum;
             }
         }
     }

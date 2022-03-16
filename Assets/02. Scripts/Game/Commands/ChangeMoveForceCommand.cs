@@ -18,7 +18,7 @@ namespace Mikrocosmos
         }
         protected override void OnExecute()
         {
-            model.MoveForce = force;
+           // model.MoveForce = force;
         }
     }
 }

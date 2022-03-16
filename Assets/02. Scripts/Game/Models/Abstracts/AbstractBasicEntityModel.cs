@@ -10,8 +10,7 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent {
-        [field: SyncVar(hook = nameof(OnClientSelfMassChanged)), SerializeField]
-        public float SelfMass { get; protected set; }
+       
 
 
         [field: SyncVar, SerializeField]
@@ -60,27 +59,37 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public float Acceleration { get; protected set; }
 
-        protected Rigidbody2D bindedRigidibody;
+        public abstract float SelfMass { get; }
 
-        private void Awake() {
+        protected Rigidbody2D bindedRigidibody; 
+
+        protected virtual void Awake() {
             bindedRigidibody = GetComponent<Rigidbody2D>();
         }
 
         [ServerCallback]
         public virtual float GetTotalMass() {
+            if (HookState == HookState.Hooked) { 
+                //hooked by somebody -> hooked.GetTotalMass() -> hooked.TotalMass()...
+                //if hooked by somebody, that hooker must be another spaceship
+                return (HookedByIdentity.GetComponent<IHaveMomentumViewController>()).Model.GetTotalMass();
+            }
+
             return SelfMass;
         }
 
         [ServerCallback]
-        public float GetMomentum() {
-            return 0.5f * SelfMass * bindedRigidibody.velocity.sqrMagnitude;
+        public virtual float GetMomentum() {
+            return 0.5f * GetTotalMass() * bindedRigidibody.velocity.sqrMagnitude;
         }
 
+        private void Update() {
+            bindedRigidibody.mass = GetTotalMass();
+        }
 
         public abstract string Name { get; }
 
-        public abstract void OnClientSelfMassChanged(float oldMass, float newMass);
-
+        
 
         private void OnHookStateChanged(HookState oldState, HookState newState) {
             if (newState == HookState.Hooked)

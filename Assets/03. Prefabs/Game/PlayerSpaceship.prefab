@@ -432,7 +432,7 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
+  m_UseAutoMass: 0
   m_Mass: 1.9218433
   m_LinearDrag: 0.2
   m_AngularDrag: 0.5
@@ -492,7 +492,7 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <ClientHookedByTransform>k__BackingField: {fileID: 0}
-  <Acceleration>k__BackingField: 0
+  <Acceleration>k__BackingField: 20
   <MoveForce>k__BackingField: 30
 --- !u!114 &2796221509383912019
 MonoBehaviour:

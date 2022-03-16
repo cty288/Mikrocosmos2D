@@ -31,7 +31,8 @@ namespace Mikrocosmos
             Debug.Log(e.newMass);
         }
 
-        private void Update() {
+        protected override void Update() {
+            base.Update();
             if (hasAuthority && isClient) {
                 RaycastHit2D ray = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
                
@@ -83,7 +84,8 @@ namespace Mikrocosmos
                         .normalized;
                     if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(Model.MaxSpeed, 2))
                     {
-                        rigidbody.AddForce(forceDir * GetModel().MoveForce);
+                        //rigidbody.AddForce(forceDir * GetModel().MoveForce);
+                        rigidbody.velocity += forceDir * GetModel().Acceleration * Time.deltaTime;
                     }
                 }
 
