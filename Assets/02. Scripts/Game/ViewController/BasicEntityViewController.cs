@@ -49,8 +49,13 @@ namespace Mikrocosmos
 
         private void OnItemShot(OnItemShot e) {
             if (e.TargetShotItem == this as ICanBeShotViewController) {
-                Debug.Log(netIdentity.connectionToClient.identity.gameObject.name);
-                TargetOnShot(netIdentity.connectionToClient, e.Force);
+               // Debug.Log(netIdentity.connectionToClient.identity.gameObject.name);
+               if (netIdentity.connectionToClient != null) {
+                   TargetOnShot(netIdentity.connectionToClient, e.Force);
+                }else {
+                   rigidbody.AddForce(e.Force, ForceMode2D.Impulse);
+                }
+
             }
         }
 

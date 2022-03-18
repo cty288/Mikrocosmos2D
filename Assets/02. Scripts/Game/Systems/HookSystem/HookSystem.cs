@@ -117,7 +117,7 @@ namespace Mikrocosmos {
 
         private void TryShoot() {
             if (HookedItem != null) {
-                HookedItem.Model.UnHook();
+                
 
                
 
@@ -132,7 +132,7 @@ namespace Mikrocosmos {
                     Force = force,
                     TargetShotItem = HookedItem as ICanBeShotViewController
                 });
-
+                HookedItem.Model.UnHook();
                 HookedItem = null;
                 HookedNetworkIdentity = null;
             }
@@ -160,6 +160,7 @@ namespace Mikrocosmos {
                         {
                             HookedItem = vc;
                             HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
+                            vc.Model.UnHook();
                             vc.Model.Hook(netIdentity);
                             break;
                         }

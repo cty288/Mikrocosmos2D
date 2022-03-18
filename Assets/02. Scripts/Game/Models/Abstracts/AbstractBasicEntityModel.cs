@@ -51,9 +51,25 @@ namespace Mikrocosmos
         [ServerCallback]
         public void UnHook() {
             //优化一下
-            HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
-            HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
-            HookState = HookState.Freed;
+            if (HookedByIdentity) {
+                HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
+                HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
+                HookState = HookState.Freed;
+
+                if (netIdentity.connectionToClient != null)
+                {
+                    TargetOnUnhooked(HookedByIdentity.GetComponent<Rigidbody2D>().velocity);
+                }
+                else
+                {
+
+                    bindedRigidibody.velocity += HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
+                }
+            }
+            
+
+
+          
             HookedByIdentity = null;
         }
 
@@ -68,9 +84,10 @@ namespace Mikrocosmos
 
         protected virtual void Awake() {
             bindedRigidibody = GetComponent<Rigidbody2D>();
+            clientOriginalLayer = gameObject.layer;
         }
 
-        [ServerCallback]
+        //[ServerCallback]
         public virtual float GetTotalMass() {
             if (HookState == HookState.Hooked) { 
                 //hooked by somebody -> hooked.GetTotalMass() -> hooked.TotalMass()...
@@ -88,23 +105,46 @@ namespace Mikrocosmos
 
         protected  virtual  void Update() {
             bindedRigidibody.mass = GetTotalMass();
+            if (isClient) {
+                if (HookState == HookState.Hooked) {
+                    if (HookedByIdentity ==
+                        NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship) {
+                        gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
+                    }
+                    else {
+                        gameObject.layer = clientOriginalLayer;
+                    }
+                }
+            }
         }
 
         public abstract string Name { get; }
 
-        
+        [TargetRpc]
+        private void TargetOnUnhooked(Vector2 velocity) {
+            bindedRigidibody.velocity += velocity;
+        }
 
+        private LayerMask clientOriginalLayer;
         private void OnHookStateChanged(HookState oldState, HookState newState) {
-            if (newState == HookState.Hooked)
-            {
+            if (newState == HookState.Hooked) {
+                if (HookedByIdentity ==
+                    NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship) {
+                    Debug.Log(NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.name);
+                }
+
+                gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
                 OnHooked();
             }
 
             if (newState == HookState.Freed)
             {
+                gameObject.layer = clientOriginalLayer;
                 OnFreed();
             }
         }
+
+        
 
         [ClientCallback]
         private void OnClientHookedByIdentityChanged(NetworkIdentity oldIdentity, NetworkIdentity newIdentity) {

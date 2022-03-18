@@ -62,7 +62,7 @@ namespace Mikrocosmos
                     RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up,  (player.position - transform.position).normalized, 20,
                         mask);
                     if (hit.collider ) {
-                        Debug.Log(hit.collider.gameObject.name);
+                       // Debug.Log(hit.collider.gameObject.name);
                         if (hit.collider.gameObject == player.gameObject) {
                             playerInfoCanvas.SetActive(true);
                         }

@@ -116,7 +116,14 @@ namespace Mikrocosmos
                     {
                         NetworkTransform nt = GetComponent<NetworkTransform>();
                         if (hookSystem.IsHooking) {
-                            GetComponent<NetworkTransform>().syncPosition = true;
+                            if (NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                                    .GetComponent<PlayerSpaceship>().Model.HookState == HookState.Hooked) {
+                                GetComponent<NetworkTransform>().syncPosition = false;
+                            }
+                            else {
+                                GetComponent<NetworkTransform>().syncPosition = true;
+                            }
+                            
                         }
                         else
                         {

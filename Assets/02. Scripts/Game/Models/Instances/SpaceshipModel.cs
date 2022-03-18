@@ -99,7 +99,7 @@ namespace Mikrocosmos
                        spaceshipModel.GetConnectedObjectSoleMass();
             }
             else {
-                return hookingModel.GetTotalMass();
+                return hookingModel.SelfMass;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Mikrocosmos
                    if (hookingModel is ISpaceshipConfigurationModel) {
                        return GetConnectedObjectSoleMass() + SelfMass + BackpackMass;
                    }else {
-                       return SelfMass + BackpackMass + hookingModel.GetTotalMass();
+                       return SelfMass + BackpackMass + hookingModel.SelfMass;
                    }
                 }
             }
