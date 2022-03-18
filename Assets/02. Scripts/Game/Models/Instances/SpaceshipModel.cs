@@ -50,10 +50,18 @@ namespace Mikrocosmos
 
         private float escapeLossTimer = 0f;
 
+        public override void OnStartServer() {
+            base.OnStartServer();
+          
+        }
+
 
         protected override void Update()
         {
             base.Update();
+            if (isServer) {
+                Acceleration = Mathf.Max(5, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
+            }
             if (hasAuthority)
             {
                 escapeLossTimer += Time.deltaTime;
@@ -84,7 +92,14 @@ namespace Mikrocosmos
             this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = EscapeCounter });
         }
 
-        public override float SelfMass { get; } = 1;
+        [field: SerializeField]
+        public float InitialAcceleration { get; private set; } = 20;
+
+        [field: SyncVar, SerializeField]
+        public override float SelfMass { get; protected set; } = 1;
+        [field: SerializeField]
+        public float AccelerationDecreasePerMass { get; private set; } = 2;
+
         public float BackpackMass { get; } = 0;
     
         public float GetConnectedObjectSoleMass() {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
+using Mirror;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -9,7 +10,8 @@ namespace Mikrocosmos
 
     }
     public class MeteorModel : AbstractBasicEntityModel, IMeteorModel {
-        public override float SelfMass { get; } = 5f;
+        [field: SyncVar, SerializeField]
+        public override float SelfMass { get; protected set; } = 5f;
         public override string Name { get; } = "Meteor";
         public override void OnHooked() {
             

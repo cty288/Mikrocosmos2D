@@ -78,7 +78,9 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public float Acceleration { get; protected set; }
 
-        public abstract float SelfMass { get; }
+
+        [field: SyncVar, SerializeField]
+        public abstract float SelfMass { get; protected set; }
 
         protected Rigidbody2D bindedRigidibody; 
 

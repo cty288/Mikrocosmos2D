@@ -7,7 +7,11 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public interface ISpaceshipConfigurationModel : IModel, IEntity  {
+
+        public float InitialAcceleration { get; }
         public float SelfMass { get; }
+
+        public float AccelerationDecreasePerMass { get; }
 
         public float BackpackMass { get; }
 
