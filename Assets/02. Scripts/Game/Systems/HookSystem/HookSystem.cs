@@ -97,6 +97,10 @@ namespace Mikrocosmos {
                 if (checkingHook) {
                     CheckHook();
                 }
+
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
+                    animator.SetBool("Hooking", false);
+                }
             }
 
             
@@ -123,7 +127,23 @@ namespace Mikrocosmos {
             hookHoldTimer = 0;
             //start check hook type
         }
+        public void ServerShootTrigger()
+        {
+            Vector2 force = transform.up * maxShootForce * realShootPercent;
+            Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
+            this.SendEvent<OnItemShot>(new OnItemShot()
+            {
+                Force = force,
+                TargetShotItem = HookedItem as ICanBeShotViewController
+            });
 
+            HookedItem.Model.UnHook();
+            HookedItem = null;
+
+            HookedNetworkIdentity = null;
+        }
+
+        private float realShootPercent;
         private void TryShoot() {
             if (HookedItem != null) {
                 float realPercent = (hookShootChargePercent * 2);
@@ -131,17 +151,10 @@ namespace Mikrocosmos {
                     realPercent = -realPercent + 2;
                 }
 
-                Vector2 force = transform.up * maxShootForce * realPercent;
-                Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realPercent}");
-                this.SendEvent<OnItemShot>(new OnItemShot() {
-                    Force = force,
-                    TargetShotItem = HookedItem as ICanBeShotViewController
-                });
-                animator.SetBool("Shoot", true);
-                HookedItem.Model.UnHook();
-                HookedItem = null;
-                animator.SetBool("Hooking", false);
-                HookedNetworkIdentity = null;
+                realShootPercent = realPercent;
+                animator.SetTrigger("Shoot");
+
+                
             }
         }
 
@@ -149,9 +162,10 @@ namespace Mikrocosmos {
             if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {//TODO: change to icanbehootvc
                 HookedItem.Model.UnHook();
             }
-            animator.SetBool("Hooking", false);
+           
             HookedItem = null;
             HookedNetworkIdentity = null;
+            animator.SetBool("Hooking", false);
         }
 
         private bool checkingHook = false;
@@ -192,6 +206,7 @@ namespace Mikrocosmos {
 
         [ServerCallback]
         private void TryHook() {
+          
             if (model.HookState == HookState.Freed && animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking"))
             {
                 animator.SetTrigger("StartHook");

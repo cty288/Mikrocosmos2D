@@ -56,10 +56,13 @@ namespace Mikrocosmos
         }
 
         private void OnControlledSpaceshipChanged(NetworkIdentity oldIdentity, NetworkIdentity newIdentity) {
-            Mikrocosmos.Interface.SendEvent<OnClientMainGamePlayerConnected>(new OnClientMainGamePlayerConnected()
-            {
-                playerSpaceship = ControlledSpaceship.gameObject
-            });
+            if (hasAuthority) {
+                Mikrocosmos.Interface.SendEvent<OnClientMainGamePlayerConnected>(new OnClientMainGamePlayerConnected()
+                {
+                    playerSpaceship = newIdentity.gameObject
+                });
+            }
+            
         }
         
     }
