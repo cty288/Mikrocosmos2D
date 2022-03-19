@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
 
@@ -15,27 +16,51 @@ namespace Mikrocosmos
     }
 
     public partial class NetworkMainGamePlayer : AbstractNetworkedController<Mikrocosmos>, ICanSendEvent {
-        [SerializeField] private GameObject spaceshipPrefab;
-        
+        //[SerializeField] private GameObject spaceshipPrefab;
 
-       public PlayerMatchInfo matchInfo = null;
+        public PlayerMatchInfo matchInfo = null;
 
-        [SyncVar]
+        [SyncVar(hook = nameof(OnControlledSpaceshipChanged))]
         public NetworkIdentity ControlledSpaceship;
+
+        [SerializeField] public List<GameObject> spaceshipPrefabs;
         public override void OnStartServer() {
             base.OnStartServer();
             //spawn spaceship
-            GameObject spaceship =  Instantiate(spaceshipPrefab, transform.position, Quaternion.identity);
-            NetworkServer.Spawn(spaceship, connectionToClient);
-            ControlledSpaceship = spaceship.GetComponent<NetworkIdentity>();
-            this.SendEvent<OnNetworkedMainGamePlayerConnected>();
+            this.RegisterEvent<OnRoomPlayerJoinGame>(OnRoomPlayerJoinGame)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.SendEvent<OnNetworkedMainGamePlayerConnected>(new OnNetworkedMainGamePlayerConnected() {
+                connection =  connectionToClient
+            });
+         
         }
 
-        public override void OnStartAuthority() {
-            base.OnStartAuthority();
-            this.SendEvent<OnClientMainGamePlayerConnected>(new OnClientMainGamePlayerConnected() {
-                playerSpaceship =  ControlledSpaceship.gameObject
+        private void OnRoomPlayerJoinGame(OnRoomPlayerJoinGame e) {
+            if (e.Connection == connectionToClient) {
+                matchInfo = e.MatchInfo;
+                SpawnSpaceshipForThisPlayer(matchInfo, e.Connection);
+            }
+
+          
+            
+         
+        }
+
+        private void SpawnSpaceshipForThisPlayer(PlayerMatchInfo matchInfo, NetworkConnection conn) {
+
+            GameObject spaceship = Instantiate(spaceshipPrefabs[matchInfo.TeamIndex], transform.position, Quaternion.identity);
+            
+            NetworkServer.Spawn(spaceship, conn);
+            spaceship.GetComponent<PlayerSpaceship>().SetTeamSprite(matchInfo.Team - 1);
+            ControlledSpaceship = spaceship.GetComponent<NetworkIdentity>();
+        }
+
+        private void OnControlledSpaceshipChanged(NetworkIdentity oldIdentity, NetworkIdentity newIdentity) {
+            Mikrocosmos.Interface.SendEvent<OnClientMainGamePlayerConnected>(new OnClientMainGamePlayerConnected()
+            {
+                playerSpaceship = ControlledSpaceship.gameObject
             });
         }
+        
     }
 }

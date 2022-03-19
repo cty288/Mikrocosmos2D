@@ -14,7 +14,7 @@ namespace Mikrocosmos
         public NetworkConnection Connection;
     }
     public partial class NetworkedMenuRoomPlayer : NetworkRoomPlayer, IController, ICanSendEvent {
-       // [SyncVar]
+        [SerializeField]
         private PlayerMatchInfo matchInfo = null;
 
         #region Server
@@ -35,7 +35,7 @@ namespace Mikrocosmos
                 });
             }
         }
-
+        
         public override void OnStopServer() {
             base.OnStopServer();
             this.GetSystem<IRoomMatchSystem>().ServerRoomPlayerLeaveMatch(matchInfo.ID);

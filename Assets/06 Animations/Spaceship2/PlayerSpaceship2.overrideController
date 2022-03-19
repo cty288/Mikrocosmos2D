@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PlayerSpaceship2
+  m_Controller: {fileID: 9100000, guid: 99d77c5a7c7d4564ea7570782041cd8a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: a9fedc197329a68489b2058a46a53153, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6e2abd3f60b15674f953d476690fc070, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5ec6fe66639d0f344bab343e6a7ebd43, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 02f6087c9a4da104e8727a44589992f6, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3eb0512a790228c47826b09dda0aa539, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4e8192ab78e1aee4b9fdebbd3c0cc175, type: 2}

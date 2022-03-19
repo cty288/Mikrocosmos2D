@@ -21,6 +21,7 @@ namespace Mikrocosmos
         public int Team;
         public bool Prepared;
         public NetworkIdentity Identity;
+        public int TeamIndex;
       
         
         public bool Equals(PlayerMatchInfo other) {
@@ -118,7 +119,20 @@ namespace Mikrocosmos
             teamPlayers.Add(1, new List<PlayerMatchInfo>());
             teamPlayers.Add(2, new List<PlayerMatchInfo>());
 
+                
+            int t1Index = -1, t2Index = -1;
+
             foreach (PlayerMatchInfo playerMatchInfo in playerMatchInfos) {
+                if (playerMatchInfo.Team == 1) {
+                    t1Index++;
+                    playerMatchInfo.TeamIndex = t1Index;
+                }
+                else {
+                    t2Index++;
+                    playerMatchInfo.TeamIndex = t2Index;
+                }
+
+                this.SendEvent<OnRoomMemberChange>();
                 teamPlayers[playerMatchInfo.Team].Add(playerMatchInfo);
             }
         }

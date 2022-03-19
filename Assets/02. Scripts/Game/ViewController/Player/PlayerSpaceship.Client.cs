@@ -13,6 +13,8 @@ namespace Mikrocosmos
         [SerializeField]
         private bool isControlling = false;
 
+    
+
 
         public override IEntity Model { get; protected set; }
 
@@ -26,11 +28,14 @@ namespace Mikrocosmos
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
-        private void OnMassChanged(OnMassChanged e)
-        {
+        
+
+        private void OnMassChanged(OnMassChanged e) {
             Debug.Log(e.newMass);
         }
 
+
+       
         protected override void Update() {
             base.Update();
             if (hasAuthority ) {

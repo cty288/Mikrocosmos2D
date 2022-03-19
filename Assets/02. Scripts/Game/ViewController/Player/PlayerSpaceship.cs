@@ -15,10 +15,21 @@ namespace Mikrocosmos
        
         private int escapeCounter = 0;
 
-     
+        [SerializeField] 
+        private List<Sprite> teamSprites;
 
-        
+        [ServerCallback]
+        public void SetTeamSprite(int teamIndex)
+        {
+            transform.Find("VisionControl/Sprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+            RpcSetTeamSprite(teamIndex);
+        }
 
+
+        [ClientRpc]
+        private void RpcSetTeamSprite(int teamIndex) {
+            transform.Find("VisionControl/Sprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+        }
         private void OnServerUpdate() {
            
         }

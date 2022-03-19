@@ -23,7 +23,10 @@ namespace Mikrocosmos
         }
 
         private void OnClientMainGamePlayerConnected(OnClientMainGamePlayerConnected e) {
-            AddFollowingPlayer(e.playerSpaceship.transform, true);
+            if (e.playerSpaceship.GetComponent<NetworkIdentity>().hasAuthority) {
+                AddFollowingPlayer(e.playerSpaceship.transform, true);
+            }
+                
         }
 
         public void AddFollowingPlayer(Transform followingObj, bool isLocalPlayer ) {

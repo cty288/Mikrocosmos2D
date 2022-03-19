@@ -49,34 +49,41 @@ namespace Mikrocosmos {
 
         private void OnClientPrepareRoomPlayerListChange(OnClientPrepareRoomPlayerListChange e) {
             int leftIndex = 0, rightIndex = 0;
-            
-            foreach (PlayerMatchInfo playerMatchInfo in e.MatchInfos) {
-                GameObject infoObj;
-                if (playerMatchInfo.Team == 1) {
-                    infoObj = ObjTeam1Layout.transform.GetChild(leftIndex).gameObject;
-                    leftIndex++;
+            if (this && e.MatchInfos != null) {
+                foreach (PlayerMatchInfo playerMatchInfo in e.MatchInfos)
+                {
+                    GameObject infoObj;
+                    if (playerMatchInfo.Team == 1)
+                    {
+                        infoObj = ObjTeam1Layout.transform.GetChild(leftIndex).gameObject;
+                        leftIndex++;
+                    }
+                    else
+                    {
+                        infoObj = ObjTeam2Layout.transform.GetChild(rightIndex).gameObject;
+                        rightIndex++;
+                    }
+                    infoObj.SetActive(true);
+                    bool isSelf = playerMatchInfo.ID == e.SelfInfo.ID;
+                    infoObj.GetComponent<PlayerInfo>().SetInfo(playerMatchInfo.ID, playerMatchInfo.Name,
+                        playerMatchInfo.Prepared, isSelf, e.IsHost);
+                    if (isSelf)
+                    {
+                        infoObj.transform.SetAsFirstSibling();
+                        BtnChangeSide.gameObject.SetActive(!playerMatchInfo.Prepared);
+                    }
                 }
-                else {
-                    infoObj = ObjTeam2Layout.transform.GetChild(rightIndex).gameObject;
-                    rightIndex++;
-                }
-                infoObj.SetActive(true);
-                bool isSelf = playerMatchInfo.ID == e.SelfInfo.ID;
-                infoObj.GetComponent<PlayerInfo>().SetInfo(playerMatchInfo.ID, playerMatchInfo.Name,
-                    playerMatchInfo.Prepared, isSelf, e.IsHost);
-                if (isSelf) {
-                    infoObj.transform.SetAsFirstSibling();
-                    BtnChangeSide.gameObject.SetActive(!playerMatchInfo.Prepared);
-                }
-            }
 
-            for (int i = leftIndex; i < ObjTeam1Layout.transform.childCount; i++) {
-                ObjTeam1Layout.transform.GetChild(i).gameObject.SetActive(false);
+                for (int i = leftIndex; i < ObjTeam1Layout.transform.childCount; i++)
+                {
+                    ObjTeam1Layout.transform.GetChild(i).gameObject.SetActive(false);
+                }
+                for (int i = rightIndex; i < ObjTeam2Layout.transform.childCount; i++)
+                {
+                    ObjTeam2Layout.transform.GetChild(i).gameObject.SetActive(false);
+                }
             }
-            for (int i = rightIndex; i < ObjTeam2Layout.transform.childCount; i++)
-            {
-                ObjTeam2Layout.transform.GetChild(i).gameObject.SetActive(false);
-            }
+           
         }
     }
 }

@@ -58,6 +58,8 @@ namespace Mikrocosmos {
 
         private bool holdingButton = false;
 
+        private Animator animator;
+
         /// <summary>
         /// 0-0.5: charge up; 0.5-0: charge down
         /// </summary>
@@ -67,6 +69,7 @@ namespace Mikrocosmos {
         private void Awake() {
             model = GetBindedModel<ISpaceshipConfigurationModel>();
             hookTrigger = GetComponentInChildren<Trigger2DCheck>();
+            animator = GetComponent<Animator>();
         }
 
         
@@ -74,26 +77,32 @@ namespace Mikrocosmos {
         [Command]
         public void CmdHoldHookButton() {
             holdingButton = true;
-           
         }
 
         private void Update() {
             if (isServer) {
                 IsHooking = HookedItem != null;
-            }
 
-            if (holdingButton) {
-                if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
-
-                    hookHoldTimer += Time.deltaTime;
-                    if (hookHoldTimer >= shootTimeThreshold) {
-                        float thisCycleTime = (hookHoldTimer - shootTimeThreshold) % shootChargeOneCycleTime;
-                        hookShootChargePercent = thisCycleTime / shootChargeOneCycleTime;
+                if (holdingButton) {
+                    if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
+                        hookHoldTimer += Time.deltaTime;
+                        if (hookHoldTimer >= shootTimeThreshold)
+                        {
+                            float thisCycleTime = (hookHoldTimer - shootTimeThreshold) % shootChargeOneCycleTime;
+                            hookShootChargePercent = thisCycleTime / shootChargeOneCycleTime;
+                        }
                     }
                 }
+
+                if (checkingHook) {
+                    CheckHook();
+                }
             }
+
+            
         }
 
+      
         [Command]
         public void CmdReleaseHookButton() {
             holdingButton = false;
@@ -117,10 +126,6 @@ namespace Mikrocosmos {
 
         private void TryShoot() {
             if (HookedItem != null) {
-                
-
-               
-
                 float realPercent = (hookShootChargePercent * 2);
                 if (realPercent >= 1) {
                     realPercent = -realPercent + 2;
@@ -132,8 +137,10 @@ namespace Mikrocosmos {
                     Force = force,
                     TargetShotItem = HookedItem as ICanBeShotViewController
                 });
+                animator.SetBool("Shoot", true);
                 HookedItem.Model.UnHook();
                 HookedItem = null;
+                animator.SetBool("Hooking", false);
                 HookedNetworkIdentity = null;
             }
         }
@@ -141,43 +148,66 @@ namespace Mikrocosmos {
         private void TryUnHook() {
             if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {//TODO: change to icanbehootvc
                 HookedItem.Model.UnHook();
-               
             }
+            animator.SetBool("Hooking", false);
             HookedItem = null;
             HookedNetworkIdentity = null;
         }
 
-        private void TryHook() {
-            if (model.HookState == HookState.Freed)
-            {
-                if (hookTrigger.Triggered)
-                {
-                    List<Collider2D> colliders = hookTrigger.Colliders;
-                    foreach (Collider2D collider in colliders)
-                    {
-                        if (collider.gameObject
-                            .TryGetComponent<IHookableViewController>(out IHookableViewController vc))
-                        {
-                            HookedItem = vc;
-                            HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
-                            vc.Model.UnHook();
-                            vc.Model.Hook(netIdentity);
-                            break;
-                        }
-                    }
+        private bool checkingHook = false;
 
+        [ServerCallback]
+        public void ServerStartHookTrigger() {
+            checkingHook = true;
+        }
+
+        [ServerCallback]
+        public void ServerStopHookTrigger() {
+            checkingHook = false;
+        }
+
+
+        [ServerCallback]
+        private void CheckHook() {
+            if (hookTrigger.Triggered && model.HookState == HookState.Freed) {
+                List<Collider2D> colliders = hookTrigger.Colliders;
+                foreach (Collider2D collider in colliders)
+                {
+                    if (collider.gameObject
+                        .TryGetComponent<IHookableViewController>(out IHookableViewController vc))
+                    {
+                        HookedItem = vc;
+                        HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
+                        vc.Model.UnHook();
+                        vc.Model.Hook(netIdentity);
+                        animator.SetBool("Hooking", true);
+                        checkingHook = false;
+                        break;
+                    }
                 }
+
+            }
+        }
+
+
+        [ServerCallback]
+        private void TryHook() {
+            if (model.HookState == HookState.Freed && animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking"))
+            {
+                animator.SetTrigger("StartHook");
             }
         }
 
         private HookAction CheckHookAction() {
+
+            if (HookedItem == null) {
+                return HookAction.Hook;
+            }
             if (hookHoldTimer <= shootTimeThreshold) {
-                if (HookedItem == null) {
-                    return HookAction.Hook;
-                }
-                else {
+                if (HookedItem != null) {
                     return HookAction.UnHook;
                 }
+                return HookAction.Hook;
             }
             else {
                 return HookAction.Shoot;

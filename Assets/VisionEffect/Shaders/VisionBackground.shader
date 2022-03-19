@@ -12,6 +12,21 @@
         [HideInInspector] _Flip("Flip", Vector) = (1,1,1,1)
         [HideInInspector] _AlphaTex("External Alpha", 2D) = "white" {}
         [HideInInspector] _EnableExternalAlpha("Enable External Alpha", Float) = 0
+
+         
+        _color1("color 1", Color) = (0.1, 0.3, 0.0, 1)
+        _color2("color 2", Color) = (0.8, 0.1, 0.0, 1)
+        _color3("color 3", Color) = (0.6 ,0.3, 0.1, 1)
+        _color4("color 4", Color) = (0.1, 0.1, 0.4, 1)
+        _tex("texture", 2D) = "white" {}
+        _scale("noise scale", Range(2, 800)) = 5
+        _speed("speed", Range(0, 10)) = 1
+         _bgSpeed("BG Speed", Range(0, 10)) = 1
+
+
+         _bgOpacityRange("BG Opacity", Vector) = (0,0,0,0)
+
+        _intensity("intensity", Range(0, 2)) = 1
     }
 
     HLSLINCLUDE
@@ -25,7 +40,7 @@
         Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
         ZWrite Off
-
+          
         Pass
         {
             Tags { "LightMode" = "Universal2D" }
@@ -64,7 +79,18 @@
             SAMPLER(sampler_NormalMap);
             half4 _MainTex_ST;
             half4 _NormalMap_ST;
+            sampler2D _tex;
 
+            float2 _bgOpacityRange;
+            float4 _color1;
+            float4 _color2;
+            float4 _color3;
+            float4 _color4;
+            
+            float _bgSpeed;
+            float _scale;
+            float _speed;
+            float _intensity;
             #if USE_SHAPE_LIGHT_TYPE_0
             SHAPE_LIGHT(0)
             #endif
@@ -81,6 +107,35 @@
             SHAPE_LIGHT(3)
             #endif
 
+                float rand(float2 uv) {
+                return frac(sin(dot(uv.xy, float2(12.9898, 78.233))) * 43758.5453123);
+            }
+
+            float noise(float2 uv) {
+                float2 ipos = floor(uv);
+                float2 fpos = frac(uv);
+
+                float o = rand(ipos);
+                float x = rand(ipos + float2(1, 0));
+                float y = rand(ipos + float2(0, 1));
+                float xy = rand(ipos + float2(1, 1));
+
+                float2 smooth = smoothstep(0, 1, fpos);
+                return lerp(lerp(o, x, smooth.x), lerp(y, xy, smooth.x), smooth.y);
+            }
+
+           
+
+            float fractal_noise(float2 uv, float speed) {
+                float n = 0;
+
+                n = (1 / 2.0) * noise(uv * 1 + _Time.y * speed);
+                n += (1 / 4.0) * noise(uv * 2 + _Time.y * speed);
+                n += (1 / 8.0) * noise(uv * 4 + _Time.y * speed);
+                n += (1 / 16.0) * noise(uv * 8 + _Time.y * speed);
+
+                return n;
+            }
             Varyings CombinedShapeLightVertex(Attributes v)
             {
                 Varyings o = (Varyings)0;
@@ -98,10 +153,26 @@
 
             half4 CombinedShapeLightFragment(Varyings i) : SV_Target
             {
-                half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
+                float2 uv = i.uv;
+                uv *= _scale;
 
-                return CombinedShapeLightShared(main, mask, i.lightingUV, i.worldPos);
+
+                half4 color = _color1;
+                half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
+                
+
+ 
+                float fn1 = fractal_noise(uv + float2(1, 1), _speed);
+                float fn2 = fractal_noise(uv + float2(1, 0) + fn1 * 2, _speed); //+ sin(_Time.y) * 0.1);
+                float fn3 = fractal_noise(uv + float2(0, 1) + fn2 * 3, _speed); //+ sin(_Time.y) * 0.1);
+
+                color = lerp(color, _color2, fn1 * 3);
+                color = lerp(color, _color3, fn2 * 2);
+                color = lerp(color, _color4, fn3 * 1);
+                color *= _intensity;
+                color =  CombinedShapeLightShared(color, mask, i.lightingUV, i.worldPos);
+                color.a = clamp(fractal_noise(uv, _bgSpeed), _bgOpacityRange.x, _bgOpacityRange.y);
+                return color;
             }
             ENDHLSL
         }
@@ -207,6 +278,8 @@
             }
             ENDHLSL
         }
+
+           
     }
 
     Fallback "Sprites/Default"

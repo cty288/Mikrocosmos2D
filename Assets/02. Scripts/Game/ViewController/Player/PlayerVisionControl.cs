@@ -14,7 +14,8 @@ namespace Mikrocosmos
 
         [SerializeField] private Material defaultSpriteLitMaterial;
         [SerializeField] private Material visionEntityMaterial;
-        private SpriteRenderer sprite;
+        [SerializeField]
+        private SpriteRenderer[] visionAffectedSprites;
 
         private GameObject visionRenderLight;
         private GameObject fovVision;
@@ -26,7 +27,6 @@ namespace Mikrocosmos
 
         private void Awake() {
             
-            sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             visionRenderLight = transform.Find("VisionRenderLight").gameObject;
             fovVision = transform.Find("FOV Vision").gameObject;
             playerInfoCanvas = transform.Find("PlayerInfoCanvas").gameObject;
@@ -38,13 +38,19 @@ namespace Mikrocosmos
         void Start() {
             hasControlAuthority = GetComponentInParent<NetworkIdentity>().hasAuthority;
             if (hasControlAuthority) {
-                sprite.material = Material.Instantiate(defaultSpriteLitMaterial); ;
+                foreach (SpriteRenderer sprite in visionAffectedSprites) {
+                    sprite.material = Material.Instantiate(defaultSpriteLitMaterial); ;
+                }
+               
                 playerNameShade.SetActive(false);
                 visionRenderLight.SetActive(true);
                 fovVision.SetActive(true);
             }
             else {
-                sprite.material =  Material.Instantiate(visionEntityMaterial);
+                foreach (SpriteRenderer sprite in visionAffectedSprites) {
+                    sprite.material = Material.Instantiate(visionEntityMaterial);
+                }
+               
                 playerNameShade.SetActive(true);
                 visionRenderLight.SetActive(false);
                 fovVision.SetActive(false);
@@ -59,12 +65,15 @@ namespace Mikrocosmos
                 if (player == null) {
                     player = NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.transform;
                 }else {
-                    RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up,  (player.position - transform.position).normalized, 20,
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up,  (player.position - transform.position).normalized, 15,
                         mask);
                     if (hit.collider ) {
                        // Debug.Log(hit.collider.gameObject.name);
                         if (hit.collider.gameObject == player.gameObject) {
                             playerInfoCanvas.SetActive(true);
+                        }
+                        else {
+                            playerInfoCanvas.SetActive(false);
                         }
                     }
                     else {

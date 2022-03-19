@@ -49,7 +49,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: 3765a9e6322d48240a46b94e3626a4d3
   hasSpawned: 0
 --- !u!114 &1507881852155513652
 MonoBehaviour:
@@ -65,8 +65,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  spaceshipPrefab: {fileID: 7986015997137912893, guid: a0dfa0b1a9bada345854ed64fed3d26b, type: 3}
+  matchInfo:
+    ID: 0
+    Name: 
+    Team: 0
+    Prepared: 0
+    Identity: {fileID: 0}
+    TeamIndex: 0
   ControlledSpaceship: {fileID: 0}
+  spaceshipPrefabs:
+  - {fileID: 7986015997137912893, guid: a0dfa0b1a9bada345854ed64fed3d26b, type: 3}
+  - {fileID: 7986015997137912893, guid: dd471e5954263984ebfef7d6f7977b90, type: 3}
 --- !u!114 &2657284343110990168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,11 +91,22 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   clientAuthority: 0
-  localPositionSensitivity: 0.01
-  localRotationSensitivity: 0.01
-  localScaleSensitivity: 0.01
-  compressRotation: 0
-  interpolateScale: 1
-  interpolateRotation: 1
-  interpolatePosition: 1
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
   syncScale: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
