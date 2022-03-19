@@ -18,10 +18,14 @@ namespace Mikrocosmos
         [SerializeField] 
         private List<Sprite> teamSprites;
 
+        [SyncVar]
+        public string Name;
+
         [ServerCallback]
-        public void SetTeamSprite(int teamIndex)
+        public void SetPlayerDisplayInfo(int teamIndex, string name)
         {
             transform.Find("VisionControl/Sprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+            this.Name = name;
             RpcSetTeamSprite(teamIndex);
         }
 

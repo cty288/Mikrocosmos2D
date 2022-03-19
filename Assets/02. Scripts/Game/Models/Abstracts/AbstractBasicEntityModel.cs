@@ -54,6 +54,7 @@ namespace Mikrocosmos
             if (HookedByIdentity) {
                 HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
                 HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
+                HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);
                 HookState = HookState.Freed;
 
                 if (netIdentity.connectionToClient != null)

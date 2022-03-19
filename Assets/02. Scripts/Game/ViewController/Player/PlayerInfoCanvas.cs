@@ -11,16 +11,11 @@ namespace Mikrocosmos
     public class PlayerInfoCanvas : AbstractMikroController<Mikrocosmos> {
         [SerializeField] private TMP_Text playerNameText;
 
-        private PlayerMatchInfo matchInfo;
+        private string name;
      
         private void Update() {
-            if (matchInfo!=null) {
-                playerNameText.text = matchInfo.Name;
-            }
-            else {
-                matchInfo =this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy();
-            }
-           
+            name = GetComponentInParent<PlayerSpaceship>().Name;
+            playerNameText.text = name;
         }
     }
 }

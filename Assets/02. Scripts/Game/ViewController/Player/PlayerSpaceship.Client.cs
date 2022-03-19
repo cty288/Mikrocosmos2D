@@ -13,7 +13,7 @@ namespace Mikrocosmos
         [SerializeField]
         private bool isControlling = false;
 
-    
+       // [SyncVar()] public PlayerMatchInfo MatchInfo;
 
 
         public override IEntity Model { get; protected set; }

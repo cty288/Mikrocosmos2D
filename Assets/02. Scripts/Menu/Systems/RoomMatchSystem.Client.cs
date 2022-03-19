@@ -13,7 +13,7 @@ namespace Mikrocosmos
         [SerializeField]
         private PlayerMatchInfo clientSelfMatchInfo;
         public void ClientRecordMatchInfoCopy(PlayerMatchInfo matchInfo) {
-            this.clientSelfMatchInfo = matchInfo;
+            this.clientSelfMatchInfo = matchInfo.Clone();
         }
 
         public void ClientKickPlayer(int kickedId) {
