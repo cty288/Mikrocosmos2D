@@ -52,12 +52,12 @@ namespace Mikrocosmos
 
       
 
-        
+        [ClientCallback]
         protected override void OnClientVisionLightTurnOff()
         {
 
         }
-
+        [ClientCallback]
         protected override void OnClientVisionLightTurnOn() {
 
         }
