@@ -6,9 +6,7 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public interface IDamagable {
-       float CurrentHP { get; }
-        float MaxHP { get; }
-
+        float MaxMomentumReceive { get; }
         float MomentumThredhold { get; }
     }
 }

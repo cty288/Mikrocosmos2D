@@ -9,7 +9,7 @@ namespace Mikrocosmos
     {
         public override void OnStartServer() {
             base.OnStartServer();
-            StartCoroutine(TurnMask());
+            //StartCoroutine(TurnMask());
         }
 
         private void Update() {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
@@ -15,9 +16,10 @@ namespace Mikrocosmos
     public struct OnEscapeCounterChanged {
         public int newValue;
     }
-    public class SpaceshipModel : AbstractBasicEntityModel, ISpaceshipConfigurationModel {
+    public class SpaceshipModel : AbstractBasicEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
         public override string Name { get; } = "Spaceship";
         private IHookSystem hookSystem;
+        private Rigidbody2D rigidbody;
         #region Server
 
         [Command]
@@ -32,6 +34,7 @@ namespace Mikrocosmos
         protected override void Awake() {
             base.Awake();
             hookSystem = GetComponent<IHookSystem>();
+            rigidbody = GetComponent<Rigidbody2D>();
         }
 
         public override void OnHooked()
@@ -50,11 +53,7 @@ namespace Mikrocosmos
 
         private float escapeLossTimer = 0f;
 
-        public override void OnStartServer() {
-            base.OnStartServer();
-          
-        }
-
+       
 
         protected override void Update()
         {
@@ -148,14 +147,66 @@ namespace Mikrocosmos
         }
 
 
-      
+        [TargetRpc]
+        public  void TargetOnClientGravityForceAdded(float force, Vector2 position, float range) {
+            
+              rigidbody .AddExplosionForce(force, position, range);
+        }
+
         #endregion
 
+        #region Server
+        protected float initialForce;
+        public override void OnStartServer()
+        {
+            Vector2 Center = this.transform.position;
+            initialForce = ProperForce();
+            this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
+        }
+        [ServerCallback]
+        private float ProperForce()
+        {
+            var pos = transform.position;
+            var rb = GetComponent<Rigidbody2D>();
+            var Rb = GameObject.Find("Star").GetComponent<IHaveGravity>();
+            return InitialForceMultiplier * GetTotalMass() * Mathf.Sqrt(Rb.GetTotalMass() / Distance(pos, Vector3.zero));
+        }
 
+        private Vector2 ProperDirect(Vector2 pos)
+        {
+            float x = Random.value, y = Random.value / 10;
+            Vector2 result;
+            if (StartDirection != Vector2.zero)
+            {
+                result = StartDirection.normalized;
+            }
+            else
+            {
+                Vector2 starPos = GameObject.Find("Star").transform.position;
+                result = Vector2.Perpendicular(((starPos - pos).normalized));
+            }
+            return result;
+        }
+        float Distance(Vector2 pos1, Vector2 pos2)
+        {
+            Vector2 diff = (pos1 - pos2);
+            float dist = Mathf.Sqrt(diff.x * diff.x + diff.y * diff.y);
+            if (dist < 1)
+                return 1;
+            else return (dist);
+        }
+        [ServerCallback]
+        public void ServerAddGravityForce(float force, Vector2 position, float range)
+        {
+            TargetOnClientGravityForceAdded(force, position, range);
+        }
 
+        [field: SerializeField]
+        public Vector2 StartDirection { get; }
 
-      
+        [field: SerializeField] public float InitialForceMultiplier { get; } = 0;
 
+        #endregion
 
 
     }

@@ -269,6 +269,8 @@ MonoBehaviour:
   <ClientHookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 5
+  <StartDirection>k__BackingField: {x: 0, y: 0}
+  <InitialForceMultiplier>k__BackingField: 0.0002
 --- !u!114 &1236633503879089806
 MonoBehaviour:
   m_ObjectHideFlags: 0
