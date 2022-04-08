@@ -23,14 +23,18 @@ namespace Mikrocosmos
                 distance = Vector3.Distance(target.transform.position, transform.position);
                 progress = Random.Range(0, 360000);
             }
-            private void FixedUpdate()
-            {
+            private void FixedUpdate() {
+                List<int> list = new List<int>();
+                for (int i = 0; i < list.Count; i++) {
+                    
+                }
                 OvalRotate();
             }
 
 
             void OvalRotate()
             {
+
                 progress += Time.deltaTime * speed;
                 Vector3 p = new Vector3(x * Mathf.Cos(progress * Mathf.Deg2Rad), z * Mathf.Sin(progress * Mathf.Deg2Rad) * distance, 0);
                 rigidbody.MovePosition( target.transform.position + p);
