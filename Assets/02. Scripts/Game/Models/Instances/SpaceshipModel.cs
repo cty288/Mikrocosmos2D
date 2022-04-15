@@ -37,12 +37,12 @@ namespace Mikrocosmos
             rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public override void OnHooked()
+        public override void OnClientHooked()
         {
 
         }
 
-        public override void OnFreed()
+        public override void OnClientFreed()
         {
 
         }

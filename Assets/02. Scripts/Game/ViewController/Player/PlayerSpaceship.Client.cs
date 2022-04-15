@@ -14,9 +14,9 @@ namespace Mikrocosmos
         private bool isControlling = false;
 
        // [SyncVar()] public PlayerMatchInfo MatchInfo;
+       private Animator selfMotionAnimator;
 
-
-        public override IEntity Model { get; protected set; }
+       public override IEntity Model { get; protected set; }
 
         private ISpaceshipConfigurationModel GetModel() {
             return GetModel<ISpaceshipConfigurationModel>();
@@ -26,6 +26,8 @@ namespace Mikrocosmos
             base.Awake();
             hookSystem = GetComponent<IHookSystem>();
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+            selfMotionAnimator = transform.Find("VisionControl/SelfSprite").GetComponent<Animator>();
+
         }
 
         
@@ -44,11 +46,13 @@ namespace Mikrocosmos
                 if (Input.GetMouseButtonDown(0)) {
                     if (Model.HookState == HookState.Freed) {
                         isControlling = true;
+                        
                     }
                     else {
 
                         isControlling  = false;
                         GetModel().IncreaseEscapeCounter();
+                       
                     }
                 }
 
@@ -85,6 +89,7 @@ namespace Mikrocosmos
             if (hasAuthority && isClient) {
                 //Debug.Log("Hasauthority");
                 if (isControlling) {
+                    selfMotionAnimator.SetBool("Controlling", true);
                     //CmdAddForce((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
                     Vector2 forceDir = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position)
                         .normalized;
@@ -93,6 +98,9 @@ namespace Mikrocosmos
                         //rigidbody.AddForce(forceDir * GetModel().MoveForce);
                         rigidbody.velocity += forceDir * GetModel().Acceleration * Time.deltaTime;
                     }
+                }
+                else {
+                    selfMotionAnimator.SetBool("Controlling", false);
                 }
 
                 UpdateRotation(Camera.main.ScreenToWorldPoint(Input.mousePosition));

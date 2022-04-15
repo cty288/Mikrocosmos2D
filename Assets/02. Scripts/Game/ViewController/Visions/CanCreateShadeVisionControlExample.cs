@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class MaskableVisionControlExample : MaskableVisionControl
+    public class CanCreateShadeVisionControllorExample : CanCreateShadeVisionControl
     {
         public override void OnStartServer() {
             base.OnStartServer();

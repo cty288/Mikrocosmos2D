@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class BasicHaveGravityModel : AbstractHaveGravityModel
+    public class BasicPlanetViewController : AbstractPlanetViewController
     {
-    
+      
     }
 }

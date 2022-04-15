@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface ICanProducePackage: IModel {
-       
+    public interface IHaveGravityViewController : IController {
+        IHaveGravity GravityModel { get; }
     }
 }

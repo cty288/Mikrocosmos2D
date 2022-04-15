@@ -152,9 +152,7 @@ namespace Mikrocosmos {
                 }
 
                 realShootPercent = realPercent;
-                animator.SetTrigger("Shoot");
-
-                
+                GetComponent<NetworkAnimator>().SetTrigger("Shoot");
             }
         }
 
@@ -206,10 +204,8 @@ namespace Mikrocosmos {
 
         [ServerCallback]
         private void TryHook() {
-          
-            if (model.HookState == HookState.Freed && animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking"))
-            {
-                animator.SetTrigger("StartHook");
+            if (model.HookState == HookState.Freed && animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking")) {
+                GetComponent<NetworkAnimator>().SetTrigger("StartHook");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Mikrocosmos
         [ServerCallback]
         public void SetPlayerDisplayInfo(int teamIndex, string name)
         {
-            transform.Find("VisionControl/Sprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+            transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
             this.Name = name;
             RpcSetTeamSprite(teamIndex);
         }
@@ -32,7 +32,7 @@ namespace Mikrocosmos
 
         [ClientRpc]
         private void RpcSetTeamSprite(int teamIndex) {
-            transform.Find("VisionControl/Sprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+            transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
         }
         private void OnServerUpdate() {
            

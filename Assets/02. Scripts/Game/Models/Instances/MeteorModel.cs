@@ -13,11 +13,11 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public override float SelfMass { get; protected set; } = 5f;
         public override string Name { get; } = "Meteor";
-        public override void OnHooked() {
+        public override void OnClientHooked() {
             
         }
 
-        public override void OnFreed() {
+        public override void OnClientFreed() {
            
         }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.U2D;
 
 namespace Mikrocosmos
@@ -17,6 +18,8 @@ namespace Mikrocosmos
         void ServerRemoveClient(NetworkIdentity identity);
 
     }
+    
+    //TODO: Star add script
     public abstract class CanCreateVisionViewController : AbstractNetworkedController<Mikrocosmos>, ICanCreateVisionViewController {
 
         #region Server
@@ -69,9 +72,33 @@ namespace Mikrocosmos
 
         #region Client
         private bool isClientCanSee = false;
+        [SerializeField] private float ClientRefreshRate = 2f;
 
-        public override void OnStartClient() {
-            base.OnStartClient();
+        private void Start() {
+            if (isClient) {
+                //StartCoroutine(RefreshLight());
+            }
+        }
+
+        private IEnumerator RefreshLight() {
+            while (true) {
+                if (isClientCanSee && IsOn) {
+                    visionLight.enabled = false;
+                    yield return new WaitForSeconds(0.01f);
+                    visionLight.enabled = true;
+                }
+                yield return new WaitForSeconds(ClientRefreshRate);
+            }
+        }
+
+        public override void OnStartAuthority() {
+            base.OnStartAuthority();
+            visionLight.enabled = false;
+            StartCoroutine(StartChangeLight());
+        }
+
+        private IEnumerator StartChangeLight() {
+            yield return new WaitForSeconds(0.5f);
             visionLight.enabled = IsOn;
         }
 

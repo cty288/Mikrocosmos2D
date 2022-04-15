@@ -9,6 +9,11 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
+    public struct OnServerObjectHookStateChanged {
+        public NetworkIdentity Identity;
+        public HookState HookState;
+        public NetworkIdentity HookedByIdentity;
+    }
     public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent {
        
 
@@ -40,6 +45,11 @@ namespace Mikrocosmos
         public void Hook(NetworkIdentity hookedBy) {
             HookState = HookState.Hooked;
             HookedByIdentity = hookedBy;
+            this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged() {
+                Identity = netIdentity,
+                HookState = HookState,
+                HookedByIdentity = hookedBy
+            });
         }
 
       
@@ -67,11 +77,15 @@ namespace Mikrocosmos
                     bindedRigidibody.velocity += HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
                 }
             }
-            
 
-
-          
+            this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
+            {
+                Identity = netIdentity,
+                HookState = HookState,
+                HookedByIdentity = this.HookedByIdentity
+            });
             HookedByIdentity = null;
+            
         }
 
      
@@ -137,13 +151,13 @@ namespace Mikrocosmos
                 }
 
                 gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
-                OnHooked();
+                OnClientHooked();
             }
 
             if (newState == HookState.Freed)
             {
                 gameObject.layer = clientOriginalLayer;
-                OnFreed();
+                OnClientFreed();
             }
         }
 
@@ -158,10 +172,10 @@ namespace Mikrocosmos
                 ClientHookedByTransform = null;
             }
         }
-        public abstract void OnHooked();
+        public abstract void OnClientHooked();
         
         
-        public abstract void OnFreed();
+        public abstract void OnClientFreed();
 
     }
 }

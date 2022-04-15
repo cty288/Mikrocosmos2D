@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpaceshipMoveAnimation
+  m_Name: Idle
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -22,7 +22,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -36,24 +36,7 @@ AnimationClip:
     path: Fire
     classID: 1
     script: {fileID: 0}
-  m_PPtrCurves:
-  - curve:
-    - time: 0
-      value: {fileID: 21300000, guid: 0782dbb4ec6f29c44a3831b048ebde7e, type: 3}
-    - time: 0.1
-      value: {fileID: 21300000, guid: 0d88740f67f65dd429de3c66def7eb03, type: 3}
-    - time: 0.2
-      value: {fileID: 21300000, guid: 759a97ee51a1ab248aae5904e37f4fe9, type: 3}
-    - time: 0.3
-      value: {fileID: 21300000, guid: c6962e26aa4997649bd5a6b1600e6ba0, type: 3}
-    - time: 0.4
-      value: {fileID: 21300000, guid: 48297ca6c7c75ac41b016e41a23aeeb5, type: 3}
-    - time: 0.5
-      value: {fileID: 21300000, guid: 78a7136e84ffc2b41a8551dcfab13d04, type: 3}
-    attribute: m_Sprite
-    path: Fire
-    classID: 212
-    script: {fileID: 0}
+  m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -68,26 +51,13 @@ AnimationClip:
       typeID: 1
       customType: 0
       isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 4176258801
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-    pptrCurveMapping:
-    - {fileID: 21300000, guid: 0782dbb4ec6f29c44a3831b048ebde7e, type: 3}
-    - {fileID: 21300000, guid: 0d88740f67f65dd429de3c66def7eb03, type: 3}
-    - {fileID: 21300000, guid: 759a97ee51a1ab248aae5904e37f4fe9, type: 3}
-    - {fileID: 21300000, guid: c6962e26aa4997649bd5a6b1600e6ba0, type: 3}
-    - {fileID: 21300000, guid: 48297ca6c7c75ac41b016e41a23aeeb5, type: 3}
-    - {fileID: 21300000, guid: 78a7136e84ffc2b41a8551dcfab13d04, type: 3}
+    pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.51666665
+    m_StopTime: 0
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -108,7 +78,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103

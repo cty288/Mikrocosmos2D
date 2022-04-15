@@ -909,6 +909,7 @@ GameObject:
   - component: {fileID: 1426794900304426698}
   - component: {fileID: 4467966795216033169}
   - component: {fileID: 3391074858448251004}
+  - component: {fileID: 5636032464893549542}
   m_Layer: 6
   m_Name: PlayerSpaceship
   m_TagString: Untagged
@@ -1252,6 +1253,22 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 448
+--- !u!114 &5636032464893549542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986015997137912893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  animator: {fileID: 3230964490078167896}
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,7 +1282,7 @@ GameObject:
   - component: {fileID: 5004574722402577696}
   - component: {fileID: 3230964490078167896}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: SelfSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1457,7 +1474,7 @@ Animator:
   m_GameObject: {fileID: 8295490642847367845}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c2111875f62ee394cbf4925e598b3f34, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1631,6 +1648,10 @@ PrefabInstance:
     - target: {fileID: 6820066280822320715, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155862405861106046, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
+      propertyPath: m_LightOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}

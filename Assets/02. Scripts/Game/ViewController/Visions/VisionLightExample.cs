@@ -7,6 +7,7 @@ using Mirror;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
 namespace Mikrocosmos
 {
     public class VisionLightExample : CanCreateVisionViewController
@@ -25,6 +26,8 @@ namespace Mikrocosmos
                 yield return new WaitForSeconds(5f);
                 IsOn = !IsOn;
             }
+
+            
         }
 
 

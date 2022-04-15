@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 namespace Mikrocosmos
 {
-    public interface IMaskableVisionControl { 
+    public interface ICanCreateShadeVisionControllor { 
         bool IsMaskable { get; set; }
 
         void ServerSetClientAlwaysUnMaskable(NetworkConnectionToClient connection);
@@ -16,7 +18,7 @@ namespace Mikrocosmos
     }
 
 
-    public  class MaskableVisionControl : AbstractNetworkedController<Mikrocosmos>, IMaskableVisionControl {
+    public  class CanCreateShadeVisionControl : AbstractNetworkedController<Mikrocosmos>, ICanCreateShadeVisionControllor {
         [field: SyncVar(hook = nameof(OnMaskableChanged)), SerializeField]
         public bool IsMaskable { get; set; } = true;
 
@@ -29,7 +31,10 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             shaderCaster.enabled = IsMaskable;
+            
         }
+
+       
 
         [ServerCallback]
         public void ServerSetClientAlwaysUnMaskable(NetworkConnectionToClient connection) {
