@@ -5,7 +5,11 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class AbstractBasePlanetModel : NetworkedModel, IHaveGravity, ICanProducePackage{
+    public interface IPlanetModel : IHaveGravity, ICanProducePackage {
+
+    }
+    public class AbstractBasePlanetModel : NetworkedModel, IPlanetModel
+    {
         protected Rigidbody2D bindedRigidbody;
         [field: SerializeField]
         public LayerMask AffectedLayerMasks { get; set; }
