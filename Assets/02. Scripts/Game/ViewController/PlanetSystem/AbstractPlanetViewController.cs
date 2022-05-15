@@ -7,14 +7,20 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
-    public abstract class AbstractPlanetViewController: AbstractNetworkedController<Mikrocosmos>, ICanProducePackageViewController, IHaveGravityViewController
-    {
-        public ICanProducePackage PackageModel { get; protected set; }
+    public interface IPlanetViewController : ICanProducePackageViewController, ICanBuyViewController,
+        IHaveGravityViewController {
 
+    }
+    public abstract class AbstractPlanetViewController: AbstractNetworkedController<Mikrocosmos>, IPlanetViewController
+    {
+        public ICanProducePackage ProducePackageModel { get; protected set; }
+        public ICanBuyViewController BuyModel { get; protected set; }
         public IHaveGravity GravityModel { get; protected set; }
         private void Awake() {
-            PackageModel = GetComponent<ICanProducePackage>();
+            ProducePackageModel = GetComponent<ICanProducePackage>();
             GravityModel = GetComponent<IHaveGravity>();
+            BuyModel = GetComponent<ICanBuyViewController>();
+
             rigidbody = GetComponent<Rigidbody2D>();
             distance = Vector3.Distance(target.transform.position, transform.position);
             progress = Random.Range(0, 360000);
@@ -42,10 +48,17 @@ namespace Mikrocosmos
         //start refactor
         private void FixedUpdate()
         {
-            OvalRotate();
+            
             if (isServer)
             {
+                OvalRotate();
                 KeepUniversalG();
+            }
+        }
+
+        private void Start() {
+            if (isClient) {
+                //GetComponent<NetworkTransform>().syncPosition = true;
             }
         }
 
@@ -94,5 +107,6 @@ namespace Mikrocosmos
         //end 
 
 
+        
     }
 }

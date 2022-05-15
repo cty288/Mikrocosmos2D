@@ -48,6 +48,7 @@ namespace Mikrocosmos
         }
         public int EscapeNeedCount { get; } = 10;
         public float EscapeLossTime { get; } = 0.125f;
+        public float MaxMaxSpeed { get; } = 40;
 
         public int EscapeCounter { get; private set; }
 

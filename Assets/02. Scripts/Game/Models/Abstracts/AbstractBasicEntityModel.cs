@@ -15,9 +15,7 @@ namespace Mikrocosmos
         public NetworkIdentity HookedByIdentity;
     }
     public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent {
-       
-
-
+     
         [field: SyncVar, SerializeField]
         public float MaxSpeed { get; protected set; }
 

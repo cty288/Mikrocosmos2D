@@ -8,9 +8,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace Mikrocosmos
 {
-    
-    public class MeteorViewController : AbstractCanCreateShadeEntity
-    {
-      
+    public class AbstractGoodsViewController : AbstractCanCreateShadeEntity, IGoodsViewController {
+       
     }
 }

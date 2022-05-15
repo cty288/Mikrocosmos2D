@@ -8,8 +8,9 @@ namespace Mikrocosmos
 {
     public class Mikrocosmos : NetworkedArchitecture<Mikrocosmos> {
         protected override void Init() {
-            this.RegisterModel<ILocalPlayerInfoModel>(new LocalPlayerInfoModel());
-           // this.RegisterModel<ISpaceshipConfigurationModel>(new SpaceshipConfigurationModel());
+            this.RegisterModel<ILocalPlayerInfoModel>(new LocalPlayerInfoModel()); 
+
+            // this.RegisterModel<ISpaceshipConfigurationModel>(new SpaceshipConfigurationModel());
            // this.RegisterModel<ISpaceshipModel>(new SpaceshipModel());
             this.RegisterSystem<ITimeSystem>(new TimeSystem());
         }

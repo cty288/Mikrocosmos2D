@@ -69,6 +69,9 @@ namespace Mikrocosmos
                 if (Input.GetMouseButtonUp(0)) {
                     isControlling = false;
                 }
+
+              
+                rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, GetModel().MaxMaxSpeed);
             }
 
             if (isServer) {
@@ -102,10 +105,12 @@ namespace Mikrocosmos
                 else {
                     selfMotionAnimator.SetBool("Controlling", false);
                 }
-
+                
                 UpdateRotation(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
         }
+
+        
 
         private void ClientUpdateSync() {
           

@@ -498,16 +498,16 @@
             <para>If you want to automatically set your tween references to NULL when a tween is killed 
             you can use the OnKill callback like this:</para>
             <code>.OnKill(()=> myTweenReference = null)</code>
-            <para>You can change this setting at any time by changing the static <see cref="F:DG.Tweening.DOTween.defaultRecyclable"/> property,
+            <para>You can change this setting at any time by changing the static <see cref="F:DG.Tweening.DOTween.defaultRecyclable"/> goodPrefab,
             or you can set the recycling behaviour for each tween separately, using:</para>
             <para><code>SetRecyclable(bool recyclable)</code></para>
             <para>Default: FALSE</para></param>
             <param name="useSafeMode">If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
             (like targets becoming null while a tween is playing).
-            You can change this setting at any time by changing the static <see cref="F:DG.Tweening.DOTween.useSafeMode"/> property.
+            You can change this setting at any time by changing the static <see cref="F:DG.Tweening.DOTween.useSafeMode"/> goodPrefab.
             <para>Default: FALSE</para></param>
             <param name="logBehaviour">Type of logging to use.
-            You can change this setting at any time by changing the static <see cref="P:DG.Tweening.DOTween.logBehaviour"/> property.
+            You can change this setting at any time by changing the static <see cref="P:DG.Tweening.DOTween.logBehaviour"/> goodPrefab.
             <para>Default: ErrorsOnly</para></param>
         </member>
         <member name="M:DG.Tweening.DOTween.SetTweensCapacity(System.Int32,System.Int32)">
@@ -553,147 +553,147 @@
             <param name="unscaledDeltaTime">Unscaled delta time (used with tweens set as timeScaleIndependent)</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Double},DG.Tweening.Core.DOSetter{System.Double},System.Double,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Int32},DG.Tweening.Core.DOSetter{System.Int32},System.Int32,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.UInt32},DG.Tweening.Core.DOSetter{System.UInt32},System.UInt32,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Int64},DG.Tweening.Core.DOSetter{System.Int64},System.Int64,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.UInt64},DG.Tweening.Core.DOSetter{System.UInt64},System.UInt64,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.String},DG.Tweening.Core.DOSetter{System.String},System.String,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Quaternion},DG.Tweening.Core.DOSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},UnityEngine.Color,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Rect},DG.Tweening.Core.DOSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.RectOffset},DG.Tweening.Core.DOSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <summary>Tweens a goodPrefab or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To``3(DG.Tweening.Plugins.Core.ABSTweenPlugin{``0,``1,``2},DG.Tweening.Core.DOGetter{``0},DG.Tweening.Core.DOSetter{``0},``1,System.Single)">
-            <summary>Tweens a property or field to the given value using a custom plugin</summary>
+            <summary>Tweens a goodPrefab or field to the given value using a custom plugin</summary>
             <param name="plugin">The plugin to use. Each custom plugin implements a static <code>Get()</code> method
             you'll need to call to assign the correct plugin in the correct way, like this:
             <para><code>CustomPlugin.Get()</code></para></param>
-            <param name="getter">A getter for the field or property to tween.
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.ToAxis(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single,System.Single,DG.Tweening.AxisConstraint)">
             <summary>Tweens only one axis of a Vector3 to the given value using default plugins.</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
             <param name="axisConstraint">The axis to tween</param>
         </member>
         <member name="M:DG.Tweening.DOTween.ToAlpha(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},System.Single,System.Single)">
             <summary>Tweens only the alpha of a Color to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single,System.Single)">
-            <summary>Tweens a virtual property from the given start to the given end value 
+            <summary>Tweens a virtual goodPrefab from the given start to the given end value 
             and implements a setter that allows to use that value with an external method or a lambda
             <para>Example:</para>
             <code>To(MyMethod, 0, 12, 0.5f);</code>
@@ -708,9 +708,9 @@
             <summary>Punches a Vector3 towards the given direction and then back to the starting one
             as if it was connected to the starting position via an elastic.
             <para>This tween type generates some GC allocations at startup</para></summary>
-            <param name="getter">A getter for the field or property to tween.
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="direction">The direction and strength of the punch</param>
             <param name="duration">The duration of the tween</param>
@@ -721,9 +721,9 @@
         </member>
         <member name="M:DG.Tweening.DOTween.Shake(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single,System.Single,System.Int32,System.Single,System.Boolean,System.Boolean)">
             <summary>Shakes a Vector3 with the given values.</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="duration">The duration of the tween</param>
             <param name="strength">The shake strength</param>
@@ -735,9 +735,9 @@
         </member>
         <member name="M:DG.Tweening.DOTween.Shake(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single,UnityEngine.Vector3,System.Int32,System.Single,System.Boolean)">
             <summary>Shakes a Vector3 with the given values.</summary>
-            <param name="getter">A getter for the field or property to tween.
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="duration">The duration of the tween</param>
             <param name="strength">The shake strength on each axis</param>
@@ -747,12 +747,12 @@
             <param name="fadeOut">If TRUE the shake will automatically fadeOut smoothly within the tween's duration, otherwise it will not</param>
         </member>
         <member name="M:DG.Tweening.DOTween.ToArray(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3[],System.Single[])">
-            <summary>Tweens a property or field to the given values using default plugins.
+            <summary>Tweens a goodPrefab or field to the given values using default plugins.
             Ease is applied between each segment and not as a whole.
             <para>This tween type generates some GC allocations at startup</para></summary>
-            <param name="getter">A getter for the field or property to tween.
+            <param name="getter">A getter for the field or goodPrefab to tween.
             <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
+            <param name="setter">A setter for the field or goodPrefab to tween
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="endValues">The end values to reach for each segment. This array must have the same length as <code>durations</code></param>
             <param name="durations">The duration of each segment. This array must have the same length as <code>endValues</code></param>
@@ -1631,17 +1631,17 @@
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOColor(UnityEngine.Material,UnityEngine.Color,System.String,System.Single)">
-            <summary>Tweens a Material's named color property to the given value.
+            <summary>Tweens a Material's named color goodPrefab to the given value.
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="property">The name of the material property to tween (like _Tint or _SpecColor)</param>
+            <param name="goodPrefab">The name of the material goodPrefab to tween (like _Tint or _SpecColor)</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOColor(UnityEngine.Material,UnityEngine.Color,System.Int32,System.Single)">
-            <summary>Tweens a Material's named color property with the given ID to the given value.
+            <summary>Tweens a Material's named color goodPrefab with the given ID to the given value.
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="propertyID">The ID of the material property to tween (also called nameID in Unity's manual)</param>
+            <param name="propertyID">The ID of the material goodPrefab to tween (also called nameID in Unity's manual)</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOFade(UnityEngine.Material,System.Single,System.Single)">
@@ -1655,7 +1655,7 @@
             (will have no effect unless your material supports transparency).
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="property">The name of the material property to tween (like _Tint or _SpecColor)</param>
+            <param name="goodPrefab">The name of the material goodPrefab to tween (like _Tint or _SpecColor)</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOFade(UnityEngine.Material,System.Single,System.Int32,System.Single)">
@@ -1663,21 +1663,21 @@
             (will have no effect unless your material supports transparency).
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="propertyID">The ID of the material property to tween (also called nameID in Unity's manual)</param>
+            <param name="propertyID">The ID of the material goodPrefab to tween (also called nameID in Unity's manual)</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOFloat(UnityEngine.Material,System.Single,System.String,System.Single)">
-            <summary>Tweens a Material's named float property to the given value.
+            <summary>Tweens a Material's named float goodPrefab to the given value.
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="property">The name of the material property to tween</param>
+            <param name="goodPrefab">The name of the material goodPrefab to tween</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOFloat(UnityEngine.Material,System.Single,System.Int32,System.Single)">
-            <summary>Tweens a Material's named float property with the given ID to the given value.
+            <summary>Tweens a Material's named float goodPrefab with the given ID to the given value.
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="propertyID">The ID of the material property to tween (also called nameID in Unity's manual)</param>
+            <param name="propertyID">The ID of the material goodPrefab to tween (also called nameID in Unity's manual)</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOOffset(UnityEngine.Material,UnityEngine.Vector2,System.Single)">
@@ -1687,10 +1687,10 @@
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOOffset(UnityEngine.Material,UnityEngine.Vector2,System.String,System.Single)">
-            <summary>Tweens a Material's named texture offset property to the given value.
+            <summary>Tweens a Material's named texture offset goodPrefab to the given value.
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="property">The name of the material property to tween</param>
+            <param name="goodPrefab">The name of the material goodPrefab to tween</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOTiling(UnityEngine.Material,UnityEngine.Vector2,System.Single)">
@@ -1700,24 +1700,24 @@
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOTiling(UnityEngine.Material,UnityEngine.Vector2,System.String,System.Single)">
-            <summary>Tweens a Material's named texture scale property to the given value.
+            <summary>Tweens a Material's named texture scale goodPrefab to the given value.
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="property">The name of the material property to tween</param>
+            <param name="goodPrefab">The name of the material goodPrefab to tween</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOVector(UnityEngine.Material,UnityEngine.Vector4,System.String,System.Single)">
-            <summary>Tweens a Material's named Vector property to the given value.
+            <summary>Tweens a Material's named Vector goodPrefab to the given value.
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="property">The name of the material property to tween</param>
+            <param name="goodPrefab">The name of the material goodPrefab to tween</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOVector(UnityEngine.Material,UnityEngine.Vector4,System.Int32,System.Single)">
-            <summary>Tweens a Material's named Vector property with the given ID to the given value.
+            <summary>Tweens a Material's named Vector goodPrefab with the given ID to the given value.
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param>
-            <param name="propertyID">The ID of the material property to tween (also called nameID in Unity's manual)</param>
+            <param name="propertyID">The ID of the material goodPrefab to tween (also called nameID in Unity's manual)</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOResize(UnityEngine.TrailRenderer,System.Single,System.Single,System.Single)">
@@ -2015,21 +2015,21 @@
             <param name="endValue">The value to tween to</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOBlendableColor(UnityEngine.Material,UnityEngine.Color,System.String,System.Single)">
-            <summary>Tweens a Material's named color property to the given value,
+            <summary>Tweens a Material's named color goodPrefab to the given value,
             in a way that allows other DOBlendableColor tweens to work together on the same target,
             instead than fight each other as multiple DOColor would do.
             Also stores the Material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The value to tween to</param>
-            <param name="property">The name of the material property to tween (like _Tint or _SpecColor)</param>
+            <param name="goodPrefab">The name of the material goodPrefab to tween (like _Tint or _SpecColor)</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOBlendableColor(UnityEngine.Material,UnityEngine.Color,System.Int32,System.Single)">
-            <summary>Tweens a Material's named color property with the given ID to the given value,
+            <summary>Tweens a Material's named color goodPrefab with the given ID to the given value,
             in a way that allows other DOBlendableColor tweens to work together on the same target,
             instead than fight each other as multiple DOColor would do.
             Also stores the Material as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The value to tween to</param>
-            <param name="propertyID">The ID of the material property to tween (also called nameID in Unity's manual)</param>
+            <param name="propertyID">The ID of the material goodPrefab to tween (also called nameID in Unity's manual)</param>
             <param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOBlendableMoveBy(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Boolean)">

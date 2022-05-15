@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 7514048138394419015}
   - component: {fileID: 4511390276959909231}
   - component: {fileID: 8345480255462355403}
+  - component: {fileID: -4471552787630732282}
   m_Layer: 0
-  m_Name: Star (3)
+  m_Name: VolcanoPlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,11 +98,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546541824714299389}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -163,6 +164,9 @@ MonoBehaviour:
   <SelfMass>k__BackingField: 10000
   <GravityFieldRange>k__BackingField: 500
   <G>k__BackingField: 0.000000001
+  initialBuyItemList: []
+  initialSellItemList: []
+  <PlanetType>k__BackingField: 0
 --- !u!114 &8345480255462355403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,3 +185,37 @@ MonoBehaviour:
   speed: 1
   x: 60
   z: 1.5
+--- !u!114 &-4471552787630732282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546541824714299389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.01
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 0
+  interpolateRotation: 0
+  interpolateScale: 0
+  bufferTimeMultiplier: 3
+  bufferSizeLimit: 64
+  catchupThreshold: 6
+  catchupMultiplier: 0.023
+  onlySyncOnChange: 0
+  bufferResetMultiplier: 4
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}

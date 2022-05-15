@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class BasicPlanetModel : AbstractBasePlanetModel
-    {
+    public class BasicPlanetModel : AbstractBasePlanetModel {
         
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface ICanProducePackageViewController : IController
+    public interface IGoodsViewController : IController
     {
-        ICanProducePackage ProducePackageModel { get; }
+        
     }
 }

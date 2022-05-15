@@ -19,6 +19,7 @@ namespace Mikrocosmos
 
         public float EscapeLossTime { get; }
 
+        public float MaxMaxSpeed { get; }
         public int EscapeCounter { get; }
 
         /// <summary>
@@ -29,6 +30,8 @@ namespace Mikrocosmos
         public float GetConnectedObjectSoleMass();
 
         public void IncreaseEscapeCounter();
+
+
     }
     
 }
