@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -45,6 +46,26 @@ namespace Mikrocosmos
             
         }
 
+        public override void OnStartServer() {
+            base.OnStartServer();
+            this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnPlayerJoinGame)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+
+        //initialization
+        private void OnPlayerJoinGame(OnNetworkedMainGamePlayerConnected obj) {
+            if (currentSellingItem != null)
+            {
+                this.SendEvent<OnServerPlanetGenerateSellItem>(new OnServerPlanetGenerateSellItem()
+                {
+                    GeneratedItem = currentSellingItemObject,
+                    ParentPlanet = this.gameObject,
+                    Price = currentSellingItemPrice
+                });
+            }
+        }
+
         private void Update() {
             if (isServer) {
                 BuyItemTimer -= Time.deltaTime;
@@ -58,6 +79,9 @@ namespace Mikrocosmos
                 }
             }
         }
+
+        
+      
         [ServerCallback]
         private void SwitchSellItem()
         {
@@ -86,6 +110,7 @@ namespace Mikrocosmos
             NetworkServer.Spawn(currentSellingItemObject);
             currentSellingItem = currentSellingItemObject.GetComponent<IGoods>();
             currentSellingItem.IsSell = true;
+            currentSellingItem.TransactionFinished = false;
 
             
 
@@ -148,6 +173,8 @@ namespace Mikrocosmos
             NetworkServer.Spawn(currentSellingItemObject);
             currentSellingItem = currentSellingItemObject.GetComponent<IGoods>();
             currentSellingItem.IsSell = false;
+            currentSellingItem.TransactionFinished = false;
+
             int basePrice = currentSellingItemConfig.RealPriceOffset + currentSellingItem.BasicBuyPrice;
             currentSellingItemPrice = Random.Range(basePrice - 5, basePrice + 5);
 

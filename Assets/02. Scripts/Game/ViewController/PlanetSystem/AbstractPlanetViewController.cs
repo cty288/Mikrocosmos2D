@@ -36,7 +36,10 @@ namespace Mikrocosmos
             progress = Random.Range(0, 360000);
 
             sellItemSpawnPosition = transform.Find("BubbleBG/SellItemSpawnPos");
-            sellPriceText = transform.Find("Canvas/SellPrice").GetComponent<TMP_Text>();
+            if (sellItemSpawnPosition) {
+                sellPriceText = transform.Find("Canvas/SellPrice").GetComponent<TMP_Text>();
+            }
+          
         }
         private void FixedUpdate() {
 
@@ -56,12 +59,17 @@ namespace Mikrocosmos
         [ServerCallback]
         private void OnServerPlanetGenerateSellItem(OnServerPlanetGenerateSellItem e) {
             if (e.ParentPlanet == gameObject) {
+                
                 Debug.Log("Sell Item generated");
                 e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellItemSpawnPosition;
-                sellPriceText.text = e.Price.ToString();
+                RpcChangeSellPrice(e.Price);
             }
         }
 
+        [ClientRpc]
+        private void RpcChangeSellPrice(int price) {
+            sellPriceText.text = price.ToString();
+        }
 
         #region Rotation
         public GameObject target;

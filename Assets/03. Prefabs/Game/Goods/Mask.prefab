@@ -123,7 +123,7 @@ MonoBehaviour:
   - {x: 0.19543839, y: -1.1491146, z: 0}
   m_ShapePathHash: -1724063987
   m_Mesh: {fileID: 0}
-  m_InstanceId: 55906
+  m_InstanceId: 151042
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,10 +163,10 @@ MonoBehaviour:
   interpolatePosition: 0
   interpolateRotation: 0
   interpolateScale: 0
-  bufferTimeMultiplier: 1
+  bufferTimeMultiplier: 3
   bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
+  catchupThreshold: 6
+  catchupMultiplier: 0
   onlySyncOnChange: 1
   bufferResetMultiplier: 5
   positionSensitivity: 0.01

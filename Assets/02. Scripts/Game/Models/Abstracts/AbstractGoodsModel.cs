@@ -19,7 +19,7 @@ namespace Mikrocosmos
         public GoodsRarity GoodRarity { get; set; }
 
         [field: SyncVar(hook = nameof(OnTransactionStatusChanged))] 
-        public bool TransactionFinished { get; set; } = false;
+        public bool TransactionFinished { get; set; } = true;
 
         [field: SyncVar]
         public int RealPrice { get; set; }
@@ -31,6 +31,7 @@ namespace Mikrocosmos
         public void ServerAddGravityForce(float force, Vector2 position, float range)
         {
             if (TransactionFinished) {
+                //Debug.Log("Affected");
                 GetComponent<Rigidbody2D>().AddExplosionForce(force, position, range);
             }
            
