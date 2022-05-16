@@ -7,6 +7,7 @@ namespace Mikrocosmos
 {
     public interface IGoodsViewController : IController
     {
-        
+        public Transform FollowingPoint { get; set; }
+        public IGoods GoodsModel { get; }
     }
 }

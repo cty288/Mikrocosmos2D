@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class BasicPlanetViewController : AbstractPlanetViewController {
-
+    public class BasicGoodsViewController : AbstractGoodsViewController
+    {
+        
     }
 }

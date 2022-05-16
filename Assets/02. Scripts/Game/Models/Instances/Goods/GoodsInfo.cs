@@ -22,9 +22,13 @@ namespace Mikrocosmos
         public GameObject GoodPrefab { get;  set; }
 
         [field: SerializeField]
-        public int RealBuyPriceOffset { get;  set; }
-        [field: SerializeField]
-        public int RealSellPriceOffset { get;  set; }
+        public int RealPriceOffset { get;  set; }
+
+        public IGoods Good {
+            get {
+                return GoodPrefab.GetComponent<IGoods>();
+            }
+        }
 
         public GoodsConfigure(){}
         public GoodsConfigure(GameObject goodPrefab) {

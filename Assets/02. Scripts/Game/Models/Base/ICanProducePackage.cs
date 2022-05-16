@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface ICanProducePackage: IModel {
+    public interface ICanBuyPackage: IModel {
         SyncList<GoodsConfigure> BuyItemList { get; }
     }
 }

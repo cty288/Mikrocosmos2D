@@ -7,13 +7,15 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface IPlanetModel : IHaveGravity, ICanProducePackage, ICanSellPackage {
+    public interface IPlanetModel : IHaveGravity, ICanBuyPackage, ICanSellPackage {
          PlanetTypeEnum PlanetType { get; }
+         List<GoodsConfigure> GetBuyItemsWithRarity(GoodsRarity rarity);
+         List<GoodsConfigure> GetSellItemsWithRarity(GoodsRarity rarity);
     }
 
 
 
-    public abstract class AbstractBasePlanetModel : NetworkedModel, IPlanetModel, ICanGetModel
+    public abstract partial class AbstractBasePlanetModel : NetworkedModel, IPlanetModel, ICanGetModel
     {
         protected Rigidbody2D bindedRigidbody;
         [field: SerializeField]
@@ -22,6 +24,7 @@ namespace Mikrocosmos
 
         private void Awake() {
             bindedRigidbody = GetComponent<Rigidbody2D>();
+            
         }
 
         public override void OnStartServer() {
@@ -72,6 +75,30 @@ namespace Mikrocosmos
 
         [field: SerializeField]
         public PlanetTypeEnum PlanetType { get;  set; }
+
+        public List<GoodsConfigure> GetBuyItemsWithRarity(GoodsRarity rarity) {
+            List<GoodsConfigure> ret = new List<GoodsConfigure>();
+            foreach (GoodsConfigure configure in buyItemList) {
+                if (configure.Good.GoodRarity == rarity) {
+                    ret.Add(configure);
+                }
+            }
+
+            return ret;
+        }
+
+        public List<GoodsConfigure> GetSellItemsWithRarity(GoodsRarity rarity) {
+            List<GoodsConfigure> ret = new List<GoodsConfigure>();
+            foreach (GoodsConfigure configure in sellItemList)
+            {
+                if (configure.Good.GoodRarity == rarity)
+                {
+                    ret.Add(configure);
+                }
+            }
+
+            return ret;
+        }
     }
 
     

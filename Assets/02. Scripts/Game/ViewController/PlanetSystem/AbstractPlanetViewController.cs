@@ -1,30 +1,69 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
-    public interface IPlanetViewController : ICanProducePackageViewController, ICanBuyViewController,
+    public interface IPlanetViewController : ICanBuyPackageViewController, ICanSellPackageViewController,
         IHaveGravityViewController {
 
     }
-    public abstract class AbstractPlanetViewController: AbstractNetworkedController<Mikrocosmos>, IPlanetViewController
-    {
-        public ICanProducePackage ProducePackageModel { get; protected set; }
-        public ICanBuyViewController BuyModel { get; protected set; }
-        public IHaveGravity GravityModel { get; protected set; }
-        private void Awake() {
-            ProducePackageModel = GetComponent<ICanProducePackage>();
-            GravityModel = GetComponent<IHaveGravity>();
-            BuyModel = GetComponent<ICanBuyViewController>();
+    public abstract class AbstractPlanetViewController: AbstractNetworkedController<Mikrocosmos>, IPlanetViewController {
+      
 
+        public ICanBuyPackage BuyPackageModel { get; protected set; }
+        public ICanSellPackage SellPackageModel { get; protected set; }
+        public IHaveGravity GravityModel { get; protected set; }
+
+        private Transform sellItemSpawnPosition;
+        private TMP_Text sellPriceText;
+
+
+
+        private void Awake() {
+            BuyPackageModel = GetComponent<ICanBuyPackage>();
+            GravityModel = GetComponent<IHaveGravity>();
+            SellPackageModel = GetComponent<ICanSellPackage>();
+            
             rigidbody = GetComponent<Rigidbody2D>();
             distance = Vector3.Distance(target.transform.position, transform.position);
             progress = Random.Range(0, 360000);
+
+            sellItemSpawnPosition = transform.Find("BubbleBG/SellItemSpawnPos");
+            sellPriceText = transform.Find("Canvas/SellPrice").GetComponent<TMP_Text>();
         }
+        private void FixedUpdate() {
+
+            if (isServer) {
+                OvalRotate();
+                KeepUniversalG();
+                
+            }
+        }
+
+        public override void OnStartServer() {
+            base.OnStartServer();
+            this.RegisterEvent<OnServerPlanetGenerateSellItem>(OnServerPlanetGenerateSellItem)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        [ServerCallback]
+        private void OnServerPlanetGenerateSellItem(OnServerPlanetGenerateSellItem e) {
+            if (e.ParentPlanet == gameObject) {
+                Debug.Log("Sell Item generated");
+                e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellItemSpawnPosition;
+                sellPriceText.text = e.Price.ToString();
+            }
+        }
+
+
+        #region Rotation
         public GameObject target;
 
         public float speed = 100;
@@ -35,8 +74,8 @@ namespace Mikrocosmos
 
         private Rigidbody2D rigidbody;
 
-      
-       
+
+
 
         void OvalRotate()
         {
@@ -46,21 +85,7 @@ namespace Mikrocosmos
             rigidbody.MovePosition(target.transform.position + p);
         }
         //start refactor
-        private void FixedUpdate()
-        {
-            
-            if (isServer)
-            {
-                OvalRotate();
-                KeepUniversalG();
-            }
-        }
-
-        private void Start() {
-            if (isClient) {
-                //GetComponent<NetworkTransform>().syncPosition = true;
-            }
-        }
+      
 
         [ServerCallback]
         void KeepUniversalG()
@@ -107,6 +132,10 @@ namespace Mikrocosmos
         //end 
 
 
-        
+
+        #endregion
+
+
+
     }
 }

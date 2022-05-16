@@ -12,7 +12,14 @@ namespace Mikrocosmos
        
         public GoodsRarity GoodRarity { get; set; }
 
-        public bool Sold { get; set; }
+        public bool TransactionFinished { get; set; }
+
+        int RealPrice { get; set; }
+
+        /// <summary>
+        /// true if is being sold; false if is being demanded
+        /// </summary>
+        bool IsSell { get; set; }
     }
 
 }

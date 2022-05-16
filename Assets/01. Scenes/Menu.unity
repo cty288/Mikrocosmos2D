@@ -171,15 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89883e1bc7c50b24082233fbfdac44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityFieldRange: 100
-  affectedPlanetLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  G: 0.00000001
-  startDirection: {x: 1, y: 1}
-  mass: 0
-  initialForce: 0.5
-  initialForceMultiplier: 0.01
 --- !u!50 &44157549
 Rigidbody2D:
   serializedVersion: 4
@@ -451,15 +442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89883e1bc7c50b24082233fbfdac44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityFieldRange: 100
-  affectedPlanetLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  G: 0.00000001
-  startDirection: {x: 0, y: 0}
-  mass: 0
-  initialForce: 0.5
-  initialForceMultiplier: 0.01
 --- !u!50 &66722566
 Rigidbody2D:
   serializedVersion: 4
@@ -596,15 +578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89883e1bc7c50b24082233fbfdac44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityFieldRange: 100
-  affectedPlanetLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  G: 0.00000001
-  startDirection: {x: 0, y: 0}
-  mass: 0
-  initialForce: 0.5
-  initialForceMultiplier: 0.01
 --- !u!50 &81895875
 Rigidbody2D:
   serializedVersion: 4
@@ -693,11 +666,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &120418147 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1546541824714299389, guid: eada2c82e30aad348b7244cd3523c062, type: 3}
-  m_PrefabInstance: {fileID: 1546541824696137886}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &134357966
 GameObject:
   m_ObjectHideFlags: 0
@@ -2437,15 +2405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89883e1bc7c50b24082233fbfdac44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityFieldRange: 100
-  affectedPlanetLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  G: 0.00000001
-  startDirection: {x: 0, y: 0}
-  mass: 0
-  initialForce: 0.5
-  initialForceMultiplier: 0.01
 --- !u!50 &733737548
 Rigidbody2D:
   serializedVersion: 4
@@ -2906,6 +2865,8 @@ MonoBehaviour:
   - {fileID: 7969864455404771155, guid: a50626b64beb33d4191f882b662eebb0, type: 3}
   - {fileID: 7986015997137912893, guid: a0dfa0b1a9bada345854ed64fed3d26b, type: 3}
   - {fileID: 7986015997137912893, guid: dd471e5954263984ebfef7d6f7977b90, type: 3}
+  - {fileID: 6410031578183631850, guid: da1a03242ab176b499f5a976904f4940, type: 3}
+  - {fileID: 6410031578183631850, guid: 6797d0d1736c23a41a79b9f34e622f8b, type: 3}
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 7748040167451011738, guid: 728c8b14dd30eaa41896b442b2bbd183, type: 3}
@@ -3806,10 +3767,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a039a49610e884cac394b4aa2702f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1633647327}
-  speed: 1
-  x: 10
-  z: 0.5
 --- !u!58 &1226046246
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4477,15 +4434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89883e1bc7c50b24082233fbfdac44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityFieldRange: 100
-  affectedPlanetLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  G: 0.00000001
-  startDirection: {x: -1, y: 1}
-  mass: 0
-  initialForce: 0.5
-  initialForceMultiplier: 0.01
 --- !u!50 &1380936272
 Rigidbody2D:
   serializedVersion: 4
@@ -5043,10 +4991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a039a49610e884cac394b4aa2702f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 120418147}
-  speed: 2
-  x: 1
-  z: 0.2
 --- !u!58 &1567367387
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -5492,15 +5436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89883e1bc7c50b24082233fbfdac44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityFieldRange: 100
-  affectedPlanetLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  G: 0.00000001
-  startDirection: {x: 0, y: 0}
-  mass: 0
-  initialForce: 0
-  initialForceMultiplier: 0
 --- !u!114 &1684978573 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8854636764338934250, guid: 31eb9d15b2a322e41b42ac434f0555cf, type: 3}
@@ -5544,15 +5479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89883e1bc7c50b24082233fbfdac44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityFieldRange: 100
-  affectedPlanetLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  G: 0.00000001
-  startDirection: {x: 0, y: 0}
-  mass: 0
-  initialForce: 0.5
-  initialForceMultiplier: 0.01
 --- !u!50 &1704669513
 Rigidbody2D:
   serializedVersion: 4

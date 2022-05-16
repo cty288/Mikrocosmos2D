@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface ICanBuyViewController : IController {
-        ICanBuyViewController BuyModel { get; }
+    public interface ICanSellPackageViewController : IController {
+        ICanSellPackage SellPackageModel { get; }
     }
 }

@@ -48,10 +48,18 @@ namespace Mikrocosmos
                 HookState = HookState,
                 HookedByIdentity = hookedBy
             });
+            OnServerHooked();
         }
 
-      
+        [ServerCallback]
+        protected virtual void OnServerHooked() {
 
+        }
+        [ServerCallback]
+        protected virtual void OnServerUnHooked()
+        {
+
+        }
 
         /// <summary>
         /// Unhook self if hooked
@@ -82,6 +90,7 @@ namespace Mikrocosmos
                 HookState = HookState,
                 HookedByIdentity = this.HookedByIdentity
             });
+            OnServerUnHooked();
             HookedByIdentity = null;
             
         }
