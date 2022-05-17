@@ -16,6 +16,12 @@ namespace Mikrocosmos
         public int Price;
         public GameObject GeneratedItem;
     }
+
+    public struct OnServerPlanetGenerateBuyingItem {
+        public GameObject ParentPlanet;
+        public int Price;
+        public GameObject GeneratedItem;
+    }
     public interface IPlanetTradingSystem : ISystem {
 
     }
@@ -34,6 +40,12 @@ namespace Mikrocosmos
         };
 
         private float BuyItemTimer;
+
+        private GoodsConfigure currentBuyingItemConfig;
+        private IGoods currentBuyingItem;
+        private GameObject currentBuyingItemObject;
+        private int currentBuyingItemPrice;
+
 
         private GoodsConfigure currentSellingItemConfig;
         private IGoods currentSellingItem;
@@ -63,6 +75,16 @@ namespace Mikrocosmos
                     ParentPlanet = this.gameObject,
                     Price = currentSellingItemPrice
                 });
+             
+            }
+
+            if (currentBuyingItem != null) {
+                this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem()
+                {
+                    GeneratedItem = currentBuyingItemObject,
+                    ParentPlanet = this.gameObject,
+                    Price = currentBuyingItemPrice
+                });
             }
         }
 
@@ -71,7 +93,7 @@ namespace Mikrocosmos
                 BuyItemTimer -= Time.deltaTime;
                 if (BuyItemTimer <= 0) {
                     BuyItemTimer = Random.Range(BuyItemMaxTime - 5, BuyItemMaxTime + 5);
-                    
+                    SwitchBuyItem();
                 }
 
                 if (currentSellingItem==null || currentSellingItem.TransactionFinished) {
@@ -86,7 +108,7 @@ namespace Mikrocosmos
         private void SwitchSellItem()
         {
             
-            List<GoodsConfigure> secondaryMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Secondary);
+            List<GoodsConfigure> secondaryMaterials = planetModel.GetSellItemsWithRarity(GoodsRarity.Secondary);
             List<GoodsConfigure> targetList = secondaryMaterials;
             GoodsConfigure selectedGoodsConfigure = null;
             if (targetList.Count > 1)
@@ -163,26 +185,26 @@ namespace Mikrocosmos
                 selectedGoodsConfigure = targetList[0];
             }
 
-            if (currentSellingItemObject != null && !currentSellingItem.TransactionFinished) {
-                Destroy(currentSellingItemObject);
+            if (currentBuyingItemObject != null && !currentBuyingItem.TransactionFinished) {
+                Destroy(currentBuyingItemObject);
             }
 
-            currentSellingItemConfig = selectedGoodsConfigure;
-            currentSellingItemObject = Instantiate(currentSellingItemConfig.GoodPrefab, transform.position,
+            currentBuyingItemConfig = selectedGoodsConfigure;
+            currentBuyingItemObject = Instantiate(currentBuyingItemConfig.GoodPrefab, transform.position,
                 Quaternion.identity);
-            NetworkServer.Spawn(currentSellingItemObject);
-            currentSellingItem = currentSellingItemObject.GetComponent<IGoods>();
-            currentSellingItem.IsSell = false;
-            currentSellingItem.TransactionFinished = false;
+            NetworkServer.Spawn(currentBuyingItemObject);
+            currentBuyingItem = currentBuyingItemObject.GetComponent<IGoods>();
+            currentBuyingItem.IsSell = false;
+            currentBuyingItem.TransactionFinished = false;
 
-            int basePrice = currentSellingItemConfig.RealPriceOffset + currentSellingItem.BasicBuyPrice;
-            currentSellingItemPrice = Random.Range(basePrice - 5, basePrice + 5);
+            int basePrice = currentBuyingItemConfig.RealPriceOffset + currentBuyingItem.BasicBuyPrice;
+            currentBuyingItemPrice = Random.Range(basePrice - 5, basePrice + 5);
 
 
-            this.SendEvent<OnServerPlanetGenerateSellItem>(new OnServerPlanetGenerateSellItem() {
-                GeneratedItem = currentSellingItemObject,
+            this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem() {
+                GeneratedItem = currentBuyingItemObject,
                 ParentPlanet = this.gameObject,
-                Price = currentSellingItemPrice
+                Price = currentBuyingItemPrice
             });
         }
     }

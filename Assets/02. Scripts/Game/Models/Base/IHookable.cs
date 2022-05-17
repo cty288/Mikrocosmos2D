@@ -18,7 +18,7 @@ namespace Mikrocosmos
 
         Transform ClientHookedByTransform { get; }
 
-        void Hook(NetworkIdentity hookedBy);
+        bool Hook(NetworkIdentity hookedBy);
         void UnHook();
     }
 

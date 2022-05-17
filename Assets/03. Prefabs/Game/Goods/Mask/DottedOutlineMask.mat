@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: vision_entity
-  m_Shader: {fileID: 4800000, guid: 6d1417b0fc765234b80b34d3b460ccc8, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA FLIP_H
+  m_Name: DottedOutlineMask
+  m_Shader: {fileID: 4800000, guid: 249c1b3e4a703894f93d5716a6fab338, type: 3}
+  m_ShaderKeywords: FLIP_H
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,40 +19,27 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalMap:
+    - _RampTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaValue: 1
-    - _EnableExternalAlpha: 0
     - _FlipHorizontalDirection: 1
     - _FlipVerticalDirection: 0
-    - _ForText: 0
-    - _OutlineDot: 0.05
-    - _OutlineDot2: 0.68
-    - _OutlineExtrusion: 1.24
-    - _OutlineSpeed: 0.0339
-    - _OutlineWidth: 10.3
-    - _Transparency: 0
+    - _OutlineDot: -0.05
+    - _OutlineDot2: -0.06
+    - _OutlineExtrusion: 2.11
+    - _OutlineSpeed: 0.0633
+    - _OutlineWidth: 4.3
+    - _Transparency: 0.42
+    - _UseTexture: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
     - _SourcePos: {r: 0, g: 0, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

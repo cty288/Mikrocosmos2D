@@ -19,7 +19,7 @@ Shader "mk/DottedOutline"
 	SubShader
 	{
 		Tags{
-			"Queue" = "Transparent"
+			"Queue" = "Transparent" "RenderPipeline" = "UniversalPipeline" 
 		}
 		Blend SrcAlpha OneMinusSrcAlpha
 	
@@ -136,5 +136,7 @@ Shader "mk/DottedOutline"
 
 			ENDCG
 		}
+
+
 	}
 }

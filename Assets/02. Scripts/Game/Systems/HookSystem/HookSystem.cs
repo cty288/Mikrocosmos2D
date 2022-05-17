@@ -191,10 +191,11 @@ namespace Mikrocosmos {
                         HookedItem = vc;
                         HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
                         vc.Model.UnHook();
-                        vc.Model.Hook(netIdentity);
-                        animator.SetBool("Hooking", true);
-                        checkingHook = false;
-                        break;
+                        if (vc.Model.Hook(netIdentity)) {
+                            animator.SetBool("Hooking", true);
+                            checkingHook = false;
+                            break;
+                        }
                     }
                 }
 

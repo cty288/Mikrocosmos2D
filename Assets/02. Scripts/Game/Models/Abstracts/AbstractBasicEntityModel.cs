@@ -40,15 +40,26 @@ namespace Mikrocosmos
         /// Hook self if not hooked
         /// </summary>
         [ServerCallback]
-        public void Hook(NetworkIdentity hookedBy) {
-            HookState = HookState.Hooked;
-            HookedByIdentity = hookedBy;
-            this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged() {
-                Identity = netIdentity,
-                HookState = HookState,
-                HookedByIdentity = hookedBy
-            });
-            OnServerHooked();
+        public bool Hook(NetworkIdentity hookedBy) {
+            if (ServerCheckCanHook()) {
+                HookState = HookState.Hooked;
+                HookedByIdentity = hookedBy;
+                this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
+                {
+                    Identity = netIdentity,
+                    HookState = HookState,
+                    HookedByIdentity = hookedBy
+                });
+                OnServerHooked();
+                return true;
+            }
+
+            return false;
+        }
+
+        [ServerCallback]
+        protected virtual bool ServerCheckCanHook() {
+            return true;
         }
 
         [ServerCallback]

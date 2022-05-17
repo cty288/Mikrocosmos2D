@@ -6,6 +6,7 @@ using MikroFramework.Event;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
@@ -22,11 +23,13 @@ namespace Mikrocosmos
         public IHaveGravity GravityModel { get; protected set; }
 
         private Transform sellItemSpawnPosition;
-        private TMP_Text sellPriceText;
+        private Text sellPriceText;
 
-
+        private Transform buytemSpawnPosition;
+        private Text buyPriceText;
 
         private void Awake() {
+         
             BuyPackageModel = GetComponent<ICanBuyPackage>();
             GravityModel = GetComponent<IHaveGravity>();
             SellPackageModel = GetComponent<ICanSellPackage>();
@@ -35,9 +38,12 @@ namespace Mikrocosmos
             distance = Vector3.Distance(target.transform.position, transform.position);
             progress = Random.Range(0, 360000);
 
-            sellItemSpawnPosition = transform.Find("BubbleBG/SellItemSpawnPos");
+            sellItemSpawnPosition = transform.Find("SellBubbleBG/SellItemSpawnPos");
+            buytemSpawnPosition = transform.Find("BuyBubbleBG/BuyItemSpawnPos");
             if (sellItemSpawnPosition) {
-                sellPriceText = transform.Find("Canvas/SellPrice").GetComponent<TMP_Text>();
+                sellPriceText = transform.Find("Canvas/SellPrice").GetComponent<Text>();
+                buyPriceText = transform.Find("Canvas/BuyPrice").GetComponent<Text>();
+                buyPriceText.gameObject.SetActive(false);
             }
           
         }
@@ -54,6 +60,16 @@ namespace Mikrocosmos
             base.OnStartServer();
             this.RegisterEvent<OnServerPlanetGenerateSellItem>(OnServerPlanetGenerateSellItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnServerPlanetGenerateBuyingItem)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+        [ServerCallback]
+        private void OnServerPlanetGenerateBuyingItem(OnServerPlanetGenerateBuyingItem e) {
+            if (e.ParentPlanet == gameObject) {
+                e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = buytemSpawnPosition;
+                RpcChangeBuyPrice(e.Price);
+            }
+          
         }
 
         [ServerCallback]
@@ -69,6 +85,12 @@ namespace Mikrocosmos
         [ClientRpc]
         private void RpcChangeSellPrice(int price) {
             sellPriceText.text = price.ToString();
+        }
+
+        [ClientRpc]
+        private void RpcChangeBuyPrice(int price) {
+            buyPriceText.gameObject.SetActive(true);
+            buyPriceText.text = price.ToString();
         }
 
         #region Rotation

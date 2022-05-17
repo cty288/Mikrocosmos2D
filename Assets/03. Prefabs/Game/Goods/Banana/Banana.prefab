@@ -15,12 +15,11 @@ GameObject:
   - component: {fileID: 6410031578183631639}
   - component: {fileID: 1133179267551477265}
   - component: {fileID: 1145151507007897450}
-  - component: {fileID: 7009927598964169536}
   - component: {fileID: 2517722696999079066}
-  - component: {fileID: 4623635824010423997}
-  - component: {fileID: 5368087662972855746}
+  - component: {fileID: 2154512109004640789}
+  - component: {fileID: -2388563459011212752}
   m_Layer: 7
-  m_Name: Statellite
+  m_Name: Banana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 6410031578183631850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.2, y: -12.3, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 0.3407, y: 0.3407, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7cb689f2ca01156458d93236e01ffa9d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd83751d7a215fd44999f123b326a98a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -113,28 +112,25 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 00000000
   m_ShapePath:
-  - {x: -2.446741, y: -1.0999451, z: 0}
-  - {x: -2.1629658, y: -0.4728012, z: 0}
-  - {x: -2.0078335, y: 0.976099, z: 0}
-  - {x: -0.7674618, y: 2.6088142, z: 0}
-  - {x: 0.7990875, y: 2.0988693, z: 0}
-  - {x: 1.148056, y: 1.5830021, z: 0}
-  - {x: 1.9370289, y: 1.4464493, z: 0}
-  - {x: 2.252386, y: 1.4401627, z: 0}
-  - {x: 2.4832401, y: 1.2643795, z: 0}
-  - {x: 1.9241867, y: 0.03929138, z: 0}
-  - {x: 2.2101345, y: -0.495636, z: 0}
-  - {x: 2.2708244, y: -1.1177101, z: 0}
-  - {x: 2.2102776, y: -1.7235336, z: 0}
-  - {x: 1.8308201, y: -2.0887547, z: 0}
-  - {x: 1.3604717, y: -2.3315144, z: 0}
-  - {x: 0.73430634, y: -2.4866505, z: 0}
-  - {x: 0.013368607, y: -2.4994717, z: 0}
-  - {x: -1.0974808, y: -2.0735817, z: 0}
-  - {x: -1.9167976, y: -1.9522018, z: 0}
-  m_ShapePathHash: 1915785287
+  - {x: -8.847885, y: -4.2885303, z: 0}
+  - {x: -5.302526, y: -2.1215906, z: 0}
+  - {x: -1.627717, y: 6.132193, z: 0}
+  - {x: 1.1511617, y: 1.5248238, z: 0}
+  - {x: 2.0519373, y: 0.09010805, z: 0}
+  - {x: 3.2048671, y: -0.7641568, z: 0}
+  - {x: 5.324009, y: -1.4705364, z: 0}
+  - {x: 8.654084, y: -1.7228136, z: 0}
+  - {x: 8.95682, y: -2.3787384, z: 0}
+  - {x: 7.4431477, y: -3.4887626, z: 0}
+  - {x: 6.434033, y: -4.9015245, z: 0}
+  - {x: 6.2322106, y: -5.809726, z: 0}
+  - {x: 1.3884606, y: -6.112461, z: 0}
+  - {x: -2.149741, y: -4.0779862, z: 0}
+  - {x: -3.9368908, y: -5.0566654, z: 0}
+  - {x: -6.7674503, y: -5.5892167, z: 0}
+  m_ShapePathHash: 939031523
   m_Mesh: {fileID: 0}
-  m_InstanceId: 56396
+  m_InstanceId: 50324
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +146,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 6797d0d1736c23a41a79b9f34e622f8b
+  m_AssetId: b58fb26c4d4008f46ab0037d23e551c6
   hasSpawned: 0
 --- !u!114 &6410031578183631639
 MonoBehaviour:
@@ -229,25 +225,6 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
---- !u!114 &7009927598964169536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d1de09509287094b9b15a251c817147, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  defaultSpriteLitMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  visionEntityMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
-  visionAffectedSprites:
-  - {fileID: 6410031578183631637}
-  <CanBeMasked>k__BackingField: 1
 --- !u!114 &2517722696999079066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,11 +244,47 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <ClientHookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <BasicSellPrice>k__BackingField: 30
-  <BasicBuyPrice>k__BackingField: 20
-  <GoodRarity>k__BackingField: 1
-  <SelfMass>k__BackingField: 2
---- !u!114 &4623635824010423997
+  <BasicSellPrice>k__BackingField: 1
+  <BasicBuyPrice>k__BackingField: 5
+  <GoodRarity>k__BackingField: 0
+  <IsSell>k__BackingField: 1
+  <SelfMass>k__BackingField: 0.1
+--- !u!68 &2154512109004640789
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -8.9729595, y: -4.934779}
+  - {x: -8.6979, y: -4.0996594}
+  - {x: -4.353617, y: -1.0686235}
+  - {x: -3.456965, y: 2.1502724}
+  - {x: -2.1208858, y: 4.525126}
+  - {x: -1.8719563, y: 5.884491}
+  - {x: -0.66657853, y: 5.8988957}
+  - {x: 2.092947, y: -0.1744647}
+  - {x: 9.14216, y: -2.0752301}
+  - {x: 6.1193056, y: -5.737952}
+  - {x: 2.0365577, y: -6.1538553}
+  - {x: -2.178204, y: -3.857036}
+  - {x: -5.9528494, y: -5.5768914}
+  - {x: -7.8260784, y: -5.151005}
+  - {x: -8.944079, y: -4.8968225}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
+--- !u!114 &-2388563459011212752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,19 +299,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   <IsMaskable>k__BackingField: 1
---- !u!58 &5368087662972855746
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2.505
+  buyMaterial: {fileID: 2100000, guid: 7476c8772d847a14a844b69736112137, type: 2}
+  sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
+  visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
+  defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  visionAffectedSprites:
+  - {fileID: 6410031578183631637}
+  <CanBeMasked>k__BackingField: 1

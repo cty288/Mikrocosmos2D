@@ -13,6 +13,9 @@
         [HideInInspector] _Flip("Flip", Vector) = (1,1,1,1)
         [HideInInspector] _AlphaTex("External Alpha", 2D) = "white" {}
         [HideInInspector] _EnableExternalAlpha("Enable External Alpha", Float) = 0
+
+        [Toggle(FOR_TEXT)] _ForText("For Text", Float) = 0
+
     }
 
     HLSLINCLUDE
@@ -26,7 +29,8 @@
         Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
         ZWrite Off
-
+        // Outline pass
+		
         Pass
         {
             Tags { "LightMode" = "Universal2D" }
@@ -38,7 +42,7 @@
             #pragma multi_compile USE_SHAPE_LIGHT_TYPE_1 __
             #pragma multi_compile USE_SHAPE_LIGHT_TYPE_2 __
             #pragma multi_compile USE_SHAPE_LIGHT_TYPE_3 __
-
+            #pragma shader_feature FOR_TEXT
             struct Attributes
             {
                 float3 positionOS   : POSITION;
@@ -66,7 +70,7 @@
             half4 _MainTex_ST;
             half4 _NormalMap_ST;
             float _AlphaValue;
-            half4 _Color;
+            uniform float4 _Color;
             half4 _Tint;
 
             #if USE_SHAPE_LIGHT_TYPE_0
@@ -104,14 +108,20 @@
             {
                 half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
-
-                half4 result = CombinedShapeLightShared(main, mask, i.lightingUV, i.worldPos) * _Tint;
+                #ifdef FOR_TEXT
+                if(main.a >0){
+                    main += _Color;
+                }
+                #endif
+                
+                half4 result = CombinedShapeLightShared(main, mask, i.lightingUV, i.worldPos) * _Tint ;
                 //_AlphaValue = CombinedShapeLightShared(main,mask, half2(0.5,0.5), mul(unity_ObjectToWorld, half2(0.5,0.5)));
-                return result;
+                
+                return result; //+ _Color;
             }
             ENDHLSL
         }
-
+        
         Pass
         {
             Tags { "LightMode" = "NormalsRendering"}
@@ -119,7 +129,7 @@
             #pragma prefer_hlslcc gles
             #pragma vertex NormalsRenderingVertex
             #pragma fragment NormalsRenderingFragment
-
+            uniform float4 _Color;
             struct Attributes
             {
                 float3 positionOS   : POSITION;
@@ -164,10 +174,18 @@
             {
                 float4 mainTex = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 float3 normalTS = UnpackNormal(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, i.uv));
-                return NormalsRenderingShared(mainTex, normalTS, i.tangentWS.xyz, i.bitangentWS.xyz, i.normalWS.xyz) ;
+               
+
+                float4 result = NormalsRenderingShared(mainTex, normalTS, i.tangentWS.xyz, i.bitangentWS.xyz, i.normalWS.xyz);
+                 
+
+                   return result;
+
             }
             ENDHLSL
         }
+        
+
         Pass
         {
             Tags { "LightMode" = "UniversalForward" "Queue"="Transparent" "RenderType"="Transparent"}
@@ -176,7 +194,7 @@
             #pragma prefer_hlslcc gles
             #pragma vertex UnlitVertex
             #pragma fragment UnlitFragment
-
+            uniform float4 _Color;
             struct Attributes
             {
                 float3 positionOS   : POSITION;
@@ -209,10 +227,14 @@
             float4 UnlitFragment(Varyings i) : SV_Target
             {
                 float4 mainTex = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                return mainTex;
+                
+               
+                return mainTex ;
             }
             ENDHLSL
         }
+
+   
     }
 
     Fallback "Sprites/Default"
