@@ -135,7 +135,7 @@ MonoBehaviour:
   - {x: -1.9167976, y: -1.9522018, z: 0}
   m_ShapePathHash: 1915785287
   m_Mesh: {fileID: 0}
-  m_InstanceId: 144398
+  m_InstanceId: 209752
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   bufferTimeMultiplier: 3
   bufferSizeLimit: 64
   catchupThreshold: 6
-  catchupMultiplier: 0
+  catchupMultiplier: 0.081
   onlySyncOnChange: 1
   bufferResetMultiplier: 5
   positionSensitivity: 0.01

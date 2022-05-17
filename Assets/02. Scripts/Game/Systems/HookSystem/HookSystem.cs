@@ -131,18 +131,21 @@ namespace Mikrocosmos {
         
         public void ServerShootTrigger()
         {
-            Vector2 force = transform.up * maxShootForce * realShootPercent;
-            Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
-            this.SendEvent<OnItemShot>(new OnItemShot()
-            {
-                Force = force,
-                TargetShotItem = HookedItem as ICanBeShotViewController
-            });
+            if (isServer) {
+                Vector2 force = transform.up * maxShootForce * realShootPercent;
+                Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
+                this.SendEvent<OnItemShot>(new OnItemShot()
+                {
+                    Force = force,
+                    TargetShotItem = HookedItem as ICanBeShotViewController
+                });
 
-            HookedItem.Model.UnHook(true);
-            HookedItem = null;
+                HookedItem.Model.UnHook(true);
+                HookedItem = null;
 
-            HookedNetworkIdentity = null;
+                HookedNetworkIdentity = null;
+            }
+            
         }
 
         private float realShootPercent;

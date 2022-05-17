@@ -1129,7 +1129,7 @@ MonoBehaviour:
   bufferTimeMultiplier: 3
   bufferSizeLimit: 64
   catchupThreshold: 6
-  catchupMultiplier: 0
+  catchupMultiplier: 0.054
   onlySyncOnChange: 0
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
@@ -1433,6 +1433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c83b296c88aa7249b26b6ab0f25de8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0
