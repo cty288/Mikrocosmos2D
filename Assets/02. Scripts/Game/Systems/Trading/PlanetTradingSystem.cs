@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
@@ -21,6 +22,10 @@ namespace Mikrocosmos
         public GameObject ParentPlanet;
         public int Price;
         public GameObject GeneratedItem;
+    }
+
+    public struct OnServerPlayerMoneyNotEnough {
+        public NetworkIdentity PlayerIdentity;
     }
     public interface IPlanetTradingSystem : ISystem {
 
@@ -63,17 +68,46 @@ namespace Mikrocosmos
             this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnPlayerJoinGame)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerTrySellItem>(OnServerTrySellItem);
+            this.RegisterEvent<OnServerTryBuytem>(OnServerTryBuyItem);
         }
 
+        private void OnServerTryBuyItem(OnServerTryBuytem e) {
+            if (e.RequestingGoods == currentSellingItem) {
+                PlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<PlayerTradingSystem>();
+                //Debug.Log($"Buy: {currentSellingItemPrice}, {currentSellingItemObject.name}");
+
+                if (!currentSellingItem.TransactionFinished)
+                {
+                    spaceship.Money -= currentSellingItem.RealPrice;
+                }
+
+                currentSellingItem.TransactionFinished = true;
+                currentSellingItem = null;
+            }
+           
+        }
+
+        [ServerCallback]
         private void OnServerTrySellItem(OnServerTrySellItem e) {
 
             if (e.DemandedByPlanet == currentBuyingItem) {
                 //need to check money first
                 Debug.Log(e.HookedByIdentity.GetComponent<PlayerSpaceship>().name + "" +
                           $"Sold a {e.RequestingGoodsGameObject.name}");
+                if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship)) {
+                    
 
-                NetworkServer.Destroy(e.RequestingGoodsGameObject);
-               SwitchBuyItem();
+                    spaceship.Money += currentBuyingItem.RealPrice;
+                    Debug.Log(currentBuyingItem.RealPrice);
+                    NetworkServer.Destroy(e.RequestingGoodsGameObject);
+                    SwitchBuyItem();
+
+
+                    //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
+                       // PlayerIdentity = e.HookedByIdentity
+                    //});
+
+                }
             }
         }
 
@@ -199,7 +233,7 @@ namespace Mikrocosmos
             }
 
             if (currentBuyingItemObject != null && !currentBuyingItem.TransactionFinished) {
-                Destroy(currentBuyingItemObject);
+                NetworkServer. Destroy(currentBuyingItemObject);
             }
 
             currentBuyingItemConfig = selectedGoodsConfigure;
@@ -212,7 +246,7 @@ namespace Mikrocosmos
 
             int basePrice = currentBuyingItemConfig.RealPriceOffset + currentBuyingItem.BasicBuyPrice;
             currentBuyingItemPrice = Random.Range(basePrice - 5, basePrice + 5);
-
+            currentBuyingItem.RealPrice = currentBuyingItemPrice;
 
             this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem() {
                 GeneratedItem = currentBuyingItemObject,

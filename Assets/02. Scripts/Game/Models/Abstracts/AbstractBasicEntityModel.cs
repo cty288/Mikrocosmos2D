@@ -41,7 +41,7 @@ namespace Mikrocosmos
         /// </summary>
         [ServerCallback]
         public bool Hook(NetworkIdentity hookedBy) {
-            if (ServerCheckCanHook()) {
+            if (ServerCheckCanHook(hookedBy)) {
                 HookState = HookState.Hooked;
                 HookedByIdentity = hookedBy;
                 this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
@@ -58,7 +58,7 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        protected virtual bool ServerCheckCanHook() {
+        protected virtual bool ServerCheckCanHook(NetworkIdentity hookedBy) {
             return true;
         }
 

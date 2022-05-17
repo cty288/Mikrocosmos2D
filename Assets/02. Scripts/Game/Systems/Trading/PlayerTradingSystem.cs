@@ -1,21 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
+using Mirror;
 using UnityEngine;
 
-namespace Mikrocosmos
-{
-    public class PlayerTradingSystem : MonoBehaviour
-    {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+namespace Mikrocosmos {
 
-        // Update is called once per frame
-        void Update()
-        {
-        
+    public struct OnClientMoneyChange {
+        public int OldMoney;
+        public int NewMoney;
+    }
+    public interface IPlayerTradingSystem : ISystem {
+        public int Money { get; set; }
+    }
+
+    public class PlayerTradingSystem : AbstractNetworkedSystem, IPlayerTradingSystem {
+        [field: SyncVar(hook  = nameof(OnClientMoneyChange))]
+        public int Money { get; set; } = 50;
+
+        [ClientCallback]
+        private void OnClientMoneyChange(int oldMoney, int newMoney){
+            if (hasAuthority) {
+                this.SendEvent<OnClientMoneyChange>(new OnClientMoneyChange() {
+                    OldMoney = oldMoney,
+                    NewMoney = newMoney
+                });
+            }
         }
     }
 }

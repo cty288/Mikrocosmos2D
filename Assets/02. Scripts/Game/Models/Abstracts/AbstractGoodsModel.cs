@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Utilities;
 using Mirror;
@@ -22,7 +23,16 @@ namespace Mikrocosmos
         public GameObject RequestingGoodsGameObject;
     }
 
-    public abstract class AbstractGoodsModel : AbstractBasicEntityModel, IGoods, IAffectedByGravity {
+    public struct OnServerTryBuytem
+    {
+        public IGoods RequestingGoods;
+        public NetworkIdentity HookedByIdentity;
+        public GameObject RequestingGoodsGameObject;
+    }
+
+
+    public abstract class AbstractGoodsModel : AbstractBasicEntityModel, IGoods, IAffectedByGravity,
+    ICanSendQuery{
         [field: SerializeField] public int BasicSellPrice { get; set; }
         [field: SerializeField] public int BasicBuyPrice { get; set; }
         [field: SerializeField] public GoodsRarity GoodRarity { get; set; }
@@ -53,17 +63,35 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        protected override bool ServerCheckCanHook() {
-            return IsSell;
-        }
+        protected override bool ServerCheckCanHook(NetworkIdentity hookedBy) {
+            if (TransactionFinished) {
+                return true;
+            }
+            else {
+                if (!IsSell) {
+                    return false;
+                }
 
-        protected override void OnServerHooked() {
-            base.OnServerHooked();
-            if (IsSell) {
-                TransactionFinished = true;
-               
+                //check money
+                int money = this.SendQuery<int>(new ServerGetPlayerMoneyQuery(hookedBy));
+                if (money - RealPrice < 0) {
+                    this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
+                     PlayerIdentity = hookedBy
+                    });
+                    return false;
+                }
+                else {
+                    this.SendEvent<OnServerTryBuytem>(new OnServerTryBuytem() {
+                        HookedByIdentity = hookedBy,
+                        RequestingGoods = this,
+                        RequestingGoodsGameObject = gameObject
+                    });
+                    return true;
+                }
             }
         }
+
+       
 
         //deal with trading
         [ServerCallback]

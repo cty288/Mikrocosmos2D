@@ -910,6 +910,7 @@ GameObject:
   - component: {fileID: 4467966795216033169}
   - component: {fileID: 3391074858448251004}
   - component: {fileID: 5636032464893549542}
+  - component: {fileID: 7374458345003629090}
   m_Layer: 6
   m_Name: PlayerSpaceship
   m_TagString: Untagged
@@ -1269,6 +1270,18 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 1
   animator: {fileID: 3230964490078167896}
+--- !u!114 &7374458345003629090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986015997137912893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c83b296c88aa7249b26b6ab0f25de8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0
