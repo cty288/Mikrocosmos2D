@@ -96,6 +96,9 @@ namespace Mikrocosmos
         }
 
 
+        //deal with sell
+        
+
 
         #region Vision
         [field: SyncVar(hook = nameof(OnCanBeMaskedChanged)), SerializeField]

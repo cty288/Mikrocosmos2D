@@ -127,6 +127,8 @@ namespace Mikrocosmos {
             hookHoldTimer = 0;
             //start check hook type
         }
+
+        
         public void ServerShootTrigger()
         {
             Vector2 force = transform.up * maxShootForce * realShootPercent;
@@ -137,7 +139,7 @@ namespace Mikrocosmos {
                 TargetShotItem = HookedItem as ICanBeShotViewController
             });
 
-            HookedItem.Model.UnHook();
+            HookedItem.Model.UnHook(true);
             HookedItem = null;
 
             HookedNetworkIdentity = null;
@@ -145,7 +147,7 @@ namespace Mikrocosmos {
 
         private float realShootPercent;
         private void TryShoot() {
-            if (HookedItem != null) {
+            if (HookedItem != null && HookedItem is ICanBeShotViewController) {
                 float realPercent = (hookShootChargePercent * 2);
                 if (realPercent >= 1) {
                     realPercent = -realPercent + 2;
@@ -157,8 +159,9 @@ namespace Mikrocosmos {
         }
 
         private void TryUnHook() {
-            if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {//TODO: change to icanbehootvc
-                HookedItem.Model.UnHook();
+            if (HookedItem != null) {
+
+                HookedItem.Model.UnHook(false);
             }
            
             HookedItem = null;
@@ -190,7 +193,7 @@ namespace Mikrocosmos {
                     {
                         HookedItem = vc;
                         HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
-                        vc.Model.UnHook();
+                        vc.Model.UnHook(false);
                         if (vc.Model.Hook(netIdentity)) {
                             animator.SetBool("Hooking", true);
                             checkingHook = false;

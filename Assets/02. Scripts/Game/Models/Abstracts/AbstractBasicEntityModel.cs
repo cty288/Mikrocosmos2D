@@ -63,6 +63,11 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
+        protected virtual void OnServerBeforeUnHooked() {
+
+        }
+
+        [ServerCallback]
         protected virtual void OnServerHooked() {
 
         }
@@ -76,9 +81,11 @@ namespace Mikrocosmos
         /// Unhook self if hooked
         /// </summary>
         [ServerCallback]
-        public void UnHook() {
+        public void UnHook(bool isShoot) {
             //优化一下
             if (HookedByIdentity) {
+                Debug.Log("UnHooked");
+                OnServerBeforeUnHooked();
                 HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
                 HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
                 HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);

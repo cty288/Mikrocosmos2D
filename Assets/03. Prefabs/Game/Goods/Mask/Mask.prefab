@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3624761722817670998}
   - component: {fileID: 2517722696999079066}
   - component: {fileID: 4623635824010423997}
+  - component: {fileID: 7885202947231709620}
   m_Layer: 7
   m_Name: Mask
   m_TagString: Untagged
@@ -122,7 +123,7 @@ MonoBehaviour:
   - {x: 0.19543839, y: -1.1491146, z: 0}
   m_ShapePathHash: -1724063987
   m_Mesh: {fileID: 0}
-  m_InstanceId: 151042
+  m_InstanceId: 144350
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,3 +290,21 @@ MonoBehaviour:
   visionAffectedSprites:
   - {fileID: 6410031578183631637}
   <CanBeMasked>k__BackingField: 1
+--- !u!114 &7885202947231709620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a7f5503a2505a49aca73bf2063239a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  maxDistance: 100
+  detectTime: 1
+  colliders: []

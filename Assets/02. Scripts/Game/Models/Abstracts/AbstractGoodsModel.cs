@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
+using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
 
@@ -12,6 +13,13 @@ namespace Mikrocosmos
 
     public struct ClientOnBuyItemInitialized {
         public GameObject item;
+    }
+
+    public struct OnServerTrySellItem {
+        public IGoods RequestingGoods;
+        public IGoods DemandedByPlanet;
+        public NetworkIdentity HookedByIdentity;
+        public GameObject RequestingGoodsGameObject;
     }
 
     public abstract class AbstractGoodsModel : AbstractBasicEntityModel, IGoods, IAffectedByGravity {
@@ -27,7 +35,13 @@ namespace Mikrocosmos
         [field: SyncVar(hook = nameof(ClientOnSellStatusChanged)), SerializeField] 
         public bool IsSell { get; set; } = true;
 
-     
+        protected Trigger2DCheck triggerCheck;
+
+        protected override void Awake() {
+            base.Awake();
+            triggerCheck = GetComponent<Trigger2DCheck>();
+        }
+
 
         [ServerCallback]
         public void ServerAddGravityForce(float force, Vector2 position, float range) {
@@ -48,6 +62,37 @@ namespace Mikrocosmos
             if (IsSell) {
                 TransactionFinished = true;
                
+            }
+        }
+
+        //deal with trading
+        [ServerCallback]
+        protected override void OnServerBeforeUnHooked() {
+            base.OnServerBeforeUnHooked();
+            if (triggerCheck) {
+                if (triggerCheck.Triggered) {
+                    
+                    foreach (Collider2D collider in triggerCheck.Colliders) {
+                        //is a goods
+                        if (collider.TryGetComponent<IGoods>(out IGoods good)) {
+                            //is the same type? (same type of goods?)
+                            if (good.GetType() == GetType()) {
+                                //is the good actually demanding by a planet?
+                                if (!good.TransactionFinished && !good.IsSell) {
+                                    //satisfy the condition, now sell it
+                                    //however, need to check money first
+                                    this.SendEvent<OnServerTrySellItem>(new OnServerTrySellItem() {
+                                        DemandedByPlanet = good,
+                                        RequestingGoods = this,
+                                        HookedByIdentity = HookedByIdentity,
+                                        RequestingGoodsGameObject = gameObject
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

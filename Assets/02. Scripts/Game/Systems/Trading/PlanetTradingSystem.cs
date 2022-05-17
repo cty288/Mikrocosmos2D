@@ -62,6 +62,19 @@ namespace Mikrocosmos
             base.OnStartServer();
             this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnPlayerJoinGame)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnServerTrySellItem>(OnServerTrySellItem);
+        }
+
+        private void OnServerTrySellItem(OnServerTrySellItem e) {
+
+            if (e.DemandedByPlanet == currentBuyingItem) {
+                //need to check money first
+                Debug.Log(e.HookedByIdentity.GetComponent<PlayerSpaceship>().name + "" +
+                          $"Sold a {e.RequestingGoodsGameObject.name}");
+
+                NetworkServer.Destroy(e.RequestingGoodsGameObject);
+               SwitchBuyItem();
+            }
         }
 
 

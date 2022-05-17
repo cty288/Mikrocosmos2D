@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 2517722696999079066}
   - component: {fileID: 4623635824010423997}
   - component: {fileID: 5368087662972855746}
+  - component: {fileID: 4166255472177508466}
   m_Layer: 7
   m_Name: Statellite
   m_TagString: Untagged
@@ -134,7 +135,7 @@ MonoBehaviour:
   - {x: -1.9167976, y: -1.9522018, z: 0}
   m_ShapePathHash: 1915785287
   m_Mesh: {fileID: 0}
-  m_InstanceId: 82598
+  m_InstanceId: 144398
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,3 +311,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.505
+--- !u!114 &4166255472177508466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a7f5503a2505a49aca73bf2063239a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  maxDistance: 100
+  detectTime: 1
+  colliders: []

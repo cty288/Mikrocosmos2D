@@ -24,7 +24,7 @@ namespace Mikrocosmos
 
         [Command]
         private void CmdUnHook() {
-            UnHook();
+            UnHook(false);
         }
       
         #endregion
