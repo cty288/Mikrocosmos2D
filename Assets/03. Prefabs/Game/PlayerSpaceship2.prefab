@@ -1193,6 +1193,7 @@ MonoBehaviour:
   teamSprites:
   - {fileID: 21300000, guid: c27bff12a31480b4dad0d03ea2323a16, type: 3}
   - {fileID: 21300000, guid: faec01642dea3fb41baba79216bb5ec2, type: 3}
+  - {fileID: 21300000, guid: faec01642dea3fb41baba79216bb5ec2, type: 3}
   Name: 
 --- !u!114 &8913116591047660154
 MonoBehaviour:
@@ -1211,7 +1212,8 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 30
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
-  <ClientHookedByTransform>k__BackingField: {fileID: 0}
+  <HookedByTransform>k__BackingField: {fileID: 0}
+  <Acceleration>k__BackingField: 0
   <InitialAcceleration>k__BackingField: 30
   <SelfMass>k__BackingField: 1
   <AccelerationDecreasePerMass>k__BackingField: 2

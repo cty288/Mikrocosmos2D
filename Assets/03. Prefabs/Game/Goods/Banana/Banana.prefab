@@ -245,7 +245,7 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <BasicSellPrice>k__BackingField: 1
+  <BasicSellPrice>k__BackingField: 10
   <BasicBuyPrice>k__BackingField: 5
   <GoodRarity>k__BackingField: 0
   <IsSell>k__BackingField: 1

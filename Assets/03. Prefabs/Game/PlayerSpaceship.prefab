@@ -1042,6 +1042,7 @@ MonoBehaviour:
   teamSprites:
   - {fileID: 21300000, guid: a42751bbbf261d44e870256942279816, type: 3}
   - {fileID: 21300000, guid: 4de6d92b35f33e346ad6a1a2783e6ce3, type: 3}
+  - {fileID: 21300000, guid: 4de6d92b35f33e346ad6a1a2783e6ce3, type: 3}
   Name: 
 --- !u!114 &8913116591047660154
 MonoBehaviour:

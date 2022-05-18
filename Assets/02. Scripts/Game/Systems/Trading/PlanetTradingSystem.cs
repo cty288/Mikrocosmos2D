@@ -218,7 +218,7 @@ namespace Mikrocosmos
 
 
             int basePrice = currentSellingItemConfig.RealPriceOffset + currentSellingItem.BasicBuyPrice;
-            currentSellingItemPrice = Random.Range(basePrice - 5, basePrice + 5);
+            currentSellingItemPrice = Random.Range(basePrice - 3, basePrice + 4);
             currentSellingItem.RealPrice = currentSellingItemPrice;
 
             this.SendEvent<OnServerPlanetGenerateSellItem>(new OnServerPlanetGenerateSellItem()
@@ -278,7 +278,7 @@ namespace Mikrocosmos
             currentBuyingItem.TransactionFinished = false;
 
             int basePrice = currentBuyingItemConfig.RealPriceOffset + currentBuyingItem.BasicBuyPrice;
-            currentBuyingItemPrice = Random.Range(basePrice - 5, basePrice + 5);
+            currentBuyingItemPrice = Random.Range(basePrice - 3, basePrice + 4);
             currentBuyingItem.RealPrice = currentBuyingItemPrice;
 
             this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem() {
