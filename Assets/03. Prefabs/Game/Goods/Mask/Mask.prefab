@@ -261,13 +261,14 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
-  <ClientHookedByTransform>k__BackingField: {fileID: 0}
+  <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <BasicSellPrice>k__BackingField: 10
   <BasicBuyPrice>k__BackingField: 15
   <GoodRarity>k__BackingField: 1
   <IsSell>k__BackingField: 1
   <SelfMass>k__BackingField: 0.1
+  <Name>k__BackingField: Mask
 --- !u!114 &4623635824010423997
 MonoBehaviour:
   m_ObjectHideFlags: 0

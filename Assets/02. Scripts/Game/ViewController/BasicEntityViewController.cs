@@ -49,44 +49,24 @@ namespace Mikrocosmos
 
         private void OnItemShot(OnItemShot e) {
             if (e.TargetShotItem == this as ICanBeShotViewController) {
-               // Debug.Log(netIdentity.connectionToClient.identity.gameObject.name);
-               if (netIdentity.connectionToClient != null) {
-                   TargetOnShot(netIdentity.connectionToClient, e.Force);
-                }else {
-                   rigidbody.AddForce(e.Force, ForceMode2D.Impulse);
-                }
-
+                rigidbody.AddForce(e.Force, ForceMode2D.Impulse);
             }
         }
 
-        [TargetRpc]
-        protected virtual void TargetOnShot(NetworkConnection conn, Vector2 force) {
-            Debug.Log($"Target On shot {force}");
-            rigidbody.AddForce(force, ForceMode2D.Impulse);
-        }
-        
+     
       
         
         protected virtual void FixedUpdate() {
-            
-            if (isClient) {
-                if (Model.HookState == HookState.Hooked) {
-                    Transform hookedByTr = Model.ClientHookedByTransform;
-                    if (hookedByTr) {
-                        if (!hasAuthority) {
-                            GetComponent<NetworkTransform>().syncPosition = false;
-                        }
-                        rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 0.5f));
-                        transform.rotation = hookedByTr.rotation;
-                        // rigidbody.velocity = hookedByTr.parent.GetComponent<Rigidbody2D>().velocity;
-                    }
+
+           
+            if (Model.HookState == HookState.Hooked) {
+                Transform hookedByTr = Model.HookedByTransform;
+                if (hookedByTr) {
+                    rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 0.5f));
+                    transform.rotation = hookedByTr.rotation;
                    
                 }
-                else {
-                    //if (!hasAuthority) {
-                        GetComponent<NetworkTransform>().syncPosition = true;
-                    //}
-                }
+
             }
         }
 

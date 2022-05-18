@@ -58,6 +58,7 @@ namespace Mikrocosmos
             base.Awake();
             GoodsModel = GetComponent<IGoods>();
             collider = GetComponent<Collider2D>();
+            collider.isTrigger = true;
             shadeCaster = GetComponent<ShadowCaster2D>();
             visionEntityMaterial = visionMaterial;
         }

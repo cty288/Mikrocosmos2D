@@ -17,15 +17,12 @@ namespace Mikrocosmos
         public int newValue;
     }
     public class SpaceshipModel : AbstractBasicEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
-        public override string Name { get; } = "Spaceship";
+        public override string Name { get; set; } = "Spaceship";
         private IHookSystem hookSystem;
         private Rigidbody2D rigidbody;
         #region Server
 
-        [Command]
-        private void CmdUnHook() {
-            UnHook(false);
-        }
+        
       
         #endregion
 
@@ -50,6 +47,7 @@ namespace Mikrocosmos
         public float EscapeLossTime { get; } = 0.125f;
         public float MaxMaxSpeed { get; } = 40;
 
+        [field: SyncVar(hook = nameof(ClientOnEscapeCounterChanged))]
         public int EscapeCounter { get; private set; }
 
         private float escapeLossTimer = 0f;
@@ -61,9 +59,7 @@ namespace Mikrocosmos
             base.Update();
             if (isServer) {
                 Acceleration = Mathf.Max(5, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
-            }
-            if (hasAuthority)
-            {
+
                 escapeLossTimer += Time.deltaTime;
                 if (escapeLossTimer >= EscapeLossTime)
                 {
@@ -71,7 +67,6 @@ namespace Mikrocosmos
                     if (EscapeCounter > 0)
                     {
                         EscapeCounter--;
-                        this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = EscapeCounter });
                     }
 
                 }
@@ -79,25 +74,25 @@ namespace Mikrocosmos
 
         }
 
-        public void IncreaseEscapeCounter()
+        [Command]
+        public void CmdIncreaseEscapeCounter()
         {
             EscapeCounter++;
             escapeLossTimer = 0;
             if (EscapeCounter >= EscapeNeedCount)
             {
                 EscapeCounter = 0;
-                CmdUnHook();
-                
+                UnHook(false);
             }
-            this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = EscapeCounter });
+
         }
 
-        [field: SerializeField]
+        [field: SyncVar,SerializeField]
         public float InitialAcceleration { get; private set; } = 20;
 
         [field: SyncVar, SerializeField]
         public override float SelfMass { get; protected set; } = 1;
-        [field: SerializeField]
+        [field: SyncVar, SerializeField]
         public float AccelerationDecreasePerMass { get; private set; } = 2;
 
         public float BackpackMass { get; } = 0;
@@ -148,12 +143,10 @@ namespace Mikrocosmos
         }
 
 
-        [TargetRpc]
-        public  void TargetOnClientGravityForceAdded(float force, Vector2 position, float range) {
-            
-              rigidbody .AddExplosionForce(force, position, range);
+        [ClientCallback]
+        private void ClientOnEscapeCounterChanged(int oldNum, int newNum) {
+            this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = newNum });
         }
-
         #endregion
 
         #region Server
@@ -199,7 +192,7 @@ namespace Mikrocosmos
         [ServerCallback]
         public void ServerAddGravityForce(float force, Vector2 position, float range)
         {
-            TargetOnClientGravityForceAdded(force, position, range);
+            rigidbody.AddExplosionForce(force, position, range);
         }
 
         [field: SerializeField]

@@ -967,12 +967,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  clientAuthority: 1
+  clientAuthority: 0
   sendInterval: 0.01
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
-  interpolatePosition: 1
+  interpolatePosition: 0
   interpolateRotation: 0
   interpolateScale: 0
   bufferTimeMultiplier: 3
@@ -1061,7 +1061,6 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <ClientHookedByTransform>k__BackingField: {fileID: 0}
-  <Acceleration>k__BackingField: 20
   <InitialAcceleration>k__BackingField: 30
   <SelfMass>k__BackingField: 1
   <AccelerationDecreasePerMass>k__BackingField: 2
@@ -1115,7 +1114,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   target: {fileID: 3263459070901394825}
-  clientAuthority: 1
+  clientAuthority: 0
   syncVelocity: 1
   clearVelocity: 0
   velocitySensitivity: 0.1

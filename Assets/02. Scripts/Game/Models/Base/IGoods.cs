@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface IGoods :  IModel{
+    public interface IGoods :  IModel, IEntity{
         public int BasicSellPrice { get; set; }
    
         public int BasicBuyPrice { get; set; }

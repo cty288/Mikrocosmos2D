@@ -16,7 +16,7 @@ namespace Mikrocosmos
 
         NetworkIdentity HookedByIdentity { get; }
 
-        Transform ClientHookedByTransform { get; }
+        Transform HookedByTransform { get; }
 
         bool Hook(NetworkIdentity hookedBy);
 

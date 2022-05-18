@@ -10,7 +10,8 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public override float SelfMass { get; protected set; }
 
-        public override string Name { get; } = "Goods";
+        [field: SyncVar, SerializeField]
+        public override string Name { get; set; } = "Goods";
 
        
 

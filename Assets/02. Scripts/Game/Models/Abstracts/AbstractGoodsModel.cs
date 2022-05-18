@@ -103,8 +103,9 @@ namespace Mikrocosmos
                     foreach (Collider2D collider in triggerCheck.Colliders) {
                         //is a goods
                         if (collider.TryGetComponent<IGoods>(out IGoods good)) {
+                            
                             //is the same type? (same type of goods?)
-                            if (good.GetType() == GetType()) {
+                            if (good.Name== Name) {
                                 //is the good actually demanding by a planet?
                                 if (!good.TransactionFinished && !good.IsSell) {
                                     //satisfy the condition, now sell it

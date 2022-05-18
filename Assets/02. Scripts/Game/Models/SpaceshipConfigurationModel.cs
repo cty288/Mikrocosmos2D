@@ -29,7 +29,7 @@ namespace Mikrocosmos
         /// <returns></returns>
         public float GetConnectedObjectSoleMass();
 
-        public void IncreaseEscapeCounter();
+        public void CmdIncreaseEscapeCounter();
 
 
     }

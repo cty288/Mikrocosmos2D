@@ -47,7 +47,7 @@ namespace Mikrocosmos
             }
           
         }
-        private void FixedUpdate() {
+        private void Update() {
 
             if (isServer) {
                 OvalRotate();

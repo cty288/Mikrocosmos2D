@@ -12,7 +12,7 @@ namespace Mikrocosmos
     public class MeteorModel : AbstractBasicEntityModel, IMeteorModel {
         [field: SyncVar, SerializeField]
         public override float SelfMass { get; protected set; } = 5f;
-        public override string Name { get; } = "Meteor";
+        public override string Name { get; set; } = "Meteor";
         public override void OnClientHooked() {
             
         }

@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 7171917572446089867}
   - component: {fileID: 1128868329765695182}
   - component: {fileID: -7106308886407098970}
-  - component: {fileID: 1236633503879089806}
   - component: {fileID: 949103041305761441}
   m_Layer: 7
   m_Name: Meteor
@@ -140,7 +139,7 @@ MonoBehaviour:
   - {x: 0.04270172, y: -3.0328565, z: 0}
   m_ShapePathHash: -960656257
   m_Mesh: {fileID: 0}
-  m_InstanceId: 67916
+  m_InstanceId: 287090
 --- !u!114 &3789394192495447793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  <IsMaskable>k__BackingField: 1
 --- !u!114 &-7106308886407098970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,25 +267,9 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <ClientHookedByTransform>k__BackingField: {fileID: 0}
-  <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 5
   <StartDirection>k__BackingField: {x: 0, y: 0}
   <InitialForceMultiplier>k__BackingField: 0.0002
---- !u!114 &1236633503879089806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3789394192495447563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45fd7fbbe65d66a4b8a9b3badb01dd67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  <IsMaskable>k__BackingField: 1
 --- !u!114 &949103041305761441
 MonoBehaviour:
   m_ObjectHideFlags: 0
