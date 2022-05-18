@@ -134,6 +134,7 @@ namespace Mikrocosmos {
             if (isServer) {
                 Vector2 force = transform.up * maxShootForce * realShootPercent;
                 Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
+
                 this.SendEvent<OnItemShot>(new OnItemShot()
                 {
                     Force = force,
@@ -141,6 +142,8 @@ namespace Mikrocosmos {
                 });
 
                 HookedItem.Model.UnHook(true);
+
+              
                 HookedItem = null;
 
                 HookedNetworkIdentity = null;

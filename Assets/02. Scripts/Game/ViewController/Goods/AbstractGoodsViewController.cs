@@ -87,7 +87,6 @@ namespace Mikrocosmos
             if (GoodsModel.TransactionFinished) {
                 collider.isTrigger = false;
                 shadeCaster.castsShadows = true;
-                rigidbody.bodyType = RigidbodyType2D.Dynamic;
             }
             else {
                 shadeCaster.castsShadows = false;

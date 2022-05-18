@@ -36,15 +36,7 @@ namespace Mikrocosmos
         }
 
         private void OnServerUpdate() {
-            if (Model.HookState == HookState.Hooked) {
-                Transform hookedByTr = Model.HookedByTransform;
-                if (hookedByTr) {
-                   
-                    rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 0.5f));
-                   transform.rotation = hookedByTr.rotation;
-                    // rigidbody.velocity = hookedByTr.parent.GetComponent<Rigidbody2D>().velocity;
-                }
-            }
+            
             rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, GetModel().MaxMaxSpeed);
         }
 
@@ -63,7 +55,8 @@ namespace Mikrocosmos
         {
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;
             float angle = Mathf.Atan2(dir.y, dir.x) * (180 / Mathf.PI) + 90;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.2f);
+           // transform.rotation = 
+            rigidbody.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.2f));
         }
 
     }

@@ -1060,7 +1060,8 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 30
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
-  <ClientHookedByTransform>k__BackingField: {fileID: 0}
+  <HookedByTransform>k__BackingField: {fileID: 0}
+  <Acceleration>k__BackingField: 0
   <InitialAcceleration>k__BackingField: 30
   <SelfMass>k__BackingField: 1
   <AccelerationDecreasePerMass>k__BackingField: 2

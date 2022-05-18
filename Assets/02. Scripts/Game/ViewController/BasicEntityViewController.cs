@@ -58,22 +58,36 @@ namespace Mikrocosmos
         
         protected virtual void FixedUpdate() {
 
-           
-            if (Model.HookState == HookState.Hooked) {
-                Transform hookedByTr = Model.HookedByTransform;
-                if (hookedByTr) {
-                    rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 0.5f));
-                    transform.rotation = hookedByTr.rotation;
-                   
+            if (isServer)
+            {
+                if (Model.HookState == HookState.Hooked)
+                {
+                    Transform hookedByTr = Model.HookedByTransform;
+                    if (hookedByTr)
+                    {
+
+                       // rigidbody.bodyType = RigidbodyType2D.Kinematic;
+                        rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 50* Time.fixedDeltaTime));
+                        Debug.Log(rigidbody.velocity.magnitude);
+                        transform.rotation = hookedByTr.rotation;
+
+                    }
+                }
+                else {
+                    rigidbody.bodyType = RigidbodyType2D.Dynamic;
                 }
 
             }
+
         }
 
         private float collideTimer = 0.3f;
 
         protected virtual void Update() {
             collideTimer -= Time.deltaTime;
+
+            
+
         }
 
         private void OnCollisionEnter2D(Collision2D other) {

@@ -14,7 +14,8 @@ namespace Mikrocosmos
         public HookState HookState;
         public NetworkIdentity HookedByIdentity;
     }
-    public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent {
+    public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent,
+    ICanGetModel{
      
         [field: SyncVar, SerializeField]
         public float MaxSpeed { get; protected set; }
@@ -53,12 +54,16 @@ namespace Mikrocosmos
                 OnServerHooked();
                 if (hookedBy) {
                     HookedByTransform = hookedBy.GetComponentInChildren<Trigger2DCheck>().transform;
+                    // LayerMask collisionMask = this.GetModel<ICollisionMaskModel>().Allocate();
+                    //bindedRigidibody.bodyType = RigidbodyType2D.Kinematic;
+                    Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
+                        true);
                 }
                 else {
                     HookedByTransform = null;
                 }
-
                
+
                 return true;
             }
 
@@ -98,8 +103,16 @@ namespace Mikrocosmos
                 HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
                 HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);
                 HookState = HookState.Freed;
-                bindedRigidibody.velocity += HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
-             
+                
+                gameObject.layer = clientOriginalLayer;
+                if (!isShoot) {
+                    bindedRigidibody.velocity = HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
+                    bindedRigidibody.angularVelocity = 0;
+                }
+                Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
+                    false);
+
+                this.GetModel<ICollisionMaskModel>().Release();
             }
 
             this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
@@ -109,6 +122,7 @@ namespace Mikrocosmos
                 HookedByIdentity = this.HookedByIdentity
             });
             OnServerUnHooked();
+            
             HookedByIdentity = null;
             HookedByTransform = null;
 
@@ -150,9 +164,9 @@ namespace Mikrocosmos
             bindedRigidibody.mass = GetTotalMass();
            
                 if (HookState == HookState.Hooked) {
-                    gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
+                    //gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
                 }else {
-                    gameObject.layer = clientOriginalLayer;
+                  //  gameObject.layer = clientOriginalLayer;
                 }
         }
             
@@ -166,7 +180,7 @@ namespace Mikrocosmos
             if (newState == HookState.Hooked) {
                
 
-                gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
+                //gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
                 OnClientHooked();
             }
 

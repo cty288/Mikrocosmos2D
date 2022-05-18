@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
@@ -28,6 +29,12 @@ namespace Mikrocosmos
         private Transform buytemSpawnPosition;
         private Text buyPriceText;
 
+        private Slider tradingSlider;
+        private Text team1TradeProgressText;
+        private Text team2TradeProgressText;
+
+        private int team1ProgressTextInt = 50;
+       
         private void Awake() {
          
             BuyPackageModel = GetComponent<ICanBuyPackage>();
@@ -44,15 +51,26 @@ namespace Mikrocosmos
                 sellPriceText = transform.Find("Canvas/SellPrice").GetComponent<Text>();
                 buyPriceText = transform.Find("Canvas/BuyPrice").GetComponent<Text>();
                 buyPriceText.gameObject.SetActive(false);
+
+                tradingSlider = transform.Find("Canvas/TradeSlider").GetComponent<Slider>();
+                team1TradeProgressText = tradingSlider.transform.Find("Team1ProgressText").GetComponent<Text>();
+                team2TradeProgressText = tradingSlider.transform.Find("Team2ProgressText").GetComponent<Text>();
             }
-          
+
+
+            this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnClientPlanetAffinityWithTeam1Changed)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
         private void Update() {
 
             if (isServer) {
                 OvalRotate();
                 KeepUniversalG();
-                
+            }
+
+            if (isClient && sellItemSpawnPosition) {
+                team1TradeProgressText.text = $"{team1ProgressTextInt}%";
+                team2TradeProgressText.text = $"{100 - team1ProgressTextInt}%";
             }
         }
 
@@ -62,7 +80,11 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnServerPlanetGenerateBuyingItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+           
         }
+
+       
+
         [ServerCallback]
         private void OnServerPlanetGenerateBuyingItem(OnServerPlanetGenerateBuyingItem e) {
             if (e.ParentPlanet == gameObject) {
@@ -91,6 +113,15 @@ namespace Mikrocosmos
         private void RpcChangeBuyPrice(int price) {
             buyPriceText.gameObject.SetActive(true);
             buyPriceText.text = price.ToString();
+        }
+        private void OnClientPlanetAffinityWithTeam1Changed(OnClientPlanetAffinityWithTeam1Changed e) {
+            if (e.PlanetIdentity == netIdentity) {
+                DOTween.To(() => tradingSlider.value, x => tradingSlider.value = x,
+                    e.NewAffinity, 0.5f);
+
+                DOTween.To(() => team1ProgressTextInt, x => team1ProgressTextInt = x,
+                    Mathf.Clamp(Mathf.RoundToInt(e.NewAffinity * 100), 0, 100), 0.5f);
+            }
         }
 
         #region Rotation

@@ -12,6 +12,10 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
+    public struct OnClientPlanetAffinityWithTeam1Changed {
+        public float NewAffinity;
+        public NetworkIdentity PlanetIdentity;
+    }
     public struct OnServerPlanetGenerateSellItem {
         public GameObject ParentPlanet;
         public int Price;
@@ -28,10 +32,18 @@ namespace Mikrocosmos
         public NetworkIdentity PlayerIdentity;
     }
     public interface IPlanetTradingSystem : ISystem {
-
+        /// <summary>
+        /// A number between 0-1. 
+        /// </summary>
+        /// <param name="team">Team number. Either 1 or 2</param>
+        /// <returns></returns>
+        float GetAffinityWithTeam(int team);
     }
     public class PlanetTradingSystem : AbstractNetworkedSystem, IPlanetTradingSystem {
         private IPlanetModel planetModel;
+
+        [SyncVar(hook = nameof(OnAffinityWithTeam1Changed))] 
+        private float affinityWithTeam1 = 0.5f;
 
        [SerializeField, SyncVar]
         private float BuyItemMaxTime = 20;
@@ -71,6 +83,7 @@ namespace Mikrocosmos
             this.RegisterEvent<OnServerTryBuytem>(OnServerTryBuyItem);
         }
 
+        //Planet SELL item, player BUY item
         private void OnServerTryBuyItem(OnServerTryBuytem e) {
             if (e.RequestingGoods == currentSellingItem) {
                 PlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<PlayerTradingSystem>();
@@ -83,17 +96,21 @@ namespace Mikrocosmos
 
                 currentSellingItem.TransactionFinished = true;
                 currentSellingItem = null;
+
+                ChangeAffinity(spaceship.GetComponent<PlayerSpaceship>().connectionToClient.identity
+                    .GetComponent<NetworkMainGamePlayer>().matchInfo.Team);
             }
            
         }
 
+
+        //Planet BUY item, player SELL item
         [ServerCallback]
         private void OnServerTrySellItem(OnServerTrySellItem e) {
 
             if (e.DemandedByPlanet == currentBuyingItem) {
-                //need to check money first
-                Debug.Log(e.HookedByIdentity.GetComponent<PlayerSpaceship>().name + "" +
-                          $"Sold a {e.RequestingGoodsGameObject.name}");
+               
+              
                 if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship)) {
                     
 
@@ -102,15 +119,31 @@ namespace Mikrocosmos
                     NetworkServer.Destroy(e.RequestingGoodsGameObject);
                     SwitchBuyItem();
 
+                    ChangeAffinity(e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
+                        .GetComponent<NetworkMainGamePlayer>().matchInfo.Team);
 
                     //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
-                       // PlayerIdentity = e.HookedByIdentity
+                    // PlayerIdentity = e.HookedByIdentity
                     //});
 
                 }
             }
         }
 
+        [ServerCallback]
+        private void ChangeAffinity(int teamNumber) {
+            Debug.Log($"Team {teamNumber} completed a transaction");
+            float affinityIncreasment = this.GetSystem<IGlobalTradingSystem>()
+                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber));
+            if (teamNumber == 1) {
+                affinityWithTeam1 += affinityIncreasment;
+            }
+            else {
+                affinityWithTeam1 -= affinityIncreasment;
+            }
+
+
+        }
 
         //initialization
         private void OnPlayerJoinGame(OnNetworkedMainGamePlayerConnected obj) {
@@ -254,5 +287,26 @@ namespace Mikrocosmos
                 Price = currentBuyingItemPrice
             });
         }
+
+       /// <summary>
+       /// Either server or client can call this function
+       /// </summary>
+       /// <param name="team"></param>
+       /// <returns></returns>
+        public float GetAffinityWithTeam(int team) {
+            if (team == 1) {
+                return affinityWithTeam1;
+            }
+
+            return 1 - affinityWithTeam1;
+        }
+
+       [ClientCallback]
+       private void OnAffinityWithTeam1Changed(float oldAffinity, float newAffinity) {
+            this.SendEvent<OnClientPlanetAffinityWithTeam1Changed>(new OnClientPlanetAffinityWithTeam1Changed() {
+                NewAffinity = newAffinity,
+                PlanetIdentity = netIdentity
+            });
+       }
     }
 }
