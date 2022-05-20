@@ -31,8 +31,11 @@ namespace Mikrocosmos
             base.OnStartClient();
             this.GetComponent<SpriteRenderer>().enabled = false;
             this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
-                this.GetComponent<SpriteRenderer>().enabled = true;
-                ClientUpdateCanBeMasked();
+                if (this) {
+                    this.GetComponent<SpriteRenderer>().enabled = true;
+                    ClientUpdateCanBeMasked();
+                }
+               
             });
 
             this.RegisterEvent<ClientOnBuyItemInitialized>(OnBuyItemInitialized)
@@ -68,7 +71,12 @@ namespace Mikrocosmos
             
             shadeCaster.enabled = false;
             this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
-                shadeCaster.enabled = true;
+                if (this) {
+                    if (Model.HookState != HookState.Hooked) {
+                        shadeCaster.enabled = IsMaskable;
+                    }
+                }
+             
             });
         }
 

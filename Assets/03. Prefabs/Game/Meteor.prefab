@@ -263,10 +263,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  <MaxSpeed>k__BackingField: 100
+  <MaxSpeed>k__BackingField: 50
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
-  <ClientHookedByTransform>k__BackingField: {fileID: 0}
+  <HookedByTransform>k__BackingField: {fileID: 0}
+  <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 5
   <StartDirection>k__BackingField: {x: 0, y: 0}
   <InitialForceMultiplier>k__BackingField: 0.0002

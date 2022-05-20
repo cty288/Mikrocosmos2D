@@ -5,11 +5,12 @@ using MikroFramework.Architecture;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mikrocosmos
 {
     public class PlayerInfoCanvas : AbstractMikroController<Mikrocosmos> {
-        [SerializeField] private TMP_Text playerNameText;
+        [SerializeField] private Text playerNameText;
 
         private string name;
      

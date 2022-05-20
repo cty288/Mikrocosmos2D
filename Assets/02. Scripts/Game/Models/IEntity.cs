@@ -5,6 +5,8 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public interface IEntity : IHookable, ICanBeShot {
-       string Name { get; set; }
+      
     }
+
+  
 }

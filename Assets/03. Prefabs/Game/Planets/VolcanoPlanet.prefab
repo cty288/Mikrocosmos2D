@@ -201,20 +201,17 @@ MonoBehaviour:
   <AffectedLayerMasks>k__BackingField:
     serializedVersion: 2
     m_Bits: 704
+  <MoveMode>k__BackingField: 1
   <SelfMass>k__BackingField: 10000
   <GravityFieldRange>k__BackingField: 500
   <G>k__BackingField: 0.000000001
   initialBuyItemList:
   - <GoodPrefab>k__BackingField: {fileID: 6410031578183631850, guid: da1a03242ab176b499f5a976904f4940, type: 3}
     <RealPriceOffset>k__BackingField: 0
-  - <GoodPrefab>k__BackingField: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+  - <GoodPrefab>k__BackingField: {fileID: 7214780700834578578, guid: 7bccd922bcd3d244e98954ca8b7d290b, type: 3}
     <RealPriceOffset>k__BackingField: 2
   initialSellItemList:
-  - <GoodPrefab>k__BackingField: {fileID: 6410031578183631850, guid: da1a03242ab176b499f5a976904f4940, type: 3}
-    <RealPriceOffset>k__BackingField: 0
-  - <GoodPrefab>k__BackingField: {fileID: 6410031578183631850, guid: 6797d0d1736c23a41a79b9f34e622f8b, type: 3}
-    <RealPriceOffset>k__BackingField: 5
-  - <GoodPrefab>k__BackingField: {fileID: 6410031578183631850, guid: 4789c4c84fd6f034b9cb9c4dd1d1bde6, type: 3}
+  - <GoodPrefab>k__BackingField: {fileID: 4621731228356974662, guid: e45362f556fbb714cbe13f7212e23cdf, type: 3}
     <RealPriceOffset>k__BackingField: 5
   <PlanetType>k__BackingField: 3
 --- !u!114 &8345480255462355403

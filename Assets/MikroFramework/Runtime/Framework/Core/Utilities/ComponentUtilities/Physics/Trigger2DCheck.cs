@@ -38,20 +38,21 @@ namespace MikroFramework.Utilities
             {
                 List<Collider2D> removedColliders = new List<Collider2D>();
 
-                foreach (Collider2D collider in colliders)
-                {
-                    if (Vector2.Distance(collider.gameObject.transform.position, transform.position)
+                for (int i = 0; i < colliders.Count; i++) {
+                    if (colliders[i] && Vector2.Distance(colliders[i].gameObject.transform.position, transform.position)
                         >= maxDistance)
                     {
                         enterRC.Release();
-                        removedColliders.Add(collider);
+                        removedColliders.Add(colliders[i]);
                     }
                 }
+               
 
-                foreach (Collider2D removedCollider in removedColliders)
-                {
+                foreach (Collider2D removedCollider in removedColliders) {
                     colliders.Remove(removedCollider);
                 }
+
+                colliders.RemoveAll((collider2D1 => collider2D1 == null));
 
                 timer = 0;
             }

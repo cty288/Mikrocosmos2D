@@ -143,7 +143,13 @@ namespace Mikrocosmos
 
             progress += Time.deltaTime * speed;
             Vector3 p = new Vector3(x * Mathf.Cos(progress * Mathf.Deg2Rad), z * Mathf.Sin(progress * Mathf.Deg2Rad) * distance, 0);
-            rigidbody.MovePosition(target.transform.position + p);
+            if (GravityModel.MoveMode == MoveMode.ByPhysics) {
+                rigidbody.MovePosition(target.transform.position + p);
+            }
+            else {
+                transform.position = target.transform.position + p;
+            }
+           
         }
         //start refactor
       

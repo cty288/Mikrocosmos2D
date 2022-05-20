@@ -1,0 +1,158 @@
+{
+  "Version": "1.0",
+  "ABMD5List": [
+    {
+      "AssetName": "mftest",
+      "MD5": "e3d6f72337c349721b37911e52563658",
+      "FileSize": 435.692383,
+      "assetDatas": [
+        {
+          "Name": "War loop",
+          "OwnerBundleName": "mftest",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Asteroid_1",
+          "OwnerBundleName": "mftest",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Cylinder",
+          "OwnerBundleName": "mftest",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestABObj",
+          "OwnerBundleName": "mftest",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
+      "AssetName": "mftest2",
+      "MD5": "823c363112af21773c35792aefff3be2",
+      "FileSize": 5.02734375,
+      "assetDatas": [
+        {
+          "Name": "War loop",
+          "OwnerBundleName": "mftest2",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestABObj",
+          "OwnerBundleName": "mftest2",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
+      "AssetName": "scene",
+      "MD5": "655210538cf1939263203f4aed6ded1f",
+      "FileSize": 26.4570313,
+      "assetDatas": [
+        {
+          "Name": "HotUpdateExampleScene",
+          "OwnerBundleName": "scene",
+          "AssetType": "UnityEditor.SceneAsset"
+        }
+      ]
+    },
+    {
+      "AssetName": "test_sphere",
+      "MD5": "8cfddd0469d9dadf4075acd1e075d1cc",
+      "FileSize": 44.38379,
+      "assetDatas": [
+        {
+          "Name": "Sphere",
+          "OwnerBundleName": "test_sphere",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
+      "AssetName": "Windows",
+      "MD5": "1a88b9103f800c3f00c3d227ec35bf06",
+      "FileSize": 1.68554688,
+      "assetDatas": []
+    },
+    {
+      "AssetName": "assets/goods",
+      "MD5": "7b3c3d27018def3de541aea54fdcc74c",
+      "FileSize": 188.581055,
+      "assetDatas": [
+        {
+          "Name": "Banana",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "BananaTemp",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "DottedOutlineBanana",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "DottedOutlineMask",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "Mask",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "DottedOutlineStatellite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "Statellite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Toliet",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "BananaSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "MaskSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "StatelliteSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TolietSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        }
+      ]
+    },
+    {
+      "AssetName": "test/scene_test.ab",
+      "MD5": "734cc94efb61586250c76833e2a8f109",
+      "FileSize": 53.6015625,
+      "assetDatas": [
+        {
+          "Name": "TestABScene",
+          "OwnerBundleName": "test/scene_test.ab",
+          "AssetType": "UnityEditor.SceneAsset"
+        }
+      ]
+    }
+  ]
+}

@@ -39,6 +39,7 @@ namespace MikroFramework.ResKit
         /// </summary>
         /// <param name="onInitFinished"></param>
         public static void Create(Action<ResLoader> onInitFinished) {
+            Debug.Log(ResData.Exists);
             if (!ResData.Exists) {
                 //resdata does not exist, initialize a new resdata
                 ResData.Singleton.Init(() => {

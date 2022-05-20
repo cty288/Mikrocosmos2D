@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -13,8 +14,10 @@ namespace Mikrocosmos
         [field: SyncVar(hook = nameof(OnMaskableChanged)), SerializeField]
         public bool IsMaskable { get; set; } = true;
 
-        public override IEntity Model { get; protected set; }
+       
         private ShadowCaster2D shaderCaster;
+
+        
         protected override void Awake()
         {
             base.Awake();
@@ -23,11 +26,12 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
+        
+
         private void OnServerObjectHookStateChanged(OnServerObjectHookStateChanged e)
         {
             if (e.Identity == netIdentity && e.HookedByIdentity != null)
-            {
-                Debug.Log(e.HookedByIdentity == null);
+            { 
                 TargetHookerClientShadeControl(e.HookedByIdentity.connectionToClient, e.HookState);
             }
         }
@@ -41,7 +45,22 @@ namespace Mikrocosmos
         public override void OnStartServer()
         {
             base.OnStartServer();
-            shaderCaster.enabled = IsMaskable;
+            if (Model.HookState != HookState.Hooked) {
+                shaderCaster.enabled = IsMaskable;
+            }
+
+            this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
+                if (this) {
+                    OnServerObjectHookStateChanged(new OnServerObjectHookStateChanged()
+                    {
+                        HookedByIdentity = Model.HookedByIdentity,
+                        HookState = Model.HookState,
+                        Identity = netIdentity
+                    });
+                }
+               
+            });
+
         }
         private IMeteorModel GetModel()
         {
@@ -69,7 +88,10 @@ namespace Mikrocosmos
         public override void OnStartClient()
         {
             base.OnStartClient();
-            shaderCaster.enabled = IsMaskable;
+            if (Model.HookState != HookState.Hooked) {
+                shaderCaster.enabled = IsMaskable;
+            }
+         
         }
 
         [TargetRpc]
@@ -83,11 +105,16 @@ namespace Mikrocosmos
             {
                 shaderCaster.enabled = true;
             }
+
+            Debug.Log($"Target Hook State: {shaderCaster.enabled}");
         }
 
         private void OnMaskableChanged(bool oldMaskable, bool currentMaskable)
         {
-            shaderCaster.enabled = currentMaskable;
+            if (Model.HookState != HookState.Hooked)
+            {
+                shaderCaster.enabled = IsMaskable;
+            }
             if (currentMaskable)
             {
                 if (!clientAlwaysUnmaskable)

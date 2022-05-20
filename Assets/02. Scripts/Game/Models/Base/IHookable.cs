@@ -10,8 +10,12 @@ namespace Mikrocosmos
         Freed,
         Hooked
     }
+
+   
     public interface IHookable: IHaveMomentum
     {
+        public string Name { get; set; }
+        public bool CanBeAddedToInventory { get; set; }
         HookState HookState { get; }
 
         NetworkIdentity HookedByIdentity { get; }

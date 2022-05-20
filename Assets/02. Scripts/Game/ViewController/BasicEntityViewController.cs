@@ -9,7 +9,11 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
+  
 
+    /// <summary>
+    /// Can't be added to inventory
+    /// </summary>
     public interface IHookableViewController: IHaveMomentumViewController
     {
         public IHookable Model { get; }
@@ -29,7 +33,7 @@ namespace Mikrocosmos
 
 
     public abstract class BasicEntityViewController: AbstractNetworkedController<Mikrocosmos>, IEntityViewController {
-        public abstract IEntity Model { get; protected set; }
+        public  IEntity Model { get; protected set; }
       
 
 
@@ -66,14 +70,24 @@ namespace Mikrocosmos
                     if (hookedByTr)
                     {
 
-                       // rigidbody.bodyType = RigidbodyType2D.Kinematic;
-                        rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 50* Time.fixedDeltaTime));
-                        Debug.Log(rigidbody.velocity.magnitude);
-                        transform.rotation = hookedByTr.rotation;
+                        // rigidbody.bodyType = RigidbodyType2D.Kinematic;
+                        if (Model.MoveMode == MoveMode.ByPhysics)
+                        {
+                            rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 20 * Time.fixedDeltaTime));
+
+                            transform.rotation = hookedByTr.rotation;
+                        }
+                        else
+                        {
+                            transform.position = (Vector2.Lerp(transform.position, hookedByTr.position, 20 * Time.fixedDeltaTime));
+                            transform.rotation = hookedByTr.rotation;
+                        }
+
 
                     }
                 }
-                else {
+                else
+                {
                     rigidbody.bodyType = RigidbodyType2D.Dynamic;
                 }
 
@@ -81,30 +95,19 @@ namespace Mikrocosmos
 
         }
 
-        private float collideTimer = 0.3f;
 
         protected virtual void Update() {
-            collideTimer -= Time.deltaTime;
+            if (isServer) {
+                OnServerUpdate();
 
-            
-
+                
+            }
         }
 
-        private void OnCollisionEnter2D(Collision2D other) {
-            if (isClient) {
-                  if (other.collider.TryGetComponent<IHaveMomentumViewController>(out IHaveMomentumViewController vc)) {
-                      if (collideTimer <= 0) {
-                          Rigidbody2D otherRigidbody = other.collider.GetComponent<Rigidbody2D>();
-                        //  rigidbody.velocity *= -0.8f;
-                          //rigidbody.velocity += otherRigidbody.velocity * 0.9f;
-                          //rigidbody.velocity *= 1.2f;
-                         // Debug.Log(rigidbody.velocity);
-                          collideTimer = 0.3f;
-                      }
-                    
-                 }
+        protected virtual void OnServerUpdate() {
+            if (Model.HookState == HookState.Freed) {
+                rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, Model.MaxSpeed);
             }
-          
         }
 
         IHookable IHookableViewController.Model

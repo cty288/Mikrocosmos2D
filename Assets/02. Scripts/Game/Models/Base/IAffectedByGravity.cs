@@ -21,6 +21,7 @@ namespace Mikrocosmos
             bindedRigidbody = GetComponent<Rigidbody2D>();
         }
 
+        public MoveMode MoveMode { get; set; }
         float IHaveMomentum.MaxSpeed { get; }
         float IHaveMomentum.Acceleration { get; }
 

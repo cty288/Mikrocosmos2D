@@ -15,14 +15,15 @@ namespace Mikrocosmos
         public NetworkIdentity HookedByIdentity;
     }
     public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent,
-    ICanGetModel{
-     
+    ICanGetModel {
+        [field:  SerializeField]
+        public MoveMode MoveMode { get; set; } = MoveMode.ByPhysics;
+
         [field: SyncVar, SerializeField]
         public float MaxSpeed { get; protected set; }
 
-       
-       
-
+         [field: SyncVar, SerializeField]
+        public bool CanBeAddedToInventory { get; set; }
 
         [field: SyncVar(hook = nameof(OnHookStateChanged)), SerializeField] 
         public HookState HookState { get; protected set; } = HookState.Freed;
@@ -56,8 +57,7 @@ namespace Mikrocosmos
                     HookedByTransform = hookedBy.GetComponentInChildren<Trigger2DCheck>().transform;
                     // LayerMask collisionMask = this.GetModel<ICollisionMaskModel>().Allocate();
                     //bindedRigidibody.bodyType = RigidbodyType2D.Kinematic;
-                    Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
-                        true);
+                   
                 }
                 else {
                     HookedByTransform = null;
@@ -97,11 +97,13 @@ namespace Mikrocosmos
         public void UnHook(bool isShoot) {
             //优化一下
             if (HookedByIdentity) {
+                
                 Debug.Log("UnHooked");
                 OnServerBeforeUnHooked();
+                /*
                 HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
                 HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
-                HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);
+                HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);*/
                 HookState = HookState.Freed;
                 
                 gameObject.layer = clientOriginalLayer;

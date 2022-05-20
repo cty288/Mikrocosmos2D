@@ -237,10 +237,10 @@ namespace Mikrocosmos
         private void SwitchBuyItem() {
             List<GoodsConfigure> rawMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.RawResource);
             List<GoodsConfigure> secondaryMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Secondary);
-            List<GoodsConfigure> compoundMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Compound);
+           List<GoodsConfigure> compoundMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Compound);
 
             List<GoodsConfigure> targetList;
-            if (rawMaterials.Any() && secondaryMaterials.Any() && compoundMaterials.Any()) { //get a resource with rarity
+            if (rawMaterials.Any() && secondaryMaterials.Any() && true){// compoundMaterials.Any()) { //get a resource with rarity
                 int chance = Random.Range(0, 100);
                 if (chance <= itemRarity[0]) {
                     targetList = rawMaterials;
@@ -248,7 +248,7 @@ namespace Mikrocosmos
                     targetList = secondaryMaterials;
                 }
                 else {
-                    targetList = compoundMaterials;
+                    targetList = secondaryMaterials;
                 }
             }
             else { //only get from raw resources

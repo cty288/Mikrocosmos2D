@@ -156,7 +156,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   clientAuthority: 0
-  sendInterval: 0.009
+  sendInterval: 0.01
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
@@ -258,7 +258,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  <MaxSpeed>k__BackingField: 0
+  <MoveMode>k__BackingField: 1
+  <MaxSpeed>k__BackingField: 50
+  <CanBeAddedToInventory>k__BackingField: 1
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
