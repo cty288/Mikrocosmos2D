@@ -20,7 +20,7 @@ namespace Mikrocosmos
         public int Durability { get; set; } 
 
         [field: SerializeField]
-        public int MaxDurability { get; protected set; }
+        public int MaxDurability { get;  set; }
 
         protected override void Awake() {
             base.Awake();

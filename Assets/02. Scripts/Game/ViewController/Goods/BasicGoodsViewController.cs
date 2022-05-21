@@ -23,6 +23,7 @@ namespace Mikrocosmos
 
         [ServerCallback]
         protected override void OnServerItemBroken() {
+            
             Debug.Log("OnServerItemBroken");
         }
 
@@ -76,6 +77,7 @@ namespace Mikrocosmos
         [ClientCallback]
         protected override void OnClientItemStartBeingSelected(CanBeUsedGoodsBasicInfo basicInfo) {
             Debug.Log("OnClientItemStartBeingSelected");
+            
             
         }
 

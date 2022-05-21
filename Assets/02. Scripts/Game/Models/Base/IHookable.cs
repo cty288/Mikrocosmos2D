@@ -52,7 +52,7 @@ namespace Mikrocosmos
         public float Frequency { get; set; }
         public int Durability { get; set; }
 
-        public int MaxDurability { get; }
+        public int MaxDurability { get; set; }
 
         void OnItemUsed();
     }

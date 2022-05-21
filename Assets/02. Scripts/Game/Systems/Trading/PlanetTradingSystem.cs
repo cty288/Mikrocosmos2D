@@ -80,11 +80,11 @@ namespace Mikrocosmos
             this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnPlayerJoinGame)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerTrySellItem>(OnServerTrySellItem);
-            this.RegisterEvent<OnServerTryBuytem>(OnServerTryBuyItem);
+            this.RegisterEvent<OnServerTryBuyItem>(OnServerTryBuyItem);
         }
 
         //Planet SELL item, player BUY item
-        private void OnServerTryBuyItem(OnServerTryBuytem e) {
+        private void OnServerTryBuyItem(OnServerTryBuyItem e) {
             if (e.RequestingGoods == currentSellingItem) {
                 PlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<PlayerTradingSystem>();
                 //Debug.Log($"Buy: {currentSellingItemPrice}, {currentSellingItemObject.name}");

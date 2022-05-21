@@ -23,7 +23,7 @@ namespace Mikrocosmos
         public GameObject RequestingGoodsGameObject;
     }
 
-    public struct OnServerTryBuytem
+    public struct OnServerTryBuyItem
     {
         public IGoods RequestingGoods;
         public NetworkIdentity HookedByIdentity;
@@ -88,7 +88,7 @@ namespace Mikrocosmos
                     return false;
                 }
                 else {
-                    this.SendEvent<OnServerTryBuytem>(new OnServerTryBuytem() {
+                    this.SendEvent<OnServerTryBuyItem>(new OnServerTryBuyItem() {
                         HookedByIdentity = hookedBy,
                         RequestingGoods = this,
                         RequestingGoodsGameObject = gameObject

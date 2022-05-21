@@ -355,16 +355,12 @@ namespace Mikrocosmos {
             ServerUseItem((() => {
                 if (HookedItem != null) {
                     if (HookedItem.Model is ICanBeUsed model) {
-                        Debug.Log("Line 337");
                         if (model.CanBeUsed && model.Durability != 0) {
-                            Debug.Log("Line 339");
-                            if (model.UseMode == ItemUseMode.UseWhenPressingKey && itemUsedForThisPress) {
+                            if (model.UseMode == ItemUseMode.UseWhenKeyDown && itemUsedForThisPress) {
                                 return false;
                             }
-                            Debug.Log("Line 340");
                             //now check time
                             if (useTimer >= model.Frequency) {
-                                Debug.Log("Line 341");
                                 itemUsedForThisPress = true;
                                 useTimer = 0;
                                 return true;

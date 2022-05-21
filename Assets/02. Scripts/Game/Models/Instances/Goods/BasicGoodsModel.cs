@@ -7,10 +7,7 @@ namespace Mikrocosmos
 {
     public class BasicGoodsModel : AbstractCanBeUsedGoodsModel
     {
-       
-
-       
-
+        
         public override void OnClientHooked() {
             
         }
