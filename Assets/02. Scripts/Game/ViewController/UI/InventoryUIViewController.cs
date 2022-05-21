@@ -53,13 +53,13 @@ namespace Mikrocosmos
                     Image itemImage = allItemSlots[i].transform.Find("ItemImage").GetComponent<Image>();
                     TMP_Text itemText = allItemSlots[i].transform.Find("ItemCount").GetComponent<TMP_Text>();
                     BackpackSlot slot = e.AllSlots[i];
-
-                    if (slot.Count > 0) {
+                   
+                    if (slot.ClientSlotCount > 0) {
                         itemImage.color = new Color(1, 1, 1, 1);
                         Texture2D texture = resLoader.LoadSync<Texture2D>("assets/goods", slot.SpriteName);
                         Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
                         itemImage.sprite = sprite;
-                        itemText.text = slot.Count.ToString();
+                        itemText.text = slot.ClientSlotCount.ToString();
                     }
                     else {
                         itemImage.color = new Color(1, 1, 1, 0);

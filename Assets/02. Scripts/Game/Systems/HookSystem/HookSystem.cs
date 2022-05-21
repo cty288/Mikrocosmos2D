@@ -104,6 +104,7 @@ namespace Mikrocosmos {
                 
             });
             inventorySystem = GetComponent<IPlayerInventorySystem>();
+
             this.RegisterEvent<OnItemRobbed>(OnRobbed).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnSwitchItemSlot>(OnServerSwitchItemSlot).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnHookItemSwitched>(OnHookItemSwitched).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -119,18 +120,18 @@ namespace Mikrocosmos {
                 NetworkIdentity oldIdentity = HookedNetworkIdentity;
 
 
-                if (e.CurrentCount>0)
-                {
-                    Debug.Log(e.PrefabName);
-                    GameObject nextItemPrefab = resLoader.LoadSync<GameObject>("assets/goods", e.PrefabName);
+                if (e.CurrentCount>0) {
 
-                    Debug.Log(nextItemPrefab);
-                    GameObject spawned = Instantiate(nextItemPrefab);
-                    NetworkServer.Spawn(spawned);
-                    spawned.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
+                    GameObject nextItem = e.NextObject;
+                    nextItem.SetActive(true);
+                    NetworkServer.Spawn(nextItem);
 
-                    HookedItem = spawned.GetComponent<IHookableViewController>();
-                    HookedNetworkIdentity = spawned.GetComponent<NetworkIdentity>();
+
+
+                    nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
+
+                    HookedItem = nextItem.GetComponent<IHookableViewController>();
+                    HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                     HookedItem.Model.Hook(netIdentity);
                     animator.SetBool("Hooking", true);
 
@@ -138,7 +139,7 @@ namespace Mikrocosmos {
                 else
                 {
                     animator.SetBool("Hooking", false);
-                   HookedItem = null;
+                    HookedItem = null;
                     HookedNetworkIdentity = null;
                 }
 
@@ -277,13 +278,16 @@ namespace Mikrocosmos {
 
                 //still have item
                 if (!String.IsNullOrEmpty(e.PrefabName)) {
-                    GameObject nextItemPrefab = resLoader.LoadSync<GameObject>("assets/goods",e.PrefabName);
-                    GameObject spawned = Instantiate(nextItemPrefab);
-                    NetworkServer.Spawn(spawned);
-                    spawned.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
+                    GameObject nextItem = e.SwitchedGameObject;
+                    if (e.SwitchedGameObject != HookedNetworkIdentity.gameObject) {
+                        nextItem.SetActive(true);
+                        NetworkServer.Spawn(nextItem);
+                    }
+                    
+                    nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
 
-                    HookedItem = spawned.GetComponent<IHookableViewController>();
-                    HookedNetworkIdentity = spawned.GetComponent<NetworkIdentity>();
+                    HookedItem = nextItem.GetComponent<IHookableViewController>();
+                    HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                     HookedItem.Model.Hook(netIdentity);
                     animator.SetBool("Hooking", true);
 
@@ -301,8 +305,10 @@ namespace Mikrocosmos {
                     OwnerIdentity = netIdentity
                 });
 
-                if (oldIdentity) {
-                    NetworkServer.Destroy(oldIdentity.gameObject);
+                if (oldIdentity && oldIdentity.gameObject !=e.SwitchedGameObject) {
+                    NetworkServer.UnSpawn(oldIdentity.gameObject);
+                    oldIdentity.gameObject.SetActive(false);
+                    //NetworkServer.Destroy(oldIdentity.gameObject);
                 }
                 
                 UpdateHookCollisions(false);
@@ -451,9 +457,8 @@ namespace Mikrocosmos {
                             HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
                             animator.SetBool("Hooking", true);
                             checkingHook = false;
-                            if (HookedItem.Model.CanBeAddedToInventory)
-                            {
-                                inventorySystem.ServerAddToBackpack(model.Name, 1);
+                            if (HookedItem.Model.CanBeAddedToInventory) {
+                                inventorySystem.ServerAddToBackpack(model.Name, HookedNetworkIdentity.gameObject);
                             }
                            
                             UpdateHookCollisions(false);

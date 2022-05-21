@@ -12,7 +12,7 @@ namespace Mikrocosmos
        
 
         public override void OnClientHooked() {
-           
+            
         }
 
         public override void OnClientFreed() {

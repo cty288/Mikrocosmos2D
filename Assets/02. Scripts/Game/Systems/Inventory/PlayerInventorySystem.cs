@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
 using Mirror;
@@ -12,6 +13,7 @@ namespace Mikrocosmos
         public NetworkIdentity Identity;
         public string PrefabName;
         public int CurrentCount;
+        public GameObject NextObject;
     }
 
     [Serializable]
@@ -19,13 +21,21 @@ namespace Mikrocosmos
 
         public string PrefabName;
         public string SpriteName;
-        public int Count;
+        public Stack<GameObject> StackedObjects = new Stack<GameObject>();
+        public int ClientSlotCount;
+        public int Count
+        {
+            get {
+                return StackedObjects.Count;
+            }
+        }
     }
 
     public struct OnItemDropped {
         public NetworkIdentity Identity;
         public string PrefabName;
         public int DropCount;
+        public List<GameObject> DroppedObjects;
     }
 
     public struct OnClientInventoryUpdate {
@@ -39,6 +49,7 @@ namespace Mikrocosmos
         public NetworkIdentity Identity;
         public string PrefabName;
         public int SlotIndex;
+        public GameObject SwitchedGameObject;
     }
 
 
@@ -47,7 +58,7 @@ namespace Mikrocosmos
         public int InitialBackPackCapacity;
     }
     public interface IPlayerInventorySystem : ISystem {
-        void ServerAddToBackpack(string name, int number);
+        void ServerAddToBackpack(string name, GameObject gameObject);
         void ServerRemoveFromCurrentBackpack();
         void ServerDropFromBackpack(string name, int number);
 
@@ -57,16 +68,10 @@ namespace Mikrocosmos
         int GetCurrentSlot();
 
     }
-    /*
+    
     public static class BackpackSlotWriter
     {
-        public static void WriteBackpackSlot(this NetworkWriter writer, List<BackpackSlot> list) {
-            writer.WriteList<BackpackSlot>(list);
-        }
-
-        public static List<BackpackSlot> ReadBackpackSlot(this NetworkReader reader) {
-            return reader.ReadList<BackpackSlot>();
-        }
+      
 
         public static void WriteBackpackItem(this NetworkWriter writer, BackpackSlot slot) {
             writer.WriteString(slot.PrefabName);
@@ -78,9 +83,13 @@ namespace Mikrocosmos
             string prefabName = reader.ReadString();
             string spriteName = reader.ReadString();
             int count = reader.ReadInt();
-            return new BackpackSlot() {Count = count, PrefabName = prefabName, SpriteName = spriteName};
+            return new BackpackSlot() {
+                PrefabName = prefabName, SpriteName = spriteName,
+                StackedObjects = null,
+                ClientSlotCount = count
+            };
         }
-    }*/
+    }
 
 
     public class PlayerInventorySystem : AbstractNetworkedSystem, IPlayerInventorySystem {
@@ -110,7 +119,7 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             for (int i = 0; i < GetSlotCount(); i++) {
-                backpackItems.Add(new BackpackSlot(){Count = 0});
+                backpackItems.Add(new BackpackSlot(){});
             }
         }
 
@@ -119,29 +128,37 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        public void ServerAddToBackpack(string name, int number) {
+        public void ServerAddToBackpack(string name, GameObject gameObject) {
             BackpackSlot slot = FindItemStackInBackpack(name);
 
             if (slot != null) {
                 slot.PrefabName = name;
-                slot.Count += number;
                 slot.SpriteName =  name + "Sprite";
+                slot.StackedObjects.Push(gameObject);
                 ServerSwitchSlot(backpackItems.FindIndex((backpackSlot => backpackSlot == slot)));
             }
             
             TargetOnInventoryUpdate(backpackItems,currentIndex);
         }
 
+
         [ServerCallback]
         public void ServerRemoveFromCurrentBackpack() {
             if (currentIndex < backpackItems.Count) {
                 BackpackSlot slot = backpackItems[currentIndex];
                 if (slot!=null && slot.Count > 0) {
-                    slot.Count--;
+
+                    slot.StackedObjects.Pop();
+
+                    GameObject nextObject = null;
+                    if (slot.StackedObjects.Count > 0) {
+                        nextObject = slot.StackedObjects.Peek();
+                    }
                     this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved() {
                         CurrentCount = slot.Count,
                         PrefabName = slot.PrefabName,
-                        Identity = netIdentity
+                        Identity = netIdentity,
+                        NextObject = nextObject
                     });
                 }
                 TargetOnInventoryUpdate(backpackItems,currentIndex);
@@ -154,13 +171,22 @@ namespace Mikrocosmos
             BackpackSlot slot = FindItemStackInBackpack(name);
             if (slot != null) {
                 int prevCount = slot.Count;
-                slot.Count -= number;
-                slot.Count = Mathf.Max(slot.Count, 0);
+                
+                List<GameObject> droppeGameObjects = new List<GameObject>();
+                for (int i = 0; i < number; i++) {
+                    if (slot.StackedObjects.Count > 0) {
+                        droppeGameObjects.Add(slot.StackedObjects.Pop());
+                    }
+                }
+
+                int dropCount = prevCount - slot.Count;
+
                 this.SendEvent<OnItemDropped>(new OnItemDropped()
                 {
-                    DropCount = prevCount - slot.Count,
+                    DropCount = dropCount,
                     PrefabName = slot.PrefabName,
-                    Identity = netIdentity
+                    Identity = netIdentity,
+                    DroppedObjects = droppeGameObjects
                 });
 
 
@@ -181,17 +207,20 @@ namespace Mikrocosmos
 
                     currentIndex = index % GetSlotCount();
                     BackpackSlot slot = backpackItems[currentIndex];
+                    GameObject switchedGameObject = null;
                     string name = "";
                     if (slot != null && slot.Count > 0)
                     {
                         name = slot.PrefabName;
+                        switchedGameObject = slot.StackedObjects.Peek();
                     }
 
                     this.SendEvent<OnSwitchItemSlot>(new OnSwitchItemSlot()
                     {
                         PrefabName = name,
                         SlotIndex = currentIndex,
-                        Identity = netIdentity
+                        Identity = netIdentity,
+                        SwitchedGameObject = switchedGameObject
                     });
                 }
                 
