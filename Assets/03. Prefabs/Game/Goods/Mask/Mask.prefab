@@ -274,6 +274,7 @@ MonoBehaviour:
   <CanBeUsed>k__BackingField: 1
   <UseMode>k__BackingField: 0
   <Frequency>k__BackingField: 0.5
+  <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 3
 --- !u!114 &4623635824010423997
 MonoBehaviour:
@@ -297,6 +298,8 @@ MonoBehaviour:
   visionAffectedSprites:
   - {fileID: 6410031578183631637}
   <CanBeMasked>k__BackingField: 1
+  DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
+  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
 --- !u!114 &7885202947231709620
 MonoBehaviour:
   m_ObjectHideFlags: 0

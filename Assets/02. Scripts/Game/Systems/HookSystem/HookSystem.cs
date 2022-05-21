@@ -31,6 +31,14 @@ namespace Mikrocosmos {
         public IHookable HookedItem;
     }
 
+    public struct OnItemUsed {
+        public ICanBeUsed Item;
+    }
+
+    public struct OnItemBroken{
+        public ICanBeUsed Item;
+    }
+
     public interface IHookSystem : ISystem {
         IHookableViewController HookedItem { get; set; }
 
@@ -274,12 +282,19 @@ namespace Mikrocosmos {
             if (e.Identity == netIdentity) {
 
                 NetworkIdentity oldIdentity = HookedNetworkIdentity;
-                
+                if (e.SameSlot) {
+                    this.SendEvent<OnHookItemSwitched>(new OnHookItemSwitched() {
+                        NewIdentity = e.SwitchedGameObject.GetComponent<NetworkIdentity>(),
+                        OldIdentity = null,
+                        OwnerIdentity = netIdentity
+                    });
+                    return;
+                }
 
                 //still have item
                 if (!String.IsNullOrEmpty(e.PrefabName)) {
                     GameObject nextItem = e.SwitchedGameObject;
-                    if (e.SwitchedGameObject != HookedNetworkIdentity.gameObject) {
+                    if (HookedNetworkIdentity==null || e.SwitchedGameObject != HookedNetworkIdentity.gameObject) {
                         nextItem.SetActive(true);
                         NetworkServer.Spawn(nextItem);
                     }
@@ -372,6 +387,9 @@ namespace Mikrocosmos {
             if (condition()) {
                 if (HookedItem.Model is ICanBeUsed model) {
                     model.OnItemUsed();
+                    this.SendEvent<OnItemUsed>(new OnItemUsed() {
+                        Item = model
+                    });
                     //check durability, if =0, then destroy item
                     if (model.Durability == 0) {
                         GameObject go = HookedNetworkIdentity.gameObject;

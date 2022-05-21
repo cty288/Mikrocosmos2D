@@ -14,6 +14,7 @@ namespace Mikrocosmos
         public string PrefabName;
         public int CurrentCount;
         public GameObject NextObject;
+        public GameObject OldObject;
     }
 
     [Serializable]
@@ -50,6 +51,7 @@ namespace Mikrocosmos
         public string PrefabName;
         public int SlotIndex;
         public GameObject SwitchedGameObject;
+        public bool SameSlot;
     }
 
 
@@ -148,7 +150,7 @@ namespace Mikrocosmos
                 BackpackSlot slot = backpackItems[currentIndex];
                 if (slot!=null && slot.Count > 0) {
 
-                    slot.StackedObjects.Pop();
+                    GameObject oldObj = slot.StackedObjects.Pop();
 
                     GameObject nextObject = null;
                     if (slot.StackedObjects.Count > 0) {
@@ -158,7 +160,8 @@ namespace Mikrocosmos
                         CurrentCount = slot.Count,
                         PrefabName = slot.PrefabName,
                         Identity = netIdentity,
-                        NextObject = nextObject
+                        NextObject = nextObject,
+                        OldObject = oldObj
                     });
                 }
                 TargetOnInventoryUpdate(backpackItems,currentIndex);
@@ -199,6 +202,7 @@ namespace Mikrocosmos
             
 
             if (hookSystem.HookedItem==null || hookSystem.HookedItem.Model.CanBeAddedToInventory) {
+                GameObject switchedGameObject = null;
                 if (index != currentIndex) {
                     if (index < 0)
                     {
@@ -207,7 +211,7 @@ namespace Mikrocosmos
 
                     currentIndex = index % GetSlotCount();
                     BackpackSlot slot = backpackItems[currentIndex];
-                    GameObject switchedGameObject = null;
+                    
                     string name = "";
                     if (slot != null && slot.Count > 0)
                     {
@@ -220,10 +224,21 @@ namespace Mikrocosmos
                         PrefabName = name,
                         SlotIndex = currentIndex,
                         Identity = netIdentity,
-                        SwitchedGameObject = switchedGameObject
+                        SwitchedGameObject = switchedGameObject,
+                        SameSlot = false
                     });
                 }
-                
+                else {
+                    this.SendEvent<OnSwitchItemSlot>(new OnSwitchItemSlot()
+                    {
+                        PrefabName = name,
+                        SlotIndex = currentIndex,
+                        Identity = netIdentity,
+                        SwitchedGameObject = hookSystem.HookedNetworkIdentity.gameObject,
+                        SameSlot = true
+                    });
+                }
+               
             }
             TargetOnInventoryUpdate(backpackItems, currentIndex);
         }

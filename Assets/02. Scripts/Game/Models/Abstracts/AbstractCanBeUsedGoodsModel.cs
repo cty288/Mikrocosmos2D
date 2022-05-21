@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ namespace Mikrocosmos
             Durability--;
             Debug.Log($"Item {gameObject.name} Used. Durability: {Durability}");
             if (Durability == 0) {
+                this.SendEvent<OnItemBroken>(new OnItemBroken() {Item = this});
                 OnBroken();
             }
         }
