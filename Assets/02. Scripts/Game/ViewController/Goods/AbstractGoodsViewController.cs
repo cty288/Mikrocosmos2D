@@ -149,7 +149,7 @@ namespace Mikrocosmos
             }
             else
             {
-                Debug.Log($"IsSell: {GoodsModel.IsSell}");
+                
                 if (GoodsModel.IsSell) {
                     if (GoodsModel.TransactionFinished) {
                         visionEntityMaterial = visionMaterial;

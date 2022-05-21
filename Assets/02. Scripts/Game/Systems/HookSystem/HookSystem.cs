@@ -43,6 +43,12 @@ namespace Mikrocosmos {
 
         void UpdateHookCollisions(bool collisionOn);
 
+        void OnServerPlayerHoldUseButton();
+
+        void OnServerPlayerReleaseUseButton();
+
+        void ServerUseItem(Func<bool> condition);
+
         bool IsHooking { get; }
     }
     public partial class HookSystem : AbstractNetworkedSystem, IHookSystem
@@ -61,7 +67,8 @@ namespace Mikrocosmos {
 
         [SerializeField] private float maxShootForce = 20f;
 
-      
+
+        
 
         [field: SyncVar]
         public bool IsHooking { get; private set; }
@@ -72,7 +79,7 @@ namespace Mikrocosmos {
 
         private Trigger2DCheck hookTrigger;
 
-        private bool holdingButton = false;
+        private bool holdingHookButton = false;
 
         private Animator animator;
 
@@ -159,14 +166,14 @@ namespace Mikrocosmos {
 
         [Command]
         public void CmdHoldHookButton() {
-            holdingButton = true;
+            holdingHookButton = true;
         }
 
         private void Update() {
             if (isServer) {
                 IsHooking = HookedItem != null;
-
-                if (holdingButton) {
+                useTimer += Time.deltaTime;
+                if (holdingHookButton) {
                     if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
                         hookHoldTimer += Time.deltaTime;
                         if (hookHoldTimer >= shootTimeThreshold)
@@ -174,6 +181,10 @@ namespace Mikrocosmos {
                             float thisCycleTime = (hookHoldTimer - shootTimeThreshold) % shootChargeOneCycleTime;
                             hookShootChargePercent = thisCycleTime / shootChargeOneCycleTime;
                         }
+                    }
+                    else {
+                        hookHoldTimer = 0;
+                        hookShootChargePercent = 0;
                     }
                 }
 
@@ -192,7 +203,7 @@ namespace Mikrocosmos {
       
         [Command]
         public void CmdReleaseHookButton() {
-            holdingButton = false;
+            holdingHookButton = false;
             HookAction targetAction = CheckHookAction();
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Hook")) {
                 switch (targetAction)
@@ -254,7 +265,7 @@ namespace Mikrocosmos {
                 resLoader.ReleaseAllAssets();
             }
           
-            resLoader = null;
+            //resLoader = null;
         }
 
         [ServerCallback]
@@ -313,6 +324,61 @@ namespace Mikrocosmos {
             }
            
         }
+
+        private float useTimer = 0;
+        private bool itemUsedForThisPress = false;
+
+        [ServerCallback]
+        public void OnServerPlayerHoldUseButton() {
+
+            ServerUseItem((() => {
+                if (HookedItem != null) {
+                    if (HookedItem.Model is ICanBeUsed model) {
+                        Debug.Log("Line 337");
+                        if (model.CanBeUsed && model.Durability != 0) {
+                            Debug.Log("Line 339");
+                            if (model.UseMode == ItemUseMode.UseWhenPressingKey && itemUsedForThisPress) {
+                                return false;
+                            }
+                            Debug.Log("Line 340");
+                            //now check time
+                            if (useTimer >= model.Frequency) {
+                                Debug.Log("Line 341");
+                                itemUsedForThisPress = true;
+                                useTimer = 0;
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+                return false;
+            }));
+        }
+
+        [ServerCallback]
+        public void OnServerPlayerReleaseUseButton() {
+            itemUsedForThisPress = false;
+        }
+
+        [ServerCallback]
+        public void ServerUseItem(Func<bool> condition) {
+            if (condition()) {
+                if (HookedItem.Model is ICanBeUsed model) {
+                    model.OnItemUsed();
+                    //check durability, if =0, then destroy item
+                    if (model.Durability == 0) {
+                        GameObject go = HookedNetworkIdentity.gameObject;
+                        UnHook();
+                        NetworkServer.Destroy(go);
+                    }
+                }
+            }
+
+
+            
+        }
+
         [ServerCallback]
         private void OnRobbed(OnItemRobbed e) {
             if (e.Victim == netIdentity && e.HookedItem == HookedItem.Model) {

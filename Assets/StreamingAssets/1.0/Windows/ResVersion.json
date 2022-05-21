@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "1a88b9103f800c3f00c3d227ec35bf06",
+      "MD5": "c666379d9571cb1c500b50190a7ae595",
       "FileSize": 1.68554688,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "7b3c3d27018def3de541aea54fdcc74c",
-      "FileSize": 188.581055,
+      "MD5": "6c14bf89662778a70ec45c0708fd471e",
+      "FileSize": 188.9082,
       "assetDatas": [
         {
           "Name": "Banana",
@@ -112,6 +112,11 @@
         },
         {
           "Name": "Statellite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Template",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.GameObject"
         },

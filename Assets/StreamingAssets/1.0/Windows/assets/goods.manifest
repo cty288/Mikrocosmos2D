@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3517539884
+CRC: 2530022701
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ca79dbb0e3a58c24bf001e9c16a7201f
+    Hash: dd4e32583f8ea794d74f57cdcdd6a6f9
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 5fcee8fb5221d01dcfe496745a375e96
+    Hash: aba70a5c009f0464391d69239eb930ee
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -49,8 +49,10 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/03. Prefabs/Game/Goods/Banana/DottedOutlineBanana.mat
 - Assets/03. Prefabs/Game/Goods/Banana/Banana.prefab
+- Assets/03. Prefabs/Game/Goods/Banana/DottedOutlineBanana.mat
+- Assets/03. Prefabs/Game/Goods/Template.prefab
+- Assets/03. Prefabs/Game/Goods/Banana/BananaTemp.prefab
 - Assets/03. Prefabs/Game/Goods/Mask/DottedOutlineMask.mat
 - Assets/04. Sprites/Goods/StatelliteSprite.png
 - Assets/04. Sprites/Goods/BananaSprite.png
@@ -59,6 +61,5 @@ Assets:
 - Assets/04. Sprites/Goods/MaskSprite.png
 - Assets/03. Prefabs/Game/Goods/Satellite/DottedOutlineStatellite.mat
 - Assets/03. Prefabs/Game/Goods/Satellite/Statellite.prefab
-- Assets/03. Prefabs/Game/Goods/Banana/BananaTemp.prefab
 - Assets/03. Prefabs/Game/Goods/Toliet/Toliet.prefab
 Dependencies: []

@@ -25,6 +25,13 @@ namespace Mikrocosmos
          [field: SyncVar, SerializeField]
         public bool CanBeAddedToInventory { get; set; }
 
+      //  [field: SyncVar, SerializeField] public bool CanBeUsed { get; set; } = false;
+
+       // [field: SyncVar, SerializeField] public int Durability { get; set; } = -1;
+
+      //  [field: SerializeField] public int MaxDurability { get; protected set; } = -1;
+
+
         [field: SyncVar(hook = nameof(OnHookStateChanged)), SerializeField] 
         public HookState HookState { get; protected set; } = HookState.Freed;
 

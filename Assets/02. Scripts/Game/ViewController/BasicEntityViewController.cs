@@ -31,6 +31,9 @@ namespace Mikrocosmos
         IEntity Model { get; }
     }
 
+    public interface ICanBeUsedHookableViewController: IHookableViewController {
+        public ICanBeUsed Model { get; }
+    }
 
     public abstract class BasicEntityViewController: AbstractNetworkedController<Mikrocosmos>, IEntityViewController {
         public  IEntity Model { get; protected set; }

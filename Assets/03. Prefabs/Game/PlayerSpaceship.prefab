@@ -712,6 +712,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   isControlling: 0
+  isUsing: 0
   teamSprites:
   - {fileID: 21300000, guid: a42751bbbf261d44e870256942279816, type: 3}
   - {fileID: 21300000, guid: 4de6d92b35f33e346ad6a1a2783e6ce3, type: 3}
@@ -937,9 +938,6 @@ MonoBehaviour:
   - {fileID: 8029335451737137903}
   <CanBeMasked>k__BackingField: 1
   player: {fileID: 7986015997137912839}
-  mask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,7 +1422,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7155862405861106046, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
       propertyPath: m_LightOrder
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155862405861106046, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155862405861106046, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.data[1]
+      value: 1225612677
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}

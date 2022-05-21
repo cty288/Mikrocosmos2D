@@ -123,7 +123,7 @@ MonoBehaviour:
   - {x: 0.19543839, y: -1.1491146, z: 0}
   m_ShapePathHash: -1724063987
   m_Mesh: {fileID: 0}
-  m_InstanceId: 144350
+  m_InstanceId: 50352
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,12 +265,16 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
+  <SelfMass>k__BackingField: 0.1
+  <Name>k__BackingField: Mask
   <BasicSellPrice>k__BackingField: 20
   <BasicBuyPrice>k__BackingField: 15
   <GoodRarity>k__BackingField: 1
   <IsSell>k__BackingField: 1
-  <SelfMass>k__BackingField: 0.1
-  <Name>k__BackingField: Mask
+  <CanBeUsed>k__BackingField: 1
+  <UseMode>k__BackingField: 0
+  <Frequency>k__BackingField: 0.5
+  <MaxDurability>k__BackingField: 3
 --- !u!114 &4623635824010423997
 MonoBehaviour:
   m_ObjectHideFlags: 0

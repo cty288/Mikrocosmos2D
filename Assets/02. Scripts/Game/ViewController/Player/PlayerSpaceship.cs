@@ -14,6 +14,9 @@ namespace Mikrocosmos
         [SerializeField, SyncVar]
         private bool isControlling = false;
 
+        [SerializeField, SyncVar]
+        private bool isUsing = false;
+
         [SyncVar]
         private Vector2 mousePosition;
 
@@ -45,13 +48,26 @@ namespace Mikrocosmos
             if (Model.HookState == HookState.Freed) {
                 rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, GetModel().MaxMaxSpeed);
             }
-           
+
+            if (isUsing) {
+                hookSystem.OnServerPlayerHoldUseButton();
+            }
         }
 
         [Command]
         private void CmdUpdateCanControl(bool isControl) {
             isControlling = isControl;
         }
+
+        [Command]
+        private void CmdUpdateUsing(bool isUsing) {
+            this.isUsing = isUsing;
+            if (!isUsing) {
+                hookSystem.OnServerPlayerReleaseUseButton();
+            }
+           
+        }
+
 
         [Command]
         private void CmdUpdateMousePosition(Vector2 mousePos) {
@@ -82,6 +98,8 @@ namespace Mikrocosmos
             int currentSlot = inventorySystem.GetCurrentSlot();
             inventorySystem.ServerSwitchSlot(currentSlot + (up ? -1 : 1));
         }
+
+        
 
         protected override void FixedUpdate() {
             base.FixedUpdate();

@@ -259,12 +259,16 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
+  <SelfMass>k__BackingField: 10
+  <Name>k__BackingField: Toliet
   <BasicSellPrice>k__BackingField: 50
   <BasicBuyPrice>k__BackingField: 30
   <GoodRarity>k__BackingField: 1
   <IsSell>k__BackingField: 1
-  <SelfMass>k__BackingField: 10
-  <Name>k__BackingField: Toliet
+  <CanBeUsed>k__BackingField: 0
+  <UseMode>k__BackingField: 0
+  <Frequency>k__BackingField: 0
+  <MaxDurability>k__BackingField: 0
 --- !u!114 &4623635824010423997
 MonoBehaviour:
   m_ObjectHideFlags: 0

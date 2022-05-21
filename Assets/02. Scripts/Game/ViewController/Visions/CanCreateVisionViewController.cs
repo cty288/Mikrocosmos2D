@@ -76,19 +76,19 @@ namespace Mikrocosmos
 
         private void Start() {
             if (isClient) {
-                //StartCoroutine(RefreshLight());
+                StartCoroutine(RefreshLight());
             }
         }
 
         private IEnumerator RefreshLight() {
-            while (true) {
+            
                 if (isClientCanSee && IsOn) {
                     visionLight.enabled = false;
-                    yield return new WaitForSeconds(0.01f);
+                    yield return new WaitForSeconds(0.1f);
                     visionLight.enabled = true;
                 }
-                yield return new WaitForSeconds(ClientRefreshRate);
-            }
+            
+            
         }
 
         public override void OnStartAuthority() {

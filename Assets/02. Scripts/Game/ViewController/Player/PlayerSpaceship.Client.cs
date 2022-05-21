@@ -42,7 +42,7 @@ namespace Mikrocosmos
             base.Update();
             if (hasAuthority && isClient ) {
                 minHookPressTimer += Time.deltaTime;
-                if (Input.GetMouseButtonDown(0)) {
+                if (Input.GetMouseButtonDown(1)) {
                     if (Model.HookState == HookState.Freed) {
                         CmdUpdateCanControl(true);
                     }
@@ -51,6 +51,15 @@ namespace Mikrocosmos
                         GetModel().CmdIncreaseEscapeCounter();
                     }
                 }
+
+                if (Input.GetMouseButtonDown(0)) {
+                    CmdUpdateUsing(true);
+                }
+
+                if (Input.GetMouseButtonUp(0)) {
+                    CmdUpdateUsing(false);
+                }
+
 
                 //take item & put item (not shoot)
                 if (Input.GetKey(KeyCode.Space)) {
@@ -69,7 +78,7 @@ namespace Mikrocosmos
                 }
 
              
-                if (Input.GetMouseButtonUp(0)) {
+                if (Input.GetMouseButtonUp(1)) {
                     CmdUpdateCanControl(false);
 
                 }
@@ -92,14 +101,9 @@ namespace Mikrocosmos
                 {
                     selfMotionAnimator.SetBool("Controlling", false);
                 }
-
-               
             }
 
            
-
-
-          
         }
 
         private float lastScroll = 0;

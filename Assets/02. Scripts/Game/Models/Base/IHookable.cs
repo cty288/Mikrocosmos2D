@@ -16,6 +16,11 @@ namespace Mikrocosmos
     {
         public string Name { get; set; }
         public bool CanBeAddedToInventory { get; set; }
+
+        //public bool CanBeUsed { get; set; }
+      //  public int Durability { get; set; }
+
+        //public int MaxDurability { get; }
         HookState HookState { get; }
 
         NetworkIdentity HookedByIdentity { get; }
@@ -28,5 +33,28 @@ namespace Mikrocosmos
         void UnHook(bool isShoot);
     }
 
-    
+    public enum ItemUseMode {
+        UseWhenKeyDown,
+        UseWhenPressingKey
+    }
+
+    /// <summary>
+    /// ICanBeUsed is IHookable
+    /// </summary>
+    public interface ICanBeUsed : IHookable {
+        public bool CanBeUsed { get; set; }
+        
+        public ItemUseMode UseMode { get; }
+
+        /// <summary>
+        /// Min time interval between two use (in seconds)
+        /// </summary>
+        public float Frequency { get; set; }
+        public int Durability { get; set; }
+
+        public int MaxDurability { get; }
+
+        void OnItemUsed();
+    }
+
 }

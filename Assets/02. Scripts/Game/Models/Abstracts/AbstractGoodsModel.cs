@@ -33,6 +33,13 @@ namespace Mikrocosmos
 
     public abstract class AbstractGoodsModel : AbstractBasicEntityModel, IGoods, IAffectedByGravity,
     ICanSendQuery{
+
+        [field: SyncVar, SerializeField]
+        public override float SelfMass { get; protected set; }
+
+        [field: SyncVar, SerializeField]
+        public override string Name { get; set; } = "Goods";
+
         [field: SerializeField] public int BasicSellPrice { get; set; }
         [field: SerializeField] public int BasicBuyPrice { get; set; }
         [field: SerializeField] public GoodsRarity GoodRarity { get; set; }

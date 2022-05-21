@@ -5,13 +5,9 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class BasicGoodsModel : AbstractGoodsModel
+    public class BasicGoodsModel : AbstractCanBeUsedGoodsModel
     {
-        [field: SyncVar, SerializeField]
-        public override float SelfMass { get; protected set; }
-
-        [field: SyncVar, SerializeField]
-        public override string Name { get; set; } = "Goods";
+       
 
        
 
@@ -21,6 +17,14 @@ namespace Mikrocosmos
 
         public override void OnClientFreed() {
            
+        }
+
+        public override void OnUsed() {
+            
+        }
+
+        public override void OnBroken() {
+          
         }
     }
 }

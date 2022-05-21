@@ -173,22 +173,28 @@ namespace Mikrocosmos
             
 
             if (hookSystem.HookedItem==null || hookSystem.HookedItem.Model.CanBeAddedToInventory) {
-                if (index < 0) {
-                    index = GetSlotCount() - 1;
-                }
+                if (index != currentIndex) {
+                    if (index < 0)
+                    {
+                        index = GetSlotCount() - 1;
+                    }
 
-                currentIndex = index % GetSlotCount(); 
-                BackpackSlot slot = backpackItems[currentIndex];
-                string name = "";
-                if (slot != null && slot.Count>0) {
-                    name = slot.PrefabName;
-                }
+                    currentIndex = index % GetSlotCount();
+                    BackpackSlot slot = backpackItems[currentIndex];
+                    string name = "";
+                    if (slot != null && slot.Count > 0)
+                    {
+                        name = slot.PrefabName;
+                    }
 
-                this.SendEvent<OnSwitchItemSlot>(new OnSwitchItemSlot() {
-                    PrefabName = name,
-                    SlotIndex = currentIndex,
-                    Identity = netIdentity
-                });
+                    this.SendEvent<OnSwitchItemSlot>(new OnSwitchItemSlot()
+                    {
+                        PrefabName = name,
+                        SlotIndex = currentIndex,
+                        Identity = netIdentity
+                    });
+                }
+                
             }
             TargetOnInventoryUpdate(backpackItems, currentIndex);
         }

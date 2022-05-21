@@ -45,3 +45,9 @@ TagManager:
   - name: Permerant Maskable
     uniqueID: 2353824561
     locked: 0
+  - name: New Layer 3
+    uniqueID: 1953122721
+    locked: 0
+  - name: Entities
+    uniqueID: 1225612677
+    locked: 0

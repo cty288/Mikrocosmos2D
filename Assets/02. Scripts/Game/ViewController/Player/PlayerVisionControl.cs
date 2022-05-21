@@ -47,7 +47,7 @@ namespace Mikrocosmos
         }
 
 
-        [SerializeField] private LayerMask mask;
+    
         void Update() {
           
             if (!hasAuthority) {
