@@ -732,7 +732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2401df144c4da90408d88d58f37fd534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
+  syncMode: 1
   syncInterval: 0
   <MoveMode>k__BackingField: 0
   <MaxSpeed>k__BackingField: 30
@@ -741,7 +741,7 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <InitialAcceleration>k__BackingField: 30
+  <InitialAcceleration>k__BackingField: 50
   <SelfMass>k__BackingField: 1
   <AccelerationDecreasePerMass>k__BackingField: 2
 --- !u!114 &6589906832623092008
@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8514fd46f1bd604cb7e7942d4b1335e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
+  syncMode: 1
   syncInterval: 0
   <HookedNetworkIdentity>k__BackingField: {fileID: 0}
   shootTimeThreshold: 0.5
@@ -901,7 +901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c83b296c88aa7249b26b6ab0f25de8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
+  syncMode: 1
   syncInterval: 0.02
 --- !u!114 &3290459578096298434
 MonoBehaviour:
@@ -915,7 +915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdd0096fee7f7d49aeb33e12540735c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
+  syncMode: 1
   syncInterval: 0.02
   backpackItems: []
   currentIndex: 0
@@ -931,13 +931,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d445c7b9fc35c24468461c22dd73eb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
+  syncMode: 1
   syncInterval: 0.1
   defaultSpriteLitMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   visionEntityMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
   visionAffectedSprites:
   - {fileID: 592615554353817294}
   - {fileID: 8029335451737137903}
+  - {fileID: 4611425416537983234}
   <CanBeMasked>k__BackingField: 1
   player: {fileID: 7986015997137912839}
 --- !u!1 &8295490642847367845

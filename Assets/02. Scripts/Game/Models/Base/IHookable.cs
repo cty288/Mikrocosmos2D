@@ -31,6 +31,8 @@ namespace Mikrocosmos
 
         
         void UnHook(bool isShoot);
+
+        void UnHook();
     }
 
     public enum ItemUseMode {

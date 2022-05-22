@@ -248,6 +248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
+  <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
 --- !u!114 &-7106308886407098970
 MonoBehaviour:
@@ -263,7 +265,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
+  <MoveMode>k__BackingField: 0
   <MaxSpeed>k__BackingField: 50
+  <CanBeAddedToInventory>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}

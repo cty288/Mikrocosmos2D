@@ -18,5 +18,7 @@ namespace Mikrocosmos
             name = GetComponentInParent<PlayerSpaceship>().Name;
             playerNameText.text = name;
         }
+
+
     }
 }

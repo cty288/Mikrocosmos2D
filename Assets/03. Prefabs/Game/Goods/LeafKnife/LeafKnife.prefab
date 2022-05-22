@@ -438,7 +438,7 @@ MonoBehaviour:
   <IsSell>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1
   <UseMode>k__BackingField: 0
-  <Frequency>k__BackingField: 2
+  <Frequency>k__BackingField: 1
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 50
   addedForce: 80

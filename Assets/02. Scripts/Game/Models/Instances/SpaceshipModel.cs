@@ -44,7 +44,7 @@ namespace Mikrocosmos
 
         }
         public int EscapeNeedCount { get; } = 10;
-        public float EscapeLossTime { get; } = 0.125f;
+        public float EscapeLossTime { get; } = 0.15f;
         public float MaxMaxSpeed { get; } = 100;
 
         [field: SyncVar(hook = nameof(ClientOnEscapeCounterChanged))]
@@ -81,7 +81,7 @@ namespace Mikrocosmos
             if (EscapeCounter >= EscapeNeedCount)
             {
                 EscapeCounter = 0;
-                UnHook(false);
+                UnHook();
             }
 
         }

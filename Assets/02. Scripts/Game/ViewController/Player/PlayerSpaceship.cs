@@ -78,10 +78,12 @@ namespace Mikrocosmos
         private void ServerMove(Vector3 mousePos) {
             Vector2 forceDir = (mousePos - transform.position)
                 .normalized;
-            if (rigidbody.velocity.sqrMagnitude <= Mathf.Pow(Model.MaxSpeed, 2))
+            Vector2 targetAddedVelocity = forceDir * GetModel().Acceleration * Time.deltaTime;
+            if (rigidbody.velocity.magnitude <=Model.MaxSpeed|| (rigidbody.velocity + targetAddedVelocity).magnitude <
+                rigidbody.velocity.magnitude)
             {
                 //rigidbody.AddForce(forceDir * GetModel().MoveForce);
-                rigidbody.velocity += forceDir * GetModel().Acceleration * Time.deltaTime;
+                rigidbody.velocity += targetAddedVelocity;
             }
         }
         [ServerCallback]

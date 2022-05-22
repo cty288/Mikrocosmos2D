@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Utilities;
-using Mirror;
+using Mirror.Experimental;
 using UnityEngine;
+using NetworkTransform = Mirror.NetworkTransform;
 
 namespace Mikrocosmos
 {
@@ -66,6 +67,7 @@ namespace Mikrocosmos
 
         private void OnItemShot(OnItemShot e) {
             if (e.TargetShotItem == this as ICanBeShotViewController) {
+                rigidbody.velocity = Model.HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
                 rigidbody.AddForce(e.Force, ForceMode2D.Impulse);
             }
         }
@@ -94,7 +96,7 @@ namespace Mikrocosmos
                         }
                         else
                         {
-                            transform.position = (Vector2.Lerp(transform.position, hookedByTr.position, 40 * Time.fixedDeltaTime));
+                            transform.position = (Vector2.Lerp(transform.position, hookedByTr.position, 30 * Time.fixedDeltaTime));
                             transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
@@ -107,6 +109,32 @@ namespace Mikrocosmos
                     rigidbody.bodyType = RigidbodyType2D.Dynamic;
                 }
 
+            }
+
+            if (isClientOnly) {
+                if (Model.HookedByIdentity && Model.HookedByIdentity.hasAuthority) {
+                    if (Model.HookState == HookState.Hooked) {
+                        GetComponent<NetworkTransform>().syncPosition = false;
+                        GetComponent<NetworkRigidbody2D>().syncVelocity = false;
+                        Transform hookedByTr = Model.HookedByIdentity.GetComponentInChildren<Trigger2DCheck>().transform;
+                        if (hookedByTr)
+                        {
+
+                            hookedByTr.localPosition = HookedPositionOffset;
+                            transform.position = (Vector2.Lerp(transform.position, hookedByTr.position, 30 * Time.fixedDeltaTime));
+                            
+                        }
+                    }
+                    else {
+                        GetComponent<NetworkTransform>().syncPosition = true;
+                        GetComponent<NetworkRigidbody2D>().syncVelocity = true;
+                    }
+                }
+                else {
+                    GetComponent<NetworkTransform>().syncPosition = true;
+                    GetComponent<NetworkRigidbody2D>().syncVelocity = true;
+                }
+                
             }
 
         }

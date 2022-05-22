@@ -78,6 +78,13 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
+        public void UnHook() {
+            if (HookedByIdentity) {
+                HookedByIdentity.GetComponent<IHookSystem>().UnHook();
+            }
+        }
+
+        [ServerCallback]
         protected virtual bool ServerCheckCanHook(NetworkIdentity hookedBy) {
             return true;
         }
@@ -118,6 +125,13 @@ namespace Mikrocosmos
                     bindedRigidibody.velocity = HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
                     bindedRigidibody.angularVelocity = 0;
                 }
+
+                //prevent hit player when unhooked
+                if (!GetComponent<Collider2D>().isTrigger) {
+                    Invoke(nameof(RecoverCollider), 0.1f);
+                }
+                GetComponent<Collider2D>().isTrigger = true;
+                
                 Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
                     false);
 
@@ -137,6 +151,10 @@ namespace Mikrocosmos
 
         }
 
+
+        private void RecoverCollider() {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
      
 
         [field: SyncVar, SerializeField]

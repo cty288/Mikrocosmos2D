@@ -15,7 +15,7 @@ namespace Mikrocosmos
        // [SyncVar()] public PlayerMatchInfo MatchInfo;
        private Animator selfMotionAnimator;
 
-       private float minHookPressTimeInterval = 0.4f;
+       private float minHookPressTimeInterval = 0.8f;
        private float minHookPressTimer = 0f;
 
         private ISpaceshipConfigurationModel GetModel() {

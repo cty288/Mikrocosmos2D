@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.ResKit;
+using MikroFramework.TimeSystem;
 using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
@@ -59,6 +60,8 @@ namespace Mikrocosmos {
 
         void ServerUseItem(Func<bool> condition);
 
+        void UnHook();
+
         bool IsHooking { get; }
     }
     public partial class HookSystem : AbstractNetworkedSystem, IHookSystem
@@ -69,7 +72,7 @@ namespace Mikrocosmos {
         [field:SyncVar, SerializeField]
         public NetworkIdentity HookedNetworkIdentity { get; set; }
 
-        [SerializeField] private float shootTimeThreshold = 0.5f;
+        [SerializeField] private float shootTimeThreshold = 0.2f;
         /// <summary>
         /// OneCycle time; including charge / decharge
         /// </summary>
@@ -243,7 +246,10 @@ namespace Mikrocosmos {
                 hookShootChargePercent = 0;
                 hookHoldTimer = 0;
             }
-            
+
+            this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
+                GetComponent<NetworkAnimator>().ResetTrigger("StartHook");
+            });
         }
 
         
@@ -423,7 +429,7 @@ namespace Mikrocosmos {
         }
 
         [ServerCallback]
-        private void UnHook() {
+        public void UnHook() {
             UpdateHookCollisions(true);
 
             if (HookedItem != null) {
@@ -536,6 +542,9 @@ namespace Mikrocosmos {
             if (model.HookState == HookState.Freed && animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking")) {
                 GetComponent<NetworkAnimator>().SetTrigger("StartHook");
             }
+
+            
+
         }
 
         private HookAction CheckHookAction() {
