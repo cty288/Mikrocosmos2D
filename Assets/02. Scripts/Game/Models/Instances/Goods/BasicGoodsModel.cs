@@ -5,9 +5,8 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class BasicGoodsModel : AbstractCanBeUsedGoodsModel
-    {
-        
+    public class BasicGoodsModel : AbstractCanBeUsedGoodsModel {
+     
         public override void OnClientHooked() {
             
         }
@@ -17,7 +16,7 @@ namespace Mikrocosmos
         }
 
         public override void OnUsed() {
-            
+            ReduceDurability(1);
         }
 
         public override void OnBroken() {

@@ -290,6 +290,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
+  <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
   buyMaterial: {fileID: 2100000, guid: 433d85f9e56b49c44bbd81d0fbeec9ff, type: 2}
   sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}

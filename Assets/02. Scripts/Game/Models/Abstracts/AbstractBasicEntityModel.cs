@@ -16,7 +16,7 @@ namespace Mikrocosmos
     }
     public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent,
     ICanGetModel {
-        [field:  SerializeField]
+        [field:  SerializeField, SyncVar]
         public MoveMode MoveMode { get; set; } = MoveMode.ByPhysics;
 
         [field: SyncVar, SerializeField]

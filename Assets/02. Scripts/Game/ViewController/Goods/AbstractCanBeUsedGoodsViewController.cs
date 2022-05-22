@@ -94,7 +94,7 @@ namespace Mikrocosmos
                     UseMode = GoodsModel.UseMode
                 };
                 RpcOnItemBroken(basicInfo);
-                TargetOnItemBroken(Model.HookedByIdentity.connectionToClient, basicInfo);
+                TargetOnItemBroken(e.HookedBy.connectionToClient, basicInfo);
             }
         }
 
@@ -110,7 +110,7 @@ namespace Mikrocosmos
                     UseMode = GoodsModel.UseMode
                 };
                 RpcOnItemUsed(basicInfo);
-                TargetOnItemUsed(Model.HookedByIdentity.connectionToClient, basicInfo);
+                TargetOnItemUsed(e.HookedBy.connectionToClient, basicInfo);
             }
         }
 

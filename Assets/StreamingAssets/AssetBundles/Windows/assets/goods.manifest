@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2530022701
+CRC: 386460525
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dd4e32583f8ea794d74f57cdcdd6a6f9
+    Hash: da1250a36b101856656805f99916a342
   TypeTreeHash:
     serializedVersion: 2
-    Hash: aba70a5c009f0464391d69239eb930ee
+    Hash: 4f9fcbb54e1c02af8323991ac41b8204
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -25,12 +25,22 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 61
   Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: b46ff1cb7e87ed14fa105476fd9e4ebc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 52a7f5503a2505a49aca73bf2063239a, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 9d1de09509287094b9b15a251c817147, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 3f99d8d5b9cd55a4d95552d02d803f49, type: 3}
 - Class: 114
@@ -40,26 +50,84 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e103ccf06e718624bac7eb83ab7a0f7b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 311063edff106cd4eb942c1bd167e39e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 528dc2a79f798bb4ab803e1a46d656cd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 058a3304973f74d4490dbcad44e39cdf, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 70848c4cb992748418834496819ae51a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: bbf355d86d3245949a8d2e29322f6b7e, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
-SerializeReferenceClassIdentifiers: []
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.FaceInfo_Legacy
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.FontAssetCreationSettings
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.KerningTable
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_Character
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_FontFeatureTable
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_FontWeightPair
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.VertexGradient
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.FaceInfo
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.Glyph
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.GlyphMetrics
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.GlyphRect
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
 - Assets/03. Prefabs/Game/Goods/Banana/Banana.prefab
 - Assets/03. Prefabs/Game/Goods/Banana/DottedOutlineBanana.mat
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite.png
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_5.png
 - Assets/03. Prefabs/Game/Goods/Template.prefab
+- Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_5.png
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_4.png
 - Assets/03. Prefabs/Game/Goods/Banana/BananaTemp.prefab
+- Assets/03. Prefabs/Game/Goods/LeafKnife/LeafKnife.prefab
+- Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_4.png
+- Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_6.png
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_3.png
+- Assets/03. Prefabs/Game/Goods/Banana2/Banana.prefab
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_2.png
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_1.png
 - Assets/03. Prefabs/Game/Goods/Mask/DottedOutlineMask.mat
 - Assets/04. Sprites/Goods/StatelliteSprite.png
 - Assets/04. Sprites/Goods/BananaSprite.png
 - Assets/VisionEffect/Sprites/TolietSprite.png
 - Assets/03. Prefabs/Game/Goods/Mask/Mask.prefab
+- Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_3.png
 - Assets/04. Sprites/Goods/MaskSprite.png
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_6.png
 - Assets/03. Prefabs/Game/Goods/Satellite/DottedOutlineStatellite.mat
 - Assets/03. Prefabs/Game/Goods/Satellite/Statellite.prefab
 - Assets/03. Prefabs/Game/Goods/Toliet/Toliet.prefab
+- Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_2.png
 Dependencies: []

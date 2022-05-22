@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "c666379d9571cb1c500b50190a7ae595",
+      "MD5": "31450d99447a123e641cf1b26c2c3855",
       "FileSize": 1.68554688,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "6c14bf89662778a70ec45c0708fd471e",
-      "FileSize": 188.9082,
+      "MD5": "3b038b3c213f4f395df80d293ca1f7cb",
+      "FileSize": 10015.6484,
       "assetDatas": [
         {
           "Name": "Banana",
@@ -94,6 +94,16 @@
           "Name": "DottedOutlineBanana",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "Banana",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "LeafKnife",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
         },
         {
           "Name": "DottedOutlineMask",
@@ -127,6 +137,66 @@
         },
         {
           "Name": "BananaSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_2",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_3",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_4",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_5",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_6",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_1",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_2",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_3",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_4",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_5",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_6",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

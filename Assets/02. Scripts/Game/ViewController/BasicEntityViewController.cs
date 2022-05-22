@@ -17,6 +17,9 @@ namespace Mikrocosmos
     public interface IHookableViewController: IHaveMomentumViewController
     {
         public IHookable Model { get; }
+
+        public Vector2 HookedPositionOffset { get; }
+        public float HookedRotationZOffset { get; }
     }
 
     public interface IHaveMomentumViewController {
@@ -37,16 +40,23 @@ namespace Mikrocosmos
 
     public abstract class BasicEntityViewController: AbstractNetworkedController<Mikrocosmos>, IEntityViewController {
         public  IEntity Model { get; protected set; }
-      
+
+        [field: SerializeField]
+        public Vector2 HookedPositionOffset { get; protected set; }
+
+        [field: SerializeField]
+        public float HookedRotationZOffset { get; protected set; }
 
 
         protected Rigidbody2D rigidbody;
 
+        protected Transform hookedTrReference;
 
 
         protected virtual void Awake() {
             Model = GetComponent<IEntity>();
             rigidbody = GetComponent<Rigidbody2D>();
+          
         }
 
         public override void OnStartServer() {
@@ -70,20 +80,23 @@ namespace Mikrocosmos
                 if (Model.HookState == HookState.Hooked)
                 {
                     Transform hookedByTr = Model.HookedByTransform;
-                    if (hookedByTr)
-                    {
+                    if (hookedByTr) {
 
+
+                        hookedByTr.localPosition = HookedPositionOffset;
                         // rigidbody.bodyType = RigidbodyType2D.Kinematic;
                         if (Model.MoveMode == MoveMode.ByPhysics)
                         {
-                            rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 20 * Time.fixedDeltaTime));
+                            rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position , 20 * Time.fixedDeltaTime));
 
-                            transform.rotation = hookedByTr.rotation;
+                            transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
+                                                                  new Vector3(0, 0, HookedRotationZOffset));
                         }
                         else
                         {
-                            transform.position = (Vector2.Lerp(transform.position, hookedByTr.position, 20 * Time.fixedDeltaTime));
-                            transform.rotation = hookedByTr.rotation;
+                            transform.position = (Vector2.Lerp(transform.position, hookedByTr.position, 40 * Time.fixedDeltaTime));
+                            transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
+                                                                  new Vector3(0, 0, HookedRotationZOffset));
                         }
 
 

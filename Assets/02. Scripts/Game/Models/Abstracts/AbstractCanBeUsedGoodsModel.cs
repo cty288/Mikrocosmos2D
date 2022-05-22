@@ -31,14 +31,21 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public void OnItemUsed() {
-            Durability--;
-            Debug.Log($"Item {gameObject.name} Used. Durability: {Durability}");
-            if (Durability == 0) {
-                this.SendEvent<OnItemBroken>(new OnItemBroken() {Item = this});
-                OnBroken();
-            }
+            OnUsed();
         }
 
+        [ServerCallback]
+        public void ReduceDurability(int count) {
+            Durability -= count;
+            if (Durability == 0)
+            {
+                OnBroken();
+                this.SendEvent<OnItemBroken>(new OnItemBroken() {
+                    Item = this ,
+                    HookedBy = HookedByIdentity
+                });
+            }
+        }
         public abstract void OnUsed();
 
         public abstract void OnBroken();

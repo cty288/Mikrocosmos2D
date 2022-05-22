@@ -55,6 +55,8 @@ namespace Mikrocosmos
         public int MaxDurability { get; set; }
 
         void OnItemUsed();
+
+        public void ReduceDurability(int count);
     }
 
 }

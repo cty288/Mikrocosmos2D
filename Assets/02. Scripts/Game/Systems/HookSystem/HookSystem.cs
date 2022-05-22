@@ -33,10 +33,12 @@ namespace Mikrocosmos {
 
     public struct OnItemUsed {
         public ICanBeUsed Item;
+        public NetworkIdentity HookedBy;
     }
 
     public struct OnItemBroken{
         public ICanBeUsed Item;
+        public NetworkIdentity HookedBy;
     }
 
     public interface IHookSystem : ISystem {
@@ -118,6 +120,16 @@ namespace Mikrocosmos {
             this.RegisterEvent<OnHookItemSwitched>(OnHookItemSwitched).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnBackpackItemRemoved>(OnCurrentBackPackItemRemoved)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnItemBroken>(OnItemBroken).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        [ServerCallback]
+        private void OnItemBroken(OnItemBroken e) {
+            if (HookedItem!=null && e.Item == HookedItem.Model) {
+                GameObject go = HookedNetworkIdentity.gameObject;
+                UnHook();
+                NetworkServer.Destroy(go);
+            }
         }
 
         [ServerCallback]
@@ -382,16 +394,20 @@ namespace Mikrocosmos {
         public void ServerUseItem(Func<bool> condition) {
             if (condition()) {
                 if (HookedItem.Model is ICanBeUsed model) {
+                    NetworkIdentity hookedBy = netIdentity;
                     model.OnItemUsed();
-                    this.SendEvent<OnItemUsed>(new OnItemUsed() {
-                        Item = model
+                    this.SendEvent<OnItemUsed>(new OnItemUsed()
+                    {
+                        Item = model,
+                        HookedBy = hookedBy
                     });
+                    /*
                     //check durability, if =0, then destroy item
                     if (model.Durability == 0) {
                         GameObject go = HookedNetworkIdentity.gameObject;
                         UnHook();
                         NetworkServer.Destroy(go);
-                    }
+                    }*/
                 }
             }
 
