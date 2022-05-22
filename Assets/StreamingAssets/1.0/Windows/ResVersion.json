@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "31450d99447a123e641cf1b26c2c3855",
+      "MD5": "b4445928886e5770ef1ee5a33b87c67a",
       "FileSize": 1.68554688,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "3b038b3c213f4f395df80d293ca1f7cb",
-      "FileSize": 10015.6484,
+      "MD5": "bbecd2efc877ea033239a732024428da",
+      "FileSize": 9981.459,
       "assetDatas": [
         {
           "Name": "Banana",

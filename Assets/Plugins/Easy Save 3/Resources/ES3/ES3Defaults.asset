@@ -36,6 +36,7 @@ MonoBehaviour:
     - MikroFramework
     - UniRx
     - Cinemachine
+    - Assembly-CSharp
     - Telepathy
     - ES3Editor
     - kcp2k
@@ -47,7 +48,6 @@ MonoBehaviour:
     - Assembly-CSharp-firstpass
     - Mirror.Authenticators
     - Elringus.SpriteGlow.Runtime
-    - Assembly-CSharp
     - PsdPlugin
     - PPv2URPConverters
     - Polyglot.Editor
