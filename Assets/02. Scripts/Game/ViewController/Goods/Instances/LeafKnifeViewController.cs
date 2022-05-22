@@ -25,7 +25,7 @@ namespace Mikrocosmos
 
         public void OnStopKnife() {
             if (isServer) {
-                hitThisTime = false;
+                
             }
         }
 
@@ -51,7 +51,9 @@ namespace Mikrocosmos
         public void OnAnimationFinished() {
             if (isServer) {
                 if (hitThisTime) {
+                    Debug.Log("Leaf Knife Hit");
                     GoodsModel.ReduceDurability(1);
+                    hitThisTime = false;
                 }
             }
         }

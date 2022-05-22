@@ -6,7 +6,8 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public class BasicGoodsModel : AbstractCanBeUsedGoodsModel {
-     
+
+        [SerializeField] private bool reduceDurabilityInstantlyAfterUse = true;
         public override void OnClientHooked() {
             
         }
@@ -16,7 +17,10 @@ namespace Mikrocosmos
         }
 
         public override void OnUsed() {
-            ReduceDurability(1);
+            if (reduceDurabilityInstantlyAfterUse) {
+                ReduceDurability(1);
+            }
+         
         }
 
         public override void OnBroken() {

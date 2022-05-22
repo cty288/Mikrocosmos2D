@@ -164,7 +164,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   clientAuthority: 0
-  sendInterval: 0.006
+  sendInterval: 0.01
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
@@ -172,9 +172,9 @@ MonoBehaviour:
   interpolateRotation: 0
   interpolateScale: 0
   bufferTimeMultiplier: 3
-  bufferSizeLimit: 64
+  bufferSizeLimit: 128
   catchupThreshold: 6
-  catchupMultiplier: 0.06
+  catchupMultiplier: 0.1
   onlySyncOnChange: 1
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
@@ -258,6 +258,7 @@ MonoBehaviour:
   <Frequency>k__BackingField: 0.25
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 5
+  reduceDurabilityInstantlyAfterUse: 1
 --- !u!114 &-2388563459011212752
 MonoBehaviour:
   m_ObjectHideFlags: 0

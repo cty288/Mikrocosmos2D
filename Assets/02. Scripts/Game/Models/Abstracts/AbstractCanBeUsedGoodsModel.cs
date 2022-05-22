@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
+    public struct OnItemDurabilityChange {
+        public ICanBeUsed Model;
+        public NetworkIdentity HookedBy;
+        public int NewDurability;
+    }
     public abstract class AbstractCanBeUsedGoodsModel : AbstractGoodsModel, ICanBeUsed {
         [field: SyncVar, SerializeField] public bool CanBeUsed { get; set; } = true;
 
@@ -37,6 +42,11 @@ namespace Mikrocosmos
         [ServerCallback]
         public void ReduceDurability(int count) {
             Durability -= count;
+            this.SendEvent<OnItemDurabilityChange>(new OnItemDurabilityChange() {
+                HookedBy = HookedByIdentity,
+                Model = this,
+                NewDurability = Durability
+            });
             if (Durability == 0)
             {
                 OnBroken();

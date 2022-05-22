@@ -181,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_InstanceId
-      value: -731094
+      value: -36794
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_ShapePathHash
@@ -346,7 +346,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.41, y: 0.31}
   serializedVersion: 2
-  m_Radius: 1.4
+  m_Radius: 1.63
 --- !u!95 &6683974370369702465
 Animator:
   serializedVersion: 4
@@ -430,7 +430,7 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <SelfMass>k__BackingField: 0.5
+  <SelfMass>k__BackingField: 3
   <Name>k__BackingField: LeafKnife
   <BasicSellPrice>k__BackingField: 20
   <BasicBuyPrice>k__BackingField: 30
@@ -441,4 +441,5 @@ MonoBehaviour:
   <Frequency>k__BackingField: 1
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 50
-  addedForce: 80
+  reduceDurabilityInstantlyAfterUse: 0
+  addedForce: 150

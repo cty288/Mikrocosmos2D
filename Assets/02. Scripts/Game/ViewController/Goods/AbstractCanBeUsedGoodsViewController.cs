@@ -28,8 +28,27 @@ namespace Mikrocosmos
             this.RegisterEvent<OnItemUsed>(OnServerItemUsed).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnItemBroken>(OnServerItemBroken).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnHookItemSwitched>(OnServerItemSwitched).UnRegisterWhenGameObjectDestroyed(gameObject);
-           // this.RegisterEvent<OnBackpackItemRemoved>(OnItemStopBeingSelected)
-              //  .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnItemDurabilityChange>(OnItemDurabilityChange)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            // this.RegisterEvent<OnBackpackItemRemoved>(OnItemStopBeingSelected)
+            //  .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnItemDurabilityChange(OnItemDurabilityChange e) {
+            if (e.Model == GoodsModel) {
+                OnServerDurabilityChange();
+                CanBeUsedGoodsBasicInfo basicInfo = new CanBeUsedGoodsBasicInfo()
+                {
+                    CanBeUsed = GoodsModel.CanBeUsed,
+                    Durability = GoodsModel.Durability,
+                    Frequency = GoodsModel.Frequency,
+                    MaxDurability = GoodsModel.MaxDurability,
+                    UseMode = GoodsModel.UseMode
+                };
+                RpcOnItemDurabilityChange(basicInfo);
+                TargetOnItemDurabilityChange(e.HookedBy.connectionToClient, basicInfo,
+                    e.HookedBy.GetComponent<IPlayerInventorySystem>().GetCurrentSlot());
+            }
         }
 
         [ServerCallback]
@@ -170,10 +189,24 @@ namespace Mikrocosmos
             OnClientOwnerItemBroken(basicInfo);
         }
 
+        [ClientRpc]
+        protected void RpcOnItemDurabilityChange(CanBeUsedGoodsBasicInfo basicInfo)
+        {
+            OnClientItemDurabilityChange(basicInfo);
+        }
+
+        [TargetRpc]
+        protected void TargetOnItemDurabilityChange(NetworkConnection conn, CanBeUsedGoodsBasicInfo basicInfo, 
+            int slotNumber)
+        {
+            OnClientOwnerDurabilityChange(basicInfo, slotNumber);
+        }
+
 
         protected abstract void OnServerItemUsed();
         protected abstract void OnServerItemBroken();
 
+        protected abstract void OnServerDurabilityChange();
         protected abstract void OnServerStopSelectThisItem();
 
         protected abstract void OnServerStartSelectThisItem();
@@ -189,5 +222,8 @@ namespace Mikrocosmos
 
        protected abstract void OnClientItemStartBeingSelected(CanBeUsedGoodsBasicInfo basicInfo);
        protected abstract void OnClientOwnerStartBeingSelected(CanBeUsedGoodsBasicInfo basicInfo, int slotNumber);
+
+       protected abstract void OnClientItemDurabilityChange(CanBeUsedGoodsBasicInfo basicInfo);
+       protected abstract void OnClientOwnerDurabilityChange(CanBeUsedGoodsBasicInfo basicInfo, int slotNumber);
     }
 }

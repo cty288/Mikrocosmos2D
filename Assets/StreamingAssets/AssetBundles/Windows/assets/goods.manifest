@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 717583363
+CRC: 2911766825
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5cdf4877b887470385139435618d3677
+    Hash: dcfbb630bbf7d626df140efe962747f1
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 57a01f7f9d81a4365735ff84ffbf8a2d
+    Hash: e11750e37252d60f783e26df01979926
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -60,11 +60,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 528dc2a79f798bb4ab803e1a46d656cd, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e5af11a9e8ef0b2409ae2cded8f0f388, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -125,6 +125,7 @@ Assets:
 - Assets/03. Prefabs/Game/Goods/Mask/Mask.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_3.png
 - Assets/04. Sprites/Goods/MaskSprite.png
+- Assets/04. Sprites/Goods/JellyGun/JellyGunSprite.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_6.png
 - Assets/03. Prefabs/Game/Goods/Satellite/DottedOutlineStatellite.mat
 - Assets/03. Prefabs/Game/Goods/Satellite/Statellite.prefab

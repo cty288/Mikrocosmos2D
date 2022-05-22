@@ -27,6 +27,10 @@ namespace Mikrocosmos
             Debug.Log("OnServerItemBroken");
         }
 
+        protected override void OnServerDurabilityChange() {
+            Debug.Log("OnServerDurabilityChange");
+        }
+
         [ServerCallback]
         protected override void OnServerStopSelectThisItem() {
             Debug.Log("OnServerStopSelectThisItem");
@@ -89,6 +93,17 @@ namespace Mikrocosmos
                 Transform currentSelectedSlotObject = GetCurrentSelectedSlotObject(slotNumber).transform;
                 currentDurabilityCountObject = Instantiate(DurabilityCountTextPrefab, currentSelectedSlotObject);
                 currentDurabilityCountObject.transform.localPosition = DurabilityCountTextSpawnLocalPosition;
+                currentDurabilityCountObject.GetComponent<TMP_Text>().text =
+                    $"{basicInfo.Durability}/{basicInfo.MaxDurability}";
+            }
+        }
+
+        protected override void OnClientItemDurabilityChange(CanBeUsedGoodsBasicInfo basicInfo) {
+            Debug.Log("OnClientItemDurabilityChange");
+        }
+
+        protected override void OnClientOwnerDurabilityChange(CanBeUsedGoodsBasicInfo basicInfo, int slotNumber) {
+            if (currentDurabilityCountObject && slotNumber == Model.HookedByIdentity.GetComponent<IPlayerInventorySystem>().GetCurrentSlot()) {
                 currentDurabilityCountObject.GetComponent<TMP_Text>().text =
                     $"{basicInfo.Durability}/{basicInfo.MaxDurability}";
             }

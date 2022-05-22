@@ -10,5 +10,9 @@ namespace Mikrocosmos
         private float addedForce;
 
         public float AddedForce => addedForce;
+
+        public override void OnUsed() {
+            
+        }
     }
 }

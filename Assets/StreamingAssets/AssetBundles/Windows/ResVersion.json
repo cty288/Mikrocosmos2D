@@ -3,8 +3,8 @@
   "ABMD5List": [
     {
       "AssetName": "mftest",
-      "MD5": "e3d6f72337c349721b37911e52563658",
-      "FileSize": 435.692383,
+      "MD5": "3fc8346f2226ce39dcb4c2f2c3361e0b",
+      "FileSize": 435.743164,
       "assetDatas": [
         {
           "Name": "War loop",
@@ -30,8 +30,8 @@
     },
     {
       "AssetName": "mftest2",
-      "MD5": "823c363112af21773c35792aefff3be2",
-      "FileSize": 5.02734375,
+      "MD5": "e681bec26a80aa712f10209e5b503da6",
+      "FileSize": 5.11328125,
       "assetDatas": [
         {
           "Name": "War loop",
@@ -47,8 +47,8 @@
     },
     {
       "AssetName": "scene",
-      "MD5": "655210538cf1939263203f4aed6ded1f",
-      "FileSize": 26.4570313,
+      "MD5": "006d5e40e5c87f2d0b92db2bc3b34555",
+      "FileSize": 26.50293,
       "assetDatas": [
         {
           "Name": "HotUpdateExampleScene",
@@ -59,8 +59,8 @@
     },
     {
       "AssetName": "test_sphere",
-      "MD5": "8cfddd0469d9dadf4075acd1e075d1cc",
-      "FileSize": 44.38379,
+      "MD5": "7876d6f324538a103593e7ce94b515c3",
+      "FileSize": 44.4736328,
       "assetDatas": [
         {
           "Name": "Sphere",
@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "b4445928886e5770ef1ee5a33b87c67a",
-      "FileSize": 1.68554688,
+      "MD5": "2533462aaa14db2e8fe6d50b352950e6",
+      "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "bbecd2efc877ea033239a732024428da",
-      "FileSize": 9981.459,
+      "MD5": "324f4a808b893aa0af8e12477a006cc1",
+      "FileSize": 10005.9775,
       "assetDatas": [
         {
           "Name": "Banana",
@@ -137,6 +137,11 @@
         },
         {
           "Name": "BananaSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },
@@ -219,8 +224,8 @@
     },
     {
       "AssetName": "test/scene_test.ab",
-      "MD5": "734cc94efb61586250c76833e2a8f109",
-      "FileSize": 53.6015625,
+      "MD5": "dfbd6563e837a0e3146cf2a34882ea2c",
+      "FileSize": 53.6865234,
       "assetDatas": [
         {
           "Name": "TestABScene",

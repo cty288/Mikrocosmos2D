@@ -166,7 +166,7 @@ MonoBehaviour:
   bufferTimeMultiplier: 3
   bufferSizeLimit: 64
   catchupThreshold: 6
-  catchupMultiplier: 0.078
+  catchupMultiplier: 0.5
   onlySyncOnChange: 1
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
@@ -276,6 +276,7 @@ MonoBehaviour:
   <Frequency>k__BackingField: 0.5
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 3
+  reduceDurabilityInstantlyAfterUse: 1
 --- !u!114 &4623635824010423997
 MonoBehaviour:
   m_ObjectHideFlags: 0

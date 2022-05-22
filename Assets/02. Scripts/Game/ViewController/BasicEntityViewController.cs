@@ -94,9 +94,8 @@ namespace Mikrocosmos
                             transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
-                        else
-                        {
-                            transform.position = (Vector2.Lerp(transform.position, hookedByTr.position, 30 * Time.fixedDeltaTime));
+                        else {
+                            transform.position = hookedByTr.position;
                             transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
@@ -111,31 +110,7 @@ namespace Mikrocosmos
 
             }
 
-            if (isClientOnly) {
-                if (Model.HookedByIdentity && Model.HookedByIdentity.hasAuthority) {
-                    if (Model.HookState == HookState.Hooked) {
-                        GetComponent<NetworkTransform>().syncPosition = false;
-                        GetComponent<NetworkRigidbody2D>().syncVelocity = false;
-                        Transform hookedByTr = Model.HookedByIdentity.GetComponentInChildren<Trigger2DCheck>().transform;
-                        if (hookedByTr)
-                        {
-
-                            hookedByTr.localPosition = HookedPositionOffset;
-                            transform.position = (Vector2.Lerp(transform.position, hookedByTr.position, 30 * Time.fixedDeltaTime));
-                            
-                        }
-                    }
-                    else {
-                        GetComponent<NetworkTransform>().syncPosition = true;
-                        GetComponent<NetworkRigidbody2D>().syncVelocity = true;
-                    }
-                }
-                else {
-                    GetComponent<NetworkTransform>().syncPosition = true;
-                    GetComponent<NetworkRigidbody2D>().syncVelocity = true;
-                }
-                
-            }
+        
 
         }
 
