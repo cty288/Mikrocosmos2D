@@ -71,15 +71,20 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "17b3a2148281f3a0c5acdf20c9510416",
+      "MD5": "f8b64dd4aa59af6de569b53f12a3bf19",
       "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "b52c573fb77fac91e7d179968e8f263e",
-      "FileSize": 10029.165,
+      "MD5": "e9076f079806ee9b4a71de3406db4597",
+      "FileSize": 10633.14,
       "assetDatas": [
+        {
+          "Name": "FirePlant",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
         {
           "Name": "LeafKnife",
           "OwnerBundleName": "assets/goods",
@@ -137,6 +142,11 @@
         },
         {
           "Name": "BananaSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "FirePlantSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },
