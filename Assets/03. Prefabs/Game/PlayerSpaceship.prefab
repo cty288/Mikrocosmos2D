@@ -741,9 +741,9 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <InitialAcceleration>k__BackingField: 50
+  <InitialAcceleration>k__BackingField: 60
   <SelfMass>k__BackingField: 10
-  <AccelerationDecreasePerMass>k__BackingField: 0.2
+  <AccelerationDecreasePerMass>k__BackingField: 1
 --- !u!114 &6589906832623092008
 MonoBehaviour:
   m_ObjectHideFlags: 0

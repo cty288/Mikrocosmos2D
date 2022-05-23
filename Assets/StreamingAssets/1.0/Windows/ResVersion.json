@@ -71,15 +71,25 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "2533462aaa14db2e8fe6d50b352950e6",
+      "MD5": "17b3a2148281f3a0c5acdf20c9510416",
       "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "324f4a808b893aa0af8e12477a006cc1",
-      "FileSize": 10005.9775,
+      "MD5": "b52c573fb77fac91e7d179968e8f263e",
+      "FileSize": 10029.165,
       "assetDatas": [
+        {
+          "Name": "LeafKnife",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Template",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
         {
           "Name": "Banana",
           "OwnerBundleName": "assets/goods",
@@ -101,11 +111,6 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
-          "Name": "LeafKnife",
-          "OwnerBundleName": "assets/goods",
-          "AssetType": "UnityEngine.GameObject"
-        },
-        {
           "Name": "DottedOutlineMask",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Material"
@@ -122,11 +127,6 @@
         },
         {
           "Name": "Statellite",
-          "OwnerBundleName": "assets/goods",
-          "AssetType": "UnityEngine.GameObject"
-        },
-        {
-          "Name": "Template",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -212,6 +212,11 @@
         },
         {
           "Name": "StatelliteSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "ThrusterSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

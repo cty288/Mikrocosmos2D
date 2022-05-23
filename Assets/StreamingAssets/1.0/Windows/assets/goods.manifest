@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2911766825
+CRC: 3297392599
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dcfbb630bbf7d626df140efe962747f1
+    Hash: 6e11e4c4cfda9a36900eeb9b4ee0737c
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e11750e37252d60f783e26df01979926
+    Hash: 930af8a0cbe22e912d048caf55c7c63b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -103,32 +103,33 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
-- Assets/03. Prefabs/Game/Goods/Banana/Banana.prefab
-- Assets/03. Prefabs/Game/Goods/Banana/DottedOutlineBanana.mat
+- Assets/04. Sprites/Goods/Thruster/ThrusterSprite.png
+- Assets/03. Prefabs/Game/Goods/Temporary/Banana/Banana.prefab
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite.png
-- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_5.png
+- Assets/03. Prefabs/Game/Goods/Temporary/Banana/DottedOutlineBanana.mat
 - Assets/03. Prefabs/Game/Goods/Template.prefab
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_5.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_5.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_4.png
-- Assets/03. Prefabs/Game/Goods/Banana/BananaTemp.prefab
+- Assets/03. Prefabs/Game/Goods/Temporary/Banana/BananaTemp.prefab
 - Assets/03. Prefabs/Game/Goods/LeafKnife/LeafKnife.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_4.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_6.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_3.png
-- Assets/03. Prefabs/Game/Goods/Banana2/Banana.prefab
+- Assets/03. Prefabs/Game/Goods/Temporary/Banana2/Banana.prefab
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_2.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_1.png
-- Assets/03. Prefabs/Game/Goods/Mask/DottedOutlineMask.mat
+- Assets/03. Prefabs/Game/Goods/Temporary/Mask/DottedOutlineMask.mat
 - Assets/04. Sprites/Goods/StatelliteSprite.png
 - Assets/04. Sprites/Goods/BananaSprite.png
 - Assets/VisionEffect/Sprites/TolietSprite.png
-- Assets/03. Prefabs/Game/Goods/Mask/Mask.prefab
+- Assets/03. Prefabs/Game/Goods/Temporary/Mask/Mask.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_3.png
 - Assets/04. Sprites/Goods/MaskSprite.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_6.png
-- Assets/03. Prefabs/Game/Goods/Satellite/DottedOutlineStatellite.mat
-- Assets/03. Prefabs/Game/Goods/Satellite/Statellite.prefab
-- Assets/03. Prefabs/Game/Goods/Toliet/Toliet.prefab
+- Assets/03. Prefabs/Game/Goods/Temporary/Satellite/DottedOutlineStatellite.mat
+- Assets/03. Prefabs/Game/Goods/Temporary/Satellite/Statellite.prefab
+- Assets/03. Prefabs/Game/Goods/Temporary/Toliet/Toliet.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_2.png
 Dependencies: []
