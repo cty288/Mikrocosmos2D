@@ -75,8 +75,9 @@ namespace Mikrocosmos
         {
             if (Model.HookedByIdentity && isServer) {
                 GoodsModel.ReduceDurability(1);
-                fire1.gameObject.SetActive(true);
+               
             }
+            fire1.gameObject.SetActive(true);
         }
 
         public void OpenFire2() {

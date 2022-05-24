@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4071540645
+CRC: 3384546638
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 273d34f9b5ef5b76e6fc3859fbc1107b
+    Hash: 2925971d5fa8865008fe70d09466a600
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8385277d7fe0d0dc587670ac43d2beb7
+    Hash: 99504828aaf18679fb8c26f3b350ef6e
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -46,6 +46,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: e103ccf06e718624bac7eb83ab7a0f7b, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 3484c07865f39ae4b800bf67fed1a85d, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 9d1de09509287094b9b15a251c817147, type: 3}
@@ -60,15 +62,13 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: e5af11a9e8ef0b2409ae2cded8f0f388, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 3484c07865f39ae4b800bf67fed1a85d, type: 3}
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -112,9 +112,10 @@ Assets:
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana/DottedOutlineBanana.mat
 - Assets/03. Prefabs/Game/Goods/Template.prefab
-- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_5.png
+- Assets/04. Sprites/Goods/Eye/KrowEye1/KrowEyeSprite.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_5.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_4.png
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_5.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana/BananaTemp.prefab
 - Assets/03. Prefabs/Game/Goods/LeafKnife/LeafKnife.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_4.png

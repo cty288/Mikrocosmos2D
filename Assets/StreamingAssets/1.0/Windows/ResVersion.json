@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "f8b64dd4aa59af6de569b53f12a3bf19",
+      "MD5": "074177cabcb269d9e287880785d81f01",
       "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "e9076f079806ee9b4a71de3406db4597",
-      "FileSize": 10633.14,
+      "MD5": "95af1212c081341c15a30ccea7e7bf84",
+      "FileSize": 10636.2461,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -142,6 +142,11 @@
         },
         {
           "Name": "BananaSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "KrowEyeSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

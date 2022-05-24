@@ -198,6 +198,7 @@ namespace Mikrocosmos
         public Vector2 StartDirection { get; }
 
         [field: SerializeField] public float InitialForceMultiplier { get; } = 0;
+        [field: SerializeField] public bool AffectedByGravity { get; set; } = true;
 
         #endregion
 

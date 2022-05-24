@@ -72,7 +72,7 @@ namespace Mikrocosmos
 
         #region Client
         private bool isClientCanSee = false;
-        [SerializeField] private float ClientRefreshRate = 2f;
+     
 
         private void Start() {
             if (isClient) {

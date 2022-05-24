@@ -170,7 +170,10 @@ namespace Mikrocosmos
                     if (rb.TryGetComponent<IAffectedByGravity>(out IAffectedByGravity target))
                     {
                         float explosionForce = -1 * UniversalG(GravityModel, target, transform.position, rb.transform.position) * Time.deltaTime;
-                        target.ServerAddGravityForce(explosionForce, Center, GravityModel.GravityFieldRange);
+                        if (target.AffectedByGravity) {
+                            target.ServerAddGravityForce(explosionForce, Center, GravityModel.GravityFieldRange);
+                        }
+                   
                     }
 
                 }

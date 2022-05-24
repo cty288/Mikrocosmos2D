@@ -39,13 +39,16 @@ namespace Mikrocosmos
         protected override void Update()
         {
             base.Update();
-            shaderCaster.selfShadows = false;
+            if (shaderCaster) {
+                shaderCaster.selfShadows = false;
+            }
+           
         }
 
         public override void OnStartServer()
         {
             base.OnStartServer();
-            if (Model.HookState != HookState.Hooked) {
+            if (Model.HookState != HookState.Hooked&& shaderCaster) {
                 shaderCaster.enabled = IsMaskable;
             }
 
@@ -88,7 +91,7 @@ namespace Mikrocosmos
         public override void OnStartClient()
         {
             base.OnStartClient();
-            if (Model.HookState != HookState.Hooked) {
+            if (Model.HookState != HookState.Hooked && shaderCaster) {
                 shaderCaster.enabled = IsMaskable;
             }
          
@@ -97,23 +100,30 @@ namespace Mikrocosmos
         [TargetRpc]
         private void TargetHookerClientShadeControl(NetworkConnection conn, HookState hookState)
         {
-            if (hookState == HookState.Hooked)
-            {
-                shaderCaster.enabled = false;
+            if (shaderCaster) {
+                if (hookState == HookState.Hooked)
+                {
+                    shaderCaster.enabled = false;
+                }
+                else
+                {
+                    shaderCaster.enabled = true;
+                }
+                Debug.Log($"Target Hook State: {shaderCaster.enabled}");
             }
-            else
-            {
-                shaderCaster.enabled = true;
-            }
+            
 
-            Debug.Log($"Target Hook State: {shaderCaster.enabled}");
+          
         }
 
         private void OnMaskableChanged(bool oldMaskable, bool currentMaskable)
         {
             if (Model.HookState != HookState.Hooked)
             {
-                shaderCaster.enabled = IsMaskable;
+                if (shaderCaster) {
+                    shaderCaster.enabled = IsMaskable;
+                }
+              
             }
             if (currentMaskable)
             {

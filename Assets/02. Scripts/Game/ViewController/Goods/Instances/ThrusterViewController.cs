@@ -8,7 +8,7 @@ namespace Mikrocosmos
 {
     public class ThrusterViewController : BasicGoodsViewController {
         [SerializeField] private float propelForce = 50;
-        private float coolDown = 0.2f;
+     
 
         private Animator animator;
 
@@ -22,11 +22,11 @@ namespace Mikrocosmos
             base.OnServerItemUsed();
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Using"))
             {
-                if (coolDown < 0) {
+              
                     animator.SetBool("Using", true);
                     isUsing = true;
 
-                }
+                
 
             }
             
@@ -38,7 +38,7 @@ namespace Mikrocosmos
         protected override void Update() {
             base.Update();
             if (isServer) {
-                coolDown -= Time.deltaTime;
+            
                 if (!gameObject.activeSelf) {
                     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Using")) {
                         animator.SetBool("Using", false);
@@ -56,17 +56,14 @@ namespace Mikrocosmos
                 if (!isUsing) {
                     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Using")) {
                         animator.SetBool("Using", false);
-                        
                     }
                 }
-
-                
             }
         }
 
         private void LateUpdate() {
             if (isServer) {
-                isUsing = false;
+               isUsing = false; 
             }
         }
 

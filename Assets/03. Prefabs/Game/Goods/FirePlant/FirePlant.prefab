@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,6 +118,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4850820837130464463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6742503940805011408}
+  - component: {fileID: 6592758430792686187}
+  - component: {fileID: 318290991555539501}
+  m_Layer: 7
+  m_Name: FireCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6742503940805011408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850820837130464463}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6410031578183631638}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &6592758430792686187
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850820837130464463}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -2.376012, y: -0.05002165}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.4510446, y: 2.7007246}
+  m_EdgeRadius: 0
+--- !u!114 &318290991555539501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850820837130464463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a7f5503a2505a49aca73bf2063239a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetLayers:
+    serializedVersion: 2
+    m_Bits: 448
+  maxDistance: 100
+  detectTime: 1
+  colliders: []
 --- !u!1 &6403340119911964050
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &439690505736936703
 Transform:
   m_ObjectHideFlags: 0
@@ -172,7 +249,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -278,6 +355,7 @@ Transform:
   m_Children:
   - {fileID: 439690505736936703}
   - {fileID: 5950795886189825694}
+  - {fileID: 6742503940805011408}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -366,7 +444,7 @@ MonoBehaviour:
   - {x: -0.92580414, y: -0.12907791, z: 0}
   m_ShapePathHash: -538096385
   m_Mesh: {fileID: 0}
-  m_InstanceId: 347058
+  m_InstanceId: 392514
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,7 +570,7 @@ MonoBehaviour:
   <UseMode>k__BackingField: 1
   <Frequency>k__BackingField: 0
   <Durability>k__BackingField: 0
-  <MaxDurability>k__BackingField: 40
+  <MaxDurability>k__BackingField: 80
   reduceDurabilityInstantlyAfterUse: 0
 --- !u!114 &-8888974966106577546
 MonoBehaviour:
@@ -561,6 +639,8 @@ MonoBehaviour:
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   visionAffectedSprites:
   - {fileID: 6410031578183631637}
+  - {fileID: 6686446572951460612}
+  - {fileID: 4916985026321286732}
   <CanBeMasked>k__BackingField: 1
   DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
   DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}

@@ -93,6 +93,7 @@ namespace Mikrocosmos
                         RequestingGoods = this,
                         RequestingGoodsGameObject = gameObject
                     });
+                    OnServerItemBought(HookedByIdentity);
                     return true;
                 }
             }
@@ -117,12 +118,14 @@ namespace Mikrocosmos
                                 if (!good.TransactionFinished && !good.IsSell) {
                                     //satisfy the condition, now sell it
                                     //however, need to check money first
+                                    OnServerItemSold(HookedByIdentity);
                                     this.SendEvent<OnServerTrySellItem>(new OnServerTrySellItem() {
                                         DemandedByPlanet = good,
                                         RequestingGoods = this,
                                         HookedByIdentity = HookedByIdentity,
                                         RequestingGoodsGameObject = gameObject
                                     });
+                                    
                                     break;
                                 }
                             }
@@ -132,8 +135,19 @@ namespace Mikrocosmos
             }
         }
 
+        [ServerCallback]
+        protected virtual void OnServerItemBought(NetworkIdentity buyer) {
+
+        }
+
+        [ServerCallback]
+        protected virtual void OnServerItemSold(NetworkIdentity seller) {
+
+        }
+
         public Vector2 StartDirection { get; }
         public float InitialForceMultiplier { get; }
+        [field: SerializeField] public bool AffectedByGravity { get; set; } = true;
 
         [ClientCallback]
         private void OnTransactionStatusChanged(bool oldStatus, bool newStatus) {

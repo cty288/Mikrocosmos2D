@@ -11,6 +11,8 @@ namespace Mikrocosmos
         Vector2 StartDirection { get; }
 
         float InitialForceMultiplier { get; }
+
+        bool AffectedByGravity { get; set; }
     }
 
     public abstract class AbstractAffectedByGravityModel : NetworkedModel, IAffectedByGravity {
@@ -48,7 +50,9 @@ namespace Mikrocosmos
         [field: SerializeField]
         public float InitialForceMultiplier { get; protected set; }
 
-    
+        [field: SerializeField] public bool AffectedByGravity { get; set; } = true;
+
+
         protected float initialForce;
 
         public override void OnStartServer() {

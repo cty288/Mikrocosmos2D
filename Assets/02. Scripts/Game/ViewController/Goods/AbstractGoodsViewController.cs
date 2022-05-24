@@ -68,16 +68,21 @@ namespace Mikrocosmos
 
 
         private void Start() {
-            
-            shadeCaster.enabled = false;
-            this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
-                if (this) {
-                    if (Model.HookState != HookState.Hooked) {
-                        shadeCaster.enabled = IsMaskable;
+
+            if (shadeCaster) {
+                shadeCaster.enabled = false;
+                this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
+                    if (this)
+                    {
+                        if (Model.HookState != HookState.Hooked)
+                        {
+                            shadeCaster.enabled = IsMaskable;
+                        }
                     }
-                }
-             
-            });
+
+                });
+            }
+           
         }
 
         protected override void FixedUpdate() {
@@ -94,10 +99,16 @@ namespace Mikrocosmos
             base.Update();
             if (GoodsModel.TransactionFinished) {
                 collider.isTrigger = false;
-                shadeCaster.castsShadows = true;
+                if (shadeCaster) {
+                    shadeCaster.castsShadows = true;
+                }
+                
             }
             else {
-                shadeCaster.castsShadows = false;
+                if (shadeCaster) {
+                    shadeCaster.castsShadows = false;
+                }
+                
                 collider.isTrigger = true;
                 rigidbody.bodyType = RigidbodyType2D.Kinematic;
             }
