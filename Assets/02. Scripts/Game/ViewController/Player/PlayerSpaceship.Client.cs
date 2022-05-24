@@ -9,7 +9,8 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public partial class PlayerSpaceship : BasicEntityViewController {
+    public partial class PlayerSpaceship : AbstractDamagableViewController
+    {
        
 
        // [SyncVar()] public PlayerMatchInfo MatchInfo;

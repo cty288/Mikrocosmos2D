@@ -151,6 +151,7 @@ namespace Mikrocosmos
 
         }
 
+       
 
         private void RecoverCollider() {
             GetComponent<Collider2D>().isTrigger = false;

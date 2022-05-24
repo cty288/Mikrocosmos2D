@@ -135,7 +135,18 @@ namespace Mikrocosmos
 
         private Rigidbody2D rigidbody;
 
-
+        [SerializeField] private float momentumOffset = 100;
+        private void OnCollisionEnter2D(Collision2D collision) {
+            if (collision.collider)
+            {
+                if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model))
+                {
+                    float excessiveMomentum = model.TakeRawMomentum(this.gameObject,momentumOffset);
+                    model.OnReceiveExcessiveMomentum(excessiveMomentum);
+                    model.TakeRawDamage(model.GetDamageFromExcessiveMomentum(excessiveMomentum));
+                }
+            }
+        }
 
 
         void OvalRotate()

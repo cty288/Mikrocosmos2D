@@ -16,10 +16,14 @@ namespace Mikrocosmos
     public struct OnEscapeCounterChanged {
         public int newValue;
     }
-    public class SpaceshipModel : AbstractBasicEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
+    public class SpaceshipModel : AbstractDamagableEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
         public override string Name { get; set; } = "Spaceship";
         private IHookSystem hookSystem;
         private Rigidbody2D rigidbody;
+
+
+        [SerializeField] 
+        private float damagePerMomentum;
         #region Server
 
         
@@ -202,6 +206,16 @@ namespace Mikrocosmos
 
         #endregion
 
+        public override int GetDamageFromExcessiveMomentum(float excessiveMomentum) {
+            return Mathf.RoundToInt(damagePerMomentum * excessiveMomentum);
+        }
 
+        public override void OnHealthChange(int newHealth) {
+            
+        }
+
+        public override void OnReceiveExcessiveMomentum(float excessiveMomentum) {
+            Debug.Log($"Excessive Momentum: {excessiveMomentum}");
+        }
     }
 }

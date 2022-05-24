@@ -39,6 +39,13 @@ namespace Mikrocosmos
         public ICanBeUsed Model { get; }
     }
 
+    public interface IDamagableViewController : IHaveMomentumViewController { 
+        public IDamagable DamagableModel { get; }
+
+    }
+
+
+
     public abstract class BasicEntityViewController: AbstractNetworkedController<Mikrocosmos>, IEntityViewController {
         public  IEntity Model { get; protected set; }
 
@@ -113,13 +120,19 @@ namespace Mikrocosmos
         
 
         }
-
+        private void OnCollisionEnter2D(Collision2D collision) {
+            if (collision.collider) {
+                if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model)) {
+                    float excessiveMomentum =  model.TakeRawMomentum(this.gameObject,0);
+                    model.OnReceiveExcessiveMomentum(excessiveMomentum);
+                    model.TakeRawDamage(model.GetDamageFromExcessiveMomentum(excessiveMomentum));
+                }
+            }
+        }
 
         protected virtual void Update() {
             if (isServer) {
                 OnServerUpdate();
-
-                
             }
         }
 

@@ -892,9 +892,14 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
+  <MaxMomentumReceive>k__BackingField: 1000
+  <MomentumThredhold>k__BackingField: 300
+  <MaxHealth>k__BackingField: 100
+  damagePerMomentum: 0.1
   <InitialAcceleration>k__BackingField: 60
   <SelfMass>k__BackingField: 10
   <AccelerationDecreasePerMass>k__BackingField: 1
+  <AffectedByGravity>k__BackingField: 1
 --- !u!114 &6589906832623092008
 MonoBehaviour:
   m_ObjectHideFlags: 0

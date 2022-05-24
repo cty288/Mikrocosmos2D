@@ -21,12 +21,13 @@ namespace Mikrocosmos
         /// </summary>
         /// <param name="hit"></param>
         /// <returns></returns>
-        float TakeRawMomentum(GameObject hit); //called by Hit IHaveMomentum
+        float TakeRawMomentum(GameObject hit, float offset); //called by Hit IHaveMomentum
 
         int GetDamageFromExcessiveMomentum(float excessiveMomentum); //called by Hit IHaveMomentum
 
-        //int OnHealthChange(int newHealth);
+        void TakeRawDamage(int damage);
+        void OnHealthChange(int newHealth);
 
-        //float OnReceiveExcessiveMomentum(float excessiveMomentum);
+        void OnReceiveExcessiveMomentum(float excessiveMomentum);
     }
 }

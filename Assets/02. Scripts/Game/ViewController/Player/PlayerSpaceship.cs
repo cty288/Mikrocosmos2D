@@ -9,7 +9,7 @@ namespace Mikrocosmos
 {
    
     
-    public partial class PlayerSpaceship : BasicEntityViewController {
+    public partial class PlayerSpaceship : AbstractDamagableViewController {
         private IHookSystem hookSystem;
         [SerializeField, SyncVar]
         private bool isControlling = false;
@@ -115,6 +115,12 @@ namespace Mikrocosmos
                     ServerRotate(mousePosition);
                 }
             }
+        }
+
+
+        [ClientRpc]
+        public override void RpcOnClientHealthChange(int newHealth) {
+            Debug.Log($"Health Received: {newHealth}");
         }
     }
 
