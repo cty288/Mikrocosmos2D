@@ -250,7 +250,6 @@ MonoBehaviour:
   syncInterval: 0.008
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
   <HookedRotationZOffset>k__BackingField: 0
-  <IsMaskable>k__BackingField: 1
 --- !u!114 &-7106308886407098970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,9 +271,15 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
+  <MaxMomentumReceive>k__BackingField: 1000
+  <MomentumThredhold>k__BackingField: 0
+  <MaxHealth>k__BackingField: 100
+  <CurrentHealth>k__BackingField: 100
+  momentumCoolDown: 0.1
   <SelfMass>k__BackingField: 5
   <StartDirection>k__BackingField: {x: 0, y: 0}
   <InitialForceMultiplier>k__BackingField: 0.0002
+  <AffectedByGravity>k__BackingField: 1
 --- !u!114 &949103041305761441
 MonoBehaviour:
   m_ObjectHideFlags: 0

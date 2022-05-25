@@ -16,6 +16,12 @@ namespace Mikrocosmos
     public struct OnEscapeCounterChanged {
         public int newValue;
     }
+
+    public struct OnSpaceshipRequestDropItems {
+        public NetworkIdentity SpaceshipIdentity;
+        public int NumberItemRequest;
+
+    }
     public class SpaceshipModel : AbstractDamagableEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
         public override string Name { get; set; } = "Spaceship";
         private IHookSystem hookSystem;
@@ -24,6 +30,8 @@ namespace Mikrocosmos
 
         [SerializeField] 
         private float damagePerMomentum;
+
+        [SerializeField] protected int dropOneItemMomentumThreshold = 3;
         #region Server
 
         
@@ -62,7 +70,7 @@ namespace Mikrocosmos
         {
             base.Update();
             if (isServer) {
-                Acceleration = Mathf.Max(5, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
+                Acceleration = Mathf.Max(15, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
 
                 escapeLossTimer += Time.deltaTime;
                 if (escapeLossTimer >= EscapeLossTime)
@@ -98,13 +106,32 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public float AccelerationDecreasePerMass { get; private set; } = 2;
 
-        public float BackpackMass { get; } = 0;
-    
+        public float BackpackMass {
+            get {
+                float mass = 0;
+                
+                if (TryGetComponent<IPlayerInventorySystem>(out IPlayerInventorySystem inventory)) {
+                    List<BackpackSlot> slots = inventory.BackpackItems;
+                    foreach (BackpackSlot slot in slots) {
+                        foreach (GameObject stackedObject in slot.StackedObjects) {
+                            mass += stackedObject.GetComponent<IHookable>().SelfMass;
+                        }
+                    }
+                }
+
+                return mass;
+            }
+        }
+
         public float GetConnectedObjectSoleMass() {
             if (hookSystem.HookedNetworkIdentity == null) {
                 return 0;
             }
-            IHaveMomentum hookingModel = hookSystem.HookedNetworkIdentity.GetComponent<IHaveMomentumViewController>().Model;
+            IHookable hookingModel = hookSystem.HookedNetworkIdentity.GetComponent<IHookable>();
+
+            if (hookingModel == null) {
+                return 0;
+            }
 
             if (hookingModel is ISpaceshipConfigurationModel) {
                 ISpaceshipConfigurationModel spaceshipModel = (hookingModel as ISpaceshipConfigurationModel);
@@ -112,6 +139,9 @@ namespace Mikrocosmos
                        spaceshipModel.GetConnectedObjectSoleMass();
             }
             else {
+                if (hookingModel.CanBeAddedToInventory) {
+                    return 0;
+                }
                 return hookingModel.SelfMass;
             }
         }
@@ -210,12 +240,18 @@ namespace Mikrocosmos
             return Mathf.RoundToInt(damagePerMomentum * excessiveMomentum);
         }
 
-        public override void OnHealthChange(int newHealth) {
-            
+        public override void OnServerTakeDamage(int oldHealth, int newHealth) {
+           // int healthReceived = newHealth - oldHealth;
         }
 
+        [ServerCallback]
         public override void OnReceiveExcessiveMomentum(float excessiveMomentum) {
             Debug.Log($"Excessive Momentum: {excessiveMomentum}");
+            int numberItemDrop = (Mathf.FloorToInt(excessiveMomentum / dropOneItemMomentumThreshold));
+            this.SendEvent<OnSpaceshipRequestDropItems>(new OnSpaceshipRequestDropItems() {
+                NumberItemRequest = numberItemDrop,
+                SpaceshipIdentity = netIdentity
+            });
         }
     }
 }

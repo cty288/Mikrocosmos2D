@@ -9,7 +9,7 @@ namespace Mikrocosmos
     public interface IMeteorModel: IModel, IAffectedByGravity {
 
     }
-    public class MeteorModel : AbstractBasicEntityModel, IMeteorModel {
+    public class MeteorModel : AbstractDamagableEntityModel, IMeteorModel {
         [field: SyncVar, SerializeField]
         public override float SelfMass { get; protected set; } = 5f;
         public override string Name { get; set; } = "Meteor";
@@ -39,6 +39,18 @@ namespace Mikrocosmos
             Vector2 Center = this.transform.position;
             initialForce = ProperForce();
             this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
+        }
+
+        public override int GetDamageFromExcessiveMomentum(float excessiveMomentum) {
+            return Mathf.RoundToInt(excessiveMomentum);
+        }
+
+        public override void OnServerTakeDamage(int oldHealth, int newHealth) {
+            
+        }
+
+        public override void OnReceiveExcessiveMomentum(float excessiveMomentum) {
+            Debug.Log($"Meteor Excessive Momentum: {excessiveMomentum}");
         }
 
         [ServerCallback]

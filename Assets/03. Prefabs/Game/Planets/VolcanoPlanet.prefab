@@ -232,6 +232,7 @@ MonoBehaviour:
   speed: 1
   x: 60
   z: 1.5
+  momentumOffset: 30
 --- !u!114 &-4471552787630732282
 MonoBehaviour:
   m_ObjectHideFlags: 0

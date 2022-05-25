@@ -9,6 +9,7 @@ using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Networking.Types;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos {
     public enum HookAction {
@@ -78,8 +79,9 @@ namespace Mikrocosmos {
         /// </summary>
         [SerializeField] private float shootChargeOneCycleTime = 4f;
 
-        [SerializeField] private float maxShootForce = 20f;
+        [SerializeField] private float maxShootForce = 80f;
 
+        [SerializeField] private Transform droppedItemSpawnPos;
 
         
 
@@ -124,6 +126,62 @@ namespace Mikrocosmos {
             this.RegisterEvent<OnBackpackItemRemoved>(OnCurrentBackPackItemRemoved)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnItemBroken>(OnItemBroken).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnItemDropped>(OnItemDropped).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        [ServerCallback]
+        private void OnItemDropped(OnItemDropped e) {
+            if (e.Identity == netIdentity) {
+
+                NetworkIdentity oldHookedIdentity = HookedNetworkIdentity;
+                
+                if (e.DroppedObject) {
+                    if (e.DroppedCurrentSlot) { //dropped current selected slot
+                        HookedItem.Model.UnHook(false);
+                        //like removed from backpack
+                        Debug.Log("Next hooking obj after drop: " + e.NextHookingObject);
+                        if (e.NextHookingObject) {
+                            GameObject nextItem = e.NextHookingObject;
+                            nextItem.SetActive(true);
+                            NetworkServer.Spawn(nextItem);
+                            nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
+
+                            HookedItem = nextItem.GetComponent<IHookableViewController>();
+                            HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
+                            HookedItem.Model.Hook(netIdentity);
+                            animator.SetBool("Hooking", true);
+                        }
+                        else {
+                            animator.SetBool("Hooking", false);
+                            HookedItem = null;
+                            HookedNetworkIdentity = null;
+                        }
+
+                        this.SendEvent<OnHookItemSwitched>(new OnHookItemSwitched() {
+                            NewIdentity = HookedNetworkIdentity,
+                            OldIdentity = oldHookedIdentity,
+                            OwnerIdentity = netIdentity
+                        });
+                    }
+                    else { //dropped from backpack: just spawn it somewhere
+                        GameObject droppedObj = e.DroppedObject;
+                        droppedObj.SetActive(true);
+                        Vector2 spawnPos = new Vector2(droppedItemSpawnPos.position.x + Random.Range(-1f, 1f),
+                            droppedItemSpawnPos.position.y + Random.Range(-1f, 1f));
+
+                        droppedObj.transform.position = spawnPos;
+                        droppedObj.GetComponent<IHookable>().UnHook(false);
+                        Vector2 randomForce = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+
+                        droppedObj.GetComponent<Rigidbody2D>().AddForce(randomForce * Random.Range(0f, 5f),
+                            ForceMode2D.Impulse);
+
+                        NetworkServer.Spawn(droppedObj);
+                    }
+                }
+                
+                UpdateHookCollisions(false);
+            }
         }
 
         [ServerCallback]

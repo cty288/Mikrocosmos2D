@@ -252,7 +252,8 @@ namespace Mikrocosmos
                 }
             }
             else { //only get from raw resources
-                targetList = rawMaterials;
+                   // targetList = rawMaterials;
+                   targetList = secondaryMaterials;
             }
 
             GoodsConfigure selectedGoodsConfigure = null;

@@ -135,7 +135,7 @@ namespace Mikrocosmos
                 Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
                     false);
 
-                this.GetModel<ICollisionMaskModel>().Release();
+               // this.GetModel<ICollisionMaskModel>().Release();
             }
 
             this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()

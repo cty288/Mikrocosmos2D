@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using MikroFramework.ResKit;
 using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
@@ -35,8 +37,9 @@ namespace Mikrocosmos
     public struct OnItemDropped {
         public NetworkIdentity Identity;
         public string PrefabName;
-        public int DropCount;
-        public List<GameObject> DroppedObjects;
+        public GameObject DroppedObject;
+        public GameObject NextHookingObject;
+        public bool DroppedCurrentSlot;
     }
 
     public struct OnClientInventoryUpdate {
@@ -62,12 +65,13 @@ namespace Mikrocosmos
     public interface IPlayerInventorySystem : ISystem {
         void ServerAddToBackpack(string name, GameObject gameObject);
         void ServerRemoveFromCurrentBackpack();
-        void ServerDropFromBackpack(string name, int number);
+        void ServerDropFromBackpack(string name);
 
         void ServerSwitchSlot(int index);
         int GetSlotCount();
-
         int GetCurrentSlot();
+
+        List<BackpackSlot> BackpackItems { get; }
 
     }
     
@@ -104,6 +108,29 @@ namespace Mikrocosmos
         private int initialInventoryCapacity = 3;
 
         IHookSystem hookSystem;
+
+        private int GetBackPackTotalItemCount() {
+            int result = 0;
+            foreach (BackpackSlot slot in backpackItems) {
+                if (slot is {Count: > 0}) {
+                    result += slot.Count;
+                }
+            }
+
+            return result;
+        }
+
+        private List<BackpackSlot> GetNonEmptySlots() {
+            List<BackpackSlot> slots = new List<BackpackSlot>();
+            foreach (BackpackSlot slot in backpackItems)
+            {
+                if (slot is { Count: > 0 }) {
+                    slots.Add(slot);
+                }
+            }
+
+            return slots;
+        }
         private void Awake() {
             ResLoader.Create(loader => resLoader = loader);
             hookSystem = GetComponent<IHookSystem>();
@@ -122,6 +149,33 @@ namespace Mikrocosmos
             base.OnStartServer();
             for (int i = 0; i < GetSlotCount(); i++) {
                 backpackItems.Add(new BackpackSlot(){});
+            }
+
+            this.RegisterEvent<OnSpaceshipRequestDropItems>(OnSpaceshipRequestDropItems)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnSpaceshipRequestDropItems(OnSpaceshipRequestDropItems e) {
+            if (e.SpaceshipIdentity == netIdentity) {
+
+                int backpackItemCount = GetBackPackTotalItemCount();
+                if (backpackItemCount > 0) {
+
+                    int realDropCount = Mathf.Min(e.NumberItemRequest, backpackItemCount);
+                    List<BackpackSlot> slots = GetNonEmptySlots();
+
+                    int dropped = 0;
+                    BackpackSlot dropSlot = slots[Random.Range(0, slots.Count)];
+                    while (dropped < realDropCount) {
+                        while (dropSlot == null || dropSlot.Count == 0) {
+                            dropSlot = slots[Random.Range(0, slots.Count)];
+                        }
+
+                        ServerDropFromBackpack(dropSlot.PrefabName);
+                        dropped++;
+                    }
+                }
+                
             }
         }
 
@@ -170,26 +224,34 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        public void ServerDropFromBackpack(string name, int number) {
+        public void ServerDropFromBackpack(string name) {
             BackpackSlot slot = FindItemStackInBackpack(name);
             if (slot != null) {
                 int prevCount = slot.Count;
                 
-                List<GameObject> droppeGameObjects = new List<GameObject>();
-                for (int i = 0; i < number; i++) {
+                GameObject droppeGameObject =null;
+               
+                if (slot.StackedObjects.Count > 0) {
+                    droppeGameObject = (slot.StackedObjects.Pop());
+                }
+
+                GameObject nextObject = null;
+                bool droppedCurrentSlot = false;
+                if (slot == backpackItems[currentIndex]) {
+                  
+                    droppedCurrentSlot = true;
                     if (slot.StackedObjects.Count > 0) {
-                        droppeGameObjects.Add(slot.StackedObjects.Pop());
+                        nextObject = slot.StackedObjects.Peek();
                     }
                 }
 
-                int dropCount = prevCount - slot.Count;
-
                 this.SendEvent<OnItemDropped>(new OnItemDropped()
                 {
-                    DropCount = dropCount,
                     PrefabName = slot.PrefabName,
                     Identity = netIdentity,
-                    DroppedObjects = droppeGameObjects
+                    DroppedObject = droppeGameObject,
+                    NextHookingObject = nextObject,
+                    DroppedCurrentSlot = droppedCurrentSlot
                 });
 
 
@@ -254,6 +316,12 @@ namespace Mikrocosmos
 
         public int GetCurrentSlot() {
             return currentIndex;
+        }
+
+        public List<BackpackSlot> BackpackItems {
+            get {
+                return backpackItems;
+            }
         }
 
         private BackpackSlot FindItemStackInBackpack(string name) {

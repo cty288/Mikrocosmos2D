@@ -119,6 +119,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &3098642152726570382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2601994127546760122}
+  m_Layer: 6
+  m_Name: HookDropPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2601994127546760122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098642152726570382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7986015997137912839}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3569224121980400222
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,6 +637,7 @@ Transform:
   - {fileID: 7380825445833627500}
   - {fileID: 4014263378635475031}
   - {fileID: 1858767934702569235}
+  - {fileID: 2601994127546760122}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -741,13 +773,16 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <MaxMomentumReceive>k__BackingField: 1000
-  <MomentumThredhold>k__BackingField: 300
+  <MaxMomentumReceive>k__BackingField: 24
+  <MomentumThredhold>k__BackingField: 12
   <MaxHealth>k__BackingField: 100
-  damagePerMomentum: 0.1
-  <InitialAcceleration>k__BackingField: 60
+  <CurrentHealth>k__BackingField: 100
+  momentumCoolDown: 0.5
+  damagePerMomentum: 1
+  dropOneItemMomentumThreshold: 3
+  <InitialAcceleration>k__BackingField: 55
   <SelfMass>k__BackingField: 10
-  <AccelerationDecreasePerMass>k__BackingField: 1
+  <AccelerationDecreasePerMass>k__BackingField: 0.5
   <AffectedByGravity>k__BackingField: 1
 --- !u!114 &6589906832623092008
 MonoBehaviour:
@@ -788,7 +823,8 @@ MonoBehaviour:
   <HookedNetworkIdentity>k__BackingField: {fileID: 0}
   shootTimeThreshold: 0.5
   shootChargeOneCycleTime: 4
-  maxShootForce: 100
+  maxShootForce: 600
+  droppedItemSpawnPos: {fileID: 2601994127546760122}
   hookShootChargePercent: 0
 --- !u!95 &1860153339421768247
 Animator:

@@ -93,7 +93,7 @@ namespace Mikrocosmos
                         RequestingGoods = this,
                         RequestingGoodsGameObject = gameObject
                     });
-                    OnServerItemBought(HookedByIdentity);
+                    OnServerItemBought(hookedBy);
                     return true;
                 }
             }

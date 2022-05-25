@@ -14,6 +14,15 @@ namespace Mikrocosmos
         [SerializeField, SyncVar]
         private bool isControlling = false;
 
+        public bool IsControlling {
+            get {
+                return isControlling;
+            }
+        }
+
+        [field: SyncVar]
+        public bool CanControl { get; set; }
+
         [SerializeField, SyncVar]
         private bool isUsing = false;
 
@@ -54,6 +63,8 @@ namespace Mikrocosmos
             }
         }
 
+        
+
         [Command]
         private void CmdUpdateCanControl(bool isControl) {
             isControlling = isControl;
@@ -68,6 +79,7 @@ namespace Mikrocosmos
            
         }
 
+        
 
         [Command]
         private void CmdUpdateMousePosition(Vector2 mousePos) {
@@ -107,7 +119,7 @@ namespace Mikrocosmos
             base.FixedUpdate();
             if (isServer) {
                 //Debug.Log("Hasauthority");
-                if (isControlling && Model.HookState == HookState.Freed) {
+                if (isControlling && Model.HookState == HookState.Freed && CanControl) {
                     ServerMove(mousePosition);
                 }
 
@@ -116,7 +128,7 @@ namespace Mikrocosmos
                 }
             }
         }
-
+        
 
         [ClientRpc]
         public override void RpcOnClientHealthChange(int newHealth) {

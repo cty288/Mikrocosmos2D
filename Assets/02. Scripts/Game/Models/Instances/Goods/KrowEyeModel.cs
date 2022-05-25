@@ -30,6 +30,7 @@ namespace Mikrocosmos
 
         protected override void OnServerItemBought(NetworkIdentity buyer) {
             base.OnServerItemBought(buyer);
+            //Debug.Log("233333: "+ (buyer.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>() == null).ToString());
             teamBelongTo.Value = buyer.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
         }
 

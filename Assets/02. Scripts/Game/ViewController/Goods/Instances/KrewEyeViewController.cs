@@ -25,7 +25,7 @@ namespace Mikrocosmos
 
         public override void OnStartServer() {
             base.OnStartServer();
-            visionLight.enabled = IsOn;
+            //visionLight.enabled = IsOn;
             GetComponent<KrowEyeModel>().TeamBelongTo.RegisterWithInitValue(OnTeamChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
