@@ -46,8 +46,11 @@ namespace Mikrocosmos
                     UseMode = GoodsModel.UseMode
                 };
                 RpcOnItemDurabilityChange(basicInfo);
-                TargetOnItemDurabilityChange(e.HookedBy.connectionToClient, basicInfo,
-                    e.HookedBy.GetComponent<IPlayerInventorySystem>().GetCurrentSlot());
+                if (e.HookedBy) {
+                    TargetOnItemDurabilityChange(e.HookedBy.connectionToClient, basicInfo,
+                        e.HookedBy.GetComponent<IPlayerInventorySystem>().GetCurrentSlot());
+                }
+              
             }
         }
 
@@ -113,7 +116,11 @@ namespace Mikrocosmos
                     UseMode = GoodsModel.UseMode
                 };
                 RpcOnItemBroken(basicInfo);
-                TargetOnItemBroken(e.HookedBy.connectionToClient, basicInfo);
+                if (e.HookedBy) {
+                    TargetOnItemBroken(e.HookedBy.connectionToClient, basicInfo);
+                }
+
+                NetworkServer.Destroy(gameObject);
             }
         }
 
@@ -129,7 +136,10 @@ namespace Mikrocosmos
                     UseMode = GoodsModel.UseMode
                 };
                 RpcOnItemUsed(basicInfo);
-                TargetOnItemUsed(e.HookedBy.connectionToClient, basicInfo);
+                if (e.HookedBy) {
+                    TargetOnItemUsed(e.HookedBy.connectionToClient, basicInfo);
+                }
+                
             }
         }
 

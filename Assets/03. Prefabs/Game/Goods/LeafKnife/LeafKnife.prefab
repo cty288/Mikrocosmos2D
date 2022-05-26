@@ -436,6 +436,7 @@ MonoBehaviour:
   <BasicBuyPrice>k__BackingField: 30
   <GoodRarity>k__BackingField: 1
   <IsSell>k__BackingField: 1
+  <AffectedByGravity>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1
   <UseMode>k__BackingField: 0
   <Frequency>k__BackingField: 1
@@ -443,3 +444,5 @@ MonoBehaviour:
   <MaxDurability>k__BackingField: 50
   reduceDurabilityInstantlyAfterUse: 0
   addedForce: 150
+  addedMomentum: 16
+  addedDamage: 8

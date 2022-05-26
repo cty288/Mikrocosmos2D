@@ -189,7 +189,7 @@ namespace Mikrocosmos {
             if (HookedItem!=null && e.Item == HookedItem.Model) {
                 GameObject go = HookedNetworkIdentity.gameObject;
                 UnHook();
-                NetworkServer.Destroy(go);
+                //NetworkServer.Destroy(go);
             }
         }
 

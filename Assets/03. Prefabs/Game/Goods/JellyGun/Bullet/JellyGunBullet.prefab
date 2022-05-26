@@ -304,6 +304,7 @@ MonoBehaviour:
   <HookedRotationZOffset>k__BackingField: 0
   Force: 0
   shooter: {fileID: 0}
+  destroyWhenHit: 0
 --- !u!114 &773197963524302722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +327,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 0.5
-  <Damage>k__BackingField: 5
+  <Damage>k__BackingField: 8
   <Name>k__BackingField: JellyBullet
 --- !u!114 &4329412435070151956
 MonoBehaviour:

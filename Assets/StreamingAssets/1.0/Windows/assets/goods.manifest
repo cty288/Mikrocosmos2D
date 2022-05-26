@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3384546638
+CRC: 1291722550
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2925971d5fa8865008fe70d09466a600
+    Hash: f67a2bb662093cd8b202b413c007bc7e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 99504828aaf18679fb8c26f3b350ef6e
+    Hash: 0b17e2cf205d2e292662888e56e7b784
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -69,6 +69,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b629bd1565be586478c0c6b213fec5d0, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -132,6 +134,7 @@ Assets:
 - Assets/03. Prefabs/Game/Goods/Temporary/Mask/Mask.prefab
 - Assets/03. Prefabs/Game/Goods/FirePlant/FirePlant.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_3.png
+- Assets/04. Sprites/Goods/BirdCannon/BirdCannon/BirdCannonSprite.png
 - Assets/04. Sprites/Goods/MaskSprite.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_6.png

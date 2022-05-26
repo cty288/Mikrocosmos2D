@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
@@ -13,6 +14,8 @@ namespace Mikrocosmos
         public Collider2D shooter;
 
        private NetworkAnimator animator;
+
+       [SerializeField] private bool destroyWhenHit = false;
         protected void Start() {
             base.Awake();
             animator = GetComponent<NetworkAnimator>();
@@ -26,12 +29,18 @@ namespace Mikrocosmos
                 if (collision.collider) {
                     if (collision.collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity)) {
                         StartCoroutine(SetVelocityToZero());
+                        
                         animator.SetTrigger("Hit");
                         if (entity is IDamagable damagable) {
                             BulletModel model = GetComponent<BulletModel>();
                             Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
                             damagable.TakeRawDamage(
-                                (Mathf.RoundToInt(model.Damage * (rigidbody.velocity.magnitude / model.MaxSpeed))));
+                                (Mathf.RoundToInt( model.Damage * (Mathf.Min(rigidbody.velocity.magnitude / model.MaxSpeed,1)))));
+                           
+                        }
+                        if (destroyWhenHit)
+                        {
+                            NetworkServer.Destroy(this.gameObject);
                         }
                     }
                 }
@@ -40,7 +49,10 @@ namespace Mikrocosmos
 
         private IEnumerator SetVelocityToZero() {
             yield return null;
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            if (this) {
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+           
         }
 
         public void OnAnimationDone() {

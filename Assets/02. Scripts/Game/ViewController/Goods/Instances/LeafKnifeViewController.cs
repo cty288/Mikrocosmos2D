@@ -10,11 +10,11 @@ namespace Mikrocosmos
         private NetworkAnimator animator;
 
         private bool hitThisTime = false;
-
+        private LeafKnifeModel model;
         protected override void Awake() {
             base.Awake();
             animator = GetComponent<NetworkAnimator>();
-           
+            model = GetComponent<LeafKnifeModel>();
         }
 
         [ServerCallback]
@@ -41,10 +41,17 @@ namespace Mikrocosmos
                 hitThisTime = true;
             }
 
+            
+
             Vector2 direction = (gameObject.transform.position - transform.position).normalized;
            
             if(gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rib)) {
-                rib.AddForce(GetComponent<LeafKnifeModel>().AddedForce * direction, ForceMode2D.Impulse);
+                rib.AddForce(model.AddedForce * direction, ForceMode2D.Impulse);
+            }
+
+            if (gameObject.TryGetComponent<IDamagable>(out IDamagable damagable)) {
+                damagable.TakeRawMomentum(Random.Range(12f, model.AddedMomentum),0);
+                damagable.TakeRawDamage(model.AddedDamage);
             }
         }
 

@@ -20,6 +20,11 @@ namespace Mikrocosmos
             cinemachineTargetGroup = GetComponent<CinemachineTargetGroup>();
             this.RegisterEvent<OnClientMainGamePlayerConnected>(OnClientMainGamePlayerConnected)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnCameraViewChange>(OnCameraViewChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnCameraViewChange(OnCameraViewChange e) {
+            cinemachineTargetGroup.m_Targets[0].radius = e.NewRadius;
         }
 
         private void OnClientMainGamePlayerConnected(OnClientMainGamePlayerConnected e) {

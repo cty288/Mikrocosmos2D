@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace Mikrocosmos
@@ -16,8 +20,6 @@ namespace Mikrocosmos
         private GameObject visionRenderLight;
         private GameObject fovVision;
         //private GameObject playerNameShade;
-        private SpriteRenderer playerNameShadeSprite;
-        private GameObject playerInfoCanvas;
         [SerializeField]
         private Transform player;
 
@@ -25,9 +27,13 @@ namespace Mikrocosmos
             
             visionRenderLight = transform.Find("VisionControl/VisionRenderLight").gameObject;
             fovVision = transform.Find("VisionControl/FOV Vision").gameObject;
-            playerInfoCanvas = transform.Find("VisionControl/PlayerInfoCanvas").gameObject;
-            
-            
+            this.RegisterEvent<OnVisionRangeChange>(OnVisionRangeChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnVisionRangeChange(OnVisionRangeChange e) {
+            Light2D light = fovVision.GetComponent<Light2D>();
+            DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, e.Inner, 0.3f);
+            DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, e.Outer, 0.3f);
         }
 
         void Start() {
