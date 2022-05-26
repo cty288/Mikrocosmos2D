@@ -47,7 +47,6 @@ MonoBehaviour:
     - where-allocations
     - Assembly-CSharp-firstpass
     - Mirror.Authenticators
-    - Elringus.SpriteGlow.Runtime
     - PsdPlugin
     - PPv2URPConverters
     - Polyglot.Editor
