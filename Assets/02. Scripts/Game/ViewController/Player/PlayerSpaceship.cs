@@ -20,8 +20,7 @@ namespace Mikrocosmos
             }
         }
 
-        [field: SyncVar]
-        public bool CanControl { get; set; }
+        [field: SyncVar] public bool CanControl { get; set; } = true;
 
         [SerializeField, SyncVar]
         private bool isUsing = false;

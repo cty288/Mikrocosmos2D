@@ -9,6 +9,7 @@ public class BulletViewController : BasicEntityViewController {
     [HideInInspector]
     public float Force;
 
+    [HideInInspector]
     public Collider2D shooter;
 
     protected  void Start() {

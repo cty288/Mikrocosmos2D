@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class JellyBulletViewController : BasicEntityViewController
+    public class BasicBulletViewController : BasicEntityViewController
     {
         [HideInInspector] public float Force;
 
         [HideInInspector]
         public Collider2D shooter;
 
-        [SerializeField] private NetworkAnimator animator;
+       private NetworkAnimator animator;
         protected void Start() {
             base.Awake();
             animator = GetComponent<NetworkAnimator>();
@@ -27,6 +27,12 @@ namespace Mikrocosmos
                     if (collision.collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity)) {
                         StartCoroutine(SetVelocityToZero());
                         animator.SetTrigger("Hit");
+                        if (entity is IDamagable damagable) {
+                            BulletModel model = GetComponent<BulletModel>();
+                            Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
+                            damagable.TakeRawDamage(
+                                (Mathf.RoundToInt(model.Damage * (rigidbody.velocity.magnitude / model.MaxSpeed))));
+                        }
                     }
                 }
             }

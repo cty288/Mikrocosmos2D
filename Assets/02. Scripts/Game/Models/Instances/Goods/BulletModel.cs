@@ -4,9 +4,12 @@ using Mikrocosmos;
 using Mirror;
 using UnityEngine;
 
-public class JellyBulletModel : AbstractBasicEntityModel {
+public class BulletModel : AbstractBasicEntityModel {
     [field: SyncVar, SerializeField]
     public override float SelfMass { get; protected set; }
+
+    [field: SyncVar, SerializeField]
+    public int Damage { get; protected set; }
 
     [field: SyncVar, SerializeField] public override string Name { get; set; } = "Bullet";
 

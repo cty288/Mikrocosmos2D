@@ -128,7 +128,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6742503940805011408}
   - component: {fileID: 6592758430792686187}
-  - component: {fileID: 318290991555539501}
+  - component: {fileID: 6250581628340284582}
+  - component: {fileID: 2086744233244930349}
   m_Layer: 7
   m_Name: FireCheck
   m_TagString: Untagged
@@ -164,7 +165,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.376012, y: -0.05002165}
+  m_Offset: {x: -2.4525373, y: -0.05002165}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -175,9 +176,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.4510446, y: 2.7007246}
+  m_Size: {x: 3.2979941, y: 2.7007246}
   m_EdgeRadius: 0
---- !u!114 &318290991555539501
+--- !u!114 &6250581628340284582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,12 +187,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 4850820837130464463}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b629bd1565be586478c0c6b213fec5d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCheckPeriod: 0.2
+  damageCheckTimer: 0
+  check: 0
+--- !u!114 &2086744233244930349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850820837130464463}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52a7f5503a2505a49aca73bf2063239a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 961
   maxDistance: 100
   detectTime: 1
   colliders: []
@@ -444,7 +460,7 @@ MonoBehaviour:
   - {x: -0.92580414, y: -0.12907791, z: 0}
   m_ShapePathHash: -538096385
   m_Mesh: {fileID: 0}
-  m_InstanceId: 392514
+  m_InstanceId: 274342
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +582,7 @@ MonoBehaviour:
   <BasicBuyPrice>k__BackingField: 50
   <GoodRarity>k__BackingField: 1
   <IsSell>k__BackingField: 1
+  <AffectedByGravity>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1
   <UseMode>k__BackingField: 1
   <Frequency>k__BackingField: 0
@@ -646,6 +663,7 @@ MonoBehaviour:
   DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
   fire1: {fileID: 6403340119911964050}
   fire2: {fileID: 1744423355335135302}
+  damageCheckPeriod: 0.2
 --- !u!95 &-6688074193047113738
 Animator:
   serializedVersion: 4

@@ -28,7 +28,7 @@ public class JellyGunViewController : BasicGoodsViewController {
     public void OnBulletShoot() {
         if (isServer) {
             GameObject bullet = Instantiate(this.bullet, shootPos.transform.position, Quaternion.identity);
-            bullet.GetComponent<JellyBulletViewController>().shooter = GetComponent<Collider2D>();
+            bullet.GetComponent<BasicBulletViewController>().shooter = GetComponent<Collider2D>();
             bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
             bullet.transform.rotation = transform.rotation;
             NetworkServer.Spawn(bullet);
