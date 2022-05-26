@@ -25,10 +25,12 @@ public class Window_Pointer : MonoBehaviour {
 
     [SerializeField]
     private Transform target;
+    private Vector3 targetDir;
 
     [SerializeField]
     private RectTransform pointerRectTransform;
     private Image pointerImage;
+    public LayerMask borderMask;
 
     private void Awake() {
         pointerImage = pointerRectTransform.GetComponent<Image>();
@@ -37,6 +39,9 @@ public class Window_Pointer : MonoBehaviour {
     }
 
     private void Update() {
+
+        Vector2 center = new Vector2(Screen.width, Screen.height);
+        
         float borderSize = 100f;
         Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(target.position);
         bool isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
@@ -46,75 +51,18 @@ public class Window_Pointer : MonoBehaviour {
 
             pointerImage.sprite = arrowSprite;
             Vector3 cappedTargetScreenPosition = targetPositionScreenPoint;
-           
-            //Vector3 cappedTargetScreenPosition = Camera.main.WorldToScreenPoint(Camera.main.transform.position)+  targetPositionScreenPoint.normalized * 500;
-            if (cappedTargetScreenPosition.x <= borderSize) {
-
-                cappedTargetScreenPosition = new Vector3(borderSize,
-                    targetPositionScreenPoint.y * (-(Screen.width / 2) / targetPositionScreenPoint.x),-10);
-
-                Debug.Log($"Target: {targetPositionScreenPoint.y * (-(Screen.width / 2) / targetPositionScreenPoint.x)}");
-            }
-            /*
-            if (cappedTargetScreenPosition.y <= borderSize)
+            
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.transform.position, targetDir, Mathf.Infinity, borderMask);
+            if (hit.collider != null)
             {
-                if (cappedTargetScreenPosition.x == targetPositionScreenPoint.x) {
-                    cappedTargetScreenPosition.x *= (Screen.width / 2) / targetPositionScreenPoint.x;
-                }
-               
-                if (cappedTargetScreenPosition.y == targetPositionScreenPoint.y) {
-                    cappedTargetScreenPosition.y = borderSize;
-                }
-                // Debug.Log((Screen.width / 2) / targetPositionScreenPoint.x);
+                pointerRectTransform.position = hit.point;
+                pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
+
             }
 
-            if (cappedTargetScreenPosition.x >= Screen.width - borderSize)
-            {
-                if (cappedTargetScreenPosition.y == targetPositionScreenPoint.y)
-                {
-                    cappedTargetScreenPosition.y *= (Screen.height / 2) / targetPositionScreenPoint.y;
-                }
-               
-
-                if (cappedTargetScreenPosition.x == targetPositionScreenPoint.x)
-                {
-                    cappedTargetScreenPosition.x = Screen.width - borderSize;
-                }
-
-                
-                //   Debug.Log((Screen.height / 2) / targetPositionScreenPoint.y);
-            }
-
-            if (cappedTargetScreenPosition.y >= Screen.height - borderSize)
-            {
-                if (cappedTargetScreenPosition.x == targetPositionScreenPoint.x)
-                {
-                    cappedTargetScreenPosition.x *= (Screen.width / 2) / targetPositionScreenPoint.x;
-                }
-
-               
-                if (cappedTargetScreenPosition.y == targetPositionScreenPoint.y)
-                {
-                    cappedTargetScreenPosition.y = Screen.height - borderSize;
-                }
-                
-                // Debug.Log((Screen.width / 2) / targetPositionScreenPoint.x);
-            }*/
 
 
-
-
-
-
-
-
-
-
-          //  Debug.Log(cappedTargetScreenPosition);
-
-            Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(cappedTargetScreenPosition);
-            pointerRectTransform.position = pointerWorldPosition;
-            pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
+            
         } else {
             pointerImage.sprite = crossSprite;
             Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(targetPositionScreenPoint);
@@ -129,8 +77,8 @@ public class Window_Pointer : MonoBehaviour {
         Vector3 toPosition = target.position;
         Vector3 fromPosition = Camera.main.transform.position;
         fromPosition.z = 0f;
-        Vector3 dir = (toPosition - fromPosition).normalized;
-        float angle = GetAngleFromVectorFloat(dir);
+        targetDir = (toPosition - fromPosition).normalized;
+        float angle = GetAngleFromVectorFloat(targetDir);
         pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle);
     }
     public static float GetAngleFromVectorFloat(Vector3 dir)
