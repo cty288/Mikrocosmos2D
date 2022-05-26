@@ -19,8 +19,15 @@ namespace Mikrocosmos {
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
             BtnChangeSide.onClick.AddListener(OnSwitchSideClicked);
+            BtnTestMode.onClick.AddListener(OnTestModeButtonClicked);
             BtnRoomLeaderStartRoom.onClick.AddListener(OnHostStartGameButtonClicked);
             BtnRoomLeaderStartRoom.gameObject.SetActive(false);
+        }
+
+        private void OnTestModeButtonClicked() {
+            if (NetworkServer.active) {
+                this.SendCommand<ServerStartGameCommand>();
+            }
         }
 
         private void OnHostStartGameButtonClicked() {
@@ -28,6 +35,8 @@ namespace Mikrocosmos {
                 this.SendCommand<ServerStartGameCommand>();
             }
         }
+
+
 
         //only called on the host
         private void OnAllPlayerReadyStatusChange(OnAllPlayersReadyStatusChanged e) {
