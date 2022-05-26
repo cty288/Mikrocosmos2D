@@ -37,8 +37,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Map UI
+  - UI Border
   m_SortingLayers:
   - name: Default
     uniqueID: 0
