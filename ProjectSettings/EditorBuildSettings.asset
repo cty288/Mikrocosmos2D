@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/01. Scenes/PrepareRoom.unity
     guid: 439e938809b5ef34ba84ff30c704de5a
   - enabled: 1
-    path: Assets/01. Scenes/MainGame.unity
+    path: Assets/01. Scenes/MainGameMap.unity
     guid: 95ddf95e537388b4487fbc78b7325a28
   - enabled: 0
     path: Assets/Mirror/Examples/Room/Scenes/OfflineScene.unity
