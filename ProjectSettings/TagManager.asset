@@ -15,7 +15,7 @@ TagManager:
   - Player
   - Obstacles
   - ClientHookedItem
-  - 
+  - Planet
   - 
   - 
   - 
@@ -41,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Permerant Maskable
+    uniqueID: 2353824561
     locked: 0

@@ -9,10 +9,14 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent {
-       
-
-
+    public struct OnServerObjectHookStateChanged {
+        public NetworkIdentity Identity;
+        public HookState HookState;
+        public NetworkIdentity HookedByIdentity;
+    }
+    public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent,
+    ICanGetModel{
+     
         [field: SyncVar, SerializeField]
         public float MaxSpeed { get; protected set; }
 
@@ -24,53 +28,104 @@ namespace Mikrocosmos
         public HookState HookState { get; protected set; } = HookState.Freed;
 
 
-        [field: SyncVar(hook = nameof(OnClientHookedByIdentityChanged)), SerializeField]
+        [field: SyncVar, SerializeField]
         public NetworkIdentity HookedByIdentity { get; protected set; }
 
      
 
         [field: SerializeField]
-        public Transform ClientHookedByTransform { get; protected set; }
+        public Transform HookedByTransform { get; protected set; }
 
 
         /// <summary>
         /// Hook self if not hooked
         /// </summary>
         [ServerCallback]
-        public void Hook(NetworkIdentity hookedBy) {
-            HookState = HookState.Hooked;
-            HookedByIdentity = hookedBy;
+        public bool Hook(NetworkIdentity hookedBy) {
+            if (ServerCheckCanHook(hookedBy)) {
+                HookState = HookState.Hooked;
+                HookedByIdentity = hookedBy;
+                this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
+                {
+                    Identity = netIdentity,
+                    HookState = HookState,
+                    HookedByIdentity = hookedBy
+                });
+                OnServerHooked();
+                if (hookedBy) {
+                    HookedByTransform = hookedBy.GetComponentInChildren<Trigger2DCheck>().transform;
+                    // LayerMask collisionMask = this.GetModel<ICollisionMaskModel>().Allocate();
+                    //bindedRigidibody.bodyType = RigidbodyType2D.Kinematic;
+                    Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
+                        true);
+                }
+                else {
+                    HookedByTransform = null;
+                }
+               
+
+                return true;
+            }
+
+            return false;
         }
 
-      
+        [ServerCallback]
+        protected virtual bool ServerCheckCanHook(NetworkIdentity hookedBy) {
+            return true;
+        }
 
+        [ServerCallback]
+        protected virtual void OnServerBeforeUnHooked() {
+
+        }
+
+        [ServerCallback]
+        protected virtual void OnServerHooked() {
+
+        }
+        [ServerCallback]
+        protected virtual void OnServerUnHooked()
+        {
+
+        }
 
         /// <summary>
         /// Unhook self if hooked
         /// </summary>
         [ServerCallback]
-        public void UnHook() {
+        public void UnHook(bool isShoot) {
             //优化一下
             if (HookedByIdentity) {
+                Debug.Log("UnHooked");
+                OnServerBeforeUnHooked();
                 HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
                 HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
+                HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);
                 HookState = HookState.Freed;
-
-                if (netIdentity.connectionToClient != null)
-                {
-                    TargetOnUnhooked(HookedByIdentity.GetComponent<Rigidbody2D>().velocity);
+                
+                gameObject.layer = clientOriginalLayer;
+                if (!isShoot) {
+                    bindedRigidibody.velocity = HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
+                    bindedRigidibody.angularVelocity = 0;
                 }
-                else
-                {
+                Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
+                    false);
 
-                    bindedRigidibody.velocity += HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
-                }
+                this.GetModel<ICollisionMaskModel>().Release();
             }
+
+            this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
+            {
+                Identity = netIdentity,
+                HookState = HookState,
+                HookedByIdentity = this.HookedByIdentity
+            });
+            OnServerUnHooked();
             
-
-
-          
             HookedByIdentity = null;
+            HookedByTransform = null;
+
         }
 
      
@@ -107,60 +162,42 @@ namespace Mikrocosmos
 
         protected  virtual  void Update() {
             bindedRigidibody.mass = GetTotalMass();
-            if (isClient) {
+           
                 if (HookState == HookState.Hooked) {
-                    if (HookedByIdentity ==
-                        NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship) {
-                        gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
-                    }
-                    else {
-                        gameObject.layer = clientOriginalLayer;
-                    }
+                    //gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
+                }else {
+                  //  gameObject.layer = clientOriginalLayer;
                 }
-            }
         }
+            
+        
 
-        public abstract string Name { get; }
+        public abstract string Name { get; set; }
 
-        [TargetRpc]
-        private void TargetOnUnhooked(Vector2 velocity) {
-            bindedRigidibody.velocity += velocity;
-        }
-
+      
         private LayerMask clientOriginalLayer;
         private void OnHookStateChanged(HookState oldState, HookState newState) {
             if (newState == HookState.Hooked) {
-                if (HookedByIdentity ==
-                    NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship) {
-                    Debug.Log(NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.name);
-                }
+               
 
-                gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
-                OnHooked();
+                //gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
+                OnClientHooked();
             }
 
             if (newState == HookState.Freed)
             {
                 gameObject.layer = clientOriginalLayer;
-                OnFreed();
+                OnClientFreed();
             }
         }
 
         
 
-        [ClientCallback]
-        private void OnClientHookedByIdentityChanged(NetworkIdentity oldIdentity, NetworkIdentity newIdentity) {
-            if (newIdentity) {
-                ClientHookedByTransform = newIdentity.GetComponentInChildren<Trigger2DCheck>().transform;
-            }
-            else {
-                ClientHookedByTransform = null;
-            }
-        }
-        public abstract void OnHooked();
+      
+        public abstract void OnClientHooked();
         
         
-        public abstract void OnFreed();
+        public abstract void OnClientFreed();
 
     }
 }

@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Spaceship2Move
+  m_Controller: {fileID: 9100000, guid: c2111875f62ee394cbf4925e598b3f34, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 077e27cd83014434380221f6a3e5f45d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8c0983fc1fa428c418249fb756adbcbe, type: 2}

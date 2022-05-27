@@ -127,40 +127,47 @@ namespace Mikrocosmos {
             hookHoldTimer = 0;
             //start check hook type
         }
+
+        
         public void ServerShootTrigger()
         {
-            Vector2 force = transform.up * maxShootForce * realShootPercent;
-            Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
-            this.SendEvent<OnItemShot>(new OnItemShot()
-            {
-                Force = force,
-                TargetShotItem = HookedItem as ICanBeShotViewController
-            });
+            if (isServer) {
+                Vector2 force = transform.up * maxShootForce * realShootPercent;
+                Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
 
-            HookedItem.Model.UnHook();
-            HookedItem = null;
+                this.SendEvent<OnItemShot>(new OnItemShot()
+                {
+                    Force = force,
+                    TargetShotItem = HookedItem as ICanBeShotViewController
+                });
 
-            HookedNetworkIdentity = null;
+                HookedItem.Model.UnHook(true);
+
+              
+                HookedItem = null;
+
+                HookedNetworkIdentity = null;
+            }
+            
         }
 
         private float realShootPercent;
         private void TryShoot() {
-            if (HookedItem != null) {
+            if (HookedItem != null && HookedItem is ICanBeShotViewController) {
                 float realPercent = (hookShootChargePercent * 2);
                 if (realPercent >= 1) {
                     realPercent = -realPercent + 2;
                 }
 
                 realShootPercent = realPercent;
-                animator.SetTrigger("Shoot");
-
-                
+                GetComponent<NetworkAnimator>().SetTrigger("Shoot");
             }
         }
 
         private void TryUnHook() {
-            if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {//TODO: change to icanbehootvc
-                HookedItem.Model.UnHook();
+            if (HookedItem != null) {
+
+                HookedItem.Model.UnHook(false);
             }
            
             HookedItem = null;
@@ -190,13 +197,15 @@ namespace Mikrocosmos {
                     if (collider.gameObject
                         .TryGetComponent<IHookableViewController>(out IHookableViewController vc))
                     {
-                        HookedItem = vc;
-                        HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
-                        vc.Model.UnHook();
-                        vc.Model.Hook(netIdentity);
-                        animator.SetBool("Hooking", true);
-                        checkingHook = false;
-                        break;
+                        vc.Model.UnHook(true);
+                        if (vc.Model.Hook(netIdentity)) {
+                            HookedItem = vc;
+                            HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
+                            
+                            animator.SetBool("Hooking", true);
+                            checkingHook = false;
+                            break;
+                        }
                     }
                 }
 
@@ -206,10 +215,8 @@ namespace Mikrocosmos {
 
         [ServerCallback]
         private void TryHook() {
-          
-            if (model.HookState == HookState.Freed && animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking"))
-            {
-                animator.SetTrigger("StartHook");
+            if (model.HookState == HookState.Freed && animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking")) {
+                GetComponent<NetworkAnimator>().SetTrigger("StartHook");
             }
         }
 

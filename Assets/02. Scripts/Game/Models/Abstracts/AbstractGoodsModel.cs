@@ -1,0 +1,150 @@
+using System.Collections;
+using System.Collections.Generic;
+using MikroFramework;
+using MikroFramework.Architecture;
+using MikroFramework.Utilities;
+using Mirror;
+using UnityEngine;
+
+namespace Mikrocosmos
+{
+    public struct OnClientGoodsTransactionFinished {
+        public IGoods Goods;
+    }
+
+    public struct ClientOnBuyItemInitialized {
+        public GameObject item;
+    }
+
+    public struct OnServerTrySellItem {
+        public IGoods RequestingGoods;
+        public IGoods DemandedByPlanet;
+        public NetworkIdentity HookedByIdentity;
+        public GameObject RequestingGoodsGameObject;
+    }
+
+    public struct OnServerTryBuytem
+    {
+        public IGoods RequestingGoods;
+        public NetworkIdentity HookedByIdentity;
+        public GameObject RequestingGoodsGameObject;
+    }
+
+
+    public abstract class AbstractGoodsModel : AbstractBasicEntityModel, IGoods, IAffectedByGravity,
+    ICanSendQuery{
+        [field: SerializeField] public int BasicSellPrice { get; set; }
+        [field: SerializeField] public int BasicBuyPrice { get; set; }
+        [field: SerializeField] public GoodsRarity GoodRarity { get; set; }
+
+        [field: SyncVar(hook = nameof(OnTransactionStatusChanged))]
+        public bool TransactionFinished { get; set; } = true;
+
+        [field: SyncVar] public int RealPrice { get; set; }
+
+        [field: SyncVar(hook = nameof(ClientOnSellStatusChanged)), SerializeField] 
+        public bool IsSell { get; set; } = true;
+
+        protected Trigger2DCheck triggerCheck;
+
+        protected override void Awake() {
+            base.Awake();
+            triggerCheck = GetComponent<Trigger2DCheck>();
+        }
+
+
+        [ServerCallback]
+        public void ServerAddGravityForce(float force, Vector2 position, float range) {
+            if (TransactionFinished) {
+                //Debug.Log("Affected");
+                GetComponent<Rigidbody2D>().AddExplosionForce(force, position, range);
+            }
+
+        }
+
+        [ServerCallback]
+        protected override bool ServerCheckCanHook(NetworkIdentity hookedBy) {
+            if (TransactionFinished) {
+                return true;
+            }
+            else {
+                if (!IsSell) {
+                    return false;
+                }
+
+                //check money
+                int money = this.SendQuery<int>(new ServerGetPlayerMoneyQuery(hookedBy));
+                if (money - RealPrice < 0) {
+                    this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
+                     PlayerIdentity = hookedBy
+                    });
+                    return false;
+                }
+                else {
+                    this.SendEvent<OnServerTryBuytem>(new OnServerTryBuytem() {
+                        HookedByIdentity = hookedBy,
+                        RequestingGoods = this,
+                        RequestingGoodsGameObject = gameObject
+                    });
+                    return true;
+                }
+            }
+        }
+
+       
+
+        //deal with trading
+        [ServerCallback]
+        protected override void OnServerBeforeUnHooked() {
+            base.OnServerBeforeUnHooked();
+            if (triggerCheck) {
+                if (triggerCheck.Triggered) {
+                    
+                    foreach (Collider2D collider in triggerCheck.Colliders) {
+                        //is a goods
+                        if (collider.TryGetComponent<IGoods>(out IGoods good)) {
+                            
+                            //is the same type? (same type of goods?)
+                            if (good.Name== Name) {
+                                //is the good actually demanding by a planet?
+                                if (!good.TransactionFinished && !good.IsSell) {
+                                    //satisfy the condition, now sell it
+                                    //however, need to check money first
+                                    this.SendEvent<OnServerTrySellItem>(new OnServerTrySellItem() {
+                                        DemandedByPlanet = good,
+                                        RequestingGoods = this,
+                                        HookedByIdentity = HookedByIdentity,
+                                        RequestingGoodsGameObject = gameObject
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public Vector2 StartDirection { get; }
+        public float InitialForceMultiplier { get; }
+
+        [ClientCallback]
+        private void OnTransactionStatusChanged(bool oldStatus, bool newStatus) {
+            if (newStatus) {
+                this.SendEvent<OnClientGoodsTransactionFinished>(new OnClientGoodsTransactionFinished() {
+                    Goods = this
+                });
+            }
+
+        }
+
+        [ClientCallback]
+        private void ClientOnSellStatusChanged(bool oldStatus, bool newStatus) {
+            if (!newStatus) {
+                this.SendEvent<ClientOnBuyItemInitialized>(new ClientOnBuyItemInitialized() {
+                    item = gameObject
+                });
+            }
+        }
+    }
+}

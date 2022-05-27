@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
+using MikroFramework.Event;
+using Mirror;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Mikrocosmos
 {
-    public class MeteorViewController : BasicEntityViewController
+    
+    public class MeteorViewController : AbstractCanCreateShadeEntity
     {
-        public override IEntity Model { get; protected set; }
-
-        private IMeteorModel GetModel()
-        {
-            return GetModel<IMeteorModel>();
-        }
+      
     }
 }

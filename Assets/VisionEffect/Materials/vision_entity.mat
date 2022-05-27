@@ -9,11 +9,11 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: vision_entity
   m_Shader: {fileID: 4800000, guid: 6d1417b0fc765234b80b34d3b460ccc8, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA FLIP_H
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -39,9 +39,20 @@ Material:
     m_Floats:
     - _AlphaValue: 1
     - _EnableExternalAlpha: 0
+    - _FlipHorizontalDirection: 1
+    - _FlipVerticalDirection: 0
+    - _ForText: 0
+    - _OutlineDot: 0.05
+    - _OutlineDot2: 0.68
+    - _OutlineExtrusion: 1.24
+    - _OutlineSpeed: 0.0339
+    - _OutlineWidth: 10.3
+    - _Transparency: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SourcePos: {r: 0, g: 0, b: 0, a: 0}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

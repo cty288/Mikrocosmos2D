@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
@@ -15,15 +16,13 @@ namespace Mikrocosmos
     public struct OnEscapeCounterChanged {
         public int newValue;
     }
-    public class SpaceshipModel : AbstractBasicEntityModel, ISpaceshipConfigurationModel {
-        public override string Name { get; } = "Spaceship";
+    public class SpaceshipModel : AbstractBasicEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
+        public override string Name { get; set; } = "Spaceship";
         private IHookSystem hookSystem;
+        private Rigidbody2D rigidbody;
         #region Server
 
-        [Command]
-        private void CmdUnHook() {
-            UnHook();
-        }
+        
       
         #endregion
 
@@ -32,38 +31,35 @@ namespace Mikrocosmos
         protected override void Awake() {
             base.Awake();
             hookSystem = GetComponent<IHookSystem>();
+            rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public override void OnHooked()
+        public override void OnClientHooked()
         {
 
         }
 
-        public override void OnFreed()
+        public override void OnClientFreed()
         {
 
         }
         public int EscapeNeedCount { get; } = 10;
         public float EscapeLossTime { get; } = 0.125f;
+        public float MaxMaxSpeed { get; } = 100;
 
+        [field: SyncVar(hook = nameof(ClientOnEscapeCounterChanged))]
         public int EscapeCounter { get; private set; }
 
         private float escapeLossTimer = 0f;
 
-        public override void OnStartServer() {
-            base.OnStartServer();
-          
-        }
-
+       
 
         protected override void Update()
         {
             base.Update();
             if (isServer) {
                 Acceleration = Mathf.Max(5, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
-            }
-            if (hasAuthority)
-            {
+
                 escapeLossTimer += Time.deltaTime;
                 if (escapeLossTimer >= EscapeLossTime)
                 {
@@ -71,7 +67,6 @@ namespace Mikrocosmos
                     if (EscapeCounter > 0)
                     {
                         EscapeCounter--;
-                        this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = EscapeCounter });
                     }
 
                 }
@@ -79,25 +74,25 @@ namespace Mikrocosmos
 
         }
 
-        public void IncreaseEscapeCounter()
+        [Command]
+        public void CmdIncreaseEscapeCounter()
         {
             EscapeCounter++;
             escapeLossTimer = 0;
             if (EscapeCounter >= EscapeNeedCount)
             {
                 EscapeCounter = 0;
-                CmdUnHook();
-                
+                UnHook(false);
             }
-            this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = EscapeCounter });
+
         }
 
-        [field: SerializeField]
+        [field: SyncVar,SerializeField]
         public float InitialAcceleration { get; private set; } = 20;
 
         [field: SyncVar, SerializeField]
         public override float SelfMass { get; protected set; } = 1;
-        [field: SerializeField]
+        [field: SyncVar, SerializeField]
         public float AccelerationDecreasePerMass { get; private set; } = 2;
 
         public float BackpackMass { get; } = 0;
@@ -148,14 +143,64 @@ namespace Mikrocosmos
         }
 
 
-      
+        [ClientCallback]
+        private void ClientOnEscapeCounterChanged(int oldNum, int newNum) {
+            this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = newNum });
+        }
         #endregion
 
+        #region Server
+        protected float initialForce;
+        public override void OnStartServer()
+        {
+            Vector2 Center = this.transform.position;
+            initialForce = ProperForce();
+            this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
+        }
+        [ServerCallback]
+        private float ProperForce()
+        {
+            var pos = transform.position;
+            var rb = GetComponent<Rigidbody2D>();
+            var Rb = GameObject.Find("Star").GetComponent<IHaveGravity>();
+            return InitialForceMultiplier * GetTotalMass() * Mathf.Sqrt(Rb.GetTotalMass() / Distance(pos, Vector3.zero));
+        }
 
+        private Vector2 ProperDirect(Vector2 pos)
+        {
+            float x = Random.value, y = Random.value / 10;
+            Vector2 result;
+            if (StartDirection != Vector2.zero)
+            {
+                result = StartDirection.normalized;
+            }
+            else
+            {
+                Vector2 starPos = GameObject.Find("Star").transform.position;
+                result = Vector2.Perpendicular(((starPos - pos).normalized));
+            }
+            return result;
+        }
+        float Distance(Vector2 pos1, Vector2 pos2)
+        {
+            Vector2 diff = (pos1 - pos2);
+            float dist = Mathf.Sqrt(diff.x * diff.x + diff.y * diff.y);
+            if (dist < 1)
+                return 1;
+            else return (dist);
+        }
+        [ServerCallback]
+        public void ServerAddGravityForce(float force, Vector2 position, float range)
+        {
+            rigidbody.AddExplosionForce(force, position, range);
+        }
 
+        [field: SerializeField]
+        public Vector2 StartDirection { get; }
 
-      
+        [field: SerializeField] public float InitialForceMultiplier { get; } = 0;
 
+        #endregion
 
 
     }

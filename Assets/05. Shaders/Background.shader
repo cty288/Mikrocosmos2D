@@ -1,4 +1,4 @@
-Shader "examples/week 4/Background"
+Shader "mk/Background"
 {
     Properties
     {

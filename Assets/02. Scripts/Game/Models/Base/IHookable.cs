@@ -16,10 +16,12 @@ namespace Mikrocosmos
 
         NetworkIdentity HookedByIdentity { get; }
 
-        Transform ClientHookedByTransform { get; }
+        Transform HookedByTransform { get; }
 
-        void Hook(NetworkIdentity hookedBy);
-        void UnHook();
+        bool Hook(NetworkIdentity hookedBy);
+
+        
+        void UnHook(bool isShoot);
     }
 
     

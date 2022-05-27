@@ -9,13 +9,9 @@ using UnityEngine.UI;
 namespace Mikrocosmos
 {
     //all client side
-    public class PlayerVisionControl : MonoBehaviour {
-        private bool hasControlAuthority;
-
-        [SerializeField] private Material defaultSpriteLitMaterial;
-        [SerializeField] private Material visionEntityMaterial;
-        [SerializeField]
-        private SpriteRenderer[] visionAffectedSprites;
+    public class PlayerVisionControl : CanBeMaskedViewController {
+  
+      
 
         private GameObject visionRenderLight;
         private GameObject fovVision;
@@ -27,29 +23,22 @@ namespace Mikrocosmos
 
         private void Awake() {
             
-            visionRenderLight = transform.Find("VisionRenderLight").gameObject;
-            fovVision = transform.Find("FOV Vision").gameObject;
-            playerInfoCanvas = transform.Find("PlayerInfoCanvas").gameObject;
-            playerNameShade = transform.Find("PlayerInfoCanvas/NameShade").gameObject;
+            visionRenderLight = transform.Find("VisionControl/VisionRenderLight").gameObject;
+            fovVision = transform.Find("VisionControl/FOV Vision").gameObject;
+            playerInfoCanvas = transform.Find("VisionControl/PlayerInfoCanvas").gameObject;
+            playerNameShade = transform.Find("VisionControl/PlayerInfoCanvas/NameShade").gameObject;
             playerNameShadeSprite = playerNameShade.GetComponent<SpriteRenderer>();
             
         }
 
         void Start() {
-            hasControlAuthority = GetComponentInParent<NetworkIdentity>().hasAuthority;
-            if (hasControlAuthority) {
-                foreach (SpriteRenderer sprite in visionAffectedSprites) {
-                    sprite.material = Material.Instantiate(defaultSpriteLitMaterial); ;
-                }
+            if (hasAuthority) {
                
                 playerNameShade.SetActive(false);
                 visionRenderLight.SetActive(true);
                 fovVision.SetActive(true);
             }
             else {
-                foreach (SpriteRenderer sprite in visionAffectedSprites) {
-                    sprite.material = Material.Instantiate(visionEntityMaterial);
-                }
                
                 playerNameShade.SetActive(true);
                 visionRenderLight.SetActive(false);
@@ -61,7 +50,10 @@ namespace Mikrocosmos
 
         [SerializeField] private LayerMask mask;
         void Update() {
-            if (!hasControlAuthority) {
+            if (Input.GetKeyDown(KeyCode.V) && isServer) {
+                //CanBeMasked = false;
+            }
+            if (!hasAuthority) {
                 if (player == null) {
                     player = NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.transform;
                 }else {
@@ -82,6 +74,26 @@ namespace Mikrocosmos
                 }
 
                 
+            }
+        }
+
+
+        protected override void ClientUpdateCanBeMasked() {
+            Material mat;
+            if (hasAuthority) {
+                mat = Material.Instantiate(defaultSpriteLitMaterial);
+            }
+            else {
+                if (!CanBeMasked) {
+                    mat = Material.Instantiate(defaultSpriteLitMaterial);
+                }
+                else {
+                    mat = Material.Instantiate(visionEntityMaterial);
+                }
+            }
+            foreach (SpriteRenderer sprite in visionAffectedSprites)
+            {
+                sprite.material = mat;
             }
         }
     }
