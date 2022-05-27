@@ -327,7 +327,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 0.5
-  <Damage>k__BackingField: 8
+  <Damage>k__BackingField: 15
   <Name>k__BackingField: JellyBullet
 --- !u!114 &4329412435070151956
 MonoBehaviour:

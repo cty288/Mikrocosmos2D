@@ -16,6 +16,8 @@ namespace Mikrocosmos
         private Trigger2DCheck fireCheck;
         private bool isUsing = false;
 
+        [SerializeField] private int damagePer02;
+
       
         protected override void Awake() {
             base.Awake();
@@ -67,7 +69,7 @@ namespace Mikrocosmos
         public void DealDamageToDamagable(GameObject target) {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Using")) {
                 Debug.Log($"Deal Damage to target: {target.name}");
-                target.GetComponent<IDamagable>().TakeRawDamage(1);
+                target.GetComponent<IDamagable>().TakeRawDamage(damagePer02);
                 
             }
         }

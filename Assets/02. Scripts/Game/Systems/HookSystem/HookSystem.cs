@@ -129,6 +129,10 @@ namespace Mikrocosmos {
             this.RegisterEvent<OnItemDropped>(OnItemDropped).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
+
+        
+
+
         [ServerCallback]
         private void OnItemDropped(OnItemDropped e) {
             if (e.Identity == netIdentity) {

@@ -146,7 +146,10 @@ namespace Mikrocosmos
         }
 
         public Vector2 StartDirection { get; }
-        public float InitialForceMultiplier { get; }
+
+
+        [field:SerializeField]
+        public float InitialForceMultiplier { get; protected set; }
         [field: SerializeField] public bool AffectedByGravity { get; set; } = true;
 
         [ClientCallback]

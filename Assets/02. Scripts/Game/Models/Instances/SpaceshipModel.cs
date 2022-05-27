@@ -163,12 +163,16 @@ namespace Mikrocosmos
             else {
                 if (hookSystem.IsHooking && hookSystem.HookedNetworkIdentity)
                 {//return SelfMass + backpack + ...
-                    IHaveMomentum hookingModel =  hookSystem.HookedNetworkIdentity.GetComponent<IHaveMomentumViewController>().Model;
+                    IHookable hookingModel =  hookSystem.HookedNetworkIdentity.GetComponent<IHookable>();
                     
                    if (hookingModel is ISpaceshipConfigurationModel) {
                        return GetConnectedObjectSoleMass() + SelfMass + BackpackMass;
                    }else {
-                       return SelfMass + BackpackMass + hookingModel.SelfMass;
+                       float hookingModelSelfMass = 0;
+                       if (hookingModel.CanBeAddedToInventory) {
+                           hookingModelSelfMass = hookingModel.SelfMass * 4;
+                       }
+                        return SelfMass + BackpackMass + hookingModelSelfMass;
                    }
                 }
             }

@@ -181,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_InstanceId
-      value: -1090338
+      value: -350666
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_ShapePathHash
@@ -436,6 +436,7 @@ MonoBehaviour:
   <BasicBuyPrice>k__BackingField: 30
   <GoodRarity>k__BackingField: 1
   <IsSell>k__BackingField: 1
+  <InitialForceMultiplier>k__BackingField: 0
   <AffectedByGravity>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1
   <UseMode>k__BackingField: 0
@@ -445,4 +446,4 @@ MonoBehaviour:
   reduceDurabilityInstantlyAfterUse: 0
   addedForce: 150
   addedMomentum: 16
-  addedDamage: 8
+  addedDamage: 30

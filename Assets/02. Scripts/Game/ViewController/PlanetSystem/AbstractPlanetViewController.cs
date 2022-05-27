@@ -34,6 +34,8 @@ namespace Mikrocosmos
         private Text team2TradeProgressText;
 
         private int team1ProgressTextInt = 50;
+
+        [SerializeField, Range(0, 360000)] private float initialProgress; 
        
         private void Awake() {
          
@@ -43,7 +45,7 @@ namespace Mikrocosmos
             
             rigidbody = GetComponent<Rigidbody2D>();
             distance = Vector3.Distance(target.transform.position, transform.position);
-            progress = Random.Range(0, 360000);
+            progress = initialProgress;
 
             sellItemSpawnPosition = transform.Find("SellBubbleBG/SellItemSpawnPos");
             buytemSpawnPosition = transform.Find("BuyBubbleBG/BuyItemSpawnPos");

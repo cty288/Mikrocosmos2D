@@ -576,12 +576,13 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <SelfMass>k__BackingField: 8
+  <SelfMass>k__BackingField: 7.5
   <Name>k__BackingField: FirePlant
   <BasicSellPrice>k__BackingField: 30
-  <BasicBuyPrice>k__BackingField: 50
+  <BasicBuyPrice>k__BackingField: 45
   <GoodRarity>k__BackingField: 1
   <IsSell>k__BackingField: 1
+  <InitialForceMultiplier>k__BackingField: 0
   <AffectedByGravity>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1
   <UseMode>k__BackingField: 1
@@ -663,7 +664,7 @@ MonoBehaviour:
   DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
   fire1: {fileID: 6403340119911964050}
   fire2: {fileID: 1744423355335135302}
-  damageCheckPeriod: 0.2
+  damagePer02: 8
 --- !u!95 &-6688074193047113738
 Animator:
   serializedVersion: 4
