@@ -14,7 +14,7 @@ namespace Mirror.Experimental
         [Header("Velocity")]
 
         [Tooltip("Syncs Velocity every SyncInterval")]
-        [SerializeField] bool syncVelocity = true;
+        [SerializeField] public bool syncVelocity = true;
 
         [Tooltip("Set velocity to 0 each frame (only works if syncVelocity is false")]
         [SerializeField] bool clearVelocity = false;

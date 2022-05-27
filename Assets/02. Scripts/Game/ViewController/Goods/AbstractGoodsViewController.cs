@@ -31,8 +31,11 @@ namespace Mikrocosmos
             base.OnStartClient();
             this.GetComponent<SpriteRenderer>().enabled = false;
             this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
-                this.GetComponent<SpriteRenderer>().enabled = true;
-                ClientUpdateCanBeMasked();
+                if (this) {
+                    this.GetComponent<SpriteRenderer>().enabled = true;
+                    ClientUpdateCanBeMasked();
+                }
+               
             });
 
             this.RegisterEvent<ClientOnBuyItemInitialized>(OnBuyItemInitialized)
@@ -65,11 +68,21 @@ namespace Mikrocosmos
 
 
         private void Start() {
-            
-            shadeCaster.enabled = false;
-            this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
-                shadeCaster.enabled = true;
-            });
+
+            if (shadeCaster) {
+                shadeCaster.enabled = false;
+                this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
+                    if (this)
+                    {
+                        if (Model.HookState != HookState.Hooked)
+                        {
+                            shadeCaster.enabled = IsMaskable;
+                        }
+                    }
+
+                });
+            }
+           
         }
 
         protected override void FixedUpdate() {
@@ -86,10 +99,16 @@ namespace Mikrocosmos
             base.Update();
             if (GoodsModel.TransactionFinished) {
                 collider.isTrigger = false;
-                shadeCaster.castsShadows = true;
+                if (shadeCaster) {
+                    shadeCaster.castsShadows = true;
+                }
+                
             }
             else {
-                shadeCaster.castsShadows = false;
+                if (shadeCaster) {
+                    shadeCaster.castsShadows = false;
+                }
+                
                 collider.isTrigger = true;
                 rigidbody.bodyType = RigidbodyType2D.Kinematic;
             }
@@ -141,7 +160,7 @@ namespace Mikrocosmos
             }
             else
             {
-                Debug.Log($"IsSell: {GoodsModel.IsSell}");
+                
                 if (GoodsModel.IsSell) {
                     if (GoodsModel.TransactionFinished) {
                         visionEntityMaterial = visionMaterial;

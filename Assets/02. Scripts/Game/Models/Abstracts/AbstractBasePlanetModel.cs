@@ -33,7 +33,7 @@ namespace Mikrocosmos
             sellItemList.AddRange(initialSellItemList);
         }
 
-
+        [field: SerializeField] public MoveMode MoveMode { get; set; } = MoveMode.ByTransform;
         float IHaveMomentum.MaxSpeed { get; }
         float IHaveMomentum.Acceleration { get; }
 

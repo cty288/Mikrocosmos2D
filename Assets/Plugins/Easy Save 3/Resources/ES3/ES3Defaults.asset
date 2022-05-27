@@ -36,10 +36,11 @@ MonoBehaviour:
     - MikroFramework
     - UniRx
     - Cinemachine
+    - Assembly-CSharp
     - Telepathy
+    - Mirror.Components
     - ES3Editor
     - kcp2k
-    - Mirror.Components
     - SimpleWebTransport
     - DOTween.Modules
     - Polyglot.Scripts

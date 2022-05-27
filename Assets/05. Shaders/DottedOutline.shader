@@ -11,6 +11,7 @@ Shader "mk/DottedOutline"
 		_SourcePos("Source Position", vector) = (0, 0, 0, 0)
 		_OutlineWidth("OutlineWidth", Range(0,100)) = 0
 		_Transparency("Transparacy", Range(0,1)) = 0.5
+		_OutlineTransparencyThreshold("Outline Transparacy Threshold", Range(0,0.5)) = 0.5
 
 		[Toggle(FLIP_V)] _FlipVerticalDirection("Flip Vertical Direction", Float) = 0
 		[Toggle(FLIP_H)] _FlipHorizontalDirection("Flip Horizontal Direction", Float) = 0
@@ -50,6 +51,7 @@ Shader "mk/DottedOutline"
 			float4 _MainTex_TexelSize;
 			float _OutlineWidth;
 			float _Transparency;
+			float _OutlineTransparencyThreshold;
 			struct vertexInput
 			{
 				float4 vertex : POSITION;
@@ -86,7 +88,7 @@ Shader "mk/DottedOutline"
 			float4 frag(vertexOutput input) : COLOR
 			{
 				fixed4 col = tex2D(_MainTex, input.uv);
-				col.a = _Transparency;
+				col.a *= _Transparency;
 				float2 pos;
 
 				#ifdef FLIP_H
@@ -120,8 +122,9 @@ Shader "mk/DottedOutline"
 
 			
                 if(up!= 0 || down!=0 || left!=0 || right!=0){
-				     col = lerp(_OutlineColor,col,w);
-					  if(w<=0.5){
+				     
+					  if(w<=_OutlineTransparencyThreshold){
+					  col = lerp(_OutlineColor,col,w);
 				         clip(skip); // stops rendering a pixel if 'skip' is negative
 					     col.a = 1;
 			       	}

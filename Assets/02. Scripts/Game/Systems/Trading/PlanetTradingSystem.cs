@@ -31,6 +31,14 @@ namespace Mikrocosmos
     public struct OnServerPlayerMoneyNotEnough {
         public NetworkIdentity PlayerIdentity;
     }
+
+    public struct OnServerTransactionFinished {
+        public IGoods GoodsModel;
+        public int Price;
+        public bool IsSell;
+    }
+
+  
     public interface IPlanetTradingSystem : ISystem {
         /// <summary>
         /// A number between 0-1. 
@@ -39,6 +47,11 @@ namespace Mikrocosmos
         /// <returns></returns>
         float GetAffinityWithTeam(int team);
     }
+
+   
+
+    
+    
     public class PlanetTradingSystem : AbstractNetworkedSystem, IPlanetTradingSystem {
         private IPlanetModel planetModel;
 
@@ -74,17 +87,18 @@ namespace Mikrocosmos
             BuyItemTimer = Random.Range(1f, BuyItemMaxTime);
             
         }
-
+       
+        
         public override void OnStartServer() {
             base.OnStartServer();
             this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnPlayerJoinGame)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerTrySellItem>(OnServerTrySellItem);
-            this.RegisterEvent<OnServerTryBuytem>(OnServerTryBuyItem);
+            this.RegisterEvent<OnServerTryBuyItem>(OnServerTryBuyItem);
         }
 
         //Planet SELL item, player BUY item
-        private void OnServerTryBuyItem(OnServerTryBuytem e) {
+        private void OnServerTryBuyItem(OnServerTryBuyItem e) {
             if (e.RequestingGoods == currentSellingItem) {
                 PlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<PlayerTradingSystem>();
                 //Debug.Log($"Buy: {currentSellingItemPrice}, {currentSellingItemObject.name}");
@@ -95,6 +109,12 @@ namespace Mikrocosmos
                 }
 
                 currentSellingItem.TransactionFinished = true;
+                this.SendEvent<OnServerTransactionFinished>(new OnServerTransactionFinished() {
+                    GoodsModel = currentSellingItem,
+                    IsSell = true,
+                    Price = currentSellingItem.RealPrice
+                });
+                
                 currentSellingItem = null;
 
                 ChangeAffinity(spaceship.GetComponent<PlayerSpaceship>().connectionToClient.identity
@@ -117,7 +137,14 @@ namespace Mikrocosmos
                     spaceship.Money += currentBuyingItem.RealPrice;
                     Debug.Log(currentBuyingItem.RealPrice);
                     NetworkServer.Destroy(e.RequestingGoodsGameObject);
-                    SwitchBuyItem();
+                    this.SendEvent<OnServerTransactionFinished>(new OnServerTransactionFinished()
+                    {
+                        GoodsModel = currentBuyingItem,
+                        IsSell = false,
+                        Price = currentBuyingItem.RealPrice
+                    });
+                    
+                    //SwitchBuyItem();
 
                     ChangeAffinity(e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
                         .GetComponent<NetworkMainGamePlayer>().matchInfo.Team);
@@ -130,6 +157,12 @@ namespace Mikrocosmos
             }
         }
 
+
+
+
+
+
+
         [ServerCallback]
         private void ChangeAffinity(int teamNumber) {
             Debug.Log($"Team {teamNumber} completed a transaction");
@@ -141,7 +174,6 @@ namespace Mikrocosmos
             else {
                 affinityWithTeam1 -= affinityIncreasment;
             }
-
 
         }
 
@@ -217,8 +249,10 @@ namespace Mikrocosmos
             
 
 
-            int basePrice = currentSellingItemConfig.RealPriceOffset + currentSellingItem.BasicBuyPrice;
-            currentSellingItemPrice = Random.Range(basePrice - 3, basePrice + 4);
+            int basePrice = currentSellingItemConfig.RealPriceOffset + currentSellingItem.BasicSellPrice;
+            int offset = Mathf.RoundToInt(basePrice * 0.1f);
+            currentSellingItemPrice = Random.Range(basePrice - offset, basePrice + offset + 1);
+            currentSellingItemPrice = Mathf.Max(currentSellingItemPrice, 1);
             currentSellingItem.RealPrice = currentSellingItemPrice;
 
             this.SendEvent<OnServerPlanetGenerateSellItem>(new OnServerPlanetGenerateSellItem()
@@ -237,10 +271,10 @@ namespace Mikrocosmos
         private void SwitchBuyItem() {
             List<GoodsConfigure> rawMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.RawResource);
             List<GoodsConfigure> secondaryMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Secondary);
-            List<GoodsConfigure> compoundMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Compound);
+           List<GoodsConfigure> compoundMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Compound);
 
             List<GoodsConfigure> targetList;
-            if (rawMaterials.Any() && secondaryMaterials.Any() && compoundMaterials.Any()) { //get a resource with rarity
+            if (rawMaterials.Any() && secondaryMaterials.Any() && false){// compoundMaterials.Any()) { //get a resource with rarity
                 int chance = Random.Range(0, 100);
                 if (chance <= itemRarity[0]) {
                     targetList = rawMaterials;
@@ -248,11 +282,12 @@ namespace Mikrocosmos
                     targetList = secondaryMaterials;
                 }
                 else {
-                    targetList = compoundMaterials;
+                    targetList = secondaryMaterials;
                 }
             }
             else { //only get from raw resources
-                targetList = rawMaterials;
+                   // targetList = rawMaterials;
+                   targetList = secondaryMaterials;
             }
 
             GoodsConfigure selectedGoodsConfigure = null;
@@ -278,7 +313,9 @@ namespace Mikrocosmos
             currentBuyingItem.TransactionFinished = false;
 
             int basePrice = currentBuyingItemConfig.RealPriceOffset + currentBuyingItem.BasicBuyPrice;
-            currentBuyingItemPrice = Random.Range(basePrice - 3, basePrice + 4);
+            int offset = Mathf.RoundToInt(basePrice * 0.1f);
+            currentBuyingItemPrice = Random.Range(basePrice - offset, basePrice + offset + 1);
+            currentBuyingItemPrice = Mathf.Max(1, currentBuyingItemPrice);
             currentBuyingItem.RealPrice = currentBuyingItemPrice;
 
             this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem() {

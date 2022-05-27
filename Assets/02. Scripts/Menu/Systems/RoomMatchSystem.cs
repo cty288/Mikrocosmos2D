@@ -82,6 +82,8 @@ namespace Mikrocosmos
         bool ServerGetIsTeamSizeEqual();
         void ServerRoomPlayerChangeReadyState(int id, bool isReady);
 
+        List<PlayerMatchInfo> ServerGetAllPlayerMatchInfoByTeamID(int team);
+
         [Command]
         void CmdRequestKickPlayer(int id, NetworkIdentity requester);
 
@@ -217,6 +219,10 @@ namespace Mikrocosmos
                 MatchInfos = playerMatchInfos,
                 Host = host
             });
+        }
+
+        public List<PlayerMatchInfo> ServerGetAllPlayerMatchInfoByTeamID(int team) {
+            return teamPlayers[team];
         }
 
         [Command(requiresAuthority = false)]

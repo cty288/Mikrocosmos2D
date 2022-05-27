@@ -10,4 +10,10 @@ namespace Mikrocosmos
         public Transform FollowingPoint { get; set; }
         public IGoods GoodsModel { get; }
     }
+
+    public interface ICanBeUsedGoodsViewController : IGoodsViewController {
+        ICanBeUsed GoodsModel { get; }
+
+        
+    }
 }

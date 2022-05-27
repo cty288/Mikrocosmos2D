@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1789813419593964460
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <HookedPositionOffset>k__BackingField.y
+      value: 3.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <SelfMass>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <GoodRarity>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <BasicBuyPrice>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <BasicSellPrice>k__BackingField
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_AssetId
+      value: e45362f556fbb714cbe13f7212e23cdf
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_Name
+      value: BananaTemp
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}

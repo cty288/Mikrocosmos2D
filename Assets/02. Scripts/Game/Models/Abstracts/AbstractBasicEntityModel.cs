@@ -15,13 +15,21 @@ namespace Mikrocosmos
         public NetworkIdentity HookedByIdentity;
     }
     public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent,
-    ICanGetModel{
-     
+    ICanGetModel {
+        [field:  SerializeField, SyncVar]
+        public MoveMode MoveMode { get; set; } = MoveMode.ByPhysics;
+
         [field: SyncVar, SerializeField]
         public float MaxSpeed { get; protected set; }
 
-       
-       
+         [field: SyncVar, SerializeField]
+        public bool CanBeAddedToInventory { get; set; }
+
+      //  [field: SyncVar, SerializeField] public bool CanBeUsed { get; set; } = false;
+
+       // [field: SyncVar, SerializeField] public int Durability { get; set; } = -1;
+
+      //  [field: SerializeField] public int MaxDurability { get; protected set; } = -1;
 
 
         [field: SyncVar(hook = nameof(OnHookStateChanged)), SerializeField] 
@@ -56,8 +64,7 @@ namespace Mikrocosmos
                     HookedByTransform = hookedBy.GetComponentInChildren<Trigger2DCheck>().transform;
                     // LayerMask collisionMask = this.GetModel<ICollisionMaskModel>().Allocate();
                     //bindedRigidibody.bodyType = RigidbodyType2D.Kinematic;
-                    Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
-                        true);
+                   
                 }
                 else {
                     HookedByTransform = null;
@@ -68,6 +75,13 @@ namespace Mikrocosmos
             }
 
             return false;
+        }
+
+        [ServerCallback]
+        public void UnHook() {
+            if (HookedByIdentity) {
+                HookedByIdentity.GetComponent<IHookSystem>().UnHook();
+            }
         }
 
         [ServerCallback]
@@ -97,11 +111,13 @@ namespace Mikrocosmos
         public void UnHook(bool isShoot) {
             //优化一下
             if (HookedByIdentity) {
+                
                 Debug.Log("UnHooked");
                 OnServerBeforeUnHooked();
+                /*
                 HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
                 HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;
-                HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);
+                HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);*/
                 HookState = HookState.Freed;
                 
                 gameObject.layer = clientOriginalLayer;
@@ -109,10 +125,17 @@ namespace Mikrocosmos
                     bindedRigidibody.velocity = HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
                     bindedRigidibody.angularVelocity = 0;
                 }
+
+                //prevent hit player when unhooked
+                if (!GetComponent<Collider2D>().isTrigger) {
+                    Invoke(nameof(RecoverCollider), 0.1f);
+                }
+                GetComponent<Collider2D>().isTrigger = true;
+                
                 Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
                     false);
 
-                this.GetModel<ICollisionMaskModel>().Release();
+               // this.GetModel<ICollisionMaskModel>().Release();
             }
 
             this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
@@ -128,6 +151,11 @@ namespace Mikrocosmos
 
         }
 
+       
+
+        private void RecoverCollider() {
+            GetComponent<Collider2D>().isTrigger = false;
+        }
      
 
         [field: SyncVar, SerializeField]

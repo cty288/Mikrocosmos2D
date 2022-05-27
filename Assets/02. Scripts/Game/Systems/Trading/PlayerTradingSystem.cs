@@ -15,6 +15,9 @@ namespace Mikrocosmos {
     }
 
     public class PlayerTradingSystem : AbstractNetworkedSystem, IPlayerTradingSystem {
+
+
+
         [field: SyncVar(hook  = nameof(OnClientMoneyChange))]
         public int Money { get; set; } = 50;
 

@@ -42,8 +42,8 @@ PlayerSettings:
   m_SplashScreenLogos: []
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
-  defaultScreenWidth: 1920
-  defaultScreenHeight: 1080
+  defaultScreenWidth: 2880
+  defaultScreenHeight: 1620
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
@@ -88,7 +88,7 @@ PlayerSettings:
   bakeCollisionMeshes: 0
   forceSingleInstance: 0
   useFlipModelSwapchain: 1
-  resizableWindow: 0
+  resizableWindow: 1
   useMacAppStoreValidation: 0
   macAppStoreCategory: public.app-category.games
   gpuSkinning: 0
@@ -145,11 +145,13 @@ PlayerSettings:
     enable360StereoCapture: 0
   isWsaHolographicRemotingEnabled: 0
   enableFrameTimingStats: 0
+  enableOpenGLProfilerGPURecorders: 1
   useHDRDisplay: 0
   D3DHDRBitDepth: 0
   m_ColorGamuts: 00000000
   targetPixelDensity: 30
   resolutionScalingMode: 0
+  resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
@@ -668,7 +670,7 @@ PlayerSettings:
     PS4: UNITY_POST_PROCESSING_STACK_V2
     PS5: UNITY_POST_PROCESSING_STACK_V2
     Stadia: UNITY_POST_PROCESSING_STACK_V2
-    Standalone: MIRROR;MIRROR_17_0_OR_NEWER;MIRROR_18_0_OR_NEWER;MIRROR_24_0_OR_NEWER;MIRROR_26_0_OR_NEWER;MIRROR_27_0_OR_NEWER;MIRROR_28_0_OR_NEWER;MIRROR_29_0_OR_NEWER;MIRROR_30_0_OR_NEWER;MIRROR_30_5_2_OR_NEWER;MIRROR_32_1_2_OR_NEWER;MIRROR_32_1_4_OR_NEWER;MIRROR_35_0_OR_NEWER;MIRROR_35_1_OR_NEWER;MIRROR_37_0_OR_NEWER;MIRROR_38_0_OR_NEWER;MIRROR_39_0_OR_NEWER;MIRROR_40_0_OR_NEWER;MIRROR_41_0_OR_NEWER;MIRROR_42_0_OR_NEWER;MIRROR_43_0_OR_NEWER;MIRROR_44_0_OR_NEWER;MIRROR_46_0_OR_NEWER;MIRROR_47_0_OR_NEWER;MIRROR_53_0_OR_NEWER;MIRROR_55_0_OR_NEWER;MIRROR_57_0_OR_NEWER;UNITY_POST_PROCESSING_STACK_V2;MIRROR_58_0_OR_NEWER;MIRROR_65_0_OR_NEWER
+    Standalone: MIRROR;MIRROR_17_0_OR_NEWER;MIRROR_18_0_OR_NEWER;MIRROR_24_0_OR_NEWER;MIRROR_26_0_OR_NEWER;MIRROR_27_0_OR_NEWER;MIRROR_28_0_OR_NEWER;MIRROR_29_0_OR_NEWER;MIRROR_30_0_OR_NEWER;MIRROR_30_5_2_OR_NEWER;MIRROR_32_1_2_OR_NEWER;MIRROR_32_1_4_OR_NEWER;MIRROR_35_0_OR_NEWER;MIRROR_35_1_OR_NEWER;MIRROR_37_0_OR_NEWER;MIRROR_38_0_OR_NEWER;MIRROR_39_0_OR_NEWER;MIRROR_40_0_OR_NEWER;MIRROR_41_0_OR_NEWER;MIRROR_42_0_OR_NEWER;MIRROR_43_0_OR_NEWER;MIRROR_44_0_OR_NEWER;MIRROR_46_0_OR_NEWER;MIRROR_47_0_OR_NEWER;MIRROR_53_0_OR_NEWER;MIRROR_55_0_OR_NEWER;MIRROR_57_0_OR_NEWER;UNITY_POST_PROCESSING_STACK_V2;MIRROR_58_0_OR_NEWER;MIRROR_65_0_OR_NEWER;MIRROR_66_0_OR_NEWER
     WebGL: UNITY_POST_PROCESSING_STACK_V2
     Windows Store Apps: UNITY_POST_PROCESSING_STACK_V2
     XboxOne: UNITY_POST_PROCESSING_STACK_V2
@@ -691,8 +693,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: 2D_BuiltInRenderer
-  metroPackageVersion: 
+  metroPackageName: 2DBuiltInRenderer
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -700,7 +702,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: 2D_BuiltInRenderer
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Mikrocosmos2D
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
@@ -717,6 +719,7 @@ PlayerSettings:
   metroFTAName: 
   metroFTAFileTypes: []
   metroProtocolName: 
+  vcxProjDefaultLanguage: 
   XboxOneProductId: 
   XboxOneUpdateKey: 
   XboxOneSandboxId: 

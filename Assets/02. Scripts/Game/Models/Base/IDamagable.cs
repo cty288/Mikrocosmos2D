@@ -5,8 +5,29 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface IDamagable {
+    public interface IDamagable: IHaveMomentum {
         float MaxMomentumReceive { get; }
         float MomentumThredhold { get; }
+
+        /// <summary>
+        /// -1 = infinite health
+        /// </summary>
+        int MaxHealth { get; }
+
+        int CurrentHealth { get; set; }
+
+        /// <summary>
+        /// Return excessive momentum
+        /// </summary>
+        /// <param name="hit"></param>
+        /// <returns></returns>
+        float TakeRawMomentum(float rawMomentum, float offset); //called by Hit IHaveMomentum
+
+        int GetDamageFromExcessiveMomentum(float excessiveMomentum); //called by Hit IHaveMomentum
+
+        void TakeRawDamage(int damage);
+        void OnServerTakeDamage(int oldHealth, int newHealth);
+
+        void OnReceiveExcessiveMomentum(float excessiveMomentum);
     }
 }

@@ -12,5 +12,6 @@ namespace Mikrocosmos {
 		[SerializeField] private GameObject ObjTeam2Layout;
 		[SerializeField] private Button BtnChangeSide;
 		[SerializeField] private Button BtnRoomLeaderStartRoom;
+		[SerializeField] private Button BtnTestMode;
 	}
 }

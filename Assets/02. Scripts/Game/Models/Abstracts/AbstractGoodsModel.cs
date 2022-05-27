@@ -23,7 +23,7 @@ namespace Mikrocosmos
         public GameObject RequestingGoodsGameObject;
     }
 
-    public struct OnServerTryBuytem
+    public struct OnServerTryBuyItem
     {
         public IGoods RequestingGoods;
         public NetworkIdentity HookedByIdentity;
@@ -33,6 +33,13 @@ namespace Mikrocosmos
 
     public abstract class AbstractGoodsModel : AbstractBasicEntityModel, IGoods, IAffectedByGravity,
     ICanSendQuery{
+
+        [field: SyncVar, SerializeField]
+        public override float SelfMass { get; protected set; }
+
+        [field: SyncVar, SerializeField]
+        public override string Name { get; set; } = "Goods";
+
         [field: SerializeField] public int BasicSellPrice { get; set; }
         [field: SerializeField] public int BasicBuyPrice { get; set; }
         [field: SerializeField] public GoodsRarity GoodRarity { get; set; }
@@ -81,11 +88,12 @@ namespace Mikrocosmos
                     return false;
                 }
                 else {
-                    this.SendEvent<OnServerTryBuytem>(new OnServerTryBuytem() {
+                    this.SendEvent<OnServerTryBuyItem>(new OnServerTryBuyItem() {
                         HookedByIdentity = hookedBy,
                         RequestingGoods = this,
                         RequestingGoodsGameObject = gameObject
                     });
+                    OnServerItemBought(hookedBy);
                     return true;
                 }
             }
@@ -110,12 +118,14 @@ namespace Mikrocosmos
                                 if (!good.TransactionFinished && !good.IsSell) {
                                     //satisfy the condition, now sell it
                                     //however, need to check money first
+                                    OnServerItemSold(HookedByIdentity);
                                     this.SendEvent<OnServerTrySellItem>(new OnServerTrySellItem() {
                                         DemandedByPlanet = good,
                                         RequestingGoods = this,
                                         HookedByIdentity = HookedByIdentity,
                                         RequestingGoodsGameObject = gameObject
                                     });
+                                    
                                     break;
                                 }
                             }
@@ -125,8 +135,22 @@ namespace Mikrocosmos
             }
         }
 
+        [ServerCallback]
+        protected virtual void OnServerItemBought(NetworkIdentity buyer) {
+
+        }
+
+        [ServerCallback]
+        protected virtual void OnServerItemSold(NetworkIdentity seller) {
+
+        }
+
         public Vector2 StartDirection { get; }
-        public float InitialForceMultiplier { get; }
+
+
+        [field:SerializeField]
+        public float InitialForceMultiplier { get; protected set; }
+        [field: SerializeField] public bool AffectedByGravity { get; set; } = true;
 
         [ClientCallback]
         private void OnTransactionStatusChanged(bool oldStatus, bool newStatus) {

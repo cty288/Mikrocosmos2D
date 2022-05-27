@@ -5,8 +5,13 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
+    public enum MoveMode {
+        ByPhysics,
+        ByTransform
+    }
     public interface IHaveMomentum {
-      
+
+        MoveMode MoveMode { get; set; }
         float MaxSpeed { get;}
 
         float Acceleration { get;}

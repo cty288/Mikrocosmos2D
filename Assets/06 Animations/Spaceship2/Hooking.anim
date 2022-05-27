@@ -81,7 +81,7 @@ AnimationClip:
     - time: 0.016666668
       value: {fileID: 21300000, guid: 663c8393e5e64564cb4fe9d162b48aac, type: 3}
     attribute: m_Sprite
-    path: HookTransform/HookSprite
+    path: HookSprite
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 60
@@ -99,7 +99,7 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 283960392
+      path: 3996442708
       attribute: 0
       script: {fileID: 0}
       typeID: 212

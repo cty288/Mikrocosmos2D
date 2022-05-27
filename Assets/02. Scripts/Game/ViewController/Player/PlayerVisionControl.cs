@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace Mikrocosmos
@@ -15,9 +19,7 @@ namespace Mikrocosmos
 
         private GameObject visionRenderLight;
         private GameObject fovVision;
-        private GameObject playerNameShade;
-        private SpriteRenderer playerNameShadeSprite;
-        private GameObject playerInfoCanvas;
+        //private GameObject playerNameShade;
         [SerializeField]
         private Transform player;
 
@@ -25,22 +27,25 @@ namespace Mikrocosmos
             
             visionRenderLight = transform.Find("VisionControl/VisionRenderLight").gameObject;
             fovVision = transform.Find("VisionControl/FOV Vision").gameObject;
-            playerInfoCanvas = transform.Find("VisionControl/PlayerInfoCanvas").gameObject;
-            playerNameShade = transform.Find("VisionControl/PlayerInfoCanvas/NameShade").gameObject;
-            playerNameShadeSprite = playerNameShade.GetComponent<SpriteRenderer>();
-            
+            this.RegisterEvent<OnVisionRangeChange>(OnVisionRangeChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnVisionRangeChange(OnVisionRangeChange e) {
+            Light2D light = fovVision.GetComponent<Light2D>();
+            DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, e.Inner, 0.3f);
+            DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, e.Outer, 0.3f);
         }
 
         void Start() {
             if (hasAuthority) {
                
-                playerNameShade.SetActive(false);
+              
                 visionRenderLight.SetActive(true);
                 fovVision.SetActive(true);
             }
             else {
                
-                playerNameShade.SetActive(true);
+             
                 visionRenderLight.SetActive(false);
                 fovVision.SetActive(false);
                 player = NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.transform;
@@ -48,32 +53,13 @@ namespace Mikrocosmos
         }
 
 
-        [SerializeField] private LayerMask mask;
+    
         void Update() {
-            if (Input.GetKeyDown(KeyCode.V) && isServer) {
-                //CanBeMasked = false;
-            }
+          
             if (!hasAuthority) {
                 if (player == null) {
                     player = NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.transform;
-                }else {
-                    RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up,  (player.position - transform.position).normalized, 15,
-                        mask);
-                    if (hit.collider ) {
-                       // Debug.Log(hit.collider.gameObject.name);
-                        if (hit.collider.gameObject == player.gameObject) {
-                            playerInfoCanvas.SetActive(true);
-                        }
-                        else {
-                            playerInfoCanvas.SetActive(false);
-                        }
-                    }
-                    else {
-                        playerInfoCanvas.SetActive(false);
-                    }
                 }
-
-                
             }
         }
 

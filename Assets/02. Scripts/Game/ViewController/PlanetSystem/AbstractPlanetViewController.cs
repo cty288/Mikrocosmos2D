@@ -34,6 +34,8 @@ namespace Mikrocosmos
         private Text team2TradeProgressText;
 
         private int team1ProgressTextInt = 50;
+
+        [SerializeField, Range(0, 360000)] private float initialProgress; 
        
         private void Awake() {
          
@@ -43,7 +45,7 @@ namespace Mikrocosmos
             
             rigidbody = GetComponent<Rigidbody2D>();
             distance = Vector3.Distance(target.transform.position, transform.position);
-            progress = Random.Range(0, 360000);
+            progress = initialProgress;
 
             sellItemSpawnPosition = transform.Find("SellBubbleBG/SellItemSpawnPos");
             buytemSpawnPosition = transform.Find("BuyBubbleBG/BuyItemSpawnPos");
@@ -135,15 +137,100 @@ namespace Mikrocosmos
 
         private Rigidbody2D rigidbody;
 
+        [SerializeField] private float momentumOffset = 100;
+        private void OnCollisionEnter2D(Collision2D collision) {
+            if (collision.collider)
+            {
+                if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model)) {
+                    if (model is IHookable hookable) {
+                        if (hookable.HookState == HookState.Hooked) {
+                            StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
+                            return;
+                        }
+                    }
+                    //normal
+                    StartCoroutine(PhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
+                    //StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
+                }
+            }
+        }
+        IEnumerator NonPhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody)
+        {
+            float waitTime = 0.01f;
+            if (targetModel is ISpaceshipConfigurationModel) {
+                targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
+            }
+            Vector2 pos1 = targetRigidbody.transform.position;
+            yield return new WaitForSeconds(waitTime);
+            Vector2 pos2 = targetRigidbody.transform.position;
+            Vector2 speed1 = (pos2 - pos1) / waitTime;
+            yield return new WaitForSeconds(waitTime);
+
+            Vector2 pos3 = targetRigidbody.transform.position;
+            Vector2 speed2 = (pos3 - pos2) / waitTime;
+
+            Vector2 acceleration = (speed2 - speed1) / waitTime;
+            if (targetModel != null)
+            {
+                Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
+                if (targetModel is ISpaceshipConfigurationModel model)
+                {
+                    targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
+                    force *= speed2.magnitude / model.MaxSpeed;
+                }
+                force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
+                force *= 2;
+                float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
+                targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
+                targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+            }
+        }
 
 
+        IEnumerator PhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody)
+        {
+            float waitTime = 0.01f;
+            Vector2 offset = Vector2.zero;
+            if (targetModel is ISpaceshipConfigurationModel) {
+                targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
+            }
+            Vector2 speed1 = targetRigidbody.velocity;
+            yield return new WaitForSeconds(waitTime);
+            Vector2 speed2 = targetRigidbody.velocity;
+
+            Vector2 acceleration = (speed2 - speed1) / waitTime;
+            Debug.Log($"Speed1: {speed1}, Speed 2: {speed2}, Acceleration: {acceleration}. " +
+                      $"Fixed Dealta Time : {Time.fixedDeltaTime}");
+            if (targetModel != null)
+            {
+                Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
+                if (targetModel is ISpaceshipConfigurationModel model)
+                {
+                    targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
+                    force *= speed2.magnitude / model.MaxSpeed;
+                }
+                force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
+                force *= 2;
+                float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
+                targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
+                targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+
+              
+            }
+        }
 
         void OvalRotate()
         {
 
             progress += Time.deltaTime * speed;
             Vector3 p = new Vector3(x * Mathf.Cos(progress * Mathf.Deg2Rad), z * Mathf.Sin(progress * Mathf.Deg2Rad) * distance, 0);
-            rigidbody.MovePosition(target.transform.position + p);
+            if (GravityModel.MoveMode == MoveMode.ByPhysics) {
+                rigidbody.MovePosition(target.transform.position + p);
+            }
+            else {
+                transform.position = target.transform.position + p;
+            }
+           
         }
         //start refactor
       
@@ -164,7 +251,10 @@ namespace Mikrocosmos
                     if (rb.TryGetComponent<IAffectedByGravity>(out IAffectedByGravity target))
                     {
                         float explosionForce = -1 * UniversalG(GravityModel, target, transform.position, rb.transform.position) * Time.deltaTime;
-                        target.ServerAddGravityForce(explosionForce, Center, GravityModel.GravityFieldRange);
+                        if (target.AffectedByGravity) {
+                            target.ServerAddGravityForce(explosionForce, Center, GravityModel.GravityFieldRange);
+                        }
+                   
                     }
 
                 }

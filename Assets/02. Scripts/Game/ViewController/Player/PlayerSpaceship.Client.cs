@@ -9,14 +9,15 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public partial class PlayerSpaceship : BasicEntityViewController {
-        [SerializeField]
-        private bool isControlling = false;
+    public partial class PlayerSpaceship : AbstractDamagableViewController
+    {
+       
 
        // [SyncVar()] public PlayerMatchInfo MatchInfo;
        private Animator selfMotionAnimator;
 
-       public override IEntity Model { get; protected set; }
+       private float minHookPressTimeInterval = 0.8f;
+       private float minHookPressTimer = 0f;
 
         private ISpaceshipConfigurationModel GetModel() {
             return GetModel<ISpaceshipConfigurationModel>();
@@ -27,7 +28,7 @@ namespace Mikrocosmos
             hookSystem = GetComponent<IHookSystem>();
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
             selfMotionAnimator = transform.Find("VisionControl/SelfSprite").GetComponent<Animator>();
-
+            inventorySystem = GetComponent<IPlayerInventorySystem>();
         }
 
         
@@ -40,80 +41,89 @@ namespace Mikrocosmos
        
         protected override void Update() {
             base.Update();
-            if (hasAuthority ) {
-                RaycastHit2D ray = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-               
-                if (Input.GetMouseButtonDown(0)) {
+            if (hasAuthority && isClient ) {
+                minHookPressTimer += Time.deltaTime;
+                if (Input.GetMouseButtonDown(1)) {
                     if (Model.HookState == HookState.Freed) {
-                        isControlling = true;
-                        
+                        CmdUpdateCanControl(true);
                     }
                     else {
-
-                        isControlling  = false;
+                        CmdUpdateCanControl(false);
                         GetModel().CmdIncreaseEscapeCounter();
-                       
                     }
                 }
+
+                if (Input.GetMouseButtonDown(0)) {
+                    CmdUpdateUsing(true);
+                }
+
+                if (Input.GetMouseButtonUp(0)) {
+                    CmdUpdateUsing(false);
+                }
+
 
                 //take item & put item (not shoot)
                 if (Input.GetKey(KeyCode.Space)) {
-                   hookSystem.CmdHoldHookButton();
+                    if (minHookPressTimer > minHookPressTimeInterval) {
+                        hookSystem.CmdHoldHookButton();
+                    }
+                 
                 }
 
                 if (Input.GetKeyUp(KeyCode.Space)) {
-                   hookSystem.CmdReleaseHookButton();
+                   
+                   if (minHookPressTimer > minHookPressTimeInterval) {
+                       minHookPressTimer = 0;
+                       hookSystem.CmdReleaseHookButton();
+                    }
                 }
 
              
-                if (Input.GetMouseButtonUp(0)) {
-                    isControlling = false;
+                if (Input.GetMouseButtonUp(1)) {
+                    CmdUpdateCanControl(false);
+
                 }
 
-              
-                
+                ClientCheckMouseScroll();
+
+
             }
 
 
-            if (hasAuthority && isClient)
-            {
-                //Debug.Log("Hasauthority");
-                if (isControlling)
-                {
+            if (hasAuthority && isClient) {
+                if (Model.HookState == HookState.Freed) {
+                    CmdUpdateMousePosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                }
+
+                if (isControlling && Model.HookState == HookState.Freed) {
                     selfMotionAnimator.SetBool("Controlling", true);
-                    //CmdAddForce((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
-                    CmdMove(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                   
                 }
                 else
                 {
                     selfMotionAnimator.SetBool("Controlling", false);
                 }
-                if (Model.HookState == HookState.Freed) {
-                    CmdRotate(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            }
 
+           
+        }
+
+        private float lastScroll = 0;
+        private void ClientCheckMouseScroll() {
+             float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+
+                if (lastScroll == 0)
+                {
+                    if (scrollWheel > 0f) { //up
+                        CmdScrollMouseWhell(true);
+                    }
+
+                    if (scrollWheel < -0f) { //down
+                    CmdScrollMouseWhell(false);
+                    }
                 }
-            }
-
-            if (isServer) {
-                OnServerUpdate();
-            }
-
-
-          
+                lastScroll = scrollWheel;
         }
 
-       
-
-        protected override void FixedUpdate() {
-          
-            
-            
-        }
-
-        
-
-      
 
         //
 

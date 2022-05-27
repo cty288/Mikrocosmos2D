@@ -5,22 +5,26 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class BasicGoodsModel : AbstractGoodsModel
-    {
-        [field: SyncVar, SerializeField]
-        public override float SelfMass { get; protected set; }
+    public class BasicGoodsModel : AbstractCanBeUsedGoodsModel {
 
-        [field: SyncVar, SerializeField]
-        public override string Name { get; set; } = "Goods";
-
-       
-
+        [SerializeField] private bool reduceDurabilityInstantlyAfterUse = true;
         public override void OnClientHooked() {
-           
+            
         }
 
         public override void OnClientFreed() {
            
+        }
+
+        public override void OnUsed() {
+            if (reduceDurabilityInstantlyAfterUse) {
+                ReduceDurability(1);
+            }
+         
+        }
+
+        public override void OnBroken() {
+          
         }
     }
 }
