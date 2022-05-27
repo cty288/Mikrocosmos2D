@@ -11,14 +11,14 @@ GameObject:
   - component: {fileID: 6410031578183631638}
   - component: {fileID: 6410031578183631637}
   - component: {fileID: 6410031578183631851}
+  - component: {fileID: -6830313856833975781}
+  - component: {fileID: 2517722696999079066}
+  - component: {fileID: -2388563459011212752}
   - component: {fileID: 6410031578183631632}
   - component: {fileID: 6410031578183631639}
   - component: {fileID: 1133179267551477265}
   - component: {fileID: 1145151507007897450}
-  - component: {fileID: 2517722696999079066}
-  - component: {fileID: -2388563459011212752}
   - component: {fileID: -8888974966106577546}
-  - component: {fileID: -6830313856833975781}
   m_Layer: 7
   m_Name: Template
   m_TagString: Untagged
@@ -132,6 +132,93 @@ MonoBehaviour:
   m_ShapePathHash: 939031523
   m_Mesh: {fileID: 0}
   m_InstanceId: 341034
+--- !u!61 &-6830313856833975781
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.0299406, y: -0.7178471}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 17.87, y: 12.14}
+    newSize: {x: 6.63, y: 6.63}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.956602, y: 6.970835}
+  m_EdgeRadius: 0
+--- !u!114 &2517722696999079066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f99d8d5b9cd55a4d95552d02d803f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  <MoveMode>k__BackingField: 1
+  <MaxSpeed>k__BackingField: 50
+  <CanBeAddedToInventory>k__BackingField: 1
+  <HookState>k__BackingField: 0
+  <HookedByIdentity>k__BackingField: {fileID: 0}
+  <HookedByTransform>k__BackingField: {fileID: 0}
+  <Acceleration>k__BackingField: 0
+  <SelfMass>k__BackingField: 0.1
+  <Name>k__BackingField: Banana
+  <BasicSellPrice>k__BackingField: 10
+  <BasicBuyPrice>k__BackingField: 5
+  <GoodRarity>k__BackingField: 0
+  <IsSell>k__BackingField: 1
+  <InitialForceMultiplier>k__BackingField: 0
+  <AffectedByGravity>k__BackingField: 1
+  <CanBeUsed>k__BackingField: 1
+  <UseMode>k__BackingField: 0
+  <Frequency>k__BackingField: 0.25
+  <Durability>k__BackingField: 0
+  <MaxDurability>k__BackingField: 5
+  reduceDurabilityInstantlyAfterUse: 1
+--- !u!114 &-2388563459011212752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46ff1cb7e87ed14fa105476fd9e4ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
+  <HookedRotationZOffset>k__BackingField: 0
+  <IsMaskable>k__BackingField: 1
+  buyMaterial: {fileID: 2100000, guid: 7476c8772d847a14a844b69736112137, type: 2}
+  sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
+  visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
+  defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  visionAffectedSprites:
+  - {fileID: 6410031578183631637}
+  <CanBeMasked>k__BackingField: 1
+  DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
+  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,65 +313,6 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
---- !u!114 &2517722696999079066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f99d8d5b9cd55a4d95552d02d803f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  <MoveMode>k__BackingField: 1
-  <MaxSpeed>k__BackingField: 50
-  <CanBeAddedToInventory>k__BackingField: 1
-  <HookState>k__BackingField: 0
-  <HookedByIdentity>k__BackingField: {fileID: 0}
-  <HookedByTransform>k__BackingField: {fileID: 0}
-  <Acceleration>k__BackingField: 0
-  <SelfMass>k__BackingField: 0.1
-  <Name>k__BackingField: Banana
-  <BasicSellPrice>k__BackingField: 10
-  <BasicBuyPrice>k__BackingField: 5
-  <GoodRarity>k__BackingField: 0
-  <IsSell>k__BackingField: 1
-  <CanBeUsed>k__BackingField: 1
-  <UseMode>k__BackingField: 0
-  <Frequency>k__BackingField: 0.25
-  <Durability>k__BackingField: 0
-  <MaxDurability>k__BackingField: 5
-  reduceDurabilityInstantlyAfterUse: 1
---- !u!114 &-2388563459011212752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46ff1cb7e87ed14fa105476fd9e4ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
-  <HookedRotationZOffset>k__BackingField: 0
-  <IsMaskable>k__BackingField: 1
-  buyMaterial: {fileID: 2100000, guid: 7476c8772d847a14a844b69736112137, type: 2}
-  sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
-  visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
-  defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  visionAffectedSprites:
-  - {fileID: 6410031578183631637}
-  <CanBeMasked>k__BackingField: 1
-  DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
-  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
 --- !u!114 &-8888974966106577546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,29 +331,3 @@ MonoBehaviour:
   maxDistance: 100
   detectTime: 1
   colliders: []
---- !u!61 &-6830313856833975781
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -1.0299406, y: -0.7178471}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 17.87, y: 12.14}
-    newSize: {x: 6.63, y: 6.63}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 10.956602, y: 6.970835}
-  m_EdgeRadius: 0

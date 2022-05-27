@@ -790,7 +790,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1.9218433
-  m_LinearDrag: 0.2
+  m_LinearDrag: 2
   m_AngularDrag: 0.5
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -852,7 +852,7 @@ MonoBehaviour:
   syncMode: 1
   syncInterval: 0
   <MoveMode>k__BackingField: 0
-  <MaxSpeed>k__BackingField: 30
+  <MaxSpeed>k__BackingField: 27.5
   <CanBeAddedToInventory>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
@@ -865,7 +865,7 @@ MonoBehaviour:
   momentumCoolDown: 0.5
   damagePerMomentum: 1
   dropOneItemMomentumThreshold: 3
-  <InitialAcceleration>k__BackingField: 55
+  <InitialAcceleration>k__BackingField: 65
   <SelfMass>k__BackingField: 10
   <AccelerationDecreasePerMass>k__BackingField: 0.5
   <AffectedByGravity>k__BackingField: 1

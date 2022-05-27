@@ -31,23 +31,23 @@ public class Window_Pointer : MonoBehaviour {
     private RectTransform pointerRectTransform;
     private Image pointerImage;
     public LayerMask borderMask;
-
+    [SerializeField] private bool isOffScreen;
     private void Awake() {
         pointerImage = pointerRectTransform.GetComponent<Image>();
 
         Show();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
 
         Vector2 center = new Vector2(Screen.width, Screen.height);
         
         float borderSize = 100f;
         Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(target.position);
-        bool isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
+        isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
 
         if (isOffScreen) {
-            RotatePointerTowardsTargetPosition();
+           RotatePointerTowardsTargetPosition();
 
             pointerImage.sprite = arrowSprite;
             Vector3 cappedTargetScreenPosition = targetPositionScreenPoint;
@@ -57,7 +57,7 @@ public class Window_Pointer : MonoBehaviour {
             {
                 pointerRectTransform.position = hit.point;
                 pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
-
+                Debug.Log("hit 23333");
             }
 
 

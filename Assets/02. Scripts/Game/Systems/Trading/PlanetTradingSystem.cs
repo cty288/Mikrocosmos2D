@@ -144,7 +144,7 @@ namespace Mikrocosmos
                         Price = currentBuyingItem.RealPrice
                     });
                     
-                    SwitchBuyItem();
+                    //SwitchBuyItem();
 
                     ChangeAffinity(e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
                         .GetComponent<NetworkMainGamePlayer>().matchInfo.Team);
