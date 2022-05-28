@@ -12,45 +12,71 @@ namespace Mikrocosmos
         [SerializeField] private float shootForce;
 
         [SerializeField] private int currCharge;
-        [SerializeField] private int maxCharge;
+        [SerializeField] private int threshold;
+
+        [SerializeField] private GameObject childTrigger;
+        [SerializeField] private StoneShieldTrigger SHT;
 
         private Transform shootPos;
         private Animator animator;
+
+        /// <summary>
+        /// 按下鼠标左键展开护盾--OnShieldExpanded
+        /// 松开鼠标左键时进行判定 若达到阈值发射冲击波--OnWaveShoot
+        /// </summary>
 
         protected override void Awake()
         {
             base.Awake();
             shootPos = transform.Find("ShootPosition");
             animator = GetComponent<Animator>();
+            childTrigger = this.gameObject.transform.GetChild(0).gameObject;
+            SHT = childTrigger.GetComponent<StoneShieldTrigger>();
+        }
+
+        private void Update()
+        {
+            if (hasAuthority)
+            {
+                if (Input.GetMouseButtonUp(0))
+                {
+                    if (currCharge >= threshold)
+                    {
+                        OnWaveShoot();
+                    }
+                }
+            }
         }
 
         protected override void OnServerItemUsed()
         {
             base.OnServerItemUsed();
+            GoodsModel.ReduceDurability(1); //ReduceDurability while using
+            OnShieldExpanded();
+        }
+
+        public void OnShieldExpanded()
+        {
+            currCharge = SHT.GetCurrCharge();
+            Debug.Log("OnExpansionB");
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
+                Debug.Log("OnExpansion");
                 animator.SetBool("Use", true);
-                animator.SetBool("Shoot",false);
+                animator.SetBool("Shoot", false);
             }
         }
 
-        public void OnBulletShoot()
+        public void OnWaveShoot()
         {
             if (isServer)
-            {
+            {                
+                Debug.Log("Charged. Shoot");
                 GameObject wave = Instantiate(this.wave, shootPos.transform.position, Quaternion.identity);
                 wave.GetComponent<JellyBulletViewController>().shooter = GetComponent<Collider2D>();
                 wave.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
                 wave.transform.rotation = transform.rotation;
                 NetworkServer.Spawn(wave);
-            }
-        }
-
-        public void OnShootAnimationEnds()
-        {
-            if (isServer)
-            {
-                GoodsModel.ReduceDurability(1);
             }
         }
     }

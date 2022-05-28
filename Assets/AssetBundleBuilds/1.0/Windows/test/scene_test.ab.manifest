@@ -1,17 +1,19 @@
 ManifestFileVersion: 0
-CRC: 2345498737
+CRC: 3203122706
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1a645eac503e2c4520ff88da50401f01
+    Hash: 77edb79c9904029c6d4b059abda5f04f
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 2f603b0fcf86549a93fbc54f488ab919
+    Hash: 72dd5ed0cf94c5619248c61986a27d7d
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
 - Class: 4
+  Script: {instanceID: 0}
+- Class: 20
   Script: {instanceID: 0}
 - Class: 21
   Script: {instanceID: 0}
@@ -25,19 +27,22 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
-- Class: 83
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 81
+  Script: {instanceID: 0}
+- Class: 104
+  Script: {instanceID: 0}
+- Class: 108
   Script: {instanceID: 0}
 - Class: 136
   Script: {instanceID: 0}
-- Class: 212
+- Class: 157
   Script: {instanceID: 0}
-- Class: 213
+- Class: 196
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/MikroFramework/Runtime/Examples/AudioKit/01. BasicExample/Resources/War
-  loop.wav
-- Assets/MikroFramework/Runtime/Examples/ResKit/02. AssetBundleExample/folder/TestABObj.prefab
-- Assets/MikroFramework/Runtime/Examples/ResKit/02. AssetBundleExample/folder/folder/Asteroid_1.png
-- Assets/MikroFramework/Runtime/Examples/ResKit/02. AssetBundleExample/folder/folder/Cylinder.prefab
-Dependencies: []
+- Assets/MikroFramework/Runtime/Examples/ResKit/06. LoadSceneABExample/TestABScene.unity
+Dependencies:
+- E:/GameDev/Mikrocosmos2D/Assets/AssetBundleBuilds/1.0/Windows/mftest
