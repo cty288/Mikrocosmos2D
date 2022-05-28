@@ -23,7 +23,7 @@ namespace Mikrocosmos
         }
 
         private void Update() {
-            moneyText.text = $"Money: {moneyViewNumber}";
+            moneyText.text = $"{moneyViewNumber}";
         }
 
         private void OnClientMoneyChange(OnClientMoneyChange e) {
