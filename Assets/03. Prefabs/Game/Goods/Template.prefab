@@ -35,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 6410031578183631850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 11.2, y: -12.3, z: 0}
-  m_LocalScale: {x: 0.3407, y: 0.3407, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -185,7 +185,7 @@ MonoBehaviour:
   <BasicBuyPrice>k__BackingField: 5
   <GoodRarity>k__BackingField: 0
   <IsSell>k__BackingField: 1
-  <InitialForceMultiplier>k__BackingField: 0
+  <InitialForceMultiplier>k__BackingField: 0.01
   <AffectedByGravity>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1
   <UseMode>k__BackingField: 0

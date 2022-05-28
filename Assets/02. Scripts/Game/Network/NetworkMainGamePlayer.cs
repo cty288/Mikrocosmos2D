@@ -18,6 +18,9 @@ namespace Mikrocosmos
     public partial class NetworkMainGamePlayer : AbstractNetworkedController<Mikrocosmos>, ICanSendEvent {
         //[SerializeField] private GameObject spaceshipPrefab;
 
+       
+
+        [SyncVar]
         public PlayerMatchInfo matchInfo = null;
 
         [SyncVar(hook = nameof(OnControlledSpaceshipChanged))]
@@ -48,10 +51,10 @@ namespace Mikrocosmos
 
         private void SpawnSpaceshipForThisPlayer(PlayerMatchInfo matchInfo, NetworkConnection conn) {
 
-            GameObject spaceship = Instantiate(spaceshipPrefabs[matchInfo.TeamIndex], transform.position, Quaternion.identity);
+            GameObject spaceship = Instantiate(spaceshipPrefabs[matchInfo.Team-1], transform.position, Quaternion.identity);
             
             NetworkServer.Spawn(spaceship, conn);
-            spaceship.GetComponent<PlayerSpaceship>().SetPlayerDisplayInfo(matchInfo.Team - 1, matchInfo.Name);
+            spaceship.GetComponent<PlayerSpaceship>().SetPlayerDisplayInfo(matchInfo.TeamIndex, matchInfo.Name);
             ControlledSpaceship = spaceship.GetComponent<NetworkIdentity>();
         }
 

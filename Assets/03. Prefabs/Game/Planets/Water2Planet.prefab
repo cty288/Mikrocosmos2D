@@ -235,13 +235,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 704
   <MoveMode>k__BackingField: 1
-  <SelfMass>k__BackingField: 10000
+  <SelfMass>k__BackingField: 1000000
   <GravityFieldRange>k__BackingField: 500
   <G>k__BackingField: 0.000000001
   initialBuyItemList:
   - <GoodPrefab>k__BackingField: {fileID: 6410031578183631850, guid: da1a03242ab176b499f5a976904f4940, type: 3}
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 334633752228750209, guid: 6bf37ea0f1b638a45801108adc5d4295, type: 3}
+    <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: 0d3243d6f8c17c24a8ac453c48e11c61, type: 3}
     <RealPriceOffset>k__BackingField: 0
   initialSellItemList:
   - <GoodPrefab>k__BackingField: {fileID: 4621731228356974662, guid: e45362f556fbb714cbe13f7212e23cdf, type: 3}

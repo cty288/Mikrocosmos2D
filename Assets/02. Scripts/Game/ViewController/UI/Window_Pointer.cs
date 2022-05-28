@@ -24,21 +24,21 @@ public class Window_Pointer : MonoBehaviour {
     [SerializeField] private Sprite crossSprite;
 
     [SerializeField]
-    private Transform target;
+    public Transform target;
     private Vector3 targetDir;
 
     [SerializeField]
     private RectTransform pointerRectTransform;
+    [SerializeField]
     private Image pointerImage;
     public LayerMask borderMask;
     [SerializeField] private bool isOffScreen;
     private void Awake() {
-        pointerImage = pointerRectTransform.GetComponent<Image>();
 
         Show();
     }
 
-    private void FixedUpdate() {
+    private void Update() {
 
         Vector2 center = new Vector2(Screen.width, Screen.height);
         
@@ -78,8 +78,8 @@ public class Window_Pointer : MonoBehaviour {
         Vector3 fromPosition = Camera.main.transform.position;
         fromPosition.z = 0f;
         targetDir = (toPosition - fromPosition).normalized;
-        float angle = GetAngleFromVectorFloat(targetDir);
-        pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle);
+       // float angle = GetAngleFromVectorFloat(targetDir);
+       // pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle);
     }
     public static float GetAngleFromVectorFloat(Vector3 dir)
     {

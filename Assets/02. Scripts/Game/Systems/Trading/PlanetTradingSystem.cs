@@ -12,64 +12,83 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
-    public struct OnClientPlanetAffinityWithTeam1Changed {
+    public struct OnClientPlanetAffinityWithTeam1Changed
+    {
         public float NewAffinity;
         public NetworkIdentity PlanetIdentity;
     }
-    public struct OnServerPlanetGenerateSellItem {
+    public struct OnServerPlanetGenerateSellItem
+    {
         public GameObject ParentPlanet;
         public int Price;
         public GameObject GeneratedItem;
     }
 
-    public struct OnServerPlanetGenerateBuyingItem {
+    public struct OnServerPlanetGenerateBuyingItem
+    {
         public GameObject ParentPlanet;
         public int Price;
         public GameObject GeneratedItem;
     }
 
-    public struct OnServerPlayerMoneyNotEnough {
+    public struct OnServerPlayerMoneyNotEnough
+    {
         public NetworkIdentity PlayerIdentity;
     }
 
-    public struct OnServerTransactionFinished {
+    public struct OnServerTransactionFinished
+    {
         public IGoods GoodsModel;
         public int Price;
         public bool IsSell;
     }
 
-  
-    public interface IPlanetTradingSystem : ISystem {
+
+    public interface IPlanetTradingSystem : ISystem
+    {
         /// <summary>
         /// A number between 0-1. 
         /// </summary>
         /// <param name="team">Team number. Either 1 or 2</param>
         /// <returns></returns>
         float GetAffinityWithTeam(int team);
+
+        string CurrentBuyItemName { get; }
+
+        float BuyItemTimer { get; }
+
+        int BuyItemMaxTimeThisTime { get; }
     }
 
-   
 
-    
-    
-    public class PlanetTradingSystem : AbstractNetworkedSystem, IPlanetTradingSystem {
+
+
+
+    public class PlanetTradingSystem : AbstractNetworkedSystem, IPlanetTradingSystem
+    {
         private IPlanetModel planetModel;
 
-        [SyncVar(hook = nameof(OnAffinityWithTeam1Changed))] 
-        private float affinityWithTeam1 = 0.5f;
+        [SyncVar(hook = nameof(OnAffinityWithTeam1Changed))]
+        private float  affinityWithTeam1 = 0.5f;
 
-       [SerializeField, SyncVar]
-        private float BuyItemMaxTime = 20;
+        [SerializeField, SyncVar]
+        private int BuyItemMaxTime = 20;
 
-        
 
-        [SerializeField] private List<float> itemRarity = new List<float>() {
+
+        [SerializeField]
+        private List<float> itemRarity = new List<float>() {
             0.5f,
             0.4f,
             0.1f
         };
 
-        private float BuyItemTimer;
+        [field: SyncVar]
+        public float BuyItemTimer { get; protected set; }
+
+        [field: SyncVar]
+        public int BuyItemMaxTimeThisTime { get; protected set; }
+
 
         private GoodsConfigure currentBuyingItemConfig;
         private IGoods currentBuyingItem;
@@ -82,24 +101,31 @@ namespace Mikrocosmos
         private GameObject currentSellingItemObject;
         private int currentSellingItemPrice;
 
-        private void Awake() {
+        private void Awake()
+        {
             planetModel = GetComponent<IPlanetModel>();
-            BuyItemTimer = Random.Range(1f, BuyItemMaxTime);
-            
+            BuyItemMaxTimeThisTime = Random.Range(1, BuyItemMaxTime + 1);
+            BuyItemTimer = BuyItemMaxTimeThisTime;
         }
-       
-        
-        public override void OnStartServer() {
+
+
+        public override void OnStartServer()
+        {
             base.OnStartServer();
             this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnPlayerJoinGame)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerTrySellItem>(OnServerTrySellItem);
             this.RegisterEvent<OnServerTryBuyItem>(OnServerTryBuyItem);
+            SwitchBuyItem();
+            SwitchSellItem();
+            
         }
 
         //Planet SELL item, player BUY item
-        private void OnServerTryBuyItem(OnServerTryBuyItem e) {
-            if (e.RequestingGoods == currentSellingItem) {
+        private void OnServerTryBuyItem(OnServerTryBuyItem e)
+        {
+            if (e.RequestingGoods == currentSellingItem)
+            {
                 PlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<PlayerTradingSystem>();
                 //Debug.Log($"Buy: {currentSellingItemPrice}, {currentSellingItemObject.name}");
 
@@ -109,30 +135,34 @@ namespace Mikrocosmos
                 }
 
                 currentSellingItem.TransactionFinished = true;
-                this.SendEvent<OnServerTransactionFinished>(new OnServerTransactionFinished() {
+                this.SendEvent<OnServerTransactionFinished>(new OnServerTransactionFinished()
+                {
                     GoodsModel = currentSellingItem,
                     IsSell = true,
                     Price = currentSellingItem.RealPrice
                 });
-                
-                currentSellingItem = null;
 
+                currentSellingItem = null;
+                SwitchSellItem();
                 ChangeAffinity(spaceship.GetComponent<PlayerSpaceship>().connectionToClient.identity
                     .GetComponent<NetworkMainGamePlayer>().matchInfo.Team);
             }
-           
+
         }
 
 
         //Planet BUY item, player SELL item
         [ServerCallback]
-        private void OnServerTrySellItem(OnServerTrySellItem e) {
+        private void OnServerTrySellItem(OnServerTrySellItem e)
+        {
 
-            if (e.DemandedByPlanet == currentBuyingItem) {
-               
-              
-                if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship)) {
-                    
+            if (e.DemandedByPlanet == currentBuyingItem)
+            {
+
+
+                if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship))
+                {
+
 
                     spaceship.Money += currentBuyingItem.RealPrice;
                     Debug.Log(currentBuyingItem.RealPrice);
@@ -143,7 +173,7 @@ namespace Mikrocosmos
                         IsSell = false,
                         Price = currentBuyingItem.RealPrice
                     });
-                    
+
                     //SwitchBuyItem();
 
                     ChangeAffinity(e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
@@ -164,21 +194,25 @@ namespace Mikrocosmos
 
 
         [ServerCallback]
-        private void ChangeAffinity(int teamNumber) {
+        private void ChangeAffinity(int teamNumber)
+        {
             Debug.Log($"Team {teamNumber} completed a transaction");
             float affinityIncreasment = this.GetSystem<IGlobalTradingSystem>()
                 .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber));
-            if (teamNumber == 1) {
+            if (teamNumber == 1)
+            {
                 affinityWithTeam1 += affinityIncreasment;
             }
-            else {
+            else
+            {
                 affinityWithTeam1 -= affinityIncreasment;
             }
 
         }
 
         //initialization
-        private void OnPlayerJoinGame(OnNetworkedMainGamePlayerConnected obj) {
+        private void OnPlayerJoinGame(OnNetworkedMainGamePlayerConnected obj)
+        {
             if (currentSellingItem != null)
             {
                 this.SendEvent<OnServerPlanetGenerateSellItem>(new OnServerPlanetGenerateSellItem()
@@ -187,10 +221,11 @@ namespace Mikrocosmos
                     ParentPlanet = this.gameObject,
                     Price = currentSellingItemPrice
                 });
-             
+
             }
 
-            if (currentBuyingItem != null) {
+            if (currentBuyingItem != null)
+            {
                 this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem()
                 {
                     GeneratedItem = currentBuyingItemObject,
@@ -201,28 +236,45 @@ namespace Mikrocosmos
         }
 
         private void Update() {
-            if (isServer) {
-                BuyItemTimer -= Time.deltaTime;
-                if (BuyItemTimer <= 0) {
-                    BuyItemTimer = Random.Range(BuyItemMaxTime - 5, BuyItemMaxTime + 5);
-                    SwitchBuyItem();
-                }
-
-                if (currentSellingItem==null || currentSellingItem.TransactionFinished) {
-                    SwitchSellItem();
-                }
+            BuyItemTimer -= Time.deltaTime;
+            if (BuyItemTimer <= 0)
+            {
+                BuyItemMaxTimeThisTime = Random.Range(BuyItemMaxTime - 5, BuyItemMaxTime + 5);
+                BuyItemTimer = BuyItemMaxTimeThisTime;
+                SwitchBuyItem();
             }
         }
 
-        
-      
+       
+
         [ServerCallback]
         private void SwitchSellItem()
         {
-            
+            List<GoodsConfigure> rawMaterials = planetModel.GetSellItemsWithRarity(GoodsRarity.RawResource);
             List<GoodsConfigure> secondaryMaterials = planetModel.GetSellItemsWithRarity(GoodsRarity.Secondary);
+
             List<GoodsConfigure> targetList = secondaryMaterials;
+
+
+            if (rawMaterials.Any() && secondaryMaterials.Any())
+            {
+                float chance = Random.Range(0f, 1f);
+                if (chance <= itemRarity[0])
+                {
+                    targetList = rawMaterials;
+                }
+                else
+                {
+                    targetList = secondaryMaterials;
+                }
+            }
+            else
+            {
+                targetList = secondaryMaterials;
+            }
+
             GoodsConfigure selectedGoodsConfigure = null;
+
             if (targetList.Count > 1)
             {
                 while (selectedGoodsConfigure == null || selectedGoodsConfigure == currentSellingItemConfig)
@@ -235,7 +287,7 @@ namespace Mikrocosmos
                 selectedGoodsConfigure = targetList[0];
             }
 
-          
+
 
             currentSellingItemConfig = selectedGoodsConfigure;
             currentSellingItemObject = Instantiate(currentSellingItemConfig.GoodPrefab, transform.position,
@@ -246,7 +298,7 @@ namespace Mikrocosmos
             currentSellingItem.IsSell = true;
             currentSellingItem.TransactionFinished = false;
 
-            
+
 
 
             int basePrice = currentSellingItemConfig.RealPriceOffset + currentSellingItem.BasicSellPrice;
@@ -268,40 +320,57 @@ namespace Mikrocosmos
 
 
         [ServerCallback]
-        private void SwitchBuyItem() {
+        private void SwitchBuyItem()
+        {
             List<GoodsConfigure> rawMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.RawResource);
             List<GoodsConfigure> secondaryMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Secondary);
-           List<GoodsConfigure> compoundMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Compound);
+            List<GoodsConfigure> compoundMaterials = planetModel.GetBuyItemsWithRarity(GoodsRarity.Compound);
 
             List<GoodsConfigure> targetList;
-            if (rawMaterials.Any() && secondaryMaterials.Any() && false){// compoundMaterials.Any()) { //get a resource with rarity
-                int chance = Random.Range(0, 100);
-                if (chance <= itemRarity[0]) {
+            if (rawMaterials.Any() && secondaryMaterials.Any())
+            {// compoundMaterials.Any()) { //get a resource with rarity
+                float chance = Random.Range(0f, 1f);
+                if (chance <= itemRarity[0])
+                {
                     targetList = rawMaterials;
-                }else if (itemRarity[0] < chance && chance <= itemRarity[0] + itemRarity[1]) {
+                }
+                else if (itemRarity[0] < chance && chance <= itemRarity[0] + itemRarity[1])
+                {
                     targetList = secondaryMaterials;
                 }
-                else {
+                else
+                {
                     targetList = secondaryMaterials;
                 }
             }
-            else { //only get from raw resources
-                   // targetList = rawMaterials;
-                   targetList = secondaryMaterials;
+            else
+            { //only get from raw resources
+              // targetList = rawMaterials;
+                targetList = secondaryMaterials;
             }
 
             GoodsConfigure selectedGoodsConfigure = null;
-            if (targetList.Count > 1) {
-                while (selectedGoodsConfigure==null || selectedGoodsConfigure== currentSellingItemConfig) {
+            if (targetList.Count > 1)
+            {
+                while (selectedGoodsConfigure == null || selectedGoodsConfigure == currentSellingItemConfig)
+                {
                     selectedGoodsConfigure = targetList[Random.Range(0, targetList.Count)];
                 }
             }
-            else {
+            else
+            {
                 selectedGoodsConfigure = targetList[0];
             }
 
-            if (currentBuyingItemObject != null && !currentBuyingItem.TransactionFinished) {
-                NetworkServer. Destroy(currentBuyingItemObject);
+            IGoods previousBuyingItem = null;
+            GameObject previousBuyingItemGameObject = null;
+            string previousBuyItemName = "";
+            if (currentBuyingItemObject != null && !currentBuyingItem.TransactionFinished)
+            {
+                //NetworkServer.Destroy(currentBuyingItemObject);
+                previousBuyingItem = currentBuyingItem;
+                previousBuyingItemGameObject = currentBuyingItemObject;
+                previousBuyItemName = currentBuyingItem.Name;
             }
 
             currentBuyingItemConfig = selectedGoodsConfigure;
@@ -317,33 +386,65 @@ namespace Mikrocosmos
             currentBuyingItemPrice = Random.Range(basePrice - offset, basePrice + offset + 1);
             currentBuyingItemPrice = Mathf.Max(1, currentBuyingItemPrice);
             currentBuyingItem.RealPrice = currentBuyingItemPrice;
+            CurrentBuyItemName = currentBuyingItem.Name;
 
-            this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem() {
+            this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem()
+            {
                 GeneratedItem = currentBuyingItemObject,
                 ParentPlanet = this.gameObject,
                 Price = currentBuyingItemPrice
             });
+
+            RpcOnPlanetSwitchBuyItem(previousBuyItemName, currentBuyingItem.Name);
+
+            if (previousBuyingItem != null)
+            {
+                NetworkServer.Destroy(previousBuyingItemGameObject);
+            }
         }
 
-       /// <summary>
-       /// Either server or client can call this function
-       /// </summary>
-       /// <param name="team"></param>
-       /// <returns></returns>
-        public float GetAffinityWithTeam(int team) {
-            if (team == 1) {
+        /// <summary>
+        /// Either server or client can call this function
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns></returns>
+        public float GetAffinityWithTeam(int team)
+        {
+            if (team == 1)
+            {
                 return affinityWithTeam1;
             }
 
             return 1 - affinityWithTeam1;
         }
 
-       [ClientCallback]
-       private void OnAffinityWithTeam1Changed(float oldAffinity, float newAffinity) {
-            this.SendEvent<OnClientPlanetAffinityWithTeam1Changed>(new OnClientPlanetAffinityWithTeam1Changed() {
+        [field: SyncVar]
+        public string CurrentBuyItemName { get; protected set; }
+
+        [ClientCallback]
+        private void OnAffinityWithTeam1Changed(float oldAffinity, float newAffinity)
+        {
+            this.SendEvent<OnClientPlanetAffinityWithTeam1Changed>(new OnClientPlanetAffinityWithTeam1Changed()
+            {
                 NewAffinity = newAffinity,
                 PlanetIdentity = netIdentity
             });
-       }
+        }
+
+        [ClientRpc]
+        private void RpcOnPlanetSwitchBuyItem(string oldBuyItemName, string newBuyItemName)
+        {
+            this.SendEvent<OnClientPlanetSwitchBuyItem>(new OnClientPlanetSwitchBuyItem() {
+                OldBuyItemName = oldBuyItemName,
+                NewBuyItemName = newBuyItemName,
+                TargetPlanet = gameObject
+            });
+        }
+    }
+
+    struct OnClientPlanetSwitchBuyItem {
+        public string OldBuyItemName;
+        public string NewBuyItemName;
+        public GameObject TargetPlanet;
     }
 }

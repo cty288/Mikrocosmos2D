@@ -5,20 +5,29 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public struct ChangeNameSuccess {
+    public struct ChangeNameSuccess
+    {
 
     }
-    public class ChangeDisplayNameCommand : AbstractCommand<ChangeDisplayNameCommand> {
+    public class ChangeDisplayNameCommand : AbstractCommand<ChangeDisplayNameCommand>
+    {
         private string nameToChange;
-        protected override void OnExecute() {
+        protected override void OnExecute()
+        {
             this.GetModel<ILocalPlayerInfoModel>().ChangeName(nameToChange);
             this.SendEvent<ChangeNameSuccess>();
         }
 
         public ChangeDisplayNameCommand() { }
 
-        public ChangeDisplayNameCommand(string nameToChange) {
+        public ChangeDisplayNameCommand(string nameToChange)
+        {
             this.nameToChange = nameToChange;
+
         }
+
+       
+
+
     }
 }

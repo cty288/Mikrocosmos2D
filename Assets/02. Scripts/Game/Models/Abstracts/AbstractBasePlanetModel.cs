@@ -83,11 +83,14 @@ namespace Mikrocosmos
                     ret.Add(configure);
                 }
             }
-
+            
             return ret;
         }
 
+
+        
         public List<GoodsConfigure> GetSellItemsWithRarity(GoodsRarity rarity) {
+            
             List<GoodsConfigure> ret = new List<GoodsConfigure>();
             foreach (GoodsConfigure configure in sellItemList)
             {

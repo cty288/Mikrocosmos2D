@@ -190,12 +190,6 @@ namespace Mikrocosmos
 
         protected  virtual  void Update() {
             bindedRigidibody.mass = GetTotalMass();
-           
-                if (HookState == HookState.Hooked) {
-                    //gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
-                }else {
-                  //  gameObject.layer = clientOriginalLayer;
-                }
         }
             
         
