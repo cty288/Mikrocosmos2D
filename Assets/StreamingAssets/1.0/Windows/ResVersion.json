@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "e2944e39c8e22d6adcf02ae028189413",
+      "MD5": "cd36ac4e175ab831660e606ffc748548",
       "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "ed4ecf9682a5c4bdc784d40693fe48b2",
-      "FileSize": 10656.1484,
+      "MD5": "1f4ecf108faad14f8fe7b999f9c99956",
+      "FileSize": 10685.4629,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -227,6 +227,21 @@
         },
         {
           "Name": "MaskSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "PoisonSpearSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "EarthMushroomSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "KindleSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

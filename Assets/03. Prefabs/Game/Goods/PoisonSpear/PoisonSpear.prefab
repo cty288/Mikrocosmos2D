@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5650487909868623853}
   - component: {fileID: 6347246023000867053}
-  - component: {fileID: 4254671173294900516}
+  - component: {fileID: 6256694501442945532}
   m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
@@ -59,7 +59,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.6953363, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4254671173294900516
+--- !u!114 &6256694501442945532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,15 +68,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8146538265801812984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52a7f5503a2505a49aca73bf2063239a, type: 3}
+  m_Script: {fileID: 11500000, guid: 034d4b5fd95d89444ac154c2c45d1da6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetLayers:
+  targetLayer:
     serializedVersion: 2
     m_Bits: 448
-  maxDistance: 100
-  detectTime: 1
-  colliders: []
 --- !u!1001 &3418294474227853830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -142,7 +139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_AssetId
-      value: dd471e5954263984ebfef7d6f7977b90
+      value: 88342e5d33702634a996e4fa88ec556b
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Sprite
@@ -223,6 +220,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
     - {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+    - {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
 --- !u!4 &8612353035255163152 stripped
 Transform:
@@ -293,7 +291,23 @@ MonoBehaviour:
   - {x: -1.2377527, y: 0.015594125, z: 0}
   m_ShapePathHash: -31317013
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1272700
+  m_InstanceId: 82384
+--- !u!114 &3239587428082404722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8612353035255163372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 8103427186174019627}
 --- !u!114 &4448206228326410173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,3 +334,43 @@ MonoBehaviour:
   <CanBeMasked>k__BackingField: 1
   DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
   DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
+--- !u!114 &9194842089764502608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8612353035255163372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde434166412da54cb9f800f23f8579d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  <MoveMode>k__BackingField: 1
+  <MaxSpeed>k__BackingField: 50
+  <CanBeAddedToInventory>k__BackingField: 1
+  <HookState>k__BackingField: 0
+  <HookedByIdentity>k__BackingField: {fileID: 0}
+  <HookedByTransform>k__BackingField: {fileID: 0}
+  <Acceleration>k__BackingField: 0
+  <SelfMass>k__BackingField: 4
+  <Name>k__BackingField: PoisonSpear
+  <BasicSellPrice>k__BackingField: 30
+  <BasicBuyPrice>k__BackingField: 45
+  <GoodRarity>k__BackingField: 1
+  <IsSell>k__BackingField: 1
+  <InitialForceMultiplier>k__BackingField: 0.01
+  <AffectedByGravity>k__BackingField: 1
+  <CanBeUsed>k__BackingField: 1
+  <UseMode>k__BackingField: 0
+  <Frequency>k__BackingField: 0.8
+  <Durability>k__BackingField: 0
+  <MaxDurability>k__BackingField: 15
+  reduceDurabilityInstantlyAfterUse: 0
+  addedForce: 500
+  addedMomentum: 18
+  addedDamage: 20
+  poisonTime: 10
+  poisonDamage: 1

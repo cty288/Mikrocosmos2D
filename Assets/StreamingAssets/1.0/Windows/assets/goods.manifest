@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1291722550
+CRC: 3600269873
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f67a2bb662093cd8b202b413c007bc7e
+    Hash: ada9e8ef7b39fe5232ae7d243f337af4
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 0b17e2cf205d2e292662888e56e7b784
+    Hash: 1cc07f55135d4eba8c9b1ecaa2672d52
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -68,9 +68,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: b629bd1565be586478c0c6b213fec5d0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -123,6 +123,8 @@ Assets:
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_4.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_6.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_3.png
+- Assets/04. Sprites/Goods/RawMaterials/Kindle/KindleSprite.png
+- Assets/04. Sprites/Goods/PoisonSpear/PoisonSpearSprite.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana2/Banana.prefab
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_2.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_1.png
@@ -140,6 +142,7 @@ Assets:
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_6.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Satellite/DottedOutlineStatellite.mat
 - Assets/03. Prefabs/Game/Goods/Temporary/Satellite/Statellite.prefab
+- Assets/04. Sprites/Goods/RawMaterials/EarthMushroom/EarthMushroomSprite.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Toliet/Toliet.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_2.png
 Dependencies: []

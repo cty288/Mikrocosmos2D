@@ -11,19 +11,21 @@ namespace Mikrocosmos
 {
     public partial class PlayerSpaceship : AbstractDamagableViewController
     {
-       
 
-       // [SyncVar()] public PlayerMatchInfo MatchInfo;
-       private Animator selfMotionAnimator;
 
-       private float minHookPressTimeInterval = 0.8f;
-       private float minHookPressTimer = 0f;
+        // [SyncVar()] public PlayerMatchInfo MatchInfo;
+        private Animator selfMotionAnimator;
 
-        private ISpaceshipConfigurationModel GetModel() {
+        private float minHookPressTimeInterval = 0.8f;
+        private float minHookPressTimer = 0f;
+
+        private ISpaceshipConfigurationModel GetModel()
+        {
             return GetModel<ISpaceshipConfigurationModel>();
         }
 
-        protected override void Awake() {
+        protected override void Awake()
+        {
             base.Awake();
             hookSystem = GetComponent<IHookSystem>();
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -31,55 +33,68 @@ namespace Mikrocosmos
             inventorySystem = GetComponent<IPlayerInventorySystem>();
         }
 
-        
 
-        private void OnMassChanged(OnMassChanged e) {
+
+        private void OnMassChanged(OnMassChanged e)
+        {
             Debug.Log(e.newMass);
         }
 
 
-       
-        protected override void Update() {
+
+        protected override void Update()
+        {
             base.Update();
-            if (hasAuthority && isClient ) {
+            if (hasAuthority && isClient)
+            {
                 minHookPressTimer += Time.deltaTime;
-                if (Input.GetMouseButtonDown(1)) {
-                    if (Model.HookState == HookState.Freed) {
+                if (Input.GetMouseButtonDown(1))
+                {
+                    if (Model.HookState == HookState.Freed)
+                    {
                         CmdUpdateCanControl(true);
                     }
-                    else {
+                    else
+                    {
                         CmdUpdateCanControl(false);
                         GetModel().CmdIncreaseEscapeCounter();
                     }
                 }
 
-                if (Input.GetMouseButtonDown(0)) {
+                if (Input.GetMouseButtonDown(0))
+                {
                     CmdUpdateUsing(true);
                 }
 
-                if (Input.GetMouseButtonUp(0)) {
+                if (Input.GetMouseButtonUp(0))
+                {
                     CmdUpdateUsing(false);
                 }
 
 
                 //take item & put item (not shoot)
-                if (Input.GetKey(KeyCode.Space)) {
-                    if (minHookPressTimer > minHookPressTimeInterval) {
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    if (minHookPressTimer > minHookPressTimeInterval)
+                    {
                         hookSystem.CmdHoldHookButton();
                     }
-                 
+
                 }
 
-                if (Input.GetKeyUp(KeyCode.Space)) {
-                   
-                   if (minHookPressTimer > minHookPressTimeInterval) {
-                       minHookPressTimer = 0;
-                       hookSystem.CmdReleaseHookButton();
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+
+                    if (minHookPressTimer > minHookPressTimeInterval)
+                    {
+                        minHookPressTimer = 0;
+                        hookSystem.CmdReleaseHookButton();
                     }
                 }
 
-             
-                if (Input.GetMouseButtonUp(1)) {
+
+                if (Input.GetMouseButtonUp(1))
+                {
                     CmdUpdateCanControl(false);
 
                 }
@@ -90,12 +105,17 @@ namespace Mikrocosmos
             }
 
 
-            if (hasAuthority && isClient) {
-                if (Model.HookState == HookState.Freed) {
+           
+
+            if (hasAuthority && isClient)
+            {
+                if (Model.HookState == HookState.Freed)
+                {
                     CmdUpdateMousePosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 }
 
-                if (isControlling && Model.HookState == HookState.Freed) {
+                if (isControlling && Model.HookState == HookState.Freed)
+                {
                     selfMotionAnimator.SetBool("Controlling", true);
                 }
                 else
@@ -104,24 +124,27 @@ namespace Mikrocosmos
                 }
             }
 
-           
+
         }
 
         private float lastScroll = 0;
-        private void ClientCheckMouseScroll() {
-             float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+        private void ClientCheckMouseScroll()
+        {
+            float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
 
-                if (lastScroll == 0)
-                {
-                    if (scrollWheel > 0f) { //up
-                        CmdScrollMouseWhell(true);
-                    }
-
-                    if (scrollWheel < -0f) { //down
-                    CmdScrollMouseWhell(false);
-                    }
+            if (lastScroll == 0)
+            {
+                if (scrollWheel > 0f)
+                { //up
+                    CmdScrollMouseWhell(true);
                 }
-                lastScroll = scrollWheel;
+
+                if (scrollWheel < -0f)
+                { //down
+                    CmdScrollMouseWhell(false);
+                }
+            }
+            lastScroll = scrollWheel;
         }
 
 
@@ -129,9 +152,9 @@ namespace Mikrocosmos
 
         private void UpdateRotation(Vector2 mousePos)
         {
-            
+
         }
 
-        
+
     }
 }
