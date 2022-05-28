@@ -18,7 +18,7 @@ PrefabInstance:
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: buyMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: fac6ce147767c384197a3560f8ba294e, type: 2}
+      objectReference: {fileID: 2100000, guid: b8e29f86efcf73a45b1715d62379f5b7, type: 2}
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <HookedRotationZOffset>k__BackingField
       value: 90
@@ -280,3 +280,39 @@ CircleCollider2D:
   m_Offset: {x: -0.031647444, y: 0}
   serializedVersion: 2
   m_Radius: 1.1683526
+--- !u!114 &5888939706740527627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710686576622463885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 0000000031834c8ca1496a74855d0d49
+  m_ShapePath:
+  - {x: -1.221895, y: -0.06979021, z: 0}
+  - {x: -1.0928637, y: 0.5461213, z: 0}
+  - {x: -0.7222626, y: 0.97601855, z: 0}
+  - {x: -0.053294055, y: 1.1965238, z: 0}
+  - {x: 0.65571845, y: 1.085447, z: 0}
+  - {x: 1.0685906, y: 0.6391402, z: 0}
+  - {x: 1.2078699, y: -0.095540896, z: 0}
+  - {x: 1.0883317, y: -0.6749268, z: 0}
+  - {x: 0.62047404, y: -1.0594456, z: 0}
+  - {x: 0.20368825, y: -1.1666998, z: 0}
+  - {x: -0.3017943, y: -1.1594504, z: 0}
+  - {x: -0.71097976, y: -0.9738572, z: 0}
+  - {x: -1.0288874, y: -0.65673304, z: 0}
+  m_ShapePathHash: 747905681
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 73618

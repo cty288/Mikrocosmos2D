@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "cd36ac4e175ab831660e606ffc748548",
+      "MD5": "5a8b5660863d590dfb8b8042c793583a",
       "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "1f4ecf108faad14f8fe7b999f9c99956",
-      "FileSize": 10685.4629,
+      "MD5": "2acd29478d99cc82dd71b472cb4c99ca",
+      "FileSize": 10721.0332,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -241,7 +241,27 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
+          "Name": "FireOreSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "FlowerSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
           "Name": "KindleSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "MetalBallSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "SeaweedFruitSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

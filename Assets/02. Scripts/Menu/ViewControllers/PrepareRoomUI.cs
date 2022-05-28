@@ -7,6 +7,7 @@ using TMPro;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 namespace Mikrocosmos {
 	public partial class PrepareRoomUI : AbstractMikroController<Mikrocosmos> {
@@ -21,9 +22,36 @@ namespace Mikrocosmos {
             BtnChangeSide.onClick.AddListener(OnSwitchSideClicked);
             BtnTestMode.onClick.AddListener(OnTestModeButtonClicked);
             BtnRoomLeaderStartRoom.onClick.AddListener(OnHostStartGameButtonClicked);
+            BtnBack.onClick.AddListener(OnBackToMenuClicked);
             BtnRoomLeaderStartRoom.gameObject.SetActive(false);
         }
 
+        private void OnBackToMenuClicked() {
+           QuitRoom();
+           Invoke(nameof(QuitRoom), 0.3f);
+            //SceneManager.LoadScene(0);
+        }
+
+        private void QuitRoom() {
+            if (NetworkServer.active)
+            {
+                NetworkServer.DisconnectAll();
+                NetworkServer.Shutdown();
+                NetworkServer.DisconnectAll();
+                NetworkServer.Shutdown();
+            }
+            else if (NetworkClient.active)
+            {
+                NetworkClient.Disconnect();
+                NetworkClient.Shutdown();
+                NetworkClient.Disconnect();
+                NetworkClient.Shutdown();
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
         private void OnTestModeButtonClicked() {
             if (NetworkServer.active) {
                 this.SendCommand<ServerStartGameCommand>();

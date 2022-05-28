@@ -18,7 +18,7 @@ PrefabInstance:
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: buyMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: fac6ce147767c384197a3560f8ba294e, type: 2}
+      objectReference: {fileID: 2100000, guid: 6aa5e2fe07fb4534582a5f09a966adcf, type: 2}
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <HookedRotationZOffset>k__BackingField
       value: 90
@@ -280,3 +280,35 @@ CapsuleCollider2D:
   m_Offset: {x: 0.000009238718, y: 0.027827734}
   m_Size: {x: 1.1408483, y: 2.3989224}
   m_Direction: 0
+--- !u!114 &8895684251234261784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710686576622463885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 0000000031834c8ca1496a74855d0d49
+  m_ShapePath:
+  - {x: 0.055089828, y: -0.116270535, z: 0}
+  - {x: 0.032827657, y: -1.1745659, z: 0}
+  - {x: -0.10431309, y: -1.174566, z: 0}
+  - {x: -0.08974098, y: -0.036230937, z: 0}
+  - {x: -0.4755501, y: 0.26116362, z: 0}
+  - {x: -0.53631157, y: 0.8006813, z: 0}
+  - {x: -0.2665705, y: 1.1613837, z: 0}
+  - {x: 0.34474713, y: 1.2015431, z: 0}
+  - {x: 0.6303461, y: 0.5120472, z: 0}
+  m_ShapePathHash: -357052104
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 73226

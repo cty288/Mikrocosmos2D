@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3600269873
+CRC: 1040541907
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ada9e8ef7b39fe5232ae7d243f337af4
+    Hash: 950f321a1d5972f215c46152a1a0c134
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 1cc07f55135d4eba8c9b1ecaa2672d52
+    Hash: 2f258df596b06fd3dd7a89a7498544da
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -68,9 +68,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: b629bd1565be586478c0c6b213fec5d0, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b629bd1565be586478c0c6b213fec5d0, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -109,6 +109,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
+- Assets/04. Sprites/Goods/RawMaterials/MetalBall/MetalBallSprite.png
 - Assets/04. Sprites/Goods/Thruster/ThrusterSprite.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana/Banana.prefab
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite.png
@@ -119,6 +120,7 @@ Assets:
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_4.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_5.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana/BananaTemp.prefab
+- Assets/04. Sprites/Goods/RawMaterials/Flower/FlowerSprite.png
 - Assets/03. Prefabs/Game/Goods/LeafKnife/LeafKnife.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_4.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_6.png
@@ -126,18 +128,20 @@ Assets:
 - Assets/04. Sprites/Goods/RawMaterials/Kindle/KindleSprite.png
 - Assets/04. Sprites/Goods/PoisonSpear/PoisonSpearSprite.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana2/Banana.prefab
-- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_2.png
+- Assets/04. Sprites/Goods/RawMaterials/FireOre/FireOreSprite.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_1.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Mask/DottedOutlineMask.mat
 - Assets/04. Sprites/Goods/StatelliteSprite.png
+- Assets/04. Sprites/Goods/RawMaterials/SeaweedFruit/SeaweedFruitSprite.png
+- Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_2.png
 - Assets/04. Sprites/Goods/BananaSprite.png
-- Assets/04. Sprites/Goods/FirePlant/FirePlant/FirePlantSprite.png
 - Assets/VisionEffect/Sprites/TolietSprite.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Mask/Mask.prefab
 - Assets/03. Prefabs/Game/Goods/FirePlant/FirePlant.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_3.png
 - Assets/04. Sprites/Goods/BirdCannon/BirdCannon/BirdCannonSprite.png
 - Assets/04. Sprites/Goods/MaskSprite.png
+- Assets/04. Sprites/Goods/FirePlant/FirePlant/FirePlantSprite.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_6.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Satellite/DottedOutlineStatellite.mat

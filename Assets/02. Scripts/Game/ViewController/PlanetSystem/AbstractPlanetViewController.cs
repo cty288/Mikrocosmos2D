@@ -13,11 +13,13 @@ using Random = UnityEngine.Random;
 namespace Mikrocosmos
 {
     public interface IPlanetViewController : ICanBuyPackageViewController, ICanSellPackageViewController,
-        IHaveGravityViewController {
+        IHaveGravityViewController
+    {
 
     }
-    public abstract class AbstractPlanetViewController: AbstractNetworkedController<Mikrocosmos>, IPlanetViewController {
-      
+    public abstract class AbstractPlanetViewController : AbstractNetworkedController<Mikrocosmos>, IPlanetViewController
+    {
+
 
         public ICanBuyPackage BuyPackageModel { get; protected set; }
         public ICanSellPackage SellPackageModel { get; protected set; }
@@ -35,21 +37,26 @@ namespace Mikrocosmos
 
         private int team1ProgressTextInt = 50;
 
-        [SerializeField, Range(0, 360000)] private float initialProgress; 
-       
+        [SerializeField, Range(0, 360000)] private float initialProgress;
+
+
+        [SerializeField] private float selfRotationSpeed;
+
+        private Transform spriteTransform;
         private void Awake() {
-         
+            spriteTransform = transform.Find("Sprite");
             BuyPackageModel = GetComponent<ICanBuyPackage>();
             GravityModel = GetComponent<IHaveGravity>();
             SellPackageModel = GetComponent<ICanSellPackage>();
-            
+
             rigidbody = GetComponent<Rigidbody2D>();
             distance = Vector3.Distance(target.transform.position, transform.position);
             progress = initialProgress;
 
             sellItemSpawnPosition = transform.Find("SellBubbleBG/SellItemSpawnPos");
             buytemSpawnPosition = transform.Find("BuyBubbleBG/BuyItemSpawnPos");
-            if (sellItemSpawnPosition) {
+            if (sellItemSpawnPosition)
+            {
                 sellPriceText = transform.Find("Canvas/SellPrice").GetComponent<Text>();
                 buyPriceText = transform.Find("Canvas/BuyPrice").GetComponent<Text>();
                 buyPriceText.gameObject.SetActive(false);
@@ -63,43 +70,61 @@ namespace Mikrocosmos
             this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnClientPlanetAffinityWithTeam1Changed)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
-        private void Update() {
+        private void Update()
+        {
 
-            if (isServer) {
+            if (isServer)
+            {
                 OvalRotate();
                 KeepUniversalG();
+                SelfRotate();
             }
 
-            if (isClient && sellItemSpawnPosition) {
+            if (isClient && sellItemSpawnPosition)
+            {
                 team1TradeProgressText.text = $"{team1ProgressTextInt}%";
                 team2TradeProgressText.text = $"{100 - team1ProgressTextInt}%";
             }
         }
 
-        public override void OnStartServer() {
+        private void SelfRotate()
+        {
+            //rotate Z
+            if (spriteTransform) {
+                spriteTransform.Rotate(0, 0, selfRotationSpeed * Time.deltaTime);
+            }
+         
+        }
+
+        public override void OnStartServer()
+        {
             base.OnStartServer();
             this.RegisterEvent<OnServerPlanetGenerateSellItem>(OnServerPlanetGenerateSellItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnServerPlanetGenerateBuyingItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
-           
+
         }
 
-       
+
 
         [ServerCallback]
-        private void OnServerPlanetGenerateBuyingItem(OnServerPlanetGenerateBuyingItem e) {
-            if (e.ParentPlanet == gameObject) {
+        private void OnServerPlanetGenerateBuyingItem(OnServerPlanetGenerateBuyingItem e)
+        {
+            if (e.ParentPlanet == gameObject)
+            {
                 e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = buytemSpawnPosition;
                 RpcChangeBuyPrice(e.Price);
             }
-          
+
         }
 
         [ServerCallback]
-        private void OnServerPlanetGenerateSellItem(OnServerPlanetGenerateSellItem e) {
-            if (e.ParentPlanet == gameObject) {
-                
+        private void OnServerPlanetGenerateSellItem(OnServerPlanetGenerateSellItem e)
+        {
+            if (e.ParentPlanet == gameObject)
+            {
+
                 Debug.Log("Sell Item generated");
                 e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellItemSpawnPosition;
                 RpcChangeSellPrice(e.Price);
@@ -107,17 +132,21 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcChangeSellPrice(int price) {
+        private void RpcChangeSellPrice(int price)
+        {
             sellPriceText.text = price.ToString();
         }
 
         [ClientRpc]
-        private void RpcChangeBuyPrice(int price) {
+        private void RpcChangeBuyPrice(int price)
+        {
             buyPriceText.gameObject.SetActive(true);
             buyPriceText.text = price.ToString();
         }
-        private void OnClientPlanetAffinityWithTeam1Changed(OnClientPlanetAffinityWithTeam1Changed e) {
-            if (e.PlanetIdentity == netIdentity) {
+        private void OnClientPlanetAffinityWithTeam1Changed(OnClientPlanetAffinityWithTeam1Changed e)
+        {
+            if (e.PlanetIdentity == netIdentity)
+            {
                 DOTween.To(() => tradingSlider.value, x => tradingSlider.value = x,
                     e.NewAffinity, 0.5f);
 
@@ -138,12 +167,16 @@ namespace Mikrocosmos
         private Rigidbody2D rigidbody;
 
         [SerializeField] private float momentumOffset = 100;
-        private void OnCollisionEnter2D(Collision2D collision) {
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
             if (collision.collider)
             {
-                if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model)) {
-                    if (model is IHookable hookable) {
-                        if (hookable.HookState == HookState.Hooked) {
+                if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model))
+                {
+                    if (model is IHookable hookable)
+                    {
+                        if (hookable.HookState == HookState.Hooked)
+                        {
                             StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
                             return;
                         }
@@ -157,7 +190,8 @@ namespace Mikrocosmos
         IEnumerator NonPhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody)
         {
             float waitTime = 0.01f;
-            if (targetModel is ISpaceshipConfigurationModel) {
+            if (targetModel is ISpaceshipConfigurationModel)
+            {
                 targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
             }
             Vector2 pos1 = targetRigidbody.transform.position;
@@ -191,7 +225,8 @@ namespace Mikrocosmos
         {
             float waitTime = 0.01f;
             Vector2 offset = Vector2.zero;
-            if (targetModel is ISpaceshipConfigurationModel) {
+            if (targetModel is ISpaceshipConfigurationModel)
+            {
                 targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
             }
             Vector2 speed1 = targetRigidbody.velocity;
@@ -215,7 +250,7 @@ namespace Mikrocosmos
                 targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
                 targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
 
-              
+
             }
         }
 
@@ -224,16 +259,18 @@ namespace Mikrocosmos
 
             progress += Time.deltaTime * speed;
             Vector3 p = new Vector3(x * Mathf.Cos(progress * Mathf.Deg2Rad), z * Mathf.Sin(progress * Mathf.Deg2Rad) * distance, 0);
-            if (GravityModel.MoveMode == MoveMode.ByPhysics) {
+            if (GravityModel.MoveMode == MoveMode.ByPhysics)
+            {
                 rigidbody.MovePosition(target.transform.position + p);
             }
-            else {
+            else
+            {
                 transform.position = target.transform.position + p;
             }
-           
+
         }
         //start refactor
-      
+
 
         [ServerCallback]
         void KeepUniversalG()
@@ -251,10 +288,11 @@ namespace Mikrocosmos
                     if (rb.TryGetComponent<IAffectedByGravity>(out IAffectedByGravity target))
                     {
                         float explosionForce = -1 * UniversalG(GravityModel, target, transform.position, rb.transform.position) * Time.deltaTime;
-                        if (target.AffectedByGravity) {
+                        if (target.AffectedByGravity)
+                        {
                             target.ServerAddGravityForce(explosionForce, Center, GravityModel.GravityFieldRange);
                         }
-                   
+
                     }
 
                 }

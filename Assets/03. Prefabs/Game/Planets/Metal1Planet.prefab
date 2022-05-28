@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 59066767318397407}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 25, y: 25, z: 1}
+  m_LocalPosition: {x: 0.4400599, y: 0.016925381, z: 0}
+  m_LocalScale: {x: 1.6925381, y: 1.6925381, z: 1.6925381}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1546541824714299382}
-  m_RootOrder: 3
+  m_Father: {fileID: 2330299036835362065}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1150461154642825147
 SpriteRenderer:
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 3f0428b4a53d48647aa08c09f1a4b003, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 396d058e8b0f10b42aa69654f27e2c0a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -158,7 +158,6 @@ Transform:
   - {fileID: 6808820890171537582}
   - {fileID: 9195645541780372382}
   - {fileID: 1947872098940575172}
-  - {fileID: 1768423402289218583}
   - {fileID: 2330299036835362065}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -245,10 +244,14 @@ MonoBehaviour:
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 8612353035255163372, guid: 88342e5d33702634a996e4fa88ec556b, type: 3}
     <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: dc8db306dab6888418e841a2ac278341, type: 3}
+    <RealPriceOffset>k__BackingField: 0
   initialSellItemList:
   - <GoodPrefab>k__BackingField: {fileID: 334633752228750209, guid: 6bf37ea0f1b638a45801108adc5d4295, type: 3}
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 4621731228356974662, guid: e45362f556fbb714cbe13f7212e23cdf, type: 3}
+    <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: 66c0f5f696620b24ab8302ed1a4e3e38, type: 3}
     <RealPriceOffset>k__BackingField: 0
   <PlanetType>k__BackingField: 0
 --- !u!114 &8345480255462355403
@@ -266,8 +269,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   initialProgress: 0
+  selfRotationSpeed: 6
   target: {fileID: 0}
-  speed: 1
+  speed: 1.3
   x: 60
   z: 1.5
   momentumOffset: 30
@@ -473,7 +477,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 3f120432432dfc94b87d36e0837ee1af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1173,7 +1177,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 27e9492856419904da7bf743fd275779, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1289,9 +1293,10 @@ Transform:
   m_LocalPosition: {x: -0.26, y: -0.01, z: 0}
   m_LocalScale: {x: 0.59082866, y: 0.59082866, z: 0.59082866}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1768423402289218583}
   m_Father: {fileID: 1546541824714299382}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3591055218695848596
 SpriteRenderer:
