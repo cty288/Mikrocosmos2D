@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3384546638
+CRC: 4079522496
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2925971d5fa8865008fe70d09466a600
+    Hash: 1bb29ff95ef9a1f6874317d41790ba98
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 99504828aaf18679fb8c26f3b350ef6e
+    Hash: d9cc068b8563b578ba28139bb2e085e5
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -69,6 +69,10 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2c0ddfc42a109774b9d75472c85f0f55, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 025964f136989614da48ea35a7668b65, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -107,6 +111,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
+- Assets/03. Prefabs/Game/Goods/StoneShield/StoneShieldB'.prefab
 - Assets/04. Sprites/Goods/Thruster/ThrusterSprite.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana/Banana.prefab
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite.png
@@ -120,6 +125,7 @@ Assets:
 - Assets/03. Prefabs/Game/Goods/LeafKnife/LeafKnife.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_4.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_6.png
+- Assets/04. Sprites/Goods/StoneShield/StoneShield/StoneShieldSprite.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_3.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana2/Banana.prefab
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_2.png

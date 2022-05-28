@@ -20,10 +20,14 @@ namespace Mikrocosmos
         private Transform shootPos;
         private Animator animator;
 
+        private bool isUsing = false;
+        private bool mouseUpTriggered = false;
+
         /// <summary>
         /// 按下鼠标左键展开护盾--OnShieldExpanded
         /// 松开鼠标左键时进行判定 若达到阈值发射冲击波--OnWaveShoot
         /// </summary>
+
 
         protected override void Awake()
         {
@@ -34,8 +38,10 @@ namespace Mikrocosmos
             SHT = childTrigger.GetComponent<StoneShieldTrigger>();
         }
 
-        private void Update()
-        {
+        private void Update() {
+            base.Update();
+            
+            
             if (hasAuthority)
             {
                 if (Input.GetMouseButtonUp(0))
@@ -53,12 +59,14 @@ namespace Mikrocosmos
             base.OnServerItemUsed();
             GoodsModel.ReduceDurability(1); //ReduceDurability while using
             OnShieldExpanded();
+            isUsing = true;
+            mouseUpTriggered = false;
         }
 
         public void OnShieldExpanded()
         {
             currCharge = SHT.GetCurrCharge();
-            Debug.Log("OnExpansionB");
+           // Debug.Log("OnExpansionB");
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
                 Debug.Log("OnExpansion");
@@ -78,6 +86,25 @@ namespace Mikrocosmos
                 wave.transform.rotation = transform.rotation;
                 NetworkServer.Spawn(wave);
             }
+        }
+
+        private void LateUpdate() {
+            if (isServer) {
+                if (!isUsing && !mouseUpTriggered) {
+                    mouseUpTriggered = true;
+                    //TODO:
+                    if (Model.HookedByIdentity != null) {
+                        OnItemUseMouseUp();
+                    }
+                  
+                }
+                
+                isUsing = false;
+            }
+        }
+
+        private void OnItemUseMouseUp() {
+
         }
     }
 }

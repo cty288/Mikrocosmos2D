@@ -82,7 +82,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4045048935829913655, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_InstanceId
-      value: -53342
+      value: -221636
       objectReference: {fileID: 0}
     - target: {fileID: 4045048935829913801, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_Sprite
@@ -142,11 +142,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4582161370884799708, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_Offset.y
-      value: 8.9
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4766875648445337414, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
+      propertyPath: <Name>k__BackingField
+      value: StoneShield
       objectReference: {fileID: 0}
     - target: {fileID: 7238378668143830698, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: TargetLayers.m_Bits
-      value: 1024
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 8667604368005481625, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_Controller
@@ -174,17 +178,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  <HookedPositionOffset>k__BackingField: {x: 0, y: 0}
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 3}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
   buyMaterial: {fileID: 2100000, guid: b9356cb58ce23014e93b7b9bf8e8b99b, type: 2}
   sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
   visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  visionAffectedSprites: []
+  visionAffectedSprites:
+  - {fileID: 57274393718387923}
   <CanBeMasked>k__BackingField: 1
   DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
-  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 0}
+  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
   wave: {fileID: 0}
   shootForce: 5
   currCharge: 0
@@ -194,5 +199,10 @@ MonoBehaviour:
 --- !u!4 &57274393718387920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4045048935829913802, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
+  m_PrefabInstance: {fileID: 4100980814441460762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &57274393718387923 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4045048935829913801, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
   m_PrefabInstance: {fileID: 4100980814441460762}
   m_PrefabAsset: {fileID: 0}

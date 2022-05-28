@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "074177cabcb269d9e287880785d81f01",
+      "MD5": "74bd1bf84b3ebb9289351e940f7ab767",
       "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "95af1212c081341c15a30ccea7e7bf84",
-      "FileSize": 10636.2461,
+      "MD5": "f0f9f2505603be6a73cae6fba9bf15d1",
+      "FileSize": 11323.6885,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -87,6 +87,11 @@
         },
         {
           "Name": "LeafKnife",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "StoneShieldB'",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -227,6 +232,11 @@
         },
         {
           "Name": "StatelliteSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "StoneShieldSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

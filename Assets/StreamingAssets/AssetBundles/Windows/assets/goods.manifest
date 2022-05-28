@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2018196949
+CRC: 4079522496
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 559c83e0e836bb0135adfb0d06a2575a
+    Hash: 1bb29ff95ef9a1f6874317d41790ba98
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 3016b23c4554aa7febafa144ba561fc9
+    Hash: d9cc068b8563b578ba28139bb2e085e5
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -64,6 +64,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: e5af11a9e8ef0b2409ae2cded8f0f388, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
@@ -83,9 +85,29 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.FaceInfo_Legacy
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.FontAssetCreationSettings
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.KerningTable
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_Character
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_FontFeatureTable
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.TMP_FontWeightPair
+- AssemblyName: Unity.TextMeshPro
   ClassName: TMPro.VertexGradient
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.FaceInfo
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.Glyph
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.GlyphMetrics
+- AssemblyName: UnityEngine.TextCoreFontEngineModule
+  ClassName: UnityEngine.TextCore.GlyphRect
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
@@ -103,6 +125,7 @@ Assets:
 - Assets/03. Prefabs/Game/Goods/LeafKnife/LeafKnife.prefab
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_4.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_6.png
+- Assets/04. Sprites/Goods/StoneShield/StoneShield/StoneShieldSprite.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_3.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana2/Banana.prefab
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_2.png
