@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -72,6 +73,9 @@ namespace Mikrocosmos
                 {
                     CreatePointerWindowForPlanet(planet);
                 }
+
+                
+              
             }
         }
 
@@ -80,6 +84,12 @@ namespace Mikrocosmos
           
             if (!planetToPointer.ContainsKey(planet)) {
                 GameObject pointer = Instantiate(pointerPrefab, transform);
+                pointer.SetActive(false);
+                this.GetSystem<ITimeSystem>().AddDelayTask(0.02f, () => {
+                    if (pointer) {
+                        pointer.SetActive(true);
+                    }
+                });
                 pointer.GetComponent<Window_Pointer>().target = planet.transform;
                 planetToPointer.Add(planet, pointer);
             }

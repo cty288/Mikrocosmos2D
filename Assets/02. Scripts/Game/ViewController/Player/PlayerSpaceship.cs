@@ -7,15 +7,18 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-   
-    
-    public partial class PlayerSpaceship : AbstractDamagableViewController {
+
+
+    public partial class PlayerSpaceship : AbstractDamagableViewController
+    {
         private IHookSystem hookSystem;
         [SerializeField, SyncVar]
         private bool isControlling = false;
 
-        public bool IsControlling {
-            get {
+        public bool IsControlling
+        {
+            get
+            {
                 return isControlling;
             }
         }
@@ -30,7 +33,7 @@ namespace Mikrocosmos
 
         private int escapeCounter = 0;
 
-        [SerializeField] 
+        [SerializeField]
         private List<Sprite> teamSprites;
 
         [SyncVar]
@@ -47,50 +50,59 @@ namespace Mikrocosmos
 
 
         [ClientRpc]
-        private void RpcSetTeamSprite(int teamIndex) {
+        private void RpcSetTeamSprite(int teamIndex)
+        {
             transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
         }
 
         [ServerCallback]
-        protected override void OnServerUpdate() {
-            if (Model.HookState == HookState.Freed) {
+        protected override void OnServerUpdate()
+        {
+            if (Model.HookState == HookState.Freed)
+            {
                 rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, GetModel().MaxMaxSpeed);
             }
 
-            if (isUsing) {
+            if (isUsing)
+            {
                 hookSystem.OnServerPlayerHoldUseButton();
             }
         }
 
-        
+
 
         [Command]
-        private void CmdUpdateCanControl(bool isControl) {
+        private void CmdUpdateCanControl(bool isControl)
+        {
             isControlling = isControl;
         }
 
         [Command]
-        private void CmdUpdateUsing(bool isUsing) {
+        private void CmdUpdateUsing(bool isUsing)
+        {
             this.isUsing = isUsing;
-            if (!isUsing) {
+            if (!isUsing)
+            {
                 hookSystem.OnServerPlayerReleaseUseButton();
             }
-           
+
         }
 
-        
+
 
         [Command]
-        private void CmdUpdateMousePosition(Vector2 mousePos) {
+        private void CmdUpdateMousePosition(Vector2 mousePos)
+        {
             mousePosition = mousePos;
         }
 
         [ServerCallback]
-        private void ServerMove(Vector3 mousePos) {
+        private void ServerMove(Vector3 mousePos)
+        {
             Vector2 forceDir = (mousePos - transform.position)
                 .normalized;
             Vector2 targetAddedVelocity = forceDir * GetModel().Acceleration * Time.deltaTime;
-            if (rigidbody.velocity.magnitude <=Model.MaxSpeed|| (rigidbody.velocity + targetAddedVelocity).magnitude <
+            if (rigidbody.velocity.magnitude <= Model.MaxSpeed || (rigidbody.velocity + targetAddedVelocity).magnitude <
                 rigidbody.velocity.magnitude)
             {
                 //rigidbody.AddForce(forceDir * GetModel().MoveForce);
@@ -107,33 +119,52 @@ namespace Mikrocosmos
         }
 
         [Command]
-        private void CmdScrollMouseWhell(bool up) {
+        private void CmdScrollMouseWhell(bool up)
+        {
             int currentSlot = inventorySystem.GetCurrentSlot();
             inventorySystem.ServerSwitchSlot(currentSlot + (up ? -1 : 1));
         }
 
-        
+        /// <summary>
+        /// index from 0-9
+        /// </summary>
+        /// <param name="index"></param>
+        [Command]
+        private void CmdPressShortCut(int index)
+        {
+            int backpackCapacity = inventorySystem.GetSlotCount();
+            if (index < backpackCapacity) {
+                inventorySystem.ServerSwitchSlot(index);
+            }
+        }
 
-        protected override void FixedUpdate() {
+
+
+        protected override void FixedUpdate()
+        {
             base.FixedUpdate();
-            if (isServer) {
+            if (isServer)
+            {
                 //Debug.Log("Hasauthority");
-                if (isControlling && Model.HookState == HookState.Freed && CanControl) {
+                if (isControlling && Model.HookState == HookState.Freed && CanControl)
+                {
                     ServerMove(mousePosition);
                 }
 
-                if (Model.HookState == HookState.Freed) {
+                if (Model.HookState == HookState.Freed)
+                {
                     ServerRotate(mousePosition);
                 }
             }
         }
-        
+
 
         [ClientRpc]
-        public override void RpcOnClientHealthChange(int newHealth) {
+        public override void RpcOnClientHealthChange(int newHealth)
+        {
             Debug.Log($"Health Received: {newHealth}");
         }
     }
 
-    }
+}
 

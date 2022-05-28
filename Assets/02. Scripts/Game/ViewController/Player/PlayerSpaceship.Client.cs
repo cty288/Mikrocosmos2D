@@ -101,6 +101,22 @@ namespace Mikrocosmos
 
                 ClientCheckMouseScroll();
 
+                for (int i = 48; i <= 57; i++) {
+                    if (Input.GetKeyDown((KeyCode) i)) {
+                        //48 - 0 -> slot 9
+                        //49 - 1 -> slot 0
+                        //50 - 2 -> slot 1
+                        int index = 0;
+                        if (i == 48) {
+                            index = 9;
+                        }
+                        else {
+                            index = i - 49;
+                        }
+
+                        CmdPressShortCut(index);
+                    }
+                }
 
             }
 
