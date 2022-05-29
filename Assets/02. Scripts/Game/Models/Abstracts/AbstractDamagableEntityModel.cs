@@ -9,6 +9,7 @@ namespace Mikrocosmos
     public struct OnEntityTakeDamage {
         public IDamagable Entity;
         public int NewHealth;
+        public int OldHealth;
     }
     public abstract class AbstractDamagableEntityModel : AbstractBasicEntityModel, IDamagable{
 
@@ -58,7 +59,8 @@ namespace Mikrocosmos
             OnServerTakeDamage(oldHealth, CurrentHealth);
             this.SendEvent<OnEntityTakeDamage>(new OnEntityTakeDamage() {
                 Entity = this,
-                NewHealth = CurrentHealth
+                NewHealth = CurrentHealth,
+                OldHealth = oldHealth
             });
         }
 

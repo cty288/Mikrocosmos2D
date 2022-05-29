@@ -31,6 +31,8 @@ namespace Mikrocosmos
             this.RegisterEvent<OnMassChanged>(OnMassChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
             selfMotionAnimator = transform.Find("VisionControl/SelfSprite").GetComponent<Animator>();
             inventorySystem = GetComponent<IPlayerInventorySystem>();
+            selfSprites.Add(transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>());
+            selfSprites.AddRange(selfSprites[0].GetComponentsInChildren<SpriteRenderer>());
         }
 
 
@@ -50,24 +52,20 @@ namespace Mikrocosmos
                 minHookPressTimer += Time.deltaTime;
                 if (Input.GetMouseButtonDown(1))
                 {
-                    if (Model.HookState == HookState.Freed)
-                    {
+                    if (Model.HookState == HookState.Freed) {
                         CmdUpdateCanControl(true);
                     }
-                    else
-                    {
+                    else {
                         CmdUpdateCanControl(false);
                         GetModel().CmdIncreaseEscapeCounter();
                     }
                 }
 
-                if (Input.GetMouseButtonDown(0))
-                {
+                if (Input.GetMouseButtonDown(0)) {
                     CmdUpdateUsing(true);
                 }
 
-                if (Input.GetMouseButtonUp(0))
-                {
+                if (Input.GetMouseButtonUp(0)) {
                     CmdUpdateUsing(false);
                 }
 
@@ -123,19 +121,15 @@ namespace Mikrocosmos
 
            
 
-            if (hasAuthority && isClient)
-            {
-                if (Model.HookState == HookState.Freed)
-                {
+            if (hasAuthority && isClient) {
+                if (Model.HookState == HookState.Freed) {
                     CmdUpdateMousePosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 }
 
-                if (isControlling && Model.HookState == HookState.Freed)
-                {
+                if (isControlling && Model.HookState == HookState.Freed) {
                     selfMotionAnimator.SetBool("Controlling", true);
                 }
-                else
-                {
+                else {
                     selfMotionAnimator.SetBool("Controlling", false);
                 }
             }

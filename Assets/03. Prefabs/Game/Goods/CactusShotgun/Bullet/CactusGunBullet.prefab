@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_AssetId
-      value: 5a07e5ec996fc0c48a9d35384249e1ba
+      value: d5c6bd440b9b3ad4f81b00c82bb242ea
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Size.x
@@ -101,7 +101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Name
-      value: JellyGunBullet
+      value: CactusGunBullet
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Mesh
@@ -276,7 +276,7 @@ Animator:
   m_GameObject: {fileID: 5222149471336982627}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0a24141a3871159448ec339611cfa380, type: 2}
+  m_Controller: {fileID: 9100000, guid: e75042a0d39869d40b5ae6d5a94fc5ce, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -304,7 +304,7 @@ MonoBehaviour:
   <HookedRotationZOffset>k__BackingField: 0
   Force: 0
   shooter: {fileID: 0}
-  destroyWhenHit: 0
+  destroyWhenHit: 1
 --- !u!114 &773197963524302722
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   <MoveMode>k__BackingField: 1
   <MaxSpeed>k__BackingField: 50
   <CanBeAddedToInventory>k__BackingField: 1
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
@@ -261,8 +261,8 @@ MonoBehaviour:
   bufferTimeMultiplier: 3
   bufferSizeLimit: 128
   catchupThreshold: 6
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
+  catchupMultiplier: 0.097
+  onlySyncOnChange: 0
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0.01

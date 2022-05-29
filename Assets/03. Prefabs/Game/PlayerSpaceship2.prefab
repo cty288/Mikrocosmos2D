@@ -515,7 +515,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -920,7 +920,7 @@ MonoBehaviour:
   bufferTimeMultiplier: 3
   bufferSizeLimit: 64
   catchupThreshold: 6
-  catchupMultiplier: 0.054
+  catchupMultiplier: 0.097
   onlySyncOnChange: 0
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
@@ -993,6 +993,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2e53f370c8ca85b4e948bd0ff17afaf1, type: 3}
   - {fileID: 21300000, guid: 3258e8d6c98a7f4458e24154a38a8398, type: 3}
   Name: 
+  ThisSpaceshipTeam: 0
 --- !u!114 &8913116591047660154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1311,7 +1312,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: faec01642dea3fb41baba79216bb5ec2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

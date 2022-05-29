@@ -46,15 +46,17 @@ namespace Mikrocosmos
                         animator.SetTrigger("Hit");
                         if (entity is IDamagable damagable) {
                             BulletModel model = GetComponent<BulletModel>();
-                            Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
+                            //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
                             damagable.TakeRawDamage(
                                 (Mathf.RoundToInt( model.Damage * (Mathf.Min(rigidbody.velocity.magnitude / model.MaxSpeed,1)))));
                            
                         }
-                        if (destroyWhenHit)
-                        {
-                            NetworkServer.Destroy(this.gameObject);
-                        }
+                        
+                    }
+
+                    if (destroyWhenHit)
+                    {
+                        NetworkServer.Destroy(this.gameObject);
                     }
                 }
             }

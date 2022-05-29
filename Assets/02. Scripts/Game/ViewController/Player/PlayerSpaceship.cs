@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.TimeSystem;
@@ -46,10 +47,17 @@ namespace Mikrocosmos
         [SyncVar] public int ThisSpaceshipTeam;
 
         private IPlayerInventorySystem inventorySystem;
+
+        private List<SpriteRenderer> selfSprites = new List<SpriteRenderer>();
+        
         [ServerCallback]
         public void SetPlayerDisplayInfo(int team, int teamIndex, string name)
         {
-            transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+           
+            selfSprites[0].sprite = teamSprites[teamIndex];
+           
+
+
             this.Name = name;
             ThisSpaceshipTeam = team;
             RpcSetTeamSprite(teamIndex);
@@ -80,10 +88,7 @@ namespace Mikrocosmos
         [ServerCallback]
         protected override void OnServerUpdate()
         {
-            if (Model.HookState == HookState.Freed)
-            {
-                rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, GetModel().MaxMaxSpeed);
-            }
+           
 
             if (isUsing)
             {
@@ -123,7 +128,7 @@ namespace Mikrocosmos
         {
             Vector2 forceDir = (mousePos - transform.position)
                 .normalized;
-            Vector2 targetAddedVelocity = forceDir * GetModel().Acceleration * Time.deltaTime;
+            Vector2 targetAddedVelocity = forceDir * GetModel().Acceleration * Time.fixedDeltaTime;
             if (rigidbody.velocity.magnitude <= Model.MaxSpeed || (rigidbody.velocity + targetAddedVelocity).magnitude <
                 rigidbody.velocity.magnitude)
             {
@@ -178,14 +183,37 @@ namespace Mikrocosmos
                 {
                     ServerRotate(mousePosition);
                 }
+
+                if (Model.HookState == HookState.Freed)
+                {
+                    rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, GetModel().MaxMaxSpeed);
+                }
             }
         }
 
 
         [ClientRpc]
-        public override void RpcOnClientHealthChange(int newHealth)
-        {
+        public override void RpcOnClientHealthChange(int oldHealth, int newHealth) {
             Debug.Log($"Health Received: {newHealth}");
+            if (newHealth < oldHealth) {
+                StartCoroutine(PlayHurtEffect());
+            }
+        }
+
+
+        private IEnumerator PlayHurtEffect() {
+            foreach (SpriteRenderer sprite in selfSprites) {
+                sprite.color = Color.red;
+            }
+
+            yield return new WaitForSeconds(0.2f);
+
+            foreach (SpriteRenderer sprite in selfSprites)
+            {
+                sprite.color = Color.white;
+            }
+            
+           
         }
     }
 
