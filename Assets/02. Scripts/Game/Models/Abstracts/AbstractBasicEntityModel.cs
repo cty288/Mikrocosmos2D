@@ -84,6 +84,15 @@ namespace Mikrocosmos
             }
         }
 
+        public void ResetEntity() {
+            if (isServer) {
+                UnHook();
+                OnReset();
+            }
+        }
+
+        public virtual void OnReset(){}
+
         [ServerCallback]
         protected virtual bool ServerCheckCanHook(NetworkIdentity hookedBy) {
             return true;

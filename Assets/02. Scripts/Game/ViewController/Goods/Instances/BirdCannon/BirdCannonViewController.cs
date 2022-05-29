@@ -23,8 +23,9 @@ namespace Mikrocosmos
 
         private Transform shootPos;
         private NetworkAnimator animator;
+        [SyncVar]
         private NetworkIdentity previousHookedBy;
-
+        //private NetworkedGameObjectPool bulletPool;
         protected override void Awake()
         {
             base.Awake();
@@ -32,7 +33,11 @@ namespace Mikrocosmos
             animator = GetComponent<NetworkAnimator>();
             
         }
-
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            //bulletPool = NetworkedObjectPoolManager.Singleton.CreatePool(bullet, 10, 30);
+        }
         protected override void OnServerItemUsed()
         {
             base.OnServerItemUsed();
@@ -47,8 +52,13 @@ namespace Mikrocosmos
         {
             if (isServer)
             {
+                //GameObject bullet = bulletPool.Allocate();
                 GameObject bullet = Instantiate(this.bullet, shootPos.transform.position, Quaternion.identity);
-                bullet.GetComponent<BasicBulletViewController>().shooter = GetComponent<Collider2D>();
+                bullet.transform.position = shootPos.transform.position;
+                bullet.transform.rotation = Quaternion.identity;
+                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                
+                bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>());
                 bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
                 bullet.transform.rotation = transform.rotation;
                 NetworkServer.Spawn(bullet);
@@ -79,10 +89,13 @@ namespace Mikrocosmos
             }
         }
 
+        
+
         protected override void OnServerItemBroken() {
             base.OnServerItemBroken();
             if (previousHookedBy)
             {
+                Debug.Log($"BirdCannon Broken: {previousHookedBy.connectionToClient}");
                 TargetOnEndCharge(previousHookedBy.connectionToClient);
             }
         }
@@ -114,5 +127,19 @@ namespace Mikrocosmos
             });
         }
 
+        private void OnDestroy() {
+            
+            if (previousHookedBy && previousHookedBy.hasAuthority) {
+                this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
+                {
+                    NewRadius = 15
+                });
+                this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
+                {
+                    Inner = 18,
+                    Outer = 25
+                });
+            }
+        }
     }
 }

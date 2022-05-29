@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Utilities;
+using Mirror;
 using Mirror.Experimental;
 using UnityEngine;
 using NetworkTransform = Mirror.NetworkTransform;
@@ -33,6 +34,8 @@ namespace Mikrocosmos
 
     public interface IEntityViewController :  ICanBeShotViewController {
         IEntity Model { get; }
+
+        void ResetViewController();
     }
 
     public interface ICanBeUsedHookableViewController: IHookableViewController {
@@ -48,6 +51,14 @@ namespace Mikrocosmos
 
     public abstract class BasicEntityViewController: AbstractNetworkedController<Mikrocosmos>, IEntityViewController {
         public  IEntity Model { get; protected set; }
+        public void ResetViewController() {
+            OnReset();
+        }
+
+        public virtual void OnReset() {
+
+        }
+        
 
         [field: SerializeField]
         public Vector2 HookedPositionOffset { get; protected set; }
@@ -58,13 +69,15 @@ namespace Mikrocosmos
 
         protected Rigidbody2D rigidbody;
 
-        protected Transform hookedTrReference;
+        protected NetworkTransform networkTransform;
+        protected NetworkRigidbody2D networkRigidbody;
 
 
         protected virtual void Awake() {
             Model = GetComponent<IEntity>();
             rigidbody = GetComponent<Rigidbody2D>();
-          
+            networkTransform = GetComponent<NetworkTransform>();
+            networkRigidbody = GetComponent<NetworkRigidbody2D>();
         }
 
         public override void OnStartServer() {
@@ -84,14 +97,11 @@ namespace Mikrocosmos
         
         protected virtual void FixedUpdate() {
 
-            if (isServer)
-            {
+            if (isServer) {
                 if (Model.HookState == HookState.Hooked)
                 {
                     Transform hookedByTr = Model.HookedByTransform;
                     if (hookedByTr) {
-
-
                         hookedByTr.localPosition = HookedPositionOffset;
                         // rigidbody.bodyType = RigidbodyType2D.Kinematic;
                         if (Model.MoveMode == MoveMode.ByPhysics)
@@ -106,16 +116,39 @@ namespace Mikrocosmos
                             transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
+                    }
+                }
+                else {
+                    rigidbody.bodyType = RigidbodyType2D.Dynamic;
+                }
+            }
 
+            /*
 
+            if (isClientOnly) {
+                if (Model.HookState == HookState.Hooked && Model.HookedByIdentity.hasAuthority) {
+                    networkRigidbody.syncVelocity = false;
+                    networkTransform.syncPosition = false;
+                    networkTransform.syncRotation = false;
+
+                    Transform hookedByTr = Model.HookedByIdentity.transform.Find("HookTransform");
+                    
+                    if (hookedByTr) {
+                        hookedByTr.localPosition = HookedPositionOffset;
+                       
+                       //rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 20 * Time.fixedDeltaTime));
+                       transform.position = hookedByTr.position;
+                        transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
+                                                                  new Vector3(0, 0, HookedRotationZOffset));
                     }
                 }
                 else
                 {
-                    rigidbody.bodyType = RigidbodyType2D.Dynamic;
+                    networkRigidbody.syncVelocity = true;
+                    networkTransform.syncPosition = true;
+                    networkTransform.syncRotation = true;
                 }
-
-            }
+            }*/
 
         
 

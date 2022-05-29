@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 42340709
+CRC: 1123729831
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 16379437fe79d0cbf40d88c7a9dfd718
+    Hash: 48ca3368f38cd5163df5a244651d1800
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 2f258df596b06fd3dd7a89a7498544da
+    Hash: 88023a85e0e50aa47352a2f9a892a6d1
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -62,15 +62,17 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 9dc4c5d80178d9945bf8edd927b4b509, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: e5af11a9e8ef0b2409ae2cded8f0f388, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: b629bd1565be586478c0c6b213fec5d0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -98,6 +100,8 @@ SerializeReferenceClassIdentifiers:
   ClassName: TMPro.VertexGradient
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.UnityEvent
 - AssemblyName: UnityEngine.TextCoreFontEngineModule
   ClassName: UnityEngine.TextCore.FaceInfo
 - AssemblyName: UnityEngine.TextCoreFontEngineModule

@@ -61,19 +61,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 67.85437
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -120.9528
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.3239698
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.92083484
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalRotation.x
@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.38995287
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -286,6 +286,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-8650637104903854428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5222149471336982627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc4c5d80178d9945bf8edd927b4b509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pool: {fileID: 0}
+  OnInitialize:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRecycle:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &-963758100097498679
 MonoBehaviour:
   m_ObjectHideFlags: 0

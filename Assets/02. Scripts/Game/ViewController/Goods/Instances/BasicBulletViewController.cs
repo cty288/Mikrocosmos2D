@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
+    //[RequireComponent(typeof(PoolableNetworkedGameObject))]
     public class BasicBulletViewController : BasicEntityViewController
     {
         [HideInInspector] public float Force;
@@ -17,21 +18,40 @@ namespace Mikrocosmos
 
        private NetworkAnimator animator;
 
+       private PoolableNetworkedGameObject poolable;
+
        [SerializeField] private bool destroyWhenHit = false;
         protected void Start() {
             base.Awake();
             animator = GetComponent<NetworkAnimator>();
+           
             if (shooter) {
                 Physics2D.IgnoreCollision(shooter, GetComponent<Collider2D>(), true);
             }
-            
+        }
+
+        public void SetShotoer(Collider2D shooter) {
+            this.shooter = shooter;
+            Physics2D.IgnoreCollision(shooter, GetComponent<Collider2D>(), true);
+        }
+       
+
+        public override void OnReset() {
+            base.OnReset();
+            if (shooter) {
+                Physics2D.IgnoreCollision(shooter, GetComponent<Collider2D>(), false);
+                shooter = null;
+            }
+            rigidbody.velocity = Vector2.zero;
         }
 
         public override void OnStartServer() {
             base.OnStartServer();
+            poolable = GetComponent<PoolableNetworkedGameObject>();
             this.GetSystem<ITimeSystem>().AddDelayTask(30, () => {
                 if (this) {
-                    NetworkServer.Destroy(gameObject);
+                    //poolable.RecycleToCache();
+                    //NetworkServer.Destroy(gameObject);
                 }
             });
 
@@ -56,7 +76,15 @@ namespace Mikrocosmos
 
                     if (destroyWhenHit)
                     {
-                        NetworkServer.Destroy(this.gameObject);
+                        // NetworkServer.Destroy(this.gameObject);
+                        rigidbody.velocity = Vector2.zero;
+                        if (poolable) {
+                            poolable.RecycleToCache();
+                        }
+                        else {
+                            NetworkServer.Destroy(this.gameObject);
+                        }
+                       
                     }
                 }
             }
@@ -72,7 +100,16 @@ namespace Mikrocosmos
 
         public void OnAnimationDone() {
             if (isServer) {
-                NetworkServer.Destroy(this.gameObject);
+                //NetworkServer.Destroy(this.gameObject);
+                rigidbody.velocity = Vector2.zero;
+                if (poolable) {
+                    
+                    poolable.RecycleToCache();
+                }
+                else {
+                    NetworkServer.Destroy(this.gameObject);
+                }
+               
             }
             
         }

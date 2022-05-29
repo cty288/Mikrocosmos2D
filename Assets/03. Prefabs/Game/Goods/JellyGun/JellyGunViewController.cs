@@ -11,10 +11,17 @@ public class JellyGunViewController : BasicGoodsViewController {
     private Transform shootPos;
     private NetworkAnimator animator;
 
+    private NetworkedGameObjectPool bulletPool;
     protected override void Awake() {
         base.Awake();
         shootPos = transform.Find("ShootPosition");
         animator = GetComponent<NetworkAnimator>();
+    }
+
+
+    public override void OnStartServer() {
+        base.OnStartServer();
+        bulletPool = NetworkedObjectPoolManager.Singleton.CreatePool(bullet,10, 30);
     }
 
     protected override void OnServerItemUsed() {
@@ -27,8 +34,11 @@ public class JellyGunViewController : BasicGoodsViewController {
     
     public void OnBulletShoot() {
         if (isServer) {
-            GameObject bullet = Instantiate(this.bullet, shootPos.transform.position, Quaternion.identity);
-            bullet.GetComponent<BasicBulletViewController>().shooter = GetComponent<Collider2D>();
+             GameObject bullet = bulletPool.Allocate();
+            //GameObject bullet = Instantiate(this.bullet, shootPos.transform.position, Quaternion.identity);
+            bullet.transform.position = shootPos.transform.position;
+            bullet.transform.rotation = Quaternion.identity;
+            bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>());
             bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
             bullet.transform.rotation = transform.rotation;
             NetworkServer.Spawn(bullet);

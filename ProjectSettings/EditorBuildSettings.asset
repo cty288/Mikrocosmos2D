@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/01. Scenes/MainGame.unity
     guid: 95ddf95e537388b4487fbc78b7325a28
   - enabled: 0
+    path: Assets/Mirror/Examples/Discovery/Scenes/Scene.unity
+    guid: 90fddc74fa21c423599167eb28b09dd1
+  - enabled: 0
     path: Assets/Mirror/Examples/Room/Scenes/OfflineScene.unity
     guid: 9e6f14982412b2545a0911ebaaa46a23
   - enabled: 0
@@ -23,7 +26,4 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Mirror/Examples/Room/Scenes/OnlineScene.unity
     guid: d7a6763559b31854586c9e49916273ef
-  - enabled: 0
-    path: Assets/Mirror/Examples/Discovery/Scenes/Scene.unity
-    guid: 90fddc74fa21c423599167eb28b09dd1
   m_configObjects: {}

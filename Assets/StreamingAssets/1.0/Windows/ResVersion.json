@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "0995b346307094cfb7b4246b5d7b744e",
+      "MD5": "06d96c3cbcb0636de1a73d7fb36572d3",
       "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "85cf578930e4050785a12d1f38e31174",
-      "FileSize": 10733.7578,
+      "MD5": "2331cd862944c0f34107cc7467a0e0d0",
+      "FileSize": 10741.6338,
       "assetDatas": [
         {
           "Name": "FirePlant",
