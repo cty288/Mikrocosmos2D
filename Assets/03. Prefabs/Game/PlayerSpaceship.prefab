@@ -838,6 +838,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4de6d92b35f33e346ad6a1a2783e6ce3, type: 3}
   - {fileID: 21300000, guid: b195fc6ee30e59a4fa00471e97f54321, type: 3}
   - {fileID: 21300000, guid: 12c908bc92110c445967c5086b1e000c, type: 3}
+  mapSprites:
+  - {fileID: 21300000, guid: 2e53f370c8ca85b4e948bd0ff17afaf1, type: 3}
+  - {fileID: 21300000, guid: 3258e8d6c98a7f4458e24154a38a8398, type: 3}
   Name: 
 --- !u!114 &8913116591047660154
 MonoBehaviour:

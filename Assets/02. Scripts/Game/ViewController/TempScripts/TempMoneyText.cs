@@ -20,6 +20,22 @@ namespace Mikrocosmos
             this.RegisterEvent<OnClientMainGamePlayerConnected>(OnLocalPlayerConnected)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnClientMoneyChange>(OnClientMoneyChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnClientMoneyNotEnough>(OnClientMoneyNotEnough)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnClientMoneyNotEnough(OnClientMoneyNotEnough e) {
+            StartCoroutine(MoneyNotEnoughAnimation());
+        }
+
+        private IEnumerator MoneyNotEnoughAnimation() {
+            moneyText.color = Color.red;
+            yield return new WaitForSeconds(0.2f);
+            moneyText.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+            moneyText.color = Color.red;
+            yield return new WaitForSeconds(0.2f);
+            moneyText.color = Color.white;
         }
 
         private void Update() {

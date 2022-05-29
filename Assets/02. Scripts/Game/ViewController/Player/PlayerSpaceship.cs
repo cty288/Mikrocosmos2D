@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
 
@@ -36,23 +38,43 @@ namespace Mikrocosmos
         [SerializeField]
         private List<Sprite> teamSprites;
 
+        [SerializeField] private List<Sprite> mapSprites;
+
         [SyncVar]
         public string Name;
 
+        [SyncVar] public int ThisSpaceshipTeam;
+
         private IPlayerInventorySystem inventorySystem;
         [ServerCallback]
-        public void SetPlayerDisplayInfo(int teamIndex, string name)
+        public void SetPlayerDisplayInfo(int team, int teamIndex, string name)
         {
             transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
             this.Name = name;
+            ThisSpaceshipTeam = team;
             RpcSetTeamSprite(teamIndex);
         }
 
 
         [ClientRpc]
-        private void RpcSetTeamSprite(int teamIndex)
-        {
+        private void RpcSetTeamSprite(int teamIndex) {
             transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+        }
+
+
+        public override void OnStartClient() {
+            base.OnStartClient();
+            this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => {
+                if (this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team ==
+                    ThisSpaceshipTeam)
+                {
+                    transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[0];
+                }
+                else
+                {
+                    transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[1];
+                }
+            });
         }
 
         [ServerCallback]
@@ -133,7 +155,8 @@ namespace Mikrocosmos
         private void CmdPressShortCut(int index)
         {
             int backpackCapacity = inventorySystem.GetSlotCount();
-            if (index < backpackCapacity) {
+            if (index < backpackCapacity)
+            {
                 inventorySystem.ServerSwitchSlot(index);
             }
         }
