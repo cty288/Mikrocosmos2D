@@ -71,14 +71,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "5a8b5660863d590dfb8b8042c793583a",
+      "MD5": "0995b346307094cfb7b4246b5d7b744e",
       "FileSize": 1.70019531,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "2acd29478d99cc82dd71b472cb4c99ca",
-      "FileSize": 10721.0332,
+      "MD5": "85cf578930e4050785a12d1f38e31174",
+      "FileSize": 10733.7578,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -147,6 +147,11 @@
         },
         {
           "Name": "BirdCannonSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "CactusShotgunSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

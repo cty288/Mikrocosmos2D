@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
+using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
 
@@ -22,6 +24,17 @@ namespace Mikrocosmos
             if (shooter) {
                 Physics2D.IgnoreCollision(shooter, GetComponent<Collider2D>(), true);
             }
+            
+        }
+
+        public override void OnStartServer() {
+            base.OnStartServer();
+            this.GetSystem<ITimeSystem>().AddDelayTask(30, () => {
+                if (this) {
+                    NetworkServer.Destroy(gameObject);
+                }
+            });
+
         }
 
         private void OnCollisionEnter2D(Collision2D collision) {

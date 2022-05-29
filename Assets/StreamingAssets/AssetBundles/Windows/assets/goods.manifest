@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1040541907
+CRC: 42340709
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 950f321a1d5972f215c46152a1a0c134
+    Hash: 16379437fe79d0cbf40d88c7a9dfd718
   TypeTreeHash:
     serializedVersion: 2
     Hash: 2f258df596b06fd3dd7a89a7498544da
@@ -117,6 +117,7 @@ Assets:
 - Assets/03. Prefabs/Game/Goods/Template.prefab
 - Assets/04. Sprites/Goods/Eye/KrowEye1/KrowEyeSprite.png
 - Assets/04. Sprites/Goods/JellyGun/JellyGunSprite_5.png
+- Assets/04. Sprites/Goods/CactusShotgun/CactusShotgunSprite.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_4.png
 - Assets/04. Sprites/Goods/LeafKnife/LeafKnifeSprite_5.png
 - Assets/03. Prefabs/Game/Goods/Temporary/Banana/BananaTemp.prefab
