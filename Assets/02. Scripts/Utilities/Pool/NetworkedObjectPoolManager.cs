@@ -72,7 +72,7 @@ namespace Mikrocosmos
                         prefab.AddComponent<DefaultPoolableGameObject>();
                     }
                 }
-
+                
                 NetworkedGameObjectPool pool = Instantiate(networkedGameObjectPoolPrefab)
                     .GetComponent<NetworkedGameObjectPool>();
                 pool.PooledPrefab = prefab;
@@ -128,7 +128,7 @@ namespace Mikrocosmos
                 {
                     if (AutoCreatePoolWhenAllocating)
                     {
-                        GetOrCreatePool(prefab);
+                        pool = GetOrCreatePool(prefab);
                     }
                     else
                     {
@@ -159,8 +159,17 @@ namespace Mikrocosmos
 
                 if (!CheckPoolExists(recycledObject, out pool))
                 {
-                    Debug.LogError($"The pool does not exist for {prefabName}! Use CreatePool() to create its pool!");
-                    return false;
+                    if (AutoCreatePoolWhenAllocating)
+                    {
+                        pool = GetOrCreatePool(recycledObject);
+                        pool.Recycle(recycledObject);
+                        return true;
+                    }
+                    else {
+                        Debug.LogError($"The pool does not exist for {prefabName}! Use CreatePool() to create its pool!");
+                        return false;
+                    }
+                   
                 }
                 else
                 {

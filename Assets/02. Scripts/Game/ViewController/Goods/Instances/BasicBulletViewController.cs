@@ -68,7 +68,7 @@ namespace Mikrocosmos
                             BulletModel model = GetComponent<BulletModel>();
                             //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
                             damagable.TakeRawDamage(
-                                (Mathf.RoundToInt( model.Damage * (Mathf.Min(rigidbody.velocity.magnitude / model.MaxSpeed,1)))));
+                                (Mathf.RoundToInt( model.Damage * (Mathf.Min(3*rigidbody.velocity.magnitude / model.MaxSpeed,1)))));
                            
                         }
                         

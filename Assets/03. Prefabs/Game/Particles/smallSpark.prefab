@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4980017880052449210}
   - component: {fileID: 4980017880052449213}
   - component: {fileID: 4980017880052449212}
+  - component: {fileID: 4744280740460071726}
   m_Layer: 0
   m_Name: smallSpark
   m_TagString: Untagged
@@ -48,7 +49,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4870,3 +4871,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4744280740460071726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4980017880052449215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728e083f0b501834ca14dc65f99c5fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 3

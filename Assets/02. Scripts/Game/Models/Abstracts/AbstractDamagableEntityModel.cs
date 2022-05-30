@@ -40,7 +40,15 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             CurrentHealth = MaxHealth;
-            StartCoroutine(RecoverHealth());
+            Invoke(nameof(StartRecoverHealthCoroutine), 1f);
+        }
+
+        private void StartRecoverHealthCoroutine() {
+            if (gameObject.activeInHierarchy) {
+                StopAllCoroutines();
+                StartCoroutine(RecoverHealth());
+            }
+        
         }
 
         private IEnumerator RecoverHealth() {

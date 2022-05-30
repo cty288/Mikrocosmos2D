@@ -27,6 +27,8 @@ namespace Mikrocosmos
             GetComponent<Rigidbody2D>().AddExplosionForce(force, position, range);
         }
 
+      
+        
         [field: SerializeField] public Vector2 StartDirection { get; protected set; }
 
         [field: SerializeField]
@@ -48,7 +50,11 @@ namespace Mikrocosmos
         }
 
         public override void OnServerTakeDamage(int oldHealth, int newHealth) {
-            
+            if (newHealth <= 0) {
+                this.SendEvent<OnMeteorDestroyed>(new OnMeteorDestroyed() {
+                    Meteor = gameObject
+                });
+            }
         }
 
         public override void OnReceiveExcessiveMomentum(float excessiveMomentum) {

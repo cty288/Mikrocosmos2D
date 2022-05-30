@@ -7,6 +7,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnStartServer
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Mikrocosmos.MeteorModel, Mikrocosmos
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: momentumCoolDown
       value: 0.5
@@ -43,6 +71,14 @@ PrefabInstance:
       propertyPath: <InitialForceMultiplier>k__BackingField
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 1128868329765695182, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: dieParticle
+      value: 
+      objectReference: {fileID: 3286347860092680941, guid: 3c052444d2f7b144e914ded460af1808, type: 3}
+    - target: {fileID: 1128868329765695182, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: damageParticle
+      value: 
+      objectReference: {fileID: 4980017880052449215, guid: 8066c86cd7eba934cb9206b82ec89dc0, type: 3}
     - target: {fileID: 1128868329765695182, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: <HookedPositionOffset>k__BackingField.y
       value: 5.23
@@ -345,3 +381,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+--- !u!1 &2647294947843263690 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3789394192495447563, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+  m_PrefabInstance: {fileID: 1165224259119530689}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3515734223052683481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2647294947843263690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc4c5d80178d9945bf8edd927b4b509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pool: {fileID: 0}
+  OnInitialize:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRecycle:
+    m_PersistentCalls:
+      m_Calls: []

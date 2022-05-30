@@ -19,9 +19,10 @@ GameObject:
   - component: {fileID: 1128868329765695182}
   - component: {fileID: -7106308886407098970}
   - component: {fileID: 949103041305761441}
+  - component: {fileID: -8026100169227303925}
   m_Layer: 7
   m_Name: Meteor
-  m_TagString: Untagged
+  m_TagString: Meteor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -252,6 +253,8 @@ MonoBehaviour:
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
+  damageParticle: {fileID: 4980017880052449215, guid: 8066c86cd7eba934cb9206b82ec89dc0, type: 3}
+  dieParticle: {fileID: 3286347860092680941, guid: 3c052444d2f7b144e914ded460af1808, type: 3}
 --- !u!114 &-7106308886407098970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,12 +278,13 @@ MonoBehaviour:
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 20
   <MomentumThredhold>k__BackingField: 10
-  <MaxHealth>k__BackingField: 100
-  <CurrentHealth>k__BackingField: 100
+  <MaxHealth>k__BackingField: 50
+  <CurrentHealth>k__BackingField: 50
   momentumCoolDown: 0.5
   healthRecoverThreshold: 20
   healthRecoverPerSecond: 50
   healthRecoverWaitTimeAfterDamage: 5
+  HealthRecoverTimer: 0
   <StartDirection>k__BackingField: {x: 0, y: 0}
   <InitialForceMultiplier>k__BackingField: 0.0002
   <AffectedByGravity>k__BackingField: 1
@@ -303,6 +307,37 @@ MonoBehaviour:
   visionAffectedSprites:
   - {fileID: 3789394192495447796}
   <CanBeMasked>k__BackingField: 1
+--- !u!114 &-8026100169227303925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3789394192495447563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc4c5d80178d9945bf8edd927b4b509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pool: {fileID: 0}
+  OnInitialize:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -7106308886407098970}
+        m_TargetAssemblyTypeName: Mikrocosmos.MeteorModel, Mikrocosmos
+        m_MethodName: OnStartServer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRecycle:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8200551623142049076
 GameObject:
   m_ObjectHideFlags: 0
