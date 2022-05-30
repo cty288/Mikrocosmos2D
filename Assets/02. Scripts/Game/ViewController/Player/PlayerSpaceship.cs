@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
@@ -26,7 +27,10 @@ namespace Mikrocosmos
             }
         }
 
-        [field: SyncVar] public bool CanControl { get; set; } = true;
+        [field: SyncVar]
+        public bool CanControl { get; set; } = true;
+
+        
 
         [SerializeField, SyncVar]
         private bool isUsing = false;
@@ -49,6 +53,8 @@ namespace Mikrocosmos
         private IPlayerInventorySystem inventorySystem;
 
         private List<SpriteRenderer> selfSprites = new List<SpriteRenderer>();
+
+        private IBuffSystem buffSystem;
         
         [ServerCallback]
         public void SetPlayerDisplayInfo(int team, int teamIndex, string name)
@@ -63,6 +69,28 @@ namespace Mikrocosmos
             RpcSetTeamSprite(teamIndex);
         }
 
+        public override void OnStartServer() {
+            base.OnStartServer();
+            this.RegisterEvent<OnPlayerDie>(OnServerPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            buffSystem.ServerRegisterClientCallback<DizzyBuff>(RpcOnDizzyBuff);
+            buffSystem.ServerRegisterClientCallback<InvincibleBuff>(RpcOnInvincibleBuff);
+        }
+
+        [ServerCallback]
+        private void OnServerPlayerDie(OnPlayerDie e) {
+         
+            if (e.SpaceshipIdentity == netIdentity) {
+                float dieTime = GetModel().DieDizzyTime;
+                float invincibleTime = GetModel().RespawnInvincibleTime;
+                
+                buffSystem.AddBuff<DizzyBuff>(new DizzyBuff(dieTime, dieTime, buffSystem, () => {
+                    DamagableModel.AddHealth(DamagableModel.MaxHealth);
+                    buffSystem.AddBuff<InvincibleBuff>(new InvincibleBuff(invincibleTime, invincibleTime, buffSystem));
+                }));
+            }
+            
+        }
 
         [ClientRpc]
         private void RpcSetTeamSprite(int teamIndex) {
@@ -141,7 +169,7 @@ namespace Mikrocosmos
         {
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;
             float angle = Mathf.Atan2(dir.y, dir.x) * (180 / Mathf.PI) + 90;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.2f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.4f);
             // rigidbody.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.2f));
         }
 
@@ -173,6 +201,10 @@ namespace Mikrocosmos
             base.FixedUpdate();
             if (isServer)
             {
+                if (buffSystem.HasBuff<DizzyBuff>()) {
+                    return;
+                }
+                
                 //Debug.Log("Hasauthority");
                 if (isControlling && Model.HookState == HookState.Freed && CanControl)
                 {

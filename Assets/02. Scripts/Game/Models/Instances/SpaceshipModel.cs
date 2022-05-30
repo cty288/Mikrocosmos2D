@@ -22,6 +22,10 @@ namespace Mikrocosmos
         public int NumberItemRequest;
 
     }
+
+    public struct OnPlayerDie {
+        public NetworkIdentity SpaceshipIdentity;
+    }
     public class SpaceshipModel : AbstractDamagableEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
         public override string Name { get; set; } = "Spaceship";
         private IHookSystem hookSystem;
@@ -97,6 +101,10 @@ namespace Mikrocosmos
             }
 
         }
+
+        [field: SerializeField] public float DieDizzyTime { get; protected set; } = 5f;
+
+        [field: SerializeField] public float RespawnInvincibleTime { get; protected set; } = 5f;
 
         [field: SyncVar,SerializeField]
         public float InitialAcceleration { get; private set; } = 20;
@@ -246,6 +254,16 @@ namespace Mikrocosmos
 
         public override void OnServerTakeDamage(int oldHealth, int newHealth) {
            // int healthReceived = newHealth - oldHealth;
+           if (newHealth <= 0) {
+               this.SendEvent<OnSpaceshipRequestDropItems>(new OnSpaceshipRequestDropItems() {
+                   NumberItemRequest = 99999,
+                   SpaceshipIdentity = netIdentity
+               });
+
+               this.SendEvent<OnPlayerDie>(new OnPlayerDie() {
+                   SpaceshipIdentity = netIdentity
+               });
+           }
         }
 
         [ServerCallback]

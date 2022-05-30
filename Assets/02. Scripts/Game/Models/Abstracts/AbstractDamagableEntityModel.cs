@@ -53,6 +53,11 @@ namespace Mikrocosmos
 
         public abstract int GetDamageFromExcessiveMomentum(float excessiveMomentum);
         public void TakeRawDamage(int damage) {
+            if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
+                if (buffSystem.HasBuff<InvincibleBuff>()) {
+                    return;
+                }
+            }
             int oldHealth = CurrentHealth;
             CurrentHealth -= damage;
             CurrentHealth = Mathf.Max(0, CurrentHealth);
@@ -62,6 +67,11 @@ namespace Mikrocosmos
                 NewHealth = CurrentHealth,
                 OldHealth = oldHealth
             });
+        }
+
+        public void AddHealth(int health) {
+            CurrentHealth += health;
+            CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
         }
 
         public abstract void OnServerTakeDamage(int oldHealth, int newHealth);

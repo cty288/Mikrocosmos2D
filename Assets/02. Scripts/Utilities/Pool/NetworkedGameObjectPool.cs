@@ -303,5 +303,49 @@ namespace Mikrocosmos
                                "calling any functions");
             }
         }
+
+
+        //merge sort an array of integers
+        private void MergeSort(int[] array, int left, int right)
+        {
+            if (left < right)
+            {
+                int middle = (left + right) / 2;
+
+                MergeSort(array, left, middle);
+                MergeSort(array, middle + 1, right);
+
+                Merge(array, left, middle, right);
+            }
+        }
+
+        private void Merge(int[] array, int left, int middle, int right) {
+            int[] temp = new int[array.Length];
+            int i, left_end, num_elements, tmp_pos;
+
+            left_end = middle;
+            tmp_pos = left;
+            num_elements = right - left + 1;
+
+            while ((left <= left_end) && (middle <= right))
+            {
+                if (array[left] <= array[middle])
+                    temp[tmp_pos++] = array[left++];
+                else
+                    temp[tmp_pos++] = array[middle++];
+            }
+
+            while (left <= left_end)
+                temp[tmp_pos++] = array[left++];
+
+            while (middle <= right)
+                temp[tmp_pos++] = array[middle++];
+
+            for (i = 0; i < num_elements; i++)
+            {
+                array[right] = temp[right];
+                right--;
+            }
+        }
     }
 }

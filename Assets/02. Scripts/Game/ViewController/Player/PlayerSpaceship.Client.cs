@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Utilities;
@@ -33,6 +34,7 @@ namespace Mikrocosmos
             inventorySystem = GetComponent<IPlayerInventorySystem>();
             selfSprites.Add(transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>());
             selfSprites.AddRange(selfSprites[0].GetComponentsInChildren<SpriteRenderer>());
+            buffSystem = GetComponent<IBuffSystem>();
         }
 
 
@@ -166,5 +168,30 @@ namespace Mikrocosmos
         }
 
 
+        [ClientRpc]
+        private void RpcOnDizzyBuff(BuffStatus e) {
+            if (e == BuffStatus.OnStart) {
+                selfSprites.ForEach((spriteRenderer => spriteRenderer.DOColor(new Color(0.4f, 0.4f, 0.4f), 0.5f).SetLoops(-1, LoopType.Yoyo)));
+            }else if (e == BuffStatus.OnEnd) {
+                selfSprites.ForEach(spriteRenderer => {
+                    spriteRenderer.DOKill(false);
+                    spriteRenderer.DOColor(Color.white, 0.5f);
+                });
+            }
+        }
+
+        [ClientRpc]
+        private void RpcOnInvincibleBuff(BuffStatus e) {
+            if (e == BuffStatus.OnStart) {
+                selfSprites.ForEach((spriteRenderer => spriteRenderer.DOFade(0.4f, 0.5f).SetLoops(-1, LoopType.Yoyo)));
+            }
+            else if (e == BuffStatus.OnEnd)
+            {
+                selfSprites.ForEach(spriteRenderer => {
+                    spriteRenderer.DOKill(false);
+                    spriteRenderer.DOFade(1f, 0.5f);
+                });
+            }
+        }
     }
 }

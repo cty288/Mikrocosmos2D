@@ -445,5 +445,5 @@ MonoBehaviour:
   <MaxDurability>k__BackingField: 50
   reduceDurabilityInstantlyAfterUse: 0
   addedForce: 150
-  addedMomentum: 16
+  addedMomentum: 17
   addedDamage: 30

@@ -31,6 +31,9 @@ namespace Mikrocosmos
 
         public void CmdIncreaseEscapeCounter();
 
+        public float DieDizzyTime { get; }
+        public float RespawnInvincibleTime { get; }        
+
 
     }
     

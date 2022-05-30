@@ -26,6 +26,8 @@ namespace Mikrocosmos
         int GetDamageFromExcessiveMomentum(float excessiveMomentum); //called by Hit IHaveMomentum
 
         void TakeRawDamage(int damage);
+
+        void AddHealth(int health);
         void OnServerTakeDamage(int oldHealth, int newHealth);
 
         void OnReceiveExcessiveMomentum(float excessiveMomentum);

@@ -170,14 +170,14 @@ namespace Mikrocosmos {
                     else { //dropped from backpack: just spawn it somewhere
                         GameObject droppedObj = e.DroppedObject;
                         droppedObj.SetActive(true);
-                        Vector2 spawnPos = new Vector2(droppedItemSpawnPos.position.x + Random.Range(-1f, 1f),
-                            droppedItemSpawnPos.position.y + Random.Range(-1f, 1f));
+                        Vector2 spawnPos = new Vector2(droppedItemSpawnPos.position.x + Random.Range(-0.5f, 0.5f),
+                            droppedItemSpawnPos.position.y + Random.Range(-0.5f, 0.5f));
 
                         droppedObj.transform.position = spawnPos;
                         droppedObj.GetComponent<IHookable>().UnHook(false);
                         Vector2 randomForce = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
 
-                        droppedObj.GetComponent<Rigidbody2D>().AddForce(randomForce * Random.Range(0f, 5f),
+                        droppedObj.GetComponent<Rigidbody2D>().AddForce(randomForce * Random.Range(-5f, 5f),
                             ForceMode2D.Impulse);
 
                         NetworkServer.Spawn(droppedObj);
