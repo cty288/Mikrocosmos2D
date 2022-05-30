@@ -192,11 +192,7 @@ namespace Mikrocosmos
             return SelfMass;
         }
 
-        [ServerCallback]
-        public virtual float GetMomentum() {
-            return 0.5f * GetTotalMass() * bindedRigidibody.velocity.sqrMagnitude;
-        }
-
+    
         protected  virtual  void Update() {
             bindedRigidibody.mass = GetTotalMass();
         }

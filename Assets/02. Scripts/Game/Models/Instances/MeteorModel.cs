@@ -10,7 +10,8 @@ namespace Mikrocosmos
 
     }
     public class MeteorModel : AbstractDamagableEntityModel, IMeteorModel {
-        [field: SyncVar, SerializeField]
+       
+        
         public override float SelfMass { get; protected set; } = 5f;
         public override string Name { get; set; } = "Meteor";
         public override void OnClientHooked() {
@@ -36,6 +37,7 @@ namespace Mikrocosmos
         protected float initialForce;
         public override void OnStartServer()
         {
+            base.OnStartServer();
             Vector2 Center = this.transform.position;
             initialForce = ProperForce();
             this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);

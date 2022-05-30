@@ -556,7 +556,7 @@ namespace Mikrocosmos {
                             animator.SetBool("Hooking", true);
                             checkingHook = false;
                             if (HookedItem.Model.CanBeAddedToInventory) {
-                                inventorySystem.ServerAddToBackpack(model.Name, HookedNetworkIdentity.gameObject);
+                                inventorySystem.ServerHookToBackpack(model.Name, HookedNetworkIdentity.gameObject);
                             }
                            
                             UpdateHookCollisions(false);

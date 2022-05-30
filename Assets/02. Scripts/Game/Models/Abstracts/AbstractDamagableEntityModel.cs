@@ -25,10 +25,42 @@ namespace Mikrocosmos
         public int CurrentHealth { get; set; }
 
         [SerializeField] private float momentumCoolDown = 0.1f;
+        
+        
         private float momentumCoolDownTimer = 0f;
+
+        [SerializeField] private int healthRecoverThreshold = 50;
+        [SerializeField] private int healthRecoverPerSecond = 10;
+        [SerializeField] private int healthRecoverWaitTimeAfterDamage = 5;
+
+        [SerializeField]
+        private float HealthRecoverTimer = 0f;
+        private bool healthRecoverStart = false;
+
         public override void OnStartServer() {
             base.OnStartServer();
             CurrentHealth = MaxHealth;
+            StartCoroutine(RecoverHealth());
+        }
+
+        private IEnumerator RecoverHealth() {
+            while (true) {
+                yield return new WaitForSeconds(1f);
+                HealthRecoverTimer++;
+                if (HealthRecoverTimer > healthRecoverWaitTimeAfterDamage) {
+                    if (CurrentHealth <= healthRecoverThreshold) {
+                        healthRecoverStart = true;
+                    }
+
+                    if (healthRecoverStart) {
+                        AddHealth(healthRecoverPerSecond);
+                    }
+
+                    if (CurrentHealth >= MaxHealth) {
+                        healthRecoverStart = false;
+                    }
+                }
+            }
         }
 
         protected override void Update() {
@@ -53,11 +85,15 @@ namespace Mikrocosmos
 
         public abstract int GetDamageFromExcessiveMomentum(float excessiveMomentum);
         public void TakeRawDamage(int damage) {
+            if(damage<=0){
+                return;
+            }
             if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
                 if (buffSystem.HasBuff<InvincibleBuff>()) {
                     return;
                 }
             }
+            
             int oldHealth = CurrentHealth;
             CurrentHealth -= damage;
             CurrentHealth = Mathf.Max(0, CurrentHealth);
@@ -67,6 +103,9 @@ namespace Mikrocosmos
                 NewHealth = CurrentHealth,
                 OldHealth = oldHealth
             });
+            //Debug.Log("Health Recover Timer 0");
+            HealthRecoverTimer = 0f;
+            healthRecoverStart = false;
         }
 
         public void AddHealth(int health) {

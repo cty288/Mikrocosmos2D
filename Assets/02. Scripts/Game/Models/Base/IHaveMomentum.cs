@@ -27,6 +27,6 @@ namespace Mikrocosmos
         /// <returns></returns>
         float GetTotalMass();
 
-        float GetMomentum();
+      
     }
 }

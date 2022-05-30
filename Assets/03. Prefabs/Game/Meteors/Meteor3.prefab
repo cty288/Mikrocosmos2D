@@ -8,6 +8,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: momentumCoolDown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: healthRecoverPerSecond
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: healthRecoverThreshold
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: <SelfMass>k__BackingField
       value: 40
       objectReference: {fileID: 0}
@@ -20,8 +32,12 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: <MomentumThredhold>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: <MaxMomentumReceive>k__BackingField
-      value: 1000
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: <InitialForceMultiplier>k__BackingField

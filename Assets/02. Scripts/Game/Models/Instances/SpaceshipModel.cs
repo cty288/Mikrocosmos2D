@@ -198,6 +198,7 @@ namespace Mikrocosmos
         protected float initialForce;
         public override void OnStartServer()
         {
+            base.OnStartServer();
             Vector2 Center = this.transform.position;
             initialForce = ProperForce();
             this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);

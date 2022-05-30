@@ -63,7 +63,7 @@ namespace Mikrocosmos
         public int InitialBackPackCapacity;
     }
     public interface IPlayerInventorySystem : ISystem {
-        void ServerAddToBackpack(string name, GameObject gameObject);
+        void ServerHookToBackpack(string name, GameObject gameObject);
         void ServerRemoveFromCurrentBackpack();
         void ServerDropFromBackpack(string name);
 
@@ -187,7 +187,7 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        public void ServerAddToBackpack(string name, GameObject gameObject) {
+        public void ServerHookToBackpack(string name, GameObject gameObject) {
             BackpackSlot slot = FindItemStackInBackpack(name);
 
             if (slot != null) {

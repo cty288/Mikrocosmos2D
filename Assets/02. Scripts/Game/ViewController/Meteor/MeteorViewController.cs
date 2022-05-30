@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
@@ -11,10 +12,12 @@ namespace Mikrocosmos
     
     public class MeteorViewController : AbstractCanCreateShadeEntity, IDamagableViewController
     {
+        private SpriteRenderer spriteRenderer;
         protected override void Awake()
         {
             base.Awake();
             DamagableModel = GetComponent<IDamagable>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         public override void OnStartServer()
@@ -25,22 +28,26 @@ namespace Mikrocosmos
 
         private void OnEntityTakeDamage(OnEntityTakeDamage e)
         {
-            if (e.Entity == Model)
-            {
-                OnServerHealthChange(e.NewHealth);
+            if (e.Entity == Model) {
+                OnServerTakeDamage(e.OldHealth, e.NewHealth);
             }
         }
 
 
         [ServerCallback]
-        public virtual void OnServerHealthChange(int newHealth)
+        public virtual void OnServerTakeDamage(int oldHealth, int newHealth)
         {
-            RpcOnClientHealthChange(newHealth);
+            RpcOnClientTakeDamage(oldHealth, newHealth);
         }
 
 
-
-        public virtual void RpcOnClientHealthChange(int newHealth){}
+        [ClientRpc]
+        public virtual void RpcOnClientTakeDamage(int oldHealth, int newHealth) {
+            if (newHealth < oldHealth) {
+                spriteRenderer.DOBlendableColor(new Color(0.6f, 0.6f, 0.6f), 0.1f).SetLoops(2, LoopType.Yoyo);
+            }
+              
+        }
 
         
 
