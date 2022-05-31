@@ -9,6 +9,7 @@ using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
@@ -54,12 +55,83 @@ namespace Mikrocosmos
                     Model.UnHook();
                 }
 
+                GenerateRewards();
+
                 if (GetComponent<PoolableNetworkedGameObject>().Pool != null) {
                     NetworkedObjectPoolManager.Singleton.Recycle(gameObject);
                 }else {
                     NetworkServer.Destroy(gameObject);
                 }
                
+            }
+        }
+
+        private void GenerateRewards() {
+            List<GameObject> rewards = GetModel<IMeteorModel>().Rewards;
+            //get a random reward
+            int randomReward = Random.Range(0, rewards.Count);
+            //spawn it
+            GameObject reward = rewards[randomReward];
+            if (reward.name == "DiamondEntity") {
+                int totalMoney = Random.Range(5, 30);
+                //generate 3-8 diamonds, randomly assign money to them but the sum of their money should be equal to totalMoney
+                List<int> moneyList = new List<int>();
+                for (int i = 0; i < Random.Range(3, 8); i++) {
+                    moneyList.Add(Random.Range(1, Mathf.Min(15, totalMoney)));
+                }
+                //get the sum of moneyList
+                int sum = 0;
+                foreach (int money in moneyList)
+                {
+                    sum += money;
+                }
+                //if sum is not equal to totalMoney, we need to make sure that the sum of moneyList is equal to totalMoney, but none of moneyList should be smaller than 1 or greater than 15
+                if (sum != totalMoney)
+                {
+                    int diff = totalMoney - sum;
+                    int index = 0;
+                    while (diff != 0)
+                    {
+                        if (diff > 0)
+                        {
+                            if (moneyList[index] < 15)
+                            {
+                                moneyList[index] += 1;
+                                diff -= 1;
+                            }
+                            else
+                            {
+                                index++;
+                            }
+                        }
+                        else
+                        {
+                            if (moneyList[index] > 1)
+                            {
+                                moneyList[index] -= 1;
+                                diff += 1;
+                            }
+                            else
+                            {
+                                index++;
+                            }
+                        }
+                    }
+                }
+                //spawn the diamonds
+                for (int i = 0; i < moneyList.Count; i++) {
+                    GameObject diamond = NetworkedObjectPoolManager.Singleton.Allocate(reward);
+                    diamond.transform.position = transform.position;
+                    //randomly set diamond's rotation
+                    diamond.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+                    //set diamond's money
+                    diamond.GetComponent<DiamondEntityViewController>().SetMoney(moneyList[i]);
+                    //add some velocity to the diamond's rigidbody
+                    diamond.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized
+                        *15f, ForceMode2D.Impulse);
+                    NetworkServer.Spawn(diamond);
+                    Debug.Log("Diamond Spawned");
+                }
             }
         }
 
@@ -79,8 +151,6 @@ namespace Mikrocosmos
                     GameObject.Instantiate(damageParticle, transform.position, Quaternion.identity);
                 }
 
-               
-              
             }
               
         }

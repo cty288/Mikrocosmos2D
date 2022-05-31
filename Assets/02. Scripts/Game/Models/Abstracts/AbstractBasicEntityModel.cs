@@ -22,7 +22,9 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public float MaxSpeed { get; protected set; }
 
-         [field: SyncVar, SerializeField]
+        [field: SyncVar, SerializeField] public bool CanBeHooked { get; set; } = true;
+
+        [field: SyncVar, SerializeField]
         public bool CanBeAddedToInventory { get; set; }
 
       //  [field: SyncVar, SerializeField] public bool CanBeUsed { get; set; } = false;
@@ -50,7 +52,7 @@ namespace Mikrocosmos
         /// </summary>
         [ServerCallback]
         public bool Hook(NetworkIdentity hookedBy) {
-            if (ServerCheckCanHook(hookedBy)) {
+            if (CanBeHooked &&  ServerCheckCanHook(hookedBy)) {
                 HookState = HookState.Hooked;
                 HookedByIdentity = hookedBy;
                 this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()

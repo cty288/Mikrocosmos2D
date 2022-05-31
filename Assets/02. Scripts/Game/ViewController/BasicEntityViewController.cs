@@ -119,7 +119,10 @@ namespace Mikrocosmos
                     }
                 }
                 else {
-                    rigidbody.bodyType = RigidbodyType2D.Dynamic;
+                    if (rigidbody) {
+                        rigidbody.bodyType = RigidbodyType2D.Dynamic;
+                    }
+                   
                 }
             }
 

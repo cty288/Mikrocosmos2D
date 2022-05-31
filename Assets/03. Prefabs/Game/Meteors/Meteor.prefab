@@ -271,6 +271,7 @@ MonoBehaviour:
   syncInterval: 0
   <MoveMode>k__BackingField: 0
   <MaxSpeed>k__BackingField: 50
+  <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
@@ -288,6 +289,8 @@ MonoBehaviour:
   <StartDirection>k__BackingField: {x: 0, y: 0}
   <InitialForceMultiplier>k__BackingField: 0.0002
   <AffectedByGravity>k__BackingField: 1
+  <Rewards>k__BackingField:
+  - {fileID: 4273496871896645202, guid: 113f1df07d7042a4b93a23c0d811c2e7, type: 3}
 --- !u!114 &949103041305761441
 MonoBehaviour:
   m_ObjectHideFlags: 0

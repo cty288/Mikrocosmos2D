@@ -7,13 +7,15 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public interface IMeteorModel: IModel, IAffectedByGravity {
-
+        List<GameObject> Rewards { get; }
     }
     public class MeteorModel : AbstractDamagableEntityModel, IMeteorModel {
        
         
         public override float SelfMass { get; protected set; } = 5f;
         public override string Name { get; set; } = "Meteor";
+
+        
         public override void OnClientHooked() {
             
         }
@@ -93,5 +95,8 @@ namespace Mikrocosmos
                 return 1;
             else return (dist);
         }
+
+        [field:SerializeField]
+        public List<GameObject> Rewards { get; protected set; }
     }
 }

@@ -15,6 +15,8 @@ namespace Mikrocosmos
     public interface IHookable: IHaveMomentum
     {
         public string Name { get; set; }
+
+        public bool CanBeHooked { get; set; }
         public bool CanBeAddedToInventory { get; set; }
 
         //public bool CanBeUsed { get; set; }

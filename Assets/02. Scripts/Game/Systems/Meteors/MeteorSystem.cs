@@ -5,6 +5,7 @@ using System.Linq;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -48,6 +49,9 @@ namespace Mikrocosmos
             meteor.SetActive(true);
             meteor.GetComponent<Rigidbody2D>().velocity = spawnPosition.up * Random.Range(5f, 25f);
             meteor.GetComponent<Collider2D>().isTrigger = true;
+            this.GetSystem<ITimeSystem>().AddDelayTask(10f, () => {
+                meteor.GetComponent<Collider2D>().isTrigger = false;
+            });
             activeMeteors.Add(meteor);
             NetworkServer.Spawn(meteor);
         }
