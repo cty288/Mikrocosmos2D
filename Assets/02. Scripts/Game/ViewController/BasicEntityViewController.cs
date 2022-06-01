@@ -164,7 +164,7 @@ namespace Mikrocosmos
         //对于星球：
         //对方UnHooked：正常
         //对方Hooked ：手动算速度
-        private void OnCollisionEnter2D(Collision2D collision) {
+        protected virtual void OnCollisionEnter2D(Collision2D collision) {
             if (collision.collider) {
                 if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model)) {
                     if (model is IHookable hookable) {

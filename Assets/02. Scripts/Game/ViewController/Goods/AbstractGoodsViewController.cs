@@ -23,6 +23,7 @@ namespace Mikrocosmos
         [SerializeField] protected Material defaultSpriteMaterial;
         protected Material visionEntityMaterial;
 
+        private IGlobalTradingSystem globalTradingSystem;
 
         [SerializeField]
         protected SpriteRenderer[] visionAffectedSprites;
@@ -56,6 +57,21 @@ namespace Mikrocosmos
             }
         }
 
+        public override void OnStartServer() {
+            base.OnStartServer();
+            globalTradingSystem = this.GetSystem<IGlobalTradingSystem>();
+            this.RegisterEvent<OnServerGoodsCraftSuccess>(OnCraftItemSuccess)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        [ServerCallback]
+        private void OnCraftItemSuccess(OnServerGoodsCraftSuccess e) {
+            if (e.Item1 == GoodsModel || e.Item2 == GoodsModel) {
+                Model.UnHook();
+                NetworkServer.Destroy(gameObject);
+            }
+        }
+
 
         protected override void Awake() {
             base.Awake();
@@ -83,6 +99,34 @@ namespace Mikrocosmos
                 });
             }
            
+        }
+
+        protected override void OnCollisionEnter2D(Collision2D collision) {
+            base.OnCollisionEnter2D(collision);
+            if (isServer) {
+               
+                if (collision.collider.TryGetComponent<IGoods>(out IGoods goods)) {
+                    
+                    if (Model.HookedByIdentity && goods.HookedByIdentity) {
+
+                        if (gameObject.GetHashCode() > collision.collider.gameObject.GetHashCode()) {
+
+                            float playerRelativeVelocity = (Model.HookedByIdentity.GetComponent<Rigidbody2D>().velocity -
+                                                           goods.HookedByIdentity.GetComponent<Rigidbody2D>().velocity).magnitude;
+                           
+                            
+                            if (playerRelativeVelocity >=
+                                globalTradingSystem.MinimumCompositeSpeedForCraftingCompounds) {
+                                Debug.Log($"Relative Velocity: {playerRelativeVelocity}");
+                                globalTradingSystem.ServerRequestCraftGoods(GoodsModel, goods, collision.GetContact(0).point);
+                            }
+                        }
+                    }
+
+
+                }
+            }
+            
         }
 
         protected override void FixedUpdate() {
@@ -114,6 +158,8 @@ namespace Mikrocosmos
             }
         }
 
+        
+        
 
         //deal with sell
         
