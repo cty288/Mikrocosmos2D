@@ -14,5 +14,6 @@ namespace Mikrocosmos {
 		[SerializeField] private Button BtnRoomLeaderStartRoom;
 		[SerializeField] private Button BtnTestMode;
 		[SerializeField] private Button BtnBack;
+		[SerializeField] private TMP_Text TextPort;
 	}
 }

@@ -249,6 +249,7 @@ namespace Mirror
         {
             if (numPlayers >= maxConnections)
             {
+                //conn.identity.gameObject.
                 conn.Disconnect();
                 return;
             }
@@ -349,6 +350,8 @@ namespace Mirror
                 }
             }
         }
+
+        
 
         /// <summary>
         /// This causes the server to switch scenes and sets the networkSceneName.

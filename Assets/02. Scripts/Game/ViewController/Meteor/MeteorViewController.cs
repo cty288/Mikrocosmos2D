@@ -90,7 +90,7 @@ namespace Mikrocosmos
                 {
                     int diff = totalMoney - sum;
                     int index = 0;
-                    while (diff != 0)
+                    while (diff != 0 && index < moneyList.Count)
                     {
                         if (diff > 0)
                         {
@@ -132,6 +132,17 @@ namespace Mikrocosmos
                     NetworkServer.Spawn(diamond);
                     Debug.Log("Diamond Spawned");
                 }
+            }else {
+                //generate random count of rewards
+                int count = Random.Range(1, 4);
+                for (int i = 0; i < count; i++) {
+                    GameObject rewardInstance = Instantiate(reward, transform.position,
+                        Quaternion.Euler(0, 0, Random.Range(0, 360)));
+                    
+                    rewardInstance.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized
+                                                                        * 15f, ForceMode2D.Impulse);
+                    NetworkServer.Spawn(rewardInstance);
+                }
             }
         }
 
@@ -147,10 +158,8 @@ namespace Mikrocosmos
             if (newHealth < oldHealth) {
                 int damage =Mathf.Abs(newHealth - oldHealth);
                 spriteRenderer.DOBlendableColor(new Color(0.6f, 0.6f, 0.6f), 0.1f).SetLoops(2, LoopType.Yoyo);
-                if (damage >= 5) {
-                    GameObject.Instantiate(damageParticle, transform.position, Quaternion.identity);
-                }
-
+                GameObject.Instantiate(damageParticle, transform.position, Quaternion.identity);
+               
             }
               
         }

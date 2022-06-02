@@ -63,6 +63,7 @@ namespace Mikrocosmos
                     }
                 }
 
+               
                 if (Input.GetMouseButtonDown(0)) {
                     CmdUpdateUsing(true);
                 }
@@ -75,8 +76,7 @@ namespace Mikrocosmos
                 //take item & put item (not shoot)
                 if (Input.GetKey(KeyCode.Space))
                 {
-                    if (minHookPressTimer > minHookPressTimeInterval)
-                    {
+                    if (minHookPressTimer > minHookPressTimeInterval) {
                         hookSystem.CmdHoldHookButton();
                     }
 

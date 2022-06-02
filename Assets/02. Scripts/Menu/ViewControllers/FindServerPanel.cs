@@ -21,6 +21,24 @@ namespace Mikrocosmos {
 
             this.RegisterEvent<OnStopNetworkDiscovery>(OnNetworkDiscoveryStop)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            BtnAddServerJoinRoom.onClick.AddListener(OnAddServerJoinRoomButtonClicked);
+        }
+
+        private void OnAddServerJoinRoomButtonClicked() {
+            if (InputPort.text != "") {
+                NetworkManager.singleton.GetComponent<TelepathyTransport>().port = ushort.Parse(InputPort.text);
+                NetworkManager.singleton.networkAddress = InputIPInput.text;
+                NetworkManager.singleton.StartClient();
+            }
+            else {
+                //NetworkManager.singleton.GetComponent<TelepathyTransport>().port = 
+                NetworkManager.singleton.StartClient();
+
+
+            }
+
+
         }
 
         private void OnNetworkDiscoveryStop(OnStopNetworkDiscovery obj) {
@@ -33,6 +51,15 @@ namespace Mikrocosmos {
             isFinding = true;
             //(NetworkManager.singleton.GetComponent<MenuNetworkDiscovery>()).StartDiscovery();
             StartCoroutine(RefreshServerList());
+        }
+
+        private void Update() {
+            if (String.IsNullOrEmpty(InputIPInput.text)) {
+                BtnAddServerJoinRoom.enabled = false;
+            }
+            else {
+                BtnAddServerJoinRoom.enabled = true;
+            }
         }
 
         IEnumerator RefreshServerList() {

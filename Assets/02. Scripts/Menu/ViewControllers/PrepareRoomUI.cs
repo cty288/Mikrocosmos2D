@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 namespace Mikrocosmos {
 	public partial class PrepareRoomUI : AbstractMikroController<Mikrocosmos> {
-        
+        private TelepathyTransport transport;
 
         private void Awake() {
             this.RegisterEvent<OnClientPrepareRoomPlayerListChange>(OnClientPrepareRoomPlayerListChange)
@@ -24,7 +24,14 @@ namespace Mikrocosmos {
             BtnRoomLeaderStartRoom.onClick.AddListener(OnHostStartGameButtonClicked);
             BtnBack.onClick.AddListener(OnBackToMenuClicked);
             BtnRoomLeaderStartRoom.gameObject.SetActive(false);
+         
         }
+
+        private void Start() {
+            transport = NetworkManager.singleton.GetComponent<TelepathyTransport>();
+        }
+
+        
 
         private void OnBackToMenuClicked() {
            QuitRoom();
@@ -64,7 +71,9 @@ namespace Mikrocosmos {
             }
         }
 
-
+        private void Update() {
+            TextPort.text = $"Port: {transport.port}";
+        }
 
         //only called on the host
         private void OnAllPlayerReadyStatusChange(OnAllPlayersReadyStatusChanged e) {

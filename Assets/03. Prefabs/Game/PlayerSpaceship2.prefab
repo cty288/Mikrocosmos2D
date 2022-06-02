@@ -978,7 +978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b21d926971913143b6ae5ee862fa1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
+  syncMode: 1
   syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
   <HookedRotationZOffset>k__BackingField: 0
@@ -1010,6 +1010,7 @@ MonoBehaviour:
   syncInterval: 0
   <MoveMode>k__BackingField: 0
   <MaxSpeed>k__BackingField: 27.5
+  <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
@@ -1020,6 +1021,10 @@ MonoBehaviour:
   <MaxHealth>k__BackingField: 100
   <CurrentHealth>k__BackingField: 100
   momentumCoolDown: 0.5
+  healthRecoverThreshold: 50
+  healthRecoverPerSecond: 10
+  healthRecoverWaitTimeAfterDamage: 5
+  HealthRecoverTimer: 0
   damagePerMomentum: 1
   dropOneItemMomentumThreshold: 3
   <DieDizzyTime>k__BackingField: 5
@@ -1102,7 +1107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
+  syncMode: 1
   syncInterval: 0
   clientAuthority: 0
   animator: {fileID: 1860153339421768247}
@@ -1170,7 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
+  syncMode: 1
   syncInterval: 0.1
   clientAuthority: 1
   animator: {fileID: 7807455679384151029}

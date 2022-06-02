@@ -23,6 +23,17 @@ namespace Mikrocosmos
         }
 
         #region Server
+        
+        public override void OnRoomServerConnect(NetworkConnectionToClient conn) {
+            base.OnRoomServerConnect(conn);
+            
+        }
+
+        /*
+        public override void OnRoomClientAddPlayerFailed() {
+            base.OnRoomClientAddPlayerFailed();
+            Debug.Log("ROOM ADD CLIENT FAILED!");
+        }*/
 
         public override void OnRoomStartServer() {
             base.OnRoomStartServer();

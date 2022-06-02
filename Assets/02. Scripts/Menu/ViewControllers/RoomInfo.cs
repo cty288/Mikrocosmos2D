@@ -40,6 +40,7 @@ namespace Mikrocosmos {
                     return;
                 }
 
+                NetworkManager.singleton.GetComponent<TelepathyTransport>().port =(ushort) response.Uri.Port;
                 NetworkManager.singleton.StartClient(response.Uri);
             
         }

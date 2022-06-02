@@ -11,6 +11,7 @@ namespace Mikrocosmos
     }
     public class ServerStartGameCommand : AbstractCommand<ServerStartGameCommand> {
         protected override void OnExecute() {
+           // NetworkRoomManager.singleton.OnStartServer();
             NetworkRoomManager.singleton.ServerChangeScene(((NetworkRoomManager)NetworkRoomManager.singleton)
                 .GameplayScene);
             this.SendEvent<OnServerStartGame>();

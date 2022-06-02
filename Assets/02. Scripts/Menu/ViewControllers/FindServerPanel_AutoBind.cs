@@ -9,11 +9,13 @@ using MikroFramework.Architecture;
 namespace Mikrocosmos {
 	public partial class FindServerPanel : AbstractMikroController<Mikrocosmos> {
 		[SerializeField] private GameObject ObjFindServerPanel;
-		[SerializeField] private TMP_Text TextName;
 		[SerializeField] private Transform TrRoomLayoutGroup;
-		[SerializeField] private TMP_Text TextRoomName;
-		[SerializeField] private TMP_Text TextRoomNumber;
-		[SerializeField] private Button BtnJoinButton;
-		[SerializeField] private TMP_Text TextRoomStatus;
+		[SerializeField] private Button BtnRoomSearchPanelBackToMenu;
+		[SerializeField] private Button BtnManualAddServer;
+		[SerializeField] private GameObject ObjManualAddServerPanel;
+		[SerializeField] private TMP_InputField InputIPInput;
+		[SerializeField] private TMP_InputField InputPort;
+		[SerializeField] private Button BtnAddServerJoinRoom;
+		[SerializeField] private Button BtnAddServerBackRoom;
 	}
 }

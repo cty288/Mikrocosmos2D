@@ -133,14 +133,11 @@ namespace Mikrocosmos
         }
 
         [Command]
-        private void CmdUpdateUsing(bool isUsing)
-        {
+        private void CmdUpdateUsing(bool isUsing) {
             this.isUsing = isUsing;
-            if (!isUsing)
-            {
+            if (!isUsing) {
                 hookSystem.OnServerPlayerReleaseUseButton();
             }
-
         }
 
 
@@ -206,8 +203,7 @@ namespace Mikrocosmos
                 }
                 
                 //Debug.Log("Hasauthority");
-                if (isControlling && Model.HookState == HookState.Freed && CanControl)
-                {
+                if (isControlling && Model.HookState == HookState.Freed && CanControl) {
                     ServerMove(mousePosition);
                 }
 
