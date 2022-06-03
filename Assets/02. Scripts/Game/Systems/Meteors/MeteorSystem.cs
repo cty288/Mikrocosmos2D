@@ -47,7 +47,7 @@ namespace Mikrocosmos
             meteor.transform.position = spawnPosition.position;
             meteor.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
             meteor.SetActive(true);
-            meteor.GetComponent<Rigidbody2D>().velocity = spawnPosition.up * Random.Range(5f, 25f);
+            meteor.GetComponent<Rigidbody2D>().velocity = spawnPosition.up * Random.Range(10f, 60f);
             meteor.GetComponent<Collider2D>().isTrigger = true;
             this.GetSystem<ITimeSystem>().AddDelayTask(10f, () => {
                 meteor.GetComponent<Collider2D>().isTrigger = false;

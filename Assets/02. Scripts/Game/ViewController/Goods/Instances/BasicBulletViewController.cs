@@ -63,7 +63,7 @@ namespace Mikrocosmos
                     if (collision.collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity)) {
                         StartCoroutine(SetVelocityToZero());
                         
-                        animator.SetTrigger("Hit");
+                       
                         if (entity is IDamagable damagable) {
                             BulletModel model = GetComponent<BulletModel>();
                             //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
@@ -73,9 +73,10 @@ namespace Mikrocosmos
                         }
                         
                     }
-
+                    animator.SetTrigger("Hit");
                     if (destroyWhenHit)
                     {
+                        
                         // NetworkServer.Destroy(this.gameObject);
                         rigidbody.velocity = Vector2.zero;
                         if (poolable) {

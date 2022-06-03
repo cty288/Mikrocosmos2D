@@ -47,6 +47,7 @@ namespace Mikrocosmos
                 Model = this,
                 NewDurability = Durability
             });
+            OnDurabilityReduced();
             if (Durability == 0)
             {
                 OnBroken();

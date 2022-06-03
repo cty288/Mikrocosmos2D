@@ -38,9 +38,11 @@ namespace Mikrocosmos
                             
                             direction = direction.normalized;
 
-                            ppd *= Random.Range(0, 2) == 1 ? 5 : -5;
+                            ppd *= Random.Range(0, 2) == 1 ? 2 : -2;
                             direction += ppd;
                             rigidbody.AddForce(direction * (rigidbody.mass + rigidbody.velocity.magnitude) * meteorBounceForce, ForceMode2D.Impulse);
+
+                            model.StartAddTorqueForce(ppd.normalized * Random.Range(20, 50), 3f);
                         }
                     }
 

@@ -1,17 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
     public interface IMeteorModel: IModel, IAffectedByGravity {
         List<GameObject> Rewards { get; }
+
+        public void StartAddTorqueForce(Vector2 addForce, float time);
     }
     public class MeteorModel : AbstractDamagableEntityModel, IMeteorModel {
-       
-        
+
+        private float torqueForceTimer = 0;
+        private Vector2 torqueForce;
+
+
+        [field: SerializeField]
         public override float SelfMass { get; protected set; } = 5f;
         public override string Name { get; set; } = "Meteor";
 
@@ -29,8 +37,15 @@ namespace Mikrocosmos
             GetComponent<Rigidbody2D>().AddExplosionForce(force, position, range);
         }
 
-      
-        
+        private void FixedUpdate() {
+            if (isServer) {
+                torqueForceTimer -= Time.fixedDeltaTime;
+                if (torqueForceTimer > 0) {
+                    bindedRigidibody.AddForce(torqueForce, ForceMode2D.Impulse);
+                }
+            }
+        }
+
         [field: SerializeField] public Vector2 StartDirection { get; protected set; }
 
         [field: SerializeField]
@@ -46,6 +61,9 @@ namespace Mikrocosmos
             initialForce = ProperForce();
             this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
         }
+
+
+        
 
         public override int GetDamageFromExcessiveMomentum(float excessiveMomentum) {
             return Mathf.RoundToInt(excessiveMomentum);
@@ -98,5 +116,11 @@ namespace Mikrocosmos
 
         [field:SerializeField]
         public List<GameObject> Rewards { get; protected set; }
+
+        public void StartAddTorqueForce(Vector2 addForce, float time) {
+            torqueForce = addForce;
+            torqueForceTimer = time;
+            
+        }
     }
 }

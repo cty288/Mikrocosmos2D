@@ -29,6 +29,7 @@ namespace Mikrocosmos
             base.OnStopServer();
             //to prevent switching to another item before the durability reduction is finished
             if (Durability > 0 && readyToReduceDurability) {
+                readyToReduceDurability = false;
                 ReduceDurability(1);
             }
         }
