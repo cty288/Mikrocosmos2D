@@ -25,9 +25,6 @@ namespace Mikrocosmos
               
                     animator.SetBool("Using", true);
                     isUsing = true;
-
-                
-
             }
             
             

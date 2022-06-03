@@ -1,0 +1,263 @@
+{
+  "Version": "1.0",
+  "ABMD5List": [
+    {
+      "AssetName": "mftest",
+      "MD5": "3fc8346f2226ce39dcb4c2f2c3361e0b",
+      "FileSize": 435.743164,
+      "assetDatas": [
+        {
+          "Name": "War loop",
+          "OwnerBundleName": "mftest",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Asteroid_1",
+          "OwnerBundleName": "mftest",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "Cylinder",
+          "OwnerBundleName": "mftest",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestABObj",
+          "OwnerBundleName": "mftest",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
+      "AssetName": "mftest2",
+      "MD5": "e681bec26a80aa712f10209e5b503da6",
+      "FileSize": 5.11328125,
+      "assetDatas": [
+        {
+          "Name": "War loop",
+          "OwnerBundleName": "mftest2",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "TestABObj",
+          "OwnerBundleName": "mftest2",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
+      "AssetName": "scene",
+      "MD5": "006d5e40e5c87f2d0b92db2bc3b34555",
+      "FileSize": 26.50293,
+      "assetDatas": [
+        {
+          "Name": "HotUpdateExampleScene",
+          "OwnerBundleName": "scene",
+          "AssetType": "UnityEditor.SceneAsset"
+        }
+      ]
+    },
+    {
+      "AssetName": "test_sphere",
+      "MD5": "7876d6f324538a103593e7ce94b515c3",
+      "FileSize": 44.4736328,
+      "assetDatas": [
+        {
+          "Name": "Sphere",
+          "OwnerBundleName": "test_sphere",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
+      "AssetName": "Windows",
+      "MD5": "8fafd185bdb11d1f3e4068e7c32045a2",
+      "FileSize": 1.70605469,
+      "assetDatas": []
+    },
+    {
+      "AssetName": "assets/goods",
+      "MD5": "ad9dff3b272afc813a50a6894c426258",
+      "FileSize": 1971.75293,
+      "assetDatas": [
+        {
+          "Name": "FirePlant",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "LeafKnife",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "StoneShieldB'",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Template",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Banana",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "BananaTemp",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "DottedOutlineBanana",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "Banana",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "DottedOutlineMask",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "Mask",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "DottedOutlineStatellite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "Statellite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Toliet",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "BananaSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "KrowEyeSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "FirePlantSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_2",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_3",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_4",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_5",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "JellyGunSprite_6",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_1",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_2",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_3",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_4",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_5",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "LeafKnifeSprite_6",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "MaskSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "StatelliteSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "ThrusterSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TolietSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        }
+      ]
+    },
+    {
+      "AssetName": "test/scene_test.ab",
+      "MD5": "dfbd6563e837a0e3146cf2a34882ea2c",
+      "FileSize": 53.6865234,
+      "assetDatas": [
+        {
+          "Name": "TestABScene",
+          "OwnerBundleName": "test/scene_test.ab",
+          "AssetType": "UnityEditor.SceneAsset"
+        }
+      ]
+    }
+  ]
+}
