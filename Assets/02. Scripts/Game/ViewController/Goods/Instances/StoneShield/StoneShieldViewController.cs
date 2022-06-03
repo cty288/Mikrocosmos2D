@@ -36,23 +36,7 @@ namespace Mikrocosmos
             animator = GetComponent<Animator>();
             childTrigger = this.gameObject.transform.GetChild(0).gameObject;
             SHT = childTrigger.GetComponent<StoneShieldTrigger>();
-        }
-
-        private void Update() {
-            base.Update();
-            
-            
-            if (hasAuthority)
-            {
-                if (Input.GetMouseButtonUp(0))
-                {
-                    if (currCharge >= threshold)
-                    {
-                        OnWaveShoot();
-                    }
-                }
-            }
-        }
+        
 
         protected override void OnServerItemUsed()
         {
@@ -85,6 +69,8 @@ namespace Mikrocosmos
                 wave.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
                 wave.transform.rotation = transform.rotation;
                 NetworkServer.Spawn(wave);
+                isUsing = false;
+                mouseUpTriggered = true;
             }
         }
 
@@ -104,7 +90,7 @@ namespace Mikrocosmos
         }
 
         private void OnItemUseMouseUp() {
-
+            OnWaveShoot();
         }
     }
 }
