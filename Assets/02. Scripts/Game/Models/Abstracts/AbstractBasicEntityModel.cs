@@ -199,7 +199,10 @@ namespace Mikrocosmos
 
     
         protected  virtual  void Update() {
-            bindedRigidibody.mass = GetTotalMass();
+            if (this) {
+                bindedRigidibody.mass = GetTotalMass();
+            }
+          
         }
             
         
@@ -218,8 +221,11 @@ namespace Mikrocosmos
 
             if (newState == HookState.Freed)
             {
-                gameObject.layer = clientOriginalLayer;
-                OnClientFreed();
+                if (this) {
+                    gameObject.layer = clientOriginalLayer;
+                    OnClientFreed();
+                }
+              
             }
         }
 
