@@ -141,7 +141,10 @@ namespace Mikrocosmos {
                 
                 if (e.DroppedObject) {
                     if (e.DroppedCurrentSlot) { //dropped current selected slot
-                        HookedItem.Model.UnHook(false);
+                        if (HookedItem != null) {
+                            HookedItem.Model.UnHook(false);
+                        }
+                       
                         //like removed from backpack
                         Debug.Log("Next hooking obj after drop: " + e.NextHookingObject);
                         if (e.NextHookingObject) {
@@ -194,6 +197,13 @@ namespace Mikrocosmos {
                 GameObject go = HookedNetworkIdentity.gameObject;
                 UnHook();
                 //NetworkServer.Destroy(go);
+            }
+
+            if (e.Item != null && (HookedItem==null || e.Item != HookedItem.Model)) {
+                if (e.Item.CanBeAddedToInventory) {
+                    inventorySystem.ServerRemoveFromBackpack(e.Item.Name);
+                    
+                }
             }
         }
 

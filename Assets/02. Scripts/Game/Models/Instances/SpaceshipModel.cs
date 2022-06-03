@@ -122,7 +122,10 @@ namespace Mikrocosmos
                     List<BackpackSlot> slots = inventory.BackpackItems;
                     foreach (BackpackSlot slot in slots) {
                         foreach (GameObject stackedObject in slot.StackedObjects) {
-                            mass += stackedObject.GetComponent<IHookable>().SelfMass;
+                            if (stackedObject) {
+                                mass += stackedObject.GetComponent<IHookable>().SelfMass;
+                            }
+                         
                         }
                     }
                 }

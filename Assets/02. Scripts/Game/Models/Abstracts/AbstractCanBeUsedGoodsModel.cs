@@ -56,6 +56,8 @@ namespace Mikrocosmos
                 });
             }
         }
+
+        public abstract void OnDurabilityReduced();
         public abstract void OnUsed();
 
         public abstract void OnBroken();

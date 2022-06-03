@@ -188,7 +188,10 @@ namespace Mikrocosmos
             if (HookState == HookState.Hooked) { 
                 //hooked by somebody -> hooked.GetTotalMass() -> hooked.TotalMass()...
                 //if hooked by somebody, that hooker must be another spaceship
-                return (HookedByIdentity.GetComponent<IHaveMomentumViewController>()).Model.GetTotalMass();
+                if (HookedByIdentity) {
+                    return (HookedByIdentity.GetComponent<IHaveMomentumViewController>()).Model.GetTotalMass();
+                }
+              
             }
 
             return SelfMass;

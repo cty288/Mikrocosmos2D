@@ -174,6 +174,7 @@ MonoBehaviour:
   syncInterval: 0
   <MoveMode>k__BackingField: 1
   <MaxSpeed>k__BackingField: 50
+  <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 1
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
@@ -304,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0
+  syncInterval: 0.01
   target: {fileID: 1133179267551477265}
   clientAuthority: 0
   syncVelocity: 1

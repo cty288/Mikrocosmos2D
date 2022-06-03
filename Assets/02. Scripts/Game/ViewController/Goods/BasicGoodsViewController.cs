@@ -91,6 +91,9 @@ namespace Mikrocosmos
             Debug.Log($"OnClientOwnerStartBeingSelected. Slot: {slotNumber}");
             if (basicInfo.MaxDurability >= 0 && basicInfo.CanBeUsed) {
                 Transform currentSelectedSlotObject = GetCurrentSelectedSlotObject(slotNumber).transform;
+                if (currentSelectedSlotObject) {
+                    Destroy(currentDurabilityCountObject);
+                }
                 currentDurabilityCountObject = Instantiate(DurabilityCountTextPrefab, currentSelectedSlotObject);
                 currentDurabilityCountObject.transform.localPosition = DurabilityCountTextSpawnLocalPosition;
                 currentDurabilityCountObject.GetComponent<TMP_Text>().text =

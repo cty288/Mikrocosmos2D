@@ -65,6 +65,7 @@ namespace Mikrocosmos
     public interface IPlayerInventorySystem : ISystem {
         void ServerHookToBackpack(string name, GameObject gameObject);
         void ServerRemoveFromCurrentBackpack();
+        void ServerRemoveFromBackpack(string name);
         void ServerDropFromBackpack(string name);
 
         void ServerSwitchSlot(int index);
@@ -224,6 +225,32 @@ namespace Mikrocosmos
                 TargetOnInventoryUpdate(backpackItems,currentIndex);
             }
            
+        }
+
+        public void ServerRemoveFromBackpack(string name) {
+            BackpackSlot slot = FindItemStackInBackpack(name);
+            if (slot != null && slot.Count > 0)
+            {
+
+                GameObject oldObj = slot.StackedObjects.Pop();
+                BackpackSlot currentSlot = backpackItems[currentIndex];
+                GameObject nextObject = null;
+                
+                if (currentSlot.StackedObjects.Count > 0)
+                {
+                    nextObject = currentSlot.StackedObjects.Peek();
+                }
+                this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved()
+                {
+                    CurrentCount = currentSlot.Count,
+                    PrefabName = currentSlot.PrefabName,
+                    Identity = netIdentity,
+                    NextObject = nextObject,
+                    OldObject = oldObj
+                });
+            }
+            TargetOnInventoryUpdate(backpackItems, currentIndex);
+
         }
 
         [ServerCallback]

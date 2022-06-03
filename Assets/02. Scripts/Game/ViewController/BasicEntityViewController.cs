@@ -112,7 +112,7 @@ namespace Mikrocosmos
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
                         else {
-                            transform.position = hookedByTr.position;
+                            rigidbody.position = hookedByTr.position;
                             transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }

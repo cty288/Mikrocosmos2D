@@ -62,7 +62,7 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public void ServerAddGravityForce(float force, Vector2 position, float range) {
-            if (TransactionFinished) {
+            if (TransactionFinished && !HookedByIdentity) {
                 //Debug.Log("Affected");
                 GetComponent<Rigidbody2D>().AddExplosionForce(force, position, range);
             }
@@ -110,7 +110,7 @@ namespace Mikrocosmos
                     
                     foreach (Collider2D collider in triggerCheck.Colliders) {
                         //is a goods
-                        if (collider.TryGetComponent<IGoods>(out IGoods good)) {
+                        if (collider && collider.TryGetComponent<IGoods>(out IGoods good)) {
                             
                             //is the same type? (same type of goods?)
                             if (good.Name== Name) {
