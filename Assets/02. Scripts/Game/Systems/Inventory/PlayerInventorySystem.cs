@@ -292,7 +292,7 @@ namespace Mikrocosmos
         [ServerCallback]
         public void ServerSwitchSlot(int index) {
             
-
+           
             if (hookSystem.HookedItem==null || hookSystem.HookedItem.Model.CanBeAddedToInventory) {
                 GameObject switchedGameObject = null;
                 if (index != currentIndex) {
@@ -321,12 +321,13 @@ namespace Mikrocosmos
                     });
                 }
                 else {
+                    Debug.Log("Inventory System 2");
                     this.SendEvent<OnSwitchItemSlot>(new OnSwitchItemSlot()
                     {
                         PrefabName = name,
                         SlotIndex = currentIndex,
                         Identity = netIdentity,
-                        SwitchedGameObject = hookSystem.HookedNetworkIdentity.gameObject,
+                        SwitchedGameObject = hookSystem.HookedNetworkIdentity!=null? hookSystem.HookedNetworkIdentity.gameObject : null,
                         SameSlot = true
                     });
                 }

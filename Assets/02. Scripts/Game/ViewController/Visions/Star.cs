@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
     public class Star : CanCreateVisionViewController {
-        [SerializeField] private float bounceForce;
+        [FormerlySerializedAs("meteorBunceForce")]  [SerializeField] private float meteorBounceForce;
         [SerializeField] private LayerMask bounceAffectedLayers;
         protected override void OnClientVisionLightTurnOff() {
             
@@ -29,15 +30,17 @@ namespace Mikrocosmos
                         }
                     }
                     else {
-                        if (rigidbody.TryGetComponent<IHaveMomentum>(out IHaveMomentum model))
+                        if (rigidbody.TryGetComponent<IMeteorModel>(out IMeteorModel model))
                         {
                             Vector2 direction = rigidbody.transform.position - transform.position;
                             //get the perpendicular vector of direction
-                            Vector2 ppd = Vector2.Perpendicular(direction);
-                            ppd *= Random.Range(0, 2) == 1 ? 1 : -1;
-                            direction += ppd;
+                            Vector2 ppd = Vector2.Perpendicular(direction).normalized;
+                            
                             direction = direction.normalized;
-                            rigidbody.AddForce(direction * (rigidbody.mass + rigidbody.velocity.magnitude) * bounceForce, ForceMode2D.Impulse);
+
+                            ppd *= Random.Range(0, 2) == 1 ? 5 : -5;
+                            direction += ppd;
+                            rigidbody.AddForce(direction * (rigidbody.mass + rigidbody.velocity.magnitude) * meteorBounceForce, ForceMode2D.Impulse);
                         }
                     }
 

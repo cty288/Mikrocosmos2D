@@ -65,10 +65,9 @@ namespace Mikrocosmos {
 
         bool IsHooking { get; }
     }
-    public partial class HookSystem : AbstractNetworkedSystem, IHookSystem
-    {
-       
-        public IHookableViewController HookedItem { get; set; }
+    public partial class HookSystem : AbstractNetworkedSystem, IHookSystem {
+
+        public IHookableViewController HookedItem { get; set; } = null;
 
         [field:SyncVar, SerializeField]
         public NetworkIdentity HookedNetworkIdentity { get; set; }
@@ -374,7 +373,7 @@ namespace Mikrocosmos {
                 NetworkIdentity oldIdentity = HookedNetworkIdentity;
                 if (e.SameSlot) {
                     this.SendEvent<OnHookItemSwitched>(new OnHookItemSwitched() {
-                        NewIdentity = e.SwitchedGameObject.GetComponent<NetworkIdentity>(),
+                        NewIdentity = e.SwitchedGameObject==null? null: e.SwitchedGameObject.GetComponent<NetworkIdentity>(),
                         OldIdentity = null,
                         OwnerIdentity = netIdentity
                     });

@@ -399,6 +399,10 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 7195200488286761968, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d82769bab47f1a141a266a6c76903157, type: 3}
 --- !u!1 &2647294947843263690 stripped
