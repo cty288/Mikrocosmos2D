@@ -36,6 +36,7 @@ namespace Mikrocosmos
             animator = GetComponent<Animator>();
             childTrigger = this.gameObject.transform.GetChild(0).gameObject;
             SHT = childTrigger.GetComponent<StoneShieldTrigger>();
+        }
         
 
         protected override void OnServerItemUsed()
