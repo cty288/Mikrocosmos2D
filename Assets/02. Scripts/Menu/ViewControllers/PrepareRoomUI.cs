@@ -72,7 +72,10 @@ namespace Mikrocosmos {
         }
 
         private void Update() {
-            TextPort.text = $"Port: {transport.port}";
+            if (((NetworkedRoomManager) NetworkManager.singleton).NetworkingMode == NetworkingMode.Normal) {
+                TextPort.text = $"Port: {transport.port}";
+            }
+        
         }
 
         //only called on the host

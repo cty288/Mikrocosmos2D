@@ -17,5 +17,8 @@ namespace Mikrocosmos {
 		[SerializeField] private TMP_InputField InputPort;
 		[SerializeField] private Button BtnAddServerJoinRoom;
 		[SerializeField] private Button BtnAddServerBackRoom;
+		[SerializeField] private GameObject ObjJoiningRoomPanel;
+		[SerializeField] private TMP_Text TextJoinRoomPanelInfo;
+		[SerializeField] private Button BtnCloseJoinRoomPanel;
 	}
 }

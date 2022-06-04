@@ -167,12 +167,13 @@ namespace Mikrocosmos
         }
 
         public void StartHosting(NetworkingMode networkingMode) {
-           // telepathyTransport.enabled = false;
+            telepathyTransport.enabled = false;
             steamworksTransport.enabled = false;
 
             switch (networkingMode) {
                 case NetworkingMode.Normal:
                     telepathyTransport.enabled = true;
+                    Transport.activeTransport = telepathyTransport;                    
                     transport = telepathyTransport;
                     telepathyTransport.port = (ushort)Random.Range(7777, 15000);
                     NetworkingMode = NetworkingMode.Normal;
@@ -180,6 +181,7 @@ namespace Mikrocosmos
                     break;
                 case NetworkingMode.Steam:
                     steamworksTransport.enabled = true;
+                    Transport.activeTransport = steamworksTransport;
                     transport = steamworksTransport;
                     SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, maxConnections);
                     NetworkingMode = NetworkingMode.Steam;
@@ -189,24 +191,37 @@ namespace Mikrocosmos
 
         public void StartJoiningClient(NetworkingMode networkingMode)
         {
-          //  telepathyTransport.enabled = false;
+            telepathyTransport.enabled = false;
             steamworksTransport.enabled = false;
 
             switch (networkingMode)
             {
                 case NetworkingMode.Normal:
+                    networkAddress = NetworkUtility.GetLocalIPAddress();
                     telepathyTransport.enabled = true;
+                    Transport.activeTransport = telepathyTransport;
                     transport = telepathyTransport;
+                    
                     NetworkingMode = NetworkingMode.Normal;
-                    StartClient();
+                   
                     break;
                 case NetworkingMode.Steam:
                     steamworksTransport.enabled = true;
+                    Transport.activeTransport = steamworksTransport;
                     transport = steamworksTransport;
                     NetworkingMode = NetworkingMode.Steam;
-                    StartClient();
+                   
                     break;
             }
+            if (NetworkClient.active)
+            {
+                NetworkClient.Disconnect();
+                NetworkClient.Shutdown();
+                NetworkClient.Disconnect();
+                NetworkClient.Shutdown();
+            }
+            
+            StartClient();
         }
 
 

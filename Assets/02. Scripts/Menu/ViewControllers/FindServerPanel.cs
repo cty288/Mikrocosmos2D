@@ -16,6 +16,10 @@ namespace Mikrocosmos {
         [SerializeField]
         private Dictionary<long, DiscoveryResponse> allSearchedServers = new Dictionary<long, DiscoveryResponse>();
 
+        [SerializeField] private float joinRoomTimeout = 10f;
+        private float joinRoomTimeoutTimer = 0f;
+        
+
         protected Callback<LobbyMatchList_t> OnSteamLobbyGetCallback;
         protected Callback<LobbyDataUpdate_t> OnSteamLobbyDataGetCallback;
         private void Awake() {
@@ -25,7 +29,16 @@ namespace Mikrocosmos {
             this.RegisterEvent<OnStopNetworkDiscovery>(OnNetworkDiscoveryStop)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
+            this.RegisterEvent<OnJoinRoomButtonClicked>(OnJoinRoomButtonClicked)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
             BtnAddServerJoinRoom.onClick.AddListener(OnAddServerJoinRoomButtonClicked);
+        }
+
+        private void OnJoinRoomButtonClicked(OnJoinRoomButtonClicked e) {
+            ObjJoiningRoomPanel.gameObject.SetActive(true);
+            joinRoomTimeoutTimer = joinRoomTimeout;
+            TextJoinRoomPanelInfo.text = "Joining room...";
+            BtnCloseJoinRoomPanel.gameObject.SetActive(false);
         }
 
         private void Start() {
@@ -34,7 +47,7 @@ namespace Mikrocosmos {
         }
 
         
-
+        
 
         private void OnAddServerJoinRoomButtonClicked() {
             if (InputPort.text != "") {
@@ -70,6 +83,12 @@ namespace Mikrocosmos {
             }
             else {
                 BtnAddServerJoinRoom.enabled = true;
+            }
+
+            joinRoomTimeoutTimer -= Time.deltaTime;
+            if (joinRoomTimeoutTimer <= 0 && ObjJoiningRoomPanel.activeInHierarchy) {
+                TextJoinRoomPanelInfo.text = "Join Room Failed!";
+                BtnCloseJoinRoomPanel.gameObject.SetActive(true);
             }
         }
 

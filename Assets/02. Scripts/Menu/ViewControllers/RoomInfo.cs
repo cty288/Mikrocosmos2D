@@ -9,7 +9,10 @@ using Mirror;
 using Steamworks;
 
 namespace Mikrocosmos {
-	public partial class RoomInfo : AbstractMikroController<Mikrocosmos> {
+    public struct OnJoinRoomButtonClicked {
+
+    }
+	public partial class RoomInfo : AbstractMikroController<Mikrocosmos>, ICanSendEvent {
         private DiscoveryResponse response;
         
         public void SetRoomInfo(DiscoveryResponse response) {
@@ -37,20 +40,19 @@ namespace Mikrocosmos {
         }
 
         private void OnJoinButtonClicked() {
-          
-                if (response.IsGaming || response.ServerPlayerNum >= response.ServerMaxPlayerNum) {
-                    return;
-                }
+            if (response.IsGaming || response.ServerPlayerNum >= response.ServerMaxPlayerNum) {
+                return;
+            }
 
-                if (response.IsLAN) {
-                    NetworkManager.singleton.GetComponent<TelepathyTransport>().port = (ushort)response.Uri.Port;
-                    ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(NetworkingMode.Normal);
-                }
-                else {
-                    SteamMatchmaking.JoinLobby(response.HostSteamLobbyID);
-                }
-           
-            
+            if (response.IsLAN) {
+                NetworkManager.singleton.GetComponent<TelepathyTransport>().port = (ushort)response.Uri.Port;
+                ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(NetworkingMode.Normal);
+            }
+            else {
+                SteamMatchmaking.JoinLobby(response.HostSteamLobbyID);
+            }
+            this.SendEvent(new OnJoinRoomButtonClicked());
+
         }
     }
 }
