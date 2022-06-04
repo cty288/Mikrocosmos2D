@@ -62,7 +62,8 @@ namespace Mirror.Discovery
         }
 
         /// <summary>
-        /// virtual so that inheriting classes' Start() can call base.Start() too
+        /// virtual so that inheriting classes'
+        /// () can call base.Start() too
         /// </summary>
         public virtual void Start()
         {

@@ -35,7 +35,9 @@ MonoBehaviour:
     - Mirror
     - MikroFramework
     - UniRx
+    - com.rlabrecque.steamworks.net
     - Cinemachine
+    - FizzySteamworks
     - Assembly-CSharp
     - Telepathy
     - Mirror.Components
@@ -48,14 +50,13 @@ MonoBehaviour:
     - Assembly-CSharp-firstpass
     - Mirror.Authenticators
     - Elringus.SpriteGlow.Runtime
-    - FizzySteamworks
-    - com.rlabrecque.steamworks.net
+    - Steamworks
     - PsdPlugin
     - PPv2URPConverters
+    - com.rlabrecque.steamworks.net.editor
     - Polyglot.Editor
     - Mirror.Editor
     - Mirror.CompilerSymbols
-    - com.rlabrecque.steamworks.net.editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

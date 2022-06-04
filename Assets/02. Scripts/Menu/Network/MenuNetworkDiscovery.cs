@@ -4,6 +4,7 @@ using System.Net;
 using Mikrocosmos;
 using Mirror;
 using Mirror.Discovery;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +29,9 @@ public class DiscoveryResponse : NetworkMessage
     public bool IsGaming;
     public Uri Uri;
     public string HostName;
+    public bool IsLAN;
+    public string HostSteamAddress;
+    public CSteamID HostSteamLobbyID;
     public IPEndPoint EndPoint { get; set; }
 
    
@@ -90,7 +94,8 @@ public class MenuNetworkDiscovery : NetworkDiscoveryBase<DiscoveryRequest, Disco
                 IsGaming =  ((NetworkedRoomManager)(NetworkedRoomManager.singleton)).IsInGame,
                 ServerPlayerNum = NetworkServer.connections.Count,
                 HostName = ((NetworkedRoomManager)NetworkManager.singleton).GetHostName(),
-                ServerMaxPlayerNum = 8
+                ServerMaxPlayerNum = 8,
+                IsLAN = ((NetworkedRoomManager)NetworkRoomManager.singleton).NetworkingMode == NetworkingMode.Normal
             };
         }
         catch (NotImplementedException)

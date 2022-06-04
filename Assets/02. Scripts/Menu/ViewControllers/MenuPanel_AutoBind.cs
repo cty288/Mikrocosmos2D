@@ -12,5 +12,8 @@ namespace Mikrocosmos {
 		[SerializeField] private TMP_Text TextName;
 		[SerializeField] private Button BtnHostGame;
 		[SerializeField] private Button BtnFindGame;
+		[SerializeField] private GameObject ObjHostGameOptionPanel;
+		[SerializeField] private Button BtnHostLocalNetwork;
+		[SerializeField] private Button BtnHostSteam;
 	}
 }

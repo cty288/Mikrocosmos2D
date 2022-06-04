@@ -13,12 +13,20 @@ namespace Mikrocosmos {
 	public partial class MenuUI : AbstractMikroController<Mikrocosmos> {
         private void Awake() {
             BtnNameConfirmButton.onClick.AddListener(OnNameButtonConfirmClicked);
-            BtnHostGame.onClick.AddListener(OnHostGameButtonClicked);
+           // BtnHostGame.onClick.AddListener(OnHostGameButtonClicked);
             BtnFindGame.onClick.AddListener(OnFindGameButtonClicked);
-            
+            BtnHostLocalNetwork.onClick.AddListener(OnHostLocalNetwork);
             BtnRoomSearchPanelBackToMenu.onClick.AddListener(OnRoomSearchBackToMenu);
             this.RegisterEvent<ChangeNameSuccess>(OnNameChangeSuccess).UnRegisterWhenGameObjectDestroyed(gameObject);
-           
+           BtnHostSteam.onClick.AddListener(OnHostSteam);
+        }
+
+        private void OnHostSteam() {
+            ((NetworkedRoomManager)(NetworkManager.singleton)).StartHosting(NetworkingMode.Steam);
+        }
+
+        private void OnHostLocalNetwork() {
+            ((NetworkedRoomManager)(NetworkManager.singleton)).StartHosting(NetworkingMode.Normal);
         }
 
         private void OnRoomSearchBackToMenu() {
@@ -39,14 +47,7 @@ namespace Mikrocosmos {
             this.SendCommand<ClientRequestNetworkDiscoveryCommand>();
         }
 
-        private void OnHostGameButtonClicked() {
-#if STEAMWORKS_NET
-            
-#endif 
-            NetworkRoomManager.singleton.GetComponent<TelepathyTransport>().port =(ushort) Random.Range(7777, 15000);
-            NetworkRoomManager.singleton.StartHost();
-            Debug.Log("Start host at: " + NetworkRoomManager.singleton.GetComponent<TelepathyTransport>().port);
-        }
+
 
         private void OnNameChangeSuccess(ChangeNameSuccess obj) {
             ObjNewPlayerPanelParent.SetActive(false);

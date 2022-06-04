@@ -6,10 +6,12 @@ using MikroFramework;
 using TMPro;
 using MikroFramework.Architecture;
 using Mirror;
+using Steamworks;
 
 namespace Mikrocosmos {
 	public partial class RoomInfo : AbstractMikroController<Mikrocosmos> {
         private DiscoveryResponse response;
+        
         public void SetRoomInfo(DiscoveryResponse response) {
             this.response = response;
             TextRoomName.text = response.HostName + " µÄ·¿¼ä";
@@ -40,8 +42,14 @@ namespace Mikrocosmos {
                     return;
                 }
 
-                NetworkManager.singleton.GetComponent<TelepathyTransport>().port =(ushort) response.Uri.Port;
-                NetworkManager.singleton.StartClient(response.Uri);
+                if (response.IsLAN) {
+                    NetworkManager.singleton.GetComponent<TelepathyTransport>().port = (ushort)response.Uri.Port;
+                    ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(NetworkingMode.Normal);
+                }
+                else {
+                    SteamMatchmaking.JoinLobby(response.HostSteamLobbyID);
+                }
+           
             
         }
     }

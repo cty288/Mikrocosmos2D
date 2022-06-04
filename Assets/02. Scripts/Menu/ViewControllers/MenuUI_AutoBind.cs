@@ -15,12 +15,12 @@ namespace Mikrocosmos {
 		[SerializeField] private TMP_Text TextName;
 		[SerializeField] private Button BtnHostGame;
 		[SerializeField] private Button BtnFindGame;
+		[SerializeField] private GameObject ObjHostGameOptionPanel;
+		[SerializeField] private Button BtnHostLocalNetwork;
+		[SerializeField] private Button BtnHostSteam;
 		[SerializeField] private GameObject ObjFindServerPanel;
 		[SerializeField] private Transform TrRoomLayoutGroup;
-		[SerializeField] private TMP_Text TextRoomName;
-		[SerializeField] private TMP_Text TextRoomNumber;
-		[SerializeField] private Button BtnJoinButton;
-		[SerializeField] private TMP_Text TextRoomStatus;
 		[SerializeField] private Button BtnRoomSearchPanelBackToMenu;
+		[SerializeField] private Button BtnManualAddServer;
 	}
 }
