@@ -15,13 +15,15 @@ namespace Mikrocosmos
         [SerializeField] private int threshold;
 
         [SerializeField] private GameObject childTrigger;
-        [SerializeField] private StoneShieldTrigger SHT;
+      
 
         private Transform shootPos;
         private Animator animator;
 
         private bool isUsing = false;
         private bool mouseUpTriggered = false;
+
+        private StoneShieldModel model;
 
         /// <summary>
         /// 按下鼠标左键展开护盾--OnShieldExpanded
@@ -35,14 +37,14 @@ namespace Mikrocosmos
             shootPos = transform.Find("ShootPosition");
             animator = GetComponent<Animator>();
             childTrigger = this.gameObject.transform.GetChild(0).gameObject;
-            SHT = childTrigger.GetComponent<StoneShieldTrigger>();
+            model = GetComponent<StoneShieldModel>();
         }
         
 
         protected override void OnServerItemUsed()
         {
             base.OnServerItemUsed();
-            GoodsModel.ReduceDurability(1); //ReduceDurability while using
+           // GoodsModel.ReduceDurability(1); //ReduceDurability while using
             OnShieldExpanded();
             isUsing = true;
             mouseUpTriggered = false;
@@ -50,7 +52,8 @@ namespace Mikrocosmos
 
         public void OnShieldExpanded()
         {
-            currCharge = SHT.GetCurrCharge();
+            currCharge = model.CurrCharge;
+            
            // Debug.Log("OnExpansionB");
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
@@ -64,15 +67,20 @@ namespace Mikrocosmos
         {
             if (isServer)
             {                
-                Debug.Log("Charged. Shoot");
+                //Debug.Log("Charged. Shoot");
                 GameObject wave = Instantiate(this.wave, shootPos.transform.position, Quaternion.identity);
-                wave.GetComponent<JellyBulletViewController>().shooter = GetComponent<Collider2D>();
+                wave.GetComponent<BasicBulletViewController>().shooter = GetComponent<Collider2D>();
                 wave.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
                 wave.transform.rotation = transform.rotation;
                 NetworkServer.Spawn(wave);
                 isUsing = false;
                 mouseUpTriggered = true;
             }
+        }
+
+        protected override void Update() {
+            base.Update();
+            
         }
 
         private void LateUpdate() {

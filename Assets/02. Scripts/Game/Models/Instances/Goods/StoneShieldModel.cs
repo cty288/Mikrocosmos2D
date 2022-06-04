@@ -8,10 +8,11 @@ namespace Mikrocosmos
 {
     public class StoneShieldModel : BasicGoodsModel
     {
-        [field: SyncVar, SerializeField]
-        public override float SelfMass { get; protected set; }
-
-        [field: SyncVar, SerializeField] public override string Name { get; set; } = "Bullet";
+        private int currCharge;
+        public int CurrCharge {
+            get => currCharge;
+            set => currCharge = value;
+        }
 
         [ServerCallback]
         protected override bool ServerCheckCanHook(NetworkIdentity hookedBy)

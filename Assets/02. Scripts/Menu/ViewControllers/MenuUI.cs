@@ -40,6 +40,9 @@ namespace Mikrocosmos {
         }
 
         private void OnHostGameButtonClicked() {
+#if STEAMWORKS_NET
+            
+#endif 
             NetworkRoomManager.singleton.GetComponent<TelepathyTransport>().port =(ushort) Random.Range(7777, 15000);
             NetworkRoomManager.singleton.StartHost();
             Debug.Log("Start host at: " + NetworkRoomManager.singleton.GetComponent<TelepathyTransport>().port);

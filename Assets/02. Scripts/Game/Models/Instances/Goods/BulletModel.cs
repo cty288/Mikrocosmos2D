@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Mikrocosmos;
+using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
 
-public class BulletModel : AbstractBasicEntityModel {
+
+
+public interface  IBulletModel: IModel{}
+public class BulletModel : AbstractBasicEntityModel, IBulletModel {
     [field: SyncVar, SerializeField]
     public override float SelfMass { get; protected set; }
 

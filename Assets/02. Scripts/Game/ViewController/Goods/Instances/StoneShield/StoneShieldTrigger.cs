@@ -10,22 +10,22 @@ namespace Mikrocosmos
     public class StoneShieldTrigger : MonoBehaviour
     {
         [SerializeField] private LayerMask targetLayer;
-        [SerializeField] private int currCharge;
 
-        public int GetCurrCharge()
-        {
-            return currCharge;
+
+        private StoneShieldModel model;
+
+        private void Awake() {
+            model = GetComponentInParent<StoneShieldModel>();
         }
-
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (NetworkServer.active)
             {
-                if (PhysicsUtility.IsInLayerMask(collider.gameObject, targetLayer))
-                {
-                    currCharge = currCharge + 1;
-                    Destroy(collider);
+                if (PhysicsUtility.IsInLayerMask(collider.gameObject, targetLayer) &&
+                    collider.TryGetComponent<IBulletModel>(out IBulletModel m)) {
+                    model.CurrCharge++;
+                    NetworkServer.Destroy(collider.gameObject);
                 }
             }
 

@@ -61,7 +61,7 @@ namespace Mikrocosmos
             this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
         }
 
-       [ServerCallback]
+       [ServerCallback] 
         private float ProperForce()
         {
             var pos = transform.position;
