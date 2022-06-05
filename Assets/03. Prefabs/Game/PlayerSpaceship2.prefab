@@ -978,15 +978,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b21d926971913143b6ae5ee862fa1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 1
+  syncMode: 0
   syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
   <HookedRotationZOffset>k__BackingField: 0
   isControlling: 0
   isUsing: 0
   teamSprites:
-  - {fileID: 21300000, guid: c27bff12a31480b4dad0d03ea2323a16, type: 3}
-  - {fileID: 21300000, guid: faec01642dea3fb41baba79216bb5ec2, type: 3}
+  - {fileID: 21300000, guid: 14bf8ba6db3aa75448715c612f806b41, type: 3}
+  - {fileID: 21300000, guid: a881c3bf7eb0bb7428f3c7e009cacc63, type: 3}
   - {fileID: 21300000, guid: a75d3e9b643d4d049b261440f1b4e214, type: 3}
   - {fileID: 21300000, guid: 75ad54cbabc1bd14eb3244d010225592, type: 3}
   mapSprites:
@@ -1015,6 +1015,7 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <AbsorbDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 600
   <MomentumThredhold>k__BackingField: 15
@@ -1320,7 +1321,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: faec01642dea3fb41baba79216bb5ec2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 14bf8ba6db3aa75448715c612f806b41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

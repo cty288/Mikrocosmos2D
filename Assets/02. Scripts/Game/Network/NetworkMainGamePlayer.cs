@@ -52,9 +52,9 @@ namespace Mikrocosmos
         private void SpawnSpaceshipForThisPlayer(PlayerMatchInfo matchInfo, NetworkConnection conn) {
 
             GameObject spaceship = Instantiate(spaceshipPrefabs[matchInfo.Team-1], transform.position, Quaternion.identity);
-            
-            NetworkServer.Spawn(spaceship, conn);
             spaceship.GetComponent<PlayerSpaceship>().SetPlayerDisplayInfo(matchInfo.Team, matchInfo.TeamIndex, matchInfo.Name);
+            NetworkServer.Spawn(spaceship, conn);
+            
             ControlledSpaceship = spaceship.GetComponent<NetworkIdentity>();
         }
 

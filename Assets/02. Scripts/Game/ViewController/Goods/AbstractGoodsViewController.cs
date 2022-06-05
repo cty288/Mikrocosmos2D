@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.TimeSystem;
@@ -73,8 +74,10 @@ namespace Mikrocosmos
         }
 
 
+        
         protected override void Awake() {
             base.Awake();
+                       
             GoodsModel = GetComponent<IGoods>();
             collider = GetComponent<Collider2D>();
             collider.isTrigger = true;
@@ -139,6 +142,13 @@ namespace Mikrocosmos
          
         }
 
+        private void OnEnable() {
+            /*
+            if (Model.HookedByIdentity) {
+                
+            }*/
+        }
+        
         protected override void Update() {
             base.Update();
             if (GoodsModel.TransactionFinished) {
@@ -146,7 +156,8 @@ namespace Mikrocosmos
                 if (shadeCaster) {
                     shadeCaster.castsShadows = true;
                 }
-                
+                //rigidbody.simulated = tr
+                rigidbody.bodyType = RigidbodyType2D.Dynamic;
             }
             else {
                 if (shadeCaster) {

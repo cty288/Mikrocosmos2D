@@ -63,15 +63,24 @@ namespace Mikrocosmos
                     if (collision.collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity)) {
                         StartCoroutine(SetVelocityToZero());
                         
-                       
-                        if (entity is IDamagable damagable) {
-                            BulletModel model = GetComponent<BulletModel>();
-                            //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
-                            damagable.TakeRawDamage(
-                                (Mathf.RoundToInt( model.Damage * (Mathf.Min(3*rigidbody.velocity.magnitude / model.MaxSpeed,1)))));
-                           
-                        }
+                        BulletModel model = GetComponent<BulletModel>();
+                        int damage = (Mathf.RoundToInt(model.Damage *
+                                                       (Mathf.Min(3 * rigidbody.velocity.magnitude / model.MaxSpeed,
+                                                           1))));
                         
+                        if (entity is IDamagable damagable) {
+
+                            //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
+                            damagable.TakeRawDamage(damage);
+                        }
+
+                        if (entity is IHookable hookable)
+                        {
+                            if (!hookable.AbsorbDamage && hookable.HookedByIdentity) {
+                                hookable.HookedByIdentity.GetComponent<IDamagable>().TakeRawDamage(damage);
+                            }
+                        }
+
                     }
                     animator.SetTrigger("Hit");
                     if (destroyWhenHit)

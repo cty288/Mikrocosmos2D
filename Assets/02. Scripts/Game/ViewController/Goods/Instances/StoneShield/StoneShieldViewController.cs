@@ -18,7 +18,7 @@ namespace Mikrocosmos
       
 
         private Transform shootPos;
-        private Animator animator;
+        private NetworkAnimator animator;
 
         private bool isUsing = false;
         private bool mouseUpTriggered = false;
@@ -35,10 +35,11 @@ namespace Mikrocosmos
         {
             base.Awake();
             shootPos = transform.Find("ShootPosition");
-            animator = GetComponent<Animator>();
+            animator = GetComponent<NetworkAnimator>();
             childTrigger = this.gameObject.transform.GetChild(0).gameObject;
             model = GetComponent<StoneShieldModel>();
         }
+        
         
 
         protected override void OnServerItemUsed()
@@ -55,11 +56,12 @@ namespace Mikrocosmos
             currCharge = model.CurrCharge;
             
            // Debug.Log("OnExpansionB");
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
+            if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 Debug.Log("OnExpansion");
-                animator.SetBool("Use", true);
-                animator.SetBool("Shoot", false);
+                animator.SetTrigger("Use");
+            }
+            else {
+                animator.ResetTrigger("Use");
             }
         }
 
@@ -68,6 +70,7 @@ namespace Mikrocosmos
             if (isServer)
             {                
                 //Debug.Log("Charged. Shoot");
+                animator.SetTrigger("Shoot");
                 GameObject wave = Instantiate(this.wave, shootPos.transform.position, Quaternion.identity);
                 wave.GetComponent<BasicBulletViewController>().shooter = GetComponent<Collider2D>();
                 wave.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
@@ -88,16 +91,13 @@ namespace Mikrocosmos
                 if (!isUsing && !mouseUpTriggered) {
                     mouseUpTriggered = true;
                     //TODO:
-                    if (Model.HookedByIdentity != null) {
-                        OnItemUseMouseUp();
-                    }
-                  
+                    OnItemUseMouseUp();
                 }
-                
                 isUsing = false;
             }
         }
 
+        [ServerCallback]
         private void OnItemUseMouseUp() {
             OnWaveShoot();
         }

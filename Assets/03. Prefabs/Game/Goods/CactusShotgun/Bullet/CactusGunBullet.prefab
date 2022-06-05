@@ -321,13 +321,14 @@ MonoBehaviour:
   syncInterval: 0.1
   <MoveMode>k__BackingField: 0
   <MaxSpeed>k__BackingField: 70
+  <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 0.5
-  <Damage>k__BackingField: 15
+  <Damage>k__BackingField: 10
   <Name>k__BackingField: CactusBullet
 --- !u!114 &4329412435070151956
 MonoBehaviour:

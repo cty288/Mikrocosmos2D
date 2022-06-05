@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
@@ -38,13 +39,29 @@ namespace Mikrocosmos
         }
 
 
-
+        
         private void OnMassChanged(OnMassChanged e)
         {
             Debug.Log(e.newMass);
         }
 
-
+        
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => {
+                if (this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team ==
+                    ThisSpaceshipTeam)
+                {
+                    transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[0];
+                }
+                else
+                {
+                    transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[1];
+                }
+            });
+            transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+        }
 
         protected override void Update()
         {
@@ -162,11 +179,7 @@ namespace Mikrocosmos
 
         //
 
-        private void UpdateRotation(Vector2 mousePos)
-        {
-
-        }
-
+    
 
         [ClientRpc]
         private void RpcOnDizzyBuff(BuffStatus e) {

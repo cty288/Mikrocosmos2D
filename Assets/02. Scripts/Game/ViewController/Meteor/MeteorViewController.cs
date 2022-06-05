@@ -50,7 +50,7 @@ namespace Mikrocosmos
         [ServerCallback]
         public virtual void OnServerTakeDamage(int oldHealth, int newHealth) {
             RpcOnClientTakeDamage(oldHealth, newHealth);
-            if (newHealth <= 0) {
+            if (newHealth <= 0 && oldHealth > 0) {
                 if (Model.HookedByIdentity) {
                     Model.UnHook();
                 }
@@ -59,6 +59,7 @@ namespace Mikrocosmos
 
                 if (GetComponent<PoolableNetworkedGameObject>().Pool != null) {
                     NetworkedObjectPoolManager.Singleton.Recycle(gameObject);
+                    NetworkServer.UnSpawn(gameObject);
                 }else {
                     NetworkServer.Destroy(gameObject);
                 }

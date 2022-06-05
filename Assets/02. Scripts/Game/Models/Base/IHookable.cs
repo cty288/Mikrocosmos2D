@@ -31,7 +31,7 @@ namespace Mikrocosmos
 
         bool Hook(NetworkIdentity hookedBy);
 
-        
+        bool AbsorbDamage { get; set; }
         void UnHook(bool isShoot);
 
         void UnHook();

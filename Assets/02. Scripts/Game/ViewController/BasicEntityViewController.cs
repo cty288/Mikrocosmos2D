@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Utilities;
@@ -22,6 +23,8 @@ namespace Mikrocosmos
 
         public Vector2 HookedPositionOffset { get; }
         public float HookedRotationZOffset { get; }
+
+        public void OnEntitySwitched(bool switchTo);
     }
 
     public interface IHaveMomentumViewController {
@@ -50,6 +53,7 @@ namespace Mikrocosmos
 
 
     public abstract class BasicEntityViewController: AbstractNetworkedController<Mikrocosmos>, IEntityViewController {
+        private Vector3 originalScale;
         public  IEntity Model { get; protected set; }
         public void ResetViewController() {
             OnReset();
@@ -66,6 +70,23 @@ namespace Mikrocosmos
         [field: SerializeField]
         public float HookedRotationZOffset { get; protected set; }
 
+        [ServerCallback]
+        public void OnEntitySwitched(bool switchTo) {
+            if (switchTo) {
+                transform.DOKill(false);
+                transform.localScale = Vector3.zero;
+                transform.DOScale(originalScale, 0.3f);
+            }
+            else {
+                NetworkServer.UnSpawn(gameObject);
+                gameObject.SetActive(false);
+               // transform.DOScale(Vector3.zero, 0.3f).OnComplete(() =>
+               // {
+                    
+                //});
+            }
+        }
+
 
         protected Rigidbody2D rigidbody;
 
@@ -78,6 +99,7 @@ namespace Mikrocosmos
             rigidbody = GetComponent<Rigidbody2D>();
             networkTransform = GetComponent<NetworkTransform>();
             networkRigidbody = GetComponent<NetworkRigidbody2D>();
+            originalScale = transform.localScale;
         }
 
         public override void OnStartServer() {
@@ -112,7 +134,7 @@ namespace Mikrocosmos
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
                         else {
-                            rigidbody.position = hookedByTr.position;
+                            transform.position = hookedByTr.position;
                             transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
@@ -120,7 +142,7 @@ namespace Mikrocosmos
                 }
                 else {
                     if (rigidbody) {
-                        rigidbody.bodyType = RigidbodyType2D.Dynamic;
+                       // rigidbody.bodyType = RigidbodyType2D.Dynamic;
                     }
                    
                 }

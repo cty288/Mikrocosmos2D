@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 421350621684394282}
   - component: {fileID: 1901226891549979291}
   - component: {fileID: 8341818875847238715}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: KnockTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,6 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 128
-  currCharge: 0
 --- !u!70 &8341818875847238715
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -56,7 +55,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3281043864930119664}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -113,7 +112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4045048935829913655, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_InstanceId
-      value: -205616
+      value: -158470
       objectReference: {fileID: 0}
     - target: {fileID: 4045048935829913655, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_ShapePathHash
@@ -314,8 +313,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.55, y: 3.05}
+  m_Offset: {x: -0.03239727, y: 0}
+  m_Size: {x: 1.7875786, y: 3.05}
   m_Direction: 0
 --- !u!114 &-5210007422349430747
 MonoBehaviour:
@@ -348,7 +347,6 @@ MonoBehaviour:
   currCharge: 0
   threshold: 0
   childTrigger: {fileID: 0}
-  SHT: {fileID: 0}
 --- !u!114 &6851574334146095325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,8 +383,6 @@ MonoBehaviour:
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 30
   reduceDurabilityInstantlyAfterUse: 0
-  <SelfMass>k__BackingField: 0
-  <Name>k__BackingField: Bullet
 --- !u!4 &57274393718387920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4045048935829913802, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}

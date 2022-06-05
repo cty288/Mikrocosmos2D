@@ -55,20 +55,26 @@ namespace Mikrocosmos
         private List<SpriteRenderer> selfSprites = new List<SpriteRenderer>();
 
         private IBuffSystem buffSystem;
+
+        [SyncVar]
+        private int teamIndex;
+        
+      
         
         [ServerCallback]
         public void SetPlayerDisplayInfo(int team, int teamIndex, string name)
         {
            
             selfSprites[0].sprite = teamSprites[teamIndex];
-           
 
+            this.teamIndex = teamIndex;
 
             this.Name = name;
             ThisSpaceshipTeam = team;
             RpcSetTeamSprite(teamIndex);
         }
 
+        
         public override void OnStartServer() {
             base.OnStartServer();
             this.RegisterEvent<OnPlayerDie>(OnServerPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -77,6 +83,8 @@ namespace Mikrocosmos
             buffSystem.ServerRegisterClientCallback<InvincibleBuff>(RpcOnInvincibleBuff);
         }
 
+
+        
         [ServerCallback]
         private void OnServerPlayerDie(OnPlayerDie e) {
          
@@ -98,20 +106,7 @@ namespace Mikrocosmos
         }
 
 
-        public override void OnStartClient() {
-            base.OnStartClient();
-            this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => {
-                if (this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team ==
-                    ThisSpaceshipTeam)
-                {
-                    transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[0];
-                }
-                else
-                {
-                    transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[1];
-                }
-            });
-        }
+        
 
         [ServerCallback]
         protected override void OnServerUpdate()

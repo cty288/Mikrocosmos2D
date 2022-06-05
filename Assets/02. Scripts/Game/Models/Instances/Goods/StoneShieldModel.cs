@@ -14,11 +14,7 @@ namespace Mikrocosmos
             set => currCharge = value;
         }
 
-        [ServerCallback]
-        protected override bool ServerCheckCanHook(NetworkIdentity hookedBy)
-        {
-            return false;
-        }
+      
 
         public override void OnClientHooked()
         {

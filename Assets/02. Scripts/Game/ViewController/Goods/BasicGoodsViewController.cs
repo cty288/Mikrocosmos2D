@@ -89,11 +89,14 @@ namespace Mikrocosmos
         protected override void OnClientOwnerStartBeingSelected(CanBeUsedGoodsBasicInfo basicInfo,
             int slotNumber) {
             Debug.Log($"OnClientOwnerStartBeingSelected. Slot: {slotNumber}");
+            if (currentDurabilityCountObject)
+            {
+                Destroy(currentDurabilityCountObject);
+            }
+            
             if (basicInfo.MaxDurability >= 0 && basicInfo.CanBeUsed) {
                 Transform currentSelectedSlotObject = GetCurrentSelectedSlotObject(slotNumber).transform;
-                if (currentSelectedSlotObject) {
-                    Destroy(currentDurabilityCountObject);
-                }
+               
                 currentDurabilityCountObject = Instantiate(DurabilityCountTextPrefab, currentSelectedSlotObject);
                 currentDurabilityCountObject.transform.localPosition = DurabilityCountTextSpawnLocalPosition;
                 currentDurabilityCountObject.GetComponent<TMP_Text>().text =

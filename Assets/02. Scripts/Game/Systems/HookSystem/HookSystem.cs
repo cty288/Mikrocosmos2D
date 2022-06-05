@@ -393,6 +393,7 @@ namespace Mikrocosmos {
                     HookedItem = nextItem.GetComponent<IHookableViewController>();
                     HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                     HookedItem.Model.Hook(netIdentity);
+                    HookedItem.OnEntitySwitched(true);
                     animator.SetBool("Hooking", true);
 
                 }
@@ -410,8 +411,10 @@ namespace Mikrocosmos {
                 });
 
                 if (oldIdentity && oldIdentity.gameObject !=e.SwitchedGameObject) {
-                    NetworkServer.UnSpawn(oldIdentity.gameObject);
-                    oldIdentity.gameObject.SetActive(false);
+
+                    oldIdentity.GetComponent<IHookableViewController>().OnEntitySwitched(false);
+                    //NetworkServer.UnSpawn(oldIdentity.gameObject);
+                    //oldIdentity.gameObject.SetActive(false);
                     //NetworkServer.Destroy(oldIdentity.gameObject);
                 }
                 

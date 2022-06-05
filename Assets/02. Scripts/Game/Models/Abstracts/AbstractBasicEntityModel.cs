@@ -79,6 +79,8 @@ namespace Mikrocosmos
             return false;
         }
 
+        [field: SyncVar, SerializeField] public bool AbsorbDamage { get; set; } = false;
+
         [ServerCallback]
         public void UnHook() {
             if (HookedByIdentity) {
