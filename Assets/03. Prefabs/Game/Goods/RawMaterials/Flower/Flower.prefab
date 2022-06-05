@@ -29,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <HookedPositionOffset>k__BackingField.y
-      value: 2.435
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <Name>k__BackingField
@@ -311,4 +311,4 @@ MonoBehaviour:
   - {x: 0.6303461, y: 0.5120472, z: 0}
   m_ShapePathHash: -357052104
   m_Mesh: {fileID: 0}
-  m_InstanceId: 73226
+  m_InstanceId: 253540

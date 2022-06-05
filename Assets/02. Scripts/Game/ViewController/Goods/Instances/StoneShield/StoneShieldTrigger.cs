@@ -24,7 +24,7 @@ namespace Mikrocosmos
             {
                 if (PhysicsUtility.IsInLayerMask(collider.gameObject, targetLayer) &&
                     collider.TryGetComponent<IBulletModel>(out IBulletModel m)) {
-                    model.CurrCharge++;
+                    
                     NetworkServer.Destroy(collider.gameObject);
                 }
             }

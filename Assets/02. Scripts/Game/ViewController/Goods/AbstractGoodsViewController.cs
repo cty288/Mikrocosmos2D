@@ -14,7 +14,7 @@ namespace Mikrocosmos
 {
     public abstract class AbstractGoodsViewController : AbstractCanCreateShadeEntity, IGoodsViewController, ICanBeMaskedViewController {
 
-        private Collider2D collider;
+      
         private ShadowCaster2D shadeCaster;
 
         [SerializeField] private Material buyMaterial;
@@ -23,6 +23,7 @@ namespace Mikrocosmos
 
         [SerializeField] protected Material defaultSpriteMaterial;
         protected Material visionEntityMaterial;
+        
 
         private IGlobalTradingSystem globalTradingSystem;
 

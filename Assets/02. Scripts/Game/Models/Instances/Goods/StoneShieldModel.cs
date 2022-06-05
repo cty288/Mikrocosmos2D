@@ -6,8 +6,9 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class StoneShieldModel : BasicGoodsModel
+    public class StoneShieldModel : BasicGoodsModel, ICanAbsorbDamage
     {
+        [SerializeField]
         private int currCharge;
         public int CurrCharge {
             get => currCharge;
@@ -24,6 +25,16 @@ namespace Mikrocosmos
         public override void OnClientFreed()
         {
 
+        }
+
+        
+        [field: SyncVar]
+        public bool AbsorbDamage { get; set; }
+
+        [ServerCallback]
+        public void OnAbsorbDamage(float damage) {
+            CurrCharge += (int) damage;
+            ReduceDurability((int)damage);
         }
     }
 }

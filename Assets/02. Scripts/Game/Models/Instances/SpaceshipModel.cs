@@ -68,13 +68,13 @@ namespace Mikrocosmos
 
         private float escapeLossTimer = 0f;
 
-       
+        [SerializeField] private float minimumAcceleration = 20;
 
         protected override void Update()
         {
             base.Update();
             if (isServer) {
-                Acceleration = Mathf.Max(15, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
+                Acceleration = Mathf.Max(minimumAcceleration, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
 
                 escapeLossTimer += Time.deltaTime;
                 if (escapeLossTimer >= EscapeLossTime)
@@ -181,7 +181,7 @@ namespace Mikrocosmos
                    }else {
                        float hookingModelSelfMass = 0;
                        if (hookingModel.CanBeAddedToInventory) {
-                           hookingModelSelfMass = hookingModel.SelfMass * 4;
+                           hookingModelSelfMass = hookingModel.SelfMass * 3;
                        }
                         return SelfMass + BackpackMass + hookingModelSelfMass;
                    }

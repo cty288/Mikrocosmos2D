@@ -16,7 +16,7 @@ namespace Mikrocosmos
         [HideInInspector]
         public Collider2D shooter;
 
-       private NetworkAnimator animator;
+       protected NetworkAnimator animator;
 
        private PoolableNetworkedGameObject poolable;
 
@@ -48,16 +48,9 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             poolable = GetComponent<PoolableNetworkedGameObject>();
-            this.GetSystem<ITimeSystem>().AddDelayTask(30, () => {
-                if (this) {
-                    //poolable.RecycleToCache();
-                    //NetworkServer.Destroy(gameObject);
-                }
-            });
-
         }
 
-        private void OnCollisionEnter2D(Collision2D collision) {
+        protected override void OnCollisionEnter2D(Collision2D collision) {
             if (isServer) {
                 if (collision.collider) {
                     if (collision.collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity)) {
@@ -74,14 +67,24 @@ namespace Mikrocosmos
                             damagable.TakeRawDamage(damage);
                         }
 
-                        if (entity is IHookable hookable)
-                        {
-                            if (!hookable.AbsorbDamage && hookable.HookedByIdentity) {
+
+                        bool dealDamageToOwner = true;
+                        if (entity is ICanAbsorbDamage canAbsorbDamage) {
+                            if (canAbsorbDamage.AbsorbDamage) {
+                                dealDamageToOwner = false;
+                                canAbsorbDamage.OnAbsorbDamage(damage);
+                            }
+                        }
+                        
+                        if (entity is IHookable hookable && dealDamageToOwner) {
+                            if (hookable.CanBeHooked && hookable.HookedByIdentity) {
                                 hookable.HookedByIdentity.GetComponent<IDamagable>().TakeRawDamage(damage);
                             }
+                            
                         }
 
                     }
+                    Debug.Log($"Bullet Destroy {gameObject.name}");
                     animator.SetTrigger("Hit");
                     if (destroyWhenHit)
                     {
@@ -90,11 +93,11 @@ namespace Mikrocosmos
                         rigidbody.velocity = Vector2.zero;
                         if (poolable) {
                             poolable.RecycleToCache();
+                            NetworkServer.UnSpawn(gameObject);
                         }
                         else {
                             NetworkServer.Destroy(this.gameObject);
                         }
-                       
                     }
                 }
             }
@@ -113,8 +116,8 @@ namespace Mikrocosmos
                 //NetworkServer.Destroy(this.gameObject);
                 rigidbody.velocity = Vector2.zero;
                 if (poolable) {
-                    
                     poolable.RecycleToCache();
+                    NetworkServer.UnSpawn(gameObject);
                 }
                 else {
                     NetworkServer.Destroy(this.gameObject);

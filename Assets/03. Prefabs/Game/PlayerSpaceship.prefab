@@ -192,7 +192,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 1d79667b5d8656344a5da5d007e25010, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -200,7 +200,7 @@ SpriteRenderer:
   m_Size: {x: 8.6, y: 8.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &3098642152726570382
@@ -749,13 +749,12 @@ MonoBehaviour:
   syncMode: 1
   syncInterval: 0
   <MoveMode>k__BackingField: 0
-  <MaxSpeed>k__BackingField: 27.5
+  <MaxSpeed>k__BackingField: 30
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
-  <AbsorbDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 24
   <MomentumThredhold>k__BackingField: 15
@@ -768,6 +767,7 @@ MonoBehaviour:
   HealthRecoverTimer: 0
   damagePerMomentum: 1
   dropOneItemMomentumThreshold: 3
+  minimumAcceleration: 20
   <DieDizzyTime>k__BackingField: 5
   <RespawnInvincibleTime>k__BackingField: 5
   <InitialAcceleration>k__BackingField: 65
@@ -813,7 +813,7 @@ MonoBehaviour:
   <HookedNetworkIdentity>k__BackingField: {fileID: 0}
   shootTimeThreshold: 0.5
   shootChargeOneCycleTime: 4
-  maxShootForce: 600
+  maxShootForce: 1200
   droppedItemSpawnPos: {fileID: 2601994127546760122}
   hookShootChargePercent: 0
 --- !u!95 &1860153339421768247
@@ -1061,7 +1061,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: b195fc6ee30e59a4fa00471e97f54321, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eb62d6a1364710f4f94af07d9bfd7e71, type: 3}
   m_Color: {r: 1, g: 0.98742133, b: 0.98742133, a: 1}
   m_FlipX: 0
   m_FlipY: 0

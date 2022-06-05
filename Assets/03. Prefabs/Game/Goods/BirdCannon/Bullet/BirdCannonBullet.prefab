@@ -240,6 +240,10 @@ PrefabInstance:
       value: 6.63
       objectReference: {fileID: 0}
     - target: {fileID: 1133179267551477265, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1133179267551477265, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
@@ -546,6 +550,7 @@ MonoBehaviour:
   syncInterval: 0.1
   <MoveMode>k__BackingField: 0
   <MaxSpeed>k__BackingField: 100
+  <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}

@@ -1,69 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3281043864930119664
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 421350621684394282}
-  - component: {fileID: 1901226891549979291}
-  - component: {fileID: 8341818875847238715}
-  m_Layer: 0
-  m_Name: KnockTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &421350621684394282
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3281043864930119664}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.49, y: -0.29, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 57274393718387920}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1901226891549979291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3281043864930119664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025964f136989614da48ea35a7668b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 128
---- !u!70 &8341818875847238715
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3281043864930119664}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.58, y: 0.24}
-  m_Size: {x: 1.99, y: 5.7}
-  m_Direction: 0
 --- !u!1 &4617969882033532338
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +29,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 57274393718387920}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4100980814441460762
 PrefabInstance:
@@ -112,7 +48,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4045048935829913655, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_InstanceId
-      value: -158470
+      value: -1668506
       objectReference: {fileID: 0}
     - target: {fileID: 4045048935829913655, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_ShapePathHash
@@ -342,11 +278,7 @@ MonoBehaviour:
   <CanBeMasked>k__BackingField: 1
   DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
   DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
-  wave: {fileID: 5222149471336982627, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
-  shootForce: 5
-  currCharge: 0
-  threshold: 0
-  childTrigger: {fileID: 0}
+  wave: {fileID: 5222149471336982627, guid: ec1758291f27d0e489113ad41ee46451, type: 3}
 --- !u!114 &6851574334146095325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,10 +311,11 @@ MonoBehaviour:
   <AffectedByGravity>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1
   <UseMode>k__BackingField: 1
-  <Frequency>k__BackingField: 0.01
+  <Frequency>k__BackingField: 0
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 30
   reduceDurabilityInstantlyAfterUse: 0
+  currCharge: 0
 --- !u!4 &57274393718387920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4045048935829913802, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}

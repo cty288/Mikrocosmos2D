@@ -55,6 +55,8 @@ namespace Mikrocosmos
     public abstract class BasicEntityViewController: AbstractNetworkedController<Mikrocosmos>, IEntityViewController {
         private Vector3 originalScale;
         public  IEntity Model { get; protected set; }
+
+        protected Collider2D collider;
         public void ResetViewController() {
             OnReset();
         }
@@ -100,6 +102,7 @@ namespace Mikrocosmos
             networkTransform = GetComponent<NetworkTransform>();
             networkRigidbody = GetComponent<NetworkRigidbody2D>();
             originalScale = transform.localScale;
+            collider = GetComponent<Collider2D>();
         }
 
         public override void OnStartServer() {
@@ -187,7 +190,7 @@ namespace Mikrocosmos
         //对方UnHooked：正常
         //对方Hooked ：手动算速度
         protected virtual void OnCollisionEnter2D(Collision2D collision) {
-            if (collision.collider) {
+            if (collision.collider && !collider.isTrigger) {
                 if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model)) {
                     if (model is IHookable hookable) {
                         if (hookable.HookState == HookState.Hooked) {

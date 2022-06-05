@@ -42,6 +42,7 @@ namespace Mikrocosmos
         [ServerCallback]
         public void ReduceDurability(int count) {
             Durability -= count;
+            Durability = Mathf.Max(Durability, 0);
             this.SendEvent<OnItemDurabilityChange>(new OnItemDurabilityChange() {
                 HookedBy = HookedByIdentity,
                 Model = this,

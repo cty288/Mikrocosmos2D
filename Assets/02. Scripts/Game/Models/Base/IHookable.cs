@@ -11,8 +11,13 @@ namespace Mikrocosmos
         Hooked
     }
 
-   
-    public interface IHookable: IHaveMomentum
+    public interface ICanAbsorbDamage : IHookable {
+        
+        bool AbsorbDamage { get; set; }
+        void OnAbsorbDamage(float damage);
+    }
+    
+   public interface IHookable: IHaveMomentum
     {
         public string Name { get; set; }
 
@@ -31,7 +36,7 @@ namespace Mikrocosmos
 
         bool Hook(NetworkIdentity hookedBy);
 
-        bool AbsorbDamage { get; set; }
+       
         void UnHook(bool isShoot);
 
         void UnHook();

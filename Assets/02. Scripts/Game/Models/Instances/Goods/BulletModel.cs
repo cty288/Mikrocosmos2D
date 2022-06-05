@@ -7,13 +7,15 @@ using UnityEngine;
 
 
 
-public interface  IBulletModel: IModel{}
+public interface IBulletModel : IModel {
+    public int Damage { get;  set; }
+}
 public class BulletModel : AbstractBasicEntityModel, IBulletModel {
     [field: SyncVar, SerializeField]
     public override float SelfMass { get; protected set; }
-
+    
     [field: SyncVar, SerializeField]
-    public int Damage { get; protected set; }
+    public int Damage { get;  set; }
 
     [field: SyncVar, SerializeField] public override string Name { get; set; } = "Bullet";
 

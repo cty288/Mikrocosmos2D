@@ -9,12 +9,9 @@ namespace Mikrocosmos
     public class StoneShieldViewController : BasicGoodsViewController
     {
         [SerializeField] private GameObject wave;
-        [SerializeField] private float shootForce;
-
-        [SerializeField] private int currCharge;
-        [SerializeField] private int threshold;
-
-        [SerializeField] private GameObject childTrigger;
+       
+       
+      
       
 
         private Transform shootPos;
@@ -25,10 +22,7 @@ namespace Mikrocosmos
 
         private StoneShieldModel model;
 
-        /// <summary>
-        /// 按下鼠标左键展开护盾--OnShieldExpanded
-        /// 松开鼠标左键时进行判定 若达到阈值发射冲击波--OnWaveShoot
-        /// </summary>
+        private NetworkedGameObjectPool bulletPool;
 
 
         protected override void Awake()
@@ -36,12 +30,15 @@ namespace Mikrocosmos
             base.Awake();
             shootPos = transform.Find("ShootPosition");
             animator = GetComponent<NetworkAnimator>();
-            childTrigger = this.gameObject.transform.GetChild(0).gameObject;
+           
             model = GetComponent<StoneShieldModel>();
         }
-        
-        
 
+        public override void OnStartServer() {
+            base.OnStartServer();
+            bulletPool = NetworkedObjectPoolManager.Singleton.CreatePool(wave, 5, 10);
+        }
+        
         protected override void OnServerItemUsed()
         {
             base.OnServerItemUsed();
@@ -53,7 +50,7 @@ namespace Mikrocosmos
 
         public void OnShieldExpanded()
         {
-            currCharge = model.CurrCharge;
+            
             
            // Debug.Log("OnExpansionB");
             if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
@@ -61,23 +58,47 @@ namespace Mikrocosmos
                 animator.SetTrigger("Use");
             }
             else {
+                model.AbsorbDamage = true;
                 animator.ResetTrigger("Use");
             }
         }
 
         public void OnWaveShoot()
         {
-            if (isServer)
-            {                
-                //Debug.Log("Charged. Shoot");
-                animator.SetTrigger("Shoot");
-                GameObject wave = Instantiate(this.wave, shootPos.transform.position, Quaternion.identity);
-                wave.GetComponent<BasicBulletViewController>().shooter = GetComponent<Collider2D>();
-                wave.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
-                wave.transform.rotation = transform.rotation;
-                NetworkServer.Spawn(wave);
+            if (isServer) {
+                if (!animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Expanded")) {
+                    animator.SetTrigger("NoDamage");
+                }
+                else {
+                    Debug.Log("StoneShieldMouseUp Effective");
+                    if (model.CurrCharge / 2 > 0)
+                    {
+                        Debug.Log("Charged. Shoot");
+                        animator.SetTrigger("Shoot");
+                        
+                        GameObject wave = bulletPool.Allocate();
+                        ///GameObject wave = Instantiate(this.wave);
+                        wave.transform.position = shootPos.position;
+                        wave.transform.rotation = transform.rotation;
+                        if (model.HookedByIdentity) {
+                            wave.GetComponent<BasicBulletViewController>()
+                                .SetShotoer(model.HookedByIdentity.GetComponent<Collider2D>());
+                        }
+                        
+                        wave.GetComponent<StoneShieldBulletViewController>().shooter = GetComponent<Collider2D>();
+                        wave.GetComponent<StoneShieldBulletViewController>().Damage = model.CurrCharge / 2;
+                        NetworkServer.Spawn(wave);
+                    }
+                    else
+                    {
+                        animator.SetTrigger("NoDamage");
+                    }
+                }
+                
+              
                 isUsing = false;
                 mouseUpTriggered = true;
+                model.CurrCharge = 0;
             }
         }
 
@@ -99,7 +120,9 @@ namespace Mikrocosmos
 
         [ServerCallback]
         private void OnItemUseMouseUp() {
+            model.AbsorbDamage = false;
             OnWaveShoot();
+           
         }
     }
 }
