@@ -138,7 +138,13 @@ namespace Mikrocosmos
                     bindedRigidibody.velocity = HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
                     bindedRigidibody.angularVelocity = 0;
                 }
-
+                if (this is ICanBeUsed model)
+                {
+                    if (model.IsUsing)
+                    {
+                        model.OnItemStopUsed();
+                    }
+                }
                 //prevent hit player when unhooked
                 if (!GetComponent<Collider2D>().isTrigger) {
                     Invoke(nameof(RecoverCollider), 0.1f);

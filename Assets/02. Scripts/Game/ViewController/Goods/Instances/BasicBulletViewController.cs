@@ -59,7 +59,7 @@ namespace Mikrocosmos
                         BulletModel model = GetComponent<BulletModel>();
                         int damage = (Mathf.RoundToInt(model.Damage *
                                                        (Mathf.Min(3 * rigidbody.velocity.magnitude / model.MaxSpeed,
-                                                           1))));
+                                                           2))));
                         
                         if (entity is IDamagable damagable) {
 

@@ -17,9 +17,8 @@ namespace Mikrocosmos
         private Transform shootPos;
         private NetworkAnimator animator;
 
-        private bool isUsing = false;
-        private bool mouseUpTriggered = false;
-
+        
+        
         private StoneShieldModel model;
 
         private NetworkedGameObjectPool bulletPool;
@@ -44,8 +43,6 @@ namespace Mikrocosmos
             base.OnServerItemUsed();
            // GoodsModel.ReduceDurability(1); //ReduceDurability while using
             OnShieldExpanded();
-            isUsing = true;
-            mouseUpTriggered = false;
         }
 
         public void OnShieldExpanded()
@@ -56,6 +53,8 @@ namespace Mikrocosmos
             if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                 Debug.Log("OnExpansion");
                 animator.SetTrigger("Use");
+                animator.ResetTrigger("NoDamage");
+                animator.ResetTrigger("Shoot");
             }
             else {
                 model.AbsorbDamage = true;
@@ -96,8 +95,7 @@ namespace Mikrocosmos
                 }
                 
               
-                isUsing = false;
-                mouseUpTriggered = true;
+              
                 model.CurrCharge = 0;
             }
         }
@@ -107,22 +105,15 @@ namespace Mikrocosmos
             
         }
 
-        private void LateUpdate() {
-            if (isServer) {
-                if (!isUsing && !mouseUpTriggered) {
-                    mouseUpTriggered = true;
-                    //TODO:
-                    OnItemUseMouseUp();
-                }
-                isUsing = false;
-            }
-        }
+     
 
-        [ServerCallback]
-        private void OnItemUseMouseUp() {
+        protected override void OnServerItemStopUsed() {
+            base.OnServerItemStopUsed();
             model.AbsorbDamage = false;
             OnWaveShoot();
-           
         }
+
+        
+       
     }
 }

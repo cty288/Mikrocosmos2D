@@ -20,6 +20,10 @@ namespace Mikrocosmos
         protected override void OnServerItemUsed() {
             Debug.Log("OnServerItemUsed");
         }
+        [ServerCallback]
+        protected override void OnServerItemStopUsed() {
+            Debug.Log("OnServerItemStopUsed");
+        }
 
         [ServerCallback]
         protected override void OnServerItemBroken() {

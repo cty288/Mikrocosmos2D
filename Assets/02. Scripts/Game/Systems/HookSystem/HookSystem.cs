@@ -36,6 +36,7 @@ namespace Mikrocosmos {
     public struct OnItemUsed {
         public ICanBeUsed Item;
         public NetworkIdentity HookedBy;
+        public bool UseEveryFrame;
     }
 
     public struct OnItemBroken{
@@ -371,6 +372,7 @@ namespace Mikrocosmos {
             if (e.Identity == netIdentity) {
 
                 NetworkIdentity oldIdentity = HookedNetworkIdentity;
+                IHookableViewController oldHookedVC = HookedItem;
                 if (e.SameSlot) {
                     this.SendEvent<OnHookItemSwitched>(new OnHookItemSwitched() {
                         NewIdentity = e.SwitchedGameObject==null? null: e.SwitchedGameObject.GetComponent<NetworkIdentity>(),
@@ -411,7 +413,12 @@ namespace Mikrocosmos {
                 });
 
                 if (oldIdentity && oldIdentity.gameObject !=e.SwitchedGameObject) {
-
+                    if (oldHookedVC.Model is ICanBeUsed model) {
+                        if (model.IsUsing) {
+                            model.OnItemStopUsed();
+                        }
+                    }
+                    
                     oldIdentity.GetComponent<IHookableViewController>().OnEntitySwitched(false);
                     //NetworkServer.UnSpawn(oldIdentity.gameObject);
                     //oldIdentity.gameObject.SetActive(false);
@@ -452,7 +459,7 @@ namespace Mikrocosmos {
                                 return false;
                             }
                             //now check time
-                            if (useTimer >= model.Frequency) {
+                            if (model.Frequency==0 || useTimer >= model.Frequency) {
                                 itemUsedForThisPress = true;
                                 useTimer = 0;
                                 return true;
@@ -468,6 +475,11 @@ namespace Mikrocosmos {
         [ServerCallback]
         public void OnServerPlayerReleaseUseButton() {
             itemUsedForThisPress = false;
+            if (HookedItem!=null && HookedItem.Model is ICanBeUsed model) {
+                if (model.IsUsing) {
+                    model.OnItemStopUsed();
+                }
+            }
         }
 
         [ServerCallback]
@@ -479,15 +491,12 @@ namespace Mikrocosmos {
                     this.SendEvent<OnItemUsed>(new OnItemUsed()
                     {
                         Item = model,
-                        HookedBy = hookedBy
+                        HookedBy = hookedBy,
+                        UseEveryFrame = model.Frequency==0 && model.UseMode == ItemUseMode.UseWhenPressingKey
                     });
-                    /*
-                    //check durability, if =0, then destroy item
-                    if (model.Durability == 0) {
-                        GameObject go = HookedNetworkIdentity.gameObject;
-                        UnHook();
-                        NetworkServer.Destroy(go);
-                    }*/
+                    if (model.Frequency > 0) {
+                        model.OnItemStopUsed();
+                    }
                 }
             }
 
@@ -507,6 +516,8 @@ namespace Mikrocosmos {
             UpdateHookCollisions(true);
 
             if (HookedItem != null) {
+                
+                
                 HookedItem.Model.UnHook(false);
                 if (HookedItem.Model.CanBeAddedToInventory)
                 {

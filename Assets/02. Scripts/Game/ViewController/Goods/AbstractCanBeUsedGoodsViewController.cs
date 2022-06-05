@@ -30,8 +30,15 @@ namespace Mikrocosmos
             this.RegisterEvent<OnHookItemSwitched>(OnServerItemSwitched).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnItemDurabilityChange>(OnItemDurabilityChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnItemStopUsed>(OnItemStopUsed).UnRegisterWhenGameObjectDestroyed(gameObject);
             // this.RegisterEvent<OnBackpackItemRemoved>(OnItemStopBeingSelected)
             //  .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnItemStopUsed(OnItemStopUsed e) {
+            if (e.Model == GoodsModel) {
+                OnServerItemStopUsed();
+            }
         }
 
         private void OnItemDurabilityChange(OnItemDurabilityChange e) {
@@ -54,25 +61,7 @@ namespace Mikrocosmos
             }
         }
 
-        [ServerCallback]
-        private void OnItemStopBeingSelected(OnBackpackItemRemoved e) {
-            CanBeUsedGoodsBasicInfo basicInfo = new CanBeUsedGoodsBasicInfo()
-            {
-                CanBeUsed = GoodsModel.CanBeUsed,
-                Durability = GoodsModel.Durability,
-                Frequency = GoodsModel.Frequency,
-                MaxDurability = GoodsModel.MaxDurability,
-                UseMode = GoodsModel.UseMode
-            };
-
-            if (e.OldObject.GetComponent<NetworkIdentity>() == netIdentity)
-            {
-                OnServerStopSelectThisItem();
-                RpcOnItemStopBeingSelected();
-                TargetOnItemStopBeingSelected(e.Identity.connectionToClient);
-            }
-        }
-
+        
         private bool switched = false;
 
         [ServerCallback]
@@ -124,6 +113,10 @@ namespace Mikrocosmos
             }
         }
 
+
+        private bool serverItemUsedEveryFrameStarted = false;
+        
+        
         [ServerCallback]
         private void OnServerItemUsed(OnItemUsed e) {
             if (e.Item == GoodsModel) {
@@ -135,11 +128,25 @@ namespace Mikrocosmos
                     MaxDurability = GoodsModel.MaxDurability,
                     UseMode = GoodsModel.UseMode
                 };
-                RpcOnItemUsed(basicInfo);
                 if (e.HookedBy) {
-                    TargetOnItemUsed(e.HookedBy.connectionToClient, basicInfo);
+                    previousOwner = e.HookedBy.connectionToClient;
                 }
-                
+                if (!e.UseEveryFrame) {
+                    RpcOnItemUsed(basicInfo);
+                    if (e.HookedBy) {
+                        TargetOnItemUsed(e.HookedBy.connectionToClient, basicInfo);
+                    }
+                }
+                else {
+                    if (!serverItemUsedEveryFrameStarted) {
+                        serverItemUsedEveryFrameStarted = true;
+                        RpcOnItemUsedEveryFrame(true);
+                        if (e.HookedBy)
+                        {
+                            TargetOnItemUsedEveryFrame(e.HookedBy.connectionToClient, true);
+                        }
+                    }
+                }
             }
         }
 
@@ -152,6 +159,90 @@ namespace Mikrocosmos
         protected void TargetOnItemUsed(NetworkConnection conn, CanBeUsedGoodsBasicInfo basicInfo) {
             OnClientOwnerItemUsed(basicInfo);
         }
+
+
+        private bool rpcItemUsedEveryFrameStarted = false;
+        private bool targetItemUsedEveryFrameStarted = false;
+        private NetworkConnection previousOwner;
+       
+
+        [ClientRpc]
+        protected void RpcOnItemUsedEveryFrame(bool isStart) {
+            rpcItemUsedEveryFrameStarted = isStart;
+            if (!isStart) {
+                CanBeUsedGoodsBasicInfo info = new CanBeUsedGoodsBasicInfo()
+                {
+                    CanBeUsed = GoodsModel.CanBeUsed,
+                    Durability = GoodsModel.Durability,
+                    Frequency = GoodsModel.Frequency,
+                    MaxDurability = GoodsModel.MaxDurability,
+                    UseMode = GoodsModel.UseMode
+                };
+                OnClientItemUsed(info);
+            }
+           
+        }
+
+        [TargetRpc]
+        protected void TargetOnItemUsedEveryFrame(NetworkConnection conn, bool isStart) {
+            targetItemUsedEveryFrameStarted = isStart;
+            if (!isStart)
+            {
+                CanBeUsedGoodsBasicInfo info = new CanBeUsedGoodsBasicInfo()
+                {
+                    CanBeUsed = GoodsModel.CanBeUsed,
+                    Durability = GoodsModel.Durability,
+                    Frequency = GoodsModel.Frequency,
+                    MaxDurability = GoodsModel.MaxDurability,
+                    UseMode = GoodsModel.UseMode
+                };
+                OnClientOwnerItemUsed(info);
+            }
+        }
+
+       
+        protected override void Update() {
+            base.Update();
+            if (isServer) {
+                if (!GoodsModel.IsUsing) {
+                    if (GoodsModel.Frequency == 0 &&
+                        GoodsModel.UseMode == ItemUseMode.UseWhenPressingKey) {
+                        if (serverItemUsedEveryFrameStarted)
+                        {
+                            serverItemUsedEveryFrameStarted = false;
+
+                            RpcOnItemUsedEveryFrame(false);
+                            if (previousOwner != null)
+                            {
+                                TargetOnItemUsedEveryFrame(previousOwner, false);
+                            }
+                        }
+                    }
+                    
+                }
+            }
+
+            if (isClient) {
+                CanBeUsedGoodsBasicInfo info = new CanBeUsedGoodsBasicInfo()
+                {
+                    CanBeUsed = GoodsModel.CanBeUsed,
+                    Durability = GoodsModel.Durability,
+                    Frequency = GoodsModel.Frequency,
+                    MaxDurability = GoodsModel.MaxDurability,
+                    UseMode = GoodsModel.UseMode
+                };
+
+                if (rpcItemUsedEveryFrameStarted) {
+                    OnClientItemUsed(info);
+                }
+
+                if (targetItemUsedEveryFrameStarted) {
+                    OnClientOwnerItemUsed(info);
+                }
+            }
+           
+        }
+
 
         [ClientRpc]
         protected void RpcOnItemStopBeingSelected()
@@ -214,6 +305,7 @@ namespace Mikrocosmos
 
 
         protected abstract void OnServerItemUsed();
+        protected abstract void OnServerItemStopUsed();
         protected abstract void OnServerItemBroken();
 
         protected abstract void OnServerDurabilityChange();

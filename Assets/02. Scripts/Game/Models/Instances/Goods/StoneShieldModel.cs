@@ -36,5 +36,9 @@ namespace Mikrocosmos
             CurrCharge += (int) damage;
             ReduceDurability((int)damage);
         }
+
+        public override void OnUsed() {
+            
+        }
     }
 }

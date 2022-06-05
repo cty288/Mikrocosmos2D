@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
@@ -10,6 +11,11 @@ namespace Mikrocosmos
         public ICanBeUsed Model;
         public NetworkIdentity HookedBy;
         public int NewDurability;
+    }
+
+    public struct OnItemStopUsed {
+        public ICanBeUsed Model;
+        public NetworkIdentity HookedBy;
     }
     public abstract class AbstractCanBeUsedGoodsModel : AbstractGoodsModel, ICanBeUsed {
         [field: SyncVar, SerializeField] public bool CanBeUsed { get; set; } = true;
@@ -32,12 +38,49 @@ namespace Mikrocosmos
             Durability = MaxDurability;
         }
 
-        
+       [field: SerializeField]
+        public bool IsUsing { get; private set; } = false;
+
+       // private bool serverItemStopUsedTriggered = true;
 
         [ServerCallback]
         public void OnItemUsed() {
+            IsUsing = true;
+            //serverItemStopUsedTriggered = false;
             OnUsed();
         }
+
+        [ServerCallback]        
+        public void OnItemStopUsed() {
+            IsUsing = false;
+            this.SendEvent<OnItemStopUsed>(new OnItemStopUsed() {
+                Model = this,
+                HookedBy = netIdentity
+            });
+            Debug.Log($"Item Stop Used: {gameObject.name}");
+        }
+
+        /*
+        protected override void Update() {
+            base.Update();
+            if (isServer) {
+                if (!IsUsing && !serverItemStopUsedTriggered) {
+                    serverItemStopUsedTriggered = true;
+                    this.SendEvent<OnItemStopUsed>(new OnItemStopUsed() {
+                        Model = this,
+                        HookedBy = HookedByIdentity
+                    });
+                    Debug.Log($"Item Stop Used: {gameObject.name}");
+                }
+            }
+        }
+
+        private void LateUpdate() {
+            if (isServer) {
+                //IsUsing = false;
+            }
+          
+        }*/
 
         [ServerCallback]
         public void ReduceDurability(int count) {

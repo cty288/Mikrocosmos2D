@@ -109,12 +109,8 @@ namespace Mikrocosmos
         
 
         [ServerCallback]
-        protected override void OnServerUpdate()
-        {
-           
-
-            if (isUsing)
-            {
+        protected override void OnServerUpdate() {
+            if (isUsing) {
                 hookSystem.OnServerPlayerHoldUseButton();
             }
         }

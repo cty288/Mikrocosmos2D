@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6410031578183631638}
   - component: {fileID: 6410031578183631637}
   - component: {fileID: 6410031578183631851}
-  - component: {fileID: -6830313856833975781}
   - component: {fileID: 2517722696999079066}
+  - component: {fileID: -6830313856833975781}
   - component: {fileID: -2388563459011212752}
   - component: {fileID: 6410031578183631632}
   - component: {fileID: 6410031578183631639}
@@ -131,33 +131,7 @@ MonoBehaviour:
   - {x: -6.7674503, y: -5.5892167, z: 0}
   m_ShapePathHash: 939031523
   m_Mesh: {fileID: 0}
-  m_InstanceId: 87844
---- !u!61 &-6830313856833975781
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -1.0299406, y: -0.7178471}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 17.87, y: 12.14}
-    newSize: {x: 6.63, y: 6.63}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 10.956602, y: 6.970835}
-  m_EdgeRadius: 0
+  m_InstanceId: 483846
 --- !u!114 &2517722696999079066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +167,34 @@ MonoBehaviour:
   <Frequency>k__BackingField: 0.25
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 5
+  <IsUsing>k__BackingField: 0
   reduceDurabilityInstantlyAfterUse: 1
+--- !u!61 &-6830313856833975781
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.0299406, y: -0.7178471}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 17.87, y: 12.14}
+    newSize: {x: 6.63, y: 6.63}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10.956602, y: 6.970835}
+  m_EdgeRadius: 0
 --- !u!114 &-2388563459011212752
 MonoBehaviour:
   m_ObjectHideFlags: 0

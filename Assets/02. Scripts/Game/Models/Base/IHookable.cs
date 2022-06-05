@@ -63,7 +63,11 @@ namespace Mikrocosmos
 
         public int MaxDurability { get; set; }
 
+        public bool IsUsing { get; }
+
         void OnItemUsed();
+
+        void OnItemStopUsed();
 
         public void ReduceDurability(int count);
     }
