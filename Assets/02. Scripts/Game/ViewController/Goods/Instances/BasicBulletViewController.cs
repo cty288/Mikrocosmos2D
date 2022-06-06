@@ -91,19 +91,43 @@ namespace Mikrocosmos
 
                     }
                     Debug.Log($"Bullet Destroy {gameObject.name}");
-                    animator.SetTrigger("Hit");
-                    if (destroyWhenHit)
+                   
+                }
+                animator.SetTrigger("Hit");
+                if (destroyWhenHit)
+                {
+
+                    // NetworkServer.Destroy(this.gameObject);
+                    rigidbody.velocity = Vector2.zero;
+                    if (poolable)
                     {
-                        
-                        // NetworkServer.Destroy(this.gameObject);
-                        rigidbody.velocity = Vector2.zero;
-                        if (poolable) {
-                            poolable.RecycleToCache();
-                            NetworkServer.UnSpawn(gameObject);
-                        }
-                        else {
-                            NetworkServer.Destroy(this.gameObject);
-                        }
+                        poolable.RecycleToCache();
+                        NetworkServer.UnSpawn(gameObject);
+                    }
+                    else
+                    {
+                        NetworkServer.Destroy(this.gameObject);
+                    }
+                }
+            }
+        }
+
+
+        private void LateUpdate() {
+            Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.5f);
+            if (collider && collider != shooter && !collider.isTrigger) {
+                animator.SetTrigger("Hit");
+                if (destroyWhenHit) {
+                    // NetworkServer.Destroy(this.gameObject);
+                    rigidbody.velocity = Vector2.zero;
+                    if (poolable)
+                    {
+                        poolable.RecycleToCache();
+                        NetworkServer.UnSpawn(gameObject);
+                    }
+                    else
+                    {
+                        NetworkServer.Destroy(this.gameObject);
                     }
                 }
             }

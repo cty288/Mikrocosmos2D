@@ -275,11 +275,17 @@ namespace Mikrocosmos
 
             GoodsConfigure selectedGoodsConfigure = null;
 
-            if (targetList.Count > 1)
-            {
-                while (selectedGoodsConfigure == null || selectedGoodsConfigure == currentSellingItemConfig)
-                {
-                    selectedGoodsConfigure = targetList[Random.Range(0, targetList.Count)];
+            if (targetList.Count > 1 || (rawMaterials.Any() && secondaryMaterials.Any())) {
+                
+                while (selectedGoodsConfigure == null || selectedGoodsConfigure == currentSellingItemConfig) {
+                    if (targetList.Count > 1) {
+                        selectedGoodsConfigure = targetList[Random.Range(0, targetList.Count)];
+                    }
+                    else {
+                        targetList = targetList == rawMaterials ? secondaryMaterials : rawMaterials;
+                        selectedGoodsConfigure = targetList[Random.Range(0, targetList.Count)];
+                    }
+                   
                 }
             }
             else

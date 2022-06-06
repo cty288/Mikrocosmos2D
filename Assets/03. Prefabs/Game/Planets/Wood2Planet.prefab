@@ -158,7 +158,7 @@ Transform:
   - {fileID: 6808820890171537582}
   - {fileID: 9195645541780372382}
   - {fileID: 1947872098940575172}
-  - {fileID: 2330299036835362065}
+  - {fileID: 2139094088906552687}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -240,8 +240,14 @@ MonoBehaviour:
   initialBuyItemList:
   - <GoodPrefab>k__BackingField: {fileID: 8825376392211092326, guid: 32154821432d5ae468975edfd3700eb5, type: 3}
     <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: 7f357c983eb7155458f5c29b82b06600, type: 3}
+    <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 57274393718387756, guid: bb4fe22ea33007b4c90dfb10784434c2, type: 3}
+    <RealPriceOffset>k__BackingField: 0
   initialSellItemList:
   - <GoodPrefab>k__BackingField: {fileID: 5674123710821168156, guid: aa0845d926eeb8e42a7935fd8f32fba0, type: 3}
+    <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 9059987998351717059, guid: 048df973b5b87ce459f6afebd37c4077, type: 3}
     <RealPriceOffset>k__BackingField: 0
   <PlanetType>k__BackingField: 3
 --- !u!114 &8345480255462355403
@@ -692,6 +698,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9195645541780372382}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3717615263909737597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2139094088906552687}
+  m_Layer: 0
+  m_Name: Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2139094088906552687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3717615263909737597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2330299036835362065}
+  m_Father: {fileID: 1546541824714299382}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4854120602850970898
 GameObject:
@@ -1266,7 +1304,7 @@ GameObject:
   - component: {fileID: 2330299036835362065}
   - component: {fileID: 3591055218695848596}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: SpriteChild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1279,14 +1317,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8920545920613749354}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.07, y: 3.759253, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.0700073, y: 3.7592545, z: 0}
   m_LocalScale: {x: 1.1564544, y: 1.1564544, z: 1.1564544}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1768423402289218583}
-  m_Father: {fileID: 1546541824714299382}
-  m_RootOrder: 3
+  m_Father: {fileID: 2139094088906552687}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3591055218695848596
 SpriteRenderer:

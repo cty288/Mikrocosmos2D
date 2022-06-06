@@ -21,15 +21,10 @@ namespace Mikrocosmos
         protected override void OnServerItemUsed() {
             base.OnServerItemUsed();
             animator.SetTrigger("Use");
+            model.CanBeHooked = false;
         }
 
-        public void OnStopKnife() {
-            if (isServer) {
-                
-            }
-        }
-
-        
+       
 
 
         [ServerCallback]
@@ -61,6 +56,7 @@ namespace Mikrocosmos
                     Debug.Log("Leaf Knife Hit");
                     GoodsModel.ReduceDurability(1);
                     hitThisTime = false;
+                    model.CanBeHooked = true;
                 }
             }
         }

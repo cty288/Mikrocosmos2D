@@ -50,7 +50,7 @@ namespace Mikrocosmos
             SellPackageModel = GetComponent<ICanSellPackage>();
 
             rigidbody = GetComponent<Rigidbody2D>();
-            distance = Vector3.Distance(target.transform.position, transform.position);
+            
             progress = initialProgress;
 
             sellItemSpawnPosition = transform.Find("SellBubbleBG/SellItemSpawnPos");
@@ -70,7 +70,9 @@ namespace Mikrocosmos
             this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnClientPlanetAffinityWithTeam1Changed)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
-        private void Update()
+
+        
+        private void FixedUpdate()
         {
 
             if (isServer)
@@ -91,7 +93,7 @@ namespace Mikrocosmos
         {
             //rotate Z
             if (spriteTransform) {
-                spriteTransform.Rotate(0, 0, selfRotationSpeed * Time.deltaTime);
+                spriteTransform.Rotate(0, 0, selfRotationSpeed * Time.fixedDeltaTime);
             }
          
         }
@@ -103,7 +105,7 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnServerPlanetGenerateBuyingItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
-
+            distance = Vector3.Distance(target.transform.position, transform.position);
         }
 
 
@@ -160,6 +162,7 @@ namespace Mikrocosmos
 
         public float speed = 100;
         float progress = 0;
+        [SerializeField]
         float distance = 0;
         public float x = 5;
         public float z = 7;
@@ -265,7 +268,7 @@ namespace Mikrocosmos
         void OvalRotate()
         {
 
-            progress += Time.deltaTime * speed;
+            progress += Time.fixedDeltaTime * speed;
             Vector3 p = new Vector3(x * Mathf.Cos(progress * Mathf.Deg2Rad), z * Mathf.Sin(progress * Mathf.Deg2Rad) * distance, 0);
             if (GravityModel.MoveMode == MoveMode.ByPhysics)
             {
@@ -295,7 +298,7 @@ namespace Mikrocosmos
                 {
                     if (rb.TryGetComponent<IAffectedByGravity>(out IAffectedByGravity target))
                     {
-                        float explosionForce = -1 * UniversalG(GravityModel, target, transform.position, rb.transform.position) * Time.deltaTime;
+                        float explosionForce = -1 * UniversalG(GravityModel, target, transform.position, rb.transform.position) * Time.fixedDeltaTime;
                         if (target.AffectedByGravity)
                         {
                             target.ServerAddGravityForce(explosionForce, Center, GravityModel.GravityFieldRange);

@@ -77,6 +77,7 @@ namespace Mikrocosmos
                 if (Model.HookedByIdentity) {
                     previousHookedBy = Model.HookedByIdentity;
                     TargetOnStartCharge(Model.HookedByIdentity.connectionToClient);
+                    Model.CanBeHooked = false;
                 }
             }
         }
@@ -85,6 +86,7 @@ namespace Mikrocosmos
             if (isServer) {
                 if (previousHookedBy) {
                     TargetOnEndCharge(previousHookedBy.connectionToClient);
+                    Model.CanBeHooked = true;
                 }
             }
         }
@@ -118,7 +120,7 @@ namespace Mikrocosmos
         private void TargetOnEndCharge(NetworkConnection conn) {
             this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
             {
-                NewRadius = 15
+                NewRadius = 20
             });
             this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
             {
@@ -132,7 +134,7 @@ namespace Mikrocosmos
             if (previousHookedBy && previousHookedBy.hasAuthority) {
                 this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
                 {
-                    NewRadius = 15
+                    NewRadius = 20
                 });
                 this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
                 {

@@ -88,6 +88,12 @@ namespace Mikrocosmos
                 GoodsModel.ReduceDurability(1);
             }
             fire1.gameObject.SetActive(true);
+            Model.CanBeHooked = false;
+        }
+
+        protected override void OnServerItemStopUsed() {
+            base.OnServerItemStopUsed();
+            Model.CanBeHooked = true;
         }
 
         public void OpenFire2() {

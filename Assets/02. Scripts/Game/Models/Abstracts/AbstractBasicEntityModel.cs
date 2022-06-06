@@ -163,6 +163,7 @@ namespace Mikrocosmos
                             false);
                     }
                 });
+                
                 // this.GetModel<ICollisionMaskModel>().Release();
             }
 

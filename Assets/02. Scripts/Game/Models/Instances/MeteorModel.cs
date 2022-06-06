@@ -13,7 +13,7 @@ namespace Mikrocosmos
 
         public void StartAddTorqueForce(Vector2 addForce, float time);
 
-       void OnMeteorRecycled();
+      
     }
 
     public class MeteorModel : AbstractDamagableEntityModel, IMeteorModel {
@@ -123,9 +123,9 @@ namespace Mikrocosmos
         }
 
         public void OnMeteorRecycled() {
-            if (isServer) {
-                this.GetSystem<IMeteorSystem>().ResetMeteor(gameObject);
-            }
+            //if (isServer) {
+                
+//            }
 
         }
     }

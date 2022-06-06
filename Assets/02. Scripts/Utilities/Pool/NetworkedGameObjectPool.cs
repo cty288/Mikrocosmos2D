@@ -112,8 +112,6 @@ namespace Mikrocosmos
                         obj.GetComponent<PoolableGameObject>().OnRecycled();
                         NetworkServer.UnSpawn(obj);
                         
-                      
-                       
                         return true;
                     }
                     else

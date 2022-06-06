@@ -57,6 +57,7 @@ namespace Mikrocosmos
                 animator.ResetTrigger("Shoot");
             }
             else {
+                Model.CanBeHooked = false;
                 model.AbsorbDamage = true;
                 animator.ResetTrigger("Use");
             }
@@ -111,6 +112,7 @@ namespace Mikrocosmos
             base.OnServerItemStopUsed();
             model.AbsorbDamage = false;
             OnWaveShoot();
+            Model.CanBeHooked = true;            
         }
 
         
