@@ -21,6 +21,8 @@ namespace Mikrocosmos
        private PoolableNetworkedGameObject poolable;
 
        [SerializeField] private bool destroyWhenHit = false;
+
+       [SerializeField] private bool damageReduceBySpeed = true;
         protected void Start() {
             base.Awake();
             animator = GetComponent<NetworkAnimator>();
@@ -60,6 +62,10 @@ namespace Mikrocosmos
                         int damage = (Mathf.RoundToInt(model.Damage *
                                                        (Mathf.Min(3 * rigidbody.velocity.magnitude / model.MaxSpeed,
                                                            2))));
+
+                        if (!damageReduceBySpeed) {
+                            damage = model.Damage;
+                        }
                         
                         if (entity is IDamagable damagable) {
 

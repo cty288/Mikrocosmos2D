@@ -571,6 +571,7 @@ MonoBehaviour:
   syncInterval: 0.1
   <MoveMode>k__BackingField: 1
   <MaxSpeed>k__BackingField: 50
+  <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 1
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
@@ -589,7 +590,9 @@ MonoBehaviour:
   <Frequency>k__BackingField: 0
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 80
+  <IsUsing>k__BackingField: 0
   reduceDurabilityInstantlyAfterUse: 0
+  reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse: 1
 --- !u!114 &-8888974966106577546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,8 +663,7 @@ MonoBehaviour:
   - {fileID: 6686446572951460612}
   - {fileID: 4916985026321286732}
   <CanBeMasked>k__BackingField: 1
-  DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
-  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
+  DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   fire1: {fileID: 6403340119911964050}
   fire2: {fileID: 1744423355335135302}
   damagePer02: 8

@@ -68,6 +68,8 @@ namespace Mikrocosmos
         void ServerRemoveFromBackpack(string name);
         void ServerDropFromBackpack(string name);
 
+        int GetSlotIndexFromItemName(string name);
+
         void ServerSwitchSlot(int index);
         int GetSlotCount();
         int GetCurrentSlot();
@@ -287,6 +289,16 @@ namespace Mikrocosmos
 
                 TargetOnInventoryUpdate(backpackItems,currentIndex);
             }
+        }
+
+        public int GetSlotIndexFromItemName(string name) { 
+            for (int i = 0; i < backpackItems.Count; i++) {
+                if (backpackItems[i].PrefabName == name) {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         [ServerCallback]

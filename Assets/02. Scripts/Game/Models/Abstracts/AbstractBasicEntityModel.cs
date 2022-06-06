@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
+using MikroFramework.TimeSystem;
 using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 namespace Mikrocosmos
 {
@@ -15,7 +17,7 @@ namespace Mikrocosmos
         public NetworkIdentity HookedByIdentity;
     }
     public abstract class AbstractBasicEntityModel : NetworkedModel, IEntity, ICanSendEvent,
-    ICanGetModel {
+    ICanGetModel, ICanGetSystem {
         [field:  SerializeField, SyncVar]
         public MoveMode MoveMode { get; set; } = MoveMode.ByPhysics;
 
@@ -146,15 +148,22 @@ namespace Mikrocosmos
                     }
                 }
                 //prevent hit player when unhooked
-                if (!GetComponent<Collider2D>().isTrigger) {
-                    Invoke(nameof(RecoverCollider), 0.1f);
-                }
-                GetComponent<Collider2D>().isTrigger = true;
+                //if (!GetComponent<Collider2D>().isTrigger) {
+                //Invoke(nameof(RecoverCollider), 0.5f);
+                //}
+                //GetComponent<Collider2D>().isTrigger = true;
+                NetworkIdentity hookeIdentity = HookedByIdentity;
+                Physics2D.IgnoreCollision(hookeIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
+                    true);
                 
-                Physics2D.IgnoreCollision(HookedByIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
-                    false);
-
-               // this.GetModel<ICollisionMaskModel>().Release();
+             
+                this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
+                    if (this && hookeIdentity != HookedByIdentity) {
+                        Physics2D.IgnoreCollision(hookeIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
+                            false);
+                    }
+                });
+                // this.GetModel<ICollisionMaskModel>().Release();
             }
 
             this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()

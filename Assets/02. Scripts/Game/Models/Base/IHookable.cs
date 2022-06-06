@@ -69,7 +69,7 @@ namespace Mikrocosmos
 
         void OnItemStopUsed();
 
-        public void ReduceDurability(int count);
+        public void ReduceDurability(int count, bool isDestroyed = false);
     }
 
 }

@@ -11,6 +11,7 @@ namespace Mikrocosmos
         public ICanBeUsed Model;
         public NetworkIdentity HookedBy;
         public int NewDurability;
+        public bool IsItemDestroyed;
     }
 
     public struct OnItemStopUsed {
@@ -83,13 +84,14 @@ namespace Mikrocosmos
         }*/
 
         [ServerCallback]
-        public void ReduceDurability(int count) {
+        public void ReduceDurability(int count, bool isItemDestroyed = false) {
             Durability -= count;
             Durability = Mathf.Max(Durability, 0);
             this.SendEvent<OnItemDurabilityChange>(new OnItemDurabilityChange() {
                 HookedBy = HookedByIdentity,
                 Model = this,
-                NewDurability = Durability
+                NewDurability = Durability,
+                IsItemDestroyed = isItemDestroyed
             });
             OnDurabilityReduced();
             if (Durability == 0)
@@ -99,6 +101,7 @@ namespace Mikrocosmos
                     Item = this ,
                     HookedBy = HookedByIdentity
                 });
+                NetworkServer.Destroy(gameObject);
             }
         }
 

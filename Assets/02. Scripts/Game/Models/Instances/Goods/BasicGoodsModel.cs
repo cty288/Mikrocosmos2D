@@ -9,6 +9,7 @@ namespace Mikrocosmos
     public class BasicGoodsModel : AbstractCanBeUsedGoodsModel {
 
         [SerializeField] private bool reduceDurabilityInstantlyAfterUse = true;
+        [SerializeField] private bool reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse = true;
 
 
         private bool readyToReduceDurability = false;
@@ -30,7 +31,7 @@ namespace Mikrocosmos
             //to prevent switching to another item before the durability reduction is finished
             if (Durability > 0 && readyToReduceDurability) {
                 readyToReduceDurability = false;
-                ReduceDurability(1);
+                ReduceDurability(1, true);
             }
         }
 
@@ -38,7 +39,10 @@ namespace Mikrocosmos
             if (reduceDurabilityInstantlyAfterUse) {
                 ReduceDurability(1);
             }else {
-                readyToReduceDurability = true;
+                if (reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse) {
+                    readyToReduceDurability = true;
+                }
+              
             }
          
         }

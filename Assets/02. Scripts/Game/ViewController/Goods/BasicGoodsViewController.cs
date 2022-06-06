@@ -7,11 +7,17 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class BasicGoodsViewController : AbstractCanBeUsedGoodsViewController {
-        [SerializeField] private GameObject DurabilityCountTextPrefab;
-        [SerializeField] private Vector2 DurabilityCountTextSpawnLocalPosition;
 
-        private GameObject currentDurabilityCountObject;
+    public struct OnGoodsUpdateViewControllerDurability {
+        public int SlotNumber;
+        public float DurabilityFraction;
+        public Sprite DurabilitySprite;
+        public bool UsePreviousSprite;
+    }
+    public class BasicGoodsViewController : AbstractCanBeUsedGoodsViewController, ICanSendEvent {
+     
+        [SerializeField] private Sprite DurabilityCountSprite;
+       
 
        
 
@@ -53,10 +59,6 @@ namespace Mikrocosmos
         [ClientCallback]
         protected override void OnClientOwnerItemUsed(CanBeUsedGoodsBasicInfo basicInfo) {
             Debug.Log("OnOwnerItemUsed");
-            if (currentDurabilityCountObject) {
-                currentDurabilityCountObject.GetComponent<TMP_Text>().text =
-                    $"{basicInfo.Durability}/{basicInfo.MaxDurability}";
-            }
         }
 
         [ClientCallback]
@@ -77,9 +79,7 @@ namespace Mikrocosmos
         [ClientCallback]
         protected override void OnClientOwnerItemStopBeingSelected() {
             Debug.Log("OnClientOwnerItemStopBeingSelected");
-            if (currentDurabilityCountObject) {
-                Destroy(currentDurabilityCountObject);
-            }
+         
         }
 
         [ClientCallback]
@@ -93,18 +93,20 @@ namespace Mikrocosmos
         protected override void OnClientOwnerStartBeingSelected(CanBeUsedGoodsBasicInfo basicInfo,
             int slotNumber) {
             Debug.Log($"OnClientOwnerStartBeingSelected. Slot: {slotNumber}");
-            if (currentDurabilityCountObject)
-            {
-                Destroy(currentDurabilityCountObject);
-            }
-            
             if (basicInfo.MaxDurability >= 0 && basicInfo.CanBeUsed) {
-                Transform currentSelectedSlotObject = GetCurrentSelectedSlotObject(slotNumber).transform;
-               
-                currentDurabilityCountObject = Instantiate(DurabilityCountTextPrefab, currentSelectedSlotObject);
-                currentDurabilityCountObject.transform.localPosition = DurabilityCountTextSpawnLocalPosition;
-                currentDurabilityCountObject.GetComponent<TMP_Text>().text =
-                    $"{basicInfo.Durability}/{basicInfo.MaxDurability}";
+                this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability() {
+                    DurabilityFraction = basicInfo.Durability /(float) basicInfo.MaxDurability,
+                    DurabilitySprite =  DurabilityCountSprite,
+                    SlotNumber = slotNumber
+                });
+            }
+            else {
+                this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability()
+                {
+                    DurabilityFraction = 0,
+                    DurabilitySprite = null,
+                    SlotNumber = slotNumber
+                });
             }
         }
 
@@ -113,10 +115,12 @@ namespace Mikrocosmos
         }
 
         protected override void OnClientOwnerDurabilityChange(CanBeUsedGoodsBasicInfo basicInfo, int slotNumber) {
-            if (currentDurabilityCountObject && slotNumber == Model.HookedByIdentity.GetComponent<IPlayerInventorySystem>().GetCurrentSlot()) {
-                currentDurabilityCountObject.GetComponent<TMP_Text>().text =
-                    $"{basicInfo.Durability}/{basicInfo.MaxDurability}";
-            }
+            this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability()
+            {
+                DurabilityFraction = basicInfo.Durability / (float)basicInfo.MaxDurability,
+                DurabilitySprite = DurabilityCountSprite,
+                SlotNumber = slotNumber
+            });
         }
 
         [ClientCallback]

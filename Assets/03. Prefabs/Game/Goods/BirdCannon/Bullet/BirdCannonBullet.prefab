@@ -534,6 +534,7 @@ MonoBehaviour:
   Force: 0
   shooter: {fileID: 0}
   destroyWhenHit: 1
+  damageReduceBySpeed: 0
 --- !u!114 &773197963524302722
 MonoBehaviour:
   m_ObjectHideFlags: 0

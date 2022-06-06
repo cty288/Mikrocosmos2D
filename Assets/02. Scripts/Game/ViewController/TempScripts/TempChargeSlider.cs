@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using UnityEngine;
@@ -18,12 +19,20 @@ namespace Mikrocosmos
 
         private void OnClientChargePercentChanged(OnClientChargePercentChanged e) {
             if (e.IsLocalPlayer) {
+                
                 float realPercent = (e.ChargePercent * 2);
+                
                 if (realPercent >= 1) {
                     realPercent = -realPercent + 2;
                 }
+
+                if (realPercent == 0) {
+                    slider.DOValue(0, 0.3f);
+                }
+                else {
+                    slider.value = realPercent;
+                }
                
-                slider.value = realPercent;
             }
         }
     }

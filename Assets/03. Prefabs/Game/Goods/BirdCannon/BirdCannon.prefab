@@ -75,6 +75,10 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <MaxDurability>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <BasicSellPrice>k__BackingField
       value: 25
       objectReference: {fileID: 0}
@@ -363,8 +367,7 @@ MonoBehaviour:
   visionAffectedSprites:
   - {fileID: 5674123710821168355}
   <CanBeMasked>k__BackingField: 1
-  DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
-  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
+  DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   bullet: {fileID: 5222149471336982627, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
   shootForce: 300
   CameraExpandRadius: 30

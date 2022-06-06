@@ -238,15 +238,11 @@ MonoBehaviour:
   <GravityFieldRange>k__BackingField: 500
   <G>k__BackingField: 0.000000001
   initialBuyItemList:
-  - <GoodPrefab>k__BackingField: {fileID: 6410031578183631850, guid: da1a03242ab176b499f5a976904f4940, type: 3}
-    <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 9059987998351717059, guid: 048df973b5b87ce459f6afebd37c4077, type: 3}
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: dc8db306dab6888418e841a2ac278341, type: 3}
     <RealPriceOffset>k__BackingField: 0
   initialSellItemList:
-  - <GoodPrefab>k__BackingField: {fileID: 4621731228356974662, guid: e45362f556fbb714cbe13f7212e23cdf, type: 3}
-    <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 2947802309723529383, guid: f7ce9b6a0414bf942a68adbeb7b5315a, type: 3}
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: 63080f426081b7d4a8475d992bbe3ed1, type: 3}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using MikroFramework.Utilities;
 using Mirror;
 using Mirror.Experimental;
@@ -24,7 +25,7 @@ namespace Mikrocosmos
         public Vector2 HookedPositionOffset { get; }
         public float HookedRotationZOffset { get; }
 
-        public void OnEntitySwitched(bool switchTo);
+        public void OnEntitySwitched(bool switchTo, float switchedToWaitTime = 0f);
     }
 
     public interface IHaveMomentumViewController {
@@ -73,11 +74,20 @@ namespace Mikrocosmos
         public float HookedRotationZOffset { get; protected set; }
 
         [ServerCallback]
-        public void OnEntitySwitched(bool switchTo) {
+        public void OnEntitySwitched(bool switchTo, float switchedToWaitTime  = 0f) {
             if (switchTo) {
                 transform.DOKill(false);
                 transform.localScale = Vector3.zero;
-                transform.DOScale(originalScale, 0.3f);
+                if (switchedToWaitTime > 0) {
+                    this.GetSystem<ITimeSystem>().AddDelayTask(switchedToWaitTime, () => {
+                        transform.DOScale(originalScale, 0.3f);
+                    });
+                }
+                else {
+                    transform.DOScale(originalScale, 0.3f);
+                }
+               
+
             }
             else {
                 NetworkServer.UnSpawn(gameObject);

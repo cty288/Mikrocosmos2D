@@ -109,7 +109,7 @@ namespace Mikrocosmos
                     TargetOnItemBroken(e.HookedBy.connectionToClient, basicInfo);
                 }
 
-                NetworkServer.Destroy(gameObject);
+                //NetworkServer.Destroy(gameObject);
             }
         }
 
@@ -298,8 +298,7 @@ namespace Mikrocosmos
 
         [TargetRpc]
         protected void TargetOnItemDurabilityChange(NetworkConnection conn, CanBeUsedGoodsBasicInfo basicInfo, 
-            int slotNumber)
-        {
+            int slotNumber) {
             OnClientOwnerDurabilityChange(basicInfo, slotNumber);
         }
 

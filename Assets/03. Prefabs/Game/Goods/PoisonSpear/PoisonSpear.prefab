@@ -332,8 +332,7 @@ MonoBehaviour:
   visionAffectedSprites:
   - {fileID: 8612353035255163155}
   <CanBeMasked>k__BackingField: 1
-  DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
-  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
+  DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   affectedLayers:
     serializedVersion: 2
     m_Bits: 192
@@ -372,7 +371,9 @@ MonoBehaviour:
   <Frequency>k__BackingField: 0.8
   <Durability>k__BackingField: 0
   <MaxDurability>k__BackingField: 15
+  <IsUsing>k__BackingField: 0
   reduceDurabilityInstantlyAfterUse: 0
+  reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse: 0
   addedForce: 500
   addedMomentum: 18
   addedDamage: 20

@@ -240,8 +240,6 @@ MonoBehaviour:
   initialBuyItemList:
   - <GoodPrefab>k__BackingField: {fileID: 5674123710821168156, guid: aa0845d926eeb8e42a7935fd8f32fba0, type: 3}
     <RealPriceOffset>k__BackingField: 0
-  - <GoodPrefab>k__BackingField: {fileID: 6410031578183631850, guid: da1a03242ab176b499f5a976904f4940, type: 3}
-    <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 2947802309723529383, guid: f7ce9b6a0414bf942a68adbeb7b5315a, type: 3}
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: 66c0f5f696620b24ab8302ed1a4e3e38, type: 3}

@@ -101,11 +101,14 @@ namespace Mikrocosmos
 
         private IEnumerator AddNewBuffToList(Type type, IBuff buff) {
             yield return new WaitForEndOfFrame();
-            buffs.Add(buff.GetType(), buff);
-            if (callbacks.ContainsKey(type))
-            {
-                callbacks[type]?.Invoke(BuffStatus.OnStart);
+            if (!buffs.ContainsKey(buff.GetType())) {
+                buffs.Add(buff.GetType(), buff);
+                if (callbacks.ContainsKey(type))
+                {
+                    callbacks[type]?.Invoke(BuffStatus.OnStart);
+                }
             }
+            
         }
 
         public bool HasBuff<T>() where T : IBuff {

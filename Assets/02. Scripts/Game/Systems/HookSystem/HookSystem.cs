@@ -62,7 +62,7 @@ namespace Mikrocosmos {
 
         void ServerUseItem(Func<bool> condition);
 
-        void UnHook();
+        void UnHook(bool isShoot = false);
 
         bool IsHooking { get; }
     }
@@ -156,6 +156,7 @@ namespace Mikrocosmos {
                             HookedItem = nextItem.GetComponent<IHookableViewController>();
                             HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                             HookedItem.Model.Hook(netIdentity);
+                            HookedItem.OnEntitySwitched(true);                            
                             animator.SetBool("Hooking", true);
                         }
                         else {
@@ -194,15 +195,12 @@ namespace Mikrocosmos {
         [ServerCallback]
         private void OnItemBroken(OnItemBroken e) {
             if (HookedItem!=null && e.Item == HookedItem.Model) {
-                GameObject go = HookedNetworkIdentity.gameObject;
+                Debug.Log("HookSystem: Item Broken");
                 UnHook();
                 //NetworkServer.Destroy(go);
-            }
-
-            if (e.Item != null && (HookedItem==null || e.Item != HookedItem.Model)) {
+            } else if (e.Item != null && (HookedItem==null || e.Item != HookedItem.Model)) {
                 if (e.Item.CanBeAddedToInventory) {
                     inventorySystem.ServerRemoveFromBackpack(e.Item.Name);
-                    
                 }
             }
         }
@@ -228,6 +226,13 @@ namespace Mikrocosmos {
                     HookedItem = nextItem.GetComponent<IHookableViewController>();
                     HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                     HookedItem.Model.Hook(netIdentity);
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
+                        HookedItem.OnEntitySwitched(true, 0.51f);
+                    }
+                    else {
+                        HookedItem.OnEntitySwitched(true);
+                    }
+                    
                     animator.SetBool("Hooking", true);
 
                 }
@@ -289,7 +294,7 @@ namespace Mikrocosmos {
                 }
 
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
-                    animator.SetBool("Hooking", false);
+                    //animator.SetBool("Hooking", false);
                 }
             }
 
@@ -330,18 +335,13 @@ namespace Mikrocosmos {
             if (isServer) {
                 Vector2 force = transform.up * maxShootForce * realShootPercent;
                 Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
-
                 this.SendEvent<OnItemShot>(new OnItemShot()
                 {
                     Force = force,
                     TargetShotItem = HookedItem as ICanBeShotViewController
                 });
-
-                HookedItem.Model.UnHook(true);
-                
+                UnHook(true);
                
-                HookedItem = null;
-                HookedNetworkIdentity = null;
             }
             
         }
@@ -385,10 +385,14 @@ namespace Mikrocosmos {
                 //still have item
                 if (!String.IsNullOrEmpty(e.PrefabName)) {
                     GameObject nextItem = e.SwitchedGameObject;
-                    if (HookedNetworkIdentity==null || e.SwitchedGameObject != HookedNetworkIdentity.gameObject) {
-                        nextItem.SetActive(true);
-                        NetworkServer.Spawn(nextItem);
+                    if (nextItem) {
+                        if (HookedNetworkIdentity == null || e.SwitchedGameObject != HookedNetworkIdentity.gameObject)
+                        {
+                            nextItem.SetActive(true);
+                            NetworkServer.Spawn(nextItem);
+                        }
                     }
+                   
                     
                     nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
 
@@ -512,15 +516,16 @@ namespace Mikrocosmos {
         }
 
         [ServerCallback]
-        public void UnHook() {
+        public void UnHook(bool isShoot = false) {
             UpdateHookCollisions(true);
 
             if (HookedItem != null) {
                 
                 
-                HookedItem.Model.UnHook(false);
+                HookedItem.Model.UnHook(isShoot);
                 if (HookedItem.Model.CanBeAddedToInventory)
                 {
+                    Debug.Log("HookSystem: Ready to remove from current backpack");
                     inventorySystem.ServerRemoveFromCurrentBackpack();
                 }
                 else {
