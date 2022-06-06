@@ -558,7 +558,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 1
-  <Damage>k__BackingField: 50
+  <Damage>k__BackingField: 100
   <Name>k__BackingField: BirdCannonBullet
 --- !u!114 &4329412435070151956
 MonoBehaviour:

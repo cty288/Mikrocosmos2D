@@ -141,7 +141,7 @@ MonoBehaviour:
   - {x: 0.04270172, y: -3.0328565, z: 0}
   m_ShapePathHash: -960656257
   m_Mesh: {fileID: 0}
-  m_InstanceId: 58188
+  m_InstanceId: 35760
 --- !u!114 &3789394192495447793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 20
-  <MomentumThredhold>k__BackingField: 10
+  <MomentumThredhold>k__BackingField: 0.5
   <MaxHealth>k__BackingField: 50
   <CurrentHealth>k__BackingField: 50
   momentumCoolDown: 0.5
@@ -343,7 +343,19 @@ MonoBehaviour:
         m_CallState: 2
   OnRecycle:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -7106308886407098970}
+        m_TargetAssemblyTypeName: Mikrocosmos.MeteorModel, Mikrocosmos
+        m_MethodName: OnMeteorRecycled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8200551623142049076
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,24 +12,26 @@ namespace Mikrocosmos
         List<GameObject> Rewards { get; }
 
         public void StartAddTorqueForce(Vector2 addForce, float time);
+
+       void OnMeteorRecycled();
     }
+
     public class MeteorModel : AbstractDamagableEntityModel, IMeteorModel {
 
         private float torqueForceTimer = 0;
         private Vector2 torqueForce;
 
 
-        [field: SerializeField]
-        public override float SelfMass { get; protected set; } = 5f;
+        [field: SerializeField] public override float SelfMass { get; protected set; } = 5f;
         public override string Name { get; set; } = "Meteor";
 
-        
+
         public override void OnClientHooked() {
-            
+
         }
 
         public override void OnClientFreed() {
-           
+
         }
 
         [ServerCallback]
@@ -48,22 +50,22 @@ namespace Mikrocosmos
 
         [field: SerializeField] public Vector2 StartDirection { get; protected set; }
 
-        [field: SerializeField]
-        public float InitialForceMultiplier { get; protected set; }
+        [field: SerializeField] public float InitialForceMultiplier { get; protected set; }
 
         [field: SerializeField] public bool AffectedByGravity { get; set; } = true;
 
         protected float initialForce;
-        public override void OnStartServer()
-        {
+
+        public override void OnStartServer() {
             base.OnStartServer();
             Vector2 Center = this.transform.position;
             initialForce = ProperForce();
-            this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
+            this.gameObject.GetComponent<Rigidbody2D>()
+                .AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
         }
 
 
-        
+
 
         public override int GetDamageFromExcessiveMomentum(float excessiveMomentum) {
             return Mathf.RoundToInt(excessiveMomentum);
@@ -82,31 +84,29 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        private float ProperForce()
-        {
+        private float ProperForce() {
             var pos = transform.position;
             var rb = GetComponent<Rigidbody2D>();
             var Rb = GameObject.Find("Star").GetComponent<IHaveGravity>();
-            return InitialForceMultiplier * GetTotalMass() * Mathf.Sqrt(Rb.GetTotalMass() / Distance(pos, Vector3.zero));
+            return InitialForceMultiplier * GetTotalMass() *
+                   Mathf.Sqrt(Rb.GetTotalMass() / Distance(pos, Vector3.zero));
         }
 
-        private Vector2 ProperDirect(Vector2 pos)
-        {
+        private Vector2 ProperDirect(Vector2 pos) {
             float x = Random.value, y = Random.value / 10;
             Vector2 result;
-            if (StartDirection != Vector2.zero)
-            {
+            if (StartDirection != Vector2.zero) {
                 result = StartDirection.normalized;
             }
-            else
-            {
+            else {
                 Vector2 starPos = GameObject.Find("Star").transform.position;
                 result = Vector2.Perpendicular(((starPos - pos).normalized));
             }
+
             return result;
         }
-        float Distance(Vector2 pos1, Vector2 pos2)
-        {
+
+        float Distance(Vector2 pos1, Vector2 pos2) {
             Vector2 diff = (pos1 - pos2);
             float dist = Mathf.Sqrt(diff.x * diff.x + diff.y * diff.y);
             if (dist < 1)
@@ -114,13 +114,19 @@ namespace Mikrocosmos
             else return (dist);
         }
 
-        [field:SerializeField]
-        public List<GameObject> Rewards { get; protected set; }
+        [field: SerializeField] public List<GameObject> Rewards { get; protected set; }
 
         public void StartAddTorqueForce(Vector2 addForce, float time) {
             torqueForce = addForce;
             torqueForceTimer = time;
-            
+
+        }
+
+        public void OnMeteorRecycled() {
+            if (isServer) {
+                this.GetSystem<IMeteorSystem>().ResetMeteor(gameObject);
+            }
+
         }
     }
 }

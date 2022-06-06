@@ -64,7 +64,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <Frequency>k__BackingField
-      value: 0.7
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <GoodRarity>k__BackingField
@@ -156,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_InstanceId
-      value: -349170
+      value: -9512
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_ShapePathHash

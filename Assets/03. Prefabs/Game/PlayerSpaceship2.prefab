@@ -1017,7 +1017,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 600
-  <MomentumThredhold>k__BackingField: 16
+  <MomentumThredhold>k__BackingField: 17
   <MaxHealth>k__BackingField: 100
   <CurrentHealth>k__BackingField: 100
   momentumCoolDown: 0.5

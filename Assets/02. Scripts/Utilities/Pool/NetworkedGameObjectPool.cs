@@ -105,12 +105,15 @@ namespace Mikrocosmos
 
                     if (CurrentCount < maxCount)
                     {
-                        NetworkServer.UnSpawn(obj);
-                        obj.SetActive(false);
-                        obj.GetComponent<PoolableGameObject>().OnRecycled();
                         obj.transform.position = Vector3.zero;
                         obj.transform.SetParent(transform);
                         cachedStack.Push(obj);
+                        obj.SetActive(false);
+                        obj.GetComponent<PoolableGameObject>().OnRecycled();
+                        NetworkServer.UnSpawn(obj);
+                        
+                      
+                       
                         return true;
                     }
                     else

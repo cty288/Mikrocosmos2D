@@ -12,7 +12,10 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
-    public class MeteorSystem : AbstractNetworkedSystem {
+    public interface IMeteorSystem : ISystem {
+        void ResetMeteor(GameObject meteor);
+    }
+    public class MeteorSystem : AbstractNetworkedSystem, IMeteorSystem{
         private List<GameObject> activeMeteors = new List<GameObject>();
         [SerializeField]
         private List<GameObject> meteorPrefabs;
@@ -27,6 +30,7 @@ namespace Mikrocosmos
 
         public override void OnStartServer() {
             base.OnStartServer();
+            Mikrocosmos.Interface.RegisterSystem<IMeteorSystem>(this);
             activeMeteors = GameObject.FindGameObjectsWithTag("Meteor").ToList();
             this.RegisterEvent<OnMeteorDestroyed>(OnMeteorDestroyed).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -55,5 +59,13 @@ namespace Mikrocosmos
             activeMeteors.Add(meteor);
             NetworkServer.Spawn(meteor);
         }
+
+
+        public void ResetMeteor(GameObject meteor) {
+            Transform spawnPosition = meteorSpawnPositions[Random.Range(0, meteorSpawnPositions.Count)];
+            meteor.transform.position = spawnPosition.position;
+        }
     }
+
+    
 }

@@ -8,9 +8,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnRecycle.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnRecycle.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnRecycle.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
     - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -20,6 +32,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
     - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnRecycle.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnRecycle.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnMeteorRecycled
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
@@ -28,8 +48,16 @@ PrefabInstance:
       value: OnStartServer
       objectReference: {fileID: 0}
     - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnRecycle.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Mikrocosmos.MeteorModel, Mikrocosmos
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Mikrocosmos.MeteorModel, Mikrocosmos
+      objectReference: {fileID: 0}
+    - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: OnRecycle.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: -8026100169227303925, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: OnInitialize.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

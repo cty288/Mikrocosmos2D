@@ -51,7 +51,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8525150851048129352
 Transform:
   m_ObjectHideFlags: 0
@@ -757,7 +757,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 24
-  <MomentumThredhold>k__BackingField: 16
+  <MomentumThredhold>k__BackingField: 17
   <MaxHealth>k__BackingField: 100
   <CurrentHealth>k__BackingField: 100
   momentumCoolDown: 0.5
