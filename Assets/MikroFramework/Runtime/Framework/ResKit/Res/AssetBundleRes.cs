@@ -93,6 +93,7 @@ namespace MikroFramework.ResKit
             }
 
             if (!ResManager.IsSimulationModeLogic) {
+                Debug.Log($"AssetBundle Asset Path: {AssetPath}");
                 AssetBundle = AssetBundle.LoadFromFile(AssetPath);
             }
 

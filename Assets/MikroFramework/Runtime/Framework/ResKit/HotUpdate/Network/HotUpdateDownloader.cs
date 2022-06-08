@@ -30,7 +30,7 @@ namespace MikroFramework.ResKit
         public IEnumerator GetLocalAssetResVersion(Action<ResVersion> getResVersion, Action<HotUpdateError>
             onGetFailed)
         {
-            string localResVersionPath = HotUpdateConfig.LocalResVersionFilePath;
+            string localResVersionPath = "file://" + HotUpdateConfig.LocalResVersionFilePath;
 
             UnityWebRequest request = UnityWebRequest.Get(localResVersionPath);
 

@@ -5886,7 +5886,7 @@ MonoBehaviour:
   serverMaxReceivesPerTick: 10000
   serverSendQueueLimitPerConnection: 10000
   serverReceiveQueueLimitPerConnection: 10000
-  clientMaxMessageSize: 12000
+  clientMaxMessageSize: 14000
   clientMaxReceivesPerTick: 1000
   clientSendQueueLimit: 30000
   clientReceiveQueueLimit: 30000

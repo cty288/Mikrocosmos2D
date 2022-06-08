@@ -61,7 +61,7 @@ namespace MikroFramework.ResKit
         {
             get {
                 return UnityEditor.EditorPrefs.GetString("ABDataPath", Application.dataPath + "/AssetBundleBuilds/")
-                    +Application.version+"/"+ResKitUtility.CurrentPlatformName+"/";
+                    +"AssetBundles/"+ResKitUtility.CurrentPlatformName+"/";
             }
         }
 #endif

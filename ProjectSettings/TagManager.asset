@@ -9,6 +9,7 @@ TagManager:
   - Planet
   - Meteor
   - Border
+  - Bullet
   layers:
   - Default
   - TransparentFX
