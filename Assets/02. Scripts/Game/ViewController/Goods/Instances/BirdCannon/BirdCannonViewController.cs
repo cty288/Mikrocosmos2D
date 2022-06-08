@@ -111,8 +111,8 @@ namespace Mikrocosmos
             });
             this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
             {
-                Inner = 36,
-                Outer = 50
+                Inner = 40,
+                Outer = 55
             });
         }
 
@@ -124,8 +124,8 @@ namespace Mikrocosmos
             });
             this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
             {
-                Inner = 18,
-                Outer = 25
+                Inner = 22,
+                Outer = 28
             });
         }
 
@@ -138,8 +138,8 @@ namespace Mikrocosmos
                 });
                 this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
                 {
-                    Inner = 18,
-                    Outer = 25
+                    Inner = 22,
+                    Outer = 28
                 });
             }
         }

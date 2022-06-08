@@ -81,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: <MaxHealth>k__BackingField
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: <CanBeHooked>k__BackingField
@@ -89,7 +89,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: <CurrentHealth>k__BackingField
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: <MomentumThredhold>k__BackingField
@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3789394192495447562, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: m_InstanceId
-      value: -485158
+      value: -1387772
       objectReference: {fileID: 0}
     - target: {fileID: 3789394192495447562, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: m_ShapePathHash
@@ -362,6 +362,14 @@ PrefabInstance:
     - target: {fileID: 7195200488286761968, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: m_LinearDrag
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225324755280011706, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225324755280011706, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d82769bab47f1a141a266a6c76903157, type: 3}

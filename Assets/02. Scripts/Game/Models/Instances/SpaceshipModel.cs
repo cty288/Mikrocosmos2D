@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using Mirror;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -70,12 +71,9 @@ namespace Mikrocosmos
 
         [SerializeField] private float minimumAcceleration = 20;
 
-        protected override void Update()
+        protected virtual void Update()
         {
-            base.Update();
             if (isServer) {
-                Acceleration = Mathf.Max(minimumAcceleration, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
-
                 escapeLossTimer += Time.deltaTime;
                 if (escapeLossTimer >= EscapeLossTime)
                 {
@@ -89,6 +87,7 @@ namespace Mikrocosmos
             }
         }
 
+        
         [Command]
         public void CmdIncreaseEscapeCounter()
         {
@@ -105,12 +104,19 @@ namespace Mikrocosmos
         [field: SerializeField] public float DieDizzyTime { get; protected set; } = 5f;
 
         [field: SerializeField] public float RespawnInvincibleTime { get; protected set; } = 5f;
+        public void ServerUpdateMass() {
+            rigidbody.mass = GetTotalMass();
+            //Acceleration = Mathf.Max(minimumAcceleration, InitialAcceleration - GetTotalMass() * AccelerationDecreasePerMass);
+        }
 
         [field: SyncVar,SerializeField]
         public float InitialAcceleration { get; private set; } = 20;
 
         [field: SyncVar, SerializeField]
         public override float SelfMass { get; protected set; } = 1;
+        
+        
+
         [field: SyncVar, SerializeField]
         public float AccelerationDecreasePerMass { get; private set; } = 2;
 
@@ -165,11 +171,12 @@ namespace Mikrocosmos
              * hooking somebody && !hooked by somebody -> (getRigidbodyMass + backpack) of all hooked player; add together
              * !hooking somebody && !hooked by somebody -> (getRigidbodyMass+backpack_)
              */
-
+            float totalMass = 0;
             //HookState
             if (HookState == HookState.Hooked) {  //hooked by somebody -> hooked.GetTotalMass() -> hooked.TotalMass()...
                 //if hooked by somebody, that hooker must be another spaceship
-                return (HookedByIdentity.GetComponent<IHaveMomentumViewController>()).Model.GetTotalMass();
+
+                totalMass = (HookedByIdentity.GetComponent<IHaveMomentumViewController>()).Model.GetTotalMass();
             }
             else {
                 if (hookSystem.IsHooking && hookSystem.HookedNetworkIdentity)
@@ -177,19 +184,26 @@ namespace Mikrocosmos
                     IHookable hookingModel =  hookSystem.HookedNetworkIdentity.GetComponent<IHookable>();
                     
                    if (hookingModel is ISpaceshipConfigurationModel) {
-                       return GetConnectedObjectSoleMass() + SelfMass + BackpackMass;
+                       totalMass= GetConnectedObjectSoleMass() + SelfMass + BackpackMass;
                    }else {
                        float hookingModelSelfMass = 0;
                        if (hookingModel.CanBeAddedToInventory) {
                            hookingModelSelfMass = hookingModel.SelfMass * 3;
                        }
-                        return SelfMass + BackpackMass + hookingModelSelfMass;
+                        totalMass = SelfMass + BackpackMass + hookingModelSelfMass;
                    }
                 }
+                else {
+                    totalMass = SelfMass + BackpackMass;
+                }
             }
-            return SelfMass + BackpackMass;
+            RefreshAcceleration(totalMass);
+            return totalMass;
         }
 
+        private void RefreshAcceleration(float totalMass) {
+            Acceleration = Mathf.Max(minimumAcceleration, InitialAcceleration - totalMass * AccelerationDecreasePerMass);
+        }
 
         [ClientCallback]
         private void ClientOnEscapeCounterChanged(int oldNum, int newNum) {
@@ -203,8 +217,11 @@ namespace Mikrocosmos
         {
             base.OnStartServer();
             Vector2 Center = this.transform.position;
+            ServerUpdateMass();
             initialForce = ProperForce();
             this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
+
+             
         }
         [ServerCallback]
         private float ProperForce()

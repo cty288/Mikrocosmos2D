@@ -102,6 +102,7 @@ namespace Mikrocosmos {
 
         private IPlayerInventorySystem inventorySystem;
 
+        
         /// <summary>
         /// 0-0.5: charge up; 0.5-0: charge down
         /// </summary>
@@ -512,6 +513,7 @@ namespace Mikrocosmos {
         private void OnRobbed(OnItemRobbed e) {
             if (e.Victim == netIdentity && e.HookedItem == HookedItem.Model) {
                 UnHook();
+                model.ServerUpdateMass();
             }
         }
 
@@ -534,9 +536,9 @@ namespace Mikrocosmos {
                     animator.SetBool("Hooking", false);
                 }
             }
-            
 
-            
+            model.ServerUpdateMass();
+
         }
 
         private bool checkingHook = false;
@@ -606,6 +608,7 @@ namespace Mikrocosmos {
                 }
 
             }
+            model.ServerUpdateMass();
         }
 
         

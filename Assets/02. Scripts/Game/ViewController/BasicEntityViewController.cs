@@ -220,50 +220,7 @@ namespace Mikrocosmos
         }
 
         IEnumerator NonPhysicsForceCalculation(IDamagable targetModel,Rigidbody2D targetRigidbody) {
-            float waitTime = 0.01f;
-            if (targetModel is ISpaceshipConfigurationModel)
-            {
-                targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
-            }
-            Vector2 pos1 = targetRigidbody.transform.position;
-            yield return new WaitForSeconds(waitTime);
-            
-            if (targetRigidbody) {
-                Vector2 pos2 = targetRigidbody.transform.position;
-                Vector2 speed1 = (pos2 - pos1) / waitTime;
-
-
-                yield return new WaitForSeconds(waitTime);
-
-                if (targetRigidbody)
-                {
-                    Vector2 pos3 = targetRigidbody.transform.position;
-                    Vector2 speed2 = (pos3 - pos2) / waitTime;
-
-                    Vector2 acceleration = (speed2 - speed1) / waitTime;
-                    if (targetModel != null)
-                    {
-                        Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
-                        if (targetModel is ISpaceshipConfigurationModel model)
-                        {
-                            targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
-                            force *= speed2.magnitude / model.MaxSpeed;
-                        }
-                        force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
-                        force *= 2;
-                        float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
-                        targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
-                        targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
-                    }
-                }
-            }
-           
-           
-            
-        }
-
-        IEnumerator PhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody) {
-            float waitTime = 0.01f;
+            float waitTime = 0.02f;
             Vector2 offset = Vector2.zero;
             if (targetModel is ISpaceshipConfigurationModel)
             {
@@ -271,15 +228,14 @@ namespace Mikrocosmos
             }
             Vector2 speed1 = targetRigidbody.velocity;
             yield return new WaitForSeconds(waitTime);
-
-            
             if (targetRigidbody) {
                 Vector2 speed2 = targetRigidbody.velocity;
 
                 Vector2 acceleration = (speed2 - speed1) / waitTime;
-
-                if (targetModel != null)
-                {
+                Debug.Log($"Speed1: {speed1}, Speed 2: {speed2}, Acceleration: {acceleration}. " +
+                          $"Fixed Dealta Time : {Time.fixedDeltaTime}");
+                if (targetModel != null) {
+                    
                     Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
                     if (targetModel is ISpaceshipConfigurationModel model)
                     {
@@ -291,11 +247,48 @@ namespace Mikrocosmos
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
                     targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
-
                 }
             }
            
+           
+            
         }
+
+        IEnumerator PhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody) {
+            float waitTime = 0.02f;
+            Vector2 offset = Vector2.zero;
+            if (targetModel is ISpaceshipConfigurationModel) {
+                targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
+            }
+
+            Vector2 speed1 = targetRigidbody.velocity;
+            yield return new WaitForSeconds(waitTime);
+            if (targetRigidbody) {
+                Vector2 speed2 = targetRigidbody.velocity;
+
+                Vector2 acceleration = (speed2 - speed1) / waitTime;
+                Debug.Log($"Speed1: {speed1}, Speed 2: {speed2}, Acceleration: {acceleration}. " +
+                          $"Fixed Dealta Time : {Time.fixedDeltaTime}");
+                if (targetModel != null) {
+                    Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
+                    if (targetModel is ISpaceshipConfigurationModel model) {
+                        targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
+                        force *= speed2.magnitude / model.MaxSpeed;
+                    }
+
+                    force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)),
+                        Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
+                    force *= 2;
+                    float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
+                    targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
+                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+
+
+                }
+
+            }
+        }
+
         protected virtual void Update() {
             if (isServer) {
                 OnServerUpdate();

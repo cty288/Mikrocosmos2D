@@ -37,7 +37,7 @@ namespace Mikrocosmos
 
         private int team1ProgressTextInt = 50;
 
-        [SerializeField, Range(0, 360000)] private float initialProgress;
+        [SerializeField, Range(0, 360)] private float initialProgress;
 
 
         [SerializeField] private float selfRotationSpeed;
@@ -161,8 +161,9 @@ namespace Mikrocosmos
         public GameObject target;
 
         public float speed = 100;
-        float progress = 0;
         [SerializeField]
+        float progress = 0;
+      
         float distance = 0;
         public float x = 5;
         public float z = 7;
@@ -192,38 +193,38 @@ namespace Mikrocosmos
         }
         IEnumerator NonPhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody)
         {
-            float waitTime = 0.01f;
+            float waitTime = 0.02f;
+            Vector2 offset = Vector2.zero;
             if (targetModel is ISpaceshipConfigurationModel)
             {
                 targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
             }
-            Vector2 pos1 = targetRigidbody.transform.position;
+            Vector2 speed1 = targetRigidbody.velocity;
             yield return new WaitForSeconds(waitTime);
-            if (targetRigidbody) {
-                Vector2 pos2 = targetRigidbody.transform.position;
-                Vector2 speed1 = (pos2 - pos1) / waitTime;
-                yield return new WaitForSeconds(waitTime);
-                if (targetRigidbody) {
-                    Vector2 pos3 = targetRigidbody.transform.position;
-                    Vector2 speed2 = (pos3 - pos2) / waitTime;
+            if (targetRigidbody)
+            {
+                Vector2 speed2 = targetRigidbody.velocity;
 
-                    Vector2 acceleration = (speed2 - speed1) / waitTime;
-                    if (targetModel != null)
+                Vector2 acceleration = (speed2 - speed1) / waitTime;
+                Debug.Log($"Speed1: {speed1}, Speed 2: {speed2}, Acceleration: {acceleration}. " +
+                          $"Fixed Dealta Time : {Time.fixedDeltaTime}");
+                if (targetModel != null)
+                {
+                    Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
+                    if (targetModel is ISpaceshipConfigurationModel model)
                     {
-                        Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
-                        if (targetModel is ISpaceshipConfigurationModel model)
-                        {
-                            targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
-                            force *= speed2.magnitude / model.MaxSpeed;
-                        }
-                        force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
-                        force *= 2;
-                        float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
-                        targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
-                        targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+                        targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
+                        force *= speed2.magnitude / model.MaxSpeed;
                     }
+                    force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
+                    force *= 2;
+                    float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
+                    targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
+                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+
+
                 }
-                
+
             }
            
         }
@@ -231,7 +232,7 @@ namespace Mikrocosmos
 
         IEnumerator PhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody)
         {
-            float waitTime = 0.01f;
+            float waitTime = 0.02f;
             Vector2 offset = Vector2.zero;
             if (targetModel is ISpaceshipConfigurationModel)
             {
@@ -268,7 +269,8 @@ namespace Mikrocosmos
         void OvalRotate()
         {
 
-            progress += Time.fixedDeltaTime * speed;
+            progress += (Time.fixedDeltaTime * speed);
+            progress %= 360;
             Vector3 p = new Vector3(x * Mathf.Cos(progress * Mathf.Deg2Rad), z * Mathf.Sin(progress * Mathf.Deg2Rad) * distance, 0);
             if (GravityModel.MoveMode == MoveMode.ByPhysics)
             {

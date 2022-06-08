@@ -756,8 +756,8 @@ MonoBehaviour:
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <Acceleration>k__BackingField: 0
-  <MaxMomentumReceive>k__BackingField: 24
-  <MomentumThredhold>k__BackingField: 17
+  <MaxMomentumReceive>k__BackingField: 10
+  <MomentumThredhold>k__BackingField: 18
   <MaxHealth>k__BackingField: 100
   <CurrentHealth>k__BackingField: 100
   momentumCoolDown: 0.5
@@ -766,7 +766,7 @@ MonoBehaviour:
   healthRecoverWaitTimeAfterDamage: 5
   HealthRecoverTimer: 0
   damagePerMomentum: 1
-  dropOneItemMomentumThreshold: 3
+  dropOneItemMomentumThreshold: 4
   minimumAcceleration: 20
   <DieDizzyTime>k__BackingField: 5
   <RespawnInvincibleTime>k__BackingField: 5

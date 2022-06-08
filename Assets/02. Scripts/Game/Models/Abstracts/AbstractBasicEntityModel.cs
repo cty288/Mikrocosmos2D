@@ -24,7 +24,8 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public float MaxSpeed { get; protected set; }
 
-        [field: SyncVar, SerializeField] public bool CanBeHooked { get; set; } = true;
+        [field: SyncVar, SerializeField] 
+        public bool CanBeHooked { get; set; } = true;
 
         [field: SyncVar, SerializeField]
         public bool CanBeAddedToInventory { get; set; }
@@ -48,6 +49,10 @@ namespace Mikrocosmos
         [field: SerializeField]
         public Transform HookedByTransform { get; protected set; }
 
+        public override void OnStartServer() {
+            base.OnStartServer();
+            bindedRigidibody.mass = GetTotalMass();
+        }
 
         /// <summary>
         /// Hook self if not hooked
@@ -73,8 +78,8 @@ namespace Mikrocosmos
                 else {
                     HookedByTransform = null;
                 }
-               
 
+                bindedRigidibody.mass = GetTotalMass();
                 return true;
             }
 
@@ -157,7 +162,7 @@ namespace Mikrocosmos
                     true);
                 
              
-                this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
+                this.GetSystem<ITimeSystem>().AddDelayTask(0.2f, () => {
                     if (this && hookeIdentity != HookedByIdentity) {
                         Physics2D.IgnoreCollision(hookeIdentity.GetComponent<Collider2D>(), GetComponent<Collider2D>(),
                             false);
@@ -166,7 +171,7 @@ namespace Mikrocosmos
                 
                 // this.GetModel<ICollisionMaskModel>().Release();
             }
-
+            bindedRigidibody.mass = GetTotalMass();
             this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
             {
                 Identity = netIdentity,
@@ -216,12 +221,7 @@ namespace Mikrocosmos
         }
 
     
-        protected  virtual  void Update() {
-            if (this) {
-                bindedRigidibody.mass = GetTotalMass();
-            }
-          
-        }
+        
             
         
 

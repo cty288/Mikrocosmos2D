@@ -56,8 +56,9 @@ namespace Mikrocosmos
                     Debug.Log("Leaf Knife Hit");
                     GoodsModel.ReduceDurability(1);
                     hitThisTime = false;
-                    model.CanBeHooked = true;
+                    
                 }
+                model.CanBeHooked = true;
             }
         }
     }

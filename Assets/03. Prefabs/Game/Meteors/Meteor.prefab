@@ -141,7 +141,7 @@ MonoBehaviour:
   - {x: 0.04270172, y: -3.0328565, z: 0}
   m_ShapePathHash: -960656257
   m_Mesh: {fileID: 0}
-  m_InstanceId: 35760
+  m_InstanceId: 268726
 --- !u!114 &3789394192495447793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,12 +279,12 @@ MonoBehaviour:
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 20
   <MomentumThredhold>k__BackingField: 0.5
-  <MaxHealth>k__BackingField: 50
-  <CurrentHealth>k__BackingField: 50
+  <MaxHealth>k__BackingField: 10
+  <CurrentHealth>k__BackingField: 10
   momentumCoolDown: 0.5
   healthRecoverThreshold: 20
   healthRecoverPerSecond: 50
-  healthRecoverWaitTimeAfterDamage: 5
+  healthRecoverWaitTimeAfterDamage: 2
   HealthRecoverTimer: 0
   <SelfMass>k__BackingField: 20
   <StartDirection>k__BackingField: {x: 0, y: 0}
@@ -382,7 +382,7 @@ Transform:
   m_GameObject: {fileID: 8200551623142049076}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 50, z: 25}
+  m_LocalScale: {x: 25, y: 25, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3789394192495447799}

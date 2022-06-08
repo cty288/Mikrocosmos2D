@@ -15,6 +15,37 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Mikrocosmos
 {
+    public static class RectTransformExtensions
+    {
+        public static void SetLeft(this RectTransform rt, float left) {
+            rt.offsetMin = new Vector2(left, rt.offsetMin.y);
+        }
+
+        public static void SetRight(this RectTransform rt, float right)
+        {
+            rt.offsetMax = new Vector2(-right, rt.offsetMax.y);
+        }
+
+        public static void SetTop(this RectTransform rt, float top)
+        {
+            rt.offsetMax = new Vector2(rt.offsetMax.x, -top);
+        }
+
+        public static void SetBottom(this RectTransform rt, float bottom)
+        {
+            rt.offsetMin = new Vector2(rt.offsetMin.x, bottom);
+        }
+
+        public static void SetOffset(this RectTransform rt, float left, float right, float top, float bottom) {
+            rt.SetLeft(left);
+            rt.SetRight(right);
+            rt.SetTop(top);
+            rt.SetBottom(bottom);
+        }
+
+
+    }
+    
     public class InventoryUIViewController : AbstractMikroController<Mikrocosmos>
     {
         [SerializeField]
@@ -69,6 +100,8 @@ namespace Mikrocosmos
                 slot.transform.Find("ItemSlot/ItemShortcutID").GetComponent<TMP_Text>().text = (i+1).ToString();
                 selectedSlotLocalYStart =
                     slot.transform.Find("ItemSlot").GetComponent<RectTransform>().anchoredPosition.y;
+               
+
             }
 
 
@@ -89,6 +122,7 @@ namespace Mikrocosmos
                 BackpackSlot slot = e.AllSlots[i];
                 
                 if (slot.ClientSlotCount > 0) {
+                   
                     itemDurabilityImage.enabled = true;
                     itemImage.color = new Color(1, 1, 1, 1);
                     Texture2D texture = resLoader.LoadSync<Texture2D>("assets/goods", slot.SpriteName);
@@ -101,24 +135,28 @@ namespace Mikrocosmos
                     itemImage.color = new Color(1, 1, 1, 0);
                     itemText.text = "";
                     itemDurabilityImage.enabled = false;
+                  
                 }
 
                 Image slotBG = allItemSlots[i].transform.Find("ItemSlot").GetComponent<Image>();
                 RectTransform itemSlotTr = allItemSlots[i].transform.Find("ItemSlot").GetComponent<RectTransform>();
                 GameObject selectedImage = itemSlotTr.transform.Find("SelectedImage").gameObject;
+                RectTransform durabilityImage = itemSlotTr.transform.Find("ItemDurabilityImage").GetComponent<RectTransform>();
                 if (i == e.SelectedIndex) {
                     slotBG.sprite = selectedSprite;
-                    itemDurabilityImage.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+                  
                     itemSlotTr.DOAnchorPosY(selectedSlotLocalY, 0.3f);
                     selectedImage.SetActive(true);
+                    durabilityImage.SetOffset(5.683799f, 5.494201f, 5.035349f, 8.26095f);
                     //itemSlotTr.DOLocalMoveY(selectedSlotLocalY, 0.3f);
                 }
                 else {
                     slotBG.sprite = unselectedSprite;
-                    itemDurabilityImage.transform.localScale = Vector3.one;
+               
                     if (Math.Abs(itemSlotTr.localPosition.y - selectedSlotLocalYStart) > 0.1f) {
                         itemSlotTr.DOAnchorPosY(selectedSlotLocalYStart, 0.3f);
                         selectedImage.SetActive(false);
+                        durabilityImage.SetOffset(0.3413018f, 0.2838982f, 0.3391983f, 0.3136017f);
                         //itemSlotTr.DOLocalMoveY(selectedSlotLocalYStart, 0.3f);
                     }
                    

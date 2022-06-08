@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
@@ -25,9 +26,9 @@ namespace Mikrocosmos
         public int CurrentHealth { get; set; }
 
         [SerializeField] private float momentumCoolDown = 0.1f;
-        
-        
-        private float momentumCoolDownTimer = 0f;
+
+
+        private DateTime momentumCoolDownTime;
 
         [SerializeField] private int healthRecoverThreshold = 50;
         [SerializeField] private int healthRecoverPerSecond = 10;
@@ -41,6 +42,7 @@ namespace Mikrocosmos
             base.OnStartServer();
             CurrentHealth = MaxHealth;
             Invoke(nameof(StartRecoverHealthCoroutine), 1f);
+            momentumCoolDownTime = DateTime.Now;
         }
 
         private void StartRecoverHealthCoroutine() {
@@ -71,22 +73,20 @@ namespace Mikrocosmos
             }
         }
 
-        protected override void Update() {
-            base.Update();
-            momentumCoolDownTimer += Time.deltaTime;
-        }
-
+       
         public virtual float TakeRawMomentum(float rawMomentum, float offset) {
-            if (momentumCoolDownTimer >= momentumCoolDown) {
-                momentumCoolDownTimer = 0;
+            if ((DateTime.Now - momentumCoolDownTime).TotalSeconds >= momentumCoolDown) {
+                momentumCoolDownTime = DateTime.Now;
                 Debug.Log($"Received Raw Momentum: {rawMomentum}");
+                float tempRawMomentum = rawMomentum;
                 rawMomentum += offset;
                 rawMomentum -= MomentumThredhold;
                 rawMomentum = Mathf.Clamp(rawMomentum, 0, MaxMomentumReceive);
+                Debug.Log($"Momentum Received by {gameObject.name}: {rawMomentum}. Raw Momentum: {tempRawMomentum}");
                 return rawMomentum;
             }
 
-            momentumCoolDownTimer = 0;
+          
             return 0;
         }
 

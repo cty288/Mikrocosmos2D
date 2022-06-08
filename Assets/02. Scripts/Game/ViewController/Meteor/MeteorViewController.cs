@@ -74,6 +74,7 @@ namespace Mikrocosmos
             int randomReward = Random.Range(0, rewards.Count);
             //spawn it
             GameObject reward = rewards[randomReward];
+
             if (reward.name == "DiamondEntity") {
                 int totalMoney = Random.Range(5, 30);
                 //generate 3-8 diamonds, randomly assign money to them but the sum of their money should be equal to totalMoney
@@ -92,6 +93,7 @@ namespace Mikrocosmos
                 {
                     int diff = totalMoney - sum;
                     int index = 0;
+
                     while (diff != 0 && index < moneyList.Count)
                     {
                         if (diff > 0)

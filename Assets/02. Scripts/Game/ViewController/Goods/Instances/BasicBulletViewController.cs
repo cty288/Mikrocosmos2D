@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.TimeSystem;
 using Mirror;
@@ -113,24 +114,42 @@ namespace Mikrocosmos
         }
 
 
+        
+
+        
         private void LateUpdate() {
-            Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.5f);
-            if (collider && collider != shooter && !collider.isTrigger) {
-                animator.SetTrigger("Hit");
-                if (destroyWhenHit) {
-                    // NetworkServer.Destroy(this.gameObject);
-                    rigidbody.velocity = Vector2.zero;
-                    if (poolable)
-                    {
-                        poolable.RecycleToCache();
-                        NetworkServer.UnSpawn(gameObject);
+            List<Collider2D> colliders = Physics2D.OverlapCircleAll(transform.position, 0.5f).ToList();
+            Collider2D selfCollider = GetComponent<Collider2D>();
+            foreach (Collider2D collider in colliders) {
+                if (!collider) {
+                    continue;
+                }
+                if (collider.CompareTag("Bullet")) {
+                    continue;
+                }
+                
+                if (collider != shooter && !collider.isTrigger) {
+                    NetworkIdentity ownerPlayer = Model.HookedByIdentity;
+
+                    if (ownerPlayer == null || collider != ownerPlayer.GetComponent<Collider2D>()) {
+                        animator.SetTrigger("Hit");
+                        if (destroyWhenHit) {
+                            // NetworkServer.Destroy(this.gameObject);
+                            rigidbody.velocity = Vector2.zero;
+                            if (poolable) {
+                                poolable.RecycleToCache();
+                                NetworkServer.UnSpawn(gameObject);
+                            }
+                            else {
+                                NetworkServer.Destroy(this.gameObject);
+                            }
+                        }
+                        break;
                     }
-                    else
-                    {
-                        NetworkServer.Destroy(this.gameObject);
-                    }
+                    
                 }
             }
+
         }
 
         private IEnumerator SetVelocityToZero() {
