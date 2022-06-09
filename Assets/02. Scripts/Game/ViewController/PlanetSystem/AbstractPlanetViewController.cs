@@ -126,8 +126,6 @@ namespace Mikrocosmos
         {
             if (e.ParentPlanet == gameObject)
             {
-
-                Debug.Log("Sell Item generated");
                 e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellItemSpawnPosition;
                 RpcChangeSellPrice(e.Price);
             }
@@ -206,8 +204,7 @@ namespace Mikrocosmos
                 Vector2 speed2 = targetRigidbody.velocity;
 
                 Vector2 acceleration = (speed2 - speed1) / waitTime;
-                Debug.Log($"Speed1: {speed1}, Speed 2: {speed2}, Acceleration: {acceleration}. " +
-                          $"Fixed Dealta Time : {Time.fixedDeltaTime}");
+                
                 if (targetModel != null)
                 {
                     Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
@@ -244,8 +241,8 @@ namespace Mikrocosmos
                 Vector2 speed2 = targetRigidbody.velocity;
 
                 Vector2 acceleration = (speed2 - speed1) / waitTime;
-                Debug.Log($"Speed1: {speed1}, Speed 2: {speed2}, Acceleration: {acceleration}. " +
-                          $"Fixed Dealta Time : {Time.fixedDeltaTime}");
+             // .Log($"Speed1: {speed1}, Speed 2: {speed2}, Acceleration: {acceleration}. " +
+                //          $"Fixed Dealta Time : {Time.fixedDeltaTime}");
                 if (targetModel != null)
                 {
                     Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());

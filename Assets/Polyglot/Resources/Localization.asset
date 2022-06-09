@@ -25,8 +25,6 @@ MonoBehaviour:
     textAsset: {fileID: 4900000, guid: 86d00d6f87b55084ca86037683077e05, type: 3}
     downloadOnStart: 1
   inputFiles:
-  - textAsset: {fileID: 4900000, guid: 0bfa546b8155096489cf71c004de3fe9, type: 3}
-    format: 0
   - textAsset: {fileID: 4900000, guid: 86d00d6f87b55084ca86037683077e05, type: 3}
     format: 0
   supportedLanguages: 000000001100000012000000

@@ -493,6 +493,14 @@ PrefabInstance:
       propertyPath: m_margin.w
       value: -0.3090129
       objectReference: {fileID: 0}
+    - target: {fileID: 5306755377588085672, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 704e9cf8c3be7e343b56192e60fe9d0a, type: 2}
+    - target: {fileID: 5306755377588085672, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7397191393735986667, guid: 704e9cf8c3be7e343b56192e60fe9d0a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
 --- !u!224 &2222784838224887055 stripped
@@ -605,12 +613,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5306755377588085672, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
       propertyPath: m_fontSize
-      value: 17.05
+      value: 15.15
       objectReference: {fileID: 0}
     - target: {fileID: 5306755377588085672, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
       propertyPath: m_margin.w
       value: 0.038543347
       objectReference: {fileID: 0}
+    - target: {fileID: 5306755377588085672, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 91902cf5be689364bab6301e54450f0e, type: 2}
     - target: {fileID: 5306755377588085672, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
       propertyPath: m_fontColor.b
       value: 0.4056604
@@ -627,6 +639,10 @@ PrefabInstance:
       propertyPath: m_fontSizeMin
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5306755377588085672, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1864449824336961823, guid: 91902cf5be689364bab6301e54450f0e, type: 2}
     - target: {fileID: 5306755377588085672, guid: 8be741e9150f35f409bf038141ddee26, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4284966759
