@@ -35,7 +35,7 @@ namespace Mikrocosmos
         }
 
         public void AddFollowingPlayer(Transform followingObj, bool isLocalPlayer ) {
-            cinemachineTargetGroup.AddMember(followingObj, isLocalPlayer ? 3 : 1, 20);
+            cinemachineTargetGroup.AddMember(followingObj, isLocalPlayer ? 3 : 1, 25);
         }
     }
 }

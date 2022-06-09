@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.46}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
@@ -341,7 +341,7 @@ MonoBehaviour:
   - {fileID: 4045048935829913801}
   <CanBeMasked>k__BackingField: 1
   DurabilityCountSprite: {fileID: 21300000, guid: 6604b9a8cd8311a479a3ff2293585c7e, type: 3}
-  propelForce: 6
+  propelForce: 2
 --- !u!114 &8170984210270291583
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -80,6 +80,8 @@ namespace Mikrocosmos
         PlayerMatchInfo ServerGetHostInfo();
 
         bool ServerGetIsTeamSizeEqual();
+
+        bool ServerGetIsStartGameConditionSatisfied();
         void ServerRoomPlayerChangeReadyState(int id, bool isReady);
 
         List<PlayerMatchInfo> ServerGetAllPlayerMatchInfoByTeamID(int team);
@@ -210,6 +212,23 @@ namespace Mikrocosmos
             }
 
             return t1 == t2;
+        }
+
+        public bool ServerGetIsStartGameConditionSatisfied() {
+            int t1 = 0, t2 = 0;
+            foreach (PlayerMatchInfo playerMatchInfo in playerMatchInfos)
+            {
+                if (playerMatchInfo.Team == 1)
+                {
+                    t1++;
+                }
+                else
+                {
+                    t2++;
+                }
+            }
+
+            return Mathf.Abs(t1 - t2) <= 1;
         }
 
         public void ServerRoomPlayerChangeReadyState(int id, bool isReady) {

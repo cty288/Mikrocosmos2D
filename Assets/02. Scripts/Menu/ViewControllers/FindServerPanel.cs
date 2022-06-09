@@ -53,11 +53,11 @@ namespace Mikrocosmos {
             if (InputPort.text != "") {
                 NetworkManager.singleton.GetComponent<TelepathyTransport>().port = ushort.Parse(InputPort.text);
                 NetworkManager.singleton.networkAddress = InputIPInput.text;
-                NetworkManager.singleton.StartClient();
+                ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(NetworkingMode.Normal);
             }
             else {
                 //NetworkManager.singleton.GetComponent<TelepathyTransport>().port = 
-                NetworkManager.singleton.StartClient();
+                ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(NetworkingMode.Normal);
 
 
             }

@@ -51,6 +51,7 @@ namespace Mikrocosmos
 
         public override void OnStartServer() {
             base.OnStartServer();
+            bindedRigidibody = GetComponent<Rigidbody2D>();
             bindedRigidibody.mass = GetTotalMass();
         }
 

@@ -110,7 +110,9 @@ namespace Mikrocosmos
                     
                     foreach (Collider2D collider in triggerCheck.Colliders) {
                         //is a goods
-                        if (collider && collider.TryGetComponent<IGoods>(out IGoods good)) {
+                        if ( collider.TryGetComponent<PlanetBuyItemDetectTrigger>(out PlanetBuyItemDetectTrigger detectTrigger)) {
+                            IGoods good = detectTrigger.GetGoods();
+                            if (good == null) return;
                             
                             //is the same type? (same type of goods?)
                             if (good.Name== Name) {

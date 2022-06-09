@@ -111,8 +111,8 @@ namespace Mikrocosmos
             });
             this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
             {
-                Inner = 40,
-                Outer = 55
+                Inner = 48,
+                Outer = 63
             });
         }
 
@@ -120,12 +120,12 @@ namespace Mikrocosmos
         private void TargetOnEndCharge(NetworkConnection conn) {
             this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
             {
-                NewRadius = 20
+                NewRadius = 25
             });
             this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
             {
-                Inner = 22,
-                Outer = 28
+                Inner = 28,
+                Outer = 35
             });
         }
 
@@ -134,12 +134,12 @@ namespace Mikrocosmos
             if (previousHookedBy && previousHookedBy.hasAuthority) {
                 this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
                 {
-                    NewRadius = 20
+                    NewRadius = 25
                 });
                 this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
                 {
-                    Inner = 22,
-                    Outer = 28
+                    Inner = 28,
+                    Outer = 35
                 });
             }
         }

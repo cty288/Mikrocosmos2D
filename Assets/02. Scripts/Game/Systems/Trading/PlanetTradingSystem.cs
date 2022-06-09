@@ -58,6 +58,8 @@ namespace Mikrocosmos
         float BuyItemTimer { get; }
 
         int BuyItemMaxTimeThisTime { get; }
+
+        IGoods ServerGetCurrentBuyItem();
     }
 
 
@@ -88,6 +90,10 @@ namespace Mikrocosmos
 
         [field: SyncVar]
         public int BuyItemMaxTimeThisTime { get; protected set; }
+
+        public IGoods ServerGetCurrentBuyItem() {
+            return currentBuyingItem;
+        }
 
 
         private GoodsConfigure currentBuyingItemConfig;

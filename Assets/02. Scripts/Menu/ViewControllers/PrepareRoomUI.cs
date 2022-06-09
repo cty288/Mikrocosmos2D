@@ -86,8 +86,8 @@ namespace Mikrocosmos {
                     BtnRoomLeaderStartRoom.gameObject.SetActive(false);
                 }
                 else {
-                    bool isTwoSidesEqual = this.GetSystem<IRoomMatchSystem>().ServerGetIsTeamSizeEqual();
-                    BtnRoomLeaderStartRoom.gameObject.SetActive(isTwoSidesEqual);
+                    bool canStartGame = this.GetSystem<IRoomMatchSystem>().ServerGetIsStartGameConditionSatisfied();
+                    BtnRoomLeaderStartRoom.gameObject.SetActive(canStartGame);
                 }
             }
         }

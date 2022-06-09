@@ -13,6 +13,7 @@ namespace Mikrocosmos {
 
     }
 	public partial class RoomInfo : AbstractMikroController<Mikrocosmos>, ICanSendEvent {
+        [SerializeField]
         private DiscoveryResponse response;
         
         public void SetRoomInfo(DiscoveryResponse response) {
@@ -46,7 +47,7 @@ namespace Mikrocosmos {
 
             if (response.IsLAN) {
                 NetworkManager.singleton.GetComponent<TelepathyTransport>().port = (ushort)response.Uri.Port;
-                ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(NetworkingMode.Normal);
+                ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(response.Uri);
             }
             else {
                 SteamMatchmaking.JoinLobby(response.HostSteamLobbyID);

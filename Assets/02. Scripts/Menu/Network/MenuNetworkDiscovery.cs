@@ -19,6 +19,7 @@ public class DiscoveryRequest : NetworkMessage
     // in their broadcast messages that servers will consume.
 }
 
+[Serializable]
 public class DiscoveryResponse : NetworkMessage
 {
     // Add properties for whatever information you want the server to return to

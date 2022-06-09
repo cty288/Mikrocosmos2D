@@ -127,15 +127,14 @@ namespace Mikrocosmos
             }
         }
 
-     
-      
-        
+
+        protected Transform hookedByTr;
         protected virtual void FixedUpdate() {
 
             if (isServer) {
                 if (Model.HookState == HookState.Hooked)
                 {
-                    Transform hookedByTr = Model.HookedByTransform;
+                     hookedByTr = Model.HookedByTransform;
                     if (hookedByTr) {
                         hookedByTr.localPosition = HookedPositionOffset;
                         // rigidbody.bodyType = RigidbodyType2D.Kinematic;
@@ -147,17 +146,11 @@ namespace Mikrocosmos
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
                         else {
-                            transform.position = hookedByTr.position;
+                            rigidbody.position = hookedByTr.position;
                             transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
                                                                   new Vector3(0, 0, HookedRotationZOffset));
                         }
                     }
-                }
-                else {
-                    if (rigidbody) {
-                       // rigidbody.bodyType = RigidbodyType2D.Dynamic;
-                    }
-                   
                 }
             }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
@@ -8,6 +9,7 @@ using NHibernate.Linq;
 using Steamworks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
@@ -168,7 +170,10 @@ namespace Mikrocosmos
 
         public void StartHosting(NetworkingMode networkingMode) {
             telepathyTransport.enabled = false;
-            steamworksTransport.enabled = false;
+            if (steamworksTransport)
+            {
+                steamworksTransport.enabled = false;
+            }
 
             switch (networkingMode) {
                 case NetworkingMode.Normal:
@@ -189,15 +194,37 @@ namespace Mikrocosmos
             }
         }
 
+        public void StartJoiningClient(Uri uri) {
+            if (steamworksTransport)
+            {
+                steamworksTransport.enabled = false;
+            }
+            telepathyTransport.enabled = true;
+            Transport.activeTransport = telepathyTransport;
+            transport = telepathyTransport;
+
+            NetworkingMode = NetworkingMode.Normal;
+
+            if (NetworkClient.active)
+            {
+                NetworkClient.Disconnect();
+                NetworkClient.Shutdown();
+                NetworkClient.Disconnect();
+                NetworkClient.Shutdown();
+            }
+
+            StartClient(uri);
+        }
         public void StartJoiningClient(NetworkingMode networkingMode)
         {
-            telepathyTransport.enabled = false;
-            steamworksTransport.enabled = false;
-
             switch (networkingMode)
             {
                 case NetworkingMode.Normal:
-                    networkAddress = NetworkUtility.GetLocalIPAddress();
+                    if (steamworksTransport)
+                    {
+                        steamworksTransport.enabled = false;
+                    }
+                    networkAddress = "localhost";//NetworkUtility.GetLocalIPAddress();
                     telepathyTransport.enabled = true;
                     Transport.activeTransport = telepathyTransport;
                     transport = telepathyTransport;
@@ -206,6 +233,7 @@ namespace Mikrocosmos
                    
                     break;
                 case NetworkingMode.Steam:
+                    telepathyTransport.enabled = false;                    
                     steamworksTransport.enabled = true;
                     Transport.activeTransport = steamworksTransport;
                     transport = steamworksTransport;

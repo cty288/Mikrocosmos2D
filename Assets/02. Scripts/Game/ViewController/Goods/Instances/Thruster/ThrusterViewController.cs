@@ -11,20 +11,28 @@ namespace Mikrocosmos
      
 
         private Animator animator;
-
+        
         private bool isUsing = false;
+
+        [SerializeField]
+        private float propellingTransformOffsetY = 2.08f;
+        private float initialTransformOffsetY;
+        
         protected override void Awake() {
             base.Awake();
             animator = GetComponent<Animator>();
+            initialTransformOffsetY = HookedPositionOffset.y;
         }
 
         protected override void OnServerItemUsed() {
             base.OnServerItemUsed();
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Using"))
             {
-              
-                    animator.SetBool("Using", true);
+                animator.SetBool("Using", true);
                     isUsing = true;
+                    Debug.Log("Thruster ");
+                    HookedPositionOffset = Vector2.Lerp(HookedPositionOffset,
+                        new Vector2(HookedPositionOffset.x, propellingTransformOffsetY), Time.deltaTime * 10);
             }
             
             
@@ -54,6 +62,11 @@ namespace Mikrocosmos
                     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Using")) {
                         animator.SetBool("Using", false);
                     }
+                }
+
+                if (!isUsing) {
+                    HookedPositionOffset = Vector2.Lerp(HookedPositionOffset,
+                        new Vector2(HookedPositionOffset.x, initialTransformOffsetY), Time.deltaTime * 10);
                 }
             }
         }
