@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using UnityEngine;
 
 namespace Mikrocosmos
 {
+
+    
     public interface IBuff
     {
         float MaxDuration { get; }
@@ -17,8 +20,7 @@ namespace Mikrocosmos
         MikroAction OnAction { get; }
     }
 
-    public interface IRepeatableBuff<T> : IBuff where T : IBuff
-    {
+    public interface IRepeatableBuff<T> : IBuff where T : IBuff {
         void OnBuffRepeated(T addedBuff);
     }
 
@@ -72,6 +74,9 @@ namespace Mikrocosmos
     }
 
 
+    /// <summary>
+    /// 分离buff为计时模式和直到...模式, 只继承IBuff的视为frequency为0时长无限的计时模式
+    /// </summary>
     public class BuffSystem : AbstractNetworkedSystem, IBuffSystem
     {
         private Dictionary<Type, IBuff> buffs = new Dictionary<Type, IBuff>();
@@ -85,14 +90,14 @@ namespace Mikrocosmos
 
         public void AddBuff<T>(IBuff buff) where T : IBuff
         {
+
+            
             if (isServer) {
                 if (!buffs.ContainsKey(buff.GetType())) {
                     StartCoroutine(AddNewBuffToList(typeof(T), buff));
                 }
-                else
-                {
-                    if (buffs[buff.GetType()] is IRepeatableBuff<T> repeatableBuff)
-                    {
+                else {
+                    if (buffs[buff.GetType()] is IRepeatableBuff<T> repeatableBuff) {
                         repeatableBuff.OnBuffRepeated((T)buff);
                     }
                 }
@@ -103,8 +108,7 @@ namespace Mikrocosmos
             yield return new WaitForEndOfFrame();
             if (!buffs.ContainsKey(buff.GetType())) {
                 buffs.Add(buff.GetType(), buff);
-                if (callbacks.ContainsKey(type))
-                {
+                if (callbacks.ContainsKey(type)) {
                     callbacks[type]?.Invoke(BuffStatus.OnStart);
                 }
             }
@@ -138,8 +142,7 @@ namespace Mikrocosmos
                     {
                         buff.FrequencyTimer += buff.Frequency;
                         buff.OnAction.Execute();
-                        if (callbacks.ContainsKey(b.Key))
-                        {
+                        if (callbacks.ContainsKey(b.Key)) {
                             callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered);
                         }
                     }

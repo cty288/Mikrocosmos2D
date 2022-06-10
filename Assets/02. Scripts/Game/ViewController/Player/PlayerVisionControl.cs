@@ -39,13 +39,16 @@ namespace Mikrocosmos
         }
 
         private void OnVisionRangeChange(OnVisionRangeChange e) {
-            Light2D light = fovVision.GetComponent<Light2D>();
-            DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, e.Inner, 0.3f);
-            DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, e.Outer, 0.3f);
+            if (hasAuthority) {
+                Light2D light = fovVision.GetComponent<Light2D>();
+                DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, e.Inner, 0.3f);
+                DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, e.Outer, 0.3f);
 
-            Light2D mapLight = fovVision.GetComponent<Light2D>();
-            DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x, e.Inner, 0.3f);
-            DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, e.Outer, 0.3f);
+                Light2D mapLight = fovVision.GetComponent<Light2D>();
+                DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x, e.Inner, 0.3f);
+                DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, e.Outer, 0.3f);
+            }
+            
         }
 
 
@@ -70,6 +73,8 @@ namespace Mikrocosmos
             int currentTeam = this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team;
             if (GetComponent<PlayerSpaceship>().ThisSpaceshipTeam == currentTeam) {
                 mapIconCanAlwaysSeenByLocalPlayer = true;
+               // mapVisionRenderLight.SetActive(true);
+                mapFovVision.SetActive(true);
                 if (AlsoMaskedOnMap) {
                     foreach (SpriteRenderer sprite in visionAffectedSpritesOnMap) {
                         sprite.material = Material.Instantiate(defaultSpriteLitMaterial);
