@@ -48,7 +48,17 @@ namespace Mikrocosmos
 
         [field: SerializeField]
         public Transform HookedByTransform { get; protected set; }
+        protected virtual void OnEnable()
+        {
+            float currentMaxSpeed = MaxSpeed;
+            MaxSpeed =10f;
+            StartCoroutine(RecoverMaxSpeed(currentMaxSpeed));
+        }
 
+        IEnumerator RecoverMaxSpeed(float originalSpeed) {
+            yield return new WaitForSeconds(0.5f);
+            MaxSpeed = originalSpeed;
+        }
         public override void OnStartServer() {
             base.OnStartServer();
             bindedRigidibody = GetComponent<Rigidbody2D>();

@@ -219,7 +219,9 @@ MonoBehaviour:
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   visionAffectedSprites:
   - {fileID: 6410031578183631637}
+  visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
+  <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 0}
 --- !u!114 &6410031578183631632
 MonoBehaviour:

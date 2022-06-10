@@ -49,6 +49,7 @@ MonoBehaviour:
     - where-allocations
     - Assembly-CSharp-firstpass
     - Mirror.Authenticators
+    - Elringus.SpriteGlow.Runtime
     - Steamworks
     - PsdPlugin
     - PPv2URPConverters

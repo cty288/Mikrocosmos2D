@@ -19,14 +19,22 @@ namespace Mikrocosmos
 
         private GameObject visionRenderLight;
         private GameObject fovVision;
+
+        private GameObject mapVisionRenderLight;
+
+        private GameObject mapFovVision;
+
+        private bool mapIconCanAlwaysSeenByLocalPlayer;
         //private GameObject playerNameShade;
-        [SerializeField]
-        private Transform player;
+        
 
         private void Awake() {
             
             visionRenderLight = transform.Find("VisionControl/VisionRenderLight").gameObject;
             fovVision = transform.Find("VisionControl/FOV Vision").gameObject;
+            mapVisionRenderLight = transform.Find("VisionControl/VisionRenderLight - FullMap").gameObject;
+            mapFovVision = transform.Find("VisionControl/FOV Vision - FullMap").gameObject;
+            
             this.RegisterEvent<OnVisionRangeChange>(OnVisionRangeChange).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
@@ -34,34 +42,51 @@ namespace Mikrocosmos
             Light2D light = fovVision.GetComponent<Light2D>();
             DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, e.Inner, 0.3f);
             DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, e.Outer, 0.3f);
+
+            Light2D mapLight = fovVision.GetComponent<Light2D>();
+            DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x, e.Inner, 0.3f);
+            DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, e.Outer, 0.3f);
         }
 
-        void Start() {
-            if (hasAuthority) {
-               
-              
-                visionRenderLight.SetActive(true);
-                fovVision.SetActive(true);
-            }
-            else {
-               
-             
+
+        public override void OnStartAuthority() {
+            base.OnStartAuthority();
+            visionRenderLight.SetActive(true);
+            mapVisionRenderLight.SetActive(true);
+            mapFovVision.SetActive(true);
+            fovVision.SetActive(true);
+            
+        }
+
+        public override void OnStartClient() {
+            base.OnStartClient();
+            if (!hasAuthority) {
                 visionRenderLight.SetActive(false);
                 fovVision.SetActive(false);
-                player = NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.transform;
+                mapVisionRenderLight.SetActive(false);
+                mapFovVision.SetActive(false);
             }
-        }
 
-
-    
-        void Update() {
-          
-            if (!hasAuthority) {
-                if (player == null) {
-                    player = NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.transform;
+            int currentTeam = this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team;
+            if (GetComponent<PlayerSpaceship>().ThisSpaceshipTeam == currentTeam) {
+                mapIconCanAlwaysSeenByLocalPlayer = true;
+                if (AlsoMaskedOnMap) {
+                    foreach (SpriteRenderer sprite in visionAffectedSpritesOnMap) {
+                        sprite.material = Material.Instantiate(defaultSpriteLitMaterial);
+                    }
                 }
             }
         }
+
+        /*
+        void Update() {
+          
+            if (!isClient) {
+                if (player == null) {
+                    //player = NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.transform;
+                }
+            }
+        }*/
 
 
         protected override void ClientUpdateCanBeMasked() {
@@ -80,6 +105,16 @@ namespace Mikrocosmos
             foreach (SpriteRenderer sprite in visionAffectedSprites)
             {
                 sprite.material = mat;
+            }
+
+            if (AlsoMaskedOnMap) {
+                if (CanBeMasked && mapIconCanAlwaysSeenByLocalPlayer) {
+                    return;
+                }
+
+                foreach (SpriteRenderer sprite in visionAffectedSpritesOnMap) {
+                    sprite.material = mat;
+                }
             }
         }
     }

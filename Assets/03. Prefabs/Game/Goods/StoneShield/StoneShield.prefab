@@ -220,7 +220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238378668143830698, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: TargetLayers.m_Bits
-      value: 128
+      value: 2048
       objectReference: {fileID: 0}
     - target: {fileID: 8667604368005481625, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
       propertyPath: m_Controller
@@ -275,7 +275,9 @@ MonoBehaviour:
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   visionAffectedSprites:
   - {fileID: 57274393718387923}
+  visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
+  <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   wave: {fileID: 5222149471336982627, guid: ec1758291f27d0e489113ad41ee46451, type: 3}
 --- !u!114 &6851574334146095325

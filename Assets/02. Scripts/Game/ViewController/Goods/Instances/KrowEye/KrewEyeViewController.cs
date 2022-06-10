@@ -13,19 +13,23 @@ namespace Mikrocosmos
 
        
 
-        private Light2DBase visionLight;
+        private Light2DBase[] visionLights;
+    
 
         private NetworkAnimator animator;
         protected override void Awake() {
             base.Awake();
-            visionLight = GetComponentInChildren<Light2DBase>();
-            visionLight.enabled = false;
+            visionLights = GetComponentsInChildren<Light2DBase>();
+            foreach (Light2DBase visionLight in visionLights) {
+                visionLight.enabled = false;
+            }
+            
             animator = GetComponent<NetworkAnimator>();
         }
 
         public override void OnStartServer() {
             base.OnStartServer();
-            //visionLight.enabled = IsOn;
+            //visionLights.enabled = IsOn;
             GetComponent<KrowEyeModel>().TeamBelongTo.RegisterWithInitValue(OnTeamChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -77,9 +81,15 @@ namespace Mikrocosmos
         private IEnumerator RefreshLight() {
 
             if (isClientCanSee && IsOn) {
-                visionLight.enabled = false;
+                foreach (Light2DBase visionLight in visionLights)
+                {
+                    visionLight.enabled = false;
+                }
                 yield return new WaitForSeconds(0.1f);
-                visionLight.enabled = true;
+                foreach (Light2DBase visionLight in visionLights)
+                {
+                    visionLight.enabled = true;
+                }
             }
         }
 
@@ -98,15 +108,18 @@ namespace Mikrocosmos
         [ClientCallback]
         protected void ClientUpdateLight() {
             if (!isClientCanSee) {
-                if (visionLight.enabled) {
-                    visionLight.enabled = false;
-                    //OnClientTurnOff
-                  
+                if (visionLights[0].enabled) {
+                    foreach (Light2DBase visionLight in visionLights)
+                    {
+                        visionLight.enabled = false;
+                    }
                 }
                 return;
             }
-
-            visionLight.enabled = IsOn;
+            foreach (Light2DBase visionLight in visionLights)
+            {
+                visionLight.enabled = IsOn;
+            }
         }
 
         public void OnTurnOnStateChanged(bool lastIsTurnOn, bool currentIsTurnOn) {

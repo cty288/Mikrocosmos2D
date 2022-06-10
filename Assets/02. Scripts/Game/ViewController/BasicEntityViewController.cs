@@ -106,6 +106,8 @@ namespace Mikrocosmos
         protected NetworkRigidbody2D networkRigidbody;
 
 
+     
+
         protected virtual void Awake() {
             Model = GetComponent<IEntity>();
             rigidbody = GetComponent<Rigidbody2D>();

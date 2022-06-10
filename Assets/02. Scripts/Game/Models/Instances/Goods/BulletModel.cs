@@ -23,7 +23,10 @@ public class BulletModel : AbstractBasicEntityModel, IBulletModel {
     protected override bool ServerCheckCanHook(NetworkIdentity hookedBy) {
         return false;
     }
+    protected override void OnEnable()
+    {
 
+    }
     public override void OnClientHooked() {
         
     }

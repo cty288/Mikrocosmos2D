@@ -29,6 +29,9 @@ namespace Mikrocosmos
 
         [SerializeField]
         protected SpriteRenderer[] visionAffectedSprites;
+
+        [SerializeField]
+        protected SpriteRenderer[] visionAffectedSpritesOnMap;
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -181,6 +184,9 @@ namespace Mikrocosmos
         [field: SyncVar(hook = nameof(OnCanBeMaskedChanged)), SerializeField]
         public bool CanBeMasked { get; protected set; } = true;
 
+        [field: SerializeField]
+        public bool AlsoMaskedOnMap { get; protected set; } = false;
+
         public void ServerTurnOn()
         {
             CanBeMasked = true;
@@ -238,6 +244,14 @@ namespace Mikrocosmos
             foreach (SpriteRenderer sprite in visionAffectedSprites)
             {
                 sprite.material = mat;
+            }
+
+            if (AlsoMaskedOnMap)
+            {
+                foreach (SpriteRenderer sprite in visionAffectedSpritesOnMap)
+                {
+                    sprite.material = mat;
+                }
             }
         }
 

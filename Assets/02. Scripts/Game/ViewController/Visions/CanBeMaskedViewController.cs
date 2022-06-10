@@ -8,6 +8,7 @@ namespace Mikrocosmos
     public interface ICanBeMaskedViewController {
         public bool CanBeMasked { get; }
 
+        public bool AlsoMaskedOnMap { get; }
         void ServerTurnOn();
         void ServerTurnOff();
     }
@@ -18,8 +19,14 @@ namespace Mikrocosmos
         [SerializeField]
         protected SpriteRenderer[] visionAffectedSprites;
 
+        [SerializeField]
+        protected SpriteRenderer[] visionAffectedSpritesOnMap;
+        
+        [field: SyncVar(hook = nameof(OnCanBeMaskedChanged)), SerializeField] 
+        public bool CanBeMasked { get; protected set; } = true;
 
-        [field: SyncVar(hook = nameof(OnCanBeMaskedChanged)), SerializeField] public bool CanBeMasked { get; protected set; } = true;
+        [field: SerializeField]
+        public bool AlsoMaskedOnMap { get; protected set; }
 
         public void ServerTurnOn() {
             CanBeMasked = true;
@@ -55,6 +62,12 @@ namespace Mikrocosmos
 
             foreach (SpriteRenderer sprite in visionAffectedSprites) {
                 sprite.material = mat;
+            }
+
+            if (AlsoMaskedOnMap) {
+                foreach (SpriteRenderer sprite in visionAffectedSpritesOnMap) {
+                    sprite.material = mat;
+                }
             }
         }
     }

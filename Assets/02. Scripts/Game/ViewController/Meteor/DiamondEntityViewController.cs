@@ -65,7 +65,7 @@ namespace Mikrocosmos
             base.FixedUpdate();
             if (targetPlayer)
             {
-                rigidbody.MovePosition(Vector2.Lerp(transform.position, targetPlayer.position, Time.fixedDeltaTime * 5f));  
+                rigidbody.MovePosition(Vector2.Lerp(transform.position, targetPlayer.position, Time.fixedDeltaTime * 10f));  
             }
         }
 
