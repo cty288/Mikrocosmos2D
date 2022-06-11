@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
@@ -35,13 +37,23 @@ namespace Mikrocosmos
         float MinimumCompositeSpeedForCraftingCompounds { get; }
 
         bool ServerRequestCraftGoods(IGoods item1, IGoods item2, Vector2 position);
+
+        GoodsConfigure PlanetRequestBuyItem(List<GoodsConfigure> possibleGoods);
+
+        GoodsConfigure PlanetRequestSellItem(List<GoodsConfigure> possibleGoods);
     }
+
+
     public class GlobalTradingSystem : AbstractNetworkedSystem, IGlobalTradingSystem {
         private List<IPlanetTradingSystem> allPlanets;
 
         [SerializeField] private List<CompoundResourceRecipe> compoundResourceRecipes;
 
         [SerializeField] private GameObject craftingEffect;
+
+        private Dictionary<string, int> allCirculatingBuyItems = new Dictionary<string, int>();
+
+        private Dictionary<string, int> allCirculatingSellItems = new Dictionary<string, int>();
 
         private void Awake() {
             Mikrocosmos.Interface.RegisterSystem<IGlobalTradingSystem>(this);
@@ -55,6 +67,64 @@ namespace Mikrocosmos
             allPlanets = new List<IPlanetTradingSystem>();
             GameObject.FindGameObjectsWithTag("Planet").Select((o => o.GetComponent<IPlanetTradingSystem>())).ToList()
                 .ForEach(p => allPlanets.Add(p));
+
+            this.RegisterEvent<OnServerPlanetGenerateSellItem>(OnPlanetGenerateSellItem)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnPlanetGenerateBuyItem)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnPlanetGenerateBuyItem(OnServerPlanetGenerateBuyingItem e) {
+            if (e.CountTowardsGlobalIItemList) {
+                IGoods generatedItem = e.GeneratedItem.GetComponent<IGoods>();
+                string generatedItemName = generatedItem.Name;
+                if (allCirculatingBuyItems.ContainsKey(generatedItemName)) {
+                    allCirculatingBuyItems[generatedItemName]++;
+                }
+                else {
+                    allCirculatingBuyItems.Add(generatedItemName, 1);
+                }
+
+                if (e.PreviousItem) {
+                    IGoods previousItem = e.GeneratedItem.GetComponent<IGoods>();
+                    string previousItemName = previousItem.Name;
+                    if (allCirculatingBuyItems.ContainsKey(previousItemName)) {
+                        allCirculatingBuyItems[previousItemName]--;
+                        if (allCirculatingBuyItems[previousItemName] <= 0) {
+                            allCirculatingBuyItems.Remove(previousItemName);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void OnPlanetGenerateSellItem(OnServerPlanetGenerateSellItem e) {
+            if (e.CountTowardsGlobalIItemList)
+            {
+                IGoods generatedItem = e.GeneratedItem.GetComponent<IGoods>();
+                string generatedItemName = generatedItem.Name;
+                if (allCirculatingSellItems.ContainsKey(generatedItemName)) {
+                    allCirculatingSellItems[generatedItemName]++;
+                }
+                else
+                {
+                    allCirculatingSellItems.Add(generatedItemName, 1);
+                }
+
+                if (e.PreviousItem)
+                {
+                    IGoods previousItem = e.GeneratedItem.GetComponent<IGoods>();
+                    string previousItemName = previousItem.Name;
+                    if (allCirculatingSellItems.ContainsKey(previousItemName))
+                    {
+                        allCirculatingSellItems[previousItemName]--;
+                        if (allCirculatingSellItems[previousItemName] <= 0) {
+                            allCirculatingSellItems.Remove(previousItemName);
+                        }
+                    }
+                }
+            }
         }
 
         [field: SerializeField][Tooltip("The Trading Curve Indicates the Marginal Affinity increasment vs." +
@@ -113,6 +183,31 @@ namespace Mikrocosmos
             });
             RpcSpawnCraftingEffect(position);
             return true;
+        }
+
+        public GoodsConfigure PlanetRequestBuyItem(List<GoodsConfigure> possibleGoods) {
+            //find item in possibleGoods that doesn't exist in allCirculatingBuyItems
+            List<GoodsConfigure> possibleGoodsNotInCirculating = possibleGoods.Where(g => !allCirculatingBuyItems.ContainsKey(g.Good.Name)).ToList();
+            //if possibleGoodsNotInCirculating is not empty, randomly return one; otherwise, just randomly select one from possibleGoods
+            if (possibleGoodsNotInCirculating.Count > 0) {
+                return possibleGoodsNotInCirculating[Random.Range(0, possibleGoodsNotInCirculating.Count)];
+            }
+            else
+            {
+                return possibleGoods[Random.Range(0, possibleGoods.Count)];
+            }
+        }
+
+        public GoodsConfigure PlanetRequestSellItem(List<GoodsConfigure> possibleGoods) {
+            //find item in possibleGoods that doesn't exist in allCirculatingBuyItems
+            List<GoodsConfigure> possibleGoodsNotInCirculating = possibleGoods.Where(g => !allCirculatingSellItems.ContainsKey(g.Good.Name)).ToList();
+            //if possibleGoodsNotInCirculating is not empty, randomly return one; otherwise, just randomly select one from possibleGoods
+            if (possibleGoodsNotInCirculating.Count > 0) {
+                return possibleGoodsNotInCirculating[Random.Range(0, possibleGoodsNotInCirculating.Count)];
+            }
+            else {
+                return possibleGoods[Random.Range(0, possibleGoods.Count)];
+            }
         }
 
 

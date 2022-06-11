@@ -57,8 +57,8 @@ namespace Mikrocosmos
             buytemSpawnPosition = transform.Find("BuyBubbleBG/BuyItemSpawnPos");
             if (sellItemSpawnPosition)
             {
-                sellPriceText = transform.Find("Canvas/SellPrice").GetComponent<Text>();
-                buyPriceText = transform.Find("Canvas/BuyPrice").GetComponent<Text>();
+                sellPriceText = transform.Find("SellBubbleBG/Canvas/SellPrice").GetComponent<Text>();
+                buyPriceText = transform.Find("BuyBubbleBG/Canvas/BuyPrice").GetComponent<Text>();
                 buyPriceText.gameObject.SetActive(false);
 
                 tradingSlider = transform.Find("Canvas/TradeSlider").GetComponent<Slider>();

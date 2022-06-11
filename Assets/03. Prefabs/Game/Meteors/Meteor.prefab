@@ -276,6 +276,7 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 8
   <MomentumThredhold>k__BackingField: 0.5

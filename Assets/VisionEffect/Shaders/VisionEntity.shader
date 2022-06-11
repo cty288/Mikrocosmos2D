@@ -13,7 +13,7 @@
         [HideInInspector] _Flip("Flip", Vector) = (1,1,1,1)
         [HideInInspector] _AlphaTex("External Alpha", 2D) = "white" {}
         [HideInInspector] _EnableExternalAlpha("Enable External Alpha", Float) = 0
-
+        _OutlineWidth("OutlineWidth", Range(0,100)) = 0
         [Toggle(FOR_TEXT)] _ForText("For Text", Float) = 0
 
     }
@@ -61,7 +61,7 @@
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/LightingUtility.hlsl"
 
-            TEXTURE2D(_MainTex);
+            TEXTURE2D(_MainTex);float4 _MainTex_TexelSize;
             SAMPLER(sampler_MainTex);
             TEXTURE2D(_MaskTex);
             SAMPLER(sampler_MaskTex);
@@ -72,7 +72,7 @@
             float _AlphaValue;
             uniform float4 _Color;
             half4 _Tint;
-
+            float _OutlineWidth;
             #if USE_SHAPE_LIGHT_TYPE_0
             SHAPE_LIGHT(0)
             #endif
@@ -112,11 +112,15 @@
                 if(main.a >0){
                     main += _Color;
                 }
+              
+				
+               
                 #endif
                 
+				
                 half4 result = CombinedShapeLightShared(main, mask, i.lightingUV, i.worldPos) * _Tint ;
                 //_AlphaValue = CombinedShapeLightShared(main,mask, half2(0.5,0.5), mul(unity_ObjectToWorld, half2(0.5,0.5)));
-                
+                 
                 return result; //+ _Color;
             }
             ENDHLSL

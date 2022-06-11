@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: vision_entity_text
+  m_Name: vision_entity_text_black
   m_Shader: {fileID: 4800000, guid: 6d1417b0fc765234b80b34d3b460ccc8, type: 3}
   m_ValidKeywords:
   - ETC1_EXTERNAL_ALPHA
@@ -40,7 +40,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaValue: 1
+    - _AlphaValue: -2.44
     - _EnableExternalAlpha: 0
     - _FlipHorizontalDirection: 1
     - _FlipVerticalDirection: 0
@@ -57,5 +57,5 @@ Material:
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SourcePos: {r: 0, g: 0, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Tint: {r: 1, g: 0.52113754, b: 0, a: 1}
   m_BuildTextureStacks: []
