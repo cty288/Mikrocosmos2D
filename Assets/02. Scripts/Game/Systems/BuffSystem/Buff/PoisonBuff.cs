@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class PoisonBuff : Buff, IRepeatableBuff<PoisonBuff>
+    public class PoisonBuff : TimedBuff, IRepeatableBuff<PoisonBuff>
     {
         public PoisonBuff(float maxDuration, float frequency, int damagePerFrq, IBuffSystem owner) : base(maxDuration, frequency, owner)
         {

@@ -22,7 +22,6 @@ namespace Mikrocosmos
 
         private void OnEntityTakeDamage(OnEntityTakeDamage e) {
             if (e.Entity == Model) {
-                
                 OnServerHealthChange(e.OldHealth, e.NewHealth);
             }
         }

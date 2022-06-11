@@ -22,7 +22,7 @@ namespace Mikrocosmos
         [field: SerializeField]
         public int MaxHealth { get; protected set; }
         
-        [field:  SyncVar, SerializeField]
+        [field:  SyncVar(hook = nameof(OnClientHealthChange)), SerializeField]
         public int CurrentHealth { get; set; }
 
         [SerializeField] private float momentumCoolDown = 0.1f;
@@ -97,7 +97,7 @@ namespace Mikrocosmos
                 return;
             }
             if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
-                if (buffSystem.HasBuff<InvincibleBuff>()) {
+                if (buffSystem.HasBuff<InvincibleTimedBuff>()) {
                     return;
                 }
             }
@@ -117,11 +117,18 @@ namespace Mikrocosmos
         }
 
         public void AddHealth(int health) {
-            CurrentHealth += health;
-            CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
+            if (CurrentHealth < MaxHealth) {
+                CurrentHealth += health;
+                CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
+            }
+           
         }
 
         public abstract void OnServerTakeDamage(int oldHealth, int newHealth);
         public abstract void OnReceiveExcessiveMomentum(float excessiveMomentum);
+
+        public virtual void OnClientHealthChange(int oldHealth, int newHealth) {
+
+        }
     }
 }

@@ -34,15 +34,15 @@ Material:
     - _FlipHorizontalDirection: 1
     - _FlipVerticalDirection: 0
     - _OutlineDot: 0.27
-    - _OutlineDot2: -0.06
+    - _OutlineDot2: -0.04
     - _OutlineExtrusion: 2.11
     - _OutlineSpeed: 0.0189
     - _OutlineTransparencyThreshold: 0.5
-    - _OutlineWidth: 2.5
-    - _Transparency: 0.42
+    - _OutlineWidth: 5.3
+    - _Transparency: 0.274
     - _UseTexture: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineColor: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SourcePos: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

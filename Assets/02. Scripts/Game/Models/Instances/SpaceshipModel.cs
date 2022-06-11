@@ -24,6 +24,13 @@ namespace Mikrocosmos
 
     }
 
+    public struct OnClientSpaceshipHealthChange
+    {
+        public int NewHealth;
+        public int MaxHealth;
+        public NetworkIdentity Identity;
+    }
+
     public struct OnPlayerDie {
         public NetworkIdentity SpaceshipIdentity;
     }
@@ -188,7 +195,7 @@ namespace Mikrocosmos
                    }else {
                        float hookingModelSelfMass = 0;
                        if (hookingModel.CanBeAddedToInventory) {
-                           hookingModelSelfMass = hookingModel.SelfMass * 3;
+                           hookingModelSelfMass = hookingModel.SelfMass * 2;
                        }
                         totalMass = SelfMass + BackpackMass + hookingModelSelfMass;
                    }
@@ -295,6 +302,19 @@ namespace Mikrocosmos
                 NumberItemRequest = numberItemDrop,
                 SpaceshipIdentity = netIdentity
             });
+        }
+
+        public override void OnClientHealthChange(int oldHealth, int newHealth) {
+            base.OnClientHealthChange(oldHealth, newHealth);
+            if (newHealth != oldHealth) {
+                this.SendEvent<OnClientSpaceshipHealthChange>(new OnClientSpaceshipHealthChange()
+                {
+                    NewHealth = newHealth,
+                    MaxHealth = MaxHealth,
+                    Identity = netIdentity
+                });
+            }
+           
         }
     }
 }

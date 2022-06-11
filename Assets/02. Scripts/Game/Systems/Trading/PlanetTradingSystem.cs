@@ -110,7 +110,7 @@ namespace Mikrocosmos
         private void Awake()
         {
             planetModel = GetComponent<IPlanetModel>();
-            BuyItemMaxTimeThisTime = Random.Range(1, BuyItemMaxTime + 1);
+            BuyItemMaxTimeThisTime = Random.Range(BuyItemMaxTime-5, BuyItemMaxTime + 5);
             BuyItemTimer = BuyItemMaxTimeThisTime;
         }
 

@@ -119,7 +119,7 @@ namespace Mikrocosmos
         
         private void LateUpdate() {
             List<Collider2D> colliders = Physics2D.OverlapCircleAll(transform.position, 0.5f).ToList();
-            Collider2D selfCollider = GetComponent<Collider2D>();
+           
             foreach (Collider2D collider in colliders) {
                 if (!collider) {
                     continue;
@@ -128,10 +128,60 @@ namespace Mikrocosmos
                     continue;
                 }
                 
+                
                 if (collider != shooter && !collider.isTrigger) {
+                    
                     NetworkIdentity ownerPlayer = Model.HookedByIdentity;
 
                     if (ownerPlayer == null || collider != ownerPlayer.GetComponent<Collider2D>()) {
+
+
+                        if (collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity))
+                        {
+                            StartCoroutine(SetVelocityToZero());
+
+                            BulletModel model = GetComponent<BulletModel>();
+                            int damage = (Mathf.RoundToInt(model.Damage *
+                                                           (Mathf.Min(3 * rigidbody.velocity.magnitude / model.MaxSpeed,
+                                                               2))));
+
+                            if (!damageReduceBySpeed)
+                            {
+                                damage = model.Damage;
+                            }
+
+                            if (entity is IDamagable damagable)
+                            {
+
+                                //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
+                                damagable.TakeRawDamage(damage);
+                            }
+
+
+                            bool dealDamageToOwner = true;
+                            if (entity is ICanAbsorbDamage canAbsorbDamage)
+                            {
+                                if (canAbsorbDamage.AbsorbDamage)
+                                {
+                                    dealDamageToOwner = false;
+                                    canAbsorbDamage.OnAbsorbDamage(damage);
+                                }
+                            }
+
+                            if (entity is IHookable hookable && dealDamageToOwner)
+                            {
+                                if (hookable.CanBeHooked && hookable.HookedByIdentity)
+                                {
+                                    hookable.HookedByIdentity.GetComponent<IDamagable>().TakeRawDamage(damage);
+                                }
+
+                            }
+
+                        }
+                        Debug.Log($"Bullet Destroy {gameObject.name}");
+                        
+
+
                         animator.SetTrigger("Hit");
                         if (destroyWhenHit) {
                             // NetworkServer.Destroy(this.gameObject);

@@ -145,8 +145,20 @@ namespace Mikrocosmos
         }
         private void OnClientPlanetAffinityWithTeam1Changed(OnClientPlanetAffinityWithTeam1Changed e)
         {
-            if (e.PlanetIdentity == netIdentity)
-            {
+            if (e.PlanetIdentity == netIdentity) {
+                if (e.NewAffinity <= 0.2) {
+                    team1TradeProgressText.enabled = false;
+                    team2TradeProgressText.enabled = true;
+                }else if (e.NewAffinity >= 0.8) {
+                    team1TradeProgressText.enabled = true;
+                    team2TradeProgressText.enabled = false;
+                }
+                else {
+                    team1TradeProgressText.enabled = true;
+                    team2TradeProgressText.enabled = true;
+                }
+
+
                 DOTween.To(() => tradingSlider.value, x => tradingSlider.value = x,
                     e.NewAffinity, 0.5f);
 

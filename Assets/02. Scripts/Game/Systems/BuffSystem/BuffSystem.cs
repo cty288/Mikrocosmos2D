@@ -11,13 +11,19 @@ namespace Mikrocosmos
 {
 
     
-    public interface IBuff
-    {
+    public interface IBuff {
+        MikroAction OnAction { get; }
+    }
+
+    public interface ITimedBuff : IBuff {
         float MaxDuration { get; }
         float RemainingTime { get; set; }
         float Frequency { get; }
         float FrequencyTimer { get; set; }
-        MikroAction OnAction { get; }
+    }
+
+    public interface IUntilBuff : IBuff {
+        int TotalCanBeTriggeredTime { get; set; }
     }
 
     public interface IRepeatableBuff<T> : IBuff where T : IBuff {
@@ -26,7 +32,7 @@ namespace Mikrocosmos
 
 
     [Serializable]
-    public abstract class Buff : IBuff
+    public abstract class TimedBuff : ITimedBuff
     {
         [field: SerializeField]
         public float MaxDuration { get; protected set; }
@@ -46,7 +52,7 @@ namespace Mikrocosmos
 
         protected IBuffSystem targetBuffOwner;
 
-        public Buff(float maxDuration, float frequency, IBuffSystem buffOwner)
+        public TimedBuff(float maxDuration, float frequency, IBuffSystem buffOwner)
         {
             MaxDuration = maxDuration;
             RemainingTime = maxDuration;
@@ -54,6 +60,25 @@ namespace Mikrocosmos
             targetBuffOwner = buffOwner;
             FrequencyTimer = frequency;
         }
+    }
+
+
+    [Serializable]
+    public abstract class UntilBuff : IUntilBuff
+    {
+       
+        public UntilBuff(int canBeTriggeredTime) {
+            TotalCanBeTriggeredTime = canBeTriggeredTime;
+        }
+
+        public MikroAction OnAction {
+            get {
+                return Action;
+            }
+        }
+
+        protected UntilAction Action;
+        public int TotalCanBeTriggeredTime { get;  set; }
     }
 
 
@@ -88,10 +113,8 @@ namespace Mikrocosmos
             return gameObject;
         }
 
-        public void AddBuff<T>(IBuff buff) where T : IBuff
-        {
+        public void AddBuff<T>(IBuff buff) where T : IBuff {
 
-            
             if (isServer) {
                 if (!buffs.ContainsKey(buff.GetType())) {
                     StartCoroutine(AddNewBuffToList(typeof(T), buff));
@@ -135,21 +158,46 @@ namespace Mikrocosmos
                 foreach (KeyValuePair<Type, IBuff> b in buffs) {
                     IBuff buff = b.Value;
                     
-                    buff.RemainingTime -= Time.deltaTime;
-                    buff.FrequencyTimer -= Time.deltaTime;
+                    if (buff is ITimedBuff timedBuff) {
+                        timedBuff.RemainingTime -= Time.deltaTime;
+                        timedBuff.FrequencyTimer -= Time.deltaTime;
+                        if (timedBuff.FrequencyTimer <= 0) {
+                            timedBuff.FrequencyTimer += timedBuff.Frequency;
+                            buff.OnAction.Execute();
+                            if (callbacks.ContainsKey(b.Key)) {
+                                callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered);
+                            }
+                        }
+                    }
 
-                    if (buff.FrequencyTimer <= 0)
-                    {
-                        buff.FrequencyTimer += buff.Frequency;
-                        buff.OnAction.Execute();
-                        if (callbacks.ContainsKey(b.Key)) {
+                    if (buff is IUntilBuff untilBuff) {
+                        if (untilBuff.OnAction.Finished) {
+                            untilBuff.TotalCanBeTriggeredTime--;
                             callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered);
                         }
                     }
+                    
                 }
               
+              
+                buffs.Where(x => {
+                        if (x.Value is ITimedBuff timedBuff) {
+                            return timedBuff.RemainingTime <= 0;
+                        }
 
-                buffs.Where(x => x.Value.RemainingTime <= 0).ToList().
+                        if (x.Value is IUntilBuff untilBuff) {
+                            if (untilBuff.OnAction.Finished) {
+                                if (untilBuff.TotalCanBeTriggeredTime > 0) {
+                                    untilBuff.OnAction.Reset();
+                                    untilBuff.OnAction.Execute();
+                                    return false;
+                                }
+                                return true;
+                            }
+                            return false;
+                        }
+                        return false;
+                    }).ToList().
                     ForEach(x => {
                         if (callbacks.ContainsKey(x.Key)) {
                             callbacks[x.Key]?.Invoke(BuffStatus.OnEnd);

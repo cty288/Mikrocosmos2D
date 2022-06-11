@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class DizzyBuff :  Buff
+    public class DizzyTimedBuff :  TimedBuff
     {
-        public DizzyBuff(float maxDuration, float frequency, IBuffSystem owner,
+        public DizzyTimedBuff(float maxDuration, float frequency, IBuffSystem owner,
             Action onFinished = null): base(maxDuration, frequency, owner) {
             
             CallbackAction action = CallbackAction.Allocate(() => {
@@ -20,9 +20,9 @@ namespace Mikrocosmos
             OnAction = action;
         }
     }
-    public class InvincibleBuff : Buff
+    public class InvincibleTimedBuff : TimedBuff
     {
-        public InvincibleBuff(float maxDuration, float frequency, IBuffSystem owner,
+        public InvincibleTimedBuff(float maxDuration, float frequency, IBuffSystem owner,
             Action onFinished = null) : base(maxDuration, frequency, owner)
         {
 

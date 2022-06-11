@@ -350,7 +350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_InstanceId
-      value: -725990
+      value: -522462
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_ShapePathHash
@@ -548,7 +548,9 @@ MonoBehaviour:
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   visionAffectedSprites:
   - {fileID: 8825376392211092377}
+  visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
+  <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   bullet: {fileID: 5222149471336982627, guid: d5c6bd440b9b3ad4f81b00c82bb242ea, type: 3}
   shootForce: 50

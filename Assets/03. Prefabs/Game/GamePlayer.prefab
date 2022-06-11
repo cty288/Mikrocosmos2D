@@ -74,8 +74,8 @@ MonoBehaviour:
     TeamIndex: 0
   ControlledSpaceship: {fileID: 0}
   spaceshipPrefabs:
-  - {fileID: 7986015997137912893, guid: a0dfa0b1a9bada345854ed64fed3d26b, type: 3}
   - {fileID: 7986015997137912893, guid: dd471e5954263984ebfef7d6f7977b90, type: 3}
+  - {fileID: 7986015997137912893, guid: a0dfa0b1a9bada345854ed64fed3d26b, type: 3}
 --- !u!114 &2657284343110990168
 MonoBehaviour:
   m_ObjectHideFlags: 0

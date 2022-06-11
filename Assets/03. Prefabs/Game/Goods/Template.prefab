@@ -153,6 +153,7 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 0.1
   <Name>k__BackingField: Banana

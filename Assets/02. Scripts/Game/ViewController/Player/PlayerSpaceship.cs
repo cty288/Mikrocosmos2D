@@ -12,6 +12,7 @@ using UnityEngine;
 namespace Mikrocosmos
 {
 
+    
 
     public partial class PlayerSpaceship : AbstractDamagableViewController
     {
@@ -79,8 +80,8 @@ namespace Mikrocosmos
             base.OnStartServer();
             this.RegisterEvent<OnPlayerDie>(OnServerPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
 
-            buffSystem.ServerRegisterClientCallback<DizzyBuff>(RpcOnDizzyBuff);
-            buffSystem.ServerRegisterClientCallback<InvincibleBuff>(RpcOnInvincibleBuff);
+            buffSystem.ServerRegisterClientCallback<DizzyTimedBuff>(RpcOnDizzyBuff);
+            buffSystem.ServerRegisterClientCallback<InvincibleTimedBuff>(RpcOnInvincibleBuff);
         }
 
 
@@ -92,9 +93,9 @@ namespace Mikrocosmos
                 float dieTime = GetModel().DieDizzyTime;
                 float invincibleTime = GetModel().RespawnInvincibleTime;
                 
-                buffSystem.AddBuff<DizzyBuff>(new DizzyBuff(dieTime, dieTime, buffSystem, () => {
+                buffSystem.AddBuff<DizzyTimedBuff>(new DizzyTimedBuff(dieTime, dieTime, buffSystem, () => {
                     DamagableModel.AddHealth(DamagableModel.MaxHealth);
-                    buffSystem.AddBuff<InvincibleBuff>(new InvincibleBuff(invincibleTime, invincibleTime, buffSystem));
+                    buffSystem.AddBuff<InvincibleTimedBuff>(new InvincibleTimedBuff(invincibleTime, invincibleTime, buffSystem));
                 }));
             }
             
@@ -189,7 +190,7 @@ namespace Mikrocosmos
             base.FixedUpdate();
             if (isServer)
             {
-                if (buffSystem.HasBuff<DizzyBuff>()) {
+                if (buffSystem.HasBuff<DizzyTimedBuff>()) {
                     return;
                 }
                 

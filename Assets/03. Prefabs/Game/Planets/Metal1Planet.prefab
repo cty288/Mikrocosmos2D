@@ -288,7 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  BuyItemMaxTime: 30
+  BuyItemMaxTime: 35
   itemRarity:
   - 0.5
   - 0.4

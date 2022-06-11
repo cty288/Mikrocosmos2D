@@ -35,8 +35,9 @@ namespace Mikrocosmos
         Transform HookedByTransform { get; }
 
         bool Hook(NetworkIdentity hookedBy);
+         
+        bool canDealMomentumDamage { get; set; }
 
-       
         void UnHook(bool isShoot);
 
         void UnHook();

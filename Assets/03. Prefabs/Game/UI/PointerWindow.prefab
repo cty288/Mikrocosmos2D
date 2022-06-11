@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3671635426418008419}
   - component: {fileID: 3671635426418008417}
-  - component: {fileID: 3671635426418008416}
   - component: {fileID: 265674661624453770}
+  - component: {fileID: 3671635426418008416}
   m_Layer: 5
   m_Name: PointerWindow
   m_TagString: Untagged
@@ -48,27 +48,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3671635426418008418}
   m_CullTransparentMesh: 1
---- !u!114 &3671635426418008416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3671635426418008418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b436c0e60f5b75c449995652ca4ee304, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrowSprite: {fileID: 21300000, guid: f636757082aba3f478187cc1b3aafdd5, type: 3}
-  crossSprite: {fileID: 21300000, guid: 7f96bd1ef950a1744ae5aa20f147f906, type: 3}
-  target: {fileID: 0}
-  pointerRectTransform: {fileID: 3671635427904748299}
-  pointerImage: {fileID: 2053621441603895512}
-  borderMask:
-    serializedVersion: 2
-    m_Bits: 2147483648
-  isOffScreen: 0
 --- !u!114 &265674661624453770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +61,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
+  teamSprites:
+  - {fileID: 21300000, guid: a5cd6d87d58ae3a4fb2e916a91e59357, type: 3}
+  - {fileID: 21300000, guid: 5348fdb5c4801644c86979f5b2873fa7, type: 3}
+--- !u!114 &3671635426418008416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3671635426418008418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b436c0e60f5b75c449995652ca4ee304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crossSprite: {fileID: 21300000, guid: 7f96bd1ef950a1744ae5aa20f147f906, type: 3}
+  target: {fileID: 0}
+  pointerRectTransform: {fileID: 3671635427904748299}
+  pointerImage: {fileID: 2053621441603895512}
+  borderMask:
+    serializedVersion: 2
+    m_Bits: 2147483648
+  isOffScreen: 0
 --- !u!1001 &7560859451339187469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91,7 +93,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3974639864709470080, guid: 3792a016f7ecd4a4da9bb479d52e60a0, type: 3}
       propertyPath: m_fontSize
-      value: 25.3
+      value: 22.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494329590854700232, guid: 3792a016f7ecd4a4da9bb479d52e60a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6492454994723888646, guid: 3792a016f7ecd4a4da9bb479d52e60a0, type: 3}
       propertyPath: m_Pivot.x

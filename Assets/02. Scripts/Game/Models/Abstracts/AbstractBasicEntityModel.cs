@@ -97,7 +97,8 @@ namespace Mikrocosmos
             return false;
         }
 
-     
+        [field: SerializeField] public bool canDealMomentumDamage { get; set; } = true;
+
 
         [ServerCallback]
         public void UnHook() {

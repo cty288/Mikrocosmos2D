@@ -187,6 +187,7 @@ namespace Mikrocosmos
 
         }
 
+        
         //TODO: 让对方启动动量计算
         //对方Unhooked：正常
         //对方Hooked && 对方MoveByPhysics：手动算速度
@@ -195,23 +196,31 @@ namespace Mikrocosmos
         //对方UnHooked：正常
         //对方Hooked ：手动算速度
         protected virtual void OnCollisionEnter2D(Collision2D collision) {
-            if (collision.collider && !collider.isTrigger) {
-                if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model)) {
-                    if (model is IHookable hookable) {
-                        if (hookable.HookState == HookState.Hooked) {
-                            if (hookable.MoveMode == MoveMode.ByTransform) {
+            if (Model.canDealMomentumDamage) {
+                if (collision.collider && !collider.isTrigger)
+                {
+                    if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model))
+                    {
+                        if (model is IHookable hookable)
+                        {
+                            if (hookable.HookState == HookState.Hooked)
+                            {
+                                if (hookable.MoveMode == MoveMode.ByTransform)
+                                {
+                                    return;
+                                }
+
+                                StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
                                 return;
                             }
-
-                            StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
-                            return;
                         }
+                        //normal
+                        // StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
+                        StartCoroutine(PhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
                     }
-                    //normal
-                   // StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
-                    StartCoroutine(PhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
                 }
             }
+            
         }
 
         IEnumerator NonPhysicsForceCalculation(IDamagable targetModel,Rigidbody2D targetRigidbody) {

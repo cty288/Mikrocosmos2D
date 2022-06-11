@@ -10,8 +10,10 @@
     --------------------------------------------------
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mikrocosmos;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,9 +21,10 @@ using UnityEngine.UI;
 [ExecuteInEditMode]
 public class Window_Pointer : MonoBehaviour {
 
+
    
-    [SerializeField] private Sprite arrowSprite;
     [SerializeField] private Sprite crossSprite;
+    private MapPointerViewController pointerViewController;
 
     [SerializeField]
     public Transform target;
@@ -34,8 +37,14 @@ public class Window_Pointer : MonoBehaviour {
     public LayerMask borderMask;
     [SerializeField] private bool isOffScreen;
     private void Awake() {
-
+    
+        pointerViewController = GetComponent<MapPointerViewController>();
         Show();
+        
+    }
+
+    private void Start() {
+        Update();
     }
 
     private void Update() {
@@ -49,15 +58,14 @@ public class Window_Pointer : MonoBehaviour {
         if (isOffScreen) {
            RotatePointerTowardsTargetPosition();
 
-            pointerImage.sprite = arrowSprite;
-            Vector3 cappedTargetScreenPosition = targetPositionScreenPoint;
+            pointerImage.sprite = pointerViewController.PointerSprite;
+        
             
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.transform.position, targetDir, Mathf.Infinity, borderMask);
             if (hit.collider != null)
             {
                 pointerRectTransform.position = hit.point;
                 pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
-                Debug.Log("hit 23333");
             }
 
 

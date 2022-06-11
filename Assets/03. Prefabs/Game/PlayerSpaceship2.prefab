@@ -1243,9 +1243,9 @@ MonoBehaviour:
   <MaxHealth>k__BackingField: 100
   <CurrentHealth>k__BackingField: 100
   momentumCoolDown: 0.5
-  healthRecoverThreshold: 50
+  healthRecoverThreshold: 100
   healthRecoverPerSecond: 10
-  healthRecoverWaitTimeAfterDamage: 5
+  healthRecoverWaitTimeAfterDamage: 8
   HealthRecoverTimer: 0
   damagePerMomentum: 1
   dropOneItemMomentumThreshold: 4
@@ -1697,6 +1697,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerInfoCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2301525965185703936, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 2301525965185703936, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2301525965185703936, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2301525965185703936, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 2301525965185703936, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -45
+      objectReference: {fileID: 0}
     - target: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1763,11 +1783,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1779,6 +1799,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6409103685007544648, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d99f3fc40a3250b4786b76033ce45ffc, type: 3}
+    - target: {fileID: 6409103685007544648, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7669650821743396071, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 47594cd78b362cc439132b6a5a6b43b3, type: 3}
+    - target: {fileID: 7669650821743396071, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

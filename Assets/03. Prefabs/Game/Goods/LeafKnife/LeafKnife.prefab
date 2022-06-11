@@ -406,7 +406,9 @@ MonoBehaviour:
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   visionAffectedSprites:
   - {fileID: 9059987998351716924}
+  visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
+  <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
 --- !u!114 &7036534165710984782
 MonoBehaviour:
@@ -429,6 +431,7 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 3
   <Name>k__BackingField: LeafKnife
