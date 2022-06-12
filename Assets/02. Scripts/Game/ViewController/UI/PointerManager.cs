@@ -13,95 +13,103 @@ namespace Mikrocosmos
     {
         [SerializeField] private GameObject pointerPrefab;
 
-
         private string currentSelectedName;
-        private Dictionary<GameObject, GameObject> planetToPointer = new Dictionary<GameObject, GameObject>();
+       
+        private Dictionary<GameObject, List<MapPointerViewController>> planetToPointers = new Dictionary<GameObject, List<MapPointerViewController>>();
         private void Awake()
         {
             this.RegisterEvent<OnClientInventoryUpdate>(OnClientInventoryUpdate)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
-            this.RegisterEvent<OnClientPlanetSwitchBuyItem>(OnClientPlanetSwitchBuyItem)
+            this.RegisterEvent<OnClientPlanetGenerateBuyItem>(OnClientPlanetGenerateBuyItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
-        private void OnClientPlanetSwitchBuyItem(OnClientPlanetSwitchBuyItem e)
+        private void OnClientPlanetGenerateBuyItem(OnClientPlanetGenerateBuyItem e)
         {
-            if (e.NewBuyItemName == currentSelectedName)
-            {
-                CreatePointerWindowForPlanet(e.TargetPlanet);
+           
+            if (planetToPointers.ContainsKey(e.TargetPlanet)) {
+                MapPointerViewController oldPointer = planetToPointers[e.TargetPlanet].Find(controller => controller.GoodsName == e.OldBuyItemName);
+                if (oldPointer) {
+                    Debug.Log($"Old Buy Item: {e.OldBuyItemName}");
+                    planetToPointers[e.TargetPlanet].Remove(oldPointer);
+                    Destroy(oldPointer.gameObject);
+                }
             }
-
-            if (e.OldBuyItemName == currentSelectedName && planetToPointer.ContainsKey(e.TargetPlanet) && e.OldBuyItemName!= e.NewBuyItemName)
-            {
-                Debug.Log($"Old Buy Item: {e.OldBuyItemName}");
-                Destroy(planetToPointer[e.TargetPlanet]);
-                planetToPointer.Remove(e.TargetPlanet);
-            }
+            
+            CreatePointerWindowForPlanet(e.TargetPlanet, e.NewBuyItemName, e.MaxBuyTime);
         }
 
 
         private void OnClientInventoryUpdate(OnClientInventoryUpdate e)
         {
-            if (currentSelectedName != e.AllSlots[e.SelectedIndex].PrefabName || e.AllSlots[e.SelectedIndex].ClientSlotCount == 0)
-            {
-                if (e.AllSlots[e.SelectedIndex].ClientSlotCount > 0)
-                {
+            if (currentSelectedName != e.AllSlots[e.SelectedIndex].PrefabName || e.AllSlots[e.SelectedIndex].ClientSlotCount == 0) {
+                
+                if (e.AllSlots[e.SelectedIndex].ClientSlotCount > 0) {
                     currentSelectedName = e.AllSlots[e.SelectedIndex].PrefabName;
                 }
-                else
-                {
+                else {
                     currentSelectedName = "";
                 }
 
-                //delete all target planets and pointerWindows
-                foreach (var planet in planetToPointer.Keys)
-                {
-                    Destroy(planetToPointer[planet]);
+                foreach (var planet in planetToPointers.Keys) {
+                    planetToPointers[planet].ForEach(controller => controller.SetPointerActive(false));
                 }
-                planetToPointer.Clear();
             }
 
 
             if (e.AllSlots[e.SelectedIndex].ClientSlotCount > 0)
             {
-                //find planets which buy current item
-                List<GameObject> planets = GetAllPlanetsBuyItem(e.AllSlots[e.SelectedIndex].PrefabName);
-
-                //create pointerWindow for each planet
-                foreach (var planet in planets)
-                {
-                    CreatePointerWindowForPlanet(planet);
+                
+                currentSelectedName = e.AllSlots[e.SelectedIndex].PrefabName;
+                
+                foreach (var planet in planetToPointers.Keys) {
+                    planetToPointers[planet].ForEach(controller => {
+                        if (controller.GoodsName == currentSelectedName) {
+                            controller.SetPointerActive(true);
+                        }
+                    });
                 }
 
-                
-              
+
+
             }
         }
 
-        private void CreatePointerWindowForPlanet(GameObject planet)
-        {
+        private void CreatePointerWindowForPlanet(GameObject planet, string goodsName, float time) {
           
-            if (!planetToPointer.ContainsKey(planet)) {
-                GameObject pointer = Instantiate(pointerPrefab, transform);
-                pointer.SetActive(false);
+            if (!planetToPointers.ContainsKey(planet)) {
+                planetToPointers.Add(planet, new List<MapPointerViewController>());
+            }
+
+            if (!String.IsNullOrEmpty(goodsName) &&
+                planetToPointers[planet].Find(controller => controller.GoodsName == goodsName) == null) {
+
+                MapPointerViewController pointer = Instantiate(pointerPrefab, transform).GetComponent<MapPointerViewController>();
+                pointer.GoodsName = goodsName;
+                pointer.Time = time;
+                pointer.timer = time;
+
+
+                pointer.SetPointerActive(false);
+                
                 this.GetSystem<ITimeSystem>().AddDelayTask(0.02f, () => {
                     if (pointer) {
-                        pointer.SetActive(true);
+                        if (currentSelectedName == goodsName) {
+                            pointer.SetPointerActive(true);
+                        }
+                       
                     }
                 });
                 pointer.GetComponent<Window_Pointer>().target = planet.transform;
-                planetToPointer.Add(planet, pointer);
+                planetToPointers[planet].Add(pointer);
             }
-             
-         
-        }
 
-        protected List<GameObject> GetAllPlanetsBuyItem(string itemName)
-        {
-            return GameObject.FindGameObjectsWithTag("Planet").Where(planet =>
-                planet.GetComponent<IPlanetTradingSystem>().CurrentBuyItemName == itemName).ToList();
+            
+
 
         }
+
+        
     }
 }

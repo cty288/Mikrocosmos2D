@@ -13,9 +13,9 @@ using Random = UnityEngine.Random;
 namespace Mikrocosmos
 {
     public interface IPlanetViewController : ICanBuyPackageViewController, ICanSellPackageViewController,
-        IHaveGravityViewController
-    {
-
+        IHaveGravityViewController {
+         Dictionary<string, GameObject> ClientBuyBubbles { get; }
+         Dictionary<string, GameObject> ClientSellBubbles { get; }
     }
     public abstract class AbstractPlanetViewController : AbstractNetworkedController<Mikrocosmos>, IPlanetViewController
     {
@@ -25,16 +25,22 @@ namespace Mikrocosmos
         public ICanSellPackage SellPackageModel { get; protected set; }
         public IHaveGravity GravityModel { get; protected set; }
 
-        private Transform sellItemSpawnPosition;
-        private Text sellPriceText;
+       // private Transform sellItemSpawnPosition;
+        //private Text sellPriceText;
 
-        private Transform buytemSpawnPosition;
-        private Text buyPriceText;
+        //private Transform buytemSpawnPosition;
+      //  private Text buyPriceText;
 
-        private Slider tradingSlider;
+       private Slider tradingSlider;
         private Text team1TradeProgressText;
         private Text team2TradeProgressText;
 
+        private Transform buyBubbleLayout;
+        private Transform sellBubbleLayout;
+
+        [SerializeField] private GameObject buyBubblePrefab;
+        [SerializeField] private GameObject sellBubblePrefab;
+        
         private int team1ProgressTextInt = 50;
 
         [SerializeField, Range(0, 360)] private float initialProgress;
@@ -43,6 +49,8 @@ namespace Mikrocosmos
         [SerializeField] private float selfRotationSpeed;
 
         private Transform spriteTransform;
+
+        private bool isSun;
         private void Awake() {
             spriteTransform = transform.Find("Sprite");
             BuyPackageModel = GetComponent<ICanBuyPackage>();
@@ -53,18 +61,18 @@ namespace Mikrocosmos
             
             progress = initialProgress;
 
-            sellItemSpawnPosition = transform.Find("SellBubbleBG/SellItemSpawnPos");
-            buytemSpawnPosition = transform.Find("BuyBubbleBG/BuyItemSpawnPos");
-            if (sellItemSpawnPosition)
-            {
-                sellPriceText = transform.Find("SellBubbleBG/Canvas/SellPrice").GetComponent<Text>();
-                buyPriceText = transform.Find("BuyBubbleBG/Canvas/BuyPrice").GetComponent<Text>();
-                buyPriceText.gameObject.SetActive(false);
+            buyBubbleLayout = transform.Find("Canvas/BuyBubbleLayout");
+            sellBubbleLayout = transform.Find("Canvas/SellBubbleLayout");
 
+            isSun = gameObject.name == "Star";
+
+            if (!isSun) {
                 tradingSlider = transform.Find("Canvas/TradeSlider").GetComponent<Slider>();
                 team1TradeProgressText = tradingSlider.transform.Find("Team1ProgressText").GetComponent<Text>();
                 team2TradeProgressText = tradingSlider.transform.Find("Team2ProgressText").GetComponent<Text>();
             }
+            
+
 
 
             this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnClientPlanetAffinityWithTeam1Changed)
@@ -82,8 +90,7 @@ namespace Mikrocosmos
                 SelfRotate();
             }
 
-            if (isClient && sellItemSpawnPosition)
-            {
+            if (isClient && !isSun) {
                 team1TradeProgressText.text = $"{team1ProgressTextInt}%";
                 team2TradeProgressText.text = $"{100 - team1ProgressTextInt}%";
             }
@@ -115,8 +122,28 @@ namespace Mikrocosmos
         {
             if (e.ParentPlanet == gameObject)
             {
-                e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = buytemSpawnPosition;
-                RpcChangeBuyPrice(e.Price);
+                string generatedName = e.GeneratedItem.GetComponent<IGoods>().Name;
+                string previousName = "";
+                if (e.PreviousItem) {
+                    previousName = e.PreviousItem.GetComponent<IGoods>().Name;
+                }
+
+                GameObject buyBubble = GenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime);
+               
+                if (buyBubble) {
+                    buyBubble.GetComponent<PlanetBuyBubble>().ServerGoodsBuying = e.GeneratedItem.GetComponent<IGoods>();
+
+                    e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint =
+                        buyBubble.transform.Find("BuyItemSpawnPos");
+                    RpcGenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime);
+                }
+
+                if (!e.CountTowardsGlobalIItemList)
+                {
+                    RpcGenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime);
+                }
+
+
             }
 
         }
@@ -124,24 +151,98 @@ namespace Mikrocosmos
         [ServerCallback]
         private void OnServerPlanetGenerateSellItem(OnServerPlanetGenerateSellItem e)
         {
-            if (e.ParentPlanet == gameObject)
+            if (e.ParentPlanet == gameObject) {
+                string generatedName = e.GeneratedItem.GetComponent<IGoods>().Name;
+                string previousName = "";
+                if (e.PreviousItem) {
+                    previousName = e.PreviousItem.GetComponent<IGoods>().Name;
+                }
+                
+                GameObject sellBubble = GenerateSellBubble(e.Price, generatedName, previousName);
+                if (sellBubble) {
+                    e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellBubble.transform.Find("SellItemSpawnPos");
+                    RpcGenerateSellBubble(e.Price, generatedName, previousName);
+                }
+
+                if (!e.CountTowardsGlobalIItemList) {
+                    RpcGenerateSellBubble(e.Price, generatedName, previousName);
+                }
+            }
+        }
+
+        private GameObject GenerateSellBubble(int price,string bubbleToGenerate,  string bubbleToDestroy) {
+            GameObject oldBubble = null;
+            if (!String.IsNullOrEmpty(bubbleToDestroy)) {
+                if (ClientSellBubbles.ContainsKey(bubbleToDestroy)) {
+                    ClientSellBubbles.Remove(bubbleToDestroy, out oldBubble);
+                    if (oldBubble && String.IsNullOrEmpty(bubbleToGenerate)) {
+                        Destroy(oldBubble);
+                    }
+                }
+            }
+            if (bubbleToGenerate == null || ClientSellBubbles.ContainsKey(bubbleToGenerate)) {
+                return null;
+            }
+
+            GameObject sellBubble = null;
+            if (oldBubble) {
+                sellBubble = oldBubble;
+            }
+            else {
+                sellBubble = Instantiate(sellBubblePrefab, sellBubbleLayout);
+            }
+            
+            
+            sellBubble.GetComponent<PlanetSellBubble>().SetPrice(price);
+            sellBubble.transform.SetAsLastSibling();
+            ClientSellBubbles.Add(bubbleToGenerate, sellBubble);
+            return sellBubble;
+        }
+
+        private GameObject GenerateBuyBubble(int price, string bubbleToGenerate, string bubbleToDestroy, float maxTime)
+        {
+            Debug.Log($"Bubble To Destroy: {bubbleToDestroy}, Bubble To Generate: {bubbleToGenerate}");
+            if (!String.IsNullOrEmpty(bubbleToDestroy))
             {
-                e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellItemSpawnPosition;
-                RpcChangeSellPrice(e.Price);
+                if (ClientBuyBubbles.ContainsKey(bubbleToDestroy))
+                {
+                    ClientBuyBubbles.Remove(bubbleToDestroy, out GameObject bubble);
+                    if (bubble)
+                    {
+                        Destroy(bubble);
+                    }
+                }
+
+            }
+
+            if (ClientBuyBubbles.ContainsKey(bubbleToGenerate)) {
+              return null;
+            }
+
+            GameObject buyBubble = Instantiate(buyBubblePrefab, buyBubbleLayout);
+            PlanetBuyBubble bubbleScript = buyBubble.GetComponent<PlanetBuyBubble>();
+            bubbleScript.Price = price;
+            bubbleScript.Time = maxTime;
+
+            buyBubble.transform.SetAsLastSibling();
+            ClientBuyBubbles.Add(bubbleToGenerate, buyBubble);
+            return buyBubble;
+        }
+
+
+        [ClientRpc]
+        private void RpcGenerateSellBubble(int price, string bubbleToGenerate, string bubbleToDestroy) {
+            if (isClientOnly) {
+                GenerateSellBubble(price, bubbleToGenerate, bubbleToDestroy);
             }
         }
 
         [ClientRpc]
-        private void RpcChangeSellPrice(int price)
+        private void RpcGenerateBuyBubble(int price, string bubbleToGenerate, string bubbleToDestroy, float maxTime)
         {
-            sellPriceText.text = price.ToString();
-        }
-
-        [ClientRpc]
-        private void RpcChangeBuyPrice(int price)
-        {
-            buyPriceText.gameObject.SetActive(true);
-            buyPriceText.text = price.ToString();
+            if (isClientOnly) {
+                GenerateBuyBubble(price, bubbleToGenerate, bubbleToDestroy, maxTime);
+            }
         }
         private void OnClientPlanetAffinityWithTeam1Changed(OnClientPlanetAffinityWithTeam1Changed e)
         {
@@ -208,6 +309,7 @@ namespace Mikrocosmos
             if (targetModel is ISpaceshipConfigurationModel)
             {
                 targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
+                targetRigidbody.GetComponent<PlayerSpaceship>().RecoverCanControl(waitTime);
             }
             Vector2 speed1 = targetRigidbody.velocity;
             yield return new WaitForSeconds(waitTime);
@@ -222,7 +324,6 @@ namespace Mikrocosmos
                     Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
                     if (targetModel is ISpaceshipConfigurationModel model)
                     {
-                        targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
                         force *= speed2.magnitude / model.MaxSpeed;
                     }
                     force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
@@ -246,6 +347,7 @@ namespace Mikrocosmos
             if (targetModel is ISpaceshipConfigurationModel)
             {
                 targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
+                targetRigidbody.GetComponent<PlayerSpaceship>().RecoverCanControl(waitTime);
             }
             Vector2 speed1 = targetRigidbody.velocity;
             yield return new WaitForSeconds(waitTime);
@@ -260,7 +362,6 @@ namespace Mikrocosmos
                     Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
                     if (targetModel is ISpaceshipConfigurationModel model)
                     {
-                        targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
                         force *= speed2.magnitude / model.MaxSpeed;
                     }
                     force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
@@ -347,6 +448,7 @@ namespace Mikrocosmos
         #endregion
 
 
-
+        public Dictionary<string, GameObject> ClientBuyBubbles { get; protected set; } = new Dictionary<string, GameObject>();
+         public Dictionary<string, GameObject> ClientSellBubbles { get; protected set; } = new Dictionary<string, GameObject>();
     }
 }

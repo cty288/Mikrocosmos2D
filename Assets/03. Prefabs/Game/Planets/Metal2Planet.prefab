@@ -204,6 +204,8 @@ MonoBehaviour:
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 8612353035255163372, guid: 88342e5d33702634a996e4fa88ec556b, type: 3}
     <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: 63080f426081b7d4a8475d992bbe3ed1, type: 3}
+    <RealPriceOffset>k__BackingField: 0
   initialSellItemList:
   - <GoodPrefab>k__BackingField: {fileID: 4045048935829913654, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
     <RealPriceOffset>k__BackingField: 0
@@ -224,6 +226,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  buyBubblePrefab: {fileID: 7960412423497364994, guid: 41e2771c2472e4e4b9c06ccacf9ce425, type: 3}
+  sellBubblePrefab: {fileID: 8416530306867068099, guid: 7851bcc193bcb4c438a0fde2e3fba744, type: 3}
   initialProgress: 0
   selfRotationSpeed: 0
   target: {fileID: 0}
@@ -285,6 +289,10 @@ MonoBehaviour:
   - 0.5
   - 0.4
   - 0.1
+  sellItemCount: 1
+  buyItemCount: 2
+  currentBuyItemLists: []
+  currentSellItemLists: []
 --- !u!1 &8920545920613749354
 GameObject:
   m_ObjectHideFlags: 0

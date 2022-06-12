@@ -226,6 +226,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  buyBubblePrefab: {fileID: 7960412423497364994, guid: 41e2771c2472e4e4b9c06ccacf9ce425, type: 3}
+  sellBubblePrefab: {fileID: 8416530306867068099, guid: 7851bcc193bcb4c438a0fde2e3fba744, type: 3}
   initialProgress: 0
   selfRotationSpeed: 3
   target: {fileID: 0}
@@ -287,6 +289,8 @@ MonoBehaviour:
   - 0.5
   - 0.4
   - 0.1
+  sellItemCount: 1
+  buyItemCount: 2
 --- !u!1 &3717615263909737597
 GameObject:
   m_ObjectHideFlags: 0

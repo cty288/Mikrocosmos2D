@@ -18,7 +18,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-[ExecuteInEditMode]
+
 public class Window_Pointer : MonoBehaviour {
 
 
@@ -52,6 +52,7 @@ public class Window_Pointer : MonoBehaviour {
         Vector2 center = new Vector2(Screen.width, Screen.height);
         
         float borderSize = 100f;
+        
         Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(target.position);
         isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
 

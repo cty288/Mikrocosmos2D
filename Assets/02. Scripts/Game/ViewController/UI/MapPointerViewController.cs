@@ -17,6 +17,7 @@ namespace Mikrocosmos
         private TMP_Text affinityText;
         private TMP_Text distanceText;
         private Sprite pointerSprite;
+        private Transform pointer;
 
         public Sprite PointerSprite => pointerSprite;
         [SerializeField]
@@ -25,11 +26,17 @@ namespace Mikrocosmos
         [SerializeField] private Sprite[] teamSprites;
 
         private Transform controlledSpaceship;
-        private void Awake()
-        {
-            progressImage = transform.Find("Pointer/Pointer_Progress").GetComponent<Image>();
-            affinityText = transform.Find("Pointer/AffinityText").GetComponent<TMP_Text>();
-            distanceText = transform.Find("Pointer/DistanceText").GetComponent<TMP_Text>();
+
+        public string GoodsName;
+        public float Time;
+
+        public float timer;
+        
+        private void Awake() {
+            pointer = transform.Find("Pointer");
+            progressImage = pointer.Find("Pointer_Progress").GetComponent<Image>();
+            affinityText = pointer.Find("AffinityText").GetComponent<TMP_Text>();
+            distanceText = pointer.Find("DistanceText").GetComponent<TMP_Text>();
             // pointerBG = transform.Find("Pointer/PointerBG").GetComponent<Image>();
         }
 
@@ -42,11 +49,18 @@ namespace Mikrocosmos
                     .ControlledSpaceship.transform;
                 UpdateAffinitySpriteText();
             }
+            
         }
 
+
+        public void SetPointerActive(bool active) {
+            pointer.gameObject.SetActive(active);
+        }
         private void Update() {
             if (targetPlanet != null) {
-                progressImage.fillAmount = (targetPlanet.BuyItemTimer) / (float) targetPlanet.BuyItemMaxTimeThisTime;
+                timer -= UnityEngine.Time.deltaTime;
+
+                progressImage.fillAmount = timer / Time;
 
                 UpdateAffinitySpriteText();
                 distanceText.text =Mathf.RoundToInt( Vector2

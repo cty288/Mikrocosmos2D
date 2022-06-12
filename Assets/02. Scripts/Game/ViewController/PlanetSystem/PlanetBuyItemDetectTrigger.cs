@@ -6,14 +6,14 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public class PlanetBuyItemDetectTrigger : MonoBehaviour {
-        IPlanetTradingSystem planetTradingSystem;
+        private PlanetBuyBubble buyBubble;
 
         private void Awake() {
-            planetTradingSystem = GetComponentInParent<IPlanetTradingSystem>();
+            buyBubble = GetComponent<PlanetBuyBubble>();
         }
 
         public IGoods GetGoods() {
-            return planetTradingSystem.ServerGetCurrentBuyItem();
+            return buyBubble.ServerGoodsBuying;
         }
 
 

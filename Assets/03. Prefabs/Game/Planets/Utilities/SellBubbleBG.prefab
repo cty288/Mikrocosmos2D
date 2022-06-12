@@ -196,6 +196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4172859460315135788}
+  - component: {fileID: -383509766946851716}
   m_Layer: 0
   m_Name: SellBubbleBG
   m_TagString: Untagged
@@ -226,3 +227,16 @@ RectTransform:
   m_AnchoredPosition: {x: 10, y: 10}
   m_SizeDelta: {x: 35.44, y: 35.44}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &-383509766946851716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8416530306867068099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53aa75d82becd8249b311f0bcc5128eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Price: 0

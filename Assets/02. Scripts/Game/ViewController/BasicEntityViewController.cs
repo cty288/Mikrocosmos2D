@@ -223,14 +223,17 @@ namespace Mikrocosmos
             
         }
 
+        
         IEnumerator NonPhysicsForceCalculation(IDamagable targetModel,Rigidbody2D targetRigidbody) {
             float waitTime = 0.02f;
             Vector2 offset = Vector2.zero;
             if (targetModel is ISpaceshipConfigurationModel)
             {
                 targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
+                targetRigidbody.GetComponent<PlayerSpaceship>().RecoverCanControl(waitTime);
             }
             Vector2 speed1 = targetRigidbody.velocity;
+            
             yield return new WaitForSeconds(waitTime);
             if (targetRigidbody) {
                 Vector2 speed2 = targetRigidbody.velocity;
@@ -241,9 +244,7 @@ namespace Mikrocosmos
                 if (targetModel != null) {
                     
                     Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
-                    if (targetModel is ISpaceshipConfigurationModel model)
-                    {
-                        targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
+                    if (targetModel is ISpaceshipConfigurationModel model) {
                         force *= speed2.magnitude / model.MaxSpeed;
                     }
                     force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
@@ -263,6 +264,7 @@ namespace Mikrocosmos
             Vector2 offset = Vector2.zero;
             if (targetModel is ISpaceshipConfigurationModel) {
                 targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = false;
+                targetRigidbody.GetComponent<PlayerSpaceship>().RecoverCanControl(waitTime);
             }
 
             Vector2 speed1 = targetRigidbody.velocity;
@@ -276,7 +278,6 @@ namespace Mikrocosmos
                 if (targetModel != null) {
                     Vector2 force = acceleration * Mathf.Sqrt(targetModel.GetTotalMass());
                     if (targetModel is ISpaceshipConfigurationModel model) {
-                        targetRigidbody.GetComponent<PlayerSpaceship>().CanControl = true;
                         force *= speed2.magnitude / model.MaxSpeed;
                     }
 

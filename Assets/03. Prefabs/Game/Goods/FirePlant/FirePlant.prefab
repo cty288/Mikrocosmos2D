@@ -415,7 +415,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 083cc17d8e699614ba091e2eecc0a2d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -576,6 +576,7 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 7.5
   <Name>k__BackingField: FirePlant
@@ -662,7 +663,9 @@ MonoBehaviour:
   - {fileID: 6410031578183631637}
   - {fileID: 6686446572951460612}
   - {fileID: 4916985026321286732}
+  visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
+  <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   fire1: {fileID: 6403340119911964050}
   fire2: {fileID: 1744423355335135302}

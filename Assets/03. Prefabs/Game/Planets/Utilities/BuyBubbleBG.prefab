@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 5796701035785145483}
   - component: {fileID: 3443480303730169113}
   - component: {fileID: 829448637464063560}
+  - component: {fileID: 7802605294858647982}
   m_Layer: 11
   m_Name: BuyBubbleBG
   m_TagString: Untagged
@@ -244,6 +245,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7960412423497364994}
   m_CullTransparentMesh: 1
+--- !u!114 &7802605294858647982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960412423497364994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814caf26ef3815e43a5b958bd02fc6df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Price: 0
+  Time: 0
 --- !u!1 &8601999148263799712
 GameObject:
   m_ObjectHideFlags: 0

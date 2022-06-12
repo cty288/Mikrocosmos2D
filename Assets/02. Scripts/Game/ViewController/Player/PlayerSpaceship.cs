@@ -183,7 +183,15 @@ namespace Mikrocosmos
             }
         }
 
+        public void RecoverCanControl(float time) {
+            StartCoroutine(RecoverCanControlCoroutine(time));
+        }
 
+        IEnumerator RecoverCanControlCoroutine(float time)
+        {
+            yield return new WaitForSeconds(time);
+            CanControl = true;
+        }
 
         protected override void FixedUpdate()
         {

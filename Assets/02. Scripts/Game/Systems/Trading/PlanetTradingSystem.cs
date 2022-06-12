@@ -33,6 +33,7 @@ namespace Mikrocosmos
         public GameObject GeneratedItem;
         public GameObject PreviousItem;
         public bool CountTowardsGlobalIItemList;
+        public float MaxTime;
     }
 
     public struct OnServerPlayerMoneyNotEnough
@@ -59,6 +60,7 @@ namespace Mikrocosmos
        // IGoods ServerGetCurrentBuyItem();
     }
 
+    [Serializable]
     public class TradingItemInfo {
         public GoodsConfigure currentItemConfig;
         public IGoods currentItem;
@@ -97,11 +99,14 @@ namespace Mikrocosmos
 
        
 
-        [SyncVar, SerializeField] private int sellItemCount = 2;
-        [SyncVar, SerializeField] private int buyItemCount = 1;
+        [SyncVar, SerializeField] private int sellItemCount = 1;
+        [SyncVar, SerializeField] private int buyItemCount = 2;
 
 
+        [SerializeField]
         private List<TradingItemInfo> currentBuyItemLists = new List<TradingItemInfo>();
+
+        [SerializeField]
         private List<TradingItemInfo> currentSellItemLists = new List<TradingItemInfo>();
 
      
@@ -126,7 +131,7 @@ namespace Mikrocosmos
         }
 
         private bool CheckItemExistsInTradingItemList(List<TradingItemInfo> list, IGoods good, out TradingItemInfo info) {
-            var l = list.Where(item => item.currentItem.Name == good.Name).ToList();
+            var l = list.Where(item => item.currentItem == good).ToList();
             if (l.Count > 0) {
                 info = l.FirstOrDefault();
                 return true;
@@ -139,6 +144,7 @@ namespace Mikrocosmos
         //Planet SELL item, player BUY item
         private void OnServerTryBuyItem(OnServerTryBuyItem e)
         {
+            
             if (CheckItemExistsInTradingItemList(currentSellItemLists, e.RequestingGoods, out TradingItemInfo info))
             {
                 PlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<PlayerTradingSystem>();
@@ -172,11 +178,11 @@ namespace Mikrocosmos
         private void OnServerTrySellItem(OnServerTrySellItem e)
         {
 
-            if (CheckItemExistsInTradingItemList(currentSellItemLists, e.DemandedByPlanet, out TradingItemInfo info)) {
+            if (CheckItemExistsInTradingItemList(currentBuyItemLists, e.DemandedByPlanet, out TradingItemInfo info)) {
                 if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship)) {
 
                     spaceship.Money += info.currentItemPrice;
-                    currentBuyItemLists.Remove(info);
+                   // currentBuyItemLists.Remove(info);
                     NetworkServer.Destroy(e.RequestingGoodsGameObject);
                     this.SendEvent<OnServerTransactionFinished>(new OnServerTransactionFinished()
                     {
@@ -231,7 +237,7 @@ namespace Mikrocosmos
                         GeneratedItem = info.currentItemGameObject,
                         ParentPlanet = this.gameObject,
                         Price = info.currentItemPrice,
-                        CountTowardsGlobalIItemList = false
+                        CountTowardsGlobalIItemList = false,
                     });
                 }
               
@@ -246,8 +252,10 @@ namespace Mikrocosmos
                         GeneratedItem = info.currentItemGameObject,
                         ParentPlanet = this.gameObject,
                         Price = info.currentItemPrice,
-                        CountTowardsGlobalIItemList = false
+                        CountTowardsGlobalIItemList = false,
+                        MaxTime = info.buyTime
                     });
+                    RpcOnPlanetGenerateBuyItem("", info.currentItem.Name, info.buyTime);
                 }
 
             }
@@ -349,74 +357,87 @@ namespace Mikrocosmos
                 currentBuyItemLists.Remove(switchedItem);
             }
 
+            if (currentBuyItemLists.Count < buyItemCount) {
+                List<GoodsConfigure> targetList = planetModel.GetBuyItemsWithRarity(rarity);
+                GoodsRarity realRarity = rarity;
+                if (targetList.Count == 0)
+                {
+                    targetList = planetModel.GetBuyItemsWithRarity(GoodsRarity.Secondary);
+                    realRarity = GoodsRarity.Secondary;
+                }
 
-            List<GoodsConfigure> targetList = planetModel.GetBuyItemsWithRarity(rarity);
-            GoodsRarity realRarity = rarity;
-            if (targetList.Count == 0) {
-                targetList = planetModel.GetBuyItemsWithRarity(GoodsRarity.Secondary);
-                realRarity = GoodsRarity.Secondary;
+                if (realRarity != GoodsRarity.Compound)
+                {
+                    targetList.RemoveAll(item => currentBuyItemLists.Any(item2 =>
+                        item2.currentItem.Name == item.Good.Name || item.Good.Name == switchedItem?.currentItem.Name));
+                }
+
+                if (targetList.Count == 0)
+                {
+                    var allItems = planetModel.GetBuyItemsWithRarity(realRarity);
+                    targetList.Add(allItems[Random.Range(0, allItems.Count)]);
+                }
+
+                GoodsConfigure selectedGoodsConfigure = null;
+                selectedGoodsConfigure = this.GetSystem<IGlobalTradingSystem>().PlanetRequestBuyItem(targetList);
+
+
+                IGoods previousBuyingItem = null;
+                GameObject previousBuyingItemGameObject = null;
+                string previousBuyItemName = "";
+
+                if (switchedItem != null && !switchedItem.currentItem.TransactionFinished)
+                {
+                    //NetworkServer.Destroy(currentBuyingItemObject);
+                    previousBuyingItem = switchedItem.currentItem;
+                    previousBuyingItemGameObject = switchedItem.currentItemGameObject;
+                    previousBuyItemName = switchedItem.currentItem.Name;
+                }
+
+
+                GoodsConfigure currentBuyingItemConfig = selectedGoodsConfigure;
+                GameObject currentBuyingItemObject = Instantiate(currentBuyingItemConfig.GoodPrefab, transform.position,
+                    Quaternion.identity);
+                NetworkServer.Spawn(currentBuyingItemObject);
+                IGoods currentBuyingItem = currentBuyingItemObject.GetComponent<IGoods>();
+                currentBuyingItem.IsSell = false;
+                currentBuyingItem.TransactionFinished = false;
+
+                int basePrice = currentBuyingItemConfig.RealPriceOffset + currentBuyingItem.BasicBuyPrice;
+                int offset = Mathf.RoundToInt(basePrice * 0.1f);
+                int currentBuyingItemPrice = Random.Range(basePrice - offset, basePrice + offset + 1);
+                currentBuyingItemPrice = Mathf.Max(1, currentBuyingItemPrice);
+                currentBuyingItem.RealPrice = currentBuyingItemPrice;
+               
+                int buyTime = Random.Range(BuyItemMaxTime - 5, BuyItemMaxTime + 6);
+
+                if (switchedItem == null)
+                {
+                    buyTime = Random.Range(10, BuyItemMaxTime + 6);
+                }
+                currentBuyItemLists.Add(new TradingItemInfo(currentBuyingItemConfig, currentBuyingItem, currentBuyingItemObject, currentBuyingItemPrice)
+                {
+                    buyTime = buyTime
+                });
+
+                this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem()
+                {
+                    GeneratedItem = currentBuyingItemObject,
+                    ParentPlanet = this.gameObject,
+                    Price = currentBuyingItemPrice,
+                    CountTowardsGlobalIItemList = true,
+                    PreviousItem = previousBuyingItemGameObject,
+                    MaxTime = buyTime
+                });
+
+                RpcOnPlanetGenerateBuyItem(previousBuyItemName, currentBuyingItem.Name, buyTime);
+
+                if (previousBuyingItem != null)
+                {
+                    NetworkServer.Destroy(previousBuyingItemGameObject);
+                }
             }
-
-            if (realRarity != GoodsRarity.Compound) {
-                targetList.RemoveAll(item => currentBuyItemLists.Any(item2 =>
-                    item2.currentItem.Name == item.Good.Name || item.Good.Name == switchedItem?.currentItem.Name));
-            }
-            
-            if (targetList.Count == 0) {
-                var allItems =  planetModel.GetBuyItemsWithRarity(realRarity);
-                targetList.Add(allItems[Random.Range(0, allItems.Count)]);
-            }
-            
-            GoodsConfigure selectedGoodsConfigure = null;
-            selectedGoodsConfigure = this.GetSystem<IGlobalTradingSystem>().PlanetRequestBuyItem(targetList);
-
-            
-            IGoods previousBuyingItem = null;
-            GameObject previousBuyingItemGameObject = null;
-            string previousBuyItemName = "";
-            
-            if (switchedItem != null && !switchedItem.currentItem.TransactionFinished)
-            {
-                //NetworkServer.Destroy(currentBuyingItemObject);
-                previousBuyingItem = switchedItem.currentItem;
-                previousBuyingItemGameObject = switchedItem.currentItemGameObject;
-                previousBuyItemName = switchedItem.currentItem.Name;
-            }
-
-            
-            GoodsConfigure currentBuyingItemConfig = selectedGoodsConfigure;
-            GameObject currentBuyingItemObject = Instantiate(currentBuyingItemConfig.GoodPrefab, transform.position,
-                Quaternion.identity);
-            NetworkServer.Spawn(currentBuyingItemObject);
-            IGoods currentBuyingItem = currentBuyingItemObject.GetComponent<IGoods>();
-            currentBuyingItem.IsSell = false;
-            currentBuyingItem.TransactionFinished = false;
-
-            int basePrice = currentBuyingItemConfig.RealPriceOffset + currentBuyingItem.BasicBuyPrice;
-            int offset = Mathf.RoundToInt(basePrice * 0.1f);
-            int currentBuyingItemPrice = Random.Range(basePrice - offset, basePrice + offset + 1);
-            currentBuyingItemPrice = Mathf.Max(1, currentBuyingItemPrice);
-            currentBuyingItem.RealPrice = currentBuyingItemPrice;
-            int buyTime = Random.Range(BuyItemMaxTime - 5, BuyItemMaxTime + 6);
-            currentBuyItemLists.Add(new TradingItemInfo(currentBuyingItemConfig, currentBuyingItem, currentBuyingItemObject, currentBuyingItemPrice) {
-                buyTime = buyTime
-            });
-
-            this.SendEvent<OnServerPlanetGenerateBuyingItem>(new OnServerPlanetGenerateBuyingItem()
-            {
-                GeneratedItem = currentBuyingItemObject,
-                ParentPlanet = this.gameObject,
-                Price = currentBuyingItemPrice,
-                CountTowardsGlobalIItemList = true,
-                PreviousItem = previousBuyingItemGameObject
-            });
-
-            RpcOnPlanetSwitchBuyItem(previousBuyItemName, currentBuyingItem.Name, buyTime );
-
-            if (previousBuyingItem != null)
-            {
-                NetworkServer.Destroy(previousBuyingItemGameObject);
-            }
+           
         }
 
         /// <summary>
@@ -447,21 +468,23 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcOnPlanetSwitchBuyItem(string oldBuyItemName, string newBuyItemName, int maxBuyTime)
+        private void RpcOnPlanetGenerateBuyItem(string oldBuyItemName, string newBuyItemName, float maxBuyTime)
         {
-            this.SendEvent<OnClientPlanetSwitchBuyItem>(new OnClientPlanetSwitchBuyItem() {
+            this.SendEvent<OnClientPlanetGenerateBuyItem>(new OnClientPlanetGenerateBuyItem() {
                 OldBuyItemName = oldBuyItemName,
                 NewBuyItemName = newBuyItemName,
                 TargetPlanet = gameObject,
                 MaxBuyTime = maxBuyTime
             });
         }
+
+       
     }
 
-    struct OnClientPlanetSwitchBuyItem {
+    struct OnClientPlanetGenerateBuyItem {
         public string OldBuyItemName;
         public string NewBuyItemName;
         public GameObject TargetPlanet;
-        public int MaxBuyTime;
+        public float MaxBuyTime;
     }
 }

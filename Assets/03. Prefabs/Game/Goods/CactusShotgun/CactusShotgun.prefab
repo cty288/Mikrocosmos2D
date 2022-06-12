@@ -350,7 +350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_InstanceId
-      value: -522462
+      value: -1948386
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_ShapePathHash
@@ -542,7 +542,7 @@ MonoBehaviour:
   <HookedPositionOffset>k__BackingField: {x: 0.01, y: 2.74}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
-  buyMaterial: {fileID: 2100000, guid: 7476c8772d847a14a844b69736112137, type: 2}
+  buyMaterial: {fileID: 2100000, guid: 59bf928c340a4054baaed5a7e3790f0e, type: 2}
   sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
   visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}

@@ -73,7 +73,8 @@ namespace Mikrocosmos
         void ServerSwitchSlot(int index);
         int GetSlotCount();
         int GetCurrentSlot();
-
+        
+        
         List<BackpackSlot> BackpackItems { get; }
 
     }
