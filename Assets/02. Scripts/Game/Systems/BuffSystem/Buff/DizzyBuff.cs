@@ -3,35 +3,68 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework;
 using MikroFramework.ActionKit;
+using Polyglot;
 using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class DizzyTimedBuff :  TimedBuff
+    public class DieBuff :  ITimedBuff
     {
-        public DizzyTimedBuff(float maxDuration, float frequency, IBuffSystem owner,
-            Action onFinished = null): base(maxDuration, frequency, owner) {
-            
-            CallbackAction action = CallbackAction.Allocate(() => {
-                
-            });
-            action.OnEndedCallback += onFinished;
+        public DieBuff(float maxDuration, Action onFinished = null) {
 
-            OnAction = action;
+            MaxDuration = maxDuration;
+            RemainingTime = maxDuration;
+
+            OnTimedActionEnd = CallbackAction.Allocate(() => {
+                onFinished?.Invoke();
+            });
         }
+
+        public  string Name { get; } = "DieBuff";
+
+        public  string GetLocalizedDescriptionText() {
+            return Localization.Get("GAME_BUFF_DIE_DESCRIPTION");
+        }
+
+        public  string GetLocalizedName() {
+            return Localization.Get("GAME_BUFF_DIE");
+        }
+
+        public float MaxDuration { get; protected set; }
+        public float RemainingTime { get; set; }
+        public MikroAction OnTimedActionEnd { get; set; }
     }
-    public class InvincibleTimedBuff : TimedBuff
+
+    
+    public class InvincibleBuff : ITimedBuff
     {
-        public InvincibleTimedBuff(float maxDuration, float frequency, IBuffSystem owner,
-            Action onFinished = null) : base(maxDuration, frequency, owner)
-        {
+        public InvincibleBuff(float maxDuration,
+            Action onFinished = null) {
 
-            CallbackAction action = CallbackAction.Allocate(() => {
-
+            MaxDuration = maxDuration;
+            RemainingTime = maxDuration;
+            
+            OnTimedActionEnd = CallbackAction.Allocate(() => {
+                onFinished?.Invoke();
             });
-            action.OnEndedCallback += onFinished;
 
-            OnAction = action;
         }
+
+
+        public  string Name { get; } = "InvincibleBuff";
+
+        public  string GetLocalizedDescriptionText()
+        {
+            return Localization.Get("GAME_BUFF_INVINCIBLE_DESCRIPTION");
+        }
+
+        public  string GetLocalizedName()
+        {
+            return Localization.Get("GAME_BUFF_INVINCIBLE");
+        }
+
+        public float MaxDuration { get; }
+        public float RemainingTime { get; set; }
+        public MikroAction OnTimedActionEnd { get; set; }
     }
 }

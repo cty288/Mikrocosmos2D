@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1338993591
+CRC: 3230142168
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -22,4 +22,7 @@ AssetBundleManifest:
         Dependency_0: mftest2
     Info_5:
       Name: assets/goods
+      Dependencies: {}
+    Info_6:
+      Name: buff_icons
       Dependencies: {}

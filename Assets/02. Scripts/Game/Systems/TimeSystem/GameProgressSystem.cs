@@ -32,6 +32,9 @@ namespace Mikrocosmos
     }
     public class GameProgressSystem : AbstractNetworkedSystem, IGameProgressSystem {
         protected DateTime globalTimer;
+        [SerializeField] 
+        private int globalTimerUpdateFrequencyInSeconds = 60;
+        
         [Tooltip("In Minutes")]
 
         [SerializeField] protected float maximumGameTime = 15;
@@ -51,19 +54,19 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
             globalTimer = DateTime.Now;
+            StartCoroutine(GlobalTimerUpdate());
         }
-        
-        private void Update() {
-            if (isServer) {
-                Debug.Log($"Seconds since game start: {(DateTime.Now - globalTimer).Seconds}");
+
+        IEnumerator GlobalTimerUpdate() {
+            while (true) {
+                yield return new WaitForSeconds(globalTimerUpdateFrequencyInSeconds);
+                
                 if ((DateTime.Now - globalTimer).Minutes >= maximumGameTime && !finialCountDownStarted) {
                     StartFinalCountDown();
                 }
-
             }
-           
         }
-
+        
         private IEnumerator FinalCountDownTimerStart() {
             while (finalCountDown> 0) {
                 finalCountDown--;

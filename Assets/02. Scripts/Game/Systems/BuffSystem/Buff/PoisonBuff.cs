@@ -1,28 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.ActionKit;
+using Polyglot;
 using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public class PoisonBuff : TimedBuff, IRepeatableBuff<PoisonBuff>
+    public class PoisonFrequentBuff : TimedFrequentBuff, IStackableBuff<PoisonFrequentBuff>
     {
-        public PoisonBuff(float maxDuration, float frequency, int damagePerFrq, IBuffSystem owner) : base(maxDuration, frequency, owner)
-        {
-            CallbackAction action = CallbackAction.Allocate(() =>
+        public int DamagePerFrq { get; set; }
+        public PoisonFrequentBuff(float maxDuration, float frequency, int damagePerFrq, IBuffSystem owner) : base(maxDuration, frequency,
+            CallbackAction.Allocate(() =>
             {
                 if (owner.GetOwnerObject().TryGetComponent<IDamagable>(out IDamagable damagable))
                 {
                     damagable.TakeRawDamage(damagePerFrq);
                 }
-            });
-
-            OnAction = action;
+            }) ) {
+            DamagePerFrq = damagePerFrq;
         }
 
-        public void OnBuffRepeated(PoisonBuff addedBuff) {
-            RemainingTime += addedBuff.RemainingTime;
+        public void OnBuffStacked(PoisonFrequentBuff addedFrequentBuff) {
+            RemainingTime += addedFrequentBuff.RemainingTime;
             RemainingTime = Mathf.Min(RemainingTime, MaxDuration);
+        }
+
+        public override string Name { get; } = "PoisonBuff";
+
+        public override string GetLocalizedDescriptionText() {
+            return Localization.GetFormat("GAME_BUFF_POISION_DESCRIPTION", Frequency, DamagePerFrq);
+        }
+
+        public override string GetLocalizedName()
+        {
+            return Localization.Get("GAME_BUFF_POISION");
         }
     }
 }

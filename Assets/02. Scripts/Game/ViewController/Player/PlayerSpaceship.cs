@@ -80,8 +80,8 @@ namespace Mikrocosmos
             base.OnStartServer();
             this.RegisterEvent<OnPlayerDie>(OnServerPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
 
-            buffSystem.ServerRegisterClientCallback<DizzyTimedBuff>(RpcOnDizzyBuff);
-            buffSystem.ServerRegisterClientCallback<InvincibleTimedBuff>(RpcOnInvincibleBuff);
+            buffSystem.ServerRegisterClientCallback<DieBuff>(RpcOnDizzyBuff);
+            buffSystem.ServerRegisterClientCallback<InvincibleBuff>(RpcOnInvincibleBuff);
         }
 
 
@@ -93,9 +93,9 @@ namespace Mikrocosmos
                 float dieTime = GetModel().DieDizzyTime;
                 float invincibleTime = GetModel().RespawnInvincibleTime;
                 
-                buffSystem.AddBuff<DizzyTimedBuff>(new DizzyTimedBuff(dieTime, dieTime, buffSystem, () => {
+                buffSystem.AddBuff<DieBuff>(new DieBuff(dieTime, () => {
                     DamagableModel.AddHealth(DamagableModel.MaxHealth);
-                    buffSystem.AddBuff<InvincibleTimedBuff>(new InvincibleTimedBuff(invincibleTime, invincibleTime, buffSystem));
+                    buffSystem.AddBuff<InvincibleBuff>(new InvincibleBuff(invincibleTime));
                 }));
             }
             
@@ -198,7 +198,7 @@ namespace Mikrocosmos
             base.FixedUpdate();
             if (isServer)
             {
-                if (buffSystem.HasBuff<DizzyTimedBuff>()) {
+                if (buffSystem.HasBuff<DieBuff>()) {
                     return;
                 }
                 

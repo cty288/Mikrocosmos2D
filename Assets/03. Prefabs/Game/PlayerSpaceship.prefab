@@ -702,6 +702,7 @@ GameObject:
   - component: {fileID: 3290459578096298434}
   - component: {fileID: 1066491073680755984}
   - component: {fileID: 8267636105090644251}
+  - component: {fileID: -4202198879838847946}
   m_Layer: 6
   m_Name: PlayerSpaceship
   m_TagString: Untagged
@@ -867,6 +868,7 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 10
   <MomentumThredhold>k__BackingField: 18
@@ -1096,6 +1098,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db478404928793c45a1651d34932f87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+--- !u!114 &-4202198879838847946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986015997137912893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f60fd87dc4a4f043b8d3446929454c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0

@@ -190,26 +190,27 @@ namespace Mikrocosmos
             }
             else {
                 sellBubble = Instantiate(sellBubblePrefab, sellBubbleLayout);
+                sellBubble.transform.SetAsLastSibling();
             }
             
             
             sellBubble.GetComponent<PlanetSellBubble>().SetPrice(price);
-            sellBubble.transform.SetAsLastSibling();
+           
             ClientSellBubbles.Add(bubbleToGenerate, sellBubble);
             return sellBubble;
         }
 
         private GameObject GenerateBuyBubble(int price, string bubbleToGenerate, string bubbleToDestroy, float maxTime)
         {
+            GameObject oldBubble = null;            
             Debug.Log($"Bubble To Destroy: {bubbleToDestroy}, Bubble To Generate: {bubbleToGenerate}");
             if (!String.IsNullOrEmpty(bubbleToDestroy))
             {
                 if (ClientBuyBubbles.ContainsKey(bubbleToDestroy))
                 {
-                    ClientBuyBubbles.Remove(bubbleToDestroy, out GameObject bubble);
-                    if (bubble)
-                    {
-                        Destroy(bubble);
+                    ClientBuyBubbles.Remove(bubbleToDestroy, out oldBubble);
+                    if (oldBubble && String.IsNullOrEmpty(bubbleToGenerate)) {
+                        Destroy(oldBubble);
                     }
                 }
 
@@ -219,12 +220,22 @@ namespace Mikrocosmos
               return null;
             }
 
-            GameObject buyBubble = Instantiate(buyBubblePrefab, buyBubbleLayout);
+            GameObject buyBubble = null;
+            if (oldBubble)
+            {
+                buyBubble = oldBubble;
+            }
+            else
+            {
+                buyBubble = Instantiate(buyBubblePrefab, buyBubbleLayout);
+                buyBubble.transform.SetAsLastSibling();
+            }
+            
             PlanetBuyBubble bubbleScript = buyBubble.GetComponent<PlanetBuyBubble>();
             bubbleScript.Price = price;
             bubbleScript.Time = maxTime;
 
-            buyBubble.transform.SetAsLastSibling();
+           
             ClientBuyBubbles.Add(bubbleToGenerate, buyBubble);
             return buyBubble;
         }

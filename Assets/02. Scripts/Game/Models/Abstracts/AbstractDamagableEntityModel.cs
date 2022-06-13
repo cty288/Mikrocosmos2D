@@ -97,7 +97,7 @@ namespace Mikrocosmos
                 return;
             }
             if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
-                if (buffSystem.HasBuff<InvincibleTimedBuff>()) {
+                if (buffSystem.HasBuff<InvincibleBuff>()) {
                     return;
                 }
             }

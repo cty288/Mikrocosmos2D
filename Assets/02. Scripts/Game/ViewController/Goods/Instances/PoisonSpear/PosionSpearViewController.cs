@@ -60,7 +60,7 @@ namespace Mikrocosmos
 
                     if (gameObject.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem))
                     {
-                        buffSystem.AddBuff<PoisonBuff>(new PoisonBuff(model.PoisonTime, 1f, model.PoisonDamage, buffSystem));
+                        buffSystem.AddBuff<PoisonFrequentBuff>(new PoisonFrequentBuff(model.PoisonTime, 1f, model.PoisonDamage, buffSystem));
                     }
                 }
             }

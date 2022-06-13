@@ -2,6 +2,33 @@
   "Version": "1.0",
   "ABMD5List": [
     {
+      "AssetName": "buff_icons",
+      "MD5": "ca6802a109c13d77452148b9d0b64468",
+      "FileSize": 99.0332,
+      "assetDatas": [
+        {
+          "Name": "BuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "DieBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "InvincibleBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "PoisonBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
       "AssetName": "mftest",
       "MD5": "3fc8346f2226ce39dcb4c2f2c3361e0b",
       "FileSize": 435.743164,
@@ -71,8 +98,8 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "360bf58594f3a4f26bc7e5b2c6cd574a",
-      "FileSize": 1.70019531,
+      "MD5": "2236361315583f7ba446686ea7ba3f4f",
+      "FileSize": 1.73242188,
       "assetDatas": []
     },
     {
