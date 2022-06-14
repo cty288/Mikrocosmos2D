@@ -392,15 +392,16 @@ namespace Mikrocosmos {
                             nextItem.SetActive(true);
                             NetworkServer.Spawn(nextItem);
                         }
+
+                        nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
+
+                        HookedItem = nextItem.GetComponent<IHookableViewController>();
+                        HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
+                        HookedItem.Model.Hook(netIdentity);
+                        HookedItem.OnEntitySwitched(true);
                     }
                    
-                    
-                    nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
-
-                    HookedItem = nextItem.GetComponent<IHookableViewController>();
-                    HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
-                    HookedItem.Model.Hook(netIdentity);
-                    HookedItem.OnEntitySwitched(true);
+                   
                     animator.SetBool("Hooking", true);
 
                 }

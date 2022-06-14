@@ -37,7 +37,7 @@ namespace Mikrocosmos
             buffSystem.ServerOnBuffStart += OnServerBuffStart;
             buffSystem.ServerOnBuffStop += OnServerBuffStop;
 
-            buffSystem.ServerRegisterClientCallback<VisionExpansionBuff, OnVisionExpansion>(RpcOnVisionExpand);
+            buffSystem.ServerRegisterClientCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
         }
 
        
@@ -97,7 +97,7 @@ namespace Mikrocosmos
 
 
         [TargetRpc]
-        private void RpcOnVisionExpand(BuffStatus e, OnVisionExpansion message) {
+        private void TargetOnVisionExpand(BuffStatus e, OnVisionExpansion message) {
             Debug.Log("Vision Expansion");
             OnVisionExpansion buff = message;
             if (e == BuffStatus.OnStart || e == BuffStatus.OnUpdate ) {

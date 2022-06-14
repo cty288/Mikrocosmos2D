@@ -5743,7 +5743,7 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   runInBackground: 1
   autoStartServerBuild: 1
-  serverTickRate: 60
+  serverTickRate: 120
   offlineScene: Assets/01. Scenes/Menu.unity
   onlineScene: Assets/01. Scenes/PrepareRoom.unity
   transport: {fileID: 872660649}
@@ -5881,7 +5881,7 @@ MonoBehaviour:
   port: 7777
   NoDelay: 1
   SendTimeout: 50000
-  ReceiveTimeout: 30000
+  ReceiveTimeout: 300000
   serverMaxMessageSize: 16384
   serverMaxReceivesPerTick: 10000
   serverSendQueueLimitPerConnection: 10000
