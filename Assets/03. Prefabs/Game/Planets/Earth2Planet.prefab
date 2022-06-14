@@ -204,6 +204,8 @@ MonoBehaviour:
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: 63080f426081b7d4a8475d992bbe3ed1, type: 3}
     <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 4045048935829913654, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
+    <RealPriceOffset>k__BackingField: 0
   initialSellItemList:
   - <GoodPrefab>k__BackingField: {fileID: 8825376392211092326, guid: 32154821432d5ae468975edfd3700eb5, type: 3}
     <RealPriceOffset>k__BackingField: 0
@@ -212,6 +214,8 @@ MonoBehaviour:
   - <GoodPrefab>k__BackingField: {fileID: 8612353035255163372, guid: 88342e5d33702634a996e4fa88ec556b, type: 3}
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 8825376392211092326, guid: 5a07e5ec996fc0c48a9d35384249e1ba, type: 3}
+    <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: dc8db306dab6888418e841a2ac278341, type: 3}
     <RealPriceOffset>k__BackingField: 0
   <PlanetType>k__BackingField: 4
 --- !u!114 &8345480255462355403
@@ -293,6 +297,8 @@ MonoBehaviour:
   - 0.1
   sellItemCount: 1
   buyItemCount: 2
+  currentBuyItemLists: []
+  currentSellItemLists: []
 --- !u!1 &8920545920613749354
 GameObject:
   m_ObjectHideFlags: 0

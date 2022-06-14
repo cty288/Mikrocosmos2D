@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.68}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
@@ -371,8 +371,8 @@ MonoBehaviour:
   <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   bullet: {fileID: 5222149471336982627, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
-  shootForce: 300
-  CameraExpandRadius: 50
+  shootForce: 200
+  CameraExpandRadius: 15
 --- !u!114 &3044698435260994450
 MonoBehaviour:
   m_ObjectHideFlags: 0

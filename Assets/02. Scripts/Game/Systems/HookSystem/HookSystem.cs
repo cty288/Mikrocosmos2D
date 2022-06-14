@@ -592,9 +592,11 @@ namespace Mikrocosmos {
                                 HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
                                 animator.SetBool("Hooking", true);
                                 checkingHook = false;
-                                if (HookedItem.Model.CanBeAddedToInventory)
-                                {
-                                    inventorySystem.ServerHookToBackpack(model.Name, HookedNetworkIdentity.gameObject);
+                                if (HookedItem.Model.CanBeAddedToInventory) {
+                                    if (HookedNetworkIdentity) {
+                                        inventorySystem.ServerHookToBackpack(model.Name, HookedNetworkIdentity.gameObject);
+                                    }
+                                
                                 }
 
                                 UpdateHookCollisions(false);

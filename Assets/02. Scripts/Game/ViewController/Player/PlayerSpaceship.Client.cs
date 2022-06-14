@@ -182,7 +182,7 @@ namespace Mikrocosmos
     
 
         [ClientRpc]
-        private void RpcOnDizzyBuff(BuffStatus e) {
+        private void RpcOnDizzyBuff(BuffStatus e, BuffClientMessage message) {
             if (e == BuffStatus.OnStart) {
                 selfSprites.ForEach((spriteRenderer => spriteRenderer.DOColor(new Color(0.4f, 0.4f, 0.4f), 0.5f).SetLoops(-1, LoopType.Yoyo)));
             }else if (e == BuffStatus.OnEnd) {
@@ -194,7 +194,7 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcOnInvincibleBuff(BuffStatus e) {
+        private void RpcOnInvincibleBuff(BuffStatus e, BuffClientMessage message) {
             if (e == BuffStatus.OnStart) {
                 selfSprites.ForEach((spriteRenderer => spriteRenderer.DOFade(0.4f, 0.5f).SetLoops(-1, LoopType.Yoyo)));
             }
@@ -206,5 +206,7 @@ namespace Mikrocosmos
                 });
             }
         }
+
+        
     }
 }

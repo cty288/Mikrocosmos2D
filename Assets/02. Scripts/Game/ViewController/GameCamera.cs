@@ -15,6 +15,8 @@ namespace Mikrocosmos
 
         [SerializeField] private float lerp = 0.1f;
 
+        private int minCameraRadius = 25;
+
         private CinemachineTargetGroup cinemachineTargetGroup;
         private void Awake() {
             cinemachineTargetGroup = GetComponent<CinemachineTargetGroup>();
@@ -24,7 +26,8 @@ namespace Mikrocosmos
         }
 
         private void OnCameraViewChange(OnCameraViewChange e) {
-            cinemachineTargetGroup.m_Targets[0].radius = e.NewRadius;
+            cinemachineTargetGroup.m_Targets[0].radius += e.RadiusAddition;
+            cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(minCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
         }
 
         private void OnClientMainGamePlayerConnected(OnClientMainGamePlayerConnected e) {

@@ -27,6 +27,8 @@ MonoBehaviour:
   inputFiles:
   - textAsset: {fileID: 4900000, guid: 86d00d6f87b55084ca86037683077e05, type: 3}
     format: 0
+  - textAsset: {fileID: 4900000, guid: c4dc0d059266d8d47862f46460cf8f31, type: 3}
+    format: 1
   supportedLanguages: 000000001100000012000000
   selectedLanguage: 0
   fallbackLanguage: 0

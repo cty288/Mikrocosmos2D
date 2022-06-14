@@ -30,6 +30,8 @@ namespace Mikrocosmos
             return Localization.Get("GAME_BUFF_DIE");
         }
 
+        public BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();
+
         public float MaxDuration { get; protected set; }
         public float RemainingTime { get; set; }
         public MikroAction OnTimedActionEnd { get; set; }
@@ -62,6 +64,8 @@ namespace Mikrocosmos
         {
             return Localization.Get("GAME_BUFF_INVINCIBLE");
         }
+
+        public BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();
 
         public float MaxDuration { get; }
         public float RemainingTime { get; set; }

@@ -10,6 +10,10 @@ using UnityEngine;
 namespace Mikrocosmos
 {
 
+    public class BuffClientMessage {
+
+    }
+
     
     public interface IBuff {
 
@@ -17,14 +21,14 @@ namespace Mikrocosmos
         string GetLocalizedDescriptionText();
 
         string GetLocalizedName();
+
+        BuffClientMessage MessageToClient { get; set; }
     }
 
     /// <summary>
     /// Give a buff some "time limit", otherwise, a buff would last unlimited amount of time
     /// </summary>
     public interface ITimedBuff : IBuff {
-      
-        
         float MaxDuration { get; }
         float RemainingTime { get; set; }
         MikroAction OnTimedActionEnd { get; set; }
@@ -100,6 +104,7 @@ namespace Mikrocosmos
         public abstract string Name { get; }
         public abstract string GetLocalizedDescriptionText();
         public abstract string GetLocalizedName();
+        public  abstract BuffClientMessage MessageToClient { get; set; }
     }
 
 
@@ -121,6 +126,7 @@ namespace Mikrocosmos
 
         public abstract string GetLocalizedDescriptionText();
         public abstract string GetLocalizedName();
+        public abstract  BuffClientMessage MessageToClient { get; set; }
 
         public UntilAction UntilAction { get; set; } 
         public int TotalCanBeTriggeredTime { get;  set; }
@@ -132,6 +138,7 @@ namespace Mikrocosmos
 
     public enum BuffStatus {
         OnStart,
+        OnUpdate,
         OnTriggered,
         OnEnd
     }
@@ -142,7 +149,7 @@ namespace Mikrocosmos
 
         bool HasBuff<T>() where T : IBuff;
 
-        void ServerRegisterClientCallback<T>(Action<BuffStatus> callback);
+        void ServerRegisterClientCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage;
 
         Action<IBuff> ServerOnBuffStart { get; set; }
 
@@ -155,7 +162,7 @@ namespace Mikrocosmos
     public class BuffSystem : AbstractNetworkedSystem, IBuffSystem
     {
         private Dictionary<Type, IBuff> buffs = new Dictionary<Type, IBuff>();
-        private Dictionary<Type, Action<BuffStatus>> callbacks = new Dictionary<Type, Action<BuffStatus>>();
+        private Dictionary<Type, Action<BuffStatus, BuffClientMessage>> callbacks = new Dictionary<Type, Action<BuffStatus, BuffClientMessage>>();
 
         
         public GameObject GetOwnerObject()
@@ -172,7 +179,11 @@ namespace Mikrocosmos
                 else {
                     if (buffs[buff.GetType()] is IStackableBuff<T> repeatableBuff) {
                         repeatableBuff.OnBuffStacked((T)buff);
+                        if (callbacks.ContainsKey(buff.GetType())) {
+                            callbacks[buff.GetType()]?.Invoke(BuffStatus.OnUpdate, buff.MessageToClient);
+                        }
                         ServerOnBuffUpdate?.Invoke(buff);
+                        
                     }
                 }
             }
@@ -183,7 +194,7 @@ namespace Mikrocosmos
             if (!buffs.ContainsKey(buff.GetType())) {
                 buffs.Add(buff.GetType(), buff);
                 if (callbacks.ContainsKey(type)) {
-                    callbacks[type]?.Invoke(BuffStatus.OnStart);
+                    callbacks[type]?.Invoke(BuffStatus.OnStart, buff.MessageToClient);
                 }
 
                 ServerOnBuffStart?.Invoke(buff);
@@ -195,12 +206,12 @@ namespace Mikrocosmos
             return buffs.ContainsKey(typeof(T));
         }
 
-        public void ServerRegisterClientCallback<T>(Action<BuffStatus> callback) {
+        public void ServerRegisterClientCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage{
             if (callbacks.ContainsKey(typeof(T))) {
-                callbacks[typeof(T)] += callback;
+                callbacks[typeof(T)] += ((status, message) => callback.Invoke(status, message as T2));
             }
             else {
-                callbacks.Add(typeof(T), callback);
+                callbacks.Add(typeof(T), ((status, message) => callback.Invoke(status, message as T2)));
             }
         }
 
@@ -227,7 +238,7 @@ namespace Mikrocosmos
                             
                             frequencyBuff.OnActionFrequentTriggered.Execute();
                             if (callbacks.ContainsKey(b.Key)) {
-                                callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered);
+                                callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered, buff.MessageToClient);
                             }
 
                             ServerOnBuffUpdate?.Invoke(buff);
@@ -237,7 +248,7 @@ namespace Mikrocosmos
                     if (buff is IUntilBuff untilBuff) {
                         if (untilBuff.UntilAction.Finished) {
                             untilBuff.TotalCanBeTriggeredTime--;
-                            callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered);
+                            callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered, buff.MessageToClient);
                             ServerOnBuffUpdate?.Invoke(buff);                            
                         }
                     }
@@ -271,7 +282,7 @@ namespace Mikrocosmos
                     }).ToList().
                     ForEach(x => {
                         if (callbacks.ContainsKey(x.Key)) {
-                            callbacks[x.Key]?.Invoke(BuffStatus.OnEnd);
+                            callbacks[x.Key]?.Invoke(BuffStatus.OnEnd, x.Value.MessageToClient);
                         }
 
                         if (x.Value is IUntilBuff untilBuff) {

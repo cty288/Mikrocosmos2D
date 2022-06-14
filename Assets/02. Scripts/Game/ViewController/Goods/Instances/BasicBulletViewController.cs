@@ -53,6 +53,8 @@ namespace Mikrocosmos
             poolable = GetComponent<PoolableNetworkedGameObject>();
         }
 
+
+        /*
         protected override void OnCollisionEnter2D(Collision2D collision) {
             if (isServer) {
                 if (collision.collider) {
@@ -112,12 +114,13 @@ namespace Mikrocosmos
                 }
             }
         }
-
+        */
 
         
 
         
         private void LateUpdate() {
+       
             List<Collider2D> colliders = Physics2D.OverlapCircleAll(transform.position, 0.5f).ToList();
            
             foreach (Collider2D collider in colliders) {

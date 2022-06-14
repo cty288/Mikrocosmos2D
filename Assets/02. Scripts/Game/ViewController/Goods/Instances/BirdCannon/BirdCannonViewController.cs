@@ -8,12 +8,12 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public struct OnCameraViewChange {
-        public int NewRadius;
+        public int RadiusAddition;
     }
 
     public struct OnVisionRangeChange {
-        public int Inner;
-        public int Outer;
+        public int InnerAddition;
+        public int OuterAddition;
     }
     public class BirdCannonViewController : BasicGoodsViewController, ICanSendEvent
     {
@@ -50,8 +50,8 @@ namespace Mikrocosmos
 
         public void OnBulletShoot()
         {
-            if (isServer)
-            {
+            //if (isServer)
+         //   {
                 //GameObject bullet = bulletPool.Allocate();
                 GameObject bullet = Instantiate(this.bullet, shootPos.transform.position, Quaternion.identity);
                 bullet.transform.position = shootPos.transform.position;
@@ -61,8 +61,8 @@ namespace Mikrocosmos
                 bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>());
                 bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
                 bullet.transform.rotation = transform.rotation;
-                NetworkServer.Spawn(bullet);
-            }
+              //  NetworkServer.Spawn(bullet);
+          //  }
         }
 
         public void OnShootAnimationEnds() {
@@ -76,16 +76,20 @@ namespace Mikrocosmos
             if (isServer) {
                 if (Model.HookedByIdentity) {
                     previousHookedBy = Model.HookedByIdentity;
-                    TargetOnStartCharge(Model.HookedByIdentity.connectionToClient);
+                    //TargetOnStartCharge(Model.HookedByIdentity.connectionToClient);
+                    if (Model.HookedByIdentity.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
+                        buffSystem.AddBuff<VisionExpansionBuff>(new VisionExpansionBuff(1f, CameraExpandRadius,
+                            new Vector2(25, 25)));
+                    }
                     Model.CanBeHooked = false;
                 }
             }
         }
 
+        
         public void OnServerEndCharge() {
             if (isServer) {
                 if (previousHookedBy) {
-                    TargetOnEndCharge(previousHookedBy.connectionToClient);
                     Model.CanBeHooked = true;
                 }
             }
@@ -93,6 +97,7 @@ namespace Mikrocosmos
 
         
 
+        /*
         protected override void OnServerItemBroken() {
             base.OnServerItemBroken();
             if (previousHookedBy)
@@ -100,48 +105,52 @@ namespace Mikrocosmos
                 Debug.Log($"BirdCannon Broken: {previousHookedBy.connectionToClient}");
                 TargetOnEndCharge(previousHookedBy.connectionToClient);
             }
-        }
+        }*/
 
        
-
+        //1.25s
+        
+        /*
         [TargetRpc]
         private void TargetOnStartCharge(NetworkConnection conn) {
             this.SendEvent<OnCameraViewChange>(new OnCameraViewChange() {
-                NewRadius = CameraExpandRadius
+                RadiusAddition = CameraExpandRadius
             });
             this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
             {
-                Inner = 48,
-                Outer = 63
+                InnerAddition = 25,
+                OuterAddition = 25
             });
-        }
+        }*/
 
+        /*
         [TargetRpc]
         private void TargetOnEndCharge(NetworkConnection conn) {
             this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
             {
-                NewRadius = 25
+                RadiusAddition = -CameraExpandRadius
             });
             this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
             {
-                Inner = 28,
-                Outer = 35
+                InnerAddition = -25,
+                OuterAddition = -25
             });
-        }
+        }*/
 
+        /*
         private void OnDestroy() {
             
             if (previousHookedBy && previousHookedBy.hasAuthority) {
                 this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
                 {
-                    NewRadius = 25
+                    RadiusAddition = -CameraExpandRadius
                 });
                 this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
                 {
-                    Inner = 28,
-                    Outer = 35
+                    InnerAddition = -25,
+                    OuterAddition = -25
                 });
             }
-        }
+        }*/
     }
 }

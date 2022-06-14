@@ -17,6 +17,8 @@ namespace Mikrocosmos
 
         [SerializeField] private float lerp = 0.1f;
 
+        private float minMainCameraRange = 25;
+
         private Camera camera;
         private void Awake() {
             camera = GetComponent<Camera>();
@@ -28,9 +30,9 @@ namespace Mikrocosmos
         }
 
         private void OnCameraViewChange(OnCameraViewChange e) {
-            float targetRadius = e.NewRadius * 2.04f;
+            float targetRadius = e.RadiusAddition * 2.04f;
 
-            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, targetRadius, 0.3f);
+            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x,  Mathf.Max(minMainCameraRange * 2.04f, camera.orthographicSize + targetRadius), 0.3f);
             //cinemachineTargetGroup.m_Targets[0].radius = e.NewRadius;
         }
 

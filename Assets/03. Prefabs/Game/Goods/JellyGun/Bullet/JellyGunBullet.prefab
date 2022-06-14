@@ -347,13 +347,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  <MoveMode>k__BackingField: 0
+  <MoveMode>k__BackingField: 1
   <MaxSpeed>k__BackingField: 70
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 0.5
   <Damage>k__BackingField: 15

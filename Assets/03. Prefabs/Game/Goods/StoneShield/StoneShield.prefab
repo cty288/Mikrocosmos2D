@@ -301,11 +301,12 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
-  <SelfMass>k__BackingField: 30
+  <SelfMass>k__BackingField: 20
   <Name>k__BackingField: StoneShield
-  <BasicSellPrice>k__BackingField: 40
-  <BasicBuyPrice>k__BackingField: 50
+  <BasicSellPrice>k__BackingField: 25
+  <BasicBuyPrice>k__BackingField: 40
   <GoodRarity>k__BackingField: 1
   <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0.01

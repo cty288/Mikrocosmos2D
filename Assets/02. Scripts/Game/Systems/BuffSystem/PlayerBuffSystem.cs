@@ -36,7 +36,11 @@ namespace Mikrocosmos
             buffSystem.ServerOnBuffUpdate += OnServerBuffUpdate;
             buffSystem.ServerOnBuffStart += OnServerBuffStart;
             buffSystem.ServerOnBuffStop += OnServerBuffStop;
+
+            buffSystem.ServerRegisterClientCallback<VisionExpansionBuff, OnVisionExpansion>(RpcOnVisionExpand);
         }
+
+       
 
         public override void OnStopServer() {
             base.OnStopServer();
@@ -89,6 +93,39 @@ namespace Mikrocosmos
                 UpdateMode = updateStatus
             });
             Debug.Log($"Client Buff Update: UpdateMode - {updateStatus}, BuffName: {buffInfo.Name}");
+        }
+
+
+        [TargetRpc]
+        private void RpcOnVisionExpand(BuffStatus e, OnVisionExpansion message) {
+            Debug.Log("Vision Expansion");
+            OnVisionExpansion buff = message;
+            if (e == BuffStatus.OnStart || e == BuffStatus.OnUpdate ) {
+                this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange() {
+                    InnerAddition = buff.VisionRangeChangeEvent.InnerAddition,
+                    OuterAddition = buff.VisionRangeChangeEvent.OuterAddition
+                });
+                
+                this.SendEvent<OnCameraViewChange>(new OnCameraViewChange() {
+                    RadiusAddition = buff.CameraViewChangeEvent.RadiusAddition
+                });
+            }
+
+            if (e == BuffStatus.OnEnd) {
+                this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
+                {
+                    InnerAddition =- buff.VisionRangeChangeEvent.InnerAddition,
+                    OuterAddition =- buff.VisionRangeChangeEvent.OuterAddition
+                });
+
+                this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
+                {
+                    RadiusAddition =- buff.CameraViewChangeEvent.RadiusAddition
+                });
+            }
+            
+            
+            Debug.Log($"Vision Expansion: {buff.VisionRangeChangeEvent.InnerAddition}");
         }
     }
 

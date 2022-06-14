@@ -16,8 +16,15 @@ namespace Mikrocosmos
             priceText = transform.Find("BuyPrice").GetComponent<Text>();
         }
 
-        private void Start()
+        public void UpdateInfo(int price, float time)
         {
+            Price = price;
+            priceText.text = Price.ToString();
+            this.Time = time;
+        }
+
+
+        private void Start() {
             priceText.text = Price.ToString();
         }
     }

@@ -35,5 +35,7 @@ namespace Mikrocosmos
         {
             return Localization.Get("GAME_BUFF_POISION");
         }
+
+        public override BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();
     }
 }
