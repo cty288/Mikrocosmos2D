@@ -7,14 +7,13 @@ using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using UnityEngine;
 
-namespace Mikrocosmos
-{
+namespace Mikrocosmos {
 
     public class BuffClientMessage {
 
     }
 
-    
+
     public interface IBuff {
 
         string Name { get; }
@@ -54,16 +53,62 @@ namespace Mikrocosmos
     /// <summary>
     /// This is a type of buff that can be triggered under a frequency
     /// </summary>
-    public interface IHaveFrequencyBuff: IBuff  {
+    public interface IHaveFrequencyBuff : IBuff {
         MikroAction OnActionFrequentTriggered { get; set; }
         float Frequency { get; }
         float FrequencyTimer { get; set; }
     }
 
 
+    public interface IPermanentRawMaterialBuff : IBuff, IStackableBuff<IPermanentRawMaterialBuff> {
+         public int MaxLevel { get; set; }
+        
+        public List<int> ProgressPerLevel { get; set; }
 
+        public int CurrentProgressInLevel { get; set; }
 
-    
+        public int CurrentLevel { get; set; }
+        
+    }
+
+    public abstract class PermanentRawMaterialBuff: IPermanentRawMaterialBuff{
+        public void OnBuffStacked(IPermanentRawMaterialBuff addedBuff) {
+            CurrentLevel += addedBuff.CurrentLevel;
+            CurrentProgressInLevel += addedBuff.CurrentProgressInLevel;
+            RecalculateLevelAndProgress();
+        }
+
+        public PermanentRawMaterialBuff(int currentLevel = 0, int currentProgressInLevel = 1) {
+            CurrentLevel = currentLevel;
+            CurrentProgressInLevel = currentProgressInLevel;
+            RecalculateLevelAndProgress();
+        }
+
+        //if current progress is greater than the maximum progress for current level, then increase current level until current progress is less than the maximum progress for current level
+        private void RecalculateLevelAndProgress() {
+            while (CurrentProgressInLevel >= ProgressPerLevel[CurrentLevel] && CurrentLevel < MaxLevel) {
+                CurrentProgressInLevel -= ProgressPerLevel[CurrentLevel];
+                CurrentLevel++;
+                if (CurrentLevel == MaxLevel) {
+                    CurrentProgressInLevel = 0;
+                }
+            }
+        }
+
+        public abstract string Name { get; }
+        public abstract string GetLocalizedDescriptionText();
+
+        public abstract string GetLocalizedName();
+
+        public  BuffClientMessage MessageToClient { get; set; }
+        public abstract  int MaxLevel { get; set; }
+        public abstract List<int> ProgressPerLevel { get; set; }
+        public int CurrentProgressInLevel { get; set; }
+        public int CurrentLevel { get; set; }
+    }
+
+   
+
     [Serializable]
     public abstract class TimedFrequentBuff : ITimedBuff, IHaveFrequencyBuff
     {

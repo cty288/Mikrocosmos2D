@@ -30,11 +30,11 @@ namespace Mikrocosmos
         }
 
         public void SetIconInfo(BuffInfo info) {
-            if(info.TimeBuffMaxTime==0){  // no time buff
+            if(info.TimeBuffInfo.TimeBuffMaxTime==0){  // no time buff
                 buffIconProgress.fillAmount = 1;
             }else {
-                maxTime = info.TimeBuffMaxTime;
-                targetProgressTimer = info.TimeBuffTime;
+                maxTime = info.TimeBuffInfo. TimeBuffMaxTime;
+                targetProgressTimer = info.TimeBuffInfo.TimeBuffTime;
                 if (progressTimer < 0) {
                     progressTimer = targetProgressTimer;
                 }

@@ -54,7 +54,7 @@ namespace Mikrocosmos
         }
 
 
-        /*
+        
         protected override void OnCollisionEnter2D(Collision2D collision) {
             if (isServer) {
                 if (collision.collider) {
@@ -63,7 +63,7 @@ namespace Mikrocosmos
                         
                         BulletModel model = GetComponent<BulletModel>();
                         int damage = (Mathf.RoundToInt(model.Damage *
-                                                       (Mathf.Min(3 * rigidbody.velocity.magnitude / model.MaxSpeed,
+                                                       (Mathf.Min(  rigidbody.velocity.magnitude / model.MaxSpeed,
                                                            2))));
 
                         if (!damageReduceBySpeed) {
@@ -97,28 +97,33 @@ namespace Mikrocosmos
                    
                 }
                 animator.SetTrigger("Hit");
-                if (destroyWhenHit)
-                {
+                StartCoroutine(DestroySelf());
+            }
+        }
 
-                    // NetworkServer.Destroy(this.gameObject);
-                    rigidbody.velocity = Vector2.zero;
-                    if (poolable)
-                    {
-                        poolable.RecycleToCache();
-                        NetworkServer.UnSpawn(gameObject);
-                    }
-                    else
-                    {
-                        NetworkServer.Destroy(this.gameObject);
-                    }
+        private IEnumerator DestroySelf() {
+            yield return new WaitForSeconds(0.2f);
+            if (destroyWhenHit)
+            {
+
+                // NetworkServer.Destroy(this.gameObject);
+                rigidbody.velocity = Vector2.zero;
+                if (poolable)
+                {
+                    poolable.RecycleToCache();
+                    NetworkServer.UnSpawn(gameObject);
+                }
+                else
+                {
+                    NetworkServer.Destroy(this.gameObject);
                 }
             }
         }
-        */
-
         
 
         
+
+        /*
         private void LateUpdate() {
        
             List<Collider2D> colliders = Physics2D.OverlapCircleAll(transform.position, 0.5f).ToList();
@@ -203,7 +208,8 @@ namespace Mikrocosmos
                 }
             }
 
-        }
+        }*/
+        
 
         private IEnumerator SetVelocityToZero() {
             yield return null;

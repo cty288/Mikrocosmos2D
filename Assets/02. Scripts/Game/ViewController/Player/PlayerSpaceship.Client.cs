@@ -63,6 +63,7 @@ namespace Mikrocosmos
             transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
         }
 
+        [SerializeField] private List<ParticleSystem> particles;
         protected override void Update()
         {
             base.Update();
@@ -147,9 +148,23 @@ namespace Mikrocosmos
 
                 if (isControlling && Model.HookState == HookState.Freed) {
                     selfMotionAnimator.SetBool("Controlling", true);
+                    foreach (ParticleSystem particle in particles) {
+                        particle.loop = true;
+                        particle.Play();
+
+                     
+                        
+
+                    }
                 }
                 else {
                     selfMotionAnimator.SetBool("Controlling", false);
+                    foreach (ParticleSystem particle in particles)
+                    {
+                         particle.loop = false;
+                        //particle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                        //  particle.SetActive(false);
+                    }
                 }
             }
 

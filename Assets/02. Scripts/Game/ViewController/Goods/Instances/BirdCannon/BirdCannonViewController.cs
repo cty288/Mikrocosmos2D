@@ -52,11 +52,11 @@ namespace Mikrocosmos
         {
             if (isServer)
             {
-                //GameObject bullet = bulletPool.Allocate();
+               
                 GameObject bullet = Instantiate(this.bullet, shootPos.transform.position, Quaternion.identity);
                 bullet.transform.position = shootPos.transform.position;
                 bullet.transform.rotation = Quaternion.identity;
-              //  NetworkServer.Spawn(bullet);
+                NetworkServer.Spawn(bullet);
                 bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 
                 bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>());
@@ -64,18 +64,7 @@ namespace Mikrocosmos
                 bullet.transform.rotation = transform.rotation;
             }
 
-            if (isClientOnly) {
-                GameObject bullet = Instantiate(this.bullet, shootPos.transform.position, Quaternion.identity);
-                bullet.transform.position = shootPos.transform.position;
-                bullet.transform.rotation = Quaternion.identity;
-                bullet.GetComponent<NetworkTransform>().syncPosition = false;
-                //  NetworkServer.Spawn(bullet);
-                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
-                bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>());
-                bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
-                bullet.transform.rotation = transform.rotation;
-            }
+          
         }
 
         public void OnShootAnimationEnds() {

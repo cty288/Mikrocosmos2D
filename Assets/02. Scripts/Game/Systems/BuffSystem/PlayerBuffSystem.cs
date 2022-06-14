@@ -7,13 +7,33 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
+
+    public struct TimeBuffInfo {
+        public float TimeBuffTime;
+        public float TimeBuffMaxTime;
+    }
+
+    public struct UntilBuffInfo {
+        public float UntilBuffTriggerTime;
+    }
+
+    public struct PermanentRawMaterialBuffInfo {
+        public int MaxLevel;
+
+        public int CurrentProgressInLevel;
+
+        public int CurrentLevel;
+    }
     public struct BuffInfo {
         public string Name;
         public string LocalizedDescription;
         public string LocalizedName;
-        public float TimeBuffTime;
-        public float TimeBuffMaxTime;
-        public float UntilBuffTriggerTime;
+
+        public TimeBuffInfo TimeBuffInfo;
+        public UntilBuffInfo UntilBuffInfo;
+        public PermanentRawMaterialBuffInfo PermanentRawMaterialBuffInfo;
+
+
     }
 
     public enum BuffUpdateMode {
@@ -71,17 +91,28 @@ namespace Mikrocosmos
                 LocalizedName = buff.GetLocalizedName(),
                 Name = buff.Name
             };
-            if (buff is ITimedBuff timedBuff)
-            {
-                buffInfo.TimeBuffTime = timedBuff.RemainingTime;
-                buffInfo.TimeBuffMaxTime = timedBuff.MaxDuration;
+            
+            if (buff is ITimedBuff timedBuff) {
+                buffInfo.TimeBuffInfo = new TimeBuffInfo() {
+                    TimeBuffTime = timedBuff.RemainingTime,
+                    TimeBuffMaxTime = timedBuff.MaxDuration,
+                };
             }
 
-            if (buff is IUntilBuff untilBuff)
-            {
-                buffInfo.UntilBuffTriggerTime = untilBuff.TotalCanBeTriggeredTime;
+            if (buff is IUntilBuff untilBuff) {
+                buffInfo.UntilBuffInfo = new UntilBuffInfo() {
+                    UntilBuffTriggerTime = untilBuff.TotalCanBeTriggeredTime
+                };
             }
 
+            if (buff is IPermanentRawMaterialBuff permanentRawMaterialBuff) {
+                buffInfo.PermanentRawMaterialBuffInfo = new PermanentRawMaterialBuffInfo()
+                {
+                    MaxLevel = permanentRawMaterialBuff.MaxLevel,
+                    CurrentProgressInLevel = permanentRawMaterialBuff.CurrentProgressInLevel,
+                    CurrentLevel = permanentRawMaterialBuff.CurrentLevel
+                };
+            }
             return buffInfo;
         }
 

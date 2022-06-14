@@ -371,7 +371,7 @@ MonoBehaviour:
   <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   bullet: {fileID: 5222149471336982627, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
-  shootForce: 200
+  shootForce: 250
   CameraExpandRadius: 15
 --- !u!114 &3044698435260994450
 MonoBehaviour:
