@@ -210,8 +210,8 @@ namespace Mikrocosmos {
         GameObject GetOwnerObject();
         void AddBuff<T>(IBuff buff) where T : IBuff;
 
-        bool HasBuff<T>() where T : IBuff;
-
+        bool HasBuff<T>(out T buff) where T : class, IBuff;
+        bool HasBuff<T>() where T : class, IBuff;
         void ServerRegisterClientCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage;
 
         Action<IBuff> ServerOnBuffStart { get; set; }
@@ -272,7 +272,14 @@ namespace Mikrocosmos {
             
         }
 
-        public bool HasBuff<T>() where T : IBuff {
+        public bool HasBuff<T>(out T buff) where T : class, IBuff {
+            IBuff temp = null;
+            buffs.TryGetValue(typeof(T), out temp);
+            buff = temp as T;
+            return buff != null;
+        }
+
+        public bool HasBuff<T>() where T : class, IBuff {
             return buffs.ContainsKey(typeof(T));
         }
 

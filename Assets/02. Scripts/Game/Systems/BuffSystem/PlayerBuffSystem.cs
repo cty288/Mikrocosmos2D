@@ -61,9 +61,11 @@ namespace Mikrocosmos
 
             buffSystem.ServerRegisterClientCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
             buffSystem.ServerRegisterClientCallback<PermanentVisionExpansionBuff, OnPermanentVisionExpansion>(TargetOnVisionPermenantExpand);
+            //buffSystem.ServerRegisterClientCallback<PermanentAffinityBuff, OnPermanentAffinityAddition>(TargetOnPermanentAffinityBuff);
         }
 
-       
+        
+
 
         public override void OnStopServer() {
             base.OnStopServer();
@@ -177,6 +179,8 @@ namespace Mikrocosmos
                 this.SendEvent(buff.VisionChangeEvent);
             }
         }
+
+       
     }
 
     public struct ClientOnBuffUpdate {

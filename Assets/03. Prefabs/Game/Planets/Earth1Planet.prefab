@@ -291,6 +291,8 @@ MonoBehaviour:
   - 0.1
   sellItemCount: 1
   buyItemCount: 2
+  currentBuyItemLists: []
+  currentSellItemLists: []
 --- !u!1 &8920545920613749354
 GameObject:
   m_ObjectHideFlags: 0

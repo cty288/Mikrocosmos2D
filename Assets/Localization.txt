@@ -718,3 +718,5 @@ GAME_PERM_BUFF_VISION_EXPANSION,,Vision Enhancement,,,,,,,,,,,,,,,,,视野提升
 GAME_PERM_BUFF_VISION_EXPANSION_DESCRIPTION,,+{0}% Vision,,,,,,,,,,,,,,,,,视野 +{0}% ,"
 視野 +{0}%",,,,,,,,,
 GAME_PERM_BUFF_LEVEL,,: Level {0},,,,,,,,,,,,,,,,,：等级{0},：等級{0},,,,,,,,,
+GAME_PERM_BUFF_AFFINITY,,Affinity Enhancement,,,,,,,,,,,,,,,,,交易好感度提升,交易好感度提升,,,,,,,,,
+GAME_PERM_BUFF_AFFINITY_DESCRIPTION,,+{0}% additional affinity for trading,,,,,,,,,,,,,,,,,交易完成后额外获得{0}%好感度,交易完成後額外獲得{0}%好感度,,,,,,,,,

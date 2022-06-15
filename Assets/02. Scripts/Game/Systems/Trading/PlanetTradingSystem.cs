@@ -167,7 +167,7 @@ namespace Mikrocosmos
                 //currentSellItemLists.Remove(info);
                 SwitchSellItem(info);
                 ChangeAffinity(spaceship.GetComponent<PlayerSpaceship>().connectionToClient.identity
-                    .GetComponent<NetworkMainGamePlayer>().matchInfo.Team);
+                    .GetComponent<NetworkMainGamePlayer>().matchInfo.Team, spaceship.GetComponent<IBuffSystem>());
             }
 
         }
@@ -194,7 +194,7 @@ namespace Mikrocosmos
                     //SwitchBuyItem();
 
                     ChangeAffinity(e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
-                        .GetComponent<NetworkMainGamePlayer>().matchInfo.Team);
+                        .GetComponent<NetworkMainGamePlayer>().matchInfo.Team, e.HookedByIdentity.GetComponent<IBuffSystem>());
 
                     //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
                     // PlayerIdentity = e.HookedByIdentity
@@ -211,11 +211,19 @@ namespace Mikrocosmos
 
 
         [ServerCallback]
-        private void ChangeAffinity(int teamNumber)
+        private void ChangeAffinity(int teamNumber, IBuffSystem buffSystem)
         {
             Debug.Log($"Team {teamNumber} completed a transaction");
             float affinityIncreasment = this.GetSystem<IGlobalTradingSystem>()
                 .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber));
+
+            if (buffSystem != null) {
+                if (buffSystem.HasBuff<PermanentAffinityBuff>(out PermanentAffinityBuff affinityBuff)) {
+                    affinityIncreasment += affinityIncreasment * affinityBuff.AdditionalAffinityAdditionPercentage * affinityBuff.CurrentLevel;
+                }
+                
+            }
+            
             if (teamNumber == 1)
             {
                 affinityWithTeam1 += affinityIncreasment;
@@ -224,6 +232,9 @@ namespace Mikrocosmos
             {
                 affinityWithTeam1 -= affinityIncreasment;
             }
+
+            affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1, 0f, 1f);
+
 
         }
 

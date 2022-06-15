@@ -119,6 +119,10 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7904383807597867959, guid: c825010e0d1fda14283442fc8a479635, type: 3}
+      propertyPath: m_FillClockwise
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3655973554031529167, guid: c825010e0d1fda14283442fc8a479635, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c825010e0d1fda14283442fc8a479635, type: 3}
@@ -139,3 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad93dd09ec0ccad4a887149432659e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IconLevel:
+    value: 0
