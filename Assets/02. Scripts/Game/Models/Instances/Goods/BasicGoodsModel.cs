@@ -26,7 +26,7 @@ namespace Mikrocosmos
         }
 
       
-        public override void OnStopServer() {
+         public override void OnStopServer() {
             base.OnStopServer();
             //to prevent switching to another item before the durability reduction is finished
             if (Durability > 0 && readyToReduceDurability) {

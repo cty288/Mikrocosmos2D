@@ -99,7 +99,8 @@ namespace Mikrocosmos
                 OnBroken();
                 this.SendEvent<OnItemBroken>(new OnItemBroken() {
                     Item = this ,
-                    HookedBy = HookedByIdentity
+                    HookedBy = HookedByIdentity,
+                    ItemObj = gameObject
                 });
                 NetworkServer.Destroy(gameObject);
             }

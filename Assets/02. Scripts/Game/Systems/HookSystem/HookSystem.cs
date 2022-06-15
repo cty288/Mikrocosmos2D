@@ -42,6 +42,7 @@ namespace Mikrocosmos {
     public struct OnItemBroken{
         public ICanBeUsed Item;
         public NetworkIdentity HookedBy;
+        public GameObject ItemObj;
     }
 
     public interface IHookSystem : ISystem {
@@ -199,9 +200,10 @@ namespace Mikrocosmos {
                 Debug.Log("HookSystem: Item Broken");
                 UnHook();
                 //NetworkServer.Destroy(go);
-            } else if (e.Item != null && (HookedItem==null || e.Item != HookedItem.Model)) {
+            } 
+            else if (e.Item != null && (HookedItem==null || e.Item != HookedItem.Model)) {
                 if (e.Item.CanBeAddedToInventory) {
-                    inventorySystem.ServerRemoveFromBackpack(e.Item.Name);
+                    inventorySystem.ServerRemoveFromBackpack(e.ItemObj);
                 }
             }
         }

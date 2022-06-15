@@ -17,17 +17,28 @@ namespace Mikrocosmos
 
         private int minCameraRadius = 25;
 
+        private int currentMinCameraRadius;
+
         private CinemachineTargetGroup cinemachineTargetGroup;
         private void Awake() {
             cinemachineTargetGroup = GetComponent<CinemachineTargetGroup>();
             this.RegisterEvent<OnClientMainGamePlayerConnected>(OnClientMainGamePlayerConnected)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnCameraViewChange>(OnCameraViewChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnVisionPermanentChange>(OnVisionPermanentChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            currentMinCameraRadius = minCameraRadius;
+        }
+
+        private void OnVisionPermanentChange(OnVisionPermanentChange e) {
+            currentMinCameraRadius += (int) (minCameraRadius * e.IncreasePercentage);
+            cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
         }
 
         private void OnCameraViewChange(OnCameraViewChange e) {
             cinemachineTargetGroup.m_Targets[0].radius += e.RadiusAddition;
-            cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(minCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
+            cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
         }
 
         private void OnClientMainGamePlayerConnected(OnClientMainGamePlayerConnected e) {

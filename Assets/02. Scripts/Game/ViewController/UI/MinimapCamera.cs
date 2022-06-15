@@ -18,6 +18,7 @@ namespace Mikrocosmos
         [SerializeField] private float lerp = 0.1f;
 
         private float minMainCameraRange = 25;
+        private float currentMinCameraRadius;
 
         private Camera camera;
         private void Awake() {
@@ -27,12 +28,23 @@ namespace Mikrocosmos
             this.RegisterEvent<OnClientMainGamePlayerConnected>(OnClientMainGamePlayerConnected)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnCameraViewChange>(OnCameraViewChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            currentMinCameraRadius = minMainCameraRange;
+
+            this.RegisterEvent<OnVisionPermanentChange>(OnVisionPermanentChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnVisionPermanentChange(OnVisionPermanentChange e) {
+            currentMinCameraRadius += minMainCameraRange * e.IncreasePercentage;
+           
+
+            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, Mathf.Max(currentMinCameraRadius * 2.5f, camera.orthographicSize), 0.3f);
         }
 
         private void OnCameraViewChange(OnCameraViewChange e) {
-            float targetRadius = e.RadiusAddition * 2.04f;
+            float targetRadius = e.RadiusAddition * 2.5f;
 
-            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x,  Mathf.Max(minMainCameraRange * 2.04f, camera.orthographicSize + targetRadius), 0.3f);
+            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x,  Mathf.Max(currentMinCameraRadius * 2.5f, camera.orthographicSize + targetRadius), 0.3f);
             //cinemachineTargetGroup.m_Targets[0].radius = e.NewRadius;
         }
 

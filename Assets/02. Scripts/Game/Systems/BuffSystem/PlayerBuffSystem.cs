@@ -22,6 +22,8 @@ namespace Mikrocosmos
 
         public int CurrentProgressInLevel;
 
+        public int MaxProgressForCurrentLevel;
+
         public int CurrentLevel;
     }
     public struct BuffInfo {
@@ -58,6 +60,7 @@ namespace Mikrocosmos
             buffSystem.ServerOnBuffStop += OnServerBuffStop;
 
             buffSystem.ServerRegisterClientCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
+            buffSystem.ServerRegisterClientCallback<PermanentVisionExpansionBuff, OnPermanentVisionExpansion>(TargetOnVisionPermenantExpand);
         }
 
        
@@ -106,11 +109,19 @@ namespace Mikrocosmos
             }
 
             if (buff is IPermanentRawMaterialBuff permanentRawMaterialBuff) {
+                int maxProgress;
+                if (permanentRawMaterialBuff.CurrentLevel == permanentRawMaterialBuff.MaxLevel) {
+                    maxProgress = 1;
+                }
+                else {
+                    maxProgress = permanentRawMaterialBuff.ProgressPerLevel[permanentRawMaterialBuff.CurrentLevel];
+                }
                 buffInfo.PermanentRawMaterialBuffInfo = new PermanentRawMaterialBuffInfo()
                 {
                     MaxLevel = permanentRawMaterialBuff.MaxLevel,
                     CurrentProgressInLevel = permanentRawMaterialBuff.CurrentProgressInLevel,
-                    CurrentLevel = permanentRawMaterialBuff.CurrentLevel
+                    CurrentLevel = permanentRawMaterialBuff.CurrentLevel,
+                    MaxProgressForCurrentLevel = maxProgress
                 };
             }
             return buffInfo;
@@ -154,9 +165,17 @@ namespace Mikrocosmos
                     RadiusAddition =- buff.CameraViewChangeEvent.RadiusAddition
                 });
             }
-            
-            
             Debug.Log($"Vision Expansion: {buff.VisionRangeChangeEvent.InnerAddition}");
+        }
+
+
+        [TargetRpc]
+        private void TargetOnVisionPermenantExpand(BuffStatus e, OnPermanentVisionExpansion message)
+        {
+            OnPermanentVisionExpansion buff = message;
+            if (e == BuffStatus.OnStart || e == BuffStatus.OnUpdate) {
+                this.SendEvent(buff.VisionChangeEvent);
+            }
         }
     }
 

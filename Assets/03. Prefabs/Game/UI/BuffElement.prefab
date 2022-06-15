@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5057720977361859197}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1e-45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50.42, y: -18.7886}
-  m_SizeDelta: {x: 390.46, y: 72.7627}
+  m_AnchoredPosition: {x: 18.82, y: -10.751807}
+  m_SizeDelta: {x: 398.46, y: 25.0717}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5057720977361859184
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Warning! The ship's control system was damaged by the impact and is self-repairing...
+  m_text: Your Speed Is Increased
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 97f291b6fd4e050479569ebbf120aeb9, type: 2}
   m_sharedMaterial: {fileID: 6700943688103016386, guid: 97f291b6fd4e050479569ebbf120aeb9, type: 2}
@@ -93,12 +93,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.77
+  m_fontSize: 12
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0
-  m_fontSizeMax: 18.77
+  m_fontSizeMax: 12
   m_fontStyle: 16
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -168,8 +168,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -206.95, y: 0.000018745}
-  m_SizeDelta: {x: 77.4, y: 84.5}
+  m_AnchoredPosition: {x: -221.89, y: 0.36152}
+  m_SizeDelta: {x: 47.5171, y: 53.2377}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5057720978136234190
 GameObject:
@@ -206,8 +206,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -164, y: -0.000044494005}
-  m_SizeDelta: {x: 6.64, y: 100}
+  m_AnchoredPosition: {x: -191.3, y: -0.00010264}
+  m_SizeDelta: {x: 6.64, y: 49.055}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5057720978136234177
 CanvasRenderer:
@@ -282,8 +282,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.00005, y: 39.84}
-  m_SizeDelta: {x: 305.62, y: 30.62}
+  m_AnchoredPosition: {x: -27.6, y: 15.7336}
+  m_SizeDelta: {x: 305.62, y: 17.3543}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5057720978813918451
 CanvasRenderer:
@@ -340,11 +340,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27
+  m_fontSize: 15.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 0
   m_fontSizeMax: 27
   m_fontStyle: 17
   m_HorizontalAlignment: 1
@@ -392,6 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5057720979007282113}
   - component: {fileID: 8893109458813188145}
+  - component: {fileID: 870246028}
   m_Layer: 5
   m_Name: BuffElement
   m_TagString: Untagged
@@ -420,8 +421,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 491.3, y: 110.3}
+  m_AnchoredPosition: {x: 0, y: -27.575012}
+  m_SizeDelta: {x: 491.3, y: 55.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8893109458813188145
 MonoBehaviour:
@@ -435,3 +436,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6b6941e42a76a49bfbe523b470df37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &870246028
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5057720979007282112}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91688d97f3506794c8d7a496c5e762ef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

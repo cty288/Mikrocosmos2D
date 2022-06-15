@@ -3,8 +3,8 @@
   "ABMD5List": [
     {
       "AssetName": "buff_icons",
-      "MD5": "28496cc1a6aaefd1d50cf9831754a269",
-      "FileSize": 116.246094,
+      "MD5": "59d3736751b50a1621df32f4f8a1ee40",
+      "FileSize": 224.546875,
       "assetDatas": [
         {
           "Name": "BuffIcon",
@@ -22,12 +22,17 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "PermanentVisionExpansionBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "PoisonBuffIcon",
           "OwnerBundleName": "buff_icons",
           "AssetType": "UnityEngine.GameObject"
         },
         {
-          "Name": "VisionExpansionBuffIcon",
+          "Name": "VisionExpansionBuffIcon 1",
           "OwnerBundleName": "buff_icons",
           "AssetType": "UnityEngine.GameObject"
         }
@@ -103,14 +108,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "eb1d439af0479789b05b5632b9004920",
+      "MD5": "1580e77ccca45690bc1a5c4cde550b31",
       "FileSize": 1.73242188,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "b205d9d871a1c6e6f0b11a8965536cd3",
-      "FileSize": 1536.75,
+      "MD5": "fad6e83dcc893f794efb2706cd75a355",
+      "FileSize": 1535.084,
       "assetDatas": [
         {
           "Name": "FirePlant",

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 905306791
+CRC: 3617807385
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ec0ae8fb48e1592cf0ba06ab3adfe1d7
+    Hash: fd4f366ef70db8df17c0797797ba2c17
   TypeTreeHash:
     serializedVersion: 2
-    Hash: e837668c69472f757cd06c165752ba7c
+    Hash: 612412107538887f0581f6f635b77476
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -17,6 +17,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 8315c83a97b08884fae53415f7b9e36f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ad93dd09ec0ccad4a887149432659e38, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -26,14 +28,17 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
+- AssemblyName: MikroFramework
+  ClassName: MikroFramework.BindableProperty.BindableProperty`1[System.Int32]
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
 - Assets/03. Prefabs/Game/UI/BuffIcons/BuffIcon.prefab
-- Assets/03. Prefabs/Game/UI/BuffIcons/VisionExpansionBuffIcon.prefab
+- Assets/03. Prefabs/Game/UI/BuffIcons/PermanentVisionExpansionBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/DieBuffIcon.prefab
+- Assets/03. Prefabs/Game/UI/BuffIcons/VisionExpansionBuffIcon 1.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/PoisonBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/InvincibleBuffIcon.prefab
 Dependencies: []

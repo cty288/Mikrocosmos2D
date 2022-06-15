@@ -29,25 +29,47 @@ namespace Mikrocosmos
 
         private int minInnerRadius = 28;
         private int minOuterRadius = 35;
+
+        private int currentMinInnerRadius;
+        private int currentMinOuterRadius;
         private void Awake() {
             
             visionRenderLight = transform.Find("VisionControl/VisionRenderLight").gameObject;
             fovVision = transform.Find("VisionControl/FOV Vision").gameObject;
             mapVisionRenderLight = transform.Find("VisionControl/VisionRenderLight - FullMap").gameObject;
             mapFovVision = transform.Find("VisionControl/FOV Vision - FullMap").gameObject;
+            currentMinInnerRadius = minInnerRadius;
+            currentMinOuterRadius = minOuterRadius;
             
             this.RegisterEvent<OnVisionRangeChange>(OnVisionRangeChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnVisionPermanentChange>(OnVisionPermanentChange).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnVisionPermanentChange(OnVisionPermanentChange e) {
+            if (hasAuthority) {
+                currentMinOuterRadius += (int)(minOuterRadius * e.IncreasePercentage);
+                currentMinInnerRadius += (int)(minInnerRadius * e.IncreasePercentage);
+
+                Light2D light = fovVision.GetComponent<Light2D>();
+                DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, Mathf.Max(light.pointLightInnerRadius, currentMinInnerRadius), 0.3f);
+                DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, Mathf.Max(light.pointLightInnerRadius, currentMinOuterRadius), 0.3f);
+
+                Light2D mapLight = fovVision.GetComponent<Light2D>();
+                DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x, Mathf.Max(mapLight.pointLightInnerRadius, currentMinInnerRadius), 0.3f);
+                DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, Mathf.Max(mapLight.pointLightOuterRadius, currentMinOuterRadius), 0.3f);
+            }
+           
         }
 
         private void OnVisionRangeChange(OnVisionRangeChange e) {
             if (hasAuthority) {
                 Light2D light = fovVision.GetComponent<Light2D>();
-                DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, Mathf.Max(light.pointLightInnerRadius + e.InnerAddition, minInnerRadius), 0.3f);
-                DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, Mathf.Max(light.pointLightInnerRadius + e.InnerAddition, minOuterRadius), 0.3f);
+                DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, Mathf.Max(light.pointLightInnerRadius + e.InnerAddition, currentMinInnerRadius), 0.3f);
+                DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, Mathf.Max(light.pointLightInnerRadius + e.InnerAddition, currentMinOuterRadius), 0.3f);
 
                 Light2D mapLight = fovVision.GetComponent<Light2D>();
-                DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x,   Mathf.Max(mapLight.pointLightInnerRadius + e.InnerAddition, minInnerRadius), 0.3f);
-                DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, Mathf.Max( mapLight.pointLightOuterRadius + e.OuterAddition, minOuterRadius), 0.3f);
+                DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x,   Mathf.Max(mapLight.pointLightInnerRadius + e.InnerAddition, currentMinInnerRadius), 0.3f);
+                DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, Mathf.Max( mapLight.pointLightOuterRadius + e.OuterAddition, currentMinOuterRadius), 0.3f);
             }
             
         }

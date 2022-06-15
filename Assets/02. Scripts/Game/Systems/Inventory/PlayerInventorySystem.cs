@@ -24,7 +24,7 @@ namespace Mikrocosmos
 
         public string PrefabName;
         public string SpriteName;
-        public Stack<GameObject> StackedObjects = new Stack<GameObject>();
+        public List<GameObject> StackedObjects = new List<GameObject>();
         public int ClientSlotCount;
         public int Count
         {
@@ -66,6 +66,8 @@ namespace Mikrocosmos
         void ServerHookToBackpack(string name, GameObject gameObject);
         void ServerRemoveFromCurrentBackpack();
         void ServerRemoveFromBackpack(string name);
+
+        void ServerRemoveFromBackpack(GameObject obj);
         void ServerDropFromBackpack(string name);
 
         int GetSlotIndexFromItemName(string name);
@@ -197,7 +199,7 @@ namespace Mikrocosmos
             if (slot != null) {
                 slot.PrefabName = name;
                 slot.SpriteName =  name + "Sprite";
-                slot.StackedObjects.Push(gameObject);
+                slot.StackedObjects.Insert(0,gameObject);
                 ServerSwitchSlot(backpackItems.FindIndex((backpackSlot => backpackSlot == slot)));
             }
             
@@ -211,11 +213,12 @@ namespace Mikrocosmos
                 BackpackSlot slot = backpackItems[currentIndex];
                 if (slot!=null && slot.Count > 0) {
 
-                    GameObject oldObj = slot.StackedObjects.Pop();
+                    GameObject oldObj = slot.StackedObjects[0];
+                    slot.StackedObjects.RemoveAt(0);
 
                     GameObject nextObject = null;
                     if (slot.StackedObjects.Count > 0) {
-                        nextObject = slot.StackedObjects.Peek();
+                        nextObject = slot.StackedObjects[0];
                     }
                     this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved() {
                         CurrentCount = slot.Count,
@@ -235,13 +238,15 @@ namespace Mikrocosmos
             if (slot != null && slot.Count > 0)
             {
 
-                GameObject oldObj = slot.StackedObjects.Pop();
+                GameObject oldObj = slot.StackedObjects[0];
+                slot.StackedObjects.RemoveAt(0);
+
+
                 BackpackSlot currentSlot = backpackItems[currentIndex];
                 GameObject nextObject = null;
                 
-                if (currentSlot.StackedObjects.Count > 0)
-                {
-                    nextObject = currentSlot.StackedObjects.Peek();
+                if (currentSlot.StackedObjects.Count > 0) {
+                    nextObject = currentSlot.StackedObjects[0];
                 }
                 this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved()
                 {
@@ -256,6 +261,38 @@ namespace Mikrocosmos
 
         }
 
+        public void ServerRemoveFromBackpack(GameObject obj) {
+            IGoods goods = obj.GetComponent<IGoods>();
+            if (goods != null) {
+                BackpackSlot slot = FindItemStackInBackpack(goods.Name);
+
+                if (slot != null && slot.Count > 0) {
+                    GameObject oldObj = null;
+                    if (slot.StackedObjects.Contains(obj)) {
+                        slot.StackedObjects.Remove(obj);
+                        oldObj = obj;
+                    }
+
+
+                    BackpackSlot currentSlot = backpackItems[currentIndex];
+                    GameObject nextObject = null;
+
+                    if (currentSlot.StackedObjects.Count > 0)
+                    {
+                        nextObject = currentSlot.StackedObjects[0];
+                    }
+                    this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved()
+                    {
+                        CurrentCount = currentSlot.Count,
+                        PrefabName = currentSlot.PrefabName,
+                        Identity = netIdentity,
+                        NextObject = nextObject,
+                        OldObject = oldObj
+                    });
+                }
+            }
+        }
+
         [ServerCallback]
         public void ServerDropFromBackpack(string name) {
             BackpackSlot slot = FindItemStackInBackpack(name);
@@ -265,7 +302,8 @@ namespace Mikrocosmos
                 GameObject droppeGameObject =null;
                
                 if (slot.StackedObjects.Count > 0) {
-                    droppeGameObject = (slot.StackedObjects.Pop());
+                    droppeGameObject = (slot.StackedObjects[0]);
+                    slot.StackedObjects.RemoveAt(0);
                 }
 
                 GameObject nextObject = null;
@@ -274,7 +312,7 @@ namespace Mikrocosmos
                   
                     droppedCurrentSlot = true;
                     if (slot.StackedObjects.Count > 0) {
-                        nextObject = slot.StackedObjects.Peek();
+                        nextObject = slot.StackedObjects[0];
                     }
                 }
 
@@ -321,7 +359,7 @@ namespace Mikrocosmos
                     if (slot != null && slot.Count > 0)
                     {
                         name = slot.PrefabName;
-                        switchedGameObject = slot.StackedObjects.Peek();
+                        switchedGameObject = slot.StackedObjects[0];
                     }
 
                     this.SendEvent<OnSwitchItemSlot>(new OnSwitchItemSlot()
@@ -384,6 +422,8 @@ namespace Mikrocosmos
 
             return firstEmptySlot;
         }
+
+       
 
 
 

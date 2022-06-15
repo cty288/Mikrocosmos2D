@@ -73,10 +73,20 @@ namespace Mikrocosmos {
 
     public abstract class PermanentRawMaterialBuff: IPermanentRawMaterialBuff{
         public void OnBuffStacked(IPermanentRawMaterialBuff addedBuff) {
-            CurrentLevel += addedBuff.CurrentLevel;
-            CurrentProgressInLevel += addedBuff.CurrentProgressInLevel;
+            //Decompose addedBuff to get its total progress
+            int totalProgress = 0;
+            for (int i = 0; i < addedBuff.CurrentLevel; i++) {
+                totalProgress += addedBuff.ProgressPerLevel[i];
+            }
+
+            totalProgress += addedBuff.CurrentProgressInLevel;
+
+            
+            CurrentProgressInLevel += totalProgress;
             RecalculateLevelAndProgress();
         }
+
+        public abstract void OnLevelUp(int previousLevel, int currentLevel);
 
         public PermanentRawMaterialBuff(int currentLevel = 0, int currentProgressInLevel = 1) {
             CurrentLevel = currentLevel;
@@ -86,6 +96,7 @@ namespace Mikrocosmos {
 
         //if current progress is greater than the maximum progress for current level, then increase current level until current progress is less than the maximum progress for current level
         private void RecalculateLevelAndProgress() {
+            int previousLevel = CurrentLevel;
             while (CurrentProgressInLevel >= ProgressPerLevel[CurrentLevel] && CurrentLevel < MaxLevel) {
                 CurrentProgressInLevel -= ProgressPerLevel[CurrentLevel];
                 CurrentLevel++;
@@ -93,6 +104,10 @@ namespace Mikrocosmos {
                     CurrentProgressInLevel = 0;
                 }
             }
+            if (previousLevel < CurrentLevel) {
+                OnLevelUp(previousLevel, CurrentLevel);
+            }
+
         }
 
         public abstract string Name { get; }
@@ -100,13 +115,16 @@ namespace Mikrocosmos {
 
         public abstract string GetLocalizedName();
 
-        public  BuffClientMessage MessageToClient { get; set; }
+        public abstract   BuffClientMessage MessageToClient { get; set; }
         public abstract  int MaxLevel { get; set; }
         public abstract List<int> ProgressPerLevel { get; set; }
         public int CurrentProgressInLevel { get; set; }
         public int CurrentLevel { get; set; }
+
+      
     }
 
+    
    
 
     [Serializable]
@@ -225,10 +243,17 @@ namespace Mikrocosmos {
                     if (buffs[buff.GetType()] is IStackableBuff<T> repeatableBuff) {
                         repeatableBuff.OnBuffStacked((T)buff);
                         if (callbacks.ContainsKey(buff.GetType())) {
-                            callbacks[buff.GetType()]?.Invoke(BuffStatus.OnUpdate, buff.MessageToClient);
+                            callbacks[repeatableBuff.GetType()]?.Invoke(BuffStatus.OnUpdate, repeatableBuff.MessageToClient);
                         }
-                        ServerOnBuffUpdate?.Invoke(buff);
+                        ServerOnBuffUpdate?.Invoke(repeatableBuff);
+                    }else if (buffs[buff.GetType()] is IStackableBuff<IPermanentRawMaterialBuff> rawMaterialBuff) {
                         
+                        rawMaterialBuff.OnBuffStacked((IPermanentRawMaterialBuff)buff);
+                        if (callbacks.ContainsKey(rawMaterialBuff.GetType()))
+                        {
+                            callbacks[rawMaterialBuff.GetType()]?.Invoke(BuffStatus.OnUpdate, rawMaterialBuff.MessageToClient);
+                        }
+                        ServerOnBuffUpdate?.Invoke(rawMaterialBuff);
                     }
                 }
             }
