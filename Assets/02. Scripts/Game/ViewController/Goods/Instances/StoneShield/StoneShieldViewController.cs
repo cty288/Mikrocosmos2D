@@ -80,12 +80,21 @@ namespace Mikrocosmos
                         ///GameObject wave = Instantiate(this.wave);
                         wave.transform.position = shootPos.position;
                         wave.transform.rotation = transform.rotation;
-                        if (model.HookedByIdentity) {
-                            wave.GetComponent<BasicBulletViewController>()
-                                .SetShotoer(model.HookedByIdentity.GetComponent<Collider2D>());
+                        IBuffSystem buffSystem = null;
+                        if (Owner)
+                        {
+                            Owner.TryGetComponent<IBuffSystem>(out buffSystem);
                         }
                         
-                        wave.GetComponent<StoneShieldBulletViewController>().shooter = GetComponent<Collider2D>();
+                        if (model.HookedByIdentity) {
+                            wave.GetComponent<BasicBulletViewController>()
+                                .SetShotoer(model.HookedByIdentity.GetComponent<Collider2D>(), buffSystem);
+                        }
+
+                        wave.GetComponent<BasicBulletViewController>()
+                            .SetShotoer(GetComponent<Collider2D>(), buffSystem);
+
+                        
                         wave.GetComponent<StoneShieldBulletViewController>().Damage = model.CurrCharge / 2;
                         NetworkServer.Spawn(wave);
                     }

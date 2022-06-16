@@ -31,6 +31,9 @@ namespace Mikrocosmos
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();
+        public void OnLevelAdded() {
+            
+        }
 
         public float MaxDuration { get; protected set; }
         public float RemainingTime { get; set; }
@@ -66,6 +69,9 @@ namespace Mikrocosmos
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();
+        public void OnLevelAdded() {
+            
+        }
 
         public float MaxDuration { get; }
         public float RemainingTime { get; set; }

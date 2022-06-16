@@ -30,6 +30,7 @@ namespace Mikrocosmos
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Using")) {
                 animator.SetBool("Use", true);
                 isUsing = true;
+                Model.CanBeHooked = false;
             }
 
             
@@ -69,7 +70,20 @@ namespace Mikrocosmos
         public void DealDamageToDamagable(GameObject target) {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Using")) {
                 Debug.Log($"Deal Damage to target: {target.name}");
-                target.GetComponent<IDamagable>().TakeRawDamage(damagePer02);
+                int damage = damagePer02;
+                if (Owner)
+                {
+                    Owner.TryGetComponent<IBuffSystem>(out var ownerBuffSystem);
+                    if (ownerBuffSystem != null)
+                    {
+                        if (ownerBuffSystem.HasBuff<PermanentPowerUpBuff>(out PermanentPowerUpBuff powerBuff))
+                        {
+                            damage *= (1 + Mathf.RoundToInt(powerBuff.CurrentLevel * powerBuff.AdditionalDamageAdditionPercentage));
+                        }
+                    }
+                }
+                
+                target.GetComponent<IDamagable>().TakeRawDamage(damage);
                 
             }
         }
@@ -88,9 +102,8 @@ namespace Mikrocosmos
                 GoodsModel.ReduceDurability(1);
             }
             fire1.gameObject.SetActive(true);
-            Model.CanBeHooked = false;
+          
         }
-
         protected override void OnServerItemStopUsed() {
             base.OnServerItemStopUsed();
             Model.CanBeHooked = true;

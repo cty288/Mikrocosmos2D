@@ -13,6 +13,9 @@ namespace Mikrocosmos
 
         public float AccelerationDecreasePerMass { get; }
 
+        public void AddSpeedAndAcceleration(float percentage);
+
+        public void AddMaximumHealth(float percentage);
         public float BackpackMass { get; }
 
         public int EscapeNeedCount { get; }

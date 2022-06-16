@@ -38,7 +38,7 @@ namespace Mikrocosmos
         public override string Name { get; set; } = "Spaceship";
         private IHookSystem hookSystem;
         private Rigidbody2D rigidbody;
-
+        
 
         [SerializeField] 
         private float damagePerMomentum;
@@ -70,6 +70,9 @@ namespace Mikrocosmos
         public int EscapeNeedCount { get; } = 10;
         public float EscapeLossTime { get; } = 0.15f;
         public float MaxMaxSpeed { get; } = 100;
+
+        private float initialMaxSpeed;
+        private float startAcceleration;
 
         [field: SyncVar(hook = nameof(ClientOnEscapeCounterChanged))]
         public int EscapeCounter { get; private set; }
@@ -126,6 +129,17 @@ namespace Mikrocosmos
 
         [field: SyncVar, SerializeField]
         public float AccelerationDecreasePerMass { get; private set; } = 2;
+
+        public void AddSpeedAndAcceleration(float percentage) {
+            MaxSpeed += initialMaxSpeed * percentage;
+            InitialAcceleration += startAcceleration * percentage;
+            GetTotalMass();
+        }
+
+        public void AddMaximumHealth(float percentage) {
+            MaxHealth = Mathf.RoundToInt(MaxHealth + 100 * percentage);
+            CurrentHealth = Mathf.RoundToInt(CurrentHealth * (1 + percentage));
+        }
 
         public float BackpackMass {
             get {
@@ -227,8 +241,9 @@ namespace Mikrocosmos
             ServerUpdateMass();
             initialForce = ProperForce();
             this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
+            initialMaxSpeed = MaxSpeed;
+            startAcceleration = InitialAcceleration;
 
-             
         }
         [ServerCallback]
         private float ProperForce()

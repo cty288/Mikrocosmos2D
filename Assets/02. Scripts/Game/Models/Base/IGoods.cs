@@ -22,4 +22,6 @@ namespace Mikrocosmos
         bool IsSell { get; set; }
     }
 
+    
+
 }

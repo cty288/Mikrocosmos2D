@@ -3,8 +3,8 @@
   "ABMD5List": [
     {
       "AssetName": "buff_icons",
-      "MD5": "59d3736751b50a1621df32f4f8a1ee40",
-      "FileSize": 224.546875,
+      "MD5": "9bd9aeb722a538c31212de9cc3dabb08",
+      "FileSize": 265.44043,
       "assetDatas": [
         {
           "Name": "BuffIcon",
@@ -22,6 +22,26 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
+          "Name": "PermanentAffinityBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "PermanentHealthBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "PermanentPowerUpBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "PermanentSpeedUpBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
           "Name": "PermanentVisionExpansionBuffIcon",
           "OwnerBundleName": "buff_icons",
           "AssetType": "UnityEngine.GameObject"
@@ -32,7 +52,7 @@
           "AssetType": "UnityEngine.GameObject"
         },
         {
-          "Name": "VisionExpansionBuffIcon 1",
+          "Name": "VisionExpansionBuffIcon",
           "OwnerBundleName": "buff_icons",
           "AssetType": "UnityEngine.GameObject"
         }
@@ -108,14 +128,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "1580e77ccca45690bc1a5c4cde550b31",
+      "MD5": "e2ed943460ae3be3dda5eb56949282c6",
       "FileSize": 1.73242188,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "fad6e83dcc893f794efb2706cd75a355",
-      "FileSize": 1535.084,
+      "MD5": "440515699decff585d2b3ad92cbec270",
+      "FileSize": 1535.2002,
       "assetDatas": [
         {
           "Name": "FirePlant",

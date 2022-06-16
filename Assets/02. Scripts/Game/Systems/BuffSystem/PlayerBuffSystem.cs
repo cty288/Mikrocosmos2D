@@ -59,63 +59,79 @@ namespace Mikrocosmos
             buffSystem.ServerOnBuffStart += OnServerBuffStart;
             buffSystem.ServerOnBuffStop += OnServerBuffStop;
 
-            buffSystem.ServerRegisterClientCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
-            buffSystem.ServerRegisterClientCallback<PermanentVisionExpansionBuff, OnPermanentVisionExpansion>(TargetOnVisionPermenantExpand);
+          //  buffSystem.ServerRegisterCallback<PermanentSpeedBuff, BuffClientMessage>(OnServerPermanentSpeedBuff);
+
+            buffSystem.ServerRegisterCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
+            buffSystem.ServerRegisterCallback<PermanentVisionExpansionBuff, OnPermanentVisionExpansion>(TargetOnVisionPermenantExpand);
             //buffSystem.ServerRegisterClientCallback<PermanentAffinityBuff, OnPermanentAffinityAddition>(TargetOnPermanentAffinityBuff);
         }
 
-        
+     
 
 
-        public override void OnStopServer() {
+        #region MessageSenders
+
+        public override void OnStopServer()
+        {
             base.OnStopServer();
             buffSystem.ServerOnBuffUpdate -= OnServerBuffUpdate;
             buffSystem.ServerOnBuffStart -= OnServerBuffStart;
             buffSystem.ServerOnBuffStop -= OnServerBuffStop;
         }
-        private void OnServerBuffStart(IBuff buff) {
+        private void OnServerBuffStart(IBuff buff)
+        {
             BuffInfo buffInfo = SetupBuffInfo(buff);
             TargetUpdateBuffInfo(buffInfo, BuffUpdateMode.Start);
         }
-        
-        private void OnServerBuffStop(IBuff buff) {
+
+        private void OnServerBuffStop(IBuff buff)
+        {
             BuffInfo buffInfo = SetupBuffInfo(buff);
             TargetUpdateBuffInfo(buffInfo, BuffUpdateMode.Stop);
         }
 
-        private void OnServerBuffUpdate(IBuff buff) {
+        private void OnServerBuffUpdate(IBuff buff)
+        {
             BuffInfo buffInfo = SetupBuffInfo(buff);
-            TargetUpdateBuffInfo(buffInfo, BuffUpdateMode.Update);            
+            TargetUpdateBuffInfo(buffInfo, BuffUpdateMode.Update);
         }
 
 
-        private BuffInfo SetupBuffInfo(IBuff buff) {
+        private BuffInfo SetupBuffInfo(IBuff buff)
+        {
             BuffInfo buffInfo = new BuffInfo()
             {
                 LocalizedDescription = buff.GetLocalizedDescriptionText(),
                 LocalizedName = buff.GetLocalizedName(),
                 Name = buff.Name
             };
-            
-            if (buff is ITimedBuff timedBuff) {
-                buffInfo.TimeBuffInfo = new TimeBuffInfo() {
+
+            if (buff is ITimedBuff timedBuff)
+            {
+                buffInfo.TimeBuffInfo = new TimeBuffInfo()
+                {
                     TimeBuffTime = timedBuff.RemainingTime,
                     TimeBuffMaxTime = timedBuff.MaxDuration,
                 };
             }
 
-            if (buff is IUntilBuff untilBuff) {
-                buffInfo.UntilBuffInfo = new UntilBuffInfo() {
+            if (buff is IUntilBuff untilBuff)
+            {
+                buffInfo.UntilBuffInfo = new UntilBuffInfo()
+                {
                     UntilBuffTriggerTime = untilBuff.TotalCanBeTriggeredTime
                 };
             }
 
-            if (buff is IPermanentRawMaterialBuff permanentRawMaterialBuff) {
+            if (buff is IPermanentRawMaterialBuff permanentRawMaterialBuff)
+            {
                 int maxProgress;
-                if (permanentRawMaterialBuff.CurrentLevel == permanentRawMaterialBuff.MaxLevel) {
+                if (permanentRawMaterialBuff.CurrentLevel == permanentRawMaterialBuff.MaxLevel)
+                {
                     maxProgress = 1;
                 }
-                else {
+                else
+                {
                     maxProgress = permanentRawMaterialBuff.ProgressPerLevel[permanentRawMaterialBuff.CurrentLevel];
                 }
                 buffInfo.PermanentRawMaterialBuffInfo = new PermanentRawMaterialBuffInfo()
@@ -131,13 +147,18 @@ namespace Mikrocosmos
 
 
         [TargetRpc]
-        public void TargetUpdateBuffInfo(BuffInfo buffInfo, BuffUpdateMode updateStatus) {
-            this.SendEvent<ClientOnBuffUpdate>(new ClientOnBuffUpdate() {
+        public void TargetUpdateBuffInfo(BuffInfo buffInfo, BuffUpdateMode updateStatus)
+        {
+            this.SendEvent<ClientOnBuffUpdate>(new ClientOnBuffUpdate()
+            {
                 BuffInfo = buffInfo,
                 UpdateMode = updateStatus
             });
             Debug.Log($"Client Buff Update: UpdateMode - {updateStatus}, BuffName: {buffInfo.Name}");
         }
+
+
+        #endregion
 
 
         [TargetRpc]

@@ -60,6 +60,6 @@ namespace Mikrocosmos
 
 
         public override int MaxLevel { get; set; } = 5;
-        public override List<int> ProgressPerLevel { get; set; } = new List<int>() {1, 3, 3, 4, 5, 5};
+        public override List<int> ProgressPerLevel { get; set; } = new List<int>() {1, 2, 2, 3, 4};
     }
 }

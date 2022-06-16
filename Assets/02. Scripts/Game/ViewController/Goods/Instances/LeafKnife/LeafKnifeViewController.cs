@@ -45,8 +45,21 @@ namespace Mikrocosmos
             }
 
             if (gameObject.TryGetComponent<IDamagable>(out IDamagable damagable)) {
+                int damage = model.AddedDamage;
+                if (Owner)
+                {
+                    Owner.TryGetComponent<IBuffSystem>(out var ownerBuffSystem);
+                    if (ownerBuffSystem != null)
+                    {
+                        if (ownerBuffSystem.HasBuff<PermanentPowerUpBuff>(out PermanentPowerUpBuff powerBuff))
+                        {
+                            damage *= (1 + Mathf.RoundToInt(powerBuff.CurrentLevel * powerBuff.AdditionalDamageAdditionPercentage));
+                        }
+                    }
+                }
+                
                 damagable.TakeRawMomentum(Random.Range(12f, model.AddedMomentum),0);
-                damagable.TakeRawDamage(model.AddedDamage);
+                damagable.TakeRawDamage(damage);
             }
         }
 

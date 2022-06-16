@@ -58,8 +58,13 @@ namespace Mikrocosmos
                 bullet.transform.rotation = Quaternion.identity;
                 NetworkServer.Spawn(bullet);
                 bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                
-                bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>());
+
+                IBuffSystem buffSystem = null;
+                if (Owner) {
+                    Owner.TryGetComponent<IBuffSystem>(out buffSystem);
+                }
+
+                bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>(), buffSystem);
                 bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
                 bullet.transform.rotation = transform.rotation;
             }

@@ -79,8 +79,8 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             this.RegisterEvent<OnPlayerDie>(OnServerPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
-            buffSystem.ServerRegisterClientCallback<DieBuff, BuffClientMessage>(RpcOnDizzyBuff);
-            buffSystem.ServerRegisterClientCallback<InvincibleBuff, BuffClientMessage>(RpcOnInvincibleBuff);
+            buffSystem.ServerRegisterCallback<DieBuff, BuffClientMessage>(RpcOnDizzyBuff);
+            buffSystem.ServerRegisterCallback<InvincibleBuff, BuffClientMessage>(RpcOnInvincibleBuff);
             
         }
 

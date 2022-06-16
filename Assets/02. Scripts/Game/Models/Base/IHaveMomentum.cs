@@ -12,10 +12,9 @@ namespace Mikrocosmos
     public interface IHaveMomentum {
 
         MoveMode MoveMode { get; set; }
-        float MaxSpeed { get;}
+        float MaxSpeed { get; }
 
-        float Acceleration { get;}
-
+        float Acceleration { get;  }
         /// <summary>
         /// This is the self mass of this object
         /// </summary>

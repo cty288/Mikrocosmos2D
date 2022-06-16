@@ -31,7 +31,7 @@ namespace Mikrocosmos
 
         }
 
-        public override string Name { get; } = "PermanentVisionExpansionBuff";
+        public override string Name { get; } = "PermanentAffinityBuff";
         public override string GetLocalizedDescriptionText()
         {
             return Localization.GetFormat("GAME_PERM_BUFF_AFFINITY_DESCRIPTION", ((int)(additionalAffinityAdditionPercentage * 100)) * CurrentLevel);
@@ -49,6 +49,6 @@ namespace Mikrocosmos
 
 
         public override int MaxLevel { get; set; } = 5;
-        public override List<int> ProgressPerLevel { get; set; } = new List<int>() { 1, 2, 3, 4, 5};
+        public override List<int> ProgressPerLevel { get; set; } = new List<int>() { 1, 2, 2, 2, 3};
     }
 }

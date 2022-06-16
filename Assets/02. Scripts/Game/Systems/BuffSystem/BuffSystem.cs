@@ -22,6 +22,8 @@ namespace Mikrocosmos {
         string GetLocalizedName();
 
         BuffClientMessage MessageToClient { get; set; }
+
+        void OnLevelAdded();
     }
 
     /// <summary>
@@ -71,7 +73,12 @@ namespace Mikrocosmos {
         
     }
 
-    public abstract class PermanentRawMaterialBuff: IPermanentRawMaterialBuff{
+    public abstract class PermanentRawMaterialBuff: IPermanentRawMaterialBuff {
+
+        public void OnLevelAdded() {
+            RecalculateLevelAndProgress();
+        }
+        
         public void OnBuffStacked(IPermanentRawMaterialBuff addedBuff) {
             //Decompose addedBuff to get its total progress
             int totalProgress = 0;
@@ -91,13 +98,17 @@ namespace Mikrocosmos {
         public PermanentRawMaterialBuff(int currentLevel = 0, int currentProgressInLevel = 1) {
             CurrentLevel = currentLevel;
             CurrentProgressInLevel = currentProgressInLevel;
-            RecalculateLevelAndProgress();
+            
         }
 
+    
+
+
+
         //if current progress is greater than the maximum progress for current level, then increase current level until current progress is less than the maximum progress for current level
-        private void RecalculateLevelAndProgress() {
+        protected void RecalculateLevelAndProgress() {
             int previousLevel = CurrentLevel;
-            while (CurrentProgressInLevel >= ProgressPerLevel[CurrentLevel] && CurrentLevel < MaxLevel) {
+            while (CurrentLevel < MaxLevel && CurrentProgressInLevel >= ProgressPerLevel[CurrentLevel]) {
                 CurrentProgressInLevel -= ProgressPerLevel[CurrentLevel];
                 CurrentLevel++;
                 if (CurrentLevel == MaxLevel) {
@@ -116,6 +127,8 @@ namespace Mikrocosmos {
         public abstract string GetLocalizedName();
 
         public abstract   BuffClientMessage MessageToClient { get; set; }
+      
+
         public abstract  int MaxLevel { get; set; }
         public abstract List<int> ProgressPerLevel { get; set; }
         public int CurrentProgressInLevel { get; set; }
@@ -168,6 +181,9 @@ namespace Mikrocosmos {
         public abstract string GetLocalizedDescriptionText();
         public abstract string GetLocalizedName();
         public  abstract BuffClientMessage MessageToClient { get; set; }
+        public virtual void OnLevelAdded() {
+            
+        }
     }
 
 
@@ -190,6 +206,9 @@ namespace Mikrocosmos {
         public abstract string GetLocalizedDescriptionText();
         public abstract string GetLocalizedName();
         public abstract  BuffClientMessage MessageToClient { get; set; }
+        public virtual void OnLevelAdded() {
+            
+        }
 
         public UntilAction UntilAction { get; set; } 
         public int TotalCanBeTriggeredTime { get;  set; }
@@ -212,7 +231,7 @@ namespace Mikrocosmos {
 
         bool HasBuff<T>(out T buff) where T : class, IBuff;
         bool HasBuff<T>() where T : class, IBuff;
-        void ServerRegisterClientCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage;
+        void ServerRegisterCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage;
 
         Action<IBuff> ServerOnBuffStart { get; set; }
 
@@ -263,6 +282,7 @@ namespace Mikrocosmos {
             yield return new WaitForEndOfFrame();
             if (!buffs.ContainsKey(buff.GetType())) {
                 buffs.Add(buff.GetType(), buff);
+                buff.OnLevelAdded();
                 if (callbacks.ContainsKey(type)) {
                     callbacks[type]?.Invoke(BuffStatus.OnStart, buff.MessageToClient);
                 }
@@ -283,7 +303,7 @@ namespace Mikrocosmos {
             return buffs.ContainsKey(typeof(T));
         }
 
-        public void ServerRegisterClientCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage{
+        public void ServerRegisterCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage{
             if (callbacks.ContainsKey(typeof(T))) {
                 callbacks[typeof(T)] += ((status, message) => callback.Invoke(status, message as T2));
             }

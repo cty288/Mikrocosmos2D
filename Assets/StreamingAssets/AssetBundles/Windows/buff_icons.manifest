@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3617807385
+CRC: 520530175
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fd4f366ef70db8df17c0797797ba2c17
+    Hash: 93394390c2d52826e704e4704ec750d6
   TypeTreeHash:
     serializedVersion: 2
     Hash: 612412107538887f0581f6f635b77476
@@ -35,10 +35,14 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
+- Assets/03. Prefabs/Game/UI/BuffIcons/PermanentSpeedUpBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/BuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/PermanentVisionExpansionBuffIcon.prefab
+- Assets/03. Prefabs/Game/UI/BuffIcons/PermanentAffinityBuffIcon.prefab
+- Assets/03. Prefabs/Game/UI/BuffIcons/PermanentPowerUpBuffIcon.prefab
+- Assets/03. Prefabs/Game/UI/BuffIcons/PermanentHealthBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/DieBuffIcon.prefab
-- Assets/03. Prefabs/Game/UI/BuffIcons/VisionExpansionBuffIcon 1.prefab
+- Assets/03. Prefabs/Game/UI/BuffIcons/VisionExpansionBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/PoisonBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/InvincibleBuffIcon.prefab
 Dependencies: []

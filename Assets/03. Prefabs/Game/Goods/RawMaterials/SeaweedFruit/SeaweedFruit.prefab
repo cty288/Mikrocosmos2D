@@ -41,6 +41,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <CanBeUsed>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <Durability>k__BackingField
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
@@ -48,8 +52,16 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <MaxDurability>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <BasicSellPrice>k__BackingField
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: reduceDurabilityInstantlyAfterUse
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_AssetId
@@ -258,7 +270,13 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -6830313856833975781, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
     - {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+    - {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+--- !u!212 &4710686576622463858 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+  m_PrefabInstance: {fileID: 1849494803883255911}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4710686576622463885 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
@@ -280,7 +298,7 @@ CircleCollider2D:
   m_Offset: {x: -0.031647444, y: 0}
   serializedVersion: 2
   m_Radius: 1.1683526
---- !u!114 &5888939706740527627
+--- !u!114 &829094423972008369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,30 +307,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 4710686576622463885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c1ec26cc22c0924ea51c8c6137844bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_ApplyToSortingLayers: 0000000031834c8ca1496a74855d0d49
-  m_ShapePath:
-  - {x: -1.221895, y: -0.06979021, z: 0}
-  - {x: -1.0928637, y: 0.5461213, z: 0}
-  - {x: -0.7222626, y: 0.97601855, z: 0}
-  - {x: -0.053294055, y: 1.1965238, z: 0}
-  - {x: 0.65571845, y: 1.085447, z: 0}
-  - {x: 1.0685906, y: 0.6391402, z: 0}
-  - {x: 1.2078699, y: -0.095540896, z: 0}
-  - {x: 1.0883317, y: -0.6749268, z: 0}
-  - {x: 0.62047404, y: -1.0594456, z: 0}
-  - {x: 0.20368825, y: -1.1666998, z: 0}
-  - {x: -0.3017943, y: -1.1594504, z: 0}
-  - {x: -0.71097976, y: -0.9738572, z: 0}
-  - {x: -1.0288874, y: -0.65673304, z: 0}
-  m_ShapePathHash: 747905681
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 73618
+  syncMode: 0
+  syncInterval: 0.1
+  <HookedPositionOffset>k__BackingField: {x: 0.01, y: 2.53}
+  <HookedRotationZOffset>k__BackingField: 90
+  <IsMaskable>k__BackingField: 1
+  buyMaterial: {fileID: 2100000, guid: b8e29f86efcf73a45b1715d62379f5b7, type: 2}
+  sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
+  visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
+  defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  visionAffectedSprites:
+  - {fileID: 4710686576622463858}
+  visionAffectedSpritesOnMap: []
+  <CanBeMasked>k__BackingField: 1
+  <AlsoMaskedOnMap>k__BackingField: 0
+  DurabilityCountSprite: {fileID: 0}
+  speedIncreasePercentage: 0.2

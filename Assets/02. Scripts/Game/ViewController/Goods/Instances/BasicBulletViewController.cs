@@ -15,7 +15,10 @@ namespace Mikrocosmos
         [HideInInspector] public float Force;
 
         [HideInInspector]
-        public Collider2D shooter;
+
+        private Collider2D shooter;
+
+        private List<Collider2D> shooters = new List<Collider2D>(); 
 
        protected NetworkAnimator animator;
 
@@ -24,6 +27,8 @@ namespace Mikrocosmos
        [SerializeField] private bool destroyWhenHit = false;
 
        [SerializeField] private bool damageReduceBySpeed = true;
+
+       private int additionalDamageFactor = 0;
         protected void Start() {
             base.Awake();
             animator = GetComponent<NetworkAnimator>();
@@ -33,18 +38,28 @@ namespace Mikrocosmos
             }
         }
 
-        public void SetShotoer(Collider2D shooter) {
+        public void SetShotoer(Collider2D shooter, IBuffSystem buffSystem = null) {
             this.shooter = shooter;
             Physics2D.IgnoreCollision(shooter, GetComponent<Collider2D>(), true);
+            if (buffSystem != null) {
+                if (buffSystem.HasBuff<PermanentPowerUpBuff>(out PermanentPowerUpBuff powerBuff)) {
+                    additionalDamageFactor = Mathf.RoundToInt(powerBuff.CurrentLevel * powerBuff.AdditionalDamageAdditionPercentage);
+                }
+            }
+            shooters.Add(shooter);
+           
         }
        
 
         public override void OnReset() {
             base.OnReset();
-            if (shooter) {
-                Physics2D.IgnoreCollision(shooter, GetComponent<Collider2D>(), false);
-                shooter = null;
+            foreach (Collider2D s in shooters) {
+                Physics2D.IgnoreCollision(s, GetComponent<Collider2D>(), false);
             }
+
+            shooter = null;
+            shooters.Clear();
+            
             rigidbody.velocity = Vector2.zero;
         }
 
@@ -69,7 +84,8 @@ namespace Mikrocosmos
                         if (!damageReduceBySpeed) {
                             damage = model.Damage;
                         }
-                        
+
+                        damage += (damage * additionalDamageFactor);
                         if (entity is IDamagable damagable) {
 
                             //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);

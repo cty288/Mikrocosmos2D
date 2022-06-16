@@ -41,7 +41,14 @@ namespace Mikrocosmos
                     //GameObject bullet = Instantiate(this.bullet, shootTransform.position, shootTransform.rotation);
                     bullet.transform.position = shootTransform.position;
                     bullet.transform.rotation = shootTransform.rotation;
-                     bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>());
+                    
+                    IBuffSystem buffSystem = null;
+                    if (Owner)
+                    {
+                        Owner.TryGetComponent<IBuffSystem>(out buffSystem);
+                    }
+                    
+                    bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>(), buffSystem);
                     bullet.GetComponent<Rigidbody2D>().AddForce(-bullet.transform.right * shootForce, ForceMode2D.Impulse);
                     NetworkServer.Spawn(bullet);
                 }
