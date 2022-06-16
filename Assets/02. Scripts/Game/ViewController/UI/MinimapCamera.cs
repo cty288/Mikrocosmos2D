@@ -44,7 +44,7 @@ namespace Mikrocosmos
         private void OnCameraViewChange(OnCameraViewChange e) {
             float targetRadius = e.RadiusAddition * 2.5f;
 
-            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x,  Mathf.Max(currentMinCameraRadius * 2.5f, camera.orthographicSize + targetRadius), 0.3f);
+            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x,  Mathf.Max(currentMinCameraRadius * 2.5f, currentMinCameraRadius * 2.5f + targetRadius), 0.3f);
             //cinemachineTargetGroup.m_Targets[0].radius = e.NewRadius;
         }
 

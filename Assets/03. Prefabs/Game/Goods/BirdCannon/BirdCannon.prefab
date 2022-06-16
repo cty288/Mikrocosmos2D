@@ -60,7 +60,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <Frequency>k__BackingField
-      value: 1.6
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <Durability>k__BackingField

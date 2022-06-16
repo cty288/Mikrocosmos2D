@@ -85,7 +85,7 @@ namespace Mikrocosmos
                     previousHookedBy = Model.HookedByIdentity;
                     //TargetOnStartCharge(Model.HookedByIdentity.connectionToClient);
                     if (Model.HookedByIdentity.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
-                        buffSystem.AddBuff<VisionExpansionBuff>(new VisionExpansionBuff(1f, CameraExpandRadius,
+                        buffSystem.AddBuff<VisionExpansionBuff>(new VisionExpansionBuff(0.9f, CameraExpandRadius,
                             new Vector2(25, 25)));
                     }
                     Model.CanBeHooked = false;

@@ -2,7 +2,7 @@ STRING ID,DESCRIPTION,ENGLISH,FRENCH / FRANÇAIS,SPANISH / ESPAÑOL,GERMAN / DEU
 LANGUAGE_CODE,IETF language tag(s) without dash,enUS enGB,frFR,esES esAR esMX,deDE deCH deAT,itIT itCH,ptBR,ptPT,ruRU,elGR,trTR,daDK,noNB,svSE,nlNL,plPL,fiFI,jaJP,zhCN zhSG,zhTW zhHK zhMO,koKR,csCZ,huHU,roRO,thTH,bgBG,heIL,ar001,bsBS
 LANGUAGE_EN,[LanguageName] in english,English,French,Spanish,German,Italian ,Portuguese (Brazil),Portuguese,Russian,Greek,Turkish,Danish,Norwegian,Swedish,Dutch,Polish,Finnish,Japanese,Simplified Chinese,Traditional Chinese,Korean,Czech,Hungarian,Romanian,Thai,Bulgarian,Hebrew,Arabic,Bosnian
 LANGUAGE_DIRECTION,ltr or rtl (text direction used by game code),ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,ltr,rtl,rtl,ltr
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Mikrocosmos 2D 的翻译在703行开始，前面都是Mikrocosmos 3的,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Polyglot,100,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 CONTEXT_CHARACTER_CLASS,[Noun] Character class,Class,Classe,Clase,Klasse,Classe,Classe,Classe,Класс,Κλάση,Sınıf,Klasse,Klasse,Klass,Klasse,Klasa,Luokka,クラス,角色种类,角色類,직업,Třída,Osztály,Clasă,คลาส,Клас,טיפוס,فئة,Klasa
 CONTEXT_CHARACTER_DELETE,[Verb],Delete Character,Supprimer personnage,Eliminar personaje,Character löschen,Cancella personaggio,Deletar Personagem,Apagar personagem,Удалить персонажа,Διαγραφή Χαρακτήρα,Karakteri Sil,Slet karakter,Slett karakter,Radera karaktär,Verwijder Personage,Usuń Postać,Poista hahmo,キャラクター削除,删除角色,刪除角色,캐릭터 지우기,Smazat postavu,Karakter törlése,Șterge personaj,ลบตัวละคร,Изтриване на героя,למחוק דמות,حذف الشخصية,Obrisati Lika
@@ -703,9 +703,11 @@ MENU_RETURN_TO_MENU_BUTTON,,Back to menu,,,,,,,,,,,,,,,,,返回菜单,返回菜�
 GAME_AUTHENTICATE_FAILED,,Failed to authenticate your identity. Please return to the menu!,,,,,,,,,,,,,,,,,身份验证失败，请返回主菜单！,身份驗證失敗，請返回主菜單！,,,,,,,,,
 MENU_SERVER_START_MATCH_FAILED,,"Sorry, an error occurred while we were starting the game. Please try again!",,,,,,,,,,,,,,,,,抱歉，服务器启动游戏时发生了错误。请尝试重新匹配！,抱歉，服務器啟動遊戲時發生了錯誤。請嘗試重新匹配！,,,,,,,,,
 MENU_AUTHENTICATE_FAILED,,Authentication failed! Please make sure you are not using any cheating plugins and re-enter the game!,,,,,,,,,,,,,,,,,身份验证失败！请确保你没有使用任何作弊工具并重新进入游戏！,身份驗證失敗！請確保你沒有使用任何作弊工具並重新進入遊戲！,,,,,,,,,
+游戏内提示,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 GAME_COUNTDOWN_START,,COUNTDOWN ALERT,,,,,,,,,,,,,,,,,倒计时警告！,倒計時警告！,,,,,,,,,
 GAME_COUNTDOWN_WIN,,win!,,,,,,,,,,,,,,,,,胜利,勝利,,,,,,,,,
 GAME_COUNTDOWN_TIE,,Tie! Continue!,,,,,,,,,,,,,,,,,平局！加时赛！,平局！加時賽！,,,,,,,,,
+BUFF系统,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 GAME_BUFF_DIE,,Lost Control,,,,,,,,,,,,,,,,,失去控制,失去控制,,,,,,,,,
 GAME_BUFF_DIE_DESCRIPTION,,Warning! The ship's control system was damaged by the impact and is self-repairing...,,,,,,,,,,,,,,,,,你的飞船受到严重打击，正在进行自我修复...,你的飛船受到嚴重打擊，正在進行自我修復...,,,,,,,,,
 GAME_BUFF_INVINCIBLE,,Invincible,,,,,,,,,,,,,,,,,焕然一新,煥然一新,,,,,,,,,

@@ -37,7 +37,7 @@ namespace Mikrocosmos
         }
 
         private void OnCameraViewChange(OnCameraViewChange e) {
-            cinemachineTargetGroup.m_Targets[0].radius += e.RadiusAddition;
+            cinemachineTargetGroup.m_Targets[0].radius = currentMinCameraRadius + e.RadiusAddition;
             cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
         }
 
