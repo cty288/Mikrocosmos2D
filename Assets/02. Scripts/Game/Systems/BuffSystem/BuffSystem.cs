@@ -23,7 +23,7 @@ namespace Mikrocosmos {
 
         BuffClientMessage MessageToClient { get; set; }
 
-        void OnLevelAdded();
+        void OnBuffAdded();
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ namespace Mikrocosmos {
 
     public abstract class PermanentRawMaterialBuff: IPermanentRawMaterialBuff {
 
-        public void OnLevelAdded() {
+        public void OnBuffAdded() {
             RecalculateLevelAndProgress();
         }
         
@@ -181,7 +181,7 @@ namespace Mikrocosmos {
         public abstract string GetLocalizedDescriptionText();
         public abstract string GetLocalizedName();
         public  abstract BuffClientMessage MessageToClient { get; set; }
-        public virtual void OnLevelAdded() {
+        public virtual void OnBuffAdded() {
             
         }
     }
@@ -206,7 +206,7 @@ namespace Mikrocosmos {
         public abstract string GetLocalizedDescriptionText();
         public abstract string GetLocalizedName();
         public abstract  BuffClientMessage MessageToClient { get; set; }
-        public virtual void OnLevelAdded() {
+        public virtual void OnBuffAdded() {
             
         }
 
@@ -282,7 +282,12 @@ namespace Mikrocosmos {
             yield return new WaitForEndOfFrame();
             if (!buffs.ContainsKey(buff.GetType())) {
                 buffs.Add(buff.GetType(), buff);
-                buff.OnLevelAdded();
+                buff.OnBuffAdded();
+
+                if (buff is IUntilBuff untilBuff) {
+                    untilBuff.UntilAction.Execute();
+                }
+                
                 if (callbacks.ContainsKey(type)) {
                     callbacks[type]?.Invoke(BuffStatus.OnStart, buff.MessageToClient);
                 }
@@ -345,7 +350,11 @@ namespace Mikrocosmos {
                     if (buff is IUntilBuff untilBuff) {
                         if (untilBuff.UntilAction.Finished) {
                             untilBuff.TotalCanBeTriggeredTime--;
-                            callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered, buff.MessageToClient);
+                            if (callbacks.ContainsKey(b.Key))
+                            {
+                                callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered, buff.MessageToClient);
+                            }
+                          
                             ServerOnBuffUpdate?.Invoke(buff);                            
                         }
                     }

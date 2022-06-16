@@ -31,7 +31,7 @@ namespace Mikrocosmos
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();
-        public void OnLevelAdded() {
+        public void OnBuffAdded() {
             
         }
 
@@ -69,7 +69,7 @@ namespace Mikrocosmos
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();
-        public void OnLevelAdded() {
+        public void OnBuffAdded() {
             
         }
 

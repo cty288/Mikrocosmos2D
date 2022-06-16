@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
 
@@ -64,9 +66,18 @@ namespace Mikrocosmos
             buffSystem.ServerRegisterCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
             buffSystem.ServerRegisterCallback<PermanentVisionExpansionBuff, OnPermanentVisionExpansion>(TargetOnVisionPermenantExpand);
             //buffSystem.ServerRegisterClientCallback<PermanentAffinityBuff, OnPermanentAffinityAddition>(TargetOnPermanentAffinityBuff);
+
+            this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
-     
+        private void OnServerSpaceshipOverweight(OnServerSpaceshipOverweight e) {
+            if (e.Spaceship == gameObject) {
+                buffSystem.AddBuff<OverweightDeBuff>(new OverweightDeBuff(1,
+                    UntilAction.Allocate((() =>
+                        Math.Abs(e.SpaceshipModel.Acceleration - e.MinimumAcceleration) >= e.Tolerance))));
+            }
+        }
 
 
         #region MessageSenders

@@ -62,7 +62,7 @@ namespace Mikrocosmos {
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new OnVisionExpansion();
-        public void OnLevelAdded() {
+        public void OnBuffAdded() {
             
         }
 

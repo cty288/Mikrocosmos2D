@@ -46,16 +46,17 @@ namespace Mikrocosmos
         }
 
         private void SpawnMeteor() {
-            var meteor = NetworkedObjectPoolManager.Singleton.Allocate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)]);
+            var meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)]);
             Transform spawnPosition = meteorSpawnPositions[Random.Range(0, meteorSpawnPositions.Count)];
             meteor.transform.position = spawnPosition.position;
             meteor.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-            meteor.SetActive(true);
-            meteor.GetComponent<Rigidbody2D>().velocity = spawnPosition.up * Random.Range(10f, 60f);
+            meteor.GetComponent<Rigidbody2D>().velocity = spawnPosition.up * Random.Range(20f, 40f);
             meteor.GetComponent<Collider2D>().isTrigger = true;
+            
             this.GetSystem<ITimeSystem>().AddDelayTask(10f, () => {
                 meteor.GetComponent<Collider2D>().isTrigger = false;
             });
+            
             activeMeteors.Add(meteor);
             NetworkServer.Spawn(meteor);
         }

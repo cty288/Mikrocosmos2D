@@ -224,6 +224,14 @@ namespace Mikrocosmos
 
         private void RefreshAcceleration(float totalMass) {
             Acceleration = Mathf.Max(minimumAcceleration, InitialAcceleration - totalMass * AccelerationDecreasePerMass);
+            if (Math.Abs(Acceleration - minimumAcceleration) < 15) {
+                this.SendEvent<OnServerSpaceshipOverweight>(new OnServerSpaceshipOverweight() {
+                    Spaceship = gameObject,
+                    Tolerance = 15,
+                    SpaceshipModel = this,
+                    MinimumAcceleration = minimumAcceleration
+                });
+            }
         }
 
         [ClientCallback]
@@ -331,5 +339,12 @@ namespace Mikrocosmos
             }
            
         }
+    }
+
+    public struct OnServerSpaceshipOverweight {
+        public GameObject Spaceship;
+        public float Tolerance;
+        public ISpaceshipConfigurationModel SpaceshipModel;
+        public float MinimumAcceleration;
     }
 }

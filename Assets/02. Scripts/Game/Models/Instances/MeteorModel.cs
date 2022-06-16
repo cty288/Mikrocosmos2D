@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
-    public interface IMeteorModel: IModel, IAffectedByGravity {
+    public interface IMeteorModel: IModel, IAffectedByGravity, IDamagable {
         List<GameObject> Rewards { get; }
 
         public void StartAddTorqueForce(Vector2 addForce, float time);
@@ -21,6 +21,9 @@ namespace Mikrocosmos
         private float torqueForceTimer = 0;
         private Vector2 torqueForce;
 
+        protected override void OnEnable() {
+           
+        }
 
         [field: SerializeField] public override float SelfMass { get; protected set; } = 5f;
         public override string Name { get; set; } = "Meteor";

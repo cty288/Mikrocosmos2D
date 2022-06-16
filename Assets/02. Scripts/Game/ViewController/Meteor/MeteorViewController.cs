@@ -57,7 +57,7 @@ namespace Mikrocosmos
 
                 GenerateRewards();
 
-                if (GetComponent<PoolableNetworkedGameObject>().Pool != null) {
+                if (GetComponent<PoolableNetworkedGameObject>()) {
                     this.GetSystem<IMeteorSystem>().ResetMeteor(gameObject);
                     NetworkedObjectPoolManager.Singleton.Recycle(gameObject);
                     NetworkServer.UnSpawn(gameObject);

@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: 1128868329765695182}
   - component: {fileID: -7106308886407098970}
   - component: {fileID: 949103041305761441}
-  - component: {fileID: -8026100169227303925}
   m_Layer: 7
   m_Name: Meteor
   m_TagString: Meteor
@@ -295,6 +294,9 @@ MonoBehaviour:
   - {fileID: 2947802309723529383, guid: f7ce9b6a0414bf942a68adbeb7b5315a, type: 3}
   - {fileID: 4710686576622463885, guid: dc8db306dab6888418e841a2ac278341, type: 3}
   - {fileID: 4710686576622463885, guid: 0d3243d6f8c17c24a8ac453c48e11c61, type: 3}
+  - {fileID: 4710686576622463885, guid: 63080f426081b7d4a8475d992bbe3ed1, type: 3}
+  - {fileID: 4710686576622463885, guid: 66c0f5f696620b24ab8302ed1a4e3e38, type: 3}
+  - {fileID: 4710686576622463885, guid: 7f357c983eb7155458f5c29b82b06600, type: 3}
 --- !u!114 &949103041305761441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,49 +318,6 @@ MonoBehaviour:
   visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
---- !u!114 &-8026100169227303925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3789394192495447563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dc4c5d80178d9945bf8edd927b4b509, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Pool: {fileID: 0}
-  OnInitialize:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -7106308886407098970}
-        m_TargetAssemblyTypeName: Mikrocosmos.MeteorModel, Mikrocosmos
-        m_MethodName: OnStartServer
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnRecycle:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -7106308886407098970}
-        m_TargetAssemblyTypeName: Mikrocosmos.MeteorModel, Mikrocosmos
-        m_MethodName: OnMeteorRecycled
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &8200551623142049076
 GameObject:
   m_ObjectHideFlags: 0
