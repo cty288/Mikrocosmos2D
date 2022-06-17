@@ -29,6 +29,12 @@ namespace Mikrocosmos
 
     public interface IGameProgressSystem : ISystem {
         public BindableProperty<int> TotalTransactionTime { get; }
+
+        /// <summary>
+        /// This returns an estimated overall game progress, based on the maximum between overall trading progress and overall time passed.
+        /// </summary>
+        /// <returns></returns>
+        public float GetGameProgress();
     }
     public class GameProgressSystem : AbstractNetworkedSystem, IGameProgressSystem {
         protected DateTime globalTimer;
@@ -46,9 +52,14 @@ namespace Mikrocosmos
         
 
         private bool finialCountDownStarted = false;
+
+        private void Awake() {
+            Mikrocosmos.Interface.RegisterSystem<IGameProgressSystem>(this);
+        }
+
         public override void OnStartServer() {
             base.OnStartServer();
-            Mikrocosmos.Interface.RegisterSystem<IGameProgressSystem>(this);
+            
 
             this.RegisterEvent<OnServerTransactionFinished>(OnTransactionFinished)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -117,6 +128,13 @@ namespace Mikrocosmos
         }
 
         public BindableProperty<int> TotalTransactionTime { get; protected set; } = new BindableProperty<int>(0);
+       
+        public float GetGameProgress() {
+            int totalPlayerCount = NetworkServer.connections.Count;
+            return Mathf.Max(
+                TotalTransactionTime.Value / ((float) (finalCountdownTransactionThresholdPerPlayer * totalPlayerCount)),
+                (float) (DateTime.Now.Subtract(globalTimer).TotalMinutes / maximumGameTime));
+        }
 
 
         [ClientRpc]

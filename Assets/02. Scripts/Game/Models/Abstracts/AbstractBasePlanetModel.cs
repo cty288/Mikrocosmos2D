@@ -9,8 +9,8 @@ namespace Mikrocosmos
 {
     public interface IPlanetModel : IHaveGravity, ICanBuyPackage, ICanSellPackage {
          PlanetTypeEnum PlanetType { get; }
-         List<GoodsConfigure> GetBuyItemsWithRarity(GoodsRarity rarity);
-         List<GoodsConfigure> GetSellItemsWithRarity(GoodsRarity rarity);
+        
+      
     }
 
 

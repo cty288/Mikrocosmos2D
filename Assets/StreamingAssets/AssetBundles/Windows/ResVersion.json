@@ -3,8 +3,8 @@
   "ABMD5List": [
     {
       "AssetName": "buff_icons",
-      "MD5": "9bd9aeb722a538c31212de9cc3dabb08",
-      "FileSize": 265.44043,
+      "MD5": "c3fa9644001c299a824962618ecb9911",
+      "FileSize": 288.28125,
       "assetDatas": [
         {
           "Name": "BuffIcon",
@@ -18,6 +18,11 @@
         },
         {
           "Name": "InvincibleBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "OverweightDeBuffIcon",
           "OwnerBundleName": "buff_icons",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -128,7 +133,7 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "e2ed943460ae3be3dda5eb56949282c6",
+      "MD5": "7a6675c6c5f9364bcf4e6bae60428b72",
       "FileSize": 1.73242188,
       "assetDatas": []
     },

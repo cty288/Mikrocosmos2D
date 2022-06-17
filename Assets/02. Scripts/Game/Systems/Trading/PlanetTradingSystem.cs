@@ -36,6 +36,17 @@ namespace Mikrocosmos
         public float MaxTime;
     }
 
+    public struct OnServerPlanetDestroySellItem {
+        public GameObject ParentPlanet;
+        public GameObject Item;
+    }
+
+    public struct OnServerPlanetDestroyBuyItem
+    {
+        public GameObject ParentPlanet;
+        public GameObject Item;
+    }
+
     public struct OnServerPlayerMoneyNotEnough
     {
         public NetworkIdentity PlayerIdentity;
@@ -78,7 +89,8 @@ namespace Mikrocosmos
     }
     public class PlanetTradingSystem : AbstractNetworkedSystem, IPlanetTradingSystem
     {
-        private IPlanetModel planetModel;
+        private ICanBuyPackage buyPackageModel;
+        private ICanSellPackage sellPackageModel;
 
         [SyncVar(hook = nameof(OnAffinityWithTeam1Changed))]
         private float  affinityWithTeam1 = 0.5f;
@@ -112,7 +124,8 @@ namespace Mikrocosmos
      
         private void Awake()
         {
-            planetModel = GetComponent<IPlanetModel>();
+            buyPackageModel = GetComponent<ICanBuyPackage>();
+            sellPackageModel = GetComponent<ICanSellPackage>();
 
         }
 
@@ -124,9 +137,15 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerTrySellItem>(OnServerTrySellItem);
             this.RegisterEvent<OnServerTryBuyItem>(OnServerTryBuyItem);
-            SwitchBuyItem(null, GoodsRarity.RawResource);
-            SwitchBuyItem(null, GoodsRarity.Secondary);
-            SwitchSellItem(null);
+
+            for (int i = 0; i < buyItemCount; i++) {
+                SwitchBuyItem(null, (GoodsRarity)(i%2));
+            }
+
+            for (int i = 0; i < sellItemCount; i++) {
+                SwitchSellItem(null);
+            }
+          
             
         }
 
@@ -224,18 +243,21 @@ namespace Mikrocosmos
                 
             }
             
-            if (teamNumber == 1)
-            {
+            if (teamNumber == 1) {
+                this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed() {
+                    ChangeAmount = affinityIncreasment
+                });
                 affinityWithTeam1 += affinityIncreasment;
             }
-            else
-            {
+            else {
                 affinityWithTeam1 -= affinityIncreasment;
+                this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed()
+                {
+                    ChangeAmount = -affinityIncreasment
+                });
             }
 
             affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1, 0f, 1f);
-
-
         }
 
         //initialization
@@ -292,8 +314,8 @@ namespace Mikrocosmos
 
 
             if (currentSellItemLists.Count < sellItemCount) {
-                List<GoodsConfigure> rawMaterials = planetModel.GetSellItemsWithRarity(GoodsRarity.RawResource);
-                List<GoodsConfigure> secondaryMaterials = planetModel.GetSellItemsWithRarity(GoodsRarity.Secondary);
+                List<GoodsConfigure> rawMaterials = sellPackageModel.GetSellItemsWithRarity(GoodsRarity.RawResource);
+                List<GoodsConfigure> secondaryMaterials = sellPackageModel.GetSellItemsWithRarity(GoodsRarity.Secondary);
 
                 List<GoodsConfigure> targetList = secondaryMaterials;
 
@@ -354,6 +376,12 @@ namespace Mikrocosmos
                     PreviousItem = previousSellingItem
                 });
             }
+            else if(switchedItem!=null){
+                this.SendEvent<OnServerPlanetDestroySellItem>(new OnServerPlanetDestroySellItem() {
+                    Item = switchedItem.currentItemGameObject,
+                    ParentPlanet = gameObject
+                });
+            }
             
         }
 
@@ -369,11 +397,11 @@ namespace Mikrocosmos
             }
 
             if (currentBuyItemLists.Count < buyItemCount) {
-                List<GoodsConfigure> targetList = planetModel.GetBuyItemsWithRarity(rarity);
+                List<GoodsConfigure> targetList = buyPackageModel.GetBuyItemsWithRarity(rarity);
                 GoodsRarity realRarity = rarity;
                 if (targetList.Count == 0)
                 {
-                    targetList = planetModel.GetBuyItemsWithRarity(GoodsRarity.Secondary);
+                    targetList = buyPackageModel.GetBuyItemsWithRarity(GoodsRarity.Secondary);
                     realRarity = GoodsRarity.Secondary;
                 }
 
@@ -385,7 +413,7 @@ namespace Mikrocosmos
 
                 if (targetList.Count == 0)
                 {
-                    var allItems = planetModel.GetBuyItemsWithRarity(realRarity);
+                    var allItems = buyPackageModel.GetBuyItemsWithRarity(realRarity);
                     targetList.Add(allItems[Random.Range(0, allItems.Count)]);
                 }
 
@@ -448,7 +476,22 @@ namespace Mikrocosmos
                     NetworkServer.Destroy(previousBuyingItemGameObject);
                 }
             }
-           
+            else if(switchedItem!=null) {
+                DestroyBuyItem(switchedItem);
+            }
+        }
+
+        private void DestroyBuyItem(TradingItemInfo switchedItem) {
+            if (switchedItem.currentItemGameObject) {
+                this.SendEvent<OnServerPlanetDestroyBuyItem>(new OnServerPlanetDestroyBuyItem()
+                {
+                    Item = switchedItem.currentItemGameObject,
+                    ParentPlanet = gameObject
+                });
+
+                RpcOnPlanetGenerateBuyItem(switchedItem.currentItem.Name, "", 0);
+                NetworkServer.Destroy(switchedItem.currentItemGameObject);
+            }
         }
 
         /// <summary>
@@ -479,8 +522,7 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcOnPlanetGenerateBuyItem(string oldBuyItemName, string newBuyItemName, float maxBuyTime)
-        {
+        private void RpcOnPlanetGenerateBuyItem(string oldBuyItemName, string newBuyItemName, float maxBuyTime) {
             this.SendEvent<OnClientPlanetGenerateBuyItem>(new OnClientPlanetGenerateBuyItem() {
                 OldBuyItemName = oldBuyItemName,
                 NewBuyItemName = newBuyItemName,
@@ -497,5 +539,9 @@ namespace Mikrocosmos
         public string NewBuyItemName;
         public GameObject TargetPlanet;
         public float MaxBuyTime;
+    }
+
+    public struct OnServerAffinityWithTeam1Changed {
+        public float ChangeAmount;
     }
 }

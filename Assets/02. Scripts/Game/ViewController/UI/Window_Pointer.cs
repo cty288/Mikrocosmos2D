@@ -48,38 +48,43 @@ public class Window_Pointer : MonoBehaviour {
     }
 
     private void Update() {
+        if (target) {
+            Vector2 center = new Vector2(Screen.width, Screen.height);
 
-        Vector2 center = new Vector2(Screen.width, Screen.height);
-        
-        float borderSize = 100f;
-        
-        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(target.position);
-        isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
+            float borderSize = 100f;
 
-        if (isOffScreen) {
-           RotatePointerTowardsTargetPosition();
+            Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(target.position);
+            isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
 
-            pointerImage.sprite = pointerViewController.PointerSprite;
-        
-            
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.transform.position, targetDir, Mathf.Infinity, borderMask);
-            if (hit.collider != null)
+            if (isOffScreen)
             {
-                pointerRectTransform.position = hit.point;
-                pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
+                RotatePointerTowardsTargetPosition();
+
+                pointerImage.sprite = pointerViewController.PointerSprite;
+
+
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.transform.position, targetDir, Mathf.Infinity, borderMask);
+                if (hit.collider != null)
+                {
+                    pointerRectTransform.position = hit.point;
+                    pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
+                }
+
+
+
+
             }
+            else
+            {
+                pointerImage.sprite = crossSprite;
+                Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(targetPositionScreenPoint);
+                pointerRectTransform.position = pointerWorldPosition;
+                pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
 
-
-
-            
-        } else {
-            pointerImage.sprite = crossSprite;
-            Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(targetPositionScreenPoint);
-            pointerRectTransform.position = pointerWorldPosition;
-            pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
-
-            pointerRectTransform.localEulerAngles = Vector3.zero;
+                pointerRectTransform.localEulerAngles = Vector3.zero;
+            }
         }
+       
     }
 
     private void RotatePointerTowardsTargetPosition() {

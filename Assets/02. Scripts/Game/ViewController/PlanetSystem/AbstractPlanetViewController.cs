@@ -31,7 +31,7 @@ namespace Mikrocosmos
         //private Transform buytemSpawnPosition;
       //  private Text buyPriceText;
 
-       private Slider tradingSlider;
+        private Slider tradingSlider;
         private Text team1TradeProgressText;
         private Text team2TradeProgressText;
 
@@ -112,9 +112,27 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnServerPlanetGenerateBuyingItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnServerPlanetDestroySellItem>(OnServerPlanetDestroySellItem)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnServerPlanetDestroyBuyItem>(OnServerPlanetDestroyBuyItem)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
             distance = Vector3.Distance(target.transform.position, transform.position);
         }
 
+        private void OnServerPlanetDestroyBuyItem(OnServerPlanetDestroyBuyItem e) {
+            if (e.ParentPlanet == gameObject) {
+                string name = e.Item.GetComponent<IGoods>().Name;
+                RpcDestroyBuyBubble(name);
+            }
+        }
+
+        private void OnServerPlanetDestroySellItem(OnServerPlanetDestroySellItem e) {
+            if (e.ParentPlanet == gameObject) {
+                string name = e.Item.GetComponent<IGoods>().Name;
+                RpcDestroySellBubble(name);
+            }
+        }
 
 
         [ServerCallback]
@@ -239,6 +257,33 @@ namespace Mikrocosmos
             return buyBubble;
         }
 
+        [ClientRpc]
+        private void RpcDestroySellBubble(string bubbleToDestroy) {
+            if (!String.IsNullOrEmpty(bubbleToDestroy)) {
+                if (ClientSellBubbles.ContainsKey(bubbleToDestroy))
+                {
+                    ClientSellBubbles.Remove(bubbleToDestroy, out GameObject oldBubble);
+                    if (oldBubble) {
+                        Destroy(oldBubble);
+                    }
+                }
+            }
+        }
+
+        [ClientRpc]
+        private void RpcDestroyBuyBubble(string bubbleToDestroy)
+        {
+            if (!String.IsNullOrEmpty(bubbleToDestroy)) {
+                if (ClientBuyBubbles.ContainsKey(bubbleToDestroy)) {
+                    
+                    ClientBuyBubbles.Remove(bubbleToDestroy, out GameObject oldBubble);
+                    if (oldBubble) {
+                        Destroy(oldBubble);
+                    }
+                }
+
+            }
+        }
 
         [ClientRpc]
         private void RpcGenerateSellBubble(int price, string bubbleToGenerate, string bubbleToDestroy) {

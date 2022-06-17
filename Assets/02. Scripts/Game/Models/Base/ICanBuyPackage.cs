@@ -6,7 +6,8 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface ICanSellPackage : IModel {
-        SyncList<GoodsConfigure> SellItemList { get; }
+    public interface ICanBuyPackage: IModel {
+        List<GoodsConfigure> GetBuyItemsWithRarity(GoodsRarity rarity);
+        SyncList<GoodsConfigure> BuyItemList { get; }
     }
 }

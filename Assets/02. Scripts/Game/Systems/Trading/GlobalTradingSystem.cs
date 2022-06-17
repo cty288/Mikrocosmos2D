@@ -55,6 +55,9 @@ namespace Mikrocosmos
 
         private Dictionary<string, int> allCirculatingSellItems = new Dictionary<string, int>();
 
+        private float totalAffinityWithTeam1;
+        private float totalAffinityWithTeam2;
+
         private void Awake() {
             Mikrocosmos.Interface.RegisterSystem<IGlobalTradingSystem>(this);
         }
@@ -73,6 +76,13 @@ namespace Mikrocosmos
 
             this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnPlanetGenerateBuyItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnServerAffinityWithTeam1Changed>(OnAffinityWithTeam1Changed).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnAffinityWithTeam1Changed(OnServerAffinityWithTeam1Changed e) {
+            totalAffinityWithTeam1 += e.ChangeAmount;
+            totalAffinityWithTeam2 -= e.ChangeAmount;
         }
 
         private void OnPlanetGenerateBuyItem(OnServerPlanetGenerateBuyingItem e) {
@@ -139,7 +149,11 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public float GetTotalAffinityWithTeam(int team) {
-            return allPlanets.Sum(p => p.GetAffinityWithTeam(team));
+            if (team == 1) {
+                return totalAffinityWithTeam1;
+            }
+
+            return totalAffinityWithTeam2;
         }
 
         /// <summary>

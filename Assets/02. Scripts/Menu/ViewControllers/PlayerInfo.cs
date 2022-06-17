@@ -35,16 +35,16 @@ namespace Mikrocosmos {
                 TextReadyStatus.gameObject.SetActive(false);
 
                 if (prepared) {
-                    BtnPrepare.GetComponentInChildren<TMP_Text>().text = "取消准备";
+                    BtnPrepare.GetComponentInChildren<TMP_Text>().text = "Cancel";
                 }
                 else {
-                    BtnPrepare.GetComponentInChildren<TMP_Text>().text = "准备";
+                    BtnPrepare.GetComponentInChildren<TMP_Text>().text = "Prepare";
                 }
             }
             else {
                 TextReadyStatus.gameObject.SetActive(true);
                 BtnPrepare.gameObject.SetActive(false);
-                TextReadyStatus.text = (isPrepared ? "已" : "未") + "准备";
+                TextReadyStatus.text = (isPrepared ? "Prepared" : "UnPrepared");
                 if (isHost) { //host
                     BtnKick.gameObject.SetActive(true);
                 }
