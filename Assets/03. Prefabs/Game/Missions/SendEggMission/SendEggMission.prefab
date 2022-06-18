@@ -66,4 +66,4 @@ MonoBehaviour:
   syncInterval: 0.1
   sunFlowerPrefab: {fileID: 5437633022175454491, guid: 683531e99f51e724f8935d3a00b8efa5, type: 3}
   childPrefab: {fileID: 8519365288654522467, guid: 496aa72782854974fa837f4b4b92b810, type: 3}
-  <MaximumTime>k__BackingField: 120
+  <MaximumTime>k__BackingField: 5

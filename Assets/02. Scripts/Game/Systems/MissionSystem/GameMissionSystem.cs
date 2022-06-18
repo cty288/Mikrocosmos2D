@@ -15,6 +15,8 @@ namespace Mikrocosmos
     public struct OnMissionStop {
         public IMission Mission;
         public GameObject MissionGameObject;
+        public string MissionName;
+        public bool Finished;
     }
     public abstract class AbstractGameMission: AbstractNetworkedSystem, IMission {
         public abstract string MissionName { get; }
@@ -34,11 +36,13 @@ namespace Mikrocosmos
                 PermanentBuffFactory.AddPermanentBuffToPlayer(buffType, buffSystem, 3, 0);
             }
         }
-        public void StopMission() {
+        public void StopMission(bool finished = true) {
             IsFinished = true;
             this.SendEvent<OnMissionStop>(new OnMissionStop() {
                 Mission = this,
-                MissionGameObject = gameObject
+                MissionGameObject = gameObject,
+                MissionName = MissionName,
+                Finished = finished
             });
             OnMissionStop();
             NetworkServer.Destroy(gameObject);
@@ -80,7 +84,7 @@ namespace Mikrocosmos
         bool IsFinished { get; set; }
 
         void OnMissionStart();
-        void StopMission();
+        void StopMission(bool Finished = true);
     }
 
     public interface IGameMissionSystem : ISystem {
@@ -167,7 +171,7 @@ namespace Mikrocosmos
             if (mission.MaximumTime > 0) {
                 yield return new WaitForSeconds(mission.MaximumTime);
                 if (!mission.IsFinished) {
-                    mission.StopMission();
+                    mission.StopMission(false);
                 }
             }
         }

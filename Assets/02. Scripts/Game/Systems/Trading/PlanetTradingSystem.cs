@@ -74,6 +74,8 @@ namespace Mikrocosmos
 
         void SwitchSellItem(TradingItemInfo switchedItem);
 
+        void DestroyBuyItem(int index);
+
         // IGoods ServerGetCurrentBuyItem();
     }
 
@@ -397,8 +399,9 @@ namespace Mikrocosmos
             
         }
 
-
-
+        public void DestroyBuyItem(int index) {
+            DestroyBuyItem(currentBuyItemLists[index]);
+        }
 
 
         [ServerCallback]
@@ -494,6 +497,10 @@ namespace Mikrocosmos
         }
 
         private void DestroyBuyItem(TradingItemInfo switchedItem) {
+            if (currentBuyItemLists.Contains(switchedItem)) {
+                currentBuyItemLists.Remove(switchedItem);
+            }
+          
             if (switchedItem.currentItemGameObject) {
                 this.SendEvent<OnServerPlanetDestroyBuyItem>(new OnServerPlanetDestroyBuyItem()
                 {

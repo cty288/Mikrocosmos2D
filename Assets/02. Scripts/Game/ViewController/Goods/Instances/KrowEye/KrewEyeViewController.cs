@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
@@ -14,35 +15,50 @@ namespace Mikrocosmos
        
 
         private Light2DBase[] visionLights;
+
+        private GameObject mapUI;
     
 
-        private NetworkAnimator animator;
+        private Animator animator;
         protected override void Awake() {
             base.Awake();
             visionLights = GetComponentsInChildren<Light2DBase>();
             foreach (Light2DBase visionLight in visionLights) {
                 visionLight.enabled = false;
             }
+
+            mapUI = transform.Find("MapUI").gameObject;
+            mapUI.SetActive(false);
             
-            animator = GetComponent<NetworkAnimator>();
+            animator = GetComponent<Animator>();
         }
 
         public override void OnStartServer() {
             base.OnStartServer();
             //visionLights.enabled = IsOn;
-            GetComponent<KrowEyeModel>().TeamBelongTo.RegisterWithInitValue(OnTeamChange)
+            GetComponent<KrowEyeModel>().TeamBelongTo.RegisterWithInitValue(OnServerTeamChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnNetworkedMainGamePlayerConnected)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+
         }
 
-        private void OnTeamChange(int oldTeam, int newTeam) {
+        private void OnNetworkedMainGamePlayerConnected(OnNetworkedMainGamePlayerConnected e) {
+            OnServerTeamChange(-1, GetComponent<KrowEyeModel>().TeamBelongTo.Value);
+        }
+
+        private void OnServerTeamChange(int oldTeam, int newTeam) {
             Debug.Log($"OnTeamChange: {newTeam}");
+            RpcOnTeamChange(oldTeam, newTeam);
+            /*
             if (newTeam == -1) {
                 animator.SetTrigger("Idle");
             }else if (newTeam == 1) {
                 animator.SetTrigger("Team1");
             }else if (newTeam == 2) {
                 animator.SetTrigger("Team2");
-            }
+            }*/
         }
 
         [ServerCallback]
@@ -70,6 +86,28 @@ namespace Mikrocosmos
 
 
         #region Client
+
+        [ClientRpc]
+        private void RpcOnTeamChange(int oldTeam, int newTeam) {
+            if (newTeam == -1) {
+                animator.SetTrigger("Idle");
+            } else if (oldTeam != newTeam) {
+                int thisClientTeam = NetworkClient.connection.identity.GetComponent<NetworkMainGamePlayer>().matchInfo
+                    .Team;
+                mapUI.SetActive(thisClientTeam == newTeam);
+
+                if (newTeam == 1) {
+                    animator.SetTrigger("Team1");
+                    mapUI.GetComponent<Animator>().SetTrigger("Team1");
+                }
+                if (newTeam == 2) {
+                    animator.SetTrigger("Team2");
+                    mapUI.GetComponent<Animator>().SetTrigger("Team2");
+                }
+            }
+           
+        }
+        
         private bool isClientCanSee = false;
 
         private void Start() {

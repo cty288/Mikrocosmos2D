@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1395824929117945168}
   - component: {fileID: 5233693683440676942}
+  - component: {fileID: 6388755971187235409}
   m_Layer: 30
   m_Name: MapUI
   m_TagString: Untagged
@@ -70,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1383806763
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d234d06aa191a9b44a6af9a2103631b6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -84,6 +85,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6388755971187235409
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003558098459082504}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 28bf04a66bc38084292366fde5aeb305, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &3373156906215918473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -169,11 +190,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 31.327307
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -56.82006
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -209,7 +230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Name
-      value: SunFlowerChild
+      value: SunFlowerChild (1)
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -6830313856833975781, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}

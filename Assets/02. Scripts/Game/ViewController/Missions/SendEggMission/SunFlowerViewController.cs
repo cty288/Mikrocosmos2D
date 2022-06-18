@@ -14,16 +14,12 @@ namespace Mikrocosmos
 
         private Transform buyBubbleLayout;
         [SerializeField] private GameObject buyBubblePrefab;
-        
-        private Transform spriteTransform;
 
-        private Rigidbody2D rigidbody;
+        private IPlanetTradingSystem tradingSystem;
 
         private Animator animator;
-        private void Awake()
-        {
-            spriteTransform = transform.Find("Sprite");
-            rigidbody = GetComponent<Rigidbody2D>();
+        private void Awake() {
+            tradingSystem = GetComponent<IPlanetTradingSystem>();
             buyBubbleLayout = transform.Find("Canvas/BuyBubbleLayout");
             animator = GetComponent<Animator>();
         }
@@ -42,18 +38,19 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerPlanetDestroyBuyItem>(OnServerPlanetDestroyBuyItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
-            this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
-            
+           // this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished)
+             //   .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
+
         }
 
-        private void OnServerTransactionFinished(OnServerTransactionFinished e) {
-            if (e.Planet == gameObject) {
-                if (!e.IsSell) {
-                    RpcTransactionFinished();
-                }
+        private void OnMissionStop(OnMissionStop e) {
+            if (e.MissionName == "SendEggMission") {
+                tradingSystem.DestroyBuyItem(0);
+                RpcTransactionFinished(e.Finished);
             }
         }
+        
 
         private void OnServerPlanetDestroyBuyItem(OnServerPlanetDestroyBuyItem e) {
             if (e.ParentPlanet == gameObject)
@@ -160,8 +157,14 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcTransactionFinished() {
-            animator.SetTrigger("Finished");
+        private void RpcTransactionFinished(bool succeed) {
+            if (succeed) {
+                animator.SetTrigger("Finished");
+            }
+            else {
+                animator.SetTrigger("UnFinished");
+            }
+            
         }
         
 

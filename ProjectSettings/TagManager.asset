@@ -57,3 +57,6 @@ TagManager:
   - name: Entities
     uniqueID: 1225612677
     locked: 0
+  - name: MapUIMap
+    uniqueID: 2911160533
+    locked: 0

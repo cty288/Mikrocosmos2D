@@ -18,12 +18,7 @@ namespace Mikrocosmos
 
 
 
-        [SerializeField]
-        private List<float> itemRarity = new List<float>() {
-            1f,
-            0f,
-            0f
-        };
+        
 
 
         [SyncVar, SerializeField] private int buyItemCount = 1;
@@ -233,13 +228,21 @@ namespace Mikrocosmos
                 DestroyBuyItem(switchedItem);
             }
         }
-
+        public void DestroyBuyItem(int index)
+        {
+            DestroyBuyItem(currentBuyItemLists[index]);
+        }
         public void SwitchSellItem(TradingItemInfo switchedItem) {
             
         }
 
         private void DestroyBuyItem(TradingItemInfo switchedItem)
         {
+            if (currentBuyItemLists.Contains(switchedItem))
+            {
+                currentBuyItemLists.Remove(switchedItem);
+            }
+
             if (switchedItem.currentItemGameObject)
             {
                 this.SendEvent<OnServerPlanetDestroyBuyItem>(new OnServerPlanetDestroyBuyItem()
@@ -252,6 +255,7 @@ namespace Mikrocosmos
                 NetworkServer.Destroy(switchedItem.currentItemGameObject);
             }
         }
+
 
         /// <summary>
         /// Either server or client can call this function
