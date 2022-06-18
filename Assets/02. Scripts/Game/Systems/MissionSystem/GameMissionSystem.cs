@@ -26,6 +26,14 @@ namespace Mikrocosmos
         public bool IsFinished { get; set; }
         public abstract void OnMissionStart();
 
+        public void AssignPermanentBuffToPlayers(List<IBuffSystem> buffSystems)
+        {
+            PermanentBuffType buffType = (PermanentBuffType)(Random.Range(0, Enum.GetValues(typeof(PermanentBuffType)).Length));
+            foreach (IBuffSystem buffSystem in buffSystems)
+            {
+                PermanentBuffFactory.AddPermanentBuffToPlayer(buffType, buffSystem, 3, 0);
+            }
+        }
         public void StopMission() {
             IsFinished = true;
             this.SendEvent<OnMissionStop>(new OnMissionStop() {
@@ -99,7 +107,7 @@ namespace Mikrocosmos
           
         }
 
-
+        
 
         private IEnumerator WaitToSwitchMission() {
             int waitTime = Random.Range(averageGapTimeBetweenMissions - 20,

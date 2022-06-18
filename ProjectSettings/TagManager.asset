@@ -10,6 +10,7 @@ TagManager:
   - Meteor
   - Border
   - Bullet
+  - Star
   layers:
   - Default
   - TransparentFX

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework;
 using MikroFramework.ActionKit;
+using Mirror;
 using Polyglot;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace Mikrocosmos
             });
         }
 
+        public IBuffSystem Owner { get; set; }
+        public NetworkIdentity OwnerIdentity { get; set; }
         public  string Name { get; } = "DieBuff";
 
         public  string GetLocalizedDescriptionText() {
@@ -34,6 +37,8 @@ namespace Mikrocosmos
         public void OnBuffAdded() {
             
         }
+
+        
 
         public float MaxDuration { get; protected set; }
         public float RemainingTime { get; set; }
@@ -69,6 +74,9 @@ namespace Mikrocosmos
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();
+        public IBuffSystem Owner { get; set; }
+        public NetworkIdentity OwnerIdentity { get; set; }
+
         public void OnBuffAdded() {
             
         }

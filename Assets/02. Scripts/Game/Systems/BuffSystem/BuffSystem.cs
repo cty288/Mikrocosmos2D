@@ -5,6 +5,7 @@ using System.Linq;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
+using Mirror;
 using UnityEngine;
 
 namespace Mikrocosmos {
@@ -23,6 +24,9 @@ namespace Mikrocosmos {
 
         BuffClientMessage MessageToClient { get; set; }
 
+        public IBuffSystem Owner { get; set; }
+
+        public NetworkIdentity OwnerIdentity { get; set; }
         void OnBuffAdded();
     }
 
@@ -74,6 +78,8 @@ namespace Mikrocosmos {
     }
 
     public abstract class PermanentRawMaterialBuff: IPermanentRawMaterialBuff {
+        public IBuffSystem Owner { get; set; }
+        public NetworkIdentity OwnerIdentity { get; set; }
 
         public void OnBuffAdded() {
             RecalculateLevelAndProgress();
@@ -96,13 +102,20 @@ namespace Mikrocosmos {
         public abstract void OnLevelUp(int previousLevel, int currentLevel);
 
         public PermanentRawMaterialBuff(int currentLevel = 0, int currentProgressInLevel = 1) {
-            CurrentLevel = currentLevel;
-            CurrentProgressInLevel = currentProgressInLevel;
+            CurrentLevel = 0;
+            int totalProgress = 0;
+            for (int i = 0; i < currentLevel; i++)
+            {
+                totalProgress += ProgressPerLevel[i];
+            }
+            
+            
+            CurrentProgressInLevel =totalProgress +  currentProgressInLevel;
             
         }
 
     
-
+        
 
 
         //if current progress is greater than the maximum progress for current level, then increase current level until current progress is less than the maximum progress for current level
@@ -181,6 +194,9 @@ namespace Mikrocosmos {
         public abstract string GetLocalizedDescriptionText();
         public abstract string GetLocalizedName();
         public  abstract BuffClientMessage MessageToClient { get; set; }
+        public IBuffSystem Owner { get; set; }
+        public NetworkIdentity OwnerIdentity { get; set; }
+
         public virtual void OnBuffAdded() {
             
         }
@@ -206,6 +222,9 @@ namespace Mikrocosmos {
         public abstract string GetLocalizedDescriptionText();
         public abstract string GetLocalizedName();
         public abstract  BuffClientMessage MessageToClient { get; set; }
+        public IBuffSystem Owner { get; set; }
+        public NetworkIdentity OwnerIdentity { get; set; }
+
         public virtual void OnBuffAdded() {
             
         }
@@ -282,6 +301,9 @@ namespace Mikrocosmos {
             yield return new WaitForEndOfFrame();
             if (!buffs.ContainsKey(buff.GetType())) {
                 buffs.Add(buff.GetType(), buff);
+                buff.Owner = this;
+                buff.OwnerIdentity = netIdentity;
+                
                 buff.OnBuffAdded();
 
                 if (buff is IUntilBuff untilBuff) {

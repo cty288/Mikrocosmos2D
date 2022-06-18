@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MikroFramework.ActionKit;
+using Mirror;
 using Polyglot;
 using UnityEngine;
 
@@ -62,6 +63,9 @@ namespace Mikrocosmos {
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new OnVisionExpansion();
+        public IBuffSystem Owner { get; set; }
+        public NetworkIdentity OwnerIdentity { get; set; }
+
         public void OnBuffAdded() {
             
         }

@@ -63,10 +63,12 @@ namespace Mikrocosmos
 
         protected override void FixedUpdate() {
             base.FixedUpdate();
-            if (targetPlayer)
-            {
-                rigidbody.MovePosition(Vector2.Lerp(transform.position, targetPlayer.position, Time.fixedDeltaTime * 10f));  
+            if (isServer) {
+                if (targetPlayer) {
+                    rigidbody.MovePosition(Vector2.Lerp(transform.position, targetPlayer.position, Time.fixedDeltaTime * 10f));
+                }
             }
+           
         }
 
         private void OnTriggered() {

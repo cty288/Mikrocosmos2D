@@ -8,16 +8,16 @@ namespace Mikrocosmos
     public class PermanentSpeedBuff : PermanentRawMaterialBuff {
 
         private float speedMultiplier;
-        private ISpaceshipConfigurationModel spaceshipModel;
+     
         public float SpeedMultiplier => speedMultiplier;
 
-        public PermanentSpeedBuff(float speedMultiplier, ISpaceshipConfigurationModel spaceshipModel, int currentLevel=0, int currentProgress=1): base(){
+        public PermanentSpeedBuff(float speedMultiplier, int currentLevel=0, int currentProgress=1): base(){
             this.speedMultiplier = speedMultiplier;
-            this.spaceshipModel = spaceshipModel;
+         
         }
 
         public override void OnLevelUp(int previousLevel, int currentLevel) {
-            if (spaceshipModel!=null) {
+            if (OwnerIdentity.TryGetComponent<ISpaceshipConfigurationModel>(out ISpaceshipConfigurationModel spaceshipModel)) {
                 spaceshipModel.AddSpeedAndAcceleration((currentLevel - previousLevel) * speedMultiplier);
             }
           

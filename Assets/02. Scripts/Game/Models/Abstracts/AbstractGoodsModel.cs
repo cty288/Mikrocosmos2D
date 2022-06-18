@@ -8,8 +8,9 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public struct OnClientGoodsTransactionFinished {
+    public struct OnClientGoodsTransactionStatusChanged {
         public IGoods Goods;
+        public bool IsFinished;
     }
 
     public struct ClientOnBuyItemInitialized {
@@ -46,6 +47,9 @@ namespace Mikrocosmos
 
         [field: SyncVar(hook = nameof(OnTransactionStatusChanged))]
         public bool TransactionFinished { get; set; } = true;
+
+        [field: SerializeField] public bool DestroyedBySun { get; set; } = true;
+
 
         [field: SyncVar] public int RealPrice { get; set; }
 
@@ -156,11 +160,12 @@ namespace Mikrocosmos
 
         [ClientCallback]
         private void OnTransactionStatusChanged(bool oldStatus, bool newStatus) {
-            if (newStatus) {
-                this.SendEvent<OnClientGoodsTransactionFinished>(new OnClientGoodsTransactionFinished() {
-                    Goods = this
+            
+                this.SendEvent<OnClientGoodsTransactionStatusChanged>(new OnClientGoodsTransactionStatusChanged() {
+                    Goods = this,
+                    IsFinished = newStatus
                 });
-            }
+            
 
         }
 

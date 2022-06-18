@@ -46,15 +46,10 @@ namespace Mikrocosmos
             this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnPlayerJoinGame)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerTrySellItem>(OnServerTrySellItem);
-          
-
+            /*
             for (int i = 0; i < buyItemCount; i++) { 
                 SwitchBuyItem(null, (GoodsRarity)(i % 2));
-            }
-
-          
-
-
+            }*/
         }
 
         private bool CheckItemExistsInTradingItemList(List<TradingItemInfo> list, IGoods good, out TradingItemInfo info)
@@ -70,8 +65,13 @@ namespace Mikrocosmos
             return false;
         }
 
-       
 
+        public void StartBuyItem() {
+            if (isServer) {
+                SwitchBuyItem(null, GoodsRarity.RawResource);
+            }
+            
+        }
         //Planet BUY item, player SELL item
         [ServerCallback]
         private void OnServerTrySellItem(OnServerTrySellItem e)
@@ -82,18 +82,22 @@ namespace Mikrocosmos
                 if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship)) {
                     spaceship.Money += info.currentItemPrice;
                     // currentBuyItemLists.Remove(info);
+                    int playerTeam = e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
+                        .GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
+                    
                     NetworkServer.Destroy(e.RequestingGoodsGameObject);
                     this.SendEvent<OnServerTransactionFinished>(new OnServerTransactionFinished()
                     {
                         GoodsModel = info.currentItem,
                         IsSell = false,
-                        Price = info.currentItemPrice
+                        Price = info.currentItemPrice,
+                        Planet = gameObject,
+                        TeamNumber = playerTeam
                     });
 
                     //SwitchBuyItem();
 
-                    ChangeAffinity(e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
-                        .GetComponent<NetworkMainGamePlayer>().matchInfo.Team, e.HookedByIdentity.GetComponent<IBuffSystem>());
+                    ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>());
 
                     //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
                     // PlayerIdentity = e.HookedByIdentity
@@ -158,7 +162,7 @@ namespace Mikrocosmos
         }
         
         [ServerCallback]
-        private void SwitchBuyItem(TradingItemInfo switchedItem, GoodsRarity rarity)
+        public void SwitchBuyItem(TradingItemInfo switchedItem, GoodsRarity rarity)
         {
             if (switchedItem != null)
             {
@@ -196,7 +200,7 @@ namespace Mikrocosmos
 
                 int basePrice = currentBuyingItemConfig.RealPriceOffset + currentBuyingItem.BasicBuyPrice;
                 int offset = Mathf.RoundToInt(basePrice * 0.1f);
-                int currentBuyingItemPrice = Random.Range(basePrice - offset, basePrice + offset + 1);
+                int currentBuyingItemPrice = basePrice;
                 currentBuyingItemPrice = Mathf.Max(1, currentBuyingItemPrice);
                 currentBuyingItem.RealPrice = currentBuyingItemPrice;
 
@@ -228,6 +232,10 @@ namespace Mikrocosmos
             else if (switchedItem != null) {
                 DestroyBuyItem(switchedItem);
             }
+        }
+
+        public void SwitchSellItem(TradingItemInfo switchedItem) {
+            
         }
 
         private void DestroyBuyItem(TradingItemInfo switchedItem)

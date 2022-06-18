@@ -25,7 +25,7 @@ namespace Mikrocosmos
                 if (col.collider.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)) {
 
                     if (rigidbody.TryGetComponent<IGoods>(out IGoods goods)) {
-                        if (goods.HookState == HookState.Freed) {
+                        if (goods.HookState == HookState.Freed && goods.DestroyedBySun) {
                             NetworkServer.Destroy(rigidbody.gameObject);
                         }
                     }

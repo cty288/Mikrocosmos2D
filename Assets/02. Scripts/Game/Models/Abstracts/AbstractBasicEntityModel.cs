@@ -30,7 +30,10 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public bool CanBeAddedToInventory { get; set; }
 
-      //  [field: SyncVar, SerializeField] public bool CanBeUsed { get; set; } = false;
+        [field:SerializeField]
+        public float AdditionalMassWhenHookedMultiplier { get; set; } = 2;
+
+        //  [field: SyncVar, SerializeField] public bool CanBeUsed { get; set; } = false;
 
        // [field: SyncVar, SerializeField] public int Durability { get; set; } = -1;
 
@@ -51,12 +54,12 @@ namespace Mikrocosmos
         protected virtual void OnEnable()
         {
             float currentMaxSpeed = MaxSpeed;
-            MaxSpeed =10f;
+            MaxSpeed =7f;
             StartCoroutine(RecoverMaxSpeed(currentMaxSpeed));
         }
 
         IEnumerator RecoverMaxSpeed(float originalSpeed) {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             MaxSpeed = originalSpeed;
         }
         public override void OnStartServer() {

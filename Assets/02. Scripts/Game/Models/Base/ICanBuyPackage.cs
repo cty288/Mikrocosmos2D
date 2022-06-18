@@ -9,5 +9,7 @@ namespace Mikrocosmos
     public interface ICanBuyPackage: IModel {
         List<GoodsConfigure> GetBuyItemsWithRarity(GoodsRarity rarity);
         SyncList<GoodsConfigure> BuyItemList { get; }
+
+        
     }
 }

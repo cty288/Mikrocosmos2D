@@ -133,14 +133,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "7a6675c6c5f9364bcf4e6bae60428b72",
+      "MD5": "358d9a39cf736779250446df3e028b0b",
       "FileSize": 1.73242188,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "440515699decff585d2b3ad92cbec270",
-      "FileSize": 1535.2002,
+      "MD5": "44d66ac8b7b8f0aa46a368647e5b76b1",
+      "FileSize": 1544.58887,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -344,6 +344,11 @@
         },
         {
           "Name": "ThrusterSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "SunFlowerSonSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

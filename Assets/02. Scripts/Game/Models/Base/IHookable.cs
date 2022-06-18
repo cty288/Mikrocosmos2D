@@ -22,7 +22,9 @@ namespace Mikrocosmos
         public string Name { get; set; }
 
         public bool CanBeHooked { get; set; }
-        public bool CanBeAddedToInventory { get; set; }
+        public bool CanBeAddedToInventory { get; set; } 
+        
+        public float AdditionalMassWhenHookedMultiplier { get; set; }
 
         //public bool CanBeUsed { get; set; }
       //  public int Durability { get; set; }
@@ -51,7 +53,7 @@ namespace Mikrocosmos
     /// <summary>
     /// ICanBeUsed is IHookable
     /// </summary>
-    public interface ICanBeUsed : IHookable {
+    public interface ICanBeUsed : IGoods {
         public bool CanBeUsed { get; set; }
         
         public ItemUseMode UseMode { get; }

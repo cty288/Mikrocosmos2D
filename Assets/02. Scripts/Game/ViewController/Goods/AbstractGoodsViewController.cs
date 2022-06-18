@@ -47,15 +47,15 @@ namespace Mikrocosmos
             this.RegisterEvent<ClientOnBuyItemInitialized>(OnBuyItemInitialized)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
-            this.RegisterEvent<OnClientGoodsTransactionFinished>(OnClientBuyGoods)
+            this.RegisterEvent<OnClientGoodsTransactionStatusChanged>(OnClientBuyGoods)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
          
             ClientUpdateCanBeMasked();
         
         }
 
-        private void OnClientBuyGoods(OnClientGoodsTransactionFinished e) {
-            if (e.Goods == GoodsModel) {
+        private void OnClientBuyGoods(OnClientGoodsTransactionStatusChanged e) {
+            if (e.Goods == GoodsModel && e.IsFinished) {
                 //visionEntityMaterial = visionMaterial;
                 ClientUpdateCanBeMasked();
                 GetComponent<SpriteRenderer>().sortingOrder = 2;

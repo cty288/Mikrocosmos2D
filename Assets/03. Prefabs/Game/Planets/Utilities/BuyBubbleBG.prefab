@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 3443480303730169113}
   - component: {fileID: 829448637464063560}
   - component: {fileID: 7802605294858647982}
+  - component: {fileID: 5096587363202428094}
   m_Layer: 11
   m_Name: BuyBubbleBG
   m_TagString: Untagged
@@ -259,6 +260,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Price: 0
   Time: 0
+--- !u!95 &5096587363202428094
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960412423497364994}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2e0122ff8a69dc458a8b8a6d8712ded, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8601999148263799712
 GameObject:
   m_ObjectHideFlags: 0

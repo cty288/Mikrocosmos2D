@@ -34,6 +34,7 @@ namespace Mikrocosmos
             if (!infoNameToElement.ContainsKey(e.Info.Name)) {
                 InfoElement spawnedInfoElement = Instantiate(GetInfoPrefabFromInfoType(e.Info.InfoType), layoutGroup)
                     .GetComponent<InfoElement>();
+                spawnedInfoElement.transform.SetAsFirstSibling();
                 infoNameToElement.Add(e.Info.Name, spawnedInfoElement);
                 spawnedInfoElement.SetInfo(e.Info, false);
             }

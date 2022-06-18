@@ -207,10 +207,8 @@ namespace Mikrocosmos
                    if (hookingModel is ISpaceshipConfigurationModel) {
                        totalMass= GetConnectedObjectSoleMass() + SelfMass + BackpackMass;
                    }else {
-                       float hookingModelSelfMass = 0;
-                       if (hookingModel.CanBeAddedToInventory) {
-                           hookingModelSelfMass = hookingModel.SelfMass * 2;
-                       }
+                       float hookingModelSelfMass  = hookingModel.SelfMass * hookingModel.AdditionalMassWhenHookedMultiplier;
+                      
                         totalMass = SelfMass + BackpackMass + hookingModelSelfMass;
                    }
                 }
@@ -220,6 +218,10 @@ namespace Mikrocosmos
             }
             RefreshAcceleration(totalMass);
             return totalMass;
+        }
+
+        protected override void OnEnable() {
+            
         }
 
         private void RefreshAcceleration(float totalMass) {

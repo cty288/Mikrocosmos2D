@@ -13,8 +13,7 @@ namespace Mikrocosmos
             if (Owner)
             {
                 if (Owner.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
-                    buffSystem.AddBuff<PermanentHealthBuff>(new PermanentHealthBuff(healthIncreasePercentage,
-                        Owner.GetComponent<ISpaceshipConfigurationModel>()));
+                    buffSystem.AddBuff<PermanentHealthBuff>(new PermanentHealthBuff(healthIncreasePercentage));
                 }
             }
             GoodsModel.ReduceDurability(1);

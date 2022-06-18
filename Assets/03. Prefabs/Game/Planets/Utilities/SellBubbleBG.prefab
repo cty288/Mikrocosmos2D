@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.030030012, y: -0.03004998}
+  m_AnchoredPosition: {x: -0.030029297, y: -0.030050278}
   m_SizeDelta: {x: 35.5, y: 35.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1695829709924442179
@@ -197,6 +197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4172859460315135788}
   - component: {fileID: -383509766946851716}
+  - component: {fileID: 5450591119169549195}
   m_Layer: 0
   m_Name: SellBubbleBG
   m_TagString: Untagged
@@ -240,3 +241,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Price: 0
+--- !u!95 &5450591119169549195
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8416530306867068099}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be30ed25c45a30249a34943419883f98, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

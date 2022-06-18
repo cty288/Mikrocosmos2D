@@ -57,6 +57,8 @@ namespace Mikrocosmos
         public IGoods GoodsModel;
         public int Price;
         public bool IsSell;
+        public GameObject Planet;
+        public int TeamNumber;
     }
 
 
@@ -67,8 +69,12 @@ namespace Mikrocosmos
         /// <param name="team">Team number. Either 1 or 2</param>
         /// <returns></returns>
         float GetAffinityWithTeam(int team);
-        
-       // IGoods ServerGetCurrentBuyItem();
+
+        void SwitchBuyItem(TradingItemInfo switchedItem, GoodsRarity rarity);
+
+        void SwitchSellItem(TradingItemInfo switchedItem);
+
+        // IGoods ServerGetCurrentBuyItem();
     }
 
     [Serializable]
@@ -168,7 +174,9 @@ namespace Mikrocosmos
             {
                 PlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<PlayerTradingSystem>();
                 //Debug.Log($"Buy: {currentSellingItemPrice}, {currentSellingItemObject.name}");
-
+                int playerTeam = spaceship.GetComponent<PlayerSpaceship>().connectionToClient.identity
+                    .GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
+                
                 IGoods currentSellingItem = e.RequestingGoods;
                 if (!currentSellingItem.TransactionFinished)
                 {
@@ -180,13 +188,14 @@ namespace Mikrocosmos
                 {
                     GoodsModel = currentSellingItem,
                     IsSell = true,
-                    Price = currentSellingItem.RealPrice
+                    Price = currentSellingItem.RealPrice,
+                    Planet = gameObject,
+                    TeamNumber = playerTeam
                 });
 
                 //currentSellItemLists.Remove(info);
                 SwitchSellItem(info);
-                ChangeAffinity(spaceship.GetComponent<PlayerSpaceship>().connectionToClient.identity
-                    .GetComponent<NetworkMainGamePlayer>().matchInfo.Team, spaceship.GetComponent<IBuffSystem>());
+                ChangeAffinity(playerTeam, spaceship.GetComponent<IBuffSystem>());
             }
 
         }
@@ -201,19 +210,22 @@ namespace Mikrocosmos
                 if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship)) {
 
                     spaceship.Money += info.currentItemPrice;
-                   // currentBuyItemLists.Remove(info);
+                    int playerTeam = e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
+                        .GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
+                    // currentBuyItemLists.Remove(info);
                     NetworkServer.Destroy(e.RequestingGoodsGameObject);
                     this.SendEvent<OnServerTransactionFinished>(new OnServerTransactionFinished()
                     {
                         GoodsModel = info.currentItem,
                         IsSell = false,
-                        Price = info.currentItemPrice
+                        Price = info.currentItemPrice,
+                        Planet = gameObject,
+                        TeamNumber = playerTeam
                     });
 
                     //SwitchBuyItem();
 
-                    ChangeAffinity(e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
-                        .GetComponent<NetworkMainGamePlayer>().matchInfo.Team, e.HookedByIdentity.GetComponent<IBuffSystem>());
+                    ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>());
 
                     //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
                     // PlayerIdentity = e.HookedByIdentity
@@ -306,7 +318,7 @@ namespace Mikrocosmos
        
 
         [ServerCallback]
-        private void SwitchSellItem(TradingItemInfo switchedItem)
+        public void SwitchSellItem(TradingItemInfo switchedItem)
         {
             if (switchedItem != null) {
                 currentSellItemLists.Remove(switchedItem);
@@ -390,7 +402,7 @@ namespace Mikrocosmos
 
 
         [ServerCallback]
-        private void SwitchBuyItem(TradingItemInfo switchedItem, GoodsRarity rarity)
+        public void SwitchBuyItem(TradingItemInfo switchedItem, GoodsRarity rarity)
         {
             if (switchedItem != null) {
                 currentBuyItemLists.Remove(switchedItem);

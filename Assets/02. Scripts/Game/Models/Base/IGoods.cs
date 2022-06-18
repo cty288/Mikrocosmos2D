@@ -14,6 +14,8 @@ namespace Mikrocosmos
 
         public bool TransactionFinished { get; set; }
 
+        public bool DestroyedBySun { get; set; }
+
         int RealPrice { get; set; }
 
         /// <summary>

@@ -9,5 +9,6 @@ namespace Mikrocosmos
     public interface ICanSellPackage : IModel {
         SyncList<GoodsConfigure> SellItemList { get; }
         List<GoodsConfigure> GetSellItemsWithRarity(GoodsRarity rarity);
+
     }
 }

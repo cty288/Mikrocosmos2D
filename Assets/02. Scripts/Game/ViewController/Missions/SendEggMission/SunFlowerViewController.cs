@@ -18,15 +18,22 @@ namespace Mikrocosmos
         private Transform spriteTransform;
 
         private Rigidbody2D rigidbody;
+
+        private Animator animator;
         private void Awake()
         {
             spriteTransform = transform.Find("Sprite");
             rigidbody = GetComponent<Rigidbody2D>();
             buyBubbleLayout = transform.Find("Canvas/BuyBubbleLayout");
+            animator = GetComponent<Animator>();
         }
 
 
-        
+        public void OnAllAnimationFinished() {
+            if (isServer) {
+                NetworkServer.Destroy(this.gameObject);
+            }
+        }
         public override void OnStartServer()
         {
             base.OnStartServer();
@@ -35,6 +42,17 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnServerPlanetDestroyBuyItem>(OnServerPlanetDestroyBuyItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            
+        }
+
+        private void OnServerTransactionFinished(OnServerTransactionFinished e) {
+            if (e.Planet == gameObject) {
+                if (!e.IsSell) {
+                    RpcTransactionFinished();
+                }
+            }
         }
 
         private void OnServerPlanetDestroyBuyItem(OnServerPlanetDestroyBuyItem e) {
@@ -140,6 +158,13 @@ namespace Mikrocosmos
 
             }
         }
+
+        [ClientRpc]
+        private void RpcTransactionFinished() {
+            animator.SetTrigger("Finished");
+        }
+        
+
 
         [ClientRpc]
         private void RpcGenerateBuyBubble(int price, string bubbleToGenerate, string bubbleToDestroy, float maxTime)

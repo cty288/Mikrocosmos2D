@@ -8,19 +8,19 @@ namespace Mikrocosmos
     public class PermanentHealthBuff : PermanentRawMaterialBuff
     {
         private float healthMultiplier;
-        private ISpaceshipConfigurationModel spaceshipModel;
+      
         public float HealthMultiplier => healthMultiplier;
 
-        public PermanentHealthBuff(float healthMultiplier, ISpaceshipConfigurationModel spaceshipModel, int currentLevel = 0, int currentProgress = 1) : base()
+        public PermanentHealthBuff(float healthMultiplier,int currentLevel = 0, int currentProgress = 1) : base()
         {
             this.healthMultiplier = healthMultiplier;
-            this.spaceshipModel = spaceshipModel;
+        
         }
 
         public override void OnLevelUp(int previousLevel, int currentLevel)
         {
-            if (spaceshipModel != null) {
-                spaceshipModel.AddMaximumHealth((currentLevel - previousLevel) * healthMultiplier);
+            if (OwnerIdentity.TryGetComponent<ISpaceshipConfigurationModel>(out ISpaceshipConfigurationModel spaceshipConfigurationModel)){
+                spaceshipConfigurationModel.AddMaximumHealth((currentLevel - previousLevel) * healthMultiplier);
             }
 
         }

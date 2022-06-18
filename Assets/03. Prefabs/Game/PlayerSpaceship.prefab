@@ -718,6 +718,7 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 30
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 1
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
@@ -734,10 +735,10 @@ MonoBehaviour:
   HealthRecoverTimer: 0
   damagePerMomentum: 1
   dropOneItemMomentumThreshold: 4
-  minimumAcceleration: 20
+  minimumAcceleration: 30
   <DieDizzyTime>k__BackingField: 5
   <RespawnInvincibleTime>k__BackingField: 5
-  <InitialAcceleration>k__BackingField: 65
+  <InitialAcceleration>k__BackingField: 70
   <SelfMass>k__BackingField: 10
   <AccelerationDecreasePerMass>k__BackingField: 0.5
   <AffectedByGravity>k__BackingField: 1

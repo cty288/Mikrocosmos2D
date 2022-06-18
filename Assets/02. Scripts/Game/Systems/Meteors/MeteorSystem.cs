@@ -23,37 +23,50 @@ namespace Mikrocosmos
         private List<Transform> meteorSpawnPositions;
 
         [SerializeField] private int meteorMinimumCount = 5;
+        [SerializeField] private int meteorSpawnInterval = 10;
         private void Awake() {
             NetworkedObjectPoolManager.AutoCreatePoolWhenAllocating = true;
             meteorSpawnPositions = transform.GetComponentsInChildren<Transform>().ToList();
         }
 
+        private IEnumerator CheckSpawnMeteor() {
+            while (true) {
+                yield return new WaitForSeconds(meteorSpawnInterval);
+                if (activeMeteors.Count < meteorMinimumCount) {
+                    SpawnMeteor();
+                }
+            }
+        }
         public override void OnStartServer() {
             base.OnStartServer();
             Mikrocosmos.Interface.RegisterSystem<IMeteorSystem>(this);
             activeMeteors = GameObject.FindGameObjectsWithTag("Meteor").ToList();
             this.RegisterEvent<OnMeteorDestroyed>(OnMeteorDestroyed).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            StartCoroutine(CheckSpawnMeteor());
         }
 
         private void OnMeteorDestroyed(OnMeteorDestroyed e) {
             activeMeteors.Remove(e.Meteor);
+            /*
             if (activeMeteors.Count < meteorMinimumCount) {
                 int spawnCount = meteorMinimumCount - activeMeteors.Count;
                 for (int i = 0; i < spawnCount; i++) {
                     SpawnMeteor();
                 }
-            }
+            }*/
         }
 
         private void SpawnMeteor() {
-            var meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)]);
             Transform spawnPosition = meteorSpawnPositions[Random.Range(0, meteorSpawnPositions.Count)];
-            meteor.transform.position = spawnPosition.position;
+            var meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)], spawnPosition.position,
+                Quaternion.identity);
+            
             meteor.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-            meteor.GetComponent<Rigidbody2D>().velocity = spawnPosition.up * Random.Range(20f, 40f);
+            meteor.GetComponent<Rigidbody2D>().velocity = spawnPosition.up * Random.Range(25f, 35f);
             meteor.GetComponent<Collider2D>().isTrigger = true;
             
-            this.GetSystem<ITimeSystem>().AddDelayTask(10f, () => {
+            this.GetSystem<ITimeSystem>().AddDelayTask(5f, () => {
                 meteor.GetComponent<Collider2D>().isTrigger = false;
             });
             

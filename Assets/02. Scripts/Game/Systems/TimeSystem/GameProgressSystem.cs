@@ -35,6 +35,12 @@ namespace Mikrocosmos
         /// </summary>
         /// <returns></returns>
         public float GetGameProgress();
+
+        /// <summary>
+        /// x: xMin, y: xMax. z: yMin, a: yMax
+        /// </summary>
+        /// <returns></returns>
+        public Vector4 GetGameMapSize();
     }
     public class GameProgressSystem : AbstractNetworkedSystem, IGameProgressSystem {
         protected DateTime globalTimer;
@@ -134,6 +140,17 @@ namespace Mikrocosmos
             return Mathf.Max(
                 TotalTransactionTime.Value / ((float) (finalCountdownTransactionThresholdPerPlayer * totalPlayerCount)),
                 (float) (DateTime.Now.Subtract(globalTimer).TotalMinutes / maximumGameTime));
+        }
+
+        public Vector4 GetGameMapSize() {
+            List<GameObject> borders = GameObject.FindGameObjectsWithTag("Border").ToList();
+            //get the border which has the smallest x and biggest x
+            float minX = borders.OrderBy(x => x.transform.position.x).First().transform.position.x + 5;
+            float maxX = borders.OrderByDescending(x => x.transform.position.x).First().transform.position.x - 5;
+            //get the border which has the smallest y and biggest y
+            float minY = borders.OrderBy(x => x.transform.position.y).First().transform.position.y +5;
+            float maxY = borders.OrderByDescending(x => x.transform.position.y).First().transform.position.y-5;
+            return new Vector4(minX, maxX, minY, maxY);
         }
 
 
