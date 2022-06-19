@@ -2275,7 +2275,7 @@ namespace Steamworks {
 		/// [connection int32] Upper limit of buffered pending bytes to be sent,
 		/// if this is reached SendMessage will return k_EResultLimitExceeded
 		/// Default is 512k (524288 bytes)
-		k_ESteamNetworkingConfig_SendBufferSize = 9,
+		k_ESteamNetworkingConfig_SendBufferSize = 18,
 
 		/// [connection int64] Get/set userdata as a configuration option.
 		/// The default value is -1.   You may want to set the user data as

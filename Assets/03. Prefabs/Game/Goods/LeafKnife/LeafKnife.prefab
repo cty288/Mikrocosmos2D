@@ -63,7 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 4288
 --- !u!1001 &2688238684005888297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -428,6 +428,7 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 50
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 1
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
@@ -438,6 +439,7 @@ MonoBehaviour:
   <BasicSellPrice>k__BackingField: 20
   <BasicBuyPrice>k__BackingField: 30
   <GoodRarity>k__BackingField: 1
+  <DestroyedBySun>k__BackingField: 1
   <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0
   <AffectedByGravity>k__BackingField: 1

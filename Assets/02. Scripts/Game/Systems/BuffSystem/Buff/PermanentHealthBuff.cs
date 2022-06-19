@@ -11,7 +11,7 @@ namespace Mikrocosmos
       
         public float HealthMultiplier => healthMultiplier;
 
-        public PermanentHealthBuff(float healthMultiplier,int currentLevel = 0, int currentProgress = 1) : base()
+        public PermanentHealthBuff(float healthMultiplier,int currentLevel = 0, int currentProgress = 1) : base(currentLevel, currentProgress)
         {
             this.healthMultiplier = healthMultiplier;
         

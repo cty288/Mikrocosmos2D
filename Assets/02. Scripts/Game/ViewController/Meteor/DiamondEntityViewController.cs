@@ -46,7 +46,7 @@ namespace Mikrocosmos
         public void SetMoney(int money) {
             Money = money;
             //set the scale of this object according to money, with a minimum of 1, and a maximum of 4
-            float scale = Mathf.Clamp(money / 5f, 1f, 4f);
+            float scale = Mathf.Clamp(money / 2f, 1f, 3f);
             transform.localScale = new Vector3(scale, scale, scale);
         }
 
@@ -66,6 +66,15 @@ namespace Mikrocosmos
             if (isServer) {
                 if (targetPlayer) {
                     rigidbody.MovePosition(Vector2.Lerp(transform.position, targetPlayer.position, Time.fixedDeltaTime * 10f));
+
+                    if (Vector2.Distance(transform.position, targetPlayer.position) < 3f) {
+                        if (targetPlayer.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem playerTradingSystem)) {
+                            playerTradingSystem.Money += Money;
+                            targetPlayer = null;
+                            NetworkedObjectPoolManager.Singleton.Recycle(gameObject);
+                        }
+                       
+                    }
                 }
             }
            
@@ -91,6 +100,7 @@ namespace Mikrocosmos
             }
         }
 
+        /*
         private void OnTriggerEnter2D(Collider2D col) {
             if (isServer) {
                 if (targetPlayer) {
@@ -103,6 +113,6 @@ namespace Mikrocosmos
                     }
                 }
             }
-        }
+        }*/
     }
 }

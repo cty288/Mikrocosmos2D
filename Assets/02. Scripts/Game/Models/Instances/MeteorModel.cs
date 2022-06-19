@@ -13,7 +13,7 @@ namespace Mikrocosmos
 
         public void StartAddTorqueForce(Vector2 addForce, float time);
 
-      
+        public int MaxMoneyReward { get; }
     }
 
     public class MeteorModel : AbstractDamagableEntityModel, IMeteorModel {
@@ -124,6 +124,8 @@ namespace Mikrocosmos
             torqueForceTimer = time;
 
         }
+
+        [field: SerializeField] public int MaxMoneyReward { get; protected set; } = 15;
 
         public void OnMeteorRecycled() {
             //if (isServer) {

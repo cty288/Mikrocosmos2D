@@ -49,14 +49,21 @@ namespace Mikrocosmos
             shooters.Add(shooter);
            
         }
-       
+
+        private void OnEnable() {
+            hit = false;
+        }
 
         public override void OnReset() {
             base.OnReset();
             foreach (Collider2D s in shooters) {
-                Physics2D.IgnoreCollision(s, GetComponent<Collider2D>(), false);
+                if (s) {
+                    Physics2D.IgnoreCollision(s, GetComponent<Collider2D>(), false);
+                }
+             
             }
 
+            hit = false;
             shooter = null;
             shooters.Clear();
             
@@ -69,12 +76,13 @@ namespace Mikrocosmos
         }
 
 
-        
-        protected override void OnCollisionEnter2D(Collision2D collision) {
+        protected bool hit = false;
+        protected override  void OnCollisionEnter2D(Collision2D collision) {
             if (isServer) {
                 if (collision.collider) {
+                   
                     if (collision.collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity)) {
-                        StartCoroutine(SetVelocityToZero());
+                        //StartCoroutine(SetVelocityToZero());
                         
                         BulletModel model = GetComponent<BulletModel>();
                         int damage = (Mathf.RoundToInt(model.Damage *
@@ -113,10 +121,22 @@ namespace Mikrocosmos
                    
                 }
                 animator.SetTrigger("Hit");
-                StartCoroutine(DestroySelf());
+                DestroySelf();
             }
         }
 
+        protected override void Update() {
+            base.Update();
+            if (isServer) {
+                if (rigidbody.velocity.magnitude < 1f && animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+                    animator.SetTrigger("Hit");
+                   
+                    DestroySelf();
+                }
+            }
+        }
+
+        /*
         private IEnumerator DestroySelf() {
             yield return new WaitForSeconds(0.2f);
             if (destroyWhenHit)
@@ -134,10 +154,31 @@ namespace Mikrocosmos
                     NetworkServer.Destroy(this.gameObject);
                 }
             }
-        }
-        
+        }*/
+        private void DestroySelf()
+        {
+            if (destroyWhenHit)
+            {
 
-        
+                // NetworkServer.Destroy(this.gameObject);
+                rigidbody.velocity = Vector2.zero;
+                if (poolable)
+                {
+                    poolable.RecycleToCache();
+                    NetworkServer.UnSpawn(gameObject);
+                }
+                else
+                {
+                    NetworkServer.Destroy(this.gameObject);
+                }
+            }
+            else {
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+        }
+
+
+
 
         /*
         private void LateUpdate() {
@@ -225,7 +266,7 @@ namespace Mikrocosmos
             }
 
         }*/
-        
+
 
         private IEnumerator SetVelocityToZero() {
             yield return null;

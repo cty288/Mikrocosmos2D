@@ -74,19 +74,26 @@ namespace Mikrocosmos {
         public int CurrentProgressInLevel { get; set; }
 
         public int CurrentLevel { get; set; }
-        
+
+        public int ReadyToAddLevel { get; }
+
+        public int ReadyToAddProgress { get; }
+
     }
 
     public abstract class PermanentRawMaterialBuff: IPermanentRawMaterialBuff {
         public IBuffSystem Owner { get; set; }
         public NetworkIdentity OwnerIdentity { get; set; }
 
+       
+        
         public void OnBuffAdded() {
             RecalculateLevelAndProgress();
         }
         
         public void OnBuffStacked(IPermanentRawMaterialBuff addedBuff) {
             //Decompose addedBuff to get its total progress
+            /*
             int totalProgress = 0;
             for (int i = 0; i < addedBuff.CurrentLevel; i++) {
                 totalProgress += addedBuff.ProgressPerLevel[i];
@@ -95,13 +102,18 @@ namespace Mikrocosmos {
             totalProgress += addedBuff.CurrentProgressInLevel;
 
             
-            CurrentProgressInLevel += totalProgress;
+            CurrentProgressInLevel += totalProgress;*/
+            
+            ReadyToAddLevel = addedBuff.ReadyToAddLevel;
+            ReadyToAddProgress = addedBuff.ReadyToAddProgress;
+            
             RecalculateLevelAndProgress();
         }
 
         public abstract void OnLevelUp(int previousLevel, int currentLevel);
 
         public PermanentRawMaterialBuff(int currentLevel = 0, int currentProgressInLevel = 1) {
+            /*
             CurrentLevel = 0;
             int totalProgress = 0;
             for (int i = 0; i < currentLevel; i++)
@@ -110,8 +122,10 @@ namespace Mikrocosmos {
             }
             
             
-            CurrentProgressInLevel =totalProgress +  currentProgressInLevel;
-            
+            CurrentProgressInLevel =totalProgress +  currentProgressInLevel;*/
+            ReadyToAddLevel = currentLevel;
+            ReadyToAddProgress = currentProgressInLevel;
+
         }
 
     
@@ -121,6 +135,18 @@ namespace Mikrocosmos {
         //if current progress is greater than the maximum progress for current level, then increase current level until current progress is less than the maximum progress for current level
         protected void RecalculateLevelAndProgress() {
             int previousLevel = CurrentLevel;
+            int totalProgress = 0;
+            for (int i = 0; i < ReadyToAddLevel; i++) {
+                totalProgress += ProgressPerLevel[i];
+            }
+            totalProgress += ReadyToAddProgress;
+
+
+            CurrentProgressInLevel += totalProgress;
+
+            ReadyToAddLevel = 0;
+            ReadyToAddProgress = 0;
+            
             while (CurrentLevel < MaxLevel && CurrentProgressInLevel >= ProgressPerLevel[CurrentLevel]) {
                 CurrentProgressInLevel -= ProgressPerLevel[CurrentLevel];
                 CurrentLevel++;
@@ -146,8 +172,8 @@ namespace Mikrocosmos {
         public abstract List<int> ProgressPerLevel { get; set; }
         public int CurrentProgressInLevel { get; set; }
         public int CurrentLevel { get; set; }
-
-      
+        public int ReadyToAddLevel { get; private set; }
+        public int ReadyToAddProgress { get; private set; }
     }
 
     

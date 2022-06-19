@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using MikroFramework.Architecture;
 using MikroFramework.TimeSystem;
 using Mirror;
@@ -46,8 +47,17 @@ namespace Mikrocosmos
             OnSteamLobbyCreatedEvent = Callback<LobbyCreated_t>.Create(OnSteamLobbyCreated);
             OnSteamLobbyEnteredEvent = Callback<LobbyEnter_t>.Create(OnSteamLobbyEntered);
 
+            
+            GCHandle gchandle = GCHandle.Alloc(32 * 128, GCHandleType.Pinned);
+            SteamNetworkingUtils.SetConfigValue(
+                ESteamNetworkingConfigValue.k_ESteamNetworkingConfig_SendBufferSize,
+                ESteamNetworkingConfigScope.k_ESteamNetworkingConfig_Global,
+                IntPtr.Zero,
+                ESteamNetworkingConfigDataType.k_ESteamNetworkingConfig_Int32,
+                gchandle.AddrOfPinnedObject());
+            gchandle.Free();
         }
-
+        
         private void OnSteamLobbyEntered(LobbyEnter_t callback) {
             if (!NetworkServer.active && !NetworkClient.active) {
                 
@@ -113,6 +123,9 @@ namespace Mikrocosmos
             if (NetworkingMode == NetworkingMode.Normal)
             {
                 GetComponent<MenuNetworkDiscovery>().AdvertiseServer();
+            }
+            else {
+                
             }
            
             GameObject matchSystem = Instantiate(matchSystemPrefab);

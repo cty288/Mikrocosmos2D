@@ -76,11 +76,11 @@ namespace Mikrocosmos
             GameObject reward = rewards[randomReward];
 
             if (reward.name == "DiamondEntity") {
-                int totalMoney = Random.Range(5, 30);
+                int totalMoney = Random.Range(5, GetModel<IMeteorModel>().MaxMoneyReward);
                 //generate 3-8 diamonds, randomly assign money to them but the sum of their money should be equal to totalMoney
                 List<int> moneyList = new List<int>();
                 for (int i = 0; i < Random.Range(3, 8); i++) {
-                    moneyList.Add(Random.Range(1, Mathf.Min(15, totalMoney)));
+                    moneyList.Add(Random.Range(1, Mathf.Min(7, totalMoney)));
                 }
                 //get the sum of moneyList
                 int sum = 0;
@@ -125,7 +125,7 @@ namespace Mikrocosmos
                 //spawn the diamonds
                 for (int i = 0; i < moneyList.Count; i++) {
                     GameObject diamond = NetworkedObjectPoolManager.Singleton.Allocate(reward);
-                    diamond.transform.position = transform.position;
+                    diamond.transform.position = transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
                     //randomly set diamond's rotation
                     diamond.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
                     //set diamond's money
