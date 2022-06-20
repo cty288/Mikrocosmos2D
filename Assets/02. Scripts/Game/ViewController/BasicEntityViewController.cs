@@ -196,7 +196,7 @@ namespace Mikrocosmos
         //对方UnHooked：正常
         //对方Hooked ：手动算速度
         protected virtual void OnCollisionEnter2D(Collision2D collision) {
-            if (Model.canDealMomentumDamage) {
+            if (isServer && Model.canDealMomentumDamage) {
                 if (collision.collider && !collider.isTrigger)
                 {
                     if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model))
@@ -259,7 +259,7 @@ namespace Mikrocosmos
             
         }
 
-        IEnumerator PhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody) {
+        protected  virtual IEnumerator PhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody) {
             float waitTime = 0.02f;
             Vector2 offset = Vector2.zero;
             if (targetModel is ISpaceshipConfigurationModel) {
@@ -287,8 +287,6 @@ namespace Mikrocosmos
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
                     targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
-
-
                 }
 
             }

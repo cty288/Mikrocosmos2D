@@ -72,7 +72,7 @@ namespace Mikrocosmos
         /// Hook self if not hooked
         /// </summary>
         [ServerCallback]
-        public bool Hook(NetworkIdentity hookedBy) {
+        public bool TryHook(NetworkIdentity hookedBy) {
             if (CanBeHooked &&  ServerCheckCanHook(hookedBy)) {
                 HookState = HookState.Hooked;
                 HookedByIdentity = hookedBy;
@@ -82,19 +82,18 @@ namespace Mikrocosmos
                     HookState = HookState,
                     HookedByIdentity = hookedBy
                 });
-                OnServerHooked();
-                if (hookedBy) {
+               // OnServerHooked();
+                if (hookedBy && HookState == HookState.Hooked) {
                     HookedByTransform = hookedBy.GetComponentInChildren<Trigger2DCheck>().transform;
                     // LayerMask collisionMask = this.GetModel<ICollisionMaskModel>().Allocate();
                     //bindedRigidibody.bodyType = RigidbodyType2D.Kinematic;
-                   
+                    bindedRigidibody.mass = GetTotalMass();
+                    return true;
                 }
                 else {
                     HookedByTransform = null;
                 }
-
-                bindedRigidibody.mass = GetTotalMass();
-                return true;
+                
             }
 
             return false;
@@ -130,7 +129,7 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        protected virtual void OnServerHooked() {
+        public virtual void OnServerHooked() {
 
         }
         [ServerCallback]

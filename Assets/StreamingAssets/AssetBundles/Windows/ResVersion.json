@@ -133,14 +133,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "87bf6792e25d96fd7b4c68431c20e84f",
+      "MD5": "826643bcbb7141081601a118ceeb13e9",
       "FileSize": 1.73242188,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "95fd3c866b14d7136a6a3f71852d8c92",
-      "FileSize": 1545.18164,
+      "MD5": "34c67010c23cd9381545cf6c739e0ef9",
+      "FileSize": 1550.14063,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -149,11 +149,6 @@
         },
         {
           "Name": "LeafKnife",
-          "OwnerBundleName": "assets/goods",
-          "AssetType": "UnityEngine.GameObject"
-        },
-        {
-          "Name": "Template",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -199,6 +194,11 @@
         },
         {
           "Name": "Toliet",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "Template",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -344,6 +344,11 @@
         },
         {
           "Name": "ThrusterSprite",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "PickaxeSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
         },

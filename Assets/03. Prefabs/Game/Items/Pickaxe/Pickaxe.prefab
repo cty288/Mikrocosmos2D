@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3344301791092725464
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <HookedPositionOffset>k__BackingField.y
+      value: 3.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_AssetId
+      value: fc34c16724940054b8103c92079f6e3f
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c71145ee471c15e4ca311f53d22f4de8, type: 3}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631638, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_Name
+      value: Pickaxe
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -6830313856833975781, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+    - {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+    - {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+--- !u!1 &8546804052185634098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+  m_PrefabInstance: {fileID: 3344301791092725464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!60 &6345319154620906746
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546804052185634098}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8, y: 8}
+    newSize: {x: 6.63, y: 6.63}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.7917753, y: -0.17786269}
+      - {x: 0.43228096, y: -0.2260513}
+      - {x: -0.23305441, y: -0.28165564}
+      - {x: -0.22132087, y: -0.45555258}
+      - {x: -0.44, y: -0.47}
+      - {x: -0.49696827, y: -0.49242407}
+      - {x: -0.4656216, y: -0.79738754}
+      - {x: -0.45901832, y: -0.8838686}
+      - {x: -0.45929086, y: -0.9147408}
+      - {x: -0.6631622, y: -0.9629657}
+      - {x: -0.6439237, y: -1.1652083}
+      - {x: -0.37380606, y: -2.0333996}
+      - {x: -0.7575185, y: -1.8784815}
+      - {x: -1.0454043, y: -1.4442343}
+      - {x: -1.0514326, y: -1.056155}
+      - {x: -1.2295581, y: -1.0849762}
+      - {x: -1.5095189, y: -0.5604793}
+      - {x: -1.7802054, y: -0.26921284}
+      - {x: -1.7677041, y: 0.24661928}
+      - {x: -1.51155, y: 0.5641682}
+      - {x: -1.3934715, y: 0.533739}
+      - {x: -1.2201698, y: 1.0618156}
+      - {x: -0.61842036, y: 2.017548}
+      - {x: -0.40939078, y: 1.602262}
+      - {x: -0.6345456, y: 1.3139603}
+      - {x: -0.6903157, y: 0.955219}
+      - {x: -0.46555945, y: 0.90459}
+      - {x: -0.49643475, y: 0.4419678}
+      - {x: -0.22112878, y: 0.42472115}
+      - {x: -0.27414203, y: 0.2133716}
+      - {x: 0.42844415, y: 0.24430043}
+      - {x: 1.7661469, y: 0.28383124}
+--- !u!95 &8388122065145420706
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546804052185634098}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9d1ac785eb7ac564093edec51b060d21, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-6089680819699282865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546804052185634098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f6cc8c67d4fb54ab397fb9754ab8b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 3.95}
+  <HookedRotationZOffset>k__BackingField: 0
+  <IsMaskable>k__BackingField: 1
+  buyMaterial: {fileID: 0}
+  sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
+  visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
+  defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  visionAffectedSprites:
+  - {fileID: 8546804052185634253}
+  visionAffectedSpritesOnMap: []
+  <CanBeMasked>k__BackingField: 1
+  <AlsoMaskedOnMap>k__BackingField: 0
+  DurabilityCountSprite: {fileID: 0}
+--- !u!114 &3443710014279021570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546804052185634098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7107a95bf135c6c4ba3f90e2a431efee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  <MoveMode>k__BackingField: 1
+  <MaxSpeed>k__BackingField: 50
+  <CanBeHooked>k__BackingField: 1
+  <CanBeAddedToInventory>k__BackingField: 1
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
+  <HookState>k__BackingField: 0
+  <HookedByIdentity>k__BackingField: {fileID: 0}
+  <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 1
+  <Acceleration>k__BackingField: 0
+  <SelfMass>k__BackingField: 0
+  <Name>k__BackingField: Pickaxe
+  <BasicSellPrice>k__BackingField: 0
+  <BasicBuyPrice>k__BackingField: 0
+  <GoodRarity>k__BackingField: 1
+  <DestroyedBySun>k__BackingField: 0
+  <IsSell>k__BackingField: 1
+  <InitialForceMultiplier>k__BackingField: 0
+  <AffectedByGravity>k__BackingField: 1
+  <CanBeUsed>k__BackingField: 0
+  <UseMode>k__BackingField: 0
+  <Frequency>k__BackingField: 0
+  <Durability>k__BackingField: 0
+  <MaxDurability>k__BackingField: 1
+  <IsUsing>k__BackingField: 0
+  reduceDurabilityInstantlyAfterUse: 1
+  reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse: 1
+  damageToMeteors: 15
+--- !u!212 &8546804052185634253 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+  m_PrefabInstance: {fileID: 3344301791092725464}
+  m_PrefabAsset: {fileID: 0}

@@ -14,7 +14,8 @@ namespace Mikrocosmos
                 return SingletonProperty<ClientMessagerForDestroyedObjects>.Singleton;
             }
         }
-        
+
+        [SerializeField] private List<GameObject> particles;
         public override void OnStartServer() {
             base.OnStartServer();
             this.RegisterEvent<OnItemDurabilityChange>(OnItemDurabilityChange)
@@ -44,6 +45,10 @@ namespace Mikrocosmos
             }
         }
 
+        public void ServerSpawnParticleOnClient(Vector2 position, int index) {
+            RpcSpawnParticle(position, index);
+        }
+
 
       
         [TargetRpc]
@@ -59,6 +64,11 @@ namespace Mikrocosmos
                 });
             }
             
+        }
+
+        [ClientRpc]
+        protected void RpcSpawnParticle(Vector2 position, int index) {
+            Instantiate(particles[index], position, Quaternion.identity);
         }
 
 

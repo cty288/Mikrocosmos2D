@@ -69,7 +69,7 @@ namespace Mikrocosmos
 
                     if (Vector2.Distance(transform.position, targetPlayer.position) < 3f) {
                         if (targetPlayer.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem playerTradingSystem)) {
-                            playerTradingSystem.Money += Money;
+                            playerTradingSystem.ReceiveMoney(Money);
                             targetPlayer = null;
                             NetworkedObjectPoolManager.Singleton.Recycle(gameObject);
                         }

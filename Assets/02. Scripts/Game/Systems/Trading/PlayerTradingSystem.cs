@@ -19,7 +19,11 @@ namespace Mikrocosmos
     }
     public interface IPlayerTradingSystem : ISystem
     {
-        public int Money { get; set; }
+        public int Money { get; }
+
+        public void SpendMoney(int count);
+
+        public void ReceiveMoney(int count);
     }
 
     public class PlayerTradingSystem : AbstractNetworkedSystem, IPlayerTradingSystem
@@ -29,6 +33,20 @@ namespace Mikrocosmos
 
         [field: SyncVar(hook = nameof(OnClientMoneyChange))]
         public int Money { get; set; } = 50;
+
+        public void SpendMoney(int count) {
+            if (Money >= count) {
+                Money -= count;
+            }
+            else
+            {
+                TargetOnPlayerMoneyNotEnough();
+            }
+        }
+
+        public void ReceiveMoney(int count) {
+            Money += count;
+        }
 
         public override void OnStartServer()
         {

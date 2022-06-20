@@ -779,8 +779,8 @@ MonoBehaviour:
   syncMode: 1
   syncInterval: 0
   <HookedNetworkIdentity>k__BackingField: {fileID: 0}
-  shootTimeThreshold: 0.5
-  shootChargeOneCycleTime: 4
+  shootTimeThreshold: 0.1
+  shootChargeOneCycleTime: 2
   maxShootForce: 1200
   droppedItemSpawnPos: {fileID: 2601994127546760122}
   hookShootChargePercent: 0

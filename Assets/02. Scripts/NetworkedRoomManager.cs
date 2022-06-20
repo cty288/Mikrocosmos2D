@@ -48,7 +48,7 @@ namespace Mikrocosmos
             OnSteamLobbyEnteredEvent = Callback<LobbyEnter_t>.Create(OnSteamLobbyEntered);
 
             
-            GCHandle gchandle = GCHandle.Alloc(32 * 128, GCHandleType.Pinned);
+            GCHandle gchandle = GCHandle.Alloc(128 * 128, GCHandleType.Pinned);
             SteamNetworkingUtils.SetConfigValue(
                 ESteamNetworkingConfigValue.k_ESteamNetworkingConfig_SendBufferSize,
                 ESteamNetworkingConfigScope.k_ESteamNetworkingConfig_Global,

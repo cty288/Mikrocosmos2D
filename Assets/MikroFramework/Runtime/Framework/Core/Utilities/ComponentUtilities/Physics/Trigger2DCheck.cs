@@ -44,6 +44,9 @@ namespace MikroFramework.Utilities
                     {
                         enterRC.Release();
                         removedColliders.Add(colliders[i]);
+                    }else if (!colliders[i].gameObject.activeInHierarchy) {
+                        enterRC.Release();
+                        removedColliders.Add(colliders[i]);
                     }
                 }
                

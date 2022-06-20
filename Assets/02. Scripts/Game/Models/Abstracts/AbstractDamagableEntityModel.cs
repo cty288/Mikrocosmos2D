@@ -79,9 +79,10 @@ namespace Mikrocosmos
                 momentumCoolDownTime = DateTime.Now;
                 Debug.Log($"Received Raw Momentum: {rawMomentum}");
                 float tempRawMomentum = rawMomentum;
-                rawMomentum += offset;
+               
                 rawMomentum -= MomentumThredhold;
                 rawMomentum = Mathf.Clamp(rawMomentum, 0, MaxMomentumReceive);
+                rawMomentum += offset;
                 Debug.Log($"Momentum Received by {gameObject.name}: {rawMomentum}. Raw Momentum: {tempRawMomentum}");
                 return rawMomentum;
             }
@@ -92,7 +93,7 @@ namespace Mikrocosmos
 
 
         public abstract int GetDamageFromExcessiveMomentum(float excessiveMomentum);
-        public void TakeRawDamage(int damage) {
+        public void TakeRawDamage(int damage, int additionalDamage =0) {
             if(damage<=0){
                 return;
             }
@@ -103,7 +104,7 @@ namespace Mikrocosmos
             }
             
             int oldHealth = CurrentHealth;
-            CurrentHealth -= damage;
+            CurrentHealth -= (damage + additionalDamage);
             CurrentHealth = Mathf.Max(0, CurrentHealth);
             OnServerTakeDamage(oldHealth, CurrentHealth);
             this.SendEvent<OnEntityTakeDamage>(new OnEntityTakeDamage() {

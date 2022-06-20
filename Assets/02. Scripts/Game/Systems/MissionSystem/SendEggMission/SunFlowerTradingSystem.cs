@@ -75,7 +75,7 @@ namespace Mikrocosmos
             if (CheckItemExistsInTradingItemList(currentBuyItemLists, e.DemandedByPlanet, out TradingItemInfo info))
             {
                 if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship)) {
-                    spaceship.Money += info.currentItemPrice;
+                    spaceship.ReceiveMoney(info.currentItemPrice);
                     // currentBuyItemLists.Remove(info);
                     int playerTeam = e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
                         .GetComponent<NetworkMainGamePlayer>().matchInfo.Team;

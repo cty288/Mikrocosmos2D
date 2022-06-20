@@ -280,12 +280,12 @@ MonoBehaviour:
   <Acceleration>k__BackingField: 0
   <MaxMomentumReceive>k__BackingField: 8
   <MomentumThredhold>k__BackingField: 0.5
-  <MaxHealth>k__BackingField: 10
-  <CurrentHealth>k__BackingField: 10
+  <MaxHealth>k__BackingField: 20
+  <CurrentHealth>k__BackingField: 20
   momentumCoolDown: 0.5
-  healthRecoverThreshold: 20
-  healthRecoverPerSecond: 50
-  healthRecoverWaitTimeAfterDamage: 2
+  healthRecoverThreshold: 5
+  healthRecoverPerSecond: 5
+  healthRecoverWaitTimeAfterDamage: 5
   HealthRecoverTimer: 0
   <SelfMass>k__BackingField: 20
   <StartDirection>k__BackingField: {x: 0, y: 0}
@@ -298,6 +298,7 @@ MonoBehaviour:
   - {fileID: 4710686576622463885, guid: 63080f426081b7d4a8475d992bbe3ed1, type: 3}
   - {fileID: 4710686576622463885, guid: 66c0f5f696620b24ab8302ed1a4e3e38, type: 3}
   - {fileID: 4710686576622463885, guid: 7f357c983eb7155458f5c29b82b06600, type: 3}
+  <MaxMoneyReward>k__BackingField: 15
 --- !u!114 &949103041305761441
 MonoBehaviour:
   m_ObjectHideFlags: 0

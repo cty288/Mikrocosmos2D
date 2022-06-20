@@ -34,7 +34,7 @@ namespace Mikrocosmos
             teamBelongTo.Value = buyer.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
         }
 
-        protected override void OnServerHooked() {
+        public override void OnServerHooked() {
             base.OnServerHooked();
             teamBelongTo.Value = HookedByIdentity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>()
                 .matchInfo.Team;

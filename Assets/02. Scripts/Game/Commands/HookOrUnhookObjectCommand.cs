@@ -16,7 +16,7 @@ namespace Mikrocosmos
         protected override void OnExecute() {
             if (isHook) {
                 hookSystem.HookedItem = hookableViewController;
-                hookableViewController.Model.Hook(hookedBy);
+                hookableViewController.Model.TryHook(hookedBy);
             }
             else {
                 hookableViewController.Model.UnHook(false);

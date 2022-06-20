@@ -63,6 +63,8 @@ namespace Mikrocosmos {
 
         void ServerUseItem(Func<bool> condition);
 
+        bool Hook(GameObject hookedBy);
+
         void UnHook(bool isShoot = false);
 
         bool IsHooking { get; }
@@ -74,11 +76,11 @@ namespace Mikrocosmos {
         [field:SyncVar, SerializeField]
         public NetworkIdentity HookedNetworkIdentity { get; set; }
 
-        [SerializeField] private float shootTimeThreshold = 0.2f;
+        [SerializeField] private float shootTimeThreshold = 0.05f;
         /// <summary>
         /// OneCycle time; including charge / decharge
         /// </summary>
-        [SerializeField] private float shootChargeOneCycleTime = 4f;
+        [SerializeField] private float shootChargeOneCycleTime = 2f;
 
         [SerializeField] private float maxShootForce = 80f;
 
@@ -157,7 +159,7 @@ namespace Mikrocosmos {
 
                             HookedItem = nextItem.GetComponent<IHookableViewController>();
                             HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
-                            HookedItem.Model.Hook(netIdentity);
+                            HookedItem.Model.TryHook(netIdentity);
                             HookedItem.OnEntitySwitched(true);                            
                             animator.SetBool("Hooking", true);
                         }
@@ -228,7 +230,7 @@ namespace Mikrocosmos {
 
                     HookedItem = nextItem.GetComponent<IHookableViewController>();
                     HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
-                    HookedItem.Model.Hook(netIdentity);
+                    HookedItem.Model.TryHook(netIdentity);
                     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
                         HookedItem.OnEntitySwitched(true, 0.51f);
                     }
@@ -399,7 +401,7 @@ namespace Mikrocosmos {
 
                         HookedItem = nextItem.GetComponent<IHookableViewController>();
                         HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
-                        HookedItem.Model.Hook(netIdentity);
+                        HookedItem.Model.TryHook(netIdentity);
                         HookedItem.OnEntitySwitched(true);
                     }
                    
@@ -512,6 +514,8 @@ namespace Mikrocosmos {
             
         }
 
+       
+
         [ServerCallback]
         private void OnRobbed(OnItemRobbed e) {
             if (e.Victim == netIdentity && e.HookedItem == HookedItem.Model) {
@@ -555,60 +559,65 @@ namespace Mikrocosmos {
         public void ServerStopHookTrigger() {
             checkingHook = false;
         }
+        public bool Hook(GameObject identity) {
+            if (identity && identity
+                .TryGetComponent<IHookableViewController>(out IHookableViewController vc)) {
 
-  
+                IHookable model = vc.Model;
+
+                if (model.CanBeHooked) {
+
+                    if (model.HookedByIdentity && model.HookedByIdentity != netIdentity) {
+                        this.SendEvent<OnItemRobbed>(new OnItemRobbed()
+                        {
+                            HookedItem = vc.Model,
+                            Victim = model.HookedByIdentity
+                        });
+                        //vc.Model.UnHook(true);
+                    }
+
+
+                    if (identity.TryGetComponent<IHookSystem>(out IHookSystem owner)) {
+                        owner.UpdateHookCollisions(false);
+                    }
+
+
+                    if (model.TryHook(netIdentity))
+                    {
+
+                        HookedItem = vc;
+                        HookedNetworkIdentity = identity.GetComponent<NetworkIdentity>();
+                        animator.SetBool("Hooking", true);
+                        checkingHook = false;
+                        if (HookedItem.Model.CanBeAddedToInventory)
+                        {
+                            if (HookedNetworkIdentity)
+                            {
+                                inventorySystem.ServerHookToBackpack(model.Name, HookedNetworkIdentity.gameObject);
+                            }
+
+                        }
+
+                        UpdateHookCollisions(false);
+                        model.OnServerHooked();
+
+                        return true;
+                    }
+                }
+
+            }
+
+            return false;
+        }
+
 
         [ServerCallback]
         private void CheckHook() {
             if (hookTrigger.Triggered && model.HookState == HookState.Freed) {
                 List<Collider2D> colliders = hookTrigger.Colliders;
-                foreach (Collider2D collider in colliders)
-                {
-
-                    if (collider.gameObject
-                        .TryGetComponent<IHookableViewController>(out IHookableViewController vc)) {
-
-                        IHookable model = vc.Model;
-
-                        if (model.CanBeHooked) {
-
-                            if (model.HookedByIdentity && model.HookedByIdentity != netIdentity) {
-                                this.SendEvent<OnItemRobbed>(new OnItemRobbed()
-                                {
-                                    HookedItem = vc.Model,
-                                    Victim = model.HookedByIdentity
-                                });
-                                //vc.Model.UnHook(true);
-                            }
-
-
-                            if (collider.TryGetComponent<IHookSystem>(out IHookSystem owner))
-                            {
-                                owner.UpdateHookCollisions(false);
-                            }
-
-
-                            if (model.Hook(netIdentity))
-                            {
-
-                                HookedItem = vc;
-                                HookedNetworkIdentity = collider.gameObject.GetComponent<NetworkIdentity>();
-                                animator.SetBool("Hooking", true);
-                                checkingHook = false;
-                                if (HookedItem.Model.CanBeAddedToInventory) {
-                                    if (HookedNetworkIdentity) {
-                                        inventorySystem.ServerHookToBackpack(model.Name, HookedNetworkIdentity.gameObject);
-                                    }
-                                
-                                }
-
-                                UpdateHookCollisions(false);
-
-
-                                break;
-                            }
-                        }
-                        
+                foreach (Collider2D collider in colliders) {
+                    if (Hook(collider.gameObject) || Hook(collider.transform.parent.gameObject)) {
+                        break;
                     }
                 }
 

@@ -18,22 +18,22 @@ PrefabInstance:
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: buyMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: b8e29f86efcf73a45b1715d62379f5b7, type: 2}
+      objectReference: {fileID: 2100000, guid: 6aa5e2fe07fb4534582a5f09a966adcf, type: 2}
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <HookedRotationZOffset>k__BackingField
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <HookedPositionOffset>k__BackingField.x
-      value: 0.01
+      value: 0.036
       objectReference: {fileID: 0}
     - target: {fileID: -2388563459011212752, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <HookedPositionOffset>k__BackingField.y
-      value: 2.53
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <Name>k__BackingField
-      value: SeaweedFruit
+      value: Flower
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <SelfMass>k__BackingField
@@ -42,10 +42,6 @@ PrefabInstance:
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <CanBeUsed>k__BackingField
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
-      propertyPath: <Durability>k__BackingField
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <BasicBuyPrice>k__BackingField
@@ -65,12 +61,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_AssetId
-      value: 7f357c983eb7155458f5c29b82b06600
+      value: 63080f426081b7d4a8475d992bbe3ed1
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4afa875e6b961d146be413d4e37f06f0, type: 3}
+      objectReference: {fileID: 21300000, guid: 5e984c398990c784097382f390e3459c, type: 3}
     - target: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -129,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Name
-      value: SeaweedFruit
+      value: Flower
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Mesh
@@ -282,8 +278,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
   m_PrefabInstance: {fileID: 1849494803883255911}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &234502844021009488
-CircleCollider2D:
+--- !u!70 &2913019138882945804
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -295,10 +291,10 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.031647444, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.1683526
---- !u!114 &829094423972008369
+  m_Offset: {x: 0.000009238718, y: 0.027827734}
+  m_Size: {x: 1.1408483, y: 2.3989224}
+  m_Direction: 0
+--- !u!114 &-6723270579716617073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -307,15 +303,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4710686576622463885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c1ec26cc22c0924ea51c8c6137844bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bfea0b13fdd02941bad2fbba4ba28c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
-  <HookedPositionOffset>k__BackingField: {x: 0.01, y: 2.53}
+  syncInterval: 0
+  <HookedPositionOffset>k__BackingField: {x: 0.036, y: 2.6}
   <HookedRotationZOffset>k__BackingField: 90
   <IsMaskable>k__BackingField: 1
-  buyMaterial: {fileID: 2100000, guid: b8e29f86efcf73a45b1715d62379f5b7, type: 2}
+  buyMaterial: {fileID: 2100000, guid: 6aa5e2fe07fb4534582a5f09a966adcf, type: 2}
   sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
   visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
@@ -325,4 +321,4 @@ MonoBehaviour:
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 0}
-  speedIncreasePercentage: 0.2
+  healthIncreasePercentage: 0.2

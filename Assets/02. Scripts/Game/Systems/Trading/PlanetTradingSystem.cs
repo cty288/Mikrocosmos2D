@@ -174,15 +174,15 @@ namespace Mikrocosmos
             
             if (CheckItemExistsInTradingItemList(currentSellItemLists, e.RequestingGoods, out TradingItemInfo info))
             {
-                PlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<PlayerTradingSystem>();
+                IPlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<IPlayerTradingSystem>();
                 //Debug.Log($"Buy: {currentSellingItemPrice}, {currentSellingItemObject.name}");
-                int playerTeam = spaceship.GetComponent<PlayerSpaceship>().connectionToClient.identity
+                int playerTeam = e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
                     .GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
                 
                 IGoods currentSellingItem = e.RequestingGoods;
                 if (!currentSellingItem.TransactionFinished)
                 {
-                    spaceship.Money -= currentSellingItem.RealPrice;
+                    spaceship.SpendMoney(currentSellingItem.RealPrice);
                 }
 
                 currentSellingItem.TransactionFinished = true;
@@ -197,7 +197,7 @@ namespace Mikrocosmos
 
                 //currentSellItemLists.Remove(info);
                 SwitchSellItem(info);
-                ChangeAffinity(playerTeam, spaceship.GetComponent<IBuffSystem>());
+                ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>());
             }
 
         }
@@ -211,7 +211,7 @@ namespace Mikrocosmos
             if (CheckItemExistsInTradingItemList(currentBuyItemLists, e.DemandedByPlanet, out TradingItemInfo info)) {
                 if (e.HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem spaceship)) {
 
-                    spaceship.Money += info.currentItemPrice;
+                    spaceship.ReceiveMoney(info.currentItemPrice);
                     int playerTeam = e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
                         .GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
                     // currentBuyItemLists.Remove(info);
