@@ -735,6 +735,8 @@ GAME_BUFF_OVERWEIGHT_DESCRIPTION,,Your spaceship is overweight! Your engine can'
 任务系统,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 GAME_MISSION_ESCORT_EGG,,Child Escort,,,,,,,,,,,,,,,,,寻孩启事,尋孩啟事,,,,,,,,,
 GAME_MISSION_ESCORT_EGG_DESCRIPTION,,Help Eggman retrieve his missing child!,,,,,,,,,,,,,,,,,帮助蛋蛋星人找回她失踪的孩子！,幫助蛋蛋星人找回她失踪的孩子！,,,,,,,,,
+GAME_MISSION_STRANGE_METEOR,,Mysterious Meteors,,,,,,,,,,,,,,,,,神秘陨石,神秘隕石,,,,,,,,,
+GAME_MISSION_STRANGE_METEOR_DESCRIPTION,,"Some strange meteors just appeared near the border, they seem precious to your boss!",,,,,,,,,,,,,,,,,,,,,,,,,,,
 主菜单,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 MENU_FIRST_TIME_USER,,New player? Give yourself a cool name!,,,,,,,,,,,,,,,,,第一次游戏？ 来个炫酷的名字吧！,第一次遊戲？來個炫酷的名字吧！,,,,,,,,,
 MENU_HOST_GAME,,Host Game,,,,,,,,,,,,,,,,,创建主机,創建主機,,,,,,,,,

@@ -157,7 +157,6 @@ namespace Mikrocosmos
             }
 
             /*
-
             if (isClientOnly) {
                 if (Model.HookState == HookState.Hooked && Model.HookedByIdentity.hasAuthority) {
                     networkRigidbody.syncVelocity = false;

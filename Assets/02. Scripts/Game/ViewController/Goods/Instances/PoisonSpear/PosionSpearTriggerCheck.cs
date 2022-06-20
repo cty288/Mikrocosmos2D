@@ -16,13 +16,15 @@ namespace Mikrocosmos
                         RaycastHit2D hit = Physics2D.Raycast(transform.position,
                             (collider.transform.position - transform.position).normalized,3f);
 
-                     
+
+                        if (hit.collider) {
                             if (hit.collider.TryGetComponent<ICanAbsorbDamage>(out ICanAbsorbDamage absorbDamageMoodel)) {
                                 if (absorbDamageMoodel.AbsorbDamage) {
                                     return;
                                 }
                             }
-                        
+                        }
+
                         GetComponentInParent<PosionSpearViewController>().OnHitObjectThisTime(collider.gameObject);
                     }
                 }

@@ -41,14 +41,14 @@ namespace Mikrocosmos
                         RaycastHit2D hit = Physics2D.Raycast(transform.position,
                             (other.transform.position - transform.position).normalized, 3f);
 
-
-                        if (hit.collider.TryGetComponent<ICanAbsorbDamage>(out ICanAbsorbDamage absorbDamageMoodel))
-                        {
-                            if (absorbDamageMoodel.AbsorbDamage)
-                            {
-                                return;
+                        if (hit.collider) {
+                            if (hit.collider.TryGetComponent<ICanAbsorbDamage>(out ICanAbsorbDamage absorbDamageMoodel)) {
+                                if (absorbDamageMoodel.AbsorbDamage) {
+                                    return;
+                                }
                             }
                         }
+                       
                         
                         Debug.Log($"Fire Planet Trigger Check: {other.gameObject.name}");
                         mainVc.DealDamageToDamagable(other.gameObject);

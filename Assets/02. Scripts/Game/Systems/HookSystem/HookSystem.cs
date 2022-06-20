@@ -616,7 +616,7 @@ namespace Mikrocosmos {
             if (hookTrigger.Triggered && model.HookState == HookState.Freed) {
                 List<Collider2D> colliders = hookTrigger.Colliders;
                 foreach (Collider2D collider in colliders) {
-                    if (Hook(collider.gameObject) || Hook(collider.transform.parent.gameObject)) {
+                    if (Hook(collider.gameObject) || (collider.transform.parent && Hook(collider.transform.parent.gameObject))) {
                         break;
                     }
                 }

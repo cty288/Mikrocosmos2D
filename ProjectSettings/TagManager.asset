@@ -51,12 +51,12 @@ TagManager:
   - name: Permerant Maskable
     uniqueID: 2353824561
     locked: 0
+  - name: MapUIMap
+    uniqueID: 2911160533
+    locked: 0
   - name: MapVisionEntity
     uniqueID: 1953122721
     locked: 0
   - name: Entities
     uniqueID: 1225612677
-    locked: 0
-  - name: MapUIMap
-    uniqueID: 2911160533
     locked: 0

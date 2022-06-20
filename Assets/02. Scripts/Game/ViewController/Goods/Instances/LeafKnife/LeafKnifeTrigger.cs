@@ -17,13 +17,14 @@ namespace Mikrocosmos
                             (collider.transform.position - transform.position).normalized, 3f);
 
 
-                        if (hit.collider.TryGetComponent<ICanAbsorbDamage>(out ICanAbsorbDamage absorbDamageMoodel)) {
-                            if (absorbDamageMoodel.AbsorbDamage)
-                            {
-                                return;
+                        if (hit.collider) {
+                            if (hit.collider.TryGetComponent<ICanAbsorbDamage>(out ICanAbsorbDamage absorbDamageMoodel)) {
+                                if (absorbDamageMoodel.AbsorbDamage) {
+                                    return;
+                                }
                             }
                         }
-                        
+
                         GetComponentInParent<LeafKnifeViewController>().OnHitObjectThisTime(collider.gameObject);
                     }
                 }
