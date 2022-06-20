@@ -13,6 +13,16 @@ namespace Mikrocosmos
             if (NetworkServer.active) {
                 if (PhysicsUtility.IsInLayerMask(collider.gameObject, targetLayer)) {
                     if (collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum model)) {
+                        RaycastHit2D hit = Physics2D.Raycast(transform.position,
+                            (collider.transform.position - transform.position).normalized,3f);
+
+                     
+                            if (hit.collider.TryGetComponent<ICanAbsorbDamage>(out ICanAbsorbDamage absorbDamageMoodel)) {
+                                if (absorbDamageMoodel.AbsorbDamage) {
+                                    return;
+                                }
+                            }
+                        
                         GetComponentInParent<PosionSpearViewController>().OnHitObjectThisTime(collider.gameObject);
                     }
                 }

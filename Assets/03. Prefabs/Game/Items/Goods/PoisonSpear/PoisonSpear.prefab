@@ -257,41 +257,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1970205221661488640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8612353035255163372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_ComponentVersion: 1
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_ApplyToSortingLayers: 0000000031834c8ca1496a74855d0d49
-  m_ShapePath:
-  - {x: -1.0379442, y: 0.49964255, z: 0}
-  - {x: -0.46145248, y: 0.93040943, z: 0}
-  - {x: 0.26922035, y: 0.5626104, z: 0}
-  - {x: 0.7970465, y: 0.5259893, z: 0}
-  - {x: 1.0916222, y: 0.34384486, z: 0}
-  - {x: 1.0325776, y: -0.41044876, z: 0}
-  - {x: 0.46005958, y: -0.645763, z: 0}
-  - {x: 0.055348516, y: -0.2311809, z: 0}
-  - {x: -0.47768545, y: -0.48782697, z: 0}
-  - {x: -0.65536356, y: 0.035336077, z: 0}
-  - {x: -1.0107195, y: -0.665505, z: 0}
-  - {x: -1.2377527, y: 0.015594125, z: 0}
-  m_ShapePathHash: -31317013
-  m_Mesh: {fileID: 0}
-  m_InstanceId: 80106
 --- !u!114 &3239587428082404722
 MonoBehaviour:
   m_ObjectHideFlags: 0

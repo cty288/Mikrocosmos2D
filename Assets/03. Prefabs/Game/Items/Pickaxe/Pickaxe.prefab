@@ -222,7 +222,7 @@ MonoBehaviour:
   <IsUsing>k__BackingField: 0
   reduceDurabilityInstantlyAfterUse: 1
   reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse: 1
-  damageToMeteors: 15
+  damageToMeteors: 10
 --- !u!212 &8546804052185634253 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}

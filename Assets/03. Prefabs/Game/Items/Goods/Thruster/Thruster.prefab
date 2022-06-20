@@ -45,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <MaxDurability>k__BackingField
-      value: 1000
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <BasicSellPrice>k__BackingField
@@ -339,9 +339,12 @@ MonoBehaviour:
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   visionAffectedSprites:
   - {fileID: 4045048935829913801}
+  visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
+  <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 21300000, guid: 6604b9a8cd8311a479a3ff2293585c7e, type: 3}
   propelForce: 2
+  propellingTransformOffsetY: 2.08
 --- !u!114 &8170984210270291583
 MonoBehaviour:
   m_ObjectHideFlags: 0

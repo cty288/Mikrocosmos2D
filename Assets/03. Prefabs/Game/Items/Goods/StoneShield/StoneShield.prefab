@@ -298,6 +298,7 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 50
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 1
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
@@ -308,6 +309,7 @@ MonoBehaviour:
   <BasicSellPrice>k__BackingField: 25
   <BasicBuyPrice>k__BackingField: 40
   <GoodRarity>k__BackingField: 1
+  <DestroyedBySun>k__BackingField: 1
   <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0.01
   <AffectedByGravity>k__BackingField: 1
@@ -315,7 +317,7 @@ MonoBehaviour:
   <UseMode>k__BackingField: 1
   <Frequency>k__BackingField: 0
   <Durability>k__BackingField: 0
-  <MaxDurability>k__BackingField: 30
+  <MaxDurability>k__BackingField: 200
   <IsUsing>k__BackingField: 0
   reduceDurabilityInstantlyAfterUse: 0
   reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse: 1
