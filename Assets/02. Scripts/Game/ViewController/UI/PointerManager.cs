@@ -6,19 +6,20 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.TimeSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Mikrocosmos
 {
     public class PointerManager : AbstractMikroController<Mikrocosmos>
     {
-        [SerializeField] private GameObject pointerPrefab;
+        [FormerlySerializedAs("pointerPrefab")] [SerializeField] private GameObject planetPointerPrefab;
 
         private string currentSelectedName;
        
-        private Dictionary<GameObject, List<MapPointerViewController>> planetToPointers = new Dictionary<GameObject, List<MapPointerViewController>>();
+        private Dictionary<GameObject, List<IMapPointerViewController>> planetToPointers = new Dictionary<GameObject, List<IMapPointerViewController>>();
         private void Awake()
         {
-            this.RegisterEvent<OnClientInventoryUpdate>(OnClientInventoryUpdate)
+            this.RegisterEvent<OnClientHookIdentityChanged>(OnClientInventoryUpdate)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
             this.RegisterEvent<OnClientPlanetGenerateBuyItem>(OnClientPlanetGenerateBuyItem)
@@ -29,11 +30,11 @@ namespace Mikrocosmos
         {
            
             if (planetToPointers.ContainsKey(e.TargetPlanet)) {
-                MapPointerViewController oldPointer = planetToPointers[e.TargetPlanet].Find(controller => controller.GoodsName == e.OldBuyItemName);
-                if (oldPointer) {
+                IMapPointerViewController oldPointer = planetToPointers[e.TargetPlanet].Find(controller => controller.Name == e.OldBuyItemName);
+                if (oldPointer!=null && oldPointer.BindedGameObject) {
                     Debug.Log($"Old Buy Item: {e.OldBuyItemName}");
                     planetToPointers[e.TargetPlanet].Remove(oldPointer);
-                    Destroy(oldPointer.gameObject);
+                    Destroy(oldPointer.BindedGameObject);
                 }
             }
             
@@ -41,12 +42,13 @@ namespace Mikrocosmos
         }
 
 
-        private void OnClientInventoryUpdate(OnClientInventoryUpdate e)
+        private void OnClientInventoryUpdate(OnClientHookIdentityChanged e)
         {
-            if (currentSelectedName != e.AllSlots[e.SelectedIndex].PrefabName || e.AllSlots[e.SelectedIndex].ClientSlotCount == 0) {
+            
+            if (currentSelectedName != e.NewHookItemName) {
                 
-                if (e.AllSlots[e.SelectedIndex].ClientSlotCount > 0) {
-                    currentSelectedName = e.AllSlots[e.SelectedIndex].PrefabName;
+                if (!string.IsNullOrEmpty(e.NewHookItemName)) {
+                    currentSelectedName = e.NewHookItemName;
                 }
                 else {
                     currentSelectedName = "";
@@ -58,35 +60,29 @@ namespace Mikrocosmos
             }
 
 
-            if (e.AllSlots[e.SelectedIndex].ClientSlotCount > 0)
-            {
-                
-                currentSelectedName = e.AllSlots[e.SelectedIndex].PrefabName;
+            if (!string.IsNullOrEmpty(currentSelectedName)) {
                 
                 foreach (var planet in planetToPointers.Keys) {
                     planetToPointers[planet].ForEach(controller => {
-                        if (controller.GoodsName == currentSelectedName) {
+                        if (controller.Name == currentSelectedName) {
                             controller.SetPointerActive(true);
                         }
                     });
                 }
-
-
-
             }
         }
 
         private void CreatePointerWindowForPlanet(GameObject planet, string goodsName, float time) {
           
             if (!planetToPointers.ContainsKey(planet)) {
-                planetToPointers.Add(planet, new List<MapPointerViewController>());
+                planetToPointers.Add(planet, new List<IMapPointerViewController>());
             }
 
             if (!String.IsNullOrEmpty(goodsName) &&
-                planetToPointers[planet].Find(controller => controller.GoodsName == goodsName) == null) {
+                planetToPointers[planet].Find(controller => controller.Name == goodsName) == null) {
 
-                MapPointerViewController pointer = Instantiate(pointerPrefab, transform).GetComponent<MapPointerViewController>();
-                pointer.GoodsName = goodsName;
+                MapPointerViewController pointer = Instantiate(planetPointerPrefab, transform).GetComponent<MapPointerViewController>();
+                pointer.Name = goodsName;
                 pointer.Time = time;
                 pointer.timer = time;
 
@@ -104,10 +100,6 @@ namespace Mikrocosmos
                 pointer.GetComponent<Window_Pointer>().target = planet.transform;
                 planetToPointers[planet].Add(pointer);
             }
-
-            
-
-
         }
 
         

@@ -40,11 +40,13 @@ namespace MikroFramework.Utilities
 
                 for (int i = 0; i < colliders.Count; i++) {
                     if (colliders[i] && Vector2.Distance(colliders[i].gameObject.transform.position, transform.position)
-                        >= maxDistance)
-                    {
+                        >= maxDistance) {
+                        
                         enterRC.Release();
                         removedColliders.Add(colliders[i]);
-                    }else if (!colliders[i].gameObject.activeInHierarchy) {
+
+                    }else if (colliders[i] && !colliders[i].gameObject.activeInHierarchy) {
+                        
                         enterRC.Release();
                         removedColliders.Add(colliders[i]);
                     }

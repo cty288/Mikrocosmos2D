@@ -267,6 +267,17 @@ namespace Mikrocosmos {
             if (allHookingIdentities != null && (allHookingIdentities.Contains(e.OwnerIdentity) || (e.OldIdentity  &&  allHookingIdentities.Contains(e.OldIdentity)))) {
                 UpdateHookCollisions(false);
             }
+
+            string itemName = "";
+            if (e.NewIdentity && e.NewIdentity.TryGetComponent<IHookable>(out IHookable hookable))
+            {
+                itemName = hookable.Name;
+            }
+
+            if (e.OwnerIdentity == netIdentity) {
+                TargetOnHookIdentityChanged(itemName);
+            }
+          
         }
 
 
@@ -538,10 +549,18 @@ namespace Mikrocosmos {
                     inventorySystem.ServerRemoveFromCurrentBackpack();
                 }
                 else {
+                    this.SendEvent<OnHookItemSwitched>(new OnHookItemSwitched()
+                    {
+                        NewIdentity = null,
+                        OldIdentity = HookedNetworkIdentity,
+                        OwnerIdentity = netIdentity
+                    });                    
+                    
                     HookedItem = null;
                     HookedNetworkIdentity = null;
                     animator.SetBool("Hooking", false);
                 }
+                
             }
 
             model.ServerUpdateMass();
@@ -566,7 +585,7 @@ namespace Mikrocosmos {
                 IHookable model = vc.Model;
 
                 if (model.CanBeHooked) {
-
+                    NetworkIdentity oldIdentity = HookedNetworkIdentity;
                     if (model.HookedByIdentity && model.HookedByIdentity != netIdentity) {
                         this.SendEvent<OnItemRobbed>(new OnItemRobbed()
                         {
@@ -597,10 +616,19 @@ namespace Mikrocosmos {
                             }
 
                         }
+                        else {
+                            this.SendEvent<OnHookItemSwitched>(new OnHookItemSwitched()
+                            {
+                                NewIdentity = HookedNetworkIdentity,
+                                OldIdentity = oldIdentity,
+                                OwnerIdentity = netIdentity
+                            });
+                        }
 
                         UpdateHookCollisions(false);
                         model.OnServerHooked();
-
+                        
+                        
                         return true;
                     }
                 }

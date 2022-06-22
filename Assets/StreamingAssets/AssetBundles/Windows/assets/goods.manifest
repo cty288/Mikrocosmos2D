@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3542929823
+CRC: 3827435979
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8d82570e80986f3ef537b8859a9615eb
+    Hash: 2a19ccb1dc34d6d9fd6135fd7fe094e9
   TypeTreeHash:
     serializedVersion: 2
     Hash: a6df28e1b5efdfc2946882c0494d428b
@@ -121,7 +121,7 @@ Assets:
 - Assets/04. Sprites/Items/Goods/RawMaterials/SeaweedFruit/SeaweedFruitSprite.png
 - Assets/04. Sprites/Items/Goods/FirePlant/FirePlant/FirePlantSprite.png
 - Assets/03. Prefabs/Game/Items/Goods/FirePlant/FirePlant.prefab
-- Assets/04. Sprites/Missions/SendEggMission/SunFlowerSonSprite.png
+- Assets/04. Sprites/Missions/SendEggMission/SunflowerSonSprite.png
 - Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite.png
 - Assets/03. Prefabs/Game/Items/Goods/Temporary/Satellite/DottedOutlineStatellite.mat
 - Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite.png

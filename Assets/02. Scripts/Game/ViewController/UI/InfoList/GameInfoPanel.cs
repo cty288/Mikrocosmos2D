@@ -13,6 +13,7 @@ namespace Mikrocosmos
         private Transform layoutGroup;
 
         private Dictionary<string, InfoElement> infoNameToElement = new Dictionary<string, InfoElement>();
+
         
         private void Awake() {
             this.RegisterEvent<OnInfoStartOrUpdate>(OnInfoStartOrUpdate).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -46,6 +47,16 @@ namespace Mikrocosmos
                 else {
                     infoNameToElement.Remove(e.Info.Name);
                 }
+            }
+        }
+
+        public void InfoElementSelfDestroy(string name) {
+            if (infoNameToElement.ContainsKey(name)) {
+                InfoElement infoElement = infoNameToElement[name];
+                if (infoElement) {
+                    infoElement.StopInfo();
+                }
+                infoNameToElement.Remove(name);
             }
         }
 

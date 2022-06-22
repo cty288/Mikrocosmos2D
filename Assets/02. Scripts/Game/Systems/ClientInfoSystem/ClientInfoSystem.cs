@@ -13,6 +13,8 @@ namespace Mikrocosmos
         public string Description;
         public string Title;
         public float RemainingTime;
+        public bool AutoDestroyWhenTimeUp;
+        public bool ShowRemainingTime;
     }
 
     public struct OnInfoStartOrUpdate {

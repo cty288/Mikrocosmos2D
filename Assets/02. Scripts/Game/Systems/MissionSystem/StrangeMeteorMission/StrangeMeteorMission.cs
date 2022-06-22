@@ -21,6 +21,8 @@ namespace Mikrocosmos
         }
 
         [field: SerializeField] public override float MaximumTime { get; set; } = 120;
+
+        private List<StrangeMeteorViewController> activeMeteors = new List<StrangeMeteorViewController>();
         public override void OnMissionStart() {
             Vector4 borders = this.GetSystem<IGameProgressSystem>().GetGameMapSize();
 
@@ -36,6 +38,7 @@ namespace Mikrocosmos
 
                 GameObject meteor = Instantiate(meteorPrefab, new Vector3(x, y, 0), Quaternion.identity);
                 NetworkServer.Spawn(meteor);
+                activeMeteors.Add(meteor.GetComponent<StrangeMeteorViewController>());
             }
         }
 

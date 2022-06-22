@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +28,8 @@ namespace Mikrocosmos
         private bool belongToTeam1Set = false;
 
         private float actualFill = 0.5f;
+
+        public float ActualFill => actualFill;
         protected override void Awake() {
             base.Awake();
             model = GetComponent<StrangeMeteorModel>();
@@ -36,6 +40,13 @@ namespace Mikrocosmos
             rangeRingAnimator = transform.Find("StrangeMeteorRange/Canvas").GetComponent<Animator>();
         }
 
+        
+        public override void OnStartClient() {
+            base.OnStartClient();
+            
+        }
+
+        //TODO: ”–Œ Ã‚
         private void OnBelongToTeam1Changed(bool arg1, bool belong) {
             Color targetColor = Color.white;
             if (actualFill != 0.5f) {
@@ -45,6 +56,19 @@ namespace Mikrocosmos
             rangeRenderer.DOColor(targetColor, 1f);
             mapUI.DOColor(targetColor, 1f);
 
+            int teamChangedTo = belong ? 1 : 2;
+            int localPlayerTeam =NetworkClient.connection.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
+            if (localPlayerTeam != teamChangedTo && belongToTeam1Set) {
+                this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage() {
+                    AutoDestroyWhenTimeUp = true,
+                    Description = "",
+                    InfoType = InfoType.LongWarning,
+                    Name = $"{model.Name}TeamChanged",
+                    RemainingTime = 8f,
+                    Title = Localization.Get("GAME_MISSION_STRANGE_METEOR_TEAM_CHANGED"),
+                    ShowRemainingTime = false
+                });
+            }
         }
 
         public override void OnStartServer() {
@@ -73,7 +97,7 @@ namespace Mikrocosmos
         private void CalculatePlayerDifferenceAndNotifyClient() {
 
              model.Team1MinusTeam2PlayerDifference = teamPlayersInRange[0] - teamPlayersInRange[1];
-            RpcUpdateProgress(model.Team1MinusTeam2PlayerDifference , model.Team1Progress);
+             RpcUpdateProgress(model.Team1MinusTeam2PlayerDifference , model.Team1Progress);
         }
 
 
@@ -89,12 +113,15 @@ namespace Mikrocosmos
 
 
                 //team1Ring.fillAmount = actualFill / 0;
-
-                belongToTeam1.Value = team1Ring.fillAmount > 0.5f;
-                if (!belongToTeam1Set) {
-                    belongToTeam1Set = true;
-                    OnBelongToTeam1Changed(false, belongToTeam1.Value);
+                if (isClient) {
+                    belongToTeam1.Value = actualFill > 0.5f;
+                    if (!belongToTeam1Set)
+                    {
+                        belongToTeam1Set = true;
+                        OnBelongToTeam1Changed(false, belongToTeam1.Value);
+                    }
                 }
+               
 
                 rangeRingAnimator.SetBool("Changing", true);
             }

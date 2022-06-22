@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   <MoveMode>k__BackingField: 1
   <MaxSpeed>k__BackingField: 50
   <CanBeHooked>k__BackingField: 1

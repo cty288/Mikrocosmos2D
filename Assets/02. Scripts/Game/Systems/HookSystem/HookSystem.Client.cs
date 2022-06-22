@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
+using Mirror;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -10,6 +11,10 @@ namespace Mikrocosmos
         public float ChargePercent;
         public float OldChargePercent;
     }
+
+    public struct OnClientHookIdentityChanged {
+        public string NewHookItemName;
+    }
     public partial class HookSystem : AbstractNetworkedSystem, IHookSystem {
         private void OnHookChargePercentChanged(float oldValue, float newValue) {
             this.SendEvent<OnClientChargePercentChanged>(new OnClientChargePercentChanged() {
@@ -17,6 +22,18 @@ namespace Mikrocosmos
                 OldChargePercent = oldValue,
                 IsLocalPlayer = hasAuthority
             });
+        }
+
+        [TargetRpc]
+        private void TargetOnHookIdentityChanged(string newHookName)
+        {
+            if (hasAuthority) {
+                this.SendEvent<OnClientHookIdentityChanged>(new OnClientHookIdentityChanged()
+                {
+                    NewHookItemName = newHookName
+                });
+            }
+           
         }
     }
 }

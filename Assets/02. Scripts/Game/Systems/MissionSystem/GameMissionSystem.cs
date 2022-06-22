@@ -157,7 +157,9 @@ namespace Mikrocosmos
                 InfoType = InfoType.LongInfo,
                 Name = info.MissionName,
                 Title = Localization.Get("GAME_MISSION_UPCOMING"),
-                RemainingTime = 10
+                RemainingTime = 10,
+                AutoDestroyWhenTimeUp = false,
+                ShowRemainingTime = true
             });
         }
 
@@ -170,7 +172,9 @@ namespace Mikrocosmos
                 Name = info.MissionName,
                 Title = info.MissionNameLocalized,
                 Description = info.MissionDescriptionLocalized,
-                RemainingTime = info.MissionMaximumTime
+                RemainingTime = info.MissionMaximumTime,
+                AutoDestroyWhenTimeUp = false,
+                ShowRemainingTime = true
             });
         }
 

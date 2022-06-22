@@ -19,6 +19,13 @@ namespace Mikrocosmos
         private Animator animator;
 
         private ClientInfoMessage info;
+
+
+        private bool autoDestroy = false;
+
+        private bool showRemainingTime = false;
+
+
         private void Awake() {
             titleWithDescription = transform.Find("InfoContainer/TitleWithDescription").GetComponent<InfoElementText>();
             onlyTitle = transform.Find("InfoContainer/OnlyTitle").GetComponent<InfoElementText>();
@@ -32,14 +39,25 @@ namespace Mikrocosmos
                 slider.fillAmount = 1;
             }
             else {
+               
                 timer -= Time.deltaTime;
                 timer = Mathf.Clamp(timer, 0, MaxTime);
-                slider.fillAmount = timer / MaxTime;
+                if (showRemainingTime) {
+                    slider.fillAmount = timer / MaxTime;
+                }
+
+                
+                if (autoDestroy && timer <= 0) {
+                    autoDestroy = false;
+                    this.GetComponentInParent<GameInfoPanel>().InfoElementSelfDestroy(info.Name);
+                }
             }
         }
 
         public void SetInfo(ClientInfoMessage info, bool isUpdate) {
             this.info = info;
+            this.autoDestroy = info.AutoDestroyWhenTimeUp;
+            this.showRemainingTime = info.ShowRemainingTime;
             if (isUpdate) {
                 animator.SetTrigger("Update");
                 tentativeMaxTime = info.RemainingTime - 1;

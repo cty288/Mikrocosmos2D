@@ -108,7 +108,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1953122721
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 138
   m_Sprite: {fileID: 21300000, guid: 2e53f370c8ca85b4e948bd0ff17afaf1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -779,7 +779,7 @@ MonoBehaviour:
   syncMode: 1
   syncInterval: 0
   <HookedNetworkIdentity>k__BackingField: {fileID: 0}
-  shootTimeThreshold: 0.1
+  shootTimeThreshold: 0.15
   shootChargeOneCycleTime: 2
   maxShootForce: 1200
   droppedItemSpawnPos: {fileID: 2601994127546760122}
@@ -6235,6 +6235,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5016221255185957216, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5884396966232922242, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -6270,6 +6274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0495378802ad84bb1828722d128e8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotation: {x: 0, y: 0, z: 0}
+  positionRelativeTo: {fileID: 7986015997137912839}
 --- !u!224 &3384020356191999802 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
