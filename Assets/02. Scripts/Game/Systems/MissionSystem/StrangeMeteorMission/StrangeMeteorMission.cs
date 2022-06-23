@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MikroFramework.Architecture;
 using Mirror;
 using Polyglot;
@@ -43,7 +44,35 @@ namespace Mikrocosmos
         }
 
         protected override void OnMissionStop() {
-            
+            float totalFillForTeam1 = 0, totalFillForTeam2 = 0;
+            foreach (StrangeMeteorViewController meteor in activeMeteors) {
+                totalFillForTeam1 += meteor.ActualFill;
+                totalFillForTeam2 += (1 - meteor.ActualFill);
+                ClientMessagerForDestroyedObjects.Singleton.ServerSpawnParticleOnClient(meteor.transform.position, 0);
+                NetworkServer.Destroy(meteor.gameObject);
+            }
+
+            int winningTeam = -1;
+            if (totalFillForTeam1 > totalFillForTeam2) {
+                winningTeam = 1;
+            }
+
+            if (totalFillForTeam1 < totalFillForTeam2) {
+                winningTeam = 2;
+            }
+
+            if (winningTeam > 0) {
+                List<PlayerMatchInfo> matchInfo =
+                    this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(winningTeam);
+
+                List<IBuffSystem> buffSystem = matchInfo.Select((info => {
+                    return info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                        .GetComponent<IBuffSystem>();
+                })).ToList();
+
+
+                AssignPermanentBuffToPlayers(buffSystem);
+            }
         }
     }
 }

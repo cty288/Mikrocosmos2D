@@ -29,6 +29,7 @@ namespace Mikrocosmos
 
         private float actualFill = 0.5f;
 
+        [SerializeField] private GameObject mapPointer;
         public float ActualFill => actualFill;
         protected override void Awake() {
             base.Awake();
@@ -40,13 +41,25 @@ namespace Mikrocosmos
             rangeRingAnimator = transform.Find("StrangeMeteorRange/Canvas").GetComponent<Animator>();
         }
 
-        
+
         public override void OnStartClient() {
             base.OnStartClient();
-            
+            PointerManager.Singleton.OnClientAddOrUpdatePointer(new OnClientAddOrUpdatePointer() {
+                IsActive = true,
+                PointerFollowing = gameObject,
+                PointerName = model.Name,
+                PointerPrefab = mapPointer
+            });
+    }
+
+        public override void OnStopClient() {
+            base.OnStopClient();
+            PointerManager.Singleton.OnClientRemovePointer(new OnClientRemovePointer() {
+               PointerName = model.Name
+            });
         }
 
-        //TODO: ”–Œ Ã‚
+
         private void OnBelongToTeam1Changed(bool arg1, bool belong) {
             Color targetColor = Color.white;
             if (actualFill != 0.5f) {
@@ -137,5 +150,7 @@ namespace Mikrocosmos
                 model.Team1Progress = fixedProgress;
             }
         }
+
+        
     }
 }

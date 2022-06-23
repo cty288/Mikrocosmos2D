@@ -31,6 +31,8 @@ namespace Mikrocosmos
         [field: SerializeField]
         public override float MaximumTime { get;  set; } = 120;
 
+        [SerializeField] private GameObject mapPointer;
+
         private GameObject sunFlower;
         public override void OnMissionStart() {
             this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished)
@@ -49,6 +51,7 @@ namespace Mikrocosmos
             
             GameObject child = Instantiate(childPrefab, new Vector3(x, y, 0), Quaternion.identity);
             NetworkServer.Spawn(child);
+            RpcSpawnPointerForEgg(child.GetComponent<NetworkIdentity>());
         }
 
         private void OnServerTransactionFinished(OnServerTransactionFinished e) {
@@ -75,6 +78,23 @@ namespace Mikrocosmos
                 AssignPermanentBuffToPlayers(buffSystem);
             }
            
+        }
+
+        [ClientRpc]
+        protected void RpcSpawnPointerForEgg(NetworkIdentity egg) {
+            PointerManager.Singleton.OnClientAddOrUpdatePointer(new OnClientAddOrUpdatePointer() {
+                IsActive = true,
+                PointerFollowing = egg.gameObject,
+                PointerName = MissionName,
+                PointerPrefab = mapPointer
+            });
+        }
+
+        public override void OnStopClient() {
+            base.OnStopClient();
+            PointerManager.Singleton.OnClientRemovePointer(new OnClientRemovePointer() {
+                PointerName = MissionName
+            });
         }
     }
 }

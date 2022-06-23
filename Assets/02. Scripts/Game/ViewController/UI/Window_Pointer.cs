@@ -24,7 +24,7 @@ public class Window_Pointer : MonoBehaviour {
 
    
     [SerializeField] private Sprite crossSprite;
-    private MapPointerViewController pointerViewController;
+    private IMapPointerViewController pointerViewController;
 
     [SerializeField]
     public Transform target;
@@ -36,9 +36,11 @@ public class Window_Pointer : MonoBehaviour {
     private Image pointerImage;
     public LayerMask borderMask;
     [SerializeField] private bool isOffScreen;
+
+    [SerializeField] private List<GameObject> hiddenObjectsWhenNoCrossSprite;
     private void Awake() {
     
-        pointerViewController = GetComponent<MapPointerViewController>();
+        pointerViewController = GetComponent<IMapPointerViewController>();
         Show();
         
     }
@@ -58,6 +60,10 @@ public class Window_Pointer : MonoBehaviour {
 
             if (isOffScreen)
             {
+                foreach (GameObject o in hiddenObjectsWhenNoCrossSprite) {
+                    o.SetActive(true);
+                }
+               // pointerRectTransform.gameObject.SetActive(true);
                 RotatePointerTowardsTargetPosition();
 
                 pointerImage.sprite = pointerViewController.PointerSprite;
@@ -76,12 +82,24 @@ public class Window_Pointer : MonoBehaviour {
             }
             else
             {
-                pointerImage.sprite = crossSprite;
-                Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(targetPositionScreenPoint);
-                pointerRectTransform.position = pointerWorldPosition;
-                pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
+                if (crossSprite) {
+                    foreach (GameObject o in hiddenObjectsWhenNoCrossSprite)
+                    {
+                        o.SetActive(true);
+                    }
+                    pointerImage.sprite = crossSprite;
+                    Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(targetPositionScreenPoint);
+                    pointerRectTransform.position = pointerWorldPosition;
+                    pointerRectTransform.localPosition = new Vector3(pointerRectTransform.localPosition.x, pointerRectTransform.localPosition.y, 0f);
 
-                pointerRectTransform.localEulerAngles = Vector3.zero;
+                    pointerRectTransform.localEulerAngles = Vector3.zero;
+                }
+                else {
+                    foreach (GameObject o in hiddenObjectsWhenNoCrossSprite)
+                    {
+                        o.SetActive(false);
+                    }
+                }
             }
         }
        

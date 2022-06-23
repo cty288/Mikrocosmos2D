@@ -16,6 +16,8 @@ namespace Mikrocosmos
         public GameObject BindedGameObject { get; set; }
 
         public void SetPointerActive(bool active);
+
+        public Sprite PointerSprite { get; }
     }
     public class MapPointerViewController : AbstractMikroController<Mikrocosmos>, IMapPointerViewController
     {
