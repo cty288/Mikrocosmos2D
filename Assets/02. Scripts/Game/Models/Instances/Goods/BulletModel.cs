@@ -12,7 +12,7 @@ public interface IBulletModel : IModel {
 }
 public class BulletModel : AbstractBasicEntityModel, IBulletModel {
     [field: SyncVar, SerializeField]
-    public override float SelfMass { get; protected set; }
+    public override float SelfMass { get;  set; }
     
     [field: SyncVar, SerializeField]
     public int Damage { get;  set; }

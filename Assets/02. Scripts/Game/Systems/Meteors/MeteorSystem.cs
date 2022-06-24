@@ -20,13 +20,13 @@ namespace Mikrocosmos
         [SerializeField]
         private List<GameObject> meteorPrefabs;
 
-        private List<Transform> meteorSpawnPositions;
+        private List<BoxCollider2D> meteorSpawnPositions;
 
         [SerializeField] private int meteorMinimumCount = 5;
         [SerializeField] private int meteorSpawnInterval = 10;
         private void Awake() {
             NetworkedObjectPoolManager.AutoCreatePoolWhenAllocating = true;
-            meteorSpawnPositions = transform.GetComponentsInChildren<Transform>().ToList();
+            meteorSpawnPositions = transform.GetComponentsInChildren<BoxCollider2D>().ToList();
         }
 
         private IEnumerator CheckSpawnMeteor() {
@@ -58,26 +58,31 @@ namespace Mikrocosmos
         }
 
         private void SpawnMeteor() {
-            Transform spawnPosition = meteorSpawnPositions[Random.Range(0, meteorSpawnPositions.Count)];
-            var meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)], spawnPosition.position,
+            Collider2D spawnPositionArea = meteorSpawnPositions[Random.Range(0, meteorSpawnPositions.Count)];
+            Vector2 spawnPosition = new Vector2(
+                Random.Range(spawnPositionArea.bounds.min.x, spawnPositionArea.bounds.max.x),
+                Random.Range(spawnPositionArea.bounds.min.y, spawnPositionArea.bounds.max.y));
+
+
+            var meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)], spawnPosition,
                 Quaternion.identity);
             
             meteor.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-            meteor.GetComponent<Rigidbody2D>().velocity = spawnPosition.up * Random.Range(25f, 35f);
-            meteor.GetComponent<Collider2D>().isTrigger = true;
+            meteor.GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * Random.Range(0, 10);
             
-            this.GetSystem<ITimeSystem>().AddDelayTask(5f, () => {
-                meteor.GetComponent<Collider2D>().isTrigger = false;
-            });
-            
+            meteor.GetComponent<Collider2D>().isTrigger = false;
+          
             activeMeteors.Add(meteor);
             NetworkServer.Spawn(meteor);
         }
 
 
         public void ResetMeteor(GameObject meteor) {
-            Transform spawnPosition = meteorSpawnPositions[Random.Range(0, meteorSpawnPositions.Count)];
-            meteor.transform.position = spawnPosition.position;
+            Collider2D spawnPositionArea = meteorSpawnPositions[Random.Range(0, meteorSpawnPositions.Count)];
+            Vector2 spawnPosition = new Vector2(
+                Random.Range(spawnPositionArea.bounds.min.x, spawnPositionArea.bounds.max.x),
+                Random.Range(spawnPositionArea.bounds.min.y, spawnPositionArea.bounds.max.y));
+            meteor.transform.position = spawnPosition;
         }
     }
 

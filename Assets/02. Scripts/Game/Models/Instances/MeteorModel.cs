@@ -25,7 +25,7 @@ namespace Mikrocosmos
            
         }
 
-        [field: SerializeField] public override float SelfMass { get; protected set; } = 5f;
+        [field: SerializeField] public override float SelfMass { get;  set; } = 5f;
         public override string Name { get; set; } = "Meteor";
 
 

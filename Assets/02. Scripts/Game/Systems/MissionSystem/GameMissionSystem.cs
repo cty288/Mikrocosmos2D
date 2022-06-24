@@ -54,7 +54,7 @@ namespace Mikrocosmos
 
         bool IsFinished { get; set; }
 
-        void OnMissionStart();
+        void OnMissionStart(float overallGameProgress);
         void StopMission(bool Finished = true);
     }
 
@@ -129,7 +129,7 @@ namespace Mikrocosmos
 
         private void SwitchToMission(IMission mission, GameObject missionGameObject) {
             StartCoroutine(MissionMaximumTimeCheck(mission, missionGameObject));
-            mission.OnMissionStart();
+            mission.OnMissionStart(progressSystem.GetGameProgress());
             this.SendEvent<OnMissionStart>(new OnMissionStart(){MissionName = mission.MissionName});
             RpcNotifyMissionAlreadytart(new ClientMissionStartInfo() {
                 MissionDescriptionLocalized = mission.MissionDescriptionLocalized(),

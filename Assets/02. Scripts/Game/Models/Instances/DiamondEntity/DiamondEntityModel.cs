@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public class DiamondEntityModel : AbstractBasicEntityModel, IAffectedByGravity {
-        public override float SelfMass { get; protected set; } = 1f;
+        public override float SelfMass { get;  set; } = 1f;
         public override string Name { get; set; }
 
         private DiamondEntityViewController vc;

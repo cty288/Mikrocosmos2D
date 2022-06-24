@@ -211,7 +211,7 @@ namespace Mikrocosmos
 
 
         [field: SyncVar, SerializeField]
-        public abstract float SelfMass { get; protected set; }
+        public abstract float SelfMass { get;  set; }
 
         protected Rigidbody2D bindedRigidibody; 
 

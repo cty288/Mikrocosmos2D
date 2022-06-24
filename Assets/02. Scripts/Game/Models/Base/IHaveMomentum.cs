@@ -18,7 +18,7 @@ namespace Mikrocosmos
         /// <summary>
         /// This is the self mass of this object
         /// </summary>
-        float SelfMass { get; }
+        float SelfMass { get;  set; }
 
         /// <summary>
         /// This is the total mass of this object, usually self mass; for player. it is equal to selfmass + backpack + hooked objects

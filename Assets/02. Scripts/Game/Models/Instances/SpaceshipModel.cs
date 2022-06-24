@@ -123,7 +123,7 @@ namespace Mikrocosmos
         public float InitialAcceleration { get; private set; } = 20;
 
         [field: SyncVar, SerializeField]
-        public override float SelfMass { get; protected set; } = 1;
+        public override float SelfMass { get;  set; } = 1;
         
         
 

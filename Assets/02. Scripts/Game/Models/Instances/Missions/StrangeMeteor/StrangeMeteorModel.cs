@@ -8,6 +8,11 @@ namespace Mikrocosmos
         [SerializeField]
         private float perPlayerProgressPerSecond = 0.01f;
 
+        public float PerPlayerProgressPerSecond1 {
+            get => perPlayerProgressPerSecond;
+            set => perPlayerProgressPerSecond = value;
+        }
+
         public float PerPlayerProgressPerSecond => perPlayerProgressPerSecond;
 
         private float team1Progress = 0.5f;
@@ -26,7 +31,7 @@ namespace Mikrocosmos
         }
 
         [field: SerializeField]
-        public override float SelfMass { get; protected set; }
+        public override float SelfMass { get;  set; }
         [field: SerializeField]        
         public override string Name { get; set; }
         public override void OnClientHooked() {

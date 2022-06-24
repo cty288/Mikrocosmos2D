@@ -32,7 +32,7 @@ namespace Mikrocosmos
         float IHaveMomentum.Acceleration { get; }
 
         [field: SerializeField, SyncVar]
-        public float SelfMass { get; protected set; }
+        public float SelfMass { get;  set; }
 
         public virtual float GetTotalMass() {
             return SelfMass;

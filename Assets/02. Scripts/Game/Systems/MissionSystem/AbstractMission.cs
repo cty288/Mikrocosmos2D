@@ -16,7 +16,7 @@ namespace Mikrocosmos
 
         public abstract float MaximumTime { get; set; }
         public bool IsFinished { get; set; }
-        public abstract void OnMissionStart();
+        public abstract void OnMissionStart(float overallProgress);
 
         public void AssignPermanentBuffToPlayers(List<IBuffSystem> buffSystems)
         {

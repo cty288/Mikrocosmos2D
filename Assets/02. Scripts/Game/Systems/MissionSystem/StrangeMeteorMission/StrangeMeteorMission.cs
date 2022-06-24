@@ -24,7 +24,8 @@ namespace Mikrocosmos
         [field: SerializeField] public override float MaximumTime { get; set; } = 120;
 
         private List<StrangeMeteorViewController> activeMeteors = new List<StrangeMeteorViewController>();
-        public override void OnMissionStart() {
+        
+        public override void OnMissionStart(float overallProgress) {
             Vector4 borders = this.GetSystem<IGameProgressSystem>().GetGameMapSize();
 
            
@@ -38,6 +39,8 @@ namespace Mikrocosmos
                 } while (Physics2D.OverlapCircle(new Vector2(x, y), 1) || Mathf.Abs(x) <= 60 || Mathf.Abs(y) <= 60);
 
                 GameObject meteor = Instantiate(meteorPrefab, new Vector3(x, y, 0), Quaternion.identity);
+                meteor.GetComponent<StrangeMeteorModel>().PerPlayerProgressPerSecond1 =
+                    0.01f / Mathf.SmoothStep(1, 4, overallProgress);
                 NetworkServer.Spawn(meteor);
                 activeMeteors.Add(meteor.GetComponent<StrangeMeteorViewController>());
             }

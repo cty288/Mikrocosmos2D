@@ -34,7 +34,7 @@ namespace Mikrocosmos
         [SerializeField] private GameObject mapPointer;
 
         private GameObject sunFlower;
-        public override void OnMissionStart() {
+        public override void OnMissionStart(float overallProgress) {
             this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
@@ -50,6 +50,7 @@ namespace Mikrocosmos
             } while (Physics2D.OverlapCircle(new Vector2(x, y), 1) || Mathf.Abs(x) <= 60 || Mathf.Abs(y) <= 60);
             
             GameObject child = Instantiate(childPrefab, new Vector3(x, y, 0), Quaternion.identity);
+            child.GetComponent<IEntity>().SelfMass = 80 * Mathf.SmoothStep(1, 3, overallProgress);
             NetworkServer.Spawn(child);
             RpcSpawnPointerForEgg(child.GetComponent<NetworkIdentity>());
         }

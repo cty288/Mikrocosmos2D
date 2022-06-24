@@ -36,7 +36,7 @@ namespace Mikrocosmos
     ICanSendQuery{
 
         [field: SyncVar, SerializeField]
-        public override float SelfMass { get; protected set; }
+        public override float SelfMass { get; set; }
 
         [field: SyncVar, SerializeField]
         public override string Name { get; set; } = "Goods";
