@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2119758188491955437}
   - component: {fileID: 3117142791784022178}
-  - component: {fileID: -2210684087431406304}
+  - component: {fileID: -4903084055656620993}
   m_Layer: 0
-  m_Name: StrangeMeteorMission
+  m_Name: SpaceMinecartMission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 771f5301e00c40f479d10efdafbe6ec1
   hasSpawned: 0
---- !u!114 &-2210684087431406304
+--- !u!114 &-4903084055656620993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,13 +59,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9103995473384659610}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9b42a775c33ab46b4b196b516cf65a, type: 3}
+  m_Script: {fileID: 11500000, guid: b8b37cbd90acfff40bb0472f955d1ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  strangeMeteorPrefabs:
-  - {fileID: 3789394192495447563, guid: aa6e7186f20aaba4f8937b23ec63a253, type: 3}
-  - {fileID: 3789394192495447563, guid: 762a8a5423b8b45438fcd43922779f30, type: 3}
-  - {fileID: 3789394192495447563, guid: 60d663a9fd63fc942b8cfb4446ead8af, type: 3}
-  <MaximumTime>k__BackingField: 20
+  spaceMinecartPrefab: {fileID: 1342861027360944214, guid: ef1f93c56f0298b4881c145b68290771, type: 3}

@@ -16,6 +16,7 @@ namespace Mikrocosmos
             moneyText = this.GetComponent<TMP_Text>();
         }
 
+        private bool moneyNotEnoughTriggered = false;
         private void Start() {
             this.RegisterEvent<OnClientMainGamePlayerConnected>(OnLocalPlayerConnected)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -25,7 +26,10 @@ namespace Mikrocosmos
         }
 
         private void OnClientMoneyNotEnough(OnClientMoneyNotEnough e) {
-            StartCoroutine(MoneyNotEnoughAnimation());
+            //if (!moneyNotEnoughTriggered) {
+                StartCoroutine(MoneyNotEnoughAnimation());
+         //   }
+           
         }
 
         private IEnumerator MoneyNotEnoughAnimation() {
@@ -36,6 +40,7 @@ namespace Mikrocosmos
             moneyText.color = Color.red;
             yield return new WaitForSeconds(0.2f);
             moneyText.color = Color.white;
+            moneyNotEnoughTriggered = false;
         }
 
         private void Update() {

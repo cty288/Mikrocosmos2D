@@ -99,7 +99,7 @@ namespace Mikrocosmos
 
             if (isServer)
             {
-                if (canOvalRotate) {
+                if (canOvalRotate && target) {
                     OvalRotate();
                 }
                 
@@ -134,7 +134,9 @@ namespace Mikrocosmos
 
             this.RegisterEvent<OnServerPlanetDestroyBuyItem>(OnServerPlanetDestroyBuyItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
-            distance = Vector3.Distance(target.transform.position, transform.position);
+            if (target) {
+                distance = Vector3.Distance(target.transform.position, transform.position);
+            } 
         }
 
         private void OnServerPlanetDestroyBuyItem(OnServerPlanetDestroyBuyItem e) {

@@ -66,6 +66,7 @@ namespace Mikrocosmos
         public void SetPrice(int pirce, bool isRaw = false) {
             Price = pirce;
             priceText.text = Price.ToString();
+           
             if (isRaw && rawText)
             {
                 rawText.gameObject.SetActive(true);

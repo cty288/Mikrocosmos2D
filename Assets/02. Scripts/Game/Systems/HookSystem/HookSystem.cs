@@ -568,15 +568,17 @@ namespace Mikrocosmos {
         }
 
         private bool checkingHook = false;
-
+        private List<GameObject> alreadyCheckedHookItem = new List<GameObject>();
         [ServerCallback]
         public void ServerStartHookTrigger() {
+            alreadyCheckedHookItem.Clear();
             checkingHook = true;
         }
 
         [ServerCallback]
         public void ServerStopHookTrigger() {
             checkingHook = false;
+            alreadyCheckedHookItem.Clear();
         }
         public bool Hook(GameObject identity) {
             if (identity && identity
@@ -644,6 +646,10 @@ namespace Mikrocosmos {
             if (hookTrigger.Triggered && model.HookState == HookState.Freed) {
                 List<Collider2D> colliders = hookTrigger.Colliders;
                 foreach (Collider2D collider in colliders) {
+                    if (alreadyCheckedHookItem.Contains(collider.gameObject)) {
+                        continue;
+                    }
+                    alreadyCheckedHookItem.Add(collider.gameObject);
                     if (Hook(collider.gameObject) || (collider.transform.parent && Hook(collider.transform.parent.gameObject))) {
                         break;
                     }

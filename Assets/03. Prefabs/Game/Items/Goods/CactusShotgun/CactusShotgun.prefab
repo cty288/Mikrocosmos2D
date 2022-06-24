@@ -538,7 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0.01, y: 2.74}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1

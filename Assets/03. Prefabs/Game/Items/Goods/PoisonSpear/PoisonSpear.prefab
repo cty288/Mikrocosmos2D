@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0.06, y: 3.21}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
@@ -333,6 +333,7 @@ MonoBehaviour:
   <BasicBuyPrice>k__BackingField: 45
   <GoodRarity>k__BackingField: 1
   <DestroyedBySun>k__BackingField: 1
+  <AbsorbedToBackpack>k__BackingField: 0
   <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0.01
   <AffectedByGravity>k__BackingField: 1
