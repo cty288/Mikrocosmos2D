@@ -16,6 +16,8 @@ namespace Mikrocosmos
 
         public bool DestroyedBySun { get; set; }
 
+        public bool AbsorbedToBackpack { get; set; }
+
         int RealPrice { get; set; }
 
         /// <summary>

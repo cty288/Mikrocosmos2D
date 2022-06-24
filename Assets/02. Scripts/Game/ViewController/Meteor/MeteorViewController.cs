@@ -145,6 +145,11 @@ namespace Mikrocosmos
                     
                     rewardInstance.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized
                                                                         * 15f, ForceMode2D.Impulse);
+                    if (rewardInstance.TryGetComponent<IGoods>(out var goods)) {
+                        goods.AbsorbedToBackpack = true;
+                    }
+
+                    
                     NetworkServer.Spawn(rewardInstance);
                 }
             }
@@ -172,7 +177,10 @@ namespace Mikrocosmos
         private void OnTriggerExit2D(Collider2D other) {
             if (other.gameObject.CompareTag("Border")) {
                 this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => {
-                    GetComponent<Collider2D>().isTrigger = false;
+                    if (this) {
+                        GetComponent<Collider2D>().isTrigger = false;
+                    }
+                
                 });
 
             }

@@ -28,10 +28,12 @@ namespace Mikrocosmos
 
         private void OnFullMapCanvasClose(OnFullMapCanvasClose e) {
             animator.SetTrigger(OnCloseBigMap);
+            animator.ResetTrigger(OnOpenBigMap);
         }
 
         private void OnFullMapCanvasOpen(OnFullMapCanvasOpen e) {
             animator.SetTrigger(OnOpenBigMap);
+            animator.ResetTrigger(OnCloseBigMap);
         }
 
         public virtual void SetBuffInfo(BuffInfo info) {

@@ -7,8 +7,7 @@ namespace Mikrocosmos
     public class EarthTypeViewController : BasicGoodsViewController
     {
         [SerializeField] private float healthIncreasePercentage = 0.2f;
-        protected override void OnServerItemUsed()
-        {
+        protected override void OnServerItemUsed() {
             base.OnServerItemUsed();
             if (Owner)
             {
@@ -18,5 +17,8 @@ namespace Mikrocosmos
             }
             GoodsModel.ReduceDurability(1);
         }
+
+
+        
     }
 }

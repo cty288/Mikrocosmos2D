@@ -64,6 +64,8 @@ namespace Mikrocosmos
     }
     public interface IPlayerInventorySystem : ISystem {
         void ServerHookToBackpack(string name, GameObject gameObject);
+
+        void ServerAddToBackpack(string name, GameObject gameObject);
         void ServerRemoveFromCurrentBackpack();
         void ServerRemoveFromBackpack(string name);
 
@@ -75,8 +77,8 @@ namespace Mikrocosmos
         void ServerSwitchSlot(int index);
         int GetSlotCount();
         int GetCurrentSlot();
-        
-        
+
+        bool ServerCheckCanAddToBackpack(IGoods goods, out BackpackSlot targetSlot);
         List<BackpackSlot> BackpackItems { get; }
 
     }
@@ -204,6 +206,34 @@ namespace Mikrocosmos
             }
             
             TargetOnInventoryUpdate(backpackItems,currentIndex);
+        }
+
+        [ServerCallback]
+        public void ServerAddToBackpack(string name, GameObject gameObject) {
+           ServerCheckCanAddToBackpack(gameObject.GetComponent<IGoods>(), out BackpackSlot slot);
+            if (slot != null)
+            {
+                slot.PrefabName = name;
+                slot.SpriteName = name + "Sprite";
+                slot.StackedObjects.Insert(0, gameObject);
+                NetworkServer.UnSpawn(gameObject);
+                gameObject.SetActive(false);
+                
+                if (backpackItems[currentIndex] == slot) {
+                   
+                        this.SendEvent<OnSwitchItemSlot>(new OnSwitchItemSlot()
+                        {
+                            PrefabName = name,
+                            SlotIndex = currentIndex,
+                            Identity = netIdentity,
+                            SwitchedGameObject = gameObject,
+                            SameSlot = false
+                        });
+                    
+                    
+                }
+                TargetOnInventoryUpdate(backpackItems, currentIndex);
+            }
         }
 
 
@@ -399,6 +429,27 @@ namespace Mikrocosmos
         public int GetCurrentSlot() {
             return currentIndex;
         }
+
+        public bool ServerCheckCanAddToBackpack(IGoods goods, out BackpackSlot targetSlot) {
+            BackpackSlot firstEmptySlot = null;
+            foreach (BackpackSlot slot in backpackItems) {
+                if (slot.Count > 0 && slot.PrefabName == goods.Name) {
+                    targetSlot = slot;
+                    return true;
+                }
+
+                if (slot.Count == 0 && firstEmptySlot==null) {
+                    if (slot == backpackItems[currentIndex] && hookSystem.IsHooking) {
+                        continue;
+                    }
+                    firstEmptySlot = slot;
+                }
+            }
+
+            targetSlot = firstEmptySlot;
+            return firstEmptySlot!=null;
+        }
+
 
         public List<BackpackSlot> BackpackItems {
             get {

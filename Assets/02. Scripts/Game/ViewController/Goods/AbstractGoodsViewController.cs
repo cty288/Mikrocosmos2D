@@ -108,6 +108,39 @@ namespace Mikrocosmos
            
         }
 
+        private GameObject absorbSpaceship;
+        private bool absorbing = false;
+        private bool waitingToCheckAbsorbing = false;
+
+        private void OnTriggerStay2D(Collider2D col) {
+            if (isServer) {
+                if (col.gameObject.CompareTag("PlayerAbsorbTrigger")) {
+                    if (!waitingToCheckAbsorbing && Model.HookState == HookState.Freed && GoodsModel.AbsorbedToBackpack && GoodsModel.TransactionFinished && !absorbing)
+                    {
+                        absorbSpaceship = col.transform.parent.gameObject;
+                        if (absorbSpaceship.TryGetComponent<IPlayerInventorySystem>(out var playerInventorySystem))
+                        {
+                            if (playerInventorySystem.ServerCheckCanAddToBackpack(GoodsModel, out var slot)) {
+                                waitingToCheckAbsorbing = true;
+                                this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
+                                    waitingToCheckAbsorbing = false;
+                                    if ( this && !absorbing)
+                                    {
+
+                                        if (Mathf.Abs(Vector2.Distance(transform.position, absorbSpaceship.transform.position)) <= 20)
+                                        {
+                                            absorbing = true;
+                                        }
+                                    }
+                                });
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
         protected override void OnCollisionEnter2D(Collision2D collision) {
             base.OnCollisionEnter2D(collision);
             if (isServer) {
@@ -142,7 +175,23 @@ namespace Mikrocosmos
                 if (!GoodsModel.TransactionFinished && FollowingPoint) {
                     transform.position = FollowingPoint.position;
                 }
+
+                if (absorbing && absorbSpaceship && GoodsModel.AbsorbedToBackpack) {
+                    rigidbody.MovePosition(Vector2.Lerp(transform.position, absorbSpaceship.transform.position,
+                        5f * Time.fixedDeltaTime));
+
+                    if (Vector2.Distance(transform.position, absorbSpaceship.transform.position) <= 5) {
+                        absorbing = false;
+                        if (absorbSpaceship.TryGetComponent<IPlayerInventorySystem>(out var playerInventorySystem))
+                        {
+                            playerInventorySystem.ServerAddToBackpack(GoodsModel.Name, gameObject);
+                        }
+                        absorbSpaceship = null;
+                    }
+                }
             }
+
+            
          
         }
 
@@ -156,7 +205,7 @@ namespace Mikrocosmos
         protected override void Update() {
             base.Update();
             if (GoodsModel.TransactionFinished) {
-                collider.isTrigger = false;
+                collider.isTrigger = absorbing;
                 if (shadeCaster) {
                     shadeCaster.castsShadows = true;
                 }

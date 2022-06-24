@@ -51,6 +51,8 @@ namespace Mikrocosmos
         private Transform spriteTransform;
 
         private bool isSun;
+
+        private bool canOvalRotate = true;
         private void Awake() {
             spriteTransform = transform.Find("Sprite");
             BuyPackageModel = GetComponent<ICanBuyPackage>();
@@ -77,15 +79,30 @@ namespace Mikrocosmos
 
             this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnClientPlanetAffinityWithTeam1Changed)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnMissionStart>(OnMissionStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
-        
+        private void OnMissionStop(OnMissionStop obj) {
+            canOvalRotate = true;
+        }
+
+        private void OnMissionStart(OnMissionStart obj) {
+            canOvalRotate = false;
+        }
+
+
         private void FixedUpdate()
         {
 
             if (isServer)
             {
-                OvalRotate();
+                if (canOvalRotate) {
+                    OvalRotate();
+                }
+                
                 KeepUniversalG();
                 SelfRotate();
             }
@@ -138,27 +155,28 @@ namespace Mikrocosmos
         [ServerCallback]
         private void OnServerPlanetGenerateBuyingItem(OnServerPlanetGenerateBuyingItem e)
         {
-            if (e.ParentPlanet == gameObject)
-            {
-                string generatedName = e.GeneratedItem.GetComponent<IGoods>().Name;
+            if (e.ParentPlanet == gameObject) {
+                IGoods generatedGoods = e.GeneratedItem.GetComponent<IGoods>();
+                string generatedName = generatedGoods.Name;
                 string previousName = "";
                 if (e.PreviousItem) {
                     previousName = e.PreviousItem.GetComponent<IGoods>().Name;
                 }
 
-                GameObject buyBubble = GenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime);
+                GameObject buyBubble = GenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime,
+                    generatedGoods.GoodRarity == GoodsRarity.RawResource);
                
                 if (buyBubble) {
-                    buyBubble.GetComponent<PlanetBuyBubble>().ServerGoodsBuying = e.GeneratedItem.GetComponent<IGoods>();
+                    buyBubble.GetComponent<PlanetBuyBubble>().ServerGoodsBuying = generatedGoods;
 
                     e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint =
                         buyBubble.transform.Find("BuyItemSpawnPos");
-                    RpcGenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime);
+                    RpcGenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime, generatedGoods.GoodRarity == GoodsRarity.RawResource);
                 }
 
-                if (!e.CountTowardsGlobalIItemList)
-                {
-                    RpcGenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime);
+                if (!e.CountTowardsGlobalIItemList) {
+                    RpcGenerateBuyBubble(e.Price, generatedName, previousName, e.MaxTime,
+                        generatedGoods.GoodRarity == GoodsRarity.RawResource);
                 }
 
 
@@ -170,25 +188,27 @@ namespace Mikrocosmos
         private void OnServerPlanetGenerateSellItem(OnServerPlanetGenerateSellItem e)
         {
             if (e.ParentPlanet == gameObject) {
-                string generatedName = e.GeneratedItem.GetComponent<IGoods>().Name;
+                IGoods generatedGoods = e.GeneratedItem.GetComponent<IGoods>();
+                string generatedName = generatedGoods.Name;
                 string previousName = "";
                 if (e.PreviousItem) {
                     previousName = e.PreviousItem.GetComponent<IGoods>().Name;
                 }
                 
-                GameObject sellBubble = GenerateSellBubble(e.Price, generatedName, previousName);
+                GameObject sellBubble = GenerateSellBubble(e.Price, generatedName, previousName,
+                    generatedGoods.GoodRarity == GoodsRarity.RawResource);
                 if (sellBubble) {
                     e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellBubble.transform.Find("SellItemSpawnPos");
-                    RpcGenerateSellBubble(e.Price, generatedName, previousName);
+                    RpcGenerateSellBubble(e.Price, generatedName, previousName, generatedGoods.GoodRarity == GoodsRarity.RawResource);
                 }
 
                 if (!e.CountTowardsGlobalIItemList) {
-                    RpcGenerateSellBubble(e.Price, generatedName, previousName);
+                    RpcGenerateSellBubble(e.Price, generatedName, previousName, generatedGoods.GoodRarity == GoodsRarity.RawResource);
                 }
             }
         }
 
-        private GameObject GenerateSellBubble(int price,string bubbleToGenerate,  string bubbleToDestroy) {
+        private GameObject GenerateSellBubble(int price,string bubbleToGenerate,  string bubbleToDestroy, bool isRaw) {
             GameObject oldBubble = null;
             if (!String.IsNullOrEmpty(bubbleToDestroy)) {
                 if (ClientSellBubbles.ContainsKey(bubbleToDestroy)) {
@@ -212,13 +232,13 @@ namespace Mikrocosmos
             }
             
             
-            sellBubble.GetComponent<PlanetSellBubble>().SetPrice(price);
+            sellBubble.GetComponent<PlanetSellBubble>().SetPrice(price, isRaw);
            
             ClientSellBubbles.Add(bubbleToGenerate, sellBubble);
             return sellBubble;
         }
 
-        private GameObject GenerateBuyBubble(int price, string bubbleToGenerate, string bubbleToDestroy, float maxTime)
+        private GameObject GenerateBuyBubble(int price, string bubbleToGenerate, string bubbleToDestroy, float maxTime, bool isRaw)
         {
             GameObject oldBubble = null;            
             Debug.Log($"Bubble To Destroy: {bubbleToDestroy}, Bubble To Generate: {bubbleToGenerate}");
@@ -250,7 +270,7 @@ namespace Mikrocosmos
             }
             
             PlanetBuyBubble bubbleScript = buyBubble.GetComponent<PlanetBuyBubble>();
-           bubbleScript.UpdateInfo(price, maxTime);
+           bubbleScript.UpdateInfo(price, maxTime, isRaw);
 
            
             ClientBuyBubbles.Add(bubbleToGenerate, buyBubble);
@@ -286,17 +306,17 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcGenerateSellBubble(int price, string bubbleToGenerate, string bubbleToDestroy) {
+        private void RpcGenerateSellBubble(int price, string bubbleToGenerate, string bubbleToDestroy, bool isRaw) {
             if (isClientOnly) {
-                GenerateSellBubble(price, bubbleToGenerate, bubbleToDestroy);
+                GenerateSellBubble(price, bubbleToGenerate, bubbleToDestroy, isRaw);
             }
         }
 
         [ClientRpc]
-        private void RpcGenerateBuyBubble(int price, string bubbleToGenerate, string bubbleToDestroy, float maxTime)
+        private void RpcGenerateBuyBubble(int price, string bubbleToGenerate, string bubbleToDestroy, float maxTime, bool isRaw)
         {
             if (isClientOnly) {
-                GenerateBuyBubble(price, bubbleToGenerate, bubbleToDestroy, maxTime);
+                GenerateBuyBubble(price, bubbleToGenerate, bubbleToDestroy, maxTime, isRaw);
             }
         }
         private void OnClientPlanetAffinityWithTeam1Changed(OnClientPlanetAffinityWithTeam1Changed e)

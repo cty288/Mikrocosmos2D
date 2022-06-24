@@ -8,10 +8,15 @@ namespace Mikrocosmos
 {
     public class PlanetSellBubble : MonoBehaviour {
         private Text priceText;
-
+        private Text rawText;
         public int Price;
         private void Awake() {
             priceText = transform.Find("SellPrice").GetComponent<Text>();
+            Transform rawMaterialTextTr = transform.Find("RawMaterialText");
+            if (rawMaterialTextTr)
+            {
+                rawText = rawMaterialTextTr.GetComponent<Text>();
+            }
         }
 
         private void Start() {
@@ -19,9 +24,17 @@ namespace Mikrocosmos
         }
 
 
-        public void SetPrice(int pirce) {
+        public void SetPrice(int pirce, bool isRaw = false) {
             Price = pirce;
             priceText.text = Price.ToString();
+            if (isRaw && rawText)
+            {
+                rawText.gameObject.SetActive(true);
+            }
+            else if (!isRaw & rawText)
+            {
+                rawText.gameObject.SetActive(false);
+            }
         }
     }
 }

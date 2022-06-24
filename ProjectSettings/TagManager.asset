@@ -11,6 +11,7 @@ TagManager:
   - Border
   - Bullet
   - Star
+  - PlayerAbsorbTrigger
   layers:
   - Default
   - TransparentFX

@@ -49,6 +49,7 @@ namespace Mikrocosmos
         public bool TransactionFinished { get; set; } = true;
 
         [field: SerializeField] public bool DestroyedBySun { get; set; } = true;
+        [field: SerializeField] public bool AbsorbedToBackpack { get; set; } = false;
 
 
         [field: SyncVar] public int RealPrice { get; set; }

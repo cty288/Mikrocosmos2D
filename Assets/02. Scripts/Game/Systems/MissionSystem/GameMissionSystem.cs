@@ -18,8 +18,12 @@ namespace Mikrocosmos
         public string MissionName;
         public bool Finished;
     }
-    
 
+    public struct OnMissionStart {
+        public string MissionName;
+    }
+
+  
     public struct ClientMissionReadyToStartInfo {
         public string MissionName;
         /*
@@ -126,6 +130,7 @@ namespace Mikrocosmos
         private void SwitchToMission(IMission mission, GameObject missionGameObject) {
             StartCoroutine(MissionMaximumTimeCheck(mission, missionGameObject));
             mission.OnMissionStart();
+            this.SendEvent<OnMissionStart>(new OnMissionStart(){MissionName = mission.MissionName});
             RpcNotifyMissionAlreadytart(new ClientMissionStartInfo() {
                 MissionDescriptionLocalized = mission.MissionDescriptionLocalized(),
                 MissionMaximumTime = mission.MaximumTime,
