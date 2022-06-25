@@ -736,7 +736,11 @@ GAME_BUFF_OVERWEIGHT_DESCRIPTION,,Your spaceship is overweight! Your engine can'
 GAME_MISSION_ESCORT_EGG,,Child Escort,,,,,,,,,,,,,,,,,寻孩启事,尋孩啟事,,,,,,,,,
 GAME_MISSION_ESCORT_EGG_DESCRIPTION,,Help Eggman retrieve his missing child!,,,,,,,,,,,,,,,,,帮助蛋蛋星人找回她失踪的孩子！,幫助蛋蛋星人找回她失踪的孩子！,,,,,,,,,
 GAME_MISSION_STRANGE_METEOR,,Mysterious Meteors,,,,,,,,,,,,,,,,,神秘陨石,神秘隕石,,,,,,,,,
-GAME_MISSION_STRANGE_METEOR_DESCRIPTION,,"Some strange meteors just appeared near the border, they seem precious to your boss!",,,,,,,,,,,,,,,,,,,,,,,,,,,
+GAME_MISSION_STRANGE_METEOR_DESCRIPTION,,"Some strange meteors just appeared near the border, they seem precious to your boss!",,,,,,,,,,,,,,,,,一些奇怪的陨石出现在边界附近，你的老板似乎对它们很感兴趣！,一些奇怪的隕石出現在邊界附近，你的老闆似乎對它們很感興趣！,,,,,,,,,
+GAME_MISSION_STRANGE_METEOR_TEAM_CHANGED,,A meteor is being occupied by your opponents!,,,,,,,,,,,,,,,,,一个陨石正在被你的对手占领！,一個隕石正在被你的對手佔領！,,,,,,,,,
+GAME_MISSION_SPACE_MINECART,,Space Minecart,,,,,,,,,,,,,,,,,宇宙矿车,宇宙礦車,,,,,,,,,
+GAME_MISSION_SPACE_MINECART_DESCRIPTION,,"A cosmic minecart full of resources just appeared, escort it to your camp!",,,,,,,,,,,,,,,,,一架满载资源的矿车刚刚出现在了宇宙中，护送它到你的营地！,"
+一架滿載資源的礦車剛剛出現在了宇宙中，護送它到你的營地！",,,,,,,,,
 主菜单,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 MENU_FIRST_TIME_USER,,New player? Give yourself a cool name!,,,,,,,,,,,,,,,,,第一次游戏？ 来个炫酷的名字吧！,第一次遊戲？來個炫酷的名字吧！,,,,,,,,,
 MENU_HOST_GAME,,Host Game,,,,,,,,,,,,,,,,,创建主机,創建主機,,,,,,,,,
