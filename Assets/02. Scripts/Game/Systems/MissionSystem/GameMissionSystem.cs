@@ -55,7 +55,7 @@ namespace Mikrocosmos
         bool IsFinished { get; set; }
 
         void OnMissionStart(float overallGameProgress);
-        void StopMission(bool Finished = true);
+        void StopMission(bool runOutOfTime = true);
     }
 
     public interface IGameMissionSystem : ISystem {
@@ -143,7 +143,7 @@ namespace Mikrocosmos
             if (mission.MaximumTime > 0) {
                 yield return new WaitForSeconds(mission.MaximumTime);
                 if (!mission.IsFinished) {
-                    mission.StopMission(false);
+                    mission.StopMission(true);
                 }
             }
         }

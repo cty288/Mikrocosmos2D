@@ -8,7 +8,7 @@ namespace Mikrocosmos
         [field: SerializeField]
         public MoveMode MoveMode { get; set; }
 
-        public float MaxSpeed { get; } = 50;
+        public float MaxSpeed { get; set; } = 10;
         public float Acceleration { get; } 
         [field: SerializeField]
         public float SelfMass { get; set; }

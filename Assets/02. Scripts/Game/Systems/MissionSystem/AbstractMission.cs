@@ -26,7 +26,7 @@ namespace Mikrocosmos
                 PermanentBuffFactory.AddPermanentBuffToPlayer(buffType, buffSystem, 3, 0);
             }
         }
-        public void StopMission(bool finished = true)
+        public void StopMission(bool runOutOfTime = true)
         {
             IsFinished = true;
             this.SendEvent<OnMissionStop>(new OnMissionStop()
@@ -34,13 +34,13 @@ namespace Mikrocosmos
                 Mission = this,
                 MissionGameObject = gameObject,
                 MissionName = MissionName,
-                Finished = finished
+                Finished = runOutOfTime
             });
-            OnMissionStop();
+            OnMissionStop(runOutOfTime);
             NetworkServer.Destroy(gameObject);
         }
 
-        protected abstract void OnMissionStop();
+        protected abstract void OnMissionStop(bool runOutOfTime = true);
 
 
     }

@@ -12,6 +12,9 @@ TagManager:
   - Bullet
   - Star
   - PlayerAbsorbTrigger
+  - MinecartSpawnPos
+  - Team1Spawn
+  - Team2Spawn
   layers:
   - Default
   - TransparentFX

@@ -110,7 +110,7 @@ namespace Mikrocosmos
         private void CalculatePlayerDifferenceAndNotifyClient() {
 
              model.Team1MinusTeam2PlayerDifference = teamPlayersInRange[0] - teamPlayersInRange[1];
-             RpcUpdateProgress(model.Team1MinusTeam2PlayerDifference , model.Team1Progress);
+             RpcUpdateProgress(model.Team1MinusTeam2PlayerDifference , model.Team1Progress, model.PerPlayerProgressPerSecond1);
         }
 
 
@@ -144,10 +144,11 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcUpdateProgress(int team1MinusTeam2, float fixedProgress) {
+        private void RpcUpdateProgress(int team1MinusTeam2, float fixedProgress, float perPlayerProgress) {
             if (isClientOnly) {
                 model.Team1MinusTeam2PlayerDifference = team1MinusTeam2;
                 model.Team1Progress = fixedProgress;
+                model.PerPlayerProgressPerSecond1 = perPlayerProgress;
             }
         }
 

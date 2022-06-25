@@ -141,7 +141,7 @@ MonoBehaviour:
   - {x: 0.04270172, y: -3.0328565, z: 0}
   m_ShapePathHash: -960656257
   m_Mesh: {fileID: 0}
-  m_InstanceId: 82048
+  m_InstanceId: 394076
 --- !u!114 &3789394192495447793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +279,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
-  <MaxMomentumReceive>k__BackingField: 8
+  <MaxMomentumReceive>k__BackingField: 3
   <MomentumThredhold>k__BackingField: 0.5
   <MaxHealth>k__BackingField: 20
   <CurrentHealth>k__BackingField: 20

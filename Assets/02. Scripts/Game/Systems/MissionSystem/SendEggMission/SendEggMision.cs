@@ -45,8 +45,8 @@ namespace Mikrocosmos
 
             float x, y;
             do {
-                x = Random.Range(borders.x, borders.y);
-                y = Random.Range(borders.z, borders.w);
+                x = Random.Range(borders.x + 50, borders.y - 50);
+                y = Random.Range(borders.z + 50, borders.w - 50);
             } while (Physics2D.OverlapCircle(new Vector2(x, y), 1) || Mathf.Abs(x) <= 60 || Mathf.Abs(y) <= 60);
             
             GameObject child = Instantiate(childPrefab, new Vector3(x, y, 0), Quaternion.identity);
@@ -65,8 +65,8 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        protected override void OnMissionStop() {
-            if (winningTeam != -1) {
+        protected override void OnMissionStop(bool runOutOfTime) {
+            if (winningTeam != -1 && !runOutOfTime) {
                 List<PlayerMatchInfo> matchInfo =
                     this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(winningTeam);
 

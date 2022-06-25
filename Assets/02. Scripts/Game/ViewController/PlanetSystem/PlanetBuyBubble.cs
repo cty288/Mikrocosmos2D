@@ -7,17 +7,19 @@ namespace Mikrocosmos
 {
     public class PlanetBuyBubble : MonoBehaviour {
         private Text priceText;
-        private Text rawText;
+        private Image itemTypeImage;
         public int Price;
         public float Time;
 
         public IGoods ServerGoodsBuying;
+
+        [SerializeField] private Sprite[] itemTypeSprites;
         private void Awake()
         {
             priceText = transform.Find("BuyPrice").GetComponent<Text>();
-            Transform rawMaterialTextTr = transform.Find("RawMaterialText");
-            if (rawMaterialTextTr) {
-                rawText = rawMaterialTextTr.GetComponent<Text>();
+            Transform itemTypeImageTr = transform.Find("ItemTypeImage");
+            if (itemTypeImageTr) {
+                itemTypeImage = itemTypeImageTr.GetComponent<Image>();
             }
         }
 
@@ -26,11 +28,18 @@ namespace Mikrocosmos
             Price = price;
             priceText.text = Price.ToString();
             this.Time = time;
-            if (isRaw && rawText) {
-                rawText.gameObject.SetActive(true);
-            } else if (!isRaw & rawText) {
-                rawText.gameObject.SetActive(false);
+            if (itemTypeImage) {
+                itemTypeImage.enabled = true;
+                if (isRaw) {
+                    itemTypeImage.sprite = itemTypeSprites[0];
+                }
+                else if (!isRaw) {
+                    itemTypeImage.sprite = itemTypeSprites[1];
+                }
+            }else{
+                itemTypeImage.enabled = false;
             }
+           
         }
 
 

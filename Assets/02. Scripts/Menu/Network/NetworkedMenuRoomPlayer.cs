@@ -17,6 +17,11 @@ namespace Mikrocosmos
         [SerializeField]
         private PlayerMatchInfo matchInfo = null;
 
+        public PlayerMatchInfo MatchInfo {
+            get => matchInfo;
+            set => matchInfo = value;
+        }
+
         #region Server
         public override void OnStartServer() {
             base.OnStartServer();

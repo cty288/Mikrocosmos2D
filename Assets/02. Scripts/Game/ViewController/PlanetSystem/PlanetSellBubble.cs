@@ -12,16 +12,16 @@ namespace Mikrocosmos
 {
     public class PlanetSellBubble : AbstractMikroController<Mikrocosmos> {
         private Text priceText;
-        private Text rawText;
+        private Image itemTypeImage;
         public int Price;
         //private static readonly int Tint = Shader.PropertyToID("_Tint");
-
+        [SerializeField] private Sprite[] itemTypeSprites;
         private void Awake() {
             priceText = transform.Find("SellPrice").GetComponent<Text>();
-            Transform rawMaterialTextTr = transform.Find("RawMaterialText");
-            if (rawMaterialTextTr)
+            Transform itemTypeImageTr = transform.Find("ItemTypeImage");
+            if (itemTypeImageTr)
             {
-                rawText = rawMaterialTextTr.GetComponent<Text>();
+                itemTypeImage = itemTypeImageTr.GetComponent<Image>();
             }
 
             this.RegisterEvent<OnClientMoneyChange>(OnClientMoneyChange)
@@ -66,14 +66,20 @@ namespace Mikrocosmos
         public void SetPrice(int pirce, bool isRaw = false) {
             Price = pirce;
             priceText.text = Price.ToString();
-           
-            if (isRaw && rawText)
-            {
-                rawText.gameObject.SetActive(true);
+
+            if (itemTypeImage) {
+                itemTypeImage.enabled = true;
+                if (isRaw) {
+                    itemTypeImage.sprite = itemTypeSprites[0];
+                }
+                else if (!isRaw)
+                {
+                    itemTypeImage.sprite = itemTypeSprites[1];
+                }
             }
-            else if (!isRaw & rawText)
+            else
             {
-                rawText.gameObject.SetActive(false);
+                itemTypeImage.enabled = false;
             }
 
 

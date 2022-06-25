@@ -57,7 +57,25 @@ namespace Mikrocosmos
                 gchandle.AddrOfPinnedObject());
             gchandle.Free();
         }
-        
+
+
+        public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer) {
+            NetworkedMenuRoomPlayer player = roomPlayer.GetComponent<NetworkedMenuRoomPlayer>();
+            int team = player.MatchInfo.Team;
+            int teamIndex = player.MatchInfo.TeamIndex;
+            Vector2 startPos = Vector2.zero;
+            if (team == 1) {
+                startPos = GameObject.FindGameObjectsWithTag("Team1Spawn")[teamIndex].transform.position;
+            }else if (team == 2) {
+                startPos = GameObject.FindGameObjectsWithTag("Team2Spawn")[teamIndex].transform.position;
+            }
+
+            GameObject gamePlayer = startPos != null
+                ? Instantiate(playerPrefab, startPos, Quaternion.identity)
+                : Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+            return gamePlayer;
+        }
+
         private void OnSteamLobbyEntered(LobbyEnter_t callback) {
             if (!NetworkServer.active && !NetworkClient.active) {
                 

@@ -138,7 +138,7 @@ namespace Mikrocosmos
                 }
             }else {
                 //generate random count of rewards
-                int count = Random.Range(1, 4);
+                int count = Random.Range(1, 3);
                 for (int i = 0; i < count; i++) {
                     GameObject rewardInstance = Instantiate(reward, transform.position,
                         Quaternion.Euler(0, 0, Random.Range(0, 360)));

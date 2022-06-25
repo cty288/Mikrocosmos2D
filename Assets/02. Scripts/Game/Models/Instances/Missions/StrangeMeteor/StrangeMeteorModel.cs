@@ -6,7 +6,7 @@ namespace Mikrocosmos
 {
     public class StrangeMeteorModel : AbstractBasicEntityModel {
         [SerializeField]
-        private float perPlayerProgressPerSecond = 0.01f;
+        private float perPlayerProgressPerSecond = 0.04f;
 
         public float PerPlayerProgressPerSecond1 {
             get => perPlayerProgressPerSecond;

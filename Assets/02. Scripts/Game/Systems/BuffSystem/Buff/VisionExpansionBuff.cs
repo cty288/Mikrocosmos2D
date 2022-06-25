@@ -18,13 +18,13 @@ namespace Mikrocosmos {
         private float cameraRangeAddition;
         private Vector2 visionLightExpansion;
 
-        
-        public VisionExpansionBuff(float maxDuration, float cameraRangeAddition, Vector2 visionLightExpansion) {
+        private bool isTemporary;
+        public VisionExpansionBuff(float maxDuration, float cameraRangeAddition, Vector2 visionLightExpansion, bool temporary = false) {
             this.cameraRangeAddition = cameraRangeAddition;
             this.visionLightExpansion = visionLightExpansion;
             this.RemainingTime = maxDuration;
             this.MaxDuration = maxDuration;
-
+            isTemporary = temporary;
             
             UpdateMessageToClient();
 
@@ -47,9 +47,12 @@ namespace Mikrocosmos {
             };
         }
         public void OnBuffStacked(VisionExpansionBuff addedBuff) {
-            cameraRangeAddition += addedBuff.cameraRangeAddition;
-            visionLightExpansion += addedBuff.visionLightExpansion;
-            RemainingTime += addedBuff.RemainingTime;
+            if (!addedBuff.isTemporary) {
+                cameraRangeAddition += addedBuff.cameraRangeAddition;
+                visionLightExpansion += addedBuff.visionLightExpansion;
+            }
+          
+            RemainingTime = Mathf.Min(RemainingTime + addedBuff.RemainingTime, MaxDuration);
             UpdateMessageToClient();
         }
 

@@ -75,9 +75,12 @@ namespace Mikrocosmos
                 timer -= UnityEngine.Time.deltaTime;
 
                 progressImage.fillAmount = timer / Time;
+
+                if (distanceText && controlledSpaceship && targetPlanetTransform) {
+                    distanceText.text = Mathf.RoundToInt(Vector2
+                        .Distance(controlledSpaceship.transform.position, targetPlanetTransform.position)) + " ly";
+                }
                 
-                distanceText.text =Mathf.RoundToInt( Vector2
-                    .Distance(controlledSpaceship.transform.position, targetPlanetTransform.position)) + " ly";
             }
         }
         private void OnAffinityWithTeam1Changed(OnClientPlanetAffinityWithTeam1Changed e)

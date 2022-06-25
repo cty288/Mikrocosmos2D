@@ -34,19 +34,20 @@ namespace Mikrocosmos
                 float x, y;
                 do
                 {
-                    x = Random.Range(borders.x, borders.y);
-                    y = Random.Range(borders.z, borders.w);
+                    x = Random.Range(borders.x + 50, borders.y - 50);
+                    y = Random.Range(borders.z + 50, borders.w - 50);
+                    
                 } while (Physics2D.OverlapCircle(new Vector2(x, y), 1) || Mathf.Abs(x) <= 60 || Mathf.Abs(y) <= 60);
 
                 GameObject meteor = Instantiate(meteorPrefab, new Vector3(x, y, 0), Quaternion.identity);
                 meteor.GetComponent<StrangeMeteorModel>().PerPlayerProgressPerSecond1 =
-                    0.01f / Mathf.SmoothStep(1, 4, overallProgress);
+                    meteor.GetComponent<StrangeMeteorModel>().PerPlayerProgressPerSecond1 / Mathf.SmoothStep(1, 3, overallProgress);
                 NetworkServer.Spawn(meteor);
                 activeMeteors.Add(meteor.GetComponent<StrangeMeteorViewController>());
             }
         }
 
-        protected override void OnMissionStop() {
+        protected override void OnMissionStop(bool runOutOfTime) {
             float totalFillForTeam1 = 0, totalFillForTeam2 = 0;
             foreach (StrangeMeteorViewController meteor in activeMeteors) {
                 totalFillForTeam1 += meteor.ActualFill;

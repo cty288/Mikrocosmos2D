@@ -25,6 +25,8 @@ namespace Mikrocosmos
         private NetworkAnimator animator;
         [SyncVar]
         private NetworkIdentity previousHookedBy;
+
+        private bool startUsed = false;
         //private NetworkedGameObjectPool bulletPool;
         protected override void Awake()
         {
@@ -41,12 +43,36 @@ namespace Mikrocosmos
         protected override void OnServerItemUsed()
         {
             base.OnServerItemUsed();
-            if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
-                animator.SetTrigger("Shoot");
+            if (!startUsed) {
+                if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+                    startUsed = true;
+                    animator.SetTrigger("Shoot");
+                    OnServerStartCharge();
+                }
+            }
+
+        }
+
+        protected override void Update() {
+            base.Update();
+            if (startUsed) {
+                if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") || animator.animator.GetCurrentAnimatorStateInfo(0).IsName("ChargeLoop")) {
+                    OnServerStartCharge();
+                }
             }
         }
 
+        protected override void OnServerItemStopUsed() {
+            base.OnServerItemStopUsed();
+            if (startUsed) {
+                if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") || animator.animator.GetCurrentAnimatorStateInfo(0).IsName("ChargeLoop")) {
+                    startUsed = false;
+                    animator.SetTrigger("ChargeEnd");
+                }
+            }
+        }
+
+        
 
         public void OnBulletShoot()
         {
@@ -86,7 +112,7 @@ namespace Mikrocosmos
                     //TargetOnStartCharge(Model.HookedByIdentity.connectionToClient);
                     if (Model.HookedByIdentity.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
                         buffSystem.AddBuff<VisionExpansionBuff>(new VisionExpansionBuff(0.9f, CameraExpandRadius,
-                            new Vector2(25, 25)));
+                            new Vector2(25, 25), true));
                     }
                     Model.CanBeHooked = false;
                 }
