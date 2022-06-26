@@ -54,7 +54,7 @@ namespace Mikrocosmos
         private bool canMove = true;
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
 
-        private List<Vector3> previousPath = new List<Vector3>();
+        
 
         private void Awake() {
             Model = GetComponent<SpaceMinecartModel>();
@@ -116,6 +116,7 @@ namespace Mikrocosmos
                     rightAnimator.SetBool("Move", false);
                     leftAnimator.SetBool("Move", false);
                     RpcOnStopMoving();
+                    
                 }
                 else if (teamPlayersInRange[0] != teamPlayersInRange[1]) {
                     canMove = true;
@@ -158,7 +159,7 @@ namespace Mikrocosmos
 
                     //get the angle of the offset
                     float angle = Mathf.Atan2(positionOffset.y, positionOffset.x) * Mathf.Rad2Deg;
-
+                    
                     Debug.Log($"Angle: {angle}");
                     if ((angle > 90 && angle <= 180))
                     {
@@ -282,20 +283,9 @@ namespace Mikrocosmos
 
         [ClientRpc]
         private void RpcOnPathCreate(List<Vector3> paths, int teamSwitchedTo) {
-           
-            gamePathLine.positionCount = previousPath.Count + paths.Count;
-            paths.Reverse();
-            List<Vector3> newList = new List<Vector3>();
-            newList.AddRange(previousPath);
-            foreach (var path in paths) {
-                newList.Insert(0, path);
-            }
-            
-            gamePathLine.SetPositions(newList.ToArray());
 
-
-            paths.Reverse();
-            previousPath = paths;
+            gamePathLine.positionCount = paths.Count;
+            gamePathLine.SetPositions(paths.ToArray());
             Color targetColor = teamColors[teamSwitchedTo - 1];
             gamePathLine.DOColor(new Color2(gamePathLine.startColor, gamePathLine.endColor), new Color2(
                 targetColor,

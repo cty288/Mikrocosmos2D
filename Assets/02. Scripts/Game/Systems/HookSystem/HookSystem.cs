@@ -50,7 +50,7 @@ namespace Mikrocosmos {
 
         NetworkIdentity HookedNetworkIdentity { get; set; }
        [Command]
-        void CmdHoldHookButton();
+        void CmdPressHookButton();
 
         [Command]
         void CmdReleaseHookButton();
@@ -282,8 +282,11 @@ namespace Mikrocosmos {
 
 
         [Command]
-        public void CmdHoldHookButton() {
+        public void CmdPressHookButton() {
             holdingHookButton = true;
+            if (HookedItem == null) {
+                CmdReleaseHookButton();
+            }
         }
 
         private void Update() {

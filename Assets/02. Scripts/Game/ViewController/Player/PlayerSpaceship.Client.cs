@@ -45,7 +45,7 @@ namespace Mikrocosmos
             Debug.Log(e.newMass);
         }
 
-        
+        private bool hookWhenEmptyReleased = true;
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -92,19 +92,24 @@ namespace Mikrocosmos
 
 
                 //take item & put item (not shoot)
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     if (minHookPressTimer > minHookPressTimeInterval) {
-                        hookSystem.CmdHoldHookButton();
+                        if (!hookSystem.HookedNetworkIdentity) {
+                            hookWhenEmptyReleased = false;
+                            minHookPressTimer = 0;
+                        }
+                        hookSystem.CmdPressHookButton();
                     }
 
                 }
 
                 if (Input.GetKeyUp(KeyCode.Space))
                 {
-
-                    if (minHookPressTimer > minHookPressTimeInterval)
-                    {
+                    if (!hookWhenEmptyReleased) {
+                        hookWhenEmptyReleased = true;
+                    }
+                    else {
                         minHookPressTimer = 0;
                         hookSystem.CmdReleaseHookButton();
                     }
