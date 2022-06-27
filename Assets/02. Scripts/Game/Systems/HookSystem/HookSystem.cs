@@ -285,7 +285,7 @@ namespace Mikrocosmos {
         public void CmdPressHookButton() {
             holdingHookButton = true;
             if (HookedItem == null) {
-                CmdReleaseHookButton();
+                ServerReleaseHookButton();
             }
         }
 
@@ -320,12 +320,12 @@ namespace Mikrocosmos {
             
         }
 
-      
-        [Command]
-        public void CmdReleaseHookButton() {
+        [ServerCallback]
+        private void ServerReleaseHookButton() {
             holdingHookButton = false;
             HookAction targetAction = CheckHookAction();
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Hook")) {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Hook"))
+            {
                 switch (targetAction)
                 {
                     case HookAction.Hook:
@@ -348,7 +348,10 @@ namespace Mikrocosmos {
             });
         }
 
-        
+        [Command]
+        public void CmdReleaseHookButton() {
+            ServerReleaseHookButton();
+        }
         public void ServerShootTrigger()
         {
             if (isServer) {

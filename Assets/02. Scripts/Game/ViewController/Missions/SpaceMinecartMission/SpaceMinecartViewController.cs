@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
@@ -51,10 +52,11 @@ namespace Mikrocosmos
 
         [SerializeField] private List<Color> teamColors;
 
-        private bool canMove = true;
+        private bool canMove = false;
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
 
-        
+        private Path team1Path;
+        private Path team2Path;
 
         private void Awake() {
             Model = GetComponent<SpaceMinecartModel>();
@@ -116,16 +118,19 @@ namespace Mikrocosmos
                     rightAnimator.SetBool("Move", false);
                     leftAnimator.SetBool("Move", false);
                     RpcOnStopMoving();
-                    
                 }
                 else if (teamPlayersInRange[0] != teamPlayersInRange[1]) {
                     canMove = true;
                     rightAnimator.SetBool("Move", true);
                     leftAnimator.SetBool("Move", false);
+                    
                     if (teamPlayersInRange[0] > teamPlayersInRange[1]) {
                         if (previousOccupiedTeam != 1 || pathfiner.GetCurrentPath()==null) {
                             previousOccupiedTeam = 1;
-                            pathfiner.StartPath(transform.position, destinations[0], OnPathCalculate);
+                            Path path =  pathfiner.StartPath(transform.position, destinations[0]);
+                            path.BlockUntilCalculated();
+                            RpcOnSwitchTeam(1, path.vectorPath);
+                            
                         }
                         else {
                             RpcOnRecoverMovingSameTeam(previousOccupiedTeam);
@@ -136,9 +141,11 @@ namespace Mikrocosmos
                         leftAnimator.SetBool("Move", true);
                         if (previousOccupiedTeam != 2) {
                             previousOccupiedTeam = 2;
-                           
-                            pathfiner.StartPath(transform.position, destinations[1], OnPathCalculate);
-                        }else{
+                            Path path = pathfiner.StartPath(transform.position, destinations[1]);
+                            path.BlockUntilCalculated();
+                            RpcOnSwitchTeam(2, path.vectorPath);
+                        }
+                        else{
                             RpcOnRecoverMovingSameTeam(previousOccupiedTeam);
                         }
                     }
@@ -179,16 +186,18 @@ namespace Mikrocosmos
         }
 
         private void Update() {
+            int speedMultiplier = clientRecordedTeam == 1 ? -1 : 1;
             if (gamePathLine) {
+                
                 gamePathLine.material.SetTextureOffset(MainTex,
                     gamePathLine.material.GetTextureOffset(MainTex) +
-                    new Vector2(mapPathSpeed * Time.deltaTime, 0));
+                    new Vector2(speedMultiplier * mapPathSpeed * Time.deltaTime, 0));
             }
 
             if (mapPathLine) {
                 mapPathLine.material.SetTextureOffset(MainTex,
                     mapPathLine.material.GetTextureOffset(MainTex) +
-                    new Vector2(bigMapPathSpeed * Time.deltaTime, 0));
+                    new Vector2(speedMultiplier * bigMapPathSpeed * Time.deltaTime, 0));
             }
         }
 
@@ -205,8 +214,9 @@ namespace Mikrocosmos
             aiPath.speed = model.MaxSpeed;
             AstarPath.active.Scan();
 
-            //pathfiner.StartPath(transform.position, destinations[0], OnPathCalculate);
-
+            pathfiner.StartPath(destinations[1], destinations[0], OnPathCalculate);
+            
+            
             trigger.OnPlayerEnterTrigger += OnPlayerEnterTrigger;
             trigger.OnPlayerExitTrigger += OnPlayerExitTrigger;
         }
@@ -233,9 +243,60 @@ namespace Mikrocosmos
 
         private void OnPathCalculate(Path path) {
             if (isServer) {
-                RpcOnPathCreate(path.vectorPath, previousOccupiedTeam);
+                if (team1Path == null)
+                {
+                    team1Path = path;
+                    team1Path.Claim(team1Path);
+                    pathfiner.StartPath(destinations[0], destinations[1], OnPathCalculate);
+                }
+                else if (team2Path == null)
+                {
+                    team2Path = path;
+                    team2Path.Claim(team2Path);
+                    transform.position = path.vectorPath[path.vectorPath.Count / 2];
+                    RpcOnCompletePathCreate(path.vectorPath);
+                }
             }
-           
+        }
+
+        private int clientRecordedTeam = 1;
+        [ClientRpc]
+        private void RpcOnSwitchTeam(int team, List<Vector3> newPath) {
+            Vector3[] existingGamePositions = new Vector3[gamePathLine.positionCount];
+            gamePathLine.GetPositions(existingGamePositions);
+            List<Vector3> newGamePositions = existingGamePositions.ToList();
+            clientRecordedTeam = team;
+            if (team == 1) {
+                //remove all vectors in newGamePositions whose x is less than transform.position.x, and replace them with newPath whose x is less than transform.position.x
+                newGamePositions.RemoveAll(x => x.x < transform.position.x);
+                newPath.Reverse();
+                newGamePositions.InsertRange(0, newPath);
+                gamePathLine.positionCount = newGamePositions.Count;
+                gamePathLine.SetPositions(newGamePositions.ToArray());
+
+                mapPathLine.positionCount = newGamePositions.Count;
+                mapPathLine.SetPositions(newGamePositions.ToArray());                
+            }
+            else {
+                newGamePositions.RemoveAll(x => x.x > transform.position.x);
+                newGamePositions.AddRange(newPath);
+                gamePathLine.positionCount = newGamePositions.Count;
+                gamePathLine.SetPositions(newGamePositions.ToArray());
+
+                mapPathLine.positionCount = newGamePositions.Count;
+                mapPathLine.SetPositions(newGamePositions.ToArray());
+            }
+
+            
+            var startColor = gamePathLine.startColor;
+
+            Color targetColor = teamColors[team - 1];
+
+            gamePathLine.DOColor(new Color2(startColor, gamePathLine.endColor),
+                new Color2(targetColor, targetColor), 0.5f);
+
+            mapPathLine.DOColor(new Color2(mapPathLine.startColor, mapPathLine.endColor),
+                new Color2(targetColor, targetColor), 0.5f);
         }
 
         public override void OnStopServer() {
@@ -258,9 +319,8 @@ namespace Mikrocosmos
         private void RpcOnStopMoving() {
             var startColor = gamePathLine.startColor;
             
-            Color targetColor = new Color(startColor.a, startColor.g,
-                startColor.b, 0);
-
+            Color targetColor =  Color.gray;
+            
             gamePathLine.DOColor(new Color2(startColor, gamePathLine.endColor),
                 new Color2(targetColor, targetColor), 0.5f);
 
@@ -268,6 +328,7 @@ namespace Mikrocosmos
                 new Color2(targetColor, targetColor), 0.5f);
         }
 
+        
         [ClientRpc]
         private void RpcOnRecoverMovingSameTeam(int team) {
             var startColor = gamePathLine.startColor;
@@ -282,11 +343,12 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcOnPathCreate(List<Vector3> paths, int teamSwitchedTo) {
+        private void RpcOnCompletePathCreate(List<Vector3> paths) {
 
             gamePathLine.positionCount = paths.Count;
             gamePathLine.SetPositions(paths.ToArray());
-            Color targetColor = teamColors[teamSwitchedTo - 1];
+            Color targetColor = Color.gray;
+            
             gamePathLine.DOColor(new Color2(gamePathLine.startColor, gamePathLine.endColor), new Color2(
                 targetColor,
                 targetColor), 0.5f);
@@ -294,7 +356,6 @@ namespace Mikrocosmos
 
             mapPathLine.positionCount = paths.Count;
             mapPathLine.SetPositions(paths.ToArray());
-
             mapPathLine.DOColor(new Color2(mapPathLine.startColor, mapPathLine.endColor), new Color2(
                 targetColor, targetColor), 0.5f);
 

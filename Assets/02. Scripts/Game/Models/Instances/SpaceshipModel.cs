@@ -34,6 +34,10 @@ namespace Mikrocosmos
     public struct OnPlayerDie {
         public NetworkIdentity SpaceshipIdentity;
     }
+
+    public struct OnClientSpaceshipHooked {
+
+    }
     public class SpaceshipModel : AbstractDamagableEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
         public override string Name { get; set; } = "Spaceship";
         private IHookSystem hookSystem;
@@ -58,9 +62,11 @@ namespace Mikrocosmos
             rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public override void OnClientHooked()
-        {
-
+        public override void OnClientHooked() {
+            if (hasAuthority) {
+                this.SendEvent<OnClientSpaceshipHooked>();
+            }
+           
         }
 
         public override void OnClientFreed()
@@ -341,6 +347,8 @@ namespace Mikrocosmos
             }
            
         }
+
+        
     }
 
     public struct OnServerSpaceshipOverweight {
