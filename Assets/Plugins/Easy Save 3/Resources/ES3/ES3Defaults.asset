@@ -44,11 +44,11 @@ MonoBehaviour:
     - Mirror.Components
     - ES3Editor
     - kcp2k
+    - Assembly-CSharp-firstpass
     - SimpleWebTransport
     - DOTween.Modules
     - Polyglot.Scripts
     - where-allocations
-    - Assembly-CSharp-firstpass
     - Mirror.Authenticators
     - Elringus.SpriteGlow.Runtime
     - Steamworks

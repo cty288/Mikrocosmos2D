@@ -17,8 +17,10 @@ namespace Mikrocosmos{
 
         private void Update() {
             transform.rotation = Quaternion.Euler(rotation);
-            
-            transform.position = positionRelativeTo.position - positionOffset;
+            if (positionRelativeTo) {
+                transform.position = positionRelativeTo.position - positionOffset;
+            }
+          
         }
     }
 }

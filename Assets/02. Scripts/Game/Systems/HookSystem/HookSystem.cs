@@ -276,6 +276,9 @@ namespace Mikrocosmos {
 
             if (e.OwnerIdentity == netIdentity) {
                 TargetOnHookIdentityChanged(itemName);
+                if (e.NewIdentity && e.NewIdentity.TryGetComponent<ISpaceshipConfigurationModel>(out ISpaceshipConfigurationModel model)) {
+                    TargetOnHookSpaceship(e.NewIdentity);
+                }
             }
           
         }

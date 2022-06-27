@@ -20,7 +20,7 @@ namespace Mikrocosmos
 
         private float minHookPressTimeInterval = 0.8f;
         private float minHookPressTimer = 0f;
-
+        private Vector2 clientPreviousMousePosition = Vector2.zero;
         private ISpaceshipConfigurationModel GetModel()
         {
             return GetModel<ISpaceshipConfigurationModel>();
@@ -94,24 +94,28 @@ namespace Mikrocosmos
                 //take item & put item (not shoot)
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    if (minHookPressTimer > minHookPressTimeInterval) {
+                  
                         if (!hookSystem.HookedNetworkIdentity) {
                             hookWhenEmptyReleased = false;
-                            minHookPressTimer = 0;
+                          //  minHookPressTimer = 0;
                         }
                         hookSystem.CmdPressHookButton();
-                    }
+                    
 
                 }
 
                 if (Input.GetKeyUp(KeyCode.Space))
                 {
+                    
                     if (!hookWhenEmptyReleased) {
                         hookWhenEmptyReleased = true;
                     }
                     else {
-                        minHookPressTimer = 0;
-                        hookSystem.CmdReleaseHookButton();
+                        if (minHookPressTimer > minHookPressTimeInterval) {
+                            minHookPressTimer = 0;
+                            hookSystem.CmdReleaseHookButton();
+                        }
+                        
                     }
                 }
 
@@ -148,7 +152,11 @@ namespace Mikrocosmos
 
             if (hasAuthority && isClient) {
                 if (Model.HookState == HookState.Freed) {
-                    CmdUpdateMousePosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    if (Vector2.Distance(mousePosition, clientPreviousMousePosition) >= 2 ) {
+                        CmdUpdateMousePosition(mousePosition);
+                        clientPreviousMousePosition = mousePosition;
+                    }
                 }
 
                 if (isControlling && Model.HookState == HookState.Freed) {

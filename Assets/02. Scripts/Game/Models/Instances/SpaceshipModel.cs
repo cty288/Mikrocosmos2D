@@ -16,6 +16,8 @@ namespace Mikrocosmos
 
     public struct OnEscapeCounterChanged {
         public int newValue;
+        public NetworkIdentity identity;
+        public bool hasAuthority;
     }
 
     public struct OnSpaceshipRequestDropItems {
@@ -36,7 +38,14 @@ namespace Mikrocosmos
     }
 
     public struct OnClientSpaceshipHooked {
+        public NetworkIdentity identity;
+        public bool hasAuthority;
+    }
 
+    public struct OnClientSpaceshipUnHooked
+    {
+        public NetworkIdentity identity;
+        public bool hasAuthority;
     }
     public class SpaceshipModel : AbstractDamagableEntityModel, ISpaceshipConfigurationModel, IAffectedByGravity {
         public override string Name { get; set; } = "Spaceship";
@@ -63,15 +72,22 @@ namespace Mikrocosmos
         }
 
         public override void OnClientHooked() {
-            if (hasAuthority) {
-                this.SendEvent<OnClientSpaceshipHooked>();
-            }
+       
+            this.SendEvent<OnClientSpaceshipHooked>(new OnClientSpaceshipHooked() {
+                hasAuthority = hasAuthority,
+                identity = netIdentity
+            });
+        
            
         }
 
         public override void OnClientFreed()
         {
-
+            this.SendEvent<OnClientSpaceshipUnHooked>(new OnClientSpaceshipUnHooked() {
+                hasAuthority = hasAuthority,
+                identity = netIdentity
+            });
+            
         }
         public int EscapeNeedCount { get; } = 10;
         public float EscapeLossTime { get; } = 0.15f;
@@ -244,7 +260,11 @@ namespace Mikrocosmos
 
         [ClientCallback]
         private void ClientOnEscapeCounterChanged(int oldNum, int newNum) {
-            this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() { newValue = newNum });
+            this.SendEvent<OnEscapeCounterChanged>(new OnEscapeCounterChanged() {
+                newValue = newNum,
+                hasAuthority = hasAuthority,
+                identity = netIdentity
+            });
         }
         #endregion
 

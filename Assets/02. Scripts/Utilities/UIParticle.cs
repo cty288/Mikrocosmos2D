@@ -41,11 +41,19 @@ namespace Mikrocosmos
             }
         }
 
-#if UNITY_EDITOR
-	void Update () {
-        Start(); 
-	}
-#endif
+        private float lastwidth = 0f;
+        private float lastheight = 0f;
+
+        void Update () {
+            if (lastwidth != Screen.width || lastheight != Screen.height)
+            {
+                lastwidth = Screen.width;
+                lastheight = Screen.height;
+                Start();
+            }
+           
+        }
+
         class ScaleData
         {
             public Transform transform;

@@ -12,6 +12,10 @@ namespace Mikrocosmos
         public float OldChargePercent;
     }
 
+    public struct OnClientHookAnotherSpaceship {
+        public NetworkIdentity spaceship;
+    }
+
     public struct OnClientHookIdentityChanged {
         public string NewHookItemName;
     }
@@ -34,6 +38,13 @@ namespace Mikrocosmos
                 });
             }
            
+        }
+
+        [TargetRpc]        
+        private void TargetOnHookSpaceship(NetworkIdentity NewIdentity) {
+            this.SendEvent<OnClientHookAnotherSpaceship>(new OnClientHookAnotherSpaceship() {
+                spaceship = NewIdentity
+            });
         }
     }
 }
