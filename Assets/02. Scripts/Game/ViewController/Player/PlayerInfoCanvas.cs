@@ -27,7 +27,7 @@ namespace Mikrocosmos
         private bool healthBarFadeWaiting = false;
         
         private void Awake() {
-            playerNameText.text = "";
+        
             this.RegisterEvent<OnClientSpaceshipHealthChange>(OnSpaceshipHealthChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
@@ -70,6 +70,7 @@ namespace Mikrocosmos
         }
 
         private void Start() {
+            playerNameText.text = "";
             UntilAction untilAction = UntilAction.Allocate(() => NetworkClient.active);
             untilAction.OnEndedCallback += () => {
                 playerNameText.text = GetComponentInParent<PlayerSpaceship>().Name;

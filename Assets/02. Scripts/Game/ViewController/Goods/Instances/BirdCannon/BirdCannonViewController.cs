@@ -25,7 +25,7 @@ namespace Mikrocosmos
         private NetworkAnimator animator;
         [SyncVar]
         private NetworkIdentity previousHookedBy;
-
+        [SerializeField]
         private bool startUsed = false;
         //private NetworkedGameObjectPool bulletPool;
         protected override void Awake()
@@ -65,10 +65,10 @@ namespace Mikrocosmos
         protected override void OnServerItemStopUsed() {
             base.OnServerItemStopUsed();
             if (startUsed) {
-                if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") || animator.animator.GetCurrentAnimatorStateInfo(0).IsName("ChargeLoop")) {
+              //  if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Charge") || animator.animator.GetCurrentAnimatorStateInfo(0).IsName("ChargeLoop")) {
                     startUsed = false;
                     animator.SetTrigger("ChargeEnd");
-                }
+               // }
             }
         }
 

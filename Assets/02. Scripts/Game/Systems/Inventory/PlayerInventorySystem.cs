@@ -202,7 +202,13 @@ namespace Mikrocosmos
                 slot.PrefabName = name;
                 slot.SpriteName =  name + "Sprite";
                 slot.StackedObjects.Insert(0,gameObject);
+                if (gameObject.TryGetComponent<IGoods>(out IGoods goods))
+                {
+                    goods.OnAddedToBackpack();
+                }
+              
                 ServerSwitchSlot(backpackItems.FindIndex((backpackSlot => backpackSlot == slot)));
+                
             }
             
             TargetOnInventoryUpdate(backpackItems,currentIndex);
@@ -216,6 +222,11 @@ namespace Mikrocosmos
                 slot.PrefabName = name;
                 slot.SpriteName = name + "Sprite";
                 slot.StackedObjects.Insert(0, gameObject);
+                if (gameObject.TryGetComponent<IGoods>(out IGoods goods))
+                {
+                    goods.OnAddedToBackpack();
+                }
+                
                 NetworkServer.UnSpawn(gameObject);
                 gameObject.SetActive(false);
                 

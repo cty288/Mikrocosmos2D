@@ -218,13 +218,15 @@ namespace Mikrocosmos
                 }
             }
         }
+        
 
-
+        [SerializeField] private GameObject hurtEffect;
         [ClientRpc]
         public override void RpcOnClientHealthChange(int oldHealth, int newHealth) {
             Debug.Log($"Health Received: {newHealth}");
             if (newHealth < oldHealth) {
                 StartCoroutine(PlayHurtEffect());
+                Instantiate(hurtEffect, transform);
             }
         }
 

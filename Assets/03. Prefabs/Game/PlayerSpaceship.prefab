@@ -737,6 +737,8 @@ MonoBehaviour:
   <HookedRotationZOffset>k__BackingField: 0
   particles:
   - {fileID: 5253080046544566927}
+  deathEffect: {fileID: 2635061704750544333, guid: a4380b49f3c69cd4a98f4f65081241b4, type: 3}
+  hitParticlePrefab: {fileID: 5608423231812658629, guid: 4a769b6e4f56d274c94ec341728691ab, type: 3}
   isControlling: 0
   isUsing: 0
   teamSprites:
@@ -749,6 +751,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3258e8d6c98a7f4458e24154a38a8398, type: 3}
   Name: 
   ThisSpaceshipTeam: 0
+  hurtEffect: {fileID: 6169241029274726610, guid: ee1ec23e3e1abf8488ad39b6714d75f9, type: 3}
 --- !u!114 &8913116591047660154
 MonoBehaviour:
   m_ObjectHideFlags: 0

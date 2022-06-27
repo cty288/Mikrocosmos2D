@@ -80,7 +80,10 @@ namespace Mikrocosmos
                 transform.localScale = Vector3.zero;
                 if (switchedToWaitTime > 0) {
                     this.GetSystem<ITimeSystem>().AddDelayTask(switchedToWaitTime, () => {
-                        transform.DOScale(originalScale, 0.3f);
+                        if (this) {
+                            transform.DOScale(originalScale, 0.3f);
+                        }
+                       
                     });
                 }
                 else {

@@ -254,7 +254,7 @@ MonoBehaviour:
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
   damageParticle: {fileID: 4980017880052449215, guid: 8066c86cd7eba934cb9206b82ec89dc0, type: 3}
-  dieParticle: {fileID: 3286347860092680941, guid: 3c052444d2f7b144e914ded460af1808, type: 3}
+  dieParticle: {fileID: 4453845215803279697, guid: 87733b43f21554b4b85849615e21e0d7, type: 3}
 --- !u!114 &-7106308886407098970
 MonoBehaviour:
   m_ObjectHideFlags: 0

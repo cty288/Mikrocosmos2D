@@ -207,12 +207,14 @@ namespace Mikrocosmos
 
         //
 
+        [SerializeField] private GameObject deathEffect;
     
 
         [ClientRpc]
         private void RpcOnDizzyBuff(BuffStatus e, BuffClientMessage message) {
             if (e == BuffStatus.OnStart) {
                 selfSprites.ForEach((spriteRenderer => spriteRenderer.DOColor(new Color(0.4f, 0.4f, 0.4f), 0.5f).SetLoops(-1, LoopType.Yoyo)));
+                Instantiate(deathEffect, transform);
             }else if (e == BuffStatus.OnEnd) {
                 selfSprites.ForEach(spriteRenderer => {
                     spriteRenderer.DOKill(false);
@@ -235,6 +237,11 @@ namespace Mikrocosmos
             }
         }
 
-        
+        [SerializeField] private GameObject hitParticlePrefab;
+        protected override void OnCollisionEnter2D(Collision2D collision) {
+            base.OnCollisionEnter2D(collision);
+            GameObject particle = Instantiate(hitParticlePrefab, collision.GetContact(0).point, Quaternion.identity);
+            particle.transform.SetParent(transform);
+        }
     }
 }

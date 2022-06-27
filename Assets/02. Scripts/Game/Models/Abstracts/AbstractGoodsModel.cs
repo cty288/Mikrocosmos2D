@@ -52,6 +52,8 @@ namespace Mikrocosmos
         [field: SerializeField] public bool AbsorbedToBackpack { get; set; } = false;
 
 
+        public abstract void OnAddedToBackpack();
+
         [field: SyncVar] public int RealPrice { get; set; }
 
         [field: SyncVar(hook = nameof(ClientOnSellStatusChanged)), SerializeField] 

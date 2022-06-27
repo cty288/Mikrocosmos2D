@@ -243,7 +243,7 @@ namespace Mikrocosmos
 
       
         private LayerMask clientOriginalLayer;
-        private void OnHookStateChanged(HookState oldState, HookState newState) {
+        protected virtual void OnHookStateChanged(HookState oldState, HookState newState) {
             if (newState == HookState.Hooked) {
                
 

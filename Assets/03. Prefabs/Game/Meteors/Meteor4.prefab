@@ -70,7 +70,7 @@ PrefabInstance:
     - target: {fileID: 1128868329765695182, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: dieParticle
       value: 
-      objectReference: {fileID: 3286347860092680941, guid: 3c052444d2f7b144e914ded460af1808, type: 3}
+      objectReference: {fileID: 4453845215803279697, guid: 87733b43f21554b4b85849615e21e0d7, type: 3}
     - target: {fileID: 1128868329765695182, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: damageParticle
       value: 

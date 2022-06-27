@@ -13,8 +13,13 @@ namespace Mikrocosmos
 
 
         private bool readyToReduceDurability = false;
+
+     
+
+        
+
         public override void OnClientHooked() {
-            AbsorbedToBackpack = false;
+            
         }
 
         public override void OnClientFreed() {
@@ -49,6 +54,10 @@ namespace Mikrocosmos
 
         public override void OnBroken() {
           
+        }
+
+        public override void OnAddedToBackpack() {
+            AbsorbedToBackpack = false;
         }
     }
 }

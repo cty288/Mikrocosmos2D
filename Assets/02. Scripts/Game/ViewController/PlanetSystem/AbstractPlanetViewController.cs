@@ -359,7 +359,7 @@ namespace Mikrocosmos
         private Rigidbody2D rigidbody;
 
         [SerializeField] private float momentumOffset = 100;
-        private void OnCollisionEnter2D(Collision2D collision)
+        protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider)
             {
@@ -369,17 +369,18 @@ namespace Mikrocosmos
                     {
                         if (hookable.HookState == HookState.Hooked)
                         {
-                            StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
+                            StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>(),
+                                collision.GetContact(0).point));
                             return;
                         }
                     }
                     //normal
-                    StartCoroutine(PhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
+                    StartCoroutine(PhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>(), collision.GetContact(0).point));
                     //StartCoroutine(NonPhysicsForceCalculation(model, collision.collider.GetComponent<Rigidbody2D>()));
                 }
             }
         }
-        IEnumerator NonPhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody)
+        IEnumerator NonPhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody, Vector2 contactPoint)
         {
             float waitTime = 0.02f;
             Vector2 offset = Vector2.zero;
@@ -405,6 +406,7 @@ namespace Mikrocosmos
                     }
                     force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
                     force *= 2;
+                    OnHitByObject(force.magnitude, contactPoint);
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
                     targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
@@ -417,7 +419,7 @@ namespace Mikrocosmos
         }
 
 
-        IEnumerator PhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody)
+        IEnumerator PhysicsForceCalculation(IDamagable targetModel, Rigidbody2D targetRigidbody, Vector2 contactPoint)
         {
             float waitTime = 0.02f;
             Vector2 offset = Vector2.zero;
@@ -443,6 +445,7 @@ namespace Mikrocosmos
                     }
                     force = new Vector2(Mathf.Sign(force.x) * Mathf.Log(Mathf.Abs(force.x)), Mathf.Sign(force.y) * Mathf.Log(Mathf.Abs(force.y), 2));
                     force *= 2;
+                    OnHitByObject(force.magnitude, contactPoint);
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
                     targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
@@ -453,6 +456,10 @@ namespace Mikrocosmos
             
         }
 
+
+        protected virtual void OnHitByObject(float force, Vector2 contactPoint) {
+
+        }
         void OvalRotate()
         {
 
