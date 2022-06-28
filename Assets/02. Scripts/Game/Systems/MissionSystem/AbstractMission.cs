@@ -3,29 +3,46 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
 using Mirror;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
+
+    public struct OnMissionAnnounceWinners {
+        public List<NetworkMainGamePlayer> Winners;
+        public float Difficulty;
+        public string MissionNameLocalized;
+    }
     public abstract class AbstractGameMission : AbstractNetworkedSystem, IMission
     {
-        public abstract string MissionName { get; }
+        [field: SerializeField]
+        public string MissionName { get; protected set; }
         public abstract string MissionNameLocalized();
 
         public abstract string MissionDescriptionLocalized();
 
         public abstract float MaximumTime { get; set; }
         public bool IsFinished { get; set; }
-        public abstract void OnMissionStart(float overallProgress);
 
-        public void AssignPermanentBuffToPlayers(List<IBuffSystem> buffSystems)
-        {
-            PermanentBuffType buffType = (PermanentBuffType)(Random.Range(0, Enum.GetValues(typeof(PermanentBuffType)).Length));
-            foreach (IBuffSystem buffSystem in buffSystems)
-            {
-                PermanentBuffFactory.AddPermanentBuffToPlayer(buffType, buffSystem, 3, 0);
-            }
+        protected float startDifficulty;
+
+        public void OnMissionStart(float overallProgress) {
+            startDifficulty = overallProgress;
+            OnStartMission(startDifficulty);
         }
+
+        public abstract void OnStartMission(float overallProgress);
+
+        [ServerCallback]
+        public void AnnounceWinners(List<NetworkMainGamePlayer> players) {
+            this.SendEvent<OnMissionAnnounceWinners>(new OnMissionAnnounceWinners() {
+                Difficulty = startDifficulty,
+                MissionNameLocalized = MissionNameLocalized(),
+                Winners = players
+            });
+        }
+     
         public void StopMission(bool runOutOfTime = true)
         {
             IsFinished = true;

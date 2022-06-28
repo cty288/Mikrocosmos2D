@@ -48,7 +48,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 771f5301e00c40f479d10efdafbe6ec1
+  m_AssetId: 48f6aee518c82624ab32ba298544ee5b
   hasSpawned: 0
 --- !u!114 &-2210684087431406304
 MonoBehaviour:
@@ -64,8 +64,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  <MissionName>k__BackingField: StrangeMeteorMission
   strangeMeteorPrefabs:
   - {fileID: 3789394192495447563, guid: aa6e7186f20aaba4f8937b23ec63a253, type: 3}
   - {fileID: 3789394192495447563, guid: 762a8a5423b8b45438fcd43922779f30, type: 3}
   - {fileID: 3789394192495447563, guid: 60d663a9fd63fc942b8cfb4446ead8af, type: 3}
-  <MaximumTime>k__BackingField: 120
+  <MaximumTime>k__BackingField: 20

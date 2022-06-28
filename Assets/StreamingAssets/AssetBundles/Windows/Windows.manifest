@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1810237903
+CRC: 3368022968
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -25,4 +25,11 @@ AssetBundleManifest:
       Dependencies: {}
     Info_6:
       Name: buff_icons
+      Dependencies: {}
+    Info_7:
+      Name: info_elements
+      Dependencies:
+        Dependency_0: info_icon_sprite
+    Info_8:
+      Name: info_icon_sprite
       Dependencies: {}

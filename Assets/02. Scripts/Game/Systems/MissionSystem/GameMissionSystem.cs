@@ -23,6 +23,11 @@ namespace Mikrocosmos
         public string MissionName;
     }
 
+    public struct OnClientRewardsGeneratedForMission {
+        public string MissionNameLocalized;
+        public List<string> WinnerNames;
+        public int DifficultyLevel;
+    }
   
     public struct ClientMissionReadyToStartInfo {
         public string MissionName;
@@ -79,10 +84,17 @@ namespace Mikrocosmos
             StartCoroutine(WaitToSwitchMission());
 
             this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
-          
+            this.RegisterEvent<OnMissionAnnounceWinners>(OnMissionAnnounceWinners)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+
         }
 
-        
+        [ServerCallback]
+        private void OnMissionAnnounceWinners(OnMissionAnnounceWinners e) {
+            List<string> rewardNames = RewardsFactory.Singleton.AssignRewardsToPlayers(e.Winners, e.Difficulty);
+            RpcNotifyRewardsGenerated(rewardNames, e.MissionNameLocalized, (Mathf.CeilToInt(e.Difficulty / 0.333334f)));
+        }
+
 
         private IEnumerator WaitToSwitchMission() {
             int waitTime = Random.Range(averageGapTimeBetweenMissions - 20,
@@ -159,12 +171,13 @@ namespace Mikrocosmos
         private void RpcNotifyMissionStart(ClientMissionReadyToStartInfo info) {
             Debug.Log($"Client Mission Start Info: {info.MissionName}");
             this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage() {
-                InfoType = InfoType.LongInfo,
                 Name = info.MissionName,
                 Title = Localization.Get("GAME_MISSION_UPCOMING"),
                 RemainingTime = 10,
                 AutoDestroyWhenTimeUp = false,
-                ShowRemainingTime = true
+                ShowRemainingTime = true,
+                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
+              
             });
         }
 
@@ -173,19 +186,30 @@ namespace Mikrocosmos
         {
             this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage()
             {
-                InfoType = InfoType.LongInfo,
                 Name = info.MissionName,
                 Title = info.MissionNameLocalized,
                 Description = info.MissionDescriptionLocalized,
                 RemainingTime = info.MissionMaximumTime,
                 AutoDestroyWhenTimeUp = false,
-                ShowRemainingTime = true
+                ShowRemainingTime = true,
+                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
+                InfoElementIconAssetName = info.MissionName + "InfoIcon"
             });
         }
 
         [ClientRpc]
         private void RpcNotifyMissionStop(ClientMissionStopInfo info) {
             this.GetSystem<IClientInfoSystem>().StopInfo(info.MissionName);
+        }
+
+        [ClientRpc]
+        private void RpcNotifyRewardsGenerated(List<string> winnerNames, string missionNameLocalized,
+            int difficultyLevel) {
+            this.SendEvent<OnClientRewardsGeneratedForMission>(new OnClientRewardsGeneratedForMission() {
+                DifficultyLevel = difficultyLevel,
+                MissionNameLocalized = missionNameLocalized,
+                WinnerNames = winnerNames
+            });
         }
     }
 }

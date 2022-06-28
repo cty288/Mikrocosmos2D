@@ -75,11 +75,11 @@ namespace Mikrocosmos
                 this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage() {
                     AutoDestroyWhenTimeUp = true,
                     Description = "",
-                    InfoType = InfoType.LongWarning,
                     Name = $"{model.Name}TeamChanged",
                     RemainingTime = 8f,
                     Title = Localization.Get("GAME_MISSION_STRANGE_METEOR_TEAM_CHANGED"),
-                    ShowRemainingTime = false
+                    ShowRemainingTime = false,
+                    InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL
                 });
             }
         }

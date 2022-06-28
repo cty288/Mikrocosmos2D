@@ -64,6 +64,65 @@
       ]
     },
     {
+      "AssetName": "info_elements",
+      "MD5": "a93320c420de1488f6d613dfe1054480",
+      "FileSize": 9632.083,
+      "assetDatas": [
+        {
+          "Name": "MissionInfoElement",
+          "OwnerBundleName": "info_elements",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "WarningInfoElement",
+          "OwnerBundleName": "info_elements",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
+      "AssetName": "info_icon_sprite",
+      "MD5": "233295eae4758427d6d52040fb000b8c",
+      "FileSize": 242.234375,
+      "assetDatas": [
+        {
+          "Name": "InfoIcon_Green",
+          "OwnerBundleName": "info_icon_sprite",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoIcon_Pink",
+          "OwnerBundleName": "info_icon_sprite",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoIcon_Purple",
+          "OwnerBundleName": "info_icon_sprite",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoIcon_Yellow",
+          "OwnerBundleName": "info_icon_sprite",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "SendEggMissionInfoIcon",
+          "OwnerBundleName": "info_icon_sprite",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "SpaceMinecartMissionInfoIcon",
+          "OwnerBundleName": "info_icon_sprite",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "StrangeMeteorMissionInfoIcon",
+          "OwnerBundleName": "info_icon_sprite",
+          "AssetType": "UnityEngine.Texture2D"
+        }
+      ]
+    },
+    {
       "AssetName": "mftest",
       "MD5": "3fc8346f2226ce39dcb4c2f2c3361e0b",
       "FileSize": 435.743164,
@@ -133,8 +192,8 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "f8edb56cc4b3c0e59abfe00e6290ddce",
-      "FileSize": 1.73242188,
+      "MD5": "80467c609ef5ec57af373ed0dadefa2d",
+      "FileSize": 1.80957031,
       "assetDatas": []
     },
     {

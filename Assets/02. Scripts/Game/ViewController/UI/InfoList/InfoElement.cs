@@ -6,6 +6,17 @@ using UnityEngine.UI;
 
 namespace Mikrocosmos
 {
+    public struct Info {
+        public string Name;
+        public Sprite InfoIconSprite;
+        public string Description;
+        public string Title;
+        public float RemainingTime;
+        public bool AutoDestroyWhenTimeUp;
+        public bool ShowRemainingTime;
+    }
+
+    
     public class InfoElement : MonoBehaviour {
         private InfoElementText titleWithDescription;
         private InfoElementText onlyTitle;
@@ -18,19 +29,20 @@ namespace Mikrocosmos
         private Image slider;
         private Animator animator;
 
-        private ClientInfoMessage info;
+        private Info info;
 
 
         private bool autoDestroy = false;
 
         private bool showRemainingTime = false;
-
+        private Image icon;
 
         private void Awake() {
             titleWithDescription = transform.Find("InfoContainer/TitleWithDescription").GetComponent<InfoElementText>();
             onlyTitle = transform.Find("InfoContainer/OnlyTitle").GetComponent<InfoElementText>();
             slider = transform.Find("InfoContainer/SliderBG/Slider").GetComponent<Image>();
             animator = GetComponent<Animator>();
+            icon = transform.Find("InfoContainer/Icon").GetComponent<Image>();
         }
 
 
@@ -54,7 +66,7 @@ namespace Mikrocosmos
             }
         }
 
-        public void SetInfo(ClientInfoMessage info, bool isUpdate) {
+        public void SetInfo(Info info, bool isUpdate) {
             this.info = info;
             this.autoDestroy = info.AutoDestroyWhenTimeUp;
             this.showRemainingTime = info.ShowRemainingTime;
@@ -88,6 +100,9 @@ namespace Mikrocosmos
                 titleWithDescription.SetInfo(info.Title, info.Description);
             }
 
+            if (info.InfoIconSprite) {
+                icon.sprite = info.InfoIconSprite;
+            }
             MaxTime = tentativeMaxTime;
             timer = MaxTime;
         }

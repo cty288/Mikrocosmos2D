@@ -4,12 +4,12 @@ using MikroFramework.Architecture;
 using Mirror.FizzySteam;
 using UnityEngine;
 
-namespace Mikrocosmos
-{
-    
+namespace Mikrocosmos {
+
     public struct ClientInfoMessage {
-        public InfoType InfoType;
         public string Name;
+        public string InfoElementPrefabAssetName;
+        public string InfoElementIconAssetName;
         public string Description;
         public string Title;
         public float RemainingTime;
@@ -24,11 +24,18 @@ namespace Mikrocosmos
     public struct OnInfoStop {
         public string InfoName;
     }
-    public enum InfoType {
-        LongInfo,
-        ShortInfo,
-        LongWarning,
-        ShortWarning
+
+    public static class InfoIconNames {
+        public const string ICON_GREEN = "InfoIcon_Green";
+        public const string ICON_PINK = "InfoIcon_Pink";
+        public const string ICON_BLUE = "InfoIcon_Blue";
+        public const string ICON_YELLOW = "InfoIcon_Yellow";
+    }
+
+    public static class InfoElementPrefabNames {
+        public const string ICON_INFO_NORMAL = "MissionInfoElement";
+        public const string ICON_WARNING_NORMAL = "WarningInfoElement";
+        
     }
 
     public interface IClientInfoSystem : ISystem {

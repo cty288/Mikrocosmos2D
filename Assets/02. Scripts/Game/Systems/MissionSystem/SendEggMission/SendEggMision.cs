@@ -13,7 +13,7 @@ namespace Mikrocosmos
 
     
     public class SendEggMision : AbstractGameMission, IMission {
-        public override string MissionName { get; } = "SendEggMission";
+       
 
         [SerializeField] private GameObject sunFlowerPrefab;
 
@@ -34,7 +34,7 @@ namespace Mikrocosmos
         [SerializeField] private GameObject mapPointer;
 
         private GameObject sunFlower;
-        public override void OnMissionStart(float overallProgress) {
+        public override void OnStartMission(float overallProgress) {
             this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
@@ -59,7 +59,7 @@ namespace Mikrocosmos
             if (e.Planet == sunFlower) {
                 if (!e.IsSell) {
                     winningTeam = e.TeamNumber;
-                    StopMission();
+                    StopMission(false);
                 }
             }
         }
@@ -70,13 +70,10 @@ namespace Mikrocosmos
                 List<PlayerMatchInfo> matchInfo =
                     this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(winningTeam);
 
-                List<IBuffSystem> buffSystem = matchInfo.Select((info => {
-                    return info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
-                        .GetComponent<IBuffSystem>();
+                List<NetworkMainGamePlayer> winners = matchInfo.Select((info => {
+                    return info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>();
                 })).ToList();
-
-
-                AssignPermanentBuffToPlayers(buffSystem);
+                AnnounceWinners(winners);
             }
            
         }

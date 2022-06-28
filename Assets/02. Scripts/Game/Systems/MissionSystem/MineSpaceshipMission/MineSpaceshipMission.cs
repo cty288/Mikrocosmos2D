@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public class MineSpaceshipMission : AbstractGameMission {
-        public override string MissionName { get; } = "SpaceMinecartMission";
+      
 
         [SerializeField]
         private GameObject spaceMinecartPrefab;
@@ -26,7 +26,7 @@ namespace Mikrocosmos
 
         [field: SerializeField ]
         public override float MaximumTime { get; set; } = 120f;
-        public override void OnMissionStart(float overallProgress) {
+        public override void OnStartMission(float overallProgress) {
             GameObject[] spawnPos = GameObject.FindGameObjectsWithTag("MinecartSpawnPos");
 
             spaceMinecraftInstance = Instantiate(spaceMinecartPrefab,
@@ -48,14 +48,13 @@ namespace Mikrocosmos
             {
                 List<PlayerMatchInfo> matchInfo =
                     this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(e.WinningTeam);
-
-                List<IBuffSystem> buffSystem = matchInfo.Select((info => {
-                    return info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
-                        .GetComponent<IBuffSystem>();
+                
+                List<NetworkMainGamePlayer> winners = matchInfo.Select((info => {
+                    return info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>();
                 })).ToList();
+                AnnounceWinners(winners);
 
-
-                AssignPermanentBuffToPlayers(buffSystem);
+                //AssignPermanentBuffToPlayers(buffSystem);
             }
 
             StopMission(false);

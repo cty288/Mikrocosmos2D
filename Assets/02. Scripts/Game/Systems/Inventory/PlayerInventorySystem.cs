@@ -107,7 +107,7 @@ namespace Mikrocosmos
 
 
     public class PlayerInventorySystem : AbstractNetworkedSystem, IPlayerInventorySystem {
-        private ResLoader resLoader;
+       // private ResLoader resLoader;
         [SerializeField]
         private List<BackpackSlot> backpackItems = new List<BackpackSlot>();
       
@@ -140,7 +140,7 @@ namespace Mikrocosmos
             return slots;
         }
         private void Awake() {
-            ResLoader.Create(loader => resLoader = loader);
+          //  ResLoader.Create(loader => resLoader = loader);
             hookSystem = GetComponent<IHookSystem>();
         }
 
@@ -191,7 +191,7 @@ namespace Mikrocosmos
        
 
         private void OnDestroy() {
-            resLoader.ReleaseAllAssets();
+            //resLoader.ReleaseAllAssets();
         }
 
         [ServerCallback]

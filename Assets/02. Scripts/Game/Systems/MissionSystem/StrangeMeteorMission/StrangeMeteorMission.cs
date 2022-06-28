@@ -10,7 +10,7 @@ namespace Mikrocosmos
 {
     public class StrangeMeteorMission : AbstractGameMission {
 
-        public override string MissionName { get; } = "StrangeMeteorMission";
+      
         [SerializeField] 
         private List<GameObject> strangeMeteorPrefabs;
         public override string MissionNameLocalized() {
@@ -25,7 +25,7 @@ namespace Mikrocosmos
 
         private List<StrangeMeteorViewController> activeMeteors = new List<StrangeMeteorViewController>();
         
-        public override void OnMissionStart(float overallProgress) {
+        public override void OnStartMission(float overallProgress) {
             Vector4 borders = this.GetSystem<IGameProgressSystem>().GetGameMapSize();
 
            
@@ -69,13 +69,10 @@ namespace Mikrocosmos
                 List<PlayerMatchInfo> matchInfo =
                     this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(winningTeam);
 
-                List<IBuffSystem> buffSystem = matchInfo.Select((info => {
-                    return info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
-                        .GetComponent<IBuffSystem>();
+                List<NetworkMainGamePlayer> winners = matchInfo.Select((info => {
+                    return info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>();
                 })).ToList();
-
-
-                AssignPermanentBuffToPlayers(buffSystem);
+                AnnounceWinners(winners);
             }
         }
     }

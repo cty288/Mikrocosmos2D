@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -37,6 +38,8 @@ namespace Mikrocosmos
 
         protected override void OnHitByObject(float force, Vector2 contactPoint) {
             base.OnHitByObject(force, contactPoint);
+            if (!hitByObjectParticles.Any()) return;
+                
             if (force >= 5 && force <= 15) {
                 Instantiate(hitByObjectParticles[0], transform);
                 Debug.Log($"Small Bump {force}");
