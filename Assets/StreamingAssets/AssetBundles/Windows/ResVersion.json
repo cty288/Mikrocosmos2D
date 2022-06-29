@@ -65,8 +65,8 @@
     },
     {
       "AssetName": "info_elements",
-      "MD5": "a93320c420de1488f6d613dfe1054480",
-      "FileSize": 9632.083,
+      "MD5": "94b10f575629bfd4243e4da40a71dd01",
+      "FileSize": 9661.307,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -192,7 +192,7 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "80467c609ef5ec57af373ed0dadefa2d",
+      "MD5": "7558dcd8c0f23acd2cac9f17991a0da3",
       "FileSize": 1.80957031,
       "assetDatas": []
     },

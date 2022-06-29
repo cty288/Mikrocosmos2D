@@ -16,12 +16,12 @@ namespace Mikrocosmos
         private GameObject spaceMinecartPrefab;
 
         private GameObject spaceMinecraftInstance;
-        public override string MissionNameLocalized() {
-            return Localization.Get("GAME_MISSION_SPACE_MINECART");
+        public override string MissionNameLocalizedKey() {
+            return "GAME_MISSION_SPACE_MINECART";
         }
 
-        public override string MissionDescriptionLocalized() {
-            return Localization.Get("GAME_MISSION_SPACE_MINECART_DESCRIPTION");
+        public override string MissionDescriptionLocalizedKey() {
+            return "GAME_MISSION_SPACE_MINECART_DESCRIPTION";
         }
 
         [field: SerializeField ]

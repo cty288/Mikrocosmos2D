@@ -26,14 +26,15 @@ namespace Mikrocosmos
         }
 
         public override string Name { get; } = "PermanentHealthBuff";
-        public override string GetLocalizedDescriptionText()
+        public override string GetLocalizedDescriptionText(Language languege)
         {
-            return Localization.GetFormat("GAME_PERM_BUFF_HEALTH_DESCRIPTION", ((int)(healthMultiplier * 100)) * CurrentLevel);
+            
+            return Localization.GetFormat("GAME_PERM_BUFF_HEALTH_DESCRIPTION", languege, ((int)(healthMultiplier * 100)) * CurrentLevel);
         }
 
-        public override string GetLocalizedName()
+        public override string GetLocalizedName(Language languege)
         {
-            return Localization.Get("GAME_PERM_BUFF_HEALTH");
+            return Localization.Get("GAME_PERM_BUFF_HEALTH", languege);
         }
 
         public override BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();

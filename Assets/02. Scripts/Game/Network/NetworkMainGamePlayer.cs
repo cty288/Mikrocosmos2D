@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -27,6 +28,11 @@ namespace Mikrocosmos
         public NetworkIdentity ControlledSpaceship;
 
         [SerializeField] public List<GameObject> spaceshipPrefabs;
+        [SerializeField]
+        private Language clientLanguage;
+
+        public Language ClientLanguage => clientLanguage;
+
         public override void OnStartServer() {
             base.OnStartServer();
             //spawn spaceship
@@ -41,13 +47,17 @@ namespace Mikrocosmos
         private void OnRoomPlayerJoinGame(OnRoomPlayerJoinGame e) {
             if (e.Connection == connectionToClient) {
                 matchInfo = e.MatchInfo;
+                clientLanguage = e.ClientLanguage;
                 SpawnSpaceshipForThisPlayer(matchInfo, e.Connection);
+              
             }
 
           
             
          
         }
+
+        
 
         private void SpawnSpaceshipForThisPlayer(PlayerMatchInfo matchInfo, NetworkConnection conn) {
 

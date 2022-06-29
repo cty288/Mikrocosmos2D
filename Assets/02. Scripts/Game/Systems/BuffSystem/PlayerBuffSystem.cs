@@ -5,6 +5,7 @@ using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -50,7 +51,9 @@ namespace Mikrocosmos
     }
     public class PlayerBuffSystem : AbstractNetworkedSystem {
         private IBuffSystem buffSystem;
-
+        [SerializeField]
+        private Language clientLanguage;
+        
         private void Awake() {
             buffSystem = GetComponent<IBuffSystem>();
         }
@@ -66,10 +69,13 @@ namespace Mikrocosmos
             buffSystem.ServerRegisterCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
             buffSystem.ServerRegisterCallback<PermanentVisionExpansionBuff, OnPermanentVisionExpansion>(TargetOnVisionPermenantExpand);
             //buffSystem.ServerRegisterClientCallback<PermanentAffinityBuff, OnPermanentAffinityAddition>(TargetOnPermanentAffinityBuff);
-
+            clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ClientLanguage;
             this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            
         }
+
+     
 
         private void OnServerSpaceshipOverweight(OnServerSpaceshipOverweight e) {
             if (e.Spaceship == gameObject) {
@@ -91,29 +97,29 @@ namespace Mikrocosmos
         }
         private void OnServerBuffStart(IBuff buff)
         {
-            BuffInfo buffInfo = SetupBuffInfo(buff);
+            BuffInfo buffInfo = SetupBuffInfo(buff, clientLanguage);
             TargetUpdateBuffInfo(buffInfo, BuffUpdateMode.Start);
         }
 
         private void OnServerBuffStop(IBuff buff)
         {
-            BuffInfo buffInfo = SetupBuffInfo(buff);
+            BuffInfo buffInfo = SetupBuffInfo(buff, clientLanguage);
             TargetUpdateBuffInfo(buffInfo, BuffUpdateMode.Stop);
         }
 
         private void OnServerBuffUpdate(IBuff buff)
         {
-            BuffInfo buffInfo = SetupBuffInfo(buff);
+            BuffInfo buffInfo = SetupBuffInfo(buff,clientLanguage);
             TargetUpdateBuffInfo(buffInfo, BuffUpdateMode.Update);
         }
 
 
-        private BuffInfo SetupBuffInfo(IBuff buff)
+        private BuffInfo SetupBuffInfo(IBuff buff, Language language)
         {
             BuffInfo buffInfo = new BuffInfo()
             {
-                LocalizedDescription = buff.GetLocalizedDescriptionText(),
-                LocalizedName = buff.GetLocalizedName(),
+                LocalizedDescription = buff.GetLocalizedDescriptionText(language),
+                LocalizedName = buff.GetLocalizedName(language),
                 Name = buff.Name
             };
 

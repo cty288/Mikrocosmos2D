@@ -32,12 +32,12 @@ namespace Mikrocosmos
         }
 
         public override string Name { get; } = "PermanentVisionExpansionBuff";
-        public override string GetLocalizedDescriptionText() {
-            return Localization.GetFormat("GAME_PERM_BUFF_VISION_EXPANSION_DESCRIPTION", ((int) (additionalVisionAdditionPercentage * 100)) * CurrentLevel);
+        public override string GetLocalizedDescriptionText(Language language) {
+            return Localization.GetFormat("GAME_PERM_BUFF_VISION_EXPANSION_DESCRIPTION", language, ((int) (additionalVisionAdditionPercentage * 100)) * CurrentLevel);
         }
 
-        public override string GetLocalizedName() {
-            return Localization.Get("GAME_PERM_BUFF_VISION_EXPANSION");
+        public override string GetLocalizedName(Language language) {
+            return Localization.Get("GAME_PERM_BUFF_VISION_EXPANSION", language);
         }
 
 

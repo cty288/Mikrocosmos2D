@@ -4,6 +4,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.TimeSystem;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -19,7 +20,8 @@ namespace Mikrocosmos
             this.RegisterEvent<OnClientRequestPrepare>(OnClientRequestPrepare)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
-
+            CmdSetLanguage(Localization.Instance.SelectedLanguage);
+            
             if (isServer) {
                 CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value);
             }

@@ -13,12 +13,12 @@ namespace Mikrocosmos
       
         [SerializeField] 
         private List<GameObject> strangeMeteorPrefabs;
-        public override string MissionNameLocalized() {
-            return Localization.Get("GAME_MISSION_STRANGE_METEOR");
+        public override string MissionNameLocalizedKey() {
+            return "GAME_MISSION_STRANGE_METEOR";
         }
 
-        public override string MissionDescriptionLocalized() {
-            return Localization.Get("GAME_MISSION_STRANGE_METEOR_DESCRIPTION");
+        public override string MissionDescriptionLocalizedKey() {
+            return "GAME_MISSION_STRANGE_METEOR_DESCRIPTION";
         }
 
         [field: SerializeField] public override float MaximumTime { get; set; } = 120;

@@ -27,13 +27,13 @@ namespace Mikrocosmos
 
         public override string Name { get; } = "PoisonBuff";
 
-        public override string GetLocalizedDescriptionText() {
-            return Localization.GetFormat("GAME_BUFF_POISION_DESCRIPTION", Frequency, DamagePerFrq);
+        public override string GetLocalizedDescriptionText(Language language) {
+            return Localization.GetFormat("GAME_BUFF_POISION_DESCRIPTION", language, Frequency, DamagePerFrq);
         }
 
-        public override string GetLocalizedName()
+        public override string GetLocalizedName(Language language)
         {
-            return Localization.Get("GAME_BUFF_POISION");
+            return Localization.Get("GAME_BUFF_POISION", language);
         }
 
         public override BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();

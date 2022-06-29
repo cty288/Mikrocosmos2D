@@ -21,14 +21,14 @@ namespace Mikrocosmos
         }
 
         public override string Name { get; } = "PermanentPowerUpBuff";
-        public override string GetLocalizedDescriptionText()
+        public override string GetLocalizedDescriptionText(Language language)
         {
-            return Localization.GetFormat("GAME_PERM_BUFF_POWER_UP_DESCRIPTION", ((int)(additionalDamageAdditionPercentage * 100)) * CurrentLevel);
+            return Localization.GetFormat("GAME_PERM_BUFF_POWER_UP_DESCRIPTION", language, ((int)(additionalDamageAdditionPercentage * 100)) * CurrentLevel);
         }
 
-        public override string GetLocalizedName()
+        public override string GetLocalizedName(Language language)
         {
-            return Localization.Get("GAME_PERM_BUFF_POWER_UP");
+            return Localization.Get("GAME_PERM_BUFF_POWER_UP", language);
         }
 
         

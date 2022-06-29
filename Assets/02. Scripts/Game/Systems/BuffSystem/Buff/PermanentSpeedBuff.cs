@@ -25,12 +25,12 @@ namespace Mikrocosmos
         }
 
         public override string Name { get; } = "PermanentSpeedUpBuff";
-        public override string GetLocalizedDescriptionText() {
-            return Localization.GetFormat("GAME_PERM_BUFF_SPEED_UP_DESCRIPTION", ((int)(speedMultiplier * 100)) * CurrentLevel);
+        public override string GetLocalizedDescriptionText(Language language) {
+            return Localization.GetFormat("GAME_PERM_BUFF_SPEED_UP_DESCRIPTION",language, ((int)(speedMultiplier * 100)) * CurrentLevel);
         }
 
-        public override string GetLocalizedName() {
-            return Localization.Get("GAME_PERM_BUFF_SPEED_UP");
+        public override string GetLocalizedName(Language language) {
+            return Localization.Get("GAME_PERM_BUFF_SPEED_UP", language);
         }
 
         public override BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();

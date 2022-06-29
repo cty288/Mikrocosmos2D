@@ -57,12 +57,12 @@ namespace Mikrocosmos {
         }
 
         public string Name { get; } = "VisionExpansionBuff";
-        public string GetLocalizedDescriptionText() {
-            return Localization.Get("GAME_BUFF_VISION_EXPANSION_DESCRIPTION");
+        public string GetLocalizedDescriptionText(Language language) {
+            return Localization.Get("GAME_BUFF_VISION_EXPANSION_DESCRIPTION", language);
         }
 
-        public string GetLocalizedName() {
-            return Localization.Get("GAME_BUFF_VISION_EXPANSION");
+        public string GetLocalizedName(Language language) {
+            return Localization.Get("GAME_BUFF_VISION_EXPANSION", language);
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new OnVisionExpansion();

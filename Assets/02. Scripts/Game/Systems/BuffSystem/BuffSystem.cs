@@ -6,6 +6,7 @@ using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 
 namespace Mikrocosmos {
@@ -18,9 +19,9 @@ namespace Mikrocosmos {
     public interface IBuff {
 
         string Name { get; }
-        string GetLocalizedDescriptionText();
+        string GetLocalizedDescriptionText(Language languege);
 
-        string GetLocalizedName();
+        string GetLocalizedName(Language languege);
 
         BuffClientMessage MessageToClient { get; set; }
 
@@ -161,9 +162,9 @@ namespace Mikrocosmos {
         }
 
         public abstract string Name { get; }
-        public abstract string GetLocalizedDescriptionText();
+        public abstract string GetLocalizedDescriptionText(Language languege);
 
-        public abstract string GetLocalizedName();
+        public abstract string GetLocalizedName(Language languege);
 
         public abstract   BuffClientMessage MessageToClient { get; set; }
       
@@ -217,8 +218,8 @@ namespace Mikrocosmos {
         }
 
         public abstract string Name { get; }
-        public abstract string GetLocalizedDescriptionText();
-        public abstract string GetLocalizedName();
+        public abstract string GetLocalizedDescriptionText(Language languege);
+        public abstract string GetLocalizedName(Language languege);
         public  abstract BuffClientMessage MessageToClient { get; set; }
         public IBuffSystem Owner { get; set; }
         public NetworkIdentity OwnerIdentity { get; set; }
@@ -245,8 +246,8 @@ namespace Mikrocosmos {
             }
         }
 
-        public abstract string GetLocalizedDescriptionText();
-        public abstract string GetLocalizedName();
+        public abstract string GetLocalizedDescriptionText(Language languege);
+        public abstract string GetLocalizedName(Language languege);
         public abstract  BuffClientMessage MessageToClient { get; set; }
         public IBuffSystem Owner { get; set; }
         public NetworkIdentity OwnerIdentity { get; set; }

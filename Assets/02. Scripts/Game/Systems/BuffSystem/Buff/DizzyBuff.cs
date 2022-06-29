@@ -25,11 +25,11 @@ namespace Mikrocosmos
         public NetworkIdentity OwnerIdentity { get; set; }
         public  string Name { get; } = "DieBuff";
 
-        public  string GetLocalizedDescriptionText() {
+        public  string GetLocalizedDescriptionText(Language language) {
             return Localization.Get("GAME_BUFF_DIE_DESCRIPTION");
         }
 
-        public  string GetLocalizedName() {
+        public  string GetLocalizedName(Language language) {
             return Localization.Get("GAME_BUFF_DIE");
         }
 
@@ -63,14 +63,14 @@ namespace Mikrocosmos
 
         public  string Name { get; } = "InvincibleBuff";
 
-        public  string GetLocalizedDescriptionText()
+        public  string GetLocalizedDescriptionText(Language language)
         {
-            return Localization.Get("GAME_BUFF_INVINCIBLE_DESCRIPTION");
+            return Localization.Get("GAME_BUFF_INVINCIBLE_DESCRIPTION", language);
         }
 
-        public  string GetLocalizedName()
+        public  string GetLocalizedName(Language language)
         {
-            return Localization.Get("GAME_BUFF_INVINCIBLE");
+            return Localization.Get("GAME_BUFF_INVINCIBLE", language);
         }
 
         public BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();

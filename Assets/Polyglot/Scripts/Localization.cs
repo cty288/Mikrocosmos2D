@@ -405,6 +405,16 @@ namespace Polyglot
             return string.Format(Get(key), arguments);
         }
 
+        public static string GetFormat(string key, Language language, params object[] arguments)
+        {
+            if (string.IsNullOrEmpty(key) || arguments == null || arguments.Length == 0)
+            {
+                return Get(key, language);
+            }
+
+            return string.Format(Get(key, language), arguments);
+        }
+
         public bool InputFilesContains(LocalizationDocument doc)
         {
             foreach (var inputFile in inputFiles)

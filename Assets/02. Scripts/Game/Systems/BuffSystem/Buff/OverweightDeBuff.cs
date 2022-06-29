@@ -12,12 +12,12 @@ namespace Mikrocosmos
 
         public override string Name { get; } = "OverweightDeBuff";
 
-        public override string GetLocalizedDescriptionText() {
-            return Localization.Get("GAME_BUFF_OVERWEIGHT_DESCRIPTION");
+        public override string GetLocalizedDescriptionText(Language language) {
+            return Localization.Get("GAME_BUFF_OVERWEIGHT_DESCRIPTION", language);
         }
 
-        public override string GetLocalizedName() {
-            return Localization.Get("GAME_BUFF_OVERWEIGHT");
+        public override string GetLocalizedName(Language language) {
+            return Localization.Get("GAME_BUFF_OVERWEIGHT", language);
           
         }
 

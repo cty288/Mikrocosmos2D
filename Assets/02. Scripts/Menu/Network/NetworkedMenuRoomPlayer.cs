@@ -5,6 +5,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.TimeSystem;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -12,11 +13,14 @@ namespace Mikrocosmos
     public struct OnRoomPlayerJoinGame {
         public PlayerMatchInfo MatchInfo;
         public NetworkConnection Connection;
+        public Language ClientLanguage;
     }
     public partial class NetworkedMenuRoomPlayer : NetworkRoomPlayer, IController, ICanSendEvent {
         [SerializeField]
         private PlayerMatchInfo matchInfo = null;
 
+        private Language clientLanguage;
+        
         public PlayerMatchInfo MatchInfo {
             get => matchInfo;
             set => matchInfo = value;
@@ -36,7 +40,8 @@ namespace Mikrocosmos
             if (obj.connection == connectionToClient) {
                 this.SendEvent<OnRoomPlayerJoinGame>(new OnRoomPlayerJoinGame() {
                     Connection = obj.connection,
-                    MatchInfo = matchInfo
+                    MatchInfo = matchInfo,
+                    ClientLanguage = clientLanguage
                 });
             }
         }
@@ -86,6 +91,11 @@ namespace Mikrocosmos
                 
                 Debug.Log($"Match info changed: Team: {obj.MatchInfo.Team}");
             }
+        }
+
+        [Command]
+        private void CmdSetLanguage(Language language) {
+            this.clientLanguage = language;
         }
 
       

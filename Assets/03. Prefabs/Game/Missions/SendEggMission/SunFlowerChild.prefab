@@ -128,6 +128,10 @@ PrefabInstance:
       propertyPath: <HookedPositionOffset>k__BackingField.y
       value: 3.37
       objectReference: {fileID: 0}
+    - target: {fileID: 1133179267551477265, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <Name>k__BackingField
       value: SunFlowerSon

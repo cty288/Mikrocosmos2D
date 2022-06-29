@@ -20,12 +20,12 @@ namespace Mikrocosmos
         [SerializeField] private GameObject childPrefab;
 
         private int winningTeam = -1;
-        public override string MissionNameLocalized() {
-            return Localization.Get("GAME_MISSION_ESCORT_EGG");
+        public override string MissionNameLocalizedKey() {
+            return "GAME_MISSION_ESCORT_EGG";
         }
 
-        public override string MissionDescriptionLocalized() {
-            return Localization.Get("GAME_MISSION_ESCORT_EGG_DESCRIPTION");
+        public override string MissionDescriptionLocalizedKey() {
+            return "GAME_MISSION_ESCORT_EGG_DESCRIPTION";
         }
 
         [field: SerializeField]

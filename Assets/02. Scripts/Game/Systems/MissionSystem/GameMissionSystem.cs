@@ -26,6 +26,7 @@ namespace Mikrocosmos
     public struct OnClientRewardsGeneratedForMission {
         public string MissionNameLocalized;
         public List<string> WinnerNames;
+        public List<string> RewardNames;
         public int DifficultyLevel;
     }
   
@@ -46,14 +47,14 @@ namespace Mikrocosmos
 
     public struct ClientMissionStartInfo {
         public string MissionName;
-        public string MissionDescriptionLocalized;
-        public string MissionNameLocalized;
+        public string MissionDescriptionLocalizedKey;
+        public string MissionNameLocalizedKey;
         public float MissionMaximumTime;
     }
     public interface IMission {
         string MissionName { get;  }
-        string MissionNameLocalized();
-        string MissionDescriptionLocalized();
+        string MissionNameLocalizedKey();
+        string MissionDescriptionLocalizedKey();
 
         float MaximumTime { get; set; }
 
@@ -91,8 +92,18 @@ namespace Mikrocosmos
 
         [ServerCallback]
         private void OnMissionAnnounceWinners(OnMissionAnnounceWinners e) {
-            List<string> rewardNames = RewardsFactory.Singleton.AssignRewardsToPlayers(e.Winners, e.Difficulty);
-            RpcNotifyRewardsGenerated(rewardNames, e.MissionNameLocalized, (Mathf.CeilToInt(e.Difficulty / 0.333334f)));
+            Dictionary<NetworkMainGamePlayer, List<string>> playerToRewardNames = RewardsFactory.Singleton.AssignRewardsToPlayers(e.Winners, e.Difficulty);
+            int difficulty = (Mathf.CeilToInt(e.Difficulty / 0.333334f));
+
+            List<string> winnerNames = new List<string>();
+            foreach (NetworkMainGamePlayer winner in e.Winners) {
+                winnerNames.Add(winner.matchInfo.Name);
+            }
+
+            foreach (NetworkMainGamePlayer player in playerToRewardNames.Keys) {
+                TargetNotifyRewardsGenerated(player.connectionToClient, playerToRewardNames[player], winnerNames,
+                    e.MissionNameLocalizedKey, difficulty);
+            }
         }
 
 
@@ -144,10 +155,10 @@ namespace Mikrocosmos
             mission.OnMissionStart(progressSystem.GetGameProgress());
             this.SendEvent<OnMissionStart>(new OnMissionStart(){MissionName = mission.MissionName});
             RpcNotifyMissionAlreadytart(new ClientMissionStartInfo() {
-                MissionDescriptionLocalized = mission.MissionDescriptionLocalized(),
+                MissionDescriptionLocalizedKey = mission.MissionDescriptionLocalizedKey(),
                 MissionMaximumTime = mission.MaximumTime,
                 MissionName = mission.MissionName,
-                MissionNameLocalized = mission.MissionNameLocalized()
+                MissionNameLocalizedKey = mission.MissionNameLocalizedKey()
             });
         }
 
@@ -187,8 +198,8 @@ namespace Mikrocosmos
             this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage()
             {
                 Name = info.MissionName,
-                Title = info.MissionNameLocalized,
-                Description = info.MissionDescriptionLocalized,
+                Title = Localization.Get(info.MissionNameLocalizedKey),
+                Description = Localization.Get(info.MissionDescriptionLocalizedKey),
                 RemainingTime = info.MissionMaximumTime,
                 AutoDestroyWhenTimeUp = false,
                 ShowRemainingTime = true,
@@ -202,12 +213,13 @@ namespace Mikrocosmos
             this.GetSystem<IClientInfoSystem>().StopInfo(info.MissionName);
         }
 
-        [ClientRpc]
-        private void RpcNotifyRewardsGenerated(List<string> winnerNames, string missionNameLocalized,
+        [TargetRpc]
+        private void TargetNotifyRewardsGenerated(NetworkConnection conn, List<string> rewardNames, List<string> winnerNames, string missionNameLocalizedKey,
             int difficultyLevel) {
             this.SendEvent<OnClientRewardsGeneratedForMission>(new OnClientRewardsGeneratedForMission() {
                 DifficultyLevel = difficultyLevel,
-                MissionNameLocalized = missionNameLocalized,
+                MissionNameLocalized = Localization.Get(missionNameLocalizedKey),
+                RewardNames = rewardNames,
                 WinnerNames = winnerNames
             });
         }

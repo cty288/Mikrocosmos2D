@@ -12,15 +12,15 @@ namespace Mikrocosmos
     public struct OnMissionAnnounceWinners {
         public List<NetworkMainGamePlayer> Winners;
         public float Difficulty;
-        public string MissionNameLocalized;
+        public string MissionNameLocalizedKey;
     }
     public abstract class AbstractGameMission : AbstractNetworkedSystem, IMission
     {
         [field: SerializeField]
         public string MissionName { get; protected set; }
-        public abstract string MissionNameLocalized();
+        public abstract string MissionNameLocalizedKey();
 
-        public abstract string MissionDescriptionLocalized();
+        public abstract string MissionDescriptionLocalizedKey();
 
         public abstract float MaximumTime { get; set; }
         public bool IsFinished { get; set; }
@@ -38,7 +38,7 @@ namespace Mikrocosmos
         public void AnnounceWinners(List<NetworkMainGamePlayer> players) {
             this.SendEvent<OnMissionAnnounceWinners>(new OnMissionAnnounceWinners() {
                 Difficulty = startDifficulty,
-                MissionNameLocalized = MissionNameLocalized(),
+                MissionNameLocalizedKey = MissionNameLocalizedKey(),
                 Winners = players
             });
         }
