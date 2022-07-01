@@ -65,7 +65,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   <MissionName>k__BackingField: SendEggMission
+  <MissionBarAssetName>k__BackingField: InfoBar_Yellow
+  <MissionSliderBGName>k__BackingField: InfoProgress_Yellow
   sunFlowerPrefab: {fileID: 5437633022175454491, guid: 683531e99f51e724f8935d3a00b8efa5, type: 3}
   childPrefab: {fileID: 8519365288654522467, guid: 496aa72782854974fa837f4b4b92b810, type: 3}
   <MaximumTime>k__BackingField: 120
-  mapPointer: {fileID: 3671635426418008418, guid: abeda724e25f5ea4282f36936d20669a, type: 3}
+  mapPointer: {fileID: 3671635426418008418, guid: d7845c840fc4f214687e557f4903cf58, type: 3}

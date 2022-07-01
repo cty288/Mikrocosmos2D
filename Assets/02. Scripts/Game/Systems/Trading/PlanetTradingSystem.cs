@@ -558,6 +558,7 @@ namespace Mikrocosmos
         public string NewBuyItemName;
         public GameObject TargetPlanet;
         public float MaxBuyTime;
+        public GameObject PointerPrefab;
     }
 
     public struct OnServerAffinityWithTeam1Changed {

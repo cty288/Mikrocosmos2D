@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Your Speed Is Increased
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 97f291b6fd4e050479569ebbf120aeb9, type: 2}
-  m_sharedMaterial: {fileID: 6700943688103016386, guid: 97f291b6fd4e050479569ebbf120aeb9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 704e9cf8c3be7e343b56192e60fe9d0a, type: 2}
+  m_sharedMaterial: {fileID: -7397191393735986667, guid: 704e9cf8c3be7e343b56192e60fe9d0a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -315,8 +315,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lost Control
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 97f291b6fd4e050479569ebbf120aeb9, type: 2}
-  m_sharedMaterial: {fileID: 6700943688103016386, guid: 97f291b6fd4e050479569ebbf120aeb9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8d88232bb8e38f4499bfa29c30a79545, type: 2}
+  m_sharedMaterial: {fileID: 2521242290319924249, guid: 8d88232bb8e38f4499bfa29c30a79545, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15.5
+  m_fontSize: 13.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

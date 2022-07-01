@@ -273,6 +273,7 @@ namespace Mikrocosmos
         }
 
 
+        [SerializeField] private GameObject pointerPrefab;
         
 
         [ClientRpc]
@@ -283,7 +284,8 @@ namespace Mikrocosmos
                 OldBuyItemName = oldBuyItemName,
                 NewBuyItemName = newBuyItemName,
                 TargetPlanet = gameObject,
-                MaxBuyTime = maxBuyTime
+                MaxBuyTime = maxBuyTime,
+                PointerPrefab = pointerPrefab
             });
         }
     }

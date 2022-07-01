@@ -658,7 +658,7 @@ MonoBehaviour:
   teamColors:
   - {r: 0.7960785, g: 0.09019608, b: 0.5176471, a: 1}
   - {r: 0.20000002, g: 0.63529414, b: 0.6627451, a: 1}
-  mapPointer: {fileID: 3671635426418008418, guid: abeda724e25f5ea4282f36936d20669a, type: 3}
+  mapPointer: {fileID: 3671635426418008418, guid: 381d0b4e3153db045bd56b48c7b8be6d, type: 3}
 --- !u!58 &6070168122387782964
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ namespace Mikrocosmos {
         public string Name;
         public string InfoElementPrefabAssetName;
         public string InfoElementIconAssetName;
+        public string InfoContainerSpriteAssetName;
+        public string InfoContainerSliderAssetName;
         public string Description;
         public string Title;
         public float RemainingTime;

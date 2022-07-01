@@ -86,6 +86,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2147483648
   isOffScreen: 0
+  hiddenObjectsWhenNoCrossSprite: []
 --- !u!1001 &7560859451339187469
 PrefabInstance:
   m_ObjectHideFlags: 0

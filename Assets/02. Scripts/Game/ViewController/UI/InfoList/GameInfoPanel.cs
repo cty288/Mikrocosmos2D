@@ -34,16 +34,34 @@ namespace Mikrocosmos
         }
 
         private void OnInfoStartOrUpdate(OnInfoStartOrUpdate e) {
-            Sprite sprite = null;
+            Sprite iconSprite = null;
+            Sprite infoContainerSpriteName = null;
+            Sprite infoSliderSprite = null;
             if (!string.IsNullOrEmpty(e.Info.InfoElementIconAssetName)) {
                 Texture2D texture = resLoader.LoadSync<Texture2D>("info_icon_sprite", e.Info.InfoElementIconAssetName);
                 if (texture) {
-                    sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                    iconSprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
                 }
             }
-          
-           
-            
+
+            if (!string.IsNullOrEmpty(e.Info.InfoContainerSpriteAssetName))
+            {
+                Texture2D texture = resLoader.LoadSync<Texture2D>("info_container_sprites", e.Info.InfoContainerSpriteAssetName);
+                if (texture)
+                {
+                    infoContainerSpriteName = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(e.Info.InfoContainerSliderAssetName))
+            {
+                Texture2D texture = resLoader.LoadSync<Texture2D>("info_slider_sprites", e.Info.InfoContainerSliderAssetName);
+                if (texture)
+                {
+                    infoSliderSprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                }
+            }
+
             if (!infoNameToElement.ContainsKey(e.Info.Name)) {
 
                   GameObject elementPrefab = resLoader.LoadSync<GameObject>("info_elements", e.Info.InfoElementPrefabAssetName);
@@ -58,11 +76,13 @@ namespace Mikrocosmos
                 spawnedInfoElement.SetInfo(new Info() {
                     AutoDestroyWhenTimeUp =e.Info.AutoDestroyWhenTimeUp,
                     Description =  e.Info.Description,
-                    InfoIconSprite = sprite,
+                    InfoIconSprite = iconSprite,
+                    InfoContainerSprite = infoContainerSpriteName,
                     Name = e.Info.Name,
                     RemainingTime = e.Info.RemainingTime,
                     ShowRemainingTime = e.Info.ShowRemainingTime,
-                    Title = e.Info.Title
+                    Title = e.Info.Title,
+                    InfoSliderSprite = infoSliderSprite
                 }, false);
             }
             else {
@@ -72,11 +92,13 @@ namespace Mikrocosmos
                     {
                         AutoDestroyWhenTimeUp = e.Info.AutoDestroyWhenTimeUp,
                         Description = e.Info.Description,
-                        InfoIconSprite = sprite,
+                        InfoIconSprite = iconSprite,
                         Name = e.Info.Name,
                         RemainingTime = e.Info.RemainingTime,
                         ShowRemainingTime = e.Info.ShowRemainingTime,
-                        Title = e.Info.Title
+                        InfoContainerSprite = infoContainerSpriteName,
+                        Title = e.Info.Title,
+                        InfoSliderSprite = infoSliderSprite                        
                     }, true);
                 }
                 else {

@@ -107,7 +107,7 @@ RectTransform:
   m_Children:
   - {fileID: 4927300110825975454}
   m_Father: {fileID: 4927300110809486662}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -370,11 +370,11 @@ RectTransform:
   m_Children:
   - {fileID: 4927300110448009212}
   m_Father: {fileID: 4927300110809486662}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 71.265, y: -24.130003}
+  m_AnchoredPosition: {x: 71.26497, y: -24.130003}
   m_SizeDelta: {x: 242.5303, y: 17.5266}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4927300110127282458
@@ -524,7 +524,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4927300110448009213}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -534,7 +534,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000019789, y: -0.00010777}
+  m_AnchoredPosition: {x: 0.000022888184, y: -0.00010871887}
   m_SizeDelta: {x: 241.71, y: 17.467}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4927300110448009214
@@ -570,7 +570,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.634
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -606,8 +606,8 @@ RectTransform:
   - {fileID: 2284216657647414357}
   - {fileID: 6030856221045017074}
   - {fileID: 7707129737901174276}
-  - {fileID: 2382598812506951961}
   - {fileID: 4927300110127282457}
+  - {fileID: 2382598812506951961}
   m_Father: {fileID: 4927300110292126899}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -651,7 +651,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000061989, y: 2.9}
+  m_AnchoredPosition: {x: 18, y: 2.9}
   m_SizeDelta: {x: 256.9791, y: 51.9555}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4927300110825975448
@@ -682,7 +682,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Mission Upcoming!
+  m_text: Mission Upcoming
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 763bdc56056c7774e9cdbc4064e50261, type: 2}
   m_sharedMaterial: {fileID: -6963496843768947756, guid: 763bdc56056c7774e9cdbc4064e50261, type: 2}

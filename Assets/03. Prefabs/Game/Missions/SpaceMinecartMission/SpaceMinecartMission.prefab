@@ -65,5 +65,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   <MissionName>k__BackingField: SpaceMinecartMission
+  <MissionBarAssetName>k__BackingField: InfoBar_Purple
+  <MissionSliderBGName>k__BackingField: InfoProgress_Purple
   spaceMinecartPrefab: {fileID: 1342861027360944214, guid: ef1f93c56f0298b4881c145b68290771, type: 3}
   <MaximumTime>k__BackingField: 20

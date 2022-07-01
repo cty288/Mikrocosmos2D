@@ -50,9 +50,15 @@ namespace Mikrocosmos
         public string MissionDescriptionLocalizedKey;
         public string MissionNameLocalizedKey;
         public float MissionMaximumTime;
+        public string MissionInfoBarAssetName;
+        public string MissionSliderAssetName;
     }
     public interface IMission {
         string MissionName { get;  }
+
+        string MissionBarAssetName { get; }
+
+        string MissionSliderBGName { get; }
         string MissionNameLocalizedKey();
         string MissionDescriptionLocalizedKey();
 
@@ -81,7 +87,7 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             progressSystem = this.GetSystem<IGameProgressSystem>();
-            allMissions = Shuffle(allMissions);
+            Shuffle(allMissions);
             StartCoroutine(WaitToSwitchMission());
 
             this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -132,22 +138,22 @@ namespace Mikrocosmos
             }
             
         }
-        private List<T> Shuffle<T>(List<T> original) {
-            System.Random randomNum = new System.Random();
-            int index = 0;
-            T temp;
-            for (int i = 0; i < original.Count; i++)
+
+        public static void Shuffle<T>(List<T> arr)
+        {
+            for (int i = 0; i < arr.Count; i++)
             {
-                index = randomNum.Next(0, original.Count - 1);
-                if (index != i)
-                {
-                    temp = original[i];
-                    original[i] = original[index];
-                    original[index] = temp;
-                }
+                var index = Random.Range(i, arr.Count);
+                var tmp = arr[i];
+                var ran = arr[index];
+                arr[i] = ran;
+                arr[index] = tmp;
             }
-            return original;
         }
+
+
+        
+       
 
 
         private void SwitchToMission(IMission mission, GameObject missionGameObject) {
@@ -158,7 +164,9 @@ namespace Mikrocosmos
                 MissionDescriptionLocalizedKey = mission.MissionDescriptionLocalizedKey(),
                 MissionMaximumTime = mission.MaximumTime,
                 MissionName = mission.MissionName,
-                MissionNameLocalizedKey = mission.MissionNameLocalizedKey()
+                MissionNameLocalizedKey = mission.MissionNameLocalizedKey(),
+                MissionInfoBarAssetName = mission.MissionBarAssetName,
+                MissionSliderAssetName = mission.MissionSliderBGName
             });
         }
 
@@ -188,7 +196,7 @@ namespace Mikrocosmos
                 AutoDestroyWhenTimeUp = false,
                 ShowRemainingTime = true,
                 InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
-              
+                
             });
         }
 
@@ -204,7 +212,9 @@ namespace Mikrocosmos
                 AutoDestroyWhenTimeUp = false,
                 ShowRemainingTime = true,
                 InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
-                InfoElementIconAssetName = info.MissionName + "InfoIcon"
+                InfoElementIconAssetName = info.MissionName + "InfoIcon",
+                InfoContainerSpriteAssetName = info.MissionInfoBarAssetName,
+                InfoContainerSliderAssetName = info.MissionSliderAssetName
             });
         }
 

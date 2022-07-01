@@ -89,7 +89,7 @@ namespace Mikrocosmos
                 }
             }
             
-            CreatePointerWindowForPlanet(e.TargetPlanet, e.NewBuyItemName, e.MaxBuyTime);
+            CreatePointerWindowForPlanet(e.TargetPlanet, e.NewBuyItemName, e.MaxBuyTime, e.PointerPrefab);
         }
 
 
@@ -135,7 +135,7 @@ namespace Mikrocosmos
                 nameToPointer.Add(name, pointer);
             }
         }
-        private void CreatePointerWindowForPlanet(GameObject planet, string goodsName, float time) {
+        private void CreatePointerWindowForPlanet(GameObject planet, string goodsName, float time, GameObject pointerPrefab) {
           
             if (!planetToPointers.ContainsKey(planet)) {
                 planetToPointers.Add(planet, new List<IMapPointerViewController>());
@@ -144,23 +144,37 @@ namespace Mikrocosmos
             if (!String.IsNullOrEmpty(goodsName) &&
                 planetToPointers[planet].Find(controller => controller.Name == goodsName) == null) {
 
-                MapPointerViewController pointer = Instantiate(planetPointerPrefab, transform).GetComponent<MapPointerViewController>();
+                GameObject pointerGameObject = null;
+
+                if (pointerPrefab) {
+                    pointerGameObject = Instantiate(pointerPrefab, transform);
+                }
+                else {
+                    pointerGameObject = Instantiate(planetPointerPrefab, transform);
+                }
+
+                IMapPointerViewController pointer = pointerGameObject.GetComponent<IMapPointerViewController>();
+              
                 pointer.Name = goodsName;
-                pointer.Time = time;
-                pointer.timer = time;
+
+                if (pointer is MapPointerViewController planetPointer) {
+                    planetPointer.Time = time;
+                    planetPointer.timer = time;
+                }
+              
 
 
                 pointer.SetPointerActive(false);
                 
                 this.GetSystem<ITimeSystem>().AddDelayTask(0.02f, () => {
-                    if (pointer) {
+                    if (pointerGameObject) {
                         if (currentSelectedName == goodsName) {
                             pointer.SetPointerActive(true);
                         }
                        
                     }
                 });
-                pointer.GetComponent<Window_Pointer>().target = planet.transform;
+                pointerGameObject.GetComponent<Window_Pointer>().target = planet.transform;
                 planetToPointers[planet].Add(pointer);
             }
         }

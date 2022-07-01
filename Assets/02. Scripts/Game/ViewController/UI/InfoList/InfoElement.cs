@@ -9,6 +9,8 @@ namespace Mikrocosmos
     public struct Info {
         public string Name;
         public Sprite InfoIconSprite;
+        public Sprite InfoContainerSprite;
+        public Sprite InfoSliderSprite;
         public string Description;
         public string Title;
         public float RemainingTime;
@@ -36,13 +38,17 @@ namespace Mikrocosmos
 
         private bool showRemainingTime = false;
         private Image icon;
+        private Image containerImage;
+        private Image sliderBGImage;
 
         private void Awake() {
             titleWithDescription = transform.Find("InfoContainer/TitleWithDescription").GetComponent<InfoElementText>();
             onlyTitle = transform.Find("InfoContainer/OnlyTitle").GetComponent<InfoElementText>();
+            sliderBGImage = transform.Find("InfoContainer/SliderBG").GetComponent<Image>();
             slider = transform.Find("InfoContainer/SliderBG/Slider").GetComponent<Image>();
             animator = GetComponent<Animator>();
             icon = transform.Find("InfoContainer/Icon").GetComponent<Image>();
+            containerImage = transform.Find("InfoContainer/Bar").GetComponent<Image>();
         }
 
 
@@ -102,6 +108,14 @@ namespace Mikrocosmos
 
             if (info.InfoIconSprite) {
                 icon.sprite = info.InfoIconSprite;
+            }
+
+            if (info.InfoContainerSprite) {
+                containerImage.sprite = info.InfoContainerSprite;
+            }
+
+            if (info.InfoSliderSprite) {
+                sliderBGImage.sprite = info.InfoSliderSprite;
             }
             MaxTime = tentativeMaxTime;
             timer = MaxTime;

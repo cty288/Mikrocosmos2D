@@ -18,6 +18,12 @@ namespace Mikrocosmos
     {
         [field: SerializeField]
         public string MissionName { get; protected set; }
+
+        [field: SerializeField]
+        public string MissionBarAssetName { get; protected set; }
+
+        [field:SerializeField]
+        public string MissionSliderBGName { get; protected set; }
         public abstract string MissionNameLocalizedKey();
 
         public abstract string MissionDescriptionLocalizedKey();

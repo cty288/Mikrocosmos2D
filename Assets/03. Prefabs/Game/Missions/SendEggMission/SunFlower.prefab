@@ -191,12 +191,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   BuyItemMaxTime: 120
-  itemRarity:
-  - 1
-  - 0
-  - 0
   buyItemCount: 1
   currentBuyItemLists: []
+  pointerPrefab: {fileID: 3671635426418008418, guid: e305aca3f07e3db4aa506c43f8ac4711, type: 3}
 --- !u!95 &2694121912459193523
 Animator:
   serializedVersion: 4

@@ -32,12 +32,21 @@ namespace Mikrocosmos
             
             foreach (GameObject meteorPrefab in strangeMeteorPrefabs) {
                 float x, y;
-                do
-                {
+                bool tooCloseToExistingMeteors = false;
+                do {
+                    tooCloseToExistingMeteors = false;
                     x = Random.Range(borders.x + 50, borders.y - 50);
                     y = Random.Range(borders.z + 50, borders.w - 50);
-                    
-                } while (Physics2D.OverlapCircle(new Vector2(x, y), 1) || Mathf.Abs(x) <= 60 || Mathf.Abs(y) <= 60);
+                  
+
+                    foreach (StrangeMeteorViewController activeMeteor in activeMeteors) {
+                        if (Vector2.Distance(new Vector2(x, y), new Vector2(activeMeteor.transform.position.x, activeMeteor.transform.position.y)) < 60) {
+                            tooCloseToExistingMeteors = true;
+                            break;
+                        }
+                    }
+
+                } while (tooCloseToExistingMeteors ||Physics2D.OverlapCircle(new Vector2(x, y), 1) || Mathf.Abs(x) <= 60 || Mathf.Abs(y) <= 60);
 
                 GameObject meteor = Instantiate(meteorPrefab, new Vector3(x, y, 0), Quaternion.identity);
                 meteor.GetComponent<StrangeMeteorModel>().PerPlayerProgressPerSecond1 =
