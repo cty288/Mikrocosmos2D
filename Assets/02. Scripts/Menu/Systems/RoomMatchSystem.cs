@@ -13,7 +13,11 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
-
+    public enum GameMode
+    {
+        Normal,
+        Tutorial
+    }
     [Serializable]
     public class PlayerMatchInfo : IEquatable<PlayerMatchInfo> {
         public int ID;
@@ -70,6 +74,8 @@ namespace Mikrocosmos
 
     }
     public partial interface IRoomMatchSystem : ISystem {
+        GameMode GameMode { get; }
+        void ServerChangeGameMode(GameMode newGameMode);
 
         void ServerRoomPlayerJoinMatch(string name, NetworkConnection conn);
       
@@ -97,6 +103,13 @@ namespace Mikrocosmos
     }
     public partial class RoomMatchSystem : AbstractNetworkedSystem, IRoomMatchSystem {
         private NetworkIdentity host;
+
+        [SyncVar(hook = nameof(RpcOnGameModeChange)), SerializeField]
+        private GameMode gameMode = GameMode.Normal;
+
+        public GameMode GameMode => gameMode;
+
+
         private void Awake() {
             DontDestroyOnLoad(gameObject);
             Mikrocosmos.Interface.RegisterSystem<IRoomMatchSystem>(this);
@@ -146,6 +159,11 @@ namespace Mikrocosmos
             teamPlayers.Clear();
             this.UnRegisterEvent<OnServerStartGame>(OnServerStartGame);
             Destroy(this.gameObject);
+        }
+
+        [ServerCallback]
+        public void ServerChangeGameMode(GameMode newGameMode) {
+            this.gameMode = newGameMode;
         }
 
         [ServerCallback]

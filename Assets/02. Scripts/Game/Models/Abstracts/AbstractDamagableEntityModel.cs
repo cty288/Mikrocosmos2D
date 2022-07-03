@@ -19,7 +19,7 @@ namespace Mikrocosmos
         [field: SerializeField]
         public float MomentumThredhold { get; protected set; }
 
-        [field: SerializeField]
+        [field: SerializeField, SyncVar(hook = nameof(OnClientMaxHealthChange))]
         public int MaxHealth { get; protected set; }
         
         [field:  SyncVar(hook = nameof(OnClientHealthChange)), SerializeField]
@@ -129,6 +129,11 @@ namespace Mikrocosmos
         public abstract void OnReceiveExcessiveMomentum(float excessiveMomentum);
 
         public virtual void OnClientHealthChange(int oldHealth, int newHealth) {
+
+        }
+
+        public virtual void OnClientMaxHealthChange(int oldMaxHealth, int newMaxHealth)
+        {
 
         }
     }

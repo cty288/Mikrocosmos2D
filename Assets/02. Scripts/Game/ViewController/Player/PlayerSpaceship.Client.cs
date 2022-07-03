@@ -8,6 +8,7 @@ using MikroFramework.TimeSystem;
 using MikroFramework.Utilities;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 namespace Mikrocosmos
 {
@@ -238,10 +239,22 @@ namespace Mikrocosmos
         }
 
         [SerializeField] private GameObject hitParticlePrefab;
-        protected override void OnCollisionEnter2D(Collision2D collision) {
+        protected override void OnCollisionEnter2D(Collision2D collision) {            
             base.OnCollisionEnter2D(collision);
-            GameObject particle = Instantiate(hitParticlePrefab, collision.GetContact(0).point, Quaternion.identity);
-            particle.transform.SetParent(transform);
+            if (hookSystem.HookedNetworkIdentity != collision.collider.GetComponent<NetworkIdentity>()) {
+                GameObject particle = Instantiate(hitParticlePrefab, collision.GetContact(0).point, Quaternion.identity);
+                particle.transform.SetParent(transform);
+                if (hasAuthority) {
+                    GameCamera.Singleton.OnShakeCamera(new ShakeCamera()
+                    {
+                        Duration = 0.25f,
+                        Strength = 1.5f,
+                        Viberato = 10
+                    });
+                }
+              
+            }
+          
         }
     }
 }

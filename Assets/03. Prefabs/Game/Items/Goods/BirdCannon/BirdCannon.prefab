@@ -373,6 +373,7 @@ MonoBehaviour:
   bullet: {fileID: 5222149471336982627, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
   shootForce: 250
   CameraExpandRadius: 15
+  startUsed: 0
 --- !u!114 &3044698435260994450
 MonoBehaviour:
   m_ObjectHideFlags: 0

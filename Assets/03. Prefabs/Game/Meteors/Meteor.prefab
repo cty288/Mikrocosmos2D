@@ -177,15 +177,15 @@ MonoBehaviour:
   sendInterval: 0.01
   syncPosition: 1
   syncRotation: 1
-  syncScale: 0
+  syncScale: 1
   interpolatePosition: 0
   interpolateRotation: 0
   interpolateScale: 0
   bufferTimeMultiplier: 3
-  bufferSizeLimit: 64
+  bufferSizeLimit: 128
   catchupThreshold: 6
   catchupMultiplier: 0.097
-  onlySyncOnChange: 1
+  onlySyncOnChange: 0
   bufferResetMultiplier: 5
   positionSensitivity: 0.01
   rotationSensitivity: 0.01
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0
+  syncInterval: 0.1
   <MoveMode>k__BackingField: 0
   <MaxSpeed>k__BackingField: 50
   <CanBeHooked>k__BackingField: 1

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 900562283
+CRC: 892241772
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 46a6335a015855c6f0669954263580b5
+    Hash: 92dee8de9fa2efff22a744d39873966e
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4a382c8a54036b5d2543805d17eebc37
@@ -76,4 +76,6 @@ Assets:
 - Assets/03. Prefabs/Game/UI/Info/MissionInfoElement.prefab
 - Assets/03. Prefabs/Game/UI/Info/WarningInfoElement.prefab
 Dependencies:
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/info_container_sprites
 - D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/info_icon_sprite
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/info_slider_sprites

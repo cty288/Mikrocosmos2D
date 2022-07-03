@@ -637,7 +637,7 @@ MonoBehaviour:
   DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   fire1: {fileID: 6403340119911964050}
   fire2: {fileID: 1744423355335135302}
-  damagePer02: 10
+  damagePer02: 17
 --- !u!95 &-6688074193047113738
 Animator:
   serializedVersion: 4

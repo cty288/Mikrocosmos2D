@@ -368,7 +368,16 @@ namespace Mikrocosmos
            
         }
 
-        
+
+        public override void OnClientMaxHealthChange(int oldMaxHealth, int newMaxHealth) {
+            base.OnClientMaxHealthChange(oldMaxHealth, newMaxHealth);
+            this.SendEvent<OnClientSpaceshipHealthChange>(new OnClientSpaceshipHealthChange()
+            {
+                NewHealth = CurrentHealth,
+                MaxHealth = newMaxHealth,
+                Identity = netIdentity
+            });
+        }
     }
 
     public struct OnServerSpaceshipOverweight {

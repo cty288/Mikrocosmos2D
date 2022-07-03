@@ -64,9 +64,36 @@
       ]
     },
     {
+      "AssetName": "info_container_sprites",
+      "MD5": "871ca7585db3c558d59629cd548b7fc4",
+      "FileSize": 32.9541,
+      "assetDatas": [
+        {
+          "Name": "InfoBar_Green",
+          "OwnerBundleName": "info_container_sprites",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoBar_Pink",
+          "OwnerBundleName": "info_container_sprites",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoBar_Purple",
+          "OwnerBundleName": "info_container_sprites",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoBar_Yellow",
+          "OwnerBundleName": "info_container_sprites",
+          "AssetType": "UnityEngine.Texture2D"
+        }
+      ]
+    },
+    {
       "AssetName": "info_elements",
-      "MD5": "94b10f575629bfd4243e4da40a71dd01",
-      "FileSize": 9661.307,
+      "MD5": "19b1f8fc34aea7d050b86b2180bd356f",
+      "FileSize": 9641.232,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -118,6 +145,33 @@
         {
           "Name": "StrangeMeteorMissionInfoIcon",
           "OwnerBundleName": "info_icon_sprite",
+          "AssetType": "UnityEngine.Texture2D"
+        }
+      ]
+    },
+    {
+      "AssetName": "info_slider_sprites",
+      "MD5": "96dfd440070d6a39cae4b103d0827d02",
+      "FileSize": 50.30371,
+      "assetDatas": [
+        {
+          "Name": "InfoProgress_Green",
+          "OwnerBundleName": "info_slider_sprites",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoProgress_Pink",
+          "OwnerBundleName": "info_slider_sprites",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoProgress_Purple",
+          "OwnerBundleName": "info_slider_sprites",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoProgress_Yellow",
+          "OwnerBundleName": "info_slider_sprites",
           "AssetType": "UnityEngine.Texture2D"
         }
       ]
@@ -192,14 +246,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "7558dcd8c0f23acd2cac9f17991a0da3",
-      "FileSize": 1.80957031,
+      "MD5": "2c0bff873ebe2fa42ae89a6b664b376c",
+      "FileSize": 1.88574219,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "9adb6e7f40b46dba0e1277d39915e946",
-      "FileSize": 1549.53906,
+      "MD5": "eeb9e0dc56402789cb751a20294d049b",
+      "FileSize": 1549.52832,
       "assetDatas": [
         {
           "Name": "FirePlant",

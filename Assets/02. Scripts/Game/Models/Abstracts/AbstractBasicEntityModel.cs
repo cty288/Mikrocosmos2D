@@ -51,11 +51,13 @@ namespace Mikrocosmos
 
         [field: SerializeField]
         public Transform HookedByTransform { get; protected set; }
+
+        private float originalMaxSpeed;
+        
         protected virtual void OnEnable()
         {
-            float currentMaxSpeed = MaxSpeed;
             MaxSpeed =7f;
-            StartCoroutine(RecoverMaxSpeed(currentMaxSpeed));
+            StartCoroutine(RecoverMaxSpeed(originalMaxSpeed));
         }
 
         IEnumerator RecoverMaxSpeed(float originalSpeed) {
@@ -216,6 +218,7 @@ namespace Mikrocosmos
         protected Rigidbody2D bindedRigidibody; 
 
         protected virtual void Awake() {
+            originalMaxSpeed = MaxSpeed;
             bindedRigidibody = GetComponent<Rigidbody2D>();
             clientOriginalLayer = gameObject.layer;
         }

@@ -12,17 +12,14 @@ namespace Mikrocosmos
 {
     public class PlanetSellBubble : AbstractMikroController<Mikrocosmos> {
         private Text priceText;
-        private Image itemTypeImage;
+        [SerializeField]
+        private Image[] itemTypeImages;
         public int Price;
         //private static readonly int Tint = Shader.PropertyToID("_Tint");
         [SerializeField] private Sprite[] itemTypeSprites;
         private void Awake() {
             priceText = transform.Find("SellPrice").GetComponent<Text>();
-            Transform itemTypeImageTr = transform.Find("ItemTypeImage");
-            if (itemTypeImageTr)
-            {
-                itemTypeImage = itemTypeImageTr.GetComponent<Image>();
-            }
+           
 
             this.RegisterEvent<OnClientMoneyChange>(OnClientMoneyChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -67,19 +64,29 @@ namespace Mikrocosmos
             Price = pirce;
             priceText.text = Price.ToString();
 
-            if (itemTypeImage) {
-                itemTypeImage.enabled = true;
-                if (isRaw) {
-                    itemTypeImage.sprite = itemTypeSprites[0];
-                }
-                else if (!isRaw)
+            if (itemTypeImages.Length > 0)
+            {
+                foreach (var itemTypeImage in itemTypeImages)
                 {
-                    itemTypeImage.sprite = itemTypeSprites[1];
+                    itemTypeImage.enabled = true;
+                    if (isRaw)
+                    {
+                        itemTypeImage.sprite = itemTypeSprites[0];
+                    }
+                    else if (!isRaw)
+                    {
+                        itemTypeImage.sprite = itemTypeSprites[1];
+                    }
                 }
+
             }
             else
             {
-                itemTypeImage.enabled = false;
+                foreach (var itemTypeImage in itemTypeImages)
+                {
+                    itemTypeImage.enabled = false;
+                }
+
             }
 
 

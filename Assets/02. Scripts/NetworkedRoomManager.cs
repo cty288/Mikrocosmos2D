@@ -27,8 +27,12 @@ namespace Mikrocosmos
         [SerializeField] private GameObject matchSystemPrefab;
 
         public bool IsInGame = false;
-
+        
         [HideInInspector] public NetworkingMode NetworkingMode;
+
+        [SerializeField][Scene]
+        private List<string> GameModeScenes;
+        
 
         private TelepathyTransport telepathyTransport;
         private FizzySteamworks steamworksTransport;
@@ -58,17 +62,25 @@ namespace Mikrocosmos
             gchandle.Free();
         }
 
-
+        public void ServerChangeGameModeScene(GameMode gamemode) {
+            GameplayScene = GameModeScenes[(int)gamemode].ToString();
+        }
         public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer) {
             NetworkedMenuRoomPlayer player = roomPlayer.GetComponent<NetworkedMenuRoomPlayer>();
             int team = player.MatchInfo.Team;
             int teamIndex = player.MatchInfo.TeamIndex;
             Vector2 startPos = Vector2.zero;
-            if (team == 1) {
-                startPos = GameObject.FindGameObjectsWithTag("Team1Spawn")[teamIndex].transform.position;
-            }else if (team == 2) {
-                startPos = GameObject.FindGameObjectsWithTag("Team2Spawn")[teamIndex].transform.position;
+            if (GameObject.FindGameObjectsWithTag("Team1Spawn").Length > 0) {
+                if (team == 1)
+                {
+                    startPos = GameObject.FindGameObjectsWithTag("Team1Spawn")[teamIndex].transform.position;
+                }
+                else if (team == 2)
+                {
+                    startPos = GameObject.FindGameObjectsWithTag("Team2Spawn")[teamIndex].transform.position;
+                }
             }
+           
 
             GameObject gamePlayer = startPos != null
                 ? Instantiate(playerPrefab, startPos, Quaternion.identity)

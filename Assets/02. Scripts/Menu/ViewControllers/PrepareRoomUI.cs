@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using MikroFramework;
@@ -7,16 +8,27 @@ using TMPro;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+using Polyglot;
 using UnityEngine.SceneManagement;
 
+
+
 namespace Mikrocosmos {
+
 	public partial class PrepareRoomUI : AbstractMikroController<Mikrocosmos> {
         private TelepathyTransport transport;
-
+        
+        private List<string> gamemodeLocalizedKeys = new List<string>() {
+            "MENU_GAME_MODE_STANDARD",
+            "MENU_GAME_MODE_TUTORIAL"
+        };
+        
         private void Awake() {
             this.RegisterEvent<OnClientPrepareRoomPlayerListChange>(OnClientPrepareRoomPlayerListChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnAllPlayersReadyStatusChanged>(OnAllPlayerReadyStatusChange)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnClientGameModeChanged>(OnClientGameModeChanged)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
             BtnChangeSide.onClick.AddListener(OnSwitchSideClicked);
@@ -24,11 +36,26 @@ namespace Mikrocosmos {
             BtnRoomLeaderStartRoom.onClick.AddListener(OnHostStartGameButtonClicked);
             BtnBack.onClick.AddListener(OnBackToMenuClicked);
             BtnRoomLeaderStartRoom.gameObject.SetActive(false);
-         
+            DropdownGameMode.interactable = NetworkServer.active;
+            DropdownGameMode.onValueChanged.AddListener(OnDropDownValueChanged);
+        }
+
+        private void OnClientGameModeChanged(OnClientGameModeChanged e) {
+            int option = (int) e.NewGameMode;
+            DropdownGameMode.value = option;
+        }
+
+        private void OnDropDownValueChanged(int choice) {
+            if (NetworkServer.active) {
+                this.GetSystem<IRoomMatchSystem>().ServerChangeGameMode((GameMode)choice);
+            }
         }
 
         private void Start() {
             transport = NetworkManager.singleton.GetComponent<TelepathyTransport>();
+            foreach (string gamemodeLocalizedKey in gamemodeLocalizedKeys) {
+                DropdownGameMode.options.Add(new TMP_Dropdown.OptionData(Localization.Get(gamemodeLocalizedKey)));
+            }
         }
 
         
@@ -61,13 +88,13 @@ namespace Mikrocosmos {
         }
         private void OnTestModeButtonClicked() {
             if (NetworkServer.active) {
-                this.SendCommand<ServerStartGameCommand>();
+                this.SendCommand<ServerStartGameCommand>(new ServerStartGameCommand(this.GetSystem<IRoomMatchSystem>().GameMode));
             }
         }
 
         private void OnHostStartGameButtonClicked() {
             if (NetworkServer.active) {
-                this.SendCommand<ServerStartGameCommand>();
+                this.SendCommand<ServerStartGameCommand>(new ServerStartGameCommand(this.GetSystem<IRoomMatchSystem>().GameMode));
             }
         }
 
@@ -82,6 +109,7 @@ namespace Mikrocosmos {
         private void OnAllPlayerReadyStatusChange(OnAllPlayersReadyStatusChanged e) {
             Debug.Log($"All players ready: {e.IsAllPlayerReady}");
             if (NetworkServer.active) {
+               
                 if (!e.IsAllPlayerReady) {
                     BtnRoomLeaderStartRoom.gameObject.SetActive(false);
                 }

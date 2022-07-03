@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: syncInterval
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: momentumCoolDown
       value: 0.5
       objectReference: {fileID: 0}
