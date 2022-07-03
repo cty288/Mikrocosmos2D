@@ -34,7 +34,7 @@ namespace Mikrocosmos
             
             spaceMinecraftInstance.GetComponent<SpaceMinecartModel>().MaxSpeed =
                 spaceMinecraftInstance.GetComponent<SpaceMinecartModel>().MaxSpeed /
-                Mathf.SmoothStep(1, 3, overallProgress);
+                Mathf.SmoothStep(1, 2, overallProgress);
 
             this.RegisterEvent<OnMinespaceshipReachDestination>(OnReachDestination)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);

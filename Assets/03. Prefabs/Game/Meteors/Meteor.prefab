@@ -287,6 +287,7 @@ MonoBehaviour:
   healthRecoverThreshold: 5
   healthRecoverPerSecond: 5
   healthRecoverWaitTimeAfterDamage: 5
+  maxDamageReceive: 6
   HealthRecoverTimer: 0
   <SelfMass>k__BackingField: 20
   <StartDirection>k__BackingField: {x: 0, y: 0}

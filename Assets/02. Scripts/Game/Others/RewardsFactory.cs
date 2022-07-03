@@ -30,7 +30,7 @@ namespace Mikrocosmos
         /// <returns></returns>
         public Dictionary<NetworkMainGamePlayer, List<string>> AssignRewardsToPlayers(List<NetworkMainGamePlayer> players, float difficulty) {
         
-            int rewardNumber = Mathf.CeilToInt(difficulty / 0.333334f) + 1;
+            int rewardNumber = Mathf.CeilToInt(difficulty / 0.333334f);
 
             List<PermanentBuffType> allBuffs = GetAllBuffTypes();
 

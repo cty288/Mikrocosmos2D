@@ -39,7 +39,7 @@ Material:
     - _OutlineSpeed: 0.0633
     - _OutlineTransparencyThreshold: 0.043
     - _OutlineWidth: 0.8
-    - _Transparency: 0.319
+    - _Transparency: 0.5
     - _UseTexture: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

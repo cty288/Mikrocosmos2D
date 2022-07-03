@@ -33,6 +33,7 @@ namespace Mikrocosmos
         [SerializeField] private int healthRecoverThreshold = 50;
         [SerializeField] private int healthRecoverPerSecond = 10;
         [SerializeField] private int healthRecoverWaitTimeAfterDamage = 5;
+        [SerializeField] private int maxDamageReceive = 1000;
 
         [SerializeField]
         private float HealthRecoverTimer = 0f;
@@ -94,7 +95,7 @@ namespace Mikrocosmos
 
         public abstract int GetDamageFromExcessiveMomentum(float excessiveMomentum);
         public void TakeRawDamage(int damage, int additionalDamage =0) {
-            if(damage<=0){
+            if(damage<0){
                 return;
             }
             if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
@@ -104,6 +105,7 @@ namespace Mikrocosmos
             }
             
             int oldHealth = CurrentHealth;
+            damage = Mathf.Clamp(damage, 0, maxDamageReceive);
             CurrentHealth -= (damage + additionalDamage);
             CurrentHealth = Mathf.Max(0, CurrentHealth);
             OnServerTakeDamage(oldHealth, CurrentHealth);

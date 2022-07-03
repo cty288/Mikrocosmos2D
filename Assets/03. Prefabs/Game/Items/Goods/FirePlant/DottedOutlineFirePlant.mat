@@ -37,8 +37,9 @@ Material:
     - _OutlineDot2: -0.06
     - _OutlineExtrusion: 2.11
     - _OutlineSpeed: 0.0633
+    - _OutlineTransparencyThreshold: 0.5
     - _OutlineWidth: 1.8
-    - _Transparency: 0.42
+    - _Transparency: 0.5
     - _UseTexture: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

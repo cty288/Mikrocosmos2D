@@ -12,6 +12,10 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: maxDamageReceive
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7106308886407098970, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: momentumCoolDown
       value: 0.5
       objectReference: {fileID: 0}
