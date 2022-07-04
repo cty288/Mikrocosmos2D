@@ -346,7 +346,7 @@ namespace Mikrocosmos
                     }
                 }
                 else {
-                    targetList = secondaryMaterials;
+                    targetList = rawMaterials;
                 }
 
 
@@ -361,9 +361,19 @@ namespace Mikrocosmos
 
 
                 GoodsConfigure selectedGoodsConfigure = null;
-                selectedGoodsConfigure = this.GetSystem<IGlobalTradingSystem>().PlanetRequestSellItem(targetList);
 
-                
+                while (selectedGoodsConfigure == null  || selectedGoodsConfigure.Good.Name == switchedItem?.currentItem.Name) {
+                    if (targetList.Count == 1) {
+                        selectedGoodsConfigure = targetList[0];
+                        break;
+                    }
+                    
+                    selectedGoodsConfigure = this.GetSystem<IGlobalTradingSystem>().PlanetRequestSellItem(targetList);
+                    targetList.Remove(selectedGoodsConfigure);
+                }
+
+            
+              
                 GameObject previousSellingItem = switchedItem?.currentItemGameObject;
 
 

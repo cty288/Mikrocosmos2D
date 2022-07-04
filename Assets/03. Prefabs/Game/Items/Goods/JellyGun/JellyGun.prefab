@@ -72,11 +72,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <BasicBuyPrice>k__BackingField
-      value: 15
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <MaxDurability>k__BackingField
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <BasicSellPrice>k__BackingField
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: reduceDurabilityInstantlyAfterUse

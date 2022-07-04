@@ -12,6 +12,7 @@ namespace Mikrocosmos
         public IDamagable Entity;
         public int NewHealth;
         public int OldHealth;
+        public NetworkIdentity DamageSource;
     }
     public abstract class AbstractDamagableEntityModel : AbstractBasicEntityModel, IDamagable{
 
@@ -113,7 +114,8 @@ namespace Mikrocosmos
             this.SendEvent<OnEntityTakeDamage>(new OnEntityTakeDamage() {
                 Entity = this,
                 NewHealth = CurrentHealth,
-                OldHealth = oldHealth
+                OldHealth = oldHealth,
+                DamageSource = damageDealer
             });
             //Debug.Log("Health Recover Timer 0");
             HealthRecoverTimer = 0f;

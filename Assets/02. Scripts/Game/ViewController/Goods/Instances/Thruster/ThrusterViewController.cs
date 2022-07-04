@@ -80,7 +80,7 @@ namespace Mikrocosmos
         public void OnUsingTruster() {
             if (Model.HookedByIdentity && isServer) {
                 Model.HookedByIdentity.GetComponent<Rigidbody2D>()
-                    .AddForce(propelForce * Model.GetTotalMass()  * transform.right, ForceMode2D.Impulse);
+                    .AddForce(propelForce * Model.GetTotalMass()  * (Model.MaxSpeed / 50f) * transform.right, ForceMode2D.Impulse);
                 Debug.Log($"Force: {propelForce  * transform.right}");
                 GoodsModel.ReduceDurability(1);
             }

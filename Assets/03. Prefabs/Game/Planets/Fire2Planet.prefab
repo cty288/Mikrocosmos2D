@@ -214,6 +214,8 @@ MonoBehaviour:
     <RealPriceOffset>k__BackingField: 0
   - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: 0d3243d6f8c17c24a8ac453c48e11c61, type: 3}
     <RealPriceOffset>k__BackingField: 0
+  - <GoodPrefab>k__BackingField: {fileID: 4710686576622463885, guid: dc8db306dab6888418e841a2ac278341, type: 3}
+    <RealPriceOffset>k__BackingField: 0
   <PlanetType>k__BackingField: 3
 --- !u!114 &8345480255462355403
 MonoBehaviour:
@@ -243,7 +245,6 @@ MonoBehaviour:
   teamColors:
   - {r: 0.7960785, g: 0.09019608, b: 0.5176471, a: 1}
   - {r: 0.20000002, g: 0.63529414, b: 0.6627451, a: 1}
-  bulletHitParticle: {fileID: 6505933437374962531, guid: 419bfac997ff77d429d549d4a97f17c5, type: 3}
   hitByObjectParticles:
   - {fileID: 8740325664268863316, guid: e4a074ff9b9b23549b22c831eae034b7, type: 3}
   - {fileID: 1285438396776896522, guid: eae78a22eb76cb34a8557f1ada1eba0b, type: 3}

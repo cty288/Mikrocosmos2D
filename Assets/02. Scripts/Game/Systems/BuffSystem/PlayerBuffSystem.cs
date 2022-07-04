@@ -20,6 +20,9 @@ namespace Mikrocosmos
         public float UntilBuffTriggerTime;
     }
 
+    public struct OnClientVisionOcculsionBuff {
+        public BuffStatus status;
+    }
     public struct PermanentRawMaterialBuffInfo {
         public int MaxLevel;
 
@@ -68,6 +71,8 @@ namespace Mikrocosmos
 
             buffSystem.ServerRegisterCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
             buffSystem.ServerRegisterCallback<PermanentVisionExpansionBuff, OnPermanentVisionExpansion>(TargetOnVisionPermenantExpand);
+
+            buffSystem.ServerRegisterCallback<VisionOcclusionDebuff, BuffClientMessage>(TargetOnVisionOcclusion);
             //buffSystem.ServerRegisterClientCallback<PermanentAffinityBuff, OnPermanentAffinityAddition>(TargetOnPermanentAffinityBuff);
             clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ClientLanguage;
             this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
@@ -75,7 +80,8 @@ namespace Mikrocosmos
             
         }
 
-     
+        
+
 
         private void OnServerSpaceshipOverweight(OnServerSpaceshipOverweight e) {
             if (e.Spaceship == gameObject) {
@@ -218,7 +224,12 @@ namespace Mikrocosmos
             }
         }
 
-       
+        [TargetRpc]
+        private void TargetOnVisionOcclusion(BuffStatus e, BuffClientMessage message) {
+            this.SendEvent<OnClientVisionOcculsionBuff>(new OnClientVisionOcculsionBuff() {
+                status = e
+            });
+        }
     }
 
     public struct ClientOnBuffUpdate {

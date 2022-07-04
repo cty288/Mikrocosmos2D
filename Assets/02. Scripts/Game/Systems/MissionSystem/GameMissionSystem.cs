@@ -12,6 +12,19 @@ using Random = UnityEngine.Random;
 namespace Mikrocosmos
 {
 
+    public static class ListExtension {
+        public static void Shuffle<T>(this List<T> arr)
+        {
+            for (int i = 0; i < arr.Count; i++)
+            {
+                var index = Random.Range(i, arr.Count);
+                var tmp = arr[i];
+                var ran = arr[index];
+                arr[i] = ran;
+                arr[index] = tmp;
+            }
+        }
+    }
     public struct OnMissionStop {
         public IMission Mission;
         public GameObject MissionGameObject;
@@ -87,7 +100,7 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             progressSystem = this.GetSystem<IGameProgressSystem>();
-            Shuffle(allMissions);
+            allMissions.Shuffle();
             StartCoroutine(WaitToSwitchMission());
 
             this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -139,18 +152,7 @@ namespace Mikrocosmos
             
         }
 
-        public static void Shuffle<T>(List<T> arr)
-        {
-            for (int i = 0; i < arr.Count; i++)
-            {
-                var index = Random.Range(i, arr.Count);
-                var tmp = arr[i];
-                var ran = arr[index];
-                arr[i] = ran;
-                arr[index] = tmp;
-            }
-        }
-
+       
 
         
        
