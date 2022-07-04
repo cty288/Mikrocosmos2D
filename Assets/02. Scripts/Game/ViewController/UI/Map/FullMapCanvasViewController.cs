@@ -25,13 +25,16 @@ namespace Mikrocosmos
             if (Input.GetKeyDown(KeyCode.Tab)) {
                 fullMapPanel.SetActive(true);
                 this.SendEvent<OnFullMapCanvasOpen>();
+                this.GetSystem<IAudioSystem>().PlaySound("OpenBigMap", SoundType.Sound2D);
             }
 
             if (Input.GetKeyUp(KeyCode.Tab))
             {
                 fullMapPanel.SetActive(false);
                 this.SendEvent<OnFullMapCanvasClose>();
+                this.GetSystem<IAudioSystem>().PlaySound("OpenBigMap", SoundType.Sound2D);
             }
+            
         }
     }
 }

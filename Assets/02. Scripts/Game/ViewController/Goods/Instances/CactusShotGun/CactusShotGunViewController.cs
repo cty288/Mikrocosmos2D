@@ -48,7 +48,7 @@ namespace Mikrocosmos
                         Owner.TryGetComponent<IBuffSystem>(out buffSystem);
                     }
                     
-                    bullet.GetComponent<BasicBulletViewController>().SetShotoer(GetComponent<Collider2D>(), buffSystem);
+                    bullet.GetComponent<BasicBulletViewController>().SetShotoer(Model.HookedByIdentity, GetComponent<Collider2D>(), buffSystem);
                     bullet.GetComponent<Rigidbody2D>().AddForce(-bullet.transform.right * shootForce, ForceMode2D.Impulse);
                     NetworkServer.Spawn(bullet);
                 }

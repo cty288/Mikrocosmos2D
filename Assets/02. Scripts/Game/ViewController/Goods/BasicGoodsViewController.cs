@@ -16,7 +16,7 @@ namespace Mikrocosmos
     }
     public class BasicGoodsViewController : AbstractCanBeUsedGoodsViewController, ICanSendEvent {
      
-        [SerializeField] private Sprite DurabilityCountSprite;
+        [SerializeField] protected Sprite DurabilityCountSprite;
 
 
         protected NetworkIdentity Owner {

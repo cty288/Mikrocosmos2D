@@ -14,7 +14,7 @@ namespace Mikrocosmos
             {
                 if (owner.GetOwnerObject().TryGetComponent<IDamagable>(out IDamagable damagable))
                 {
-                    damagable.TakeRawDamage(damagePerFrq);
+                    damagable.TakeRawDamage(damagePerFrq, null);
                 }
             }) ) {
             DamagePerFrq = damagePerFrq;

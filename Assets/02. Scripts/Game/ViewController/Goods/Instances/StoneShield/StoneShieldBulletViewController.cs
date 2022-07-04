@@ -61,17 +61,24 @@ namespace Mikrocosmos
         }
 
         private void OnTriggerEnter2D(Collider2D collider) {
-            if (isServer)
+            if (isServer && !hitTriggered)
             {
                 if (collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity)) {
-                    
-                    if (entity is IDamagable damagable) {
-                        //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
-                        damagable.TakeRawDamage(Damage);
+                    if (entity is ICanAbsorbDamage canAbsorbDamage && shooterWeapon != collider)
+                    {
+                        if (canAbsorbDamage.AbsorbDamage) {
+                            canAbsorbDamage.OnAbsorbDamage(damage);
+                            hitTriggered = true;
+                            animator.SetTrigger("Hit");
+                        }
+                    }
+                    else {
+                        if (entity is IDamagable damagable) {
+                            //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
+                            damagable.TakeRawDamage(Damage, shooterPlayer);
+                        }
                     }
                 }
-
-            
             }
         }
     }

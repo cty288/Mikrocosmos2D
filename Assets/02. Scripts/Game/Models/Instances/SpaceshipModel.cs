@@ -331,7 +331,7 @@ namespace Mikrocosmos
             return Mathf.RoundToInt(damagePerMomentum * excessiveMomentum);
         }
 
-        public override void OnServerTakeDamage(int oldHealth, int newHealth) {
+        public override void OnServerTakeDamage(int oldHealth, NetworkIdentity damageDealer, int newHealth) {
            // int healthReceived = newHealth - oldHealth;
            if (newHealth <= 0) {
                this.SendEvent<OnSpaceshipRequestDropItems>(new OnSpaceshipRequestDropItems() {

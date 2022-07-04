@@ -227,6 +227,19 @@ namespace Mikrocosmos
             if (newHealth < oldHealth) {
                 StartCoroutine(PlayHurtEffect());
                 Instantiate(hurtEffect, transform);
+                if (hasAuthority) {
+                    int damage = Mathf.Abs(oldHealth - newHealth);
+                    //get the percentile of damage between 0 to 20
+                    float strength = Mathf.Clamp((damage / 20f), 0.5f, 1f) * 10f;
+                    
+                    
+                    GameCamera.Singleton.OnShakeCamera(new OnShakeCamera()
+                    {
+                        Duration = 0.25f,
+                        Strength = strength,
+                        Viberato = 10
+                    });
+                }
             }
         }
 

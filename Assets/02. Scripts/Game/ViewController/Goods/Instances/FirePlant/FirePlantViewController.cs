@@ -83,7 +83,7 @@ namespace Mikrocosmos
                     }
                 }
                 
-                target.GetComponent<IDamagable>().TakeRawDamage(damage);
+                target.GetComponent<IDamagable>().TakeRawDamage(damage, Model.HookedByIdentity);
                 
             }
         }

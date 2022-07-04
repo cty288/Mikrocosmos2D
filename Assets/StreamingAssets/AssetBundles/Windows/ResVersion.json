@@ -2,9 +2,51 @@
   "Version": "1.0",
   "ABMD5List": [
     {
+      "AssetName": "audio",
+      "MD5": "d048f2618034b5496a3542c9452db7a4",
+      "FileSize": 365.773438,
+      "assetDatas": [
+        {
+          "Name": "AddMoney",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "BuffUpgrade",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Buy",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "InfoUpcoming",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "OpenBigMap",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Sell",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "Team2Hook",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        }
+      ]
+    },
+    {
       "AssetName": "buff_icons",
-      "MD5": "c3fa9644001c299a824962618ecb9911",
-      "FileSize": 288.28125,
+      "MD5": "51f105ee52fd5e58f64095f6e6b02e48",
+      "FileSize": 297.006836,
       "assetDatas": [
         {
           "Name": "BuffIcon",
@@ -60,6 +102,11 @@
           "Name": "VisionExpansionBuffIcon",
           "OwnerBundleName": "buff_icons",
           "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "VisionOcclusionDeBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
         }
       ]
     },
@@ -92,8 +139,8 @@
     },
     {
       "AssetName": "info_elements",
-      "MD5": "19b1f8fc34aea7d050b86b2180bd356f",
-      "FileSize": 9641.232,
+      "MD5": "cec4725c26d9b645ea7d90b5590949cc",
+      "FileSize": 9643.034,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -246,14 +293,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "2c0bff873ebe2fa42ae89a6b664b376c",
-      "FileSize": 1.88574219,
+      "MD5": "ec41995fe0561bdcbe6055b16d385879",
+      "FileSize": 1.91699219,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "eeb9e0dc56402789cb751a20294d049b",
-      "FileSize": 1549.52832,
+      "MD5": "b39b670a02f35d588c4f363d7b20732c",
+      "FileSize": 1550.28027,
       "assetDatas": [
         {
           "Name": "FirePlant",

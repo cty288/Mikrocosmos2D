@@ -19,6 +19,8 @@ namespace Mikrocosmos
         // [SyncVar()] public PlayerMatchInfo MatchInfo;
         private Animator selfMotionAnimator;
 
+        private Animator animator;
+
         private float minHookPressTimeInterval = 0.8f;
         private float minHookPressTimer = 0f;
         private Vector2 clientPreviousMousePosition = Vector2.zero;
@@ -37,6 +39,7 @@ namespace Mikrocosmos
             selfSprites.Add(transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>());
             selfSprites.AddRange(selfSprites[0].GetComponentsInChildren<SpriteRenderer>());
             buffSystem = GetComponent<IBuffSystem>();
+            animator = GetComponent<Animator>();
         }
 
 
@@ -96,13 +99,18 @@ namespace Mikrocosmos
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                   
-                        if (!hookSystem.HookedNetworkIdentity) {
-                            hookWhenEmptyReleased = false;
-                          //  minHookPressTimer = 0;
-                        }
-                        hookSystem.CmdPressHookButton();
-                    
+                    if (!hookSystem.HookedNetworkIdentity) {
+                        
+                        hookWhenEmptyReleased = false;
+                      //  minHookPressTimer = 0;
+                      if (animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking")) {
+                          if (ThisSpaceshipTeam == 2) {
+                              this.GetSystem<IAudioSystem>().PlaySound("Team2Hook", SoundType.Sound2D);
+                          }
+                      }
 
+                    }
+                    hookSystem.CmdPressHookButton();
                 }
 
                 if (Input.GetKeyUp(KeyCode.Space))
@@ -245,12 +253,7 @@ namespace Mikrocosmos
                 GameObject particle = Instantiate(hitParticlePrefab, collision.GetContact(0).point, Quaternion.identity);
                 particle.transform.SetParent(transform);
                 if (hasAuthority) {
-                    GameCamera.Singleton.OnShakeCamera(new ShakeCamera()
-                    {
-                        Duration = 0.25f,
-                        Strength = 1.5f,
-                        Viberato = 10
-                    });
+                  
                 }
               
             }

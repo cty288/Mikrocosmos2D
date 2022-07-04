@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1133179267551477265, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_CollisionDetection
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_AssetId
@@ -317,25 +317,6 @@ MonoBehaviour:
   OnRecycle:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-963758100097498679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5222149471336982627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5af11a9e8ef0b2409ae2cded8f0f388, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  <HookedPositionOffset>k__BackingField: {x: 0, y: 0}
-  <HookedRotationZOffset>k__BackingField: 0
-  Force: 0
-  destroyWhenHit: 0
-  damageReduceBySpeed: 1
 --- !u!114 &773197963524302722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,3 +360,22 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: 5659450030232754890}
+--- !u!114 &6745302975641611522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5222149471336982627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac87e66466a1fd47b0b79ada3842fd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 0}
+  <HookedRotationZOffset>k__BackingField: 0
+  Force: 0
+  destroyWhenHit: 0
+  damageReduceBySpeed: 1

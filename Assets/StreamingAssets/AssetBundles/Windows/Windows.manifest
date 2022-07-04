@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2272425259
+CRC: 3980002984
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -40,4 +40,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_10:
       Name: info_slider_sprites
+      Dependencies: {}
+    Info_11:
+      Name: audio
       Dependencies: {}

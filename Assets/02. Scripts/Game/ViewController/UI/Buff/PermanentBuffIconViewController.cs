@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace Mikrocosmos
             if (!initialized) {
                 initialized = true;
                 IconLevel.Value = info.PermanentRawMaterialBuffInfo.CurrentLevel;
+                this.GetSystem<IAudioSystem>().PlaySound("BuffUpgrade", SoundType.Sound2D);
                 if (info.PermanentRawMaterialBuffInfo.CurrentLevel != info.PermanentRawMaterialBuffInfo.MaxLevel) {
                     buffIconProgress.fillAmount = info.PermanentRawMaterialBuffInfo.CurrentProgressInLevel / (float)info.PermanentRawMaterialBuffInfo.MaxProgressForCurrentLevel;
                 }
@@ -34,9 +36,12 @@ namespace Mikrocosmos
                         buffIconProgress.fillAmount = 0;
                         IconLevel.Value++;
                         levelUpNumber--;
+                        this.GetSystem<IAudioSystem>().PlaySound("BuffUpgrade", SoundType.Sound2D);
+                        
                         if (levelUpNumber > 0) {
                             buffIconProgress.DOFillAmount(1, 0.2f).SetLoops(levelUpNumber, LoopType.Restart).OnStepComplete((
                                 () => {
+                                    this.GetSystem<IAudioSystem>().PlaySound("BuffUpgrade", SoundType.Sound2D);
                                     IconLevel.Value++;
                                 })).OnComplete(() => {
                                 buffIconProgress.fillAmount = 0;

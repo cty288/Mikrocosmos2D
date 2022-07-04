@@ -13,7 +13,7 @@ namespace Mikrocosmos
                 {
                     if (col.TryGetComponent<IMeteorModel>(out var meteorModel))
                     {
-                        meteorModel.TakeRawDamage(meteorModel.MaxHealth);
+                        meteorModel.TakeRawDamage(meteorModel.MaxHealth, null);
                     }
                 }
             }
@@ -26,7 +26,7 @@ namespace Mikrocosmos
                 {
                     if (col.collider.TryGetComponent<IMeteorModel>(out var meteorModel))
                     {
-                        meteorModel.TakeRawDamage(meteorModel.MaxHealth);
+                        meteorModel.TakeRawDamage(meteorModel.MaxHealth, null);
                     }
                 }
             }

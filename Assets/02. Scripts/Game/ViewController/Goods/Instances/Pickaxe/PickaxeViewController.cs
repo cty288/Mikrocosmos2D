@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -11,6 +12,19 @@ namespace Mikrocosmos
         protected override void Awake() {
             base.Awake();
             pickaxeModel = GetComponent<PickaxeModel>();
+        }
+
+        protected override void OnClientOwnerStartBeingSelected(CanBeUsedGoodsBasicInfo basicInfo, int slotNumber) {
+            Debug.Log($"OnClientOwnerStartBeingSelected. Slot: {slotNumber}");
+           
+            this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability()
+            {
+                DurabilityFraction = basicInfo.Durability / (float)basicInfo.MaxDurability,
+                DurabilitySprite = DurabilityCountSprite,
+                SlotNumber = slotNumber
+            });
+        
+          
         }
 
         protected override void OnCollisionEnter2D(Collision2D collision) {
@@ -65,7 +79,7 @@ namespace Mikrocosmos
                                              pickaxeModel.DamageToMeteors;
                     }
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
-                    targetModel.TakeRawDamage(0,targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+                    targetModel.TakeRawDamage(0,Model.HookedByIdentity,targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
                 }
 
             }

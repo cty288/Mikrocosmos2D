@@ -227,7 +227,7 @@ MonoBehaviour:
   interpolateRotation: 0
   interpolateScale: 0
   bufferTimeMultiplier: 3
-  bufferSizeLimit: 256
+  bufferSizeLimit: 128
   catchupThreshold: 6
   catchupMultiplier: 0.097
   onlySyncOnChange: 0

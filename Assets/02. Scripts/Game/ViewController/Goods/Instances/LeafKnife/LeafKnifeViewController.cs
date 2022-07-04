@@ -59,7 +59,7 @@ namespace Mikrocosmos
                 }
                 
                 damagable.TakeRawMomentum(Random.Range(12f, model.AddedMomentum),0);
-                damagable.TakeRawDamage(damage);
+                damagable.TakeRawDamage(damage, model.HookedByIdentity);
             }
         }
 

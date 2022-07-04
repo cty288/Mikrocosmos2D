@@ -19,13 +19,9 @@ namespace Mikrocosmos
 
         private void OnClientChargePercentChanged(OnClientChargePercentChanged e) {
             if (e.IsLocalPlayer) {
-                
-                float realPercent = (e.ChargePercent * 2);
-                
-                if (realPercent >= 1) {
-                    realPercent = -realPercent + 2;
-                }
 
+                float realPercent = e.ChargePercent;
+                
                 if (realPercent == 0) {
                     slider.DOValue(0, 0.3f);
                 }

@@ -174,6 +174,7 @@ namespace Mikrocosmos
             
             if (CheckItemExistsInTradingItemList(currentSellItemLists, e.RequestingGoods, out TradingItemInfo info))
             {
+                
                 IPlayerTradingSystem spaceship = e.HookedByIdentity.GetComponent<IPlayerTradingSystem>();
                 //Debug.Log($"Buy: {currentSellingItemPrice}, {currentSellingItemObject.name}");
                 int playerTeam = e.HookedByIdentity.GetComponent<PlayerSpaceship>().connectionToClient.identity
@@ -198,6 +199,7 @@ namespace Mikrocosmos
                 //currentSellItemLists.Remove(info);
                 SwitchSellItem(info);
                 ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>());
+                TargetOnBuyItemSuccess(e.HookedByIdentity.connectionToClient);
             }
 
         }
@@ -232,7 +234,7 @@ namespace Mikrocosmos
                     //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
                     // PlayerIdentity = e.HookedByIdentity
                     //});
-
+                    TargetOnSellItemSuccess(e.HookedByIdentity.connectionToClient);
                 }
             }
         }
@@ -550,7 +552,17 @@ namespace Mikrocosmos
             });
         }
 
-       
+        [TargetRpc]
+        private void TargetOnBuyItemSuccess(NetworkConnection connection) {
+            this.GetSystem<IAudioSystem>().PlaySound("Buy", SoundType.Sound2D);
+        }
+
+        [TargetRpc]
+        private void TargetOnSellItemSuccess(NetworkConnection connection)
+        {
+            this.GetSystem<IAudioSystem>().PlaySound("Sell", SoundType.Sound2D);
+        }
+
     }
 
     struct OnClientPlanetGenerateBuyItem {

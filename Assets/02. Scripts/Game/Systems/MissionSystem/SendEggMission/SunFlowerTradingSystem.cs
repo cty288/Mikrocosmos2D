@@ -97,6 +97,7 @@ namespace Mikrocosmos
                     //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
                     // PlayerIdentity = e.HookedByIdentity
                     //});
+                    TargetOnSellItemSuccess(e.HookedByIdentity.connectionToClient);                    
                     DestroyBuyItem(info);
                 }
             }
@@ -287,6 +288,12 @@ namespace Mikrocosmos
                 MaxBuyTime = maxBuyTime,
                 PointerPrefab = pointerPrefab
             });
+        }
+
+        [TargetRpc]
+        private void TargetOnSellItemSuccess(NetworkConnection connection)
+        {
+            this.GetSystem<IAudioSystem>().PlaySound("Sell", SoundType.Sound2D);
         }
     }
 }

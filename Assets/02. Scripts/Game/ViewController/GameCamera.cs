@@ -2,91 +2,114 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Singletons;
 using MikroFramework.TimeSystem;
 using Mirror;
+using Steamworks;
 using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public struct ShakeCamera {
-        public float Duration;
+
+    public struct OnShakeCamera {
         public float Strength;
-        public int Viberato;
+        public float Duration;
+        public float Viberato;
     }
-    public class GameCamera : AbstractMikroController<Mikrocosmos>, ISingleton {
-      
-        private GameObject following;
+    public struct OnCameraStartShake{}
+    public struct OnCameraShakeEnd {
+
+    }
+    public class GameCamera : AbstractMikroController<Mikrocosmos>, ISingleton, ICanSendEvent
+    {
+       
+        public GameObject following;
 
         [SerializeField] private float lerp = 0.1f;
 
-        private int minCameraRadius = 32;
+        private int minCameraRadius = 25;
 
         private int currentMinCameraRadius;
 
-        private Camera camera;
+        private CinemachineTargetGroup cinemachineTargetGroup;
+        private CinemachineVirtualCamera vmCamera;
+        private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
+        [SerializeField]
+        private float shakeDuration = 0;
+        private bool shakeEndTriggered = true;
 
-        
-        
-        private void Awake() {
+        private void Awake()
+        {
+            cinemachineTargetGroup = GameObject.Find("TargetGroupCamera").GetComponent<CinemachineTargetGroup>();
             this.RegisterEvent<OnClientMainGamePlayerConnected>(OnClientMainGamePlayerConnected)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnCameraViewChange>(OnCameraViewChange).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             this.RegisterEvent<OnVisionPermanentChange>(OnVisionPermanentChange).UnRegisterWhenGameObjectDestroyed(gameObject);
-            this.RegisterEvent<ShakeCamera>(OnShakeCamera).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnShakeCamera>(OnShakeCamera).UnRegisterWhenGameObjectDestroyed(gameObject);
             currentMinCameraRadius = minCameraRadius;
-            camera = GetComponentInChildren<Camera>();
-         
+            vmCamera = GameObject.Find("CM vcam").GetComponent<CinemachineVirtualCamera>();
+            virtualCameraNoise = vmCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            
         }
 
-        public void OnShakeCamera(ShakeCamera e) {
+        public void OnShakeCamera(OnShakeCamera e) {
+            virtualCameraNoise.ReSeed();
+            virtualCameraNoise.m_AmplitudeGain = e.Strength;
+            shakeDuration = e.Duration;
+            virtualCameraNoise.m_FrequencyGain = e.Viberato;
             
+            shakeEndTriggered = false;
+            this.SendEvent<OnCameraStartShake>();
+            
+        }
+
+        private void Update() {
+            if (shakeDuration > 0f) {
+                shakeDuration -= Time.deltaTime;
+                if (shakeDuration <= 0f)
+                {
+                    virtualCameraNoise.m_AmplitudeGain = 0;
+                    if (!shakeEndTriggered)
+                    {
+                        shakeEndTriggered = true;
+                        this.GetSystem<ITimeSystem>().AddDelayTask(0.3f, () => {
+                            if (shakeEndTriggered) {
+                                this.SendEvent<OnCameraShakeEnd>();
+                            }
+                        });
+                    }
+                }
+            }
            
-            //lerp = 20;
-            camera.DOShakePosition(e.Duration, e.Strength, e.Viberato, 100f).OnComplete((() => {
-
-            }));
-         
         }
 
-        
-        private void LateUpdate() {
-            var position = following.transform.position;
-            Vector3 targetPos = new Vector3(position.x, position.y, -10);
-            
-            transform.position = Vector3.Lerp(transform.position, targetPos, lerp * Time.deltaTime);
-            
-            //transform.position = targetPos;
-            
+        private void OnVisionPermanentChange(OnVisionPermanentChange e)
+        {
+            currentMinCameraRadius += (int)(minCameraRadius * e.IncreasePercentage);
+            cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
         }
 
-        private void OnVisionPermanentChange(OnVisionPermanentChange e) {
-            currentMinCameraRadius += (int) (minCameraRadius * e.IncreasePercentage);
-            camera.DOOrthoSize(Mathf.Max(currentMinCameraRadius, camera.orthographicSize), 0.1f);
-            //cinemachineTargetGroup.m_Targets[0].radius = 
+        private void OnCameraViewChange(OnCameraViewChange e)
+        {
+            cinemachineTargetGroup.m_Targets[0].radius = currentMinCameraRadius + e.RadiusAddition;
+            cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
         }
 
-        
-
-        private void OnCameraViewChange(OnCameraViewChange e) {
-            float targetRadius = currentMinCameraRadius + e.RadiusAddition;
-            camera.DOOrthoSize(Mathf.Max(currentMinCameraRadius, targetRadius), 0.5f);
-        //    cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
-        }
-
-        private void OnClientMainGamePlayerConnected(OnClientMainGamePlayerConnected e) {
-            if (e.playerSpaceship.GetComponent<NetworkIdentity>().hasAuthority) {
+        private void OnClientMainGamePlayerConnected(OnClientMainGamePlayerConnected e)
+        {
+            if (e.playerSpaceship.GetComponent<NetworkIdentity>().hasAuthority)
+            {
                 AddFollowingPlayer(e.playerSpaceship.transform, true);
             }
-                
+
         }
 
-        public void AddFollowingPlayer(Transform followingObj, bool isLocalPlayer ) {
+        public void AddFollowingPlayer(Transform followingObj, bool isLocalPlayer) {
             following = followingObj.gameObject;
+            cinemachineTargetGroup.AddMember(followingObj, isLocalPlayer ? 3 : 1, 25);
         }
 
         public static GameCamera Singleton {

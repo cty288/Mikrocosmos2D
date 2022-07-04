@@ -17,7 +17,7 @@ namespace Mikrocosmos
 
         [SerializeField] private float lerp = 0.1f;
 
-        private float minMainCameraRange = 32;
+        private float minMainCameraRange = 25;
         private float currentMinCameraRadius;
 
         private Camera camera;

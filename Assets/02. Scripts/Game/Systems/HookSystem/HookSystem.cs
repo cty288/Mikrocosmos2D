@@ -299,10 +299,10 @@ namespace Mikrocosmos {
                 if (holdingHookButton) {
                     if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
                         hookHoldTimer += Time.deltaTime;
-                        if (hookHoldTimer >= shootTimeThreshold)
-                        {
-                            float thisCycleTime = (hookHoldTimer - shootTimeThreshold) % shootChargeOneCycleTime;
-                            hookShootChargePercent = thisCycleTime / shootChargeOneCycleTime;
+                        if (hookShootChargePercent < 1) {
+                            float targetPercent = hookShootChargePercent + Time.deltaTime * shootChargeOneCycleTime;
+                            targetPercent = Mathf.Clamp(targetPercent, 0, 1);
+                            hookShootChargePercent = targetPercent;
                         }
                     }
                     else {
@@ -374,11 +374,7 @@ namespace Mikrocosmos {
         private float realShootPercent;
         private void TryShoot() {
             if (HookedItem != null && HookedItem is ICanBeShotViewController) {
-                float realPercent = (hookShootChargePercent * 2);
-                if (realPercent >= 1) {
-                    realPercent = -realPercent + 2;
-                }
-
+                float realPercent = (hookShootChargePercent);
                 realShootPercent = realPercent;
                 GetComponent<NetworkAnimator>().SetTrigger("Shoot");
             }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 namespace Mikrocosmos
 {
@@ -94,13 +95,13 @@ namespace Mikrocosmos
 
 
         public abstract int GetDamageFromExcessiveMomentum(float excessiveMomentum);
-        public void TakeRawDamage(int damage, int additionalDamage =0) {
+        public int TakeRawDamage(int damage, NetworkIdentity damageDealer, int additionalDamage =0) {
             if(damage<0){
-                return;
+                return 0;
             }
             if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
                 if (buffSystem.HasBuff<InvincibleBuff>()) {
-                    return;
+                    return 0;
                 }
             }
             
@@ -108,7 +109,7 @@ namespace Mikrocosmos
             damage = Mathf.Clamp(damage, 0, maxDamageReceive);
             CurrentHealth -= (damage + additionalDamage);
             CurrentHealth = Mathf.Max(0, CurrentHealth);
-            OnServerTakeDamage(oldHealth, CurrentHealth);
+            OnServerTakeDamage(oldHealth, damageDealer, CurrentHealth);
             this.SendEvent<OnEntityTakeDamage>(new OnEntityTakeDamage() {
                 Entity = this,
                 NewHealth = CurrentHealth,
@@ -117,6 +118,7 @@ namespace Mikrocosmos
             //Debug.Log("Health Recover Timer 0");
             HealthRecoverTimer = 0f;
             healthRecoverStart = false;
+            return damage;
         }
 
         public void AddHealth(int health) {
@@ -127,7 +129,7 @@ namespace Mikrocosmos
            
         }
 
-        public abstract void OnServerTakeDamage(int oldHealth, int newHealth);
+        public abstract void OnServerTakeDamage(int oldHealth, NetworkIdentity damageDealer, int newHealth);
         public abstract void OnReceiveExcessiveMomentum(float excessiveMomentum);
 
         public virtual void OnClientHealthChange(int oldHealth, int newHealth) {

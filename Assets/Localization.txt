@@ -732,6 +732,9 @@ GAME_PERM_BUFF_HEALTH_DESCRIPTION,,+{0}% maximum health,,,,,,,,,,,,,,,,,+{0}%最
 GAME_BUFF_TACH_NAME,,Tech Lv {1},,,,,,,,,,,,,,,,,,,,,,,,,,,
 GAME_BUFF_OVERWEIGHT,,Overweight,,,,,,,,,,,,,,,,,超重,超重,,,,,,,,,
 GAME_BUFF_OVERWEIGHT_DESCRIPTION,,Your spaceship is overweight! Your engine can't handle that much weight!,,,,,,,,,,,,,,,,,你装备的物资太多了！你的引擎无法承受如此大的重量！,你裝備的物資太多了！你的引擎無法承受如此大的重量！,,,,,,,,,
+GAME_BUFF_VISION_OCCLUSION,,Vision Occlusion,,,,,,,,,,,,,,,,,视野遮挡,視野遮擋,,,,,,,,,
+GAME_BUFF_VISION_OCCLUSION_DESCRIPT,,Nasty slime!,,,,,,,,,,,,,,,,,讨厌的粘液！,"
+討厭的粘液！",,,,,,,,,
 GAME_BUFF,,Powerup: ,,,,,,,,,,,,,,,,,强化：,強化：,,,,,,,,,
 任务系统,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 GAME_MISSION_ESCORT_EGG,,Child Escort,,,,,,,,,,,,,,,,,寻孩启事,尋孩啟事,,,,,,,,,

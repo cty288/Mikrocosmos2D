@@ -784,6 +784,7 @@ MonoBehaviour:
   healthRecoverThreshold: 100
   healthRecoverPerSecond: 10
   healthRecoverWaitTimeAfterDamage: 8
+  maxDamageReceive: 1000
   HealthRecoverTimer: 0
   damagePerMomentum: 1
   dropOneItemMomentumThreshold: 4
@@ -832,7 +833,7 @@ MonoBehaviour:
   syncInterval: 0
   <HookedNetworkIdentity>k__BackingField: {fileID: 0}
   shootTimeThreshold: 0.15
-  shootChargeOneCycleTime: 2
+  shootChargeOneCycleTime: 1
   maxShootForce: 1200
   droppedItemSpawnPos: {fileID: 2601994127546760122}
   hookShootChargePercent: 0
@@ -1022,6 +1023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  clientLanguage: 0
 --- !u!1 &8268555120520065621
 GameObject:
   m_ObjectHideFlags: 0

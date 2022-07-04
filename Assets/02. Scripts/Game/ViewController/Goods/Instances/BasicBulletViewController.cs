@@ -6,6 +6,7 @@ using MikroFramework.Architecture;
 using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 namespace Mikrocosmos
 {
@@ -16,7 +17,9 @@ namespace Mikrocosmos
 
         [HideInInspector]
 
-        private Collider2D shooter;
+        protected NetworkIdentity shooterPlayer;
+
+        protected Collider2D shooterWeapon;
 
         private List<Collider2D> shooters = new List<Collider2D>(); 
 
@@ -33,21 +36,37 @@ namespace Mikrocosmos
             base.Awake();
             animator = GetComponent<NetworkAnimator>();
            
-            if (shooter) {
-                Physics2D.IgnoreCollision(shooter, GetComponent<Collider2D>(), true);
+            if (shooterPlayer) {
+                Physics2D.IgnoreCollision(shooterPlayer.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
+            }
+
+            if (shooterWeapon)
+            {
+                Physics2D.IgnoreCollision(shooterWeapon, GetComponent<Collider2D>(), true);
             }
         }
 
-        public void SetShotoer(Collider2D shooter, IBuffSystem buffSystem = null) {
-            this.shooter = shooter;
-            Physics2D.IgnoreCollision(shooter, GetComponent<Collider2D>(), true);
+        public void SetShotoer(NetworkIdentity shooterPlayer, Collider2D shooterWeapon, IBuffSystem buffSystem = null) {
+            this.shooterPlayer = shooterPlayer;
+            this.shooterWeapon = shooterWeapon;
+
+            if (this.shooterPlayer) {
+                Physics2D.IgnoreCollision(shooterPlayer.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
+            }
+           
+            Physics2D.IgnoreCollision(this.shooterWeapon, GetComponent<Collider2D>(), true);
+            
             if (buffSystem != null) {
                 if (buffSystem.HasBuff<PermanentPowerUpBuff>(out PermanentPowerUpBuff powerBuff)) {
                     additionalDamageFactor = Mathf.RoundToInt(powerBuff.CurrentLevel * powerBuff.AdditionalDamageAdditionPercentage);
                 }
             }
-            shooters.Add(shooter);
-           
+
+            if (shooterPlayer) {
+                shooters.Add(shooterPlayer.GetComponent<Collider2D>());
+            }
+        
+            shooters.Add(shooterWeapon);
         }
 
         private void OnEnable() {
@@ -64,7 +83,8 @@ namespace Mikrocosmos
             }
 
             hit = false;
-            shooter = null;
+            shooterPlayer = null;
+            shooterWeapon = null;
             shooters.Clear();
             
             rigidbody.velocity = Vector2.zero;
@@ -97,25 +117,27 @@ namespace Mikrocosmos
                         if (entity is IDamagable damagable) {
 
                             //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
-                            damagable.TakeRawDamage(damage);
+                            damage = damagable.TakeRawDamage(damage, shooterPlayer);
                         }
 
+                        if (!(entity is ISpaceshipConfigurationModel)) {
+                            if (entity is ICanAbsorbDamage canAbsorbDamage) {
+                                if (canAbsorbDamage.AbsorbDamage) {
+                                    damage =  canAbsorbDamage.OnAbsorbDamage(damage);
+                                }
+                            }
 
-                        bool dealDamageToOwner = true;
-                        if (entity is ICanAbsorbDamage canAbsorbDamage) {
-                            if (canAbsorbDamage.AbsorbDamage) {
-                                dealDamageToOwner = false;
-                                canAbsorbDamage.OnAbsorbDamage(damage);
+                            if (entity is IHookable hookable) {
+                                if (hookable.CanBeHooked && hookable.HookedByIdentity) {
+                                    hookable.HookedByIdentity.GetComponent<IDamagable>().TakeRawDamage(damage, shooterPlayer);
+                                    OnServerSpaceshipHit(damage, collision.collider.gameObject);
+                                }
+
                             }
                         }
-                        
-                        if (entity is IHookable hookable && dealDamageToOwner) {
-                            if (hookable.CanBeHooked && hookable.HookedByIdentity) {
-                                hookable.HookedByIdentity.GetComponent<IDamagable>().TakeRawDamage(damage);
-                            }
-                            
+                        else {
+                            OnServerSpaceshipHit(damage, collision.collider.gameObject);
                         }
-
                     }
                     Debug.Log($"Bullet Destroy {gameObject.name}");
                    
@@ -123,6 +145,10 @@ namespace Mikrocosmos
                 animator.SetTrigger("Hit");
                 DestroySelf();
             }
+        }
+        [ServerCallback]
+        protected virtual void OnServerSpaceshipHit(int damage, GameObject spaceship) {
+
         }
 
         protected override void Update() {

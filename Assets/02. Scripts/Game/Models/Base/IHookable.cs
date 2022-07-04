@@ -14,7 +14,7 @@ namespace Mikrocosmos
     public interface ICanAbsorbDamage : IHookable {
         
         bool AbsorbDamage { get; set; }
-        void OnAbsorbDamage(float damage);
+        int OnAbsorbDamage(float damage);
     }
     
    public interface IHookable: IHaveMomentum

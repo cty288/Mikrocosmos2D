@@ -63,6 +63,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631639, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: bufferSizeLimit
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Name
       value: Pickaxe
@@ -180,7 +184,7 @@ MonoBehaviour:
   visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
-  DurabilityCountSprite: {fileID: 0}
+  DurabilityCountSprite: {fileID: 21300000, guid: cfddab52f2626ce449aa3847a7b1cf62, type: 3}
 --- !u!114 &3443710014279021570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0
+  syncInterval: 0.1
   <MoveMode>k__BackingField: 1
   <MaxSpeed>k__BackingField: 50
   <CanBeHooked>k__BackingField: 1
@@ -219,7 +223,7 @@ MonoBehaviour:
   <UseMode>k__BackingField: 0
   <Frequency>k__BackingField: 0
   <Durability>k__BackingField: 0
-  <MaxDurability>k__BackingField: 1
+  <MaxDurability>k__BackingField: -1
   <IsUsing>k__BackingField: 0
   reduceDurabilityInstantlyAfterUse: 1
   reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse: 1

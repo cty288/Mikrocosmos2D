@@ -72,6 +72,9 @@ namespace Mikrocosmos
                     OldMoney = oldMoney,
                     NewMoney = newMoney
                 });
+                if (newMoney > oldMoney) {
+                    this.GetSystem<IAudioSystem>().PlaySound("AddMoney", SoundType.Sound2D);
+                }
             }
         }
 

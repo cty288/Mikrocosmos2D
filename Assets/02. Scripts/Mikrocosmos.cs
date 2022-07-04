@@ -15,6 +15,7 @@ namespace Mikrocosmos
            // this.RegisterModel<ISpaceshipModel>(new SpaceshipModel());
             this.RegisterSystem<ITimeSystem>(new TimeSystem());
             this.RegisterSystem<IClientInfoSystem>(new ClientInfoSystem());
+         
         }
 
         protected override void SeverInit() {

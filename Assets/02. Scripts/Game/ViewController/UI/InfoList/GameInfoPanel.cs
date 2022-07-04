@@ -70,8 +70,8 @@ namespace Mikrocosmos
                     .GetComponent<InfoElement>();
                 spawnedInfoElement.transform.SetAsFirstSibling();
 
-               
-                
+                this.GetSystem<IAudioSystem>().PlaySound("InfoUpcoming", SoundType.Sound2D);
+
                 infoNameToElement.Add(e.Info.Name, spawnedInfoElement);
                 spawnedInfoElement.SetInfo(new Info() {
                     AutoDestroyWhenTimeUp =e.Info.AutoDestroyWhenTimeUp,

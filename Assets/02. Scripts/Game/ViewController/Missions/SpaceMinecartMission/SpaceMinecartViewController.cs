@@ -38,6 +38,7 @@ namespace Mikrocosmos
 
         private Animator rightAnimator;
         private Animator leftAnimator;
+        private GameObject spriteParent;
 
         
         private Vector3 lastPosition;
@@ -65,11 +66,20 @@ namespace Mikrocosmos
             model = GetComponent<SpaceMinecartModel>();
             trigger = GetComponentInChildren<StrangeMeteorTrigger>();
             transform.localScale = Vector3.zero;
-            rightAnimator = transform.Find("Right").GetComponent<Animator>();
-            leftAnimator = transform.Find("Left").GetComponent<Animator>();
+            spriteParent = transform.Find("Sprite").gameObject;
+            rightAnimator = transform.Find("Sprite/Right").GetComponent<Animator>();
+            leftAnimator = transform.Find("Sprite/Left").GetComponent<Animator>();
             transform.DOScale(2 * Vector3.one, 0.5f);
             gamePathLine = Instantiate(gamePathLinePrefab).GetComponent<LineRenderer>();
             mapPathLine = Instantiate(mapPathLinePrefab).GetComponent<LineRenderer>();
+        }
+
+        private void Start() {
+            spriteParent.SetActive(false);
+            this.GetSystem<ITimeSystem>().AddDelayTask(0.3f, () =>
+            {
+                spriteParent.SetActive(true);
+            });
         }
 
         public override void OnStartClient()

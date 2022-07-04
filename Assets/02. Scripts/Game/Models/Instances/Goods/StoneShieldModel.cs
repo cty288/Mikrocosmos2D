@@ -32,9 +32,10 @@ namespace Mikrocosmos
         public bool AbsorbDamage { get; set; }
 
         [ServerCallback]
-        public void OnAbsorbDamage(float damage) {
+        public int OnAbsorbDamage(float damage) {
             CurrCharge += (int) damage;
             ReduceDurability((int)damage);
+            return 0;
         }
 
         public override void OnUsed() {

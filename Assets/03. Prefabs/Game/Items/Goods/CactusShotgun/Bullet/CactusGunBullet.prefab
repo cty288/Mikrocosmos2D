@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1133179267551477265, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_AssetId
       value: d5c6bd440b9b3ad4f81b00c82bb242ea
@@ -338,7 +342,7 @@ MonoBehaviour:
   <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 0.5
-  <Damage>k__BackingField: 12
+  <Damage>k__BackingField: 15
   <Name>k__BackingField: CactusBullet
 --- !u!114 &4329412435070151956
 MonoBehaviour:

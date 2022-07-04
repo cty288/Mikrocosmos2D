@@ -198,6 +198,8 @@ namespace Mikrocosmos
                 InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
                 
             });
+
+            //this.GetSystem<IAudioSystem>().PlaySound("MissionUpcoming", SoundType.Sound2D);
         }
 
         [ClientRpc]

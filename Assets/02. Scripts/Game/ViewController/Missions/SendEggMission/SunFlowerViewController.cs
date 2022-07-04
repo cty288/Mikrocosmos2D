@@ -226,7 +226,7 @@ namespace Mikrocosmos
                     force *= 2;
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
-                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum), netIdentity);
 
 
                 }
@@ -265,7 +265,7 @@ namespace Mikrocosmos
                     force *= 2;
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
-                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum), netIdentity);
 
 
                 }

@@ -68,11 +68,10 @@ namespace Mikrocosmos
                     }
 
                     
-                    damagable.TakeRawDamage(damage);
+                    damagable.TakeRawDamage(damage, Model.HookedByIdentity);
 
                     if (gameObject.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem))
                     {
-                        damagable.TakeRawDamage(damage);
                         buffSystem.AddBuff<PoisonFrequentBuff>(new PoisonFrequentBuff(model.PoisonTime, 1f, model.PoisonDamage, buffSystem));
                     }
                 }

@@ -85,25 +85,30 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public void ReduceDurability(int count, bool isItemDestroyed = false) {
-            Durability -= count;
-            Durability = Mathf.Max(Durability, 0);
-            this.SendEvent<OnItemDurabilityChange>(new OnItemDurabilityChange() {
-                HookedBy = HookedByIdentity,
-                Model = this,
-                NewDurability = Durability,
-                IsItemDestroyed = isItemDestroyed
-            });
-            OnDurabilityReduced();
-            if (Durability == 0)
-            {
-                OnBroken();
-                this.SendEvent<OnItemBroken>(new OnItemBroken() {
-                    Item = this ,
+            if (Durability > 0) {
+                Durability -= count;
+                Durability = Mathf.Max(Durability, 0);
+                this.SendEvent<OnItemDurabilityChange>(new OnItemDurabilityChange()
+                {
                     HookedBy = HookedByIdentity,
-                    ItemObj = gameObject
+                    Model = this,
+                    NewDurability = Durability,
+                    IsItemDestroyed = isItemDestroyed
                 });
-                NetworkServer.Destroy(gameObject);
+                OnDurabilityReduced();
+                if (Durability == 0)
+                {
+                    OnBroken();
+                    this.SendEvent<OnItemBroken>(new OnItemBroken()
+                    {
+                        Item = this,
+                        HookedBy = HookedByIdentity,
+                        ItemObj = gameObject
+                    });
+                    NetworkServer.Destroy(gameObject);
+                }
             }
+          
         }
 
         public abstract void OnDurabilityReduced();

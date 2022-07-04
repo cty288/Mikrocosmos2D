@@ -74,7 +74,7 @@ namespace Mikrocosmos
             return Mathf.RoundToInt(excessiveMomentum);
         }
 
-        public override void OnServerTakeDamage(int oldHealth, int newHealth) {
+        public override void OnServerTakeDamage(int oldHealth, NetworkIdentity damageDealer, int newHealth) {
             if (newHealth <= 0) {
                 this.SendEvent<OnMeteorDestroyed>(new OnMeteorDestroyed() {
                     Meteor = gameObject

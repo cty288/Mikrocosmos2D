@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Mikrocosmos
 {
-    public class BuffIconViewController : MonoBehaviour {
+    public class BuffIconViewController : AbstractMikroController<Mikrocosmos> {
         protected Image buffIconProgress;
         private float maxTime = -1;
         

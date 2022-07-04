@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.BindableProperty;
+using Mirror;
 using UnityEngine;
 
 namespace Mikrocosmos
@@ -25,10 +26,9 @@ namespace Mikrocosmos
 
         int GetDamageFromExcessiveMomentum(float excessiveMomentum); //called by Hit IHaveMomentum
 
-        void TakeRawDamage(int damage, int additionalOffset=0);
+        int TakeRawDamage(int damage, NetworkIdentity damageDealer, int additionalOffset=0);
 
         void AddHealth(int health);
-        void OnServerTakeDamage(int oldHealth, int newHealth);
 
         void OnReceiveExcessiveMomentum(float excessiveMomentum);
     }
