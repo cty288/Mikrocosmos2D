@@ -15,7 +15,10 @@ namespace Mikrocosmos
             set => currCharge = value;
         }
 
-      
+        [SerializeField] private float bounceForce = 50f;
+
+        public float BounceForce => bounceForce;
+
 
         public override void OnClientHooked()
         {

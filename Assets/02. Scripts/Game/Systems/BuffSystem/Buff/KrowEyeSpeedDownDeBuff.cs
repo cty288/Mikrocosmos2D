@@ -16,12 +16,13 @@ namespace Mikrocosmos
 
         public override string GetLocalizedDescriptionText(Language languege)
         {
-            return Localization.Get("GAME_BUFF_EYE_SPEED_DOWN", languege);
+            return Localization.Get("GAME_BUFF_EYE_SPEED_DOWN_DESCRIPTION", languege);
         }
 
         public override string GetLocalizedName(Language languege)
         {
-            return Localization.Get("GAME_BUFF_EYE_SPEED_DOWN_DESCRIPTION", languege);
+            return Localization.Get("GAME_BUFF_EYE_SPEED_DOWN", languege);
+         
         }
 
         public override BuffClientMessage MessageToClient { get; set; } = new BuffClientMessage();

@@ -45,6 +45,7 @@ namespace Mikrocosmos
             OnShieldExpanded();
         }
 
+        private bool isUsing = false;
         public void OnShieldExpanded()
         {
             
@@ -60,6 +61,7 @@ namespace Mikrocosmos
                 Model.CanBeHooked = false;
                 model.AbsorbDamage = true;
                 animator.ResetTrigger("Use");
+                isUsing = true;
             }
         }
 
@@ -107,6 +109,17 @@ namespace Mikrocosmos
             }
         }
 
+        protected override void OnCollisionEnter2D(Collision2D collision) {
+            base.OnCollisionEnter2D(collision);
+            if (isServer) {
+                if (isUsing &&  collision.collider.TryGetComponent<PlayerSpaceship>(out var spaceship)) {
+                    model.ReduceDurability(20);
+                    spaceship.GetComponent<Rigidbody2D>().AddForce(-transform.right * model.BounceForce, ForceMode2D.Impulse);
+                }
+            }
+        }
+
+
         protected override void Update() {
             base.Update();
             
@@ -118,6 +131,7 @@ namespace Mikrocosmos
             base.OnServerItemStopUsed();
             model.AbsorbDamage = false;
             OnWaveShoot();
+            isUsing = false;
             Model.CanBeHooked = true;            
         }
 

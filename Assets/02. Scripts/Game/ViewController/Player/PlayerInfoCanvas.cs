@@ -25,6 +25,8 @@ namespace Mikrocosmos
         [SerializeField]
         private float healthBarFadeTimer = 0;
         private bool healthBarFadeWaiting = false;
+
+        [SerializeField] private Material opponentNameMaterial;
         
         private void Awake() {
         
@@ -73,7 +75,13 @@ namespace Mikrocosmos
             playerNameText.text = "";
             UntilAction untilAction = UntilAction.Allocate(() => NetworkClient.active);
             untilAction.OnEndedCallback += () => {
-                playerNameText.text = GetComponentInParent<PlayerSpaceship>().Name;
+                PlayerSpaceship spaceship = GetComponentInParent<PlayerSpaceship>();
+                playerNameText.text = spaceship.Name;
+                if (spaceship.ThisSpaceshipTeam != NetworkClient.connection.identity
+                        .GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.GetComponent<PlayerSpaceship>()
+                        .ThisSpaceshipTeam) {
+                    playerNameText.material = opponentNameMaterial;
+                }
             };
             untilAction.Execute();
         }

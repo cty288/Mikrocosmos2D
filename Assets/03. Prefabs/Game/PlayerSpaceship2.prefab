@@ -5783,6 +5783,7 @@ MonoBehaviour:
   mapSprites:
   - {fileID: 21300000, guid: 2e53f370c8ca85b4e948bd0ff17afaf1, type: 3}
   - {fileID: 21300000, guid: 3258e8d6c98a7f4458e24154a38a8398, type: 3}
+  - {fileID: 21300000, guid: 7839f9b96b2356d41b1e763c05c50e00, type: 3}
   Name: 
   ThisSpaceshipTeam: 0
   hurtEffect: {fileID: 4123953389269167744, guid: 4675b3b9e38f01b49b8b4bb62ddb9e0a, type: 3}
@@ -11189,6 +11190,10 @@ PrefabInstance:
       propertyPath: positionRelativeTo
       value: 
       objectReference: {fileID: 7986015997137912839}
+    - target: {fileID: 5016221255185957216, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 5e8c399e261896c468e662245f7f07aa, type: 3}
     - target: {fileID: 6180481581461423348, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: positionRelativeTo
       value: 

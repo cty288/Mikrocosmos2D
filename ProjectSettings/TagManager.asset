@@ -15,6 +15,7 @@ TagManager:
   - MinecartSpawnPos
   - Team1Spawn
   - Team2Spawn
+  - Origin
   layers:
   - Default
   - TransparentFX

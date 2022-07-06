@@ -26,27 +26,28 @@ namespace Mikrocosmos
         private List<StrangeMeteorViewController> activeMeteors = new List<StrangeMeteorViewController>();
         
         public override void OnStartMission(float overallProgress) {
-            Vector4 borders = this.GetSystem<IGameProgressSystem>().GetGameMapSize();
-
            
-            
+
+            var origins = GameObject.FindGameObjectsWithTag("Origin");
+            Vector2 origin = origins[Random.Range(0, origins.Length)].transform.position;
+
             foreach (GameObject meteorPrefab in strangeMeteorPrefabs) {
                 float x, y;
                 bool tooCloseToExistingMeteors = false;
                 do {
                     tooCloseToExistingMeteors = false;
-                    x = Random.Range(borders.x + 50, borders.y - 50);
-                    y = Random.Range(borders.z + 50, borders.w - 50);
+                    x = Random.Range(origin.x - 50f, origin.x + 50f);
+                    y = Random.Range(origin.y - 50f, origin.y + 50f);
                   
 
                     foreach (StrangeMeteorViewController activeMeteor in activeMeteors) {
-                        if (Vector2.Distance(new Vector2(x, y), new Vector2(activeMeteor.transform.position.x, activeMeteor.transform.position.y)) < 60) {
+                        if (Vector2.Distance(new Vector2(x, y), new Vector2(activeMeteor.transform.position.x, activeMeteor.transform.position.y)) < 25) {
                             tooCloseToExistingMeteors = true;
                             break;
                         }
                     }
 
-                } while (tooCloseToExistingMeteors ||Physics2D.OverlapCircle(new Vector2(x, y), 1) || Mathf.Abs(x) <= 60 || Mathf.Abs(y) <= 60);
+                } while (tooCloseToExistingMeteors ||Physics2D.OverlapCircle(new Vector2(x, y), 1));
 
                 GameObject meteor = Instantiate(meteorPrefab, new Vector3(x, y, 0), Quaternion.identity);
                 meteor.GetComponent<StrangeMeteorModel>().PerPlayerProgressPerSecond1 =

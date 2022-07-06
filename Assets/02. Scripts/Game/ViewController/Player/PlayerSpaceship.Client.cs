@@ -55,9 +55,14 @@ namespace Mikrocosmos
             base.OnStartClient();
             this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => {
                 if (this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team ==
-                    ThisSpaceshipTeam)
-                {
-                    transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[0];
+                    ThisSpaceshipTeam) {
+                    if (hasAuthority) {
+                        transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[2];
+                    }
+                    else {
+                        transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[0];
+                    }
+                  
                 }
                 else
                 {

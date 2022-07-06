@@ -302,7 +302,7 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 50
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 1
-  <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 3
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
@@ -327,6 +327,7 @@ MonoBehaviour:
   reduceDurabilityInstantlyAfterUse: 0
   reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse: 1
   currCharge: 0
+  bounceForce: 700
 --- !u!4 &57274393718387920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4045048935829913802, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
