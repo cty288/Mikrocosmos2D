@@ -152,10 +152,14 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public float AccelerationDecreasePerMass { get; private set; } = 2;
 
+        private float unscaledMaxSpeed;
+        private float unscaledInitialAcceleration;
         public void AddSpeedAndAcceleration(float percentage) {
-            MaxSpeed =Mathf.Clamp(MaxSpeed + initialMaxSpeed * percentage, 5, MaxMaxSpeed);
-            InitialAcceleration = Mathf.Clamp(InitialAcceleration + startAcceleration * percentage, minimumAcceleration,
-                200);
+            unscaledMaxSpeed += initialMaxSpeed * percentage;
+            unscaledInitialAcceleration += startAcceleration * percentage;
+
+            MaxSpeed =Mathf.Clamp(unscaledMaxSpeed, 5, MaxMaxSpeed);
+            InitialAcceleration = Mathf.Clamp(unscaledInitialAcceleration, minimumAcceleration, 200);
             GetTotalMass();
         }
 
@@ -280,6 +284,9 @@ namespace Mikrocosmos
             this.gameObject.GetComponent<Rigidbody2D>().AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
             initialMaxSpeed = MaxSpeed;
             startAcceleration = InitialAcceleration;
+            unscaledMaxSpeed = MaxSpeed;
+            unscaledInitialAcceleration = InitialAcceleration;
+
 
         }
         [ServerCallback]

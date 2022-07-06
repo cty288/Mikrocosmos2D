@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -12,14 +15,17 @@ namespace Mikrocosmos
         [field: SerializeField, SyncVar(hook = nameof(OnTurnOnStateChanged))]
         public bool IsOn { get; set; }
 
-       
+
+        private StrangeMeteorTrigger spaceshipDetectTrigger;
+        private KrowEyeModel krowEyeModel;
 
         private Light2DBase[] visionLights;
 
         private GameObject mapUI;
-    
 
         private Animator animator;
+
+        
         protected override void Awake() {
             base.Awake();
             visionLights = GetComponentsInChildren<Light2DBase>();
@@ -29,8 +35,9 @@ namespace Mikrocosmos
 
             mapUI = transform.Find("MapUI").gameObject;
             mapUI.SetActive(false);
-            
+            krowEyeModel = GetComponent<KrowEyeModel>();
             animator = GetComponent<Animator>();
+            spaceshipDetectTrigger = GetComponentInChildren<StrangeMeteorTrigger>();
         }
 
         public override void OnStartServer() {
@@ -42,6 +49,31 @@ namespace Mikrocosmos
             this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnNetworkedMainGamePlayerConnected)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
+            spaceshipDetectTrigger.OnPlayerEnterTrigger += OnSpaceshipEnterTrigger;
+
+        }
+
+        private void OnSpaceshipEnterTrigger(PlayerSpaceship e) {
+            if (krowEyeModel.TeamBelongTo.Value != -1) {
+                if (e.ThisSpaceshipTeam != krowEyeModel.TeamBelongTo.Value) {
+                    
+                    List<PlayerMatchInfo> matchInfo =
+                        this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(krowEyeModel.TeamBelongTo.Value);
+
+                    List<NetworkConnectionToClient> connections = matchInfo.Select((info => {
+                        return info.Identity.connectionToClient;
+                    })).ToList();
+
+                    foreach (NetworkConnectionToClient connection in connections) {
+                        TargetAlertTeamMembers(connection);
+                    }
+
+                    if (e.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
+                        buffSystem.AddBuff<KrowEyeSpeedDownDeBuff>(new KrowEyeSpeedDownDeBuff(
+                            UntilAction.Allocate(() => !spaceshipDetectTrigger.PlayersInTrigger.Contains(e))));
+                    }
+                }
+            }
         }
 
         private void OnNetworkedMainGamePlayerConnected(OnNetworkedMainGamePlayerConnected e) {
@@ -173,5 +205,18 @@ namespace Mikrocosmos
             }
         }
         #endregion
+
+        [TargetRpc]
+        private void TargetAlertTeamMembers(NetworkConnection conn) {
+            this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage() {
+                AutoDestroyWhenTimeUp = true,
+                Description = "",
+                Name = $"EyeAlert_{GetHashCode()}",
+                RemainingTime = 6f,
+                Title = Localization.Get("GAME_INFO_EYE_DETECT"),
+                ShowRemainingTime = false,
+                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL
+            });
+        }
     }
 }

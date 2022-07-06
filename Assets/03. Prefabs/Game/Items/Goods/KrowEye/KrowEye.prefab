@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 8251957528502369281}
   - component: {fileID: 1044146620755666512}
   - component: {fileID: 1160576961145989034}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: AlarmCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

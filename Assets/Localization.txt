@@ -708,6 +708,8 @@ GAME_COUNTDOWN_START,,COUNTDOWN ALERT,,,,,,,,,,,,,,,,,倒计时开始！,倒計�
 GAME_COUNTDOWN_WIN,,win!,,,,,,,,,,,,,,,,,胜利,勝利,,,,,,,,,
 GAME_COUNTDOWN_TIE,,Almost there -- Follow the path we believed in,,,,,,,,,,,,,,,,,形势焦灼,形勢焦灼,,,,,,,,,
 GAME_MISSION_UPCOMING,,Mission Upcoming!,,,,,,,,,,,,,,,,,任务即将开始！,任務即將開始！,,,,,,,,,
+GAME_INFO_EYE_DETECT,,"Your Eye just detected an 
+intruder!",,,,,,,,,,,,,,,,,你的眼刚刚侦测到了一个入侵者！,你的眼剛剛偵測到了一個入侵者！,,,,,,,,,
 BUFF系统,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 GAME_BUFF_DIE,,Lost Control,,,,,,,,,,,,,,,,,失去控制,失去控制,,,,,,,,,
 GAME_BUFF_DIE_DESCRIPTION,,Warning! The ship's control system was damaged by the impact and is self-repairing...,,,,,,,,,,,,,,,,,你的飞船受到严重打击，正在进行自我修复...,你的飛船受到嚴重打擊，正在進行自我修復...,,,,,,,,,
@@ -735,6 +737,8 @@ GAME_BUFF_OVERWEIGHT_DESCRIPTION,,Your spaceship is overweight! Your engine can'
 GAME_BUFF_VISION_OCCLUSION,,Vision Occlusion,,,,,,,,,,,,,,,,,视野遮挡,視野遮擋,,,,,,,,,
 GAME_BUFF_AIMING_SPEED_DOWN,,Aiming...,,,,,,,,,,,,,,,,,瞄准中...,瞄準中...,,,,,,,,,
 GAME_BUFF_AIMING_SPEED_DOWN_DESCRIPTION,,You have to slow down to aim your target!,,,,,,,,,,,,,,,,,你必须减速以瞄准目标！,你必須減速以瞄準目標！,,,,,,,,,
+GAME_BUFF_EYE_SPEED_DOWN,,Signal Interfered,,,,,,,,,,,,,,,,,信号干扰,信號干擾,,,,,,,,,
+GAME_BUFF_EYE_SPEED_DOWN_DESCRIPTION,,You have been detected by a nearby Eye. Your speed has been decreased and your location has been exposed,,,,,,,,,,,,,,,,,你已被一个对方的眼侦测到，你的方位已暴露，且移动速度已被干扰,你已被一個對方的眼偵測到，你的方位已暴露，且移動速度已被干擾,,,,,,,,,
 GAME_BUFF_VISION_OCCLUSION_DESCRIPT,,Nasty slime!,,,,,,,,,,,,,,,,,讨厌的粘液！,"
 討厭的粘液！",,,,,,,,,
 GAME_BUFF,,Powerup: ,,,,,,,,,,,,,,,,,强化：,強化：,,,,,,,,,

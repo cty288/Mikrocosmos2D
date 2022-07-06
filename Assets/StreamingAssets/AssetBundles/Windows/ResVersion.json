@@ -45,8 +45,8 @@
     },
     {
       "AssetName": "buff_icons",
-      "MD5": "6f07024124b651d7fadc707506f0d440",
-      "FileSize": 308.610352,
+      "MD5": "1b7a1e32b243bc387a26085ce42a8111",
+      "FileSize": 309.2832,
       "assetDatas": [
         {
           "Name": "AimingSpeedDownDeBuffIcon",
@@ -65,6 +65,11 @@
         },
         {
           "Name": "InvincibleBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "KrowEyeSpeedDownDeBuffIcon",
           "OwnerBundleName": "buff_icons",
           "AssetType": "UnityEngine.GameObject"
         },
@@ -298,14 +303,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "9944f90936667ac1aba13765624e6c84",
+      "MD5": "9c0c683c2272c4510e8dfcd11bb90928",
       "FileSize": 1.91699219,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "729dd65af911dde2e67592c9d96e14cd",
-      "FileSize": 1552.23438,
+      "MD5": "321b88489e6bf66c51506bb6106e3ffb",
+      "FileSize": 1558.03027,
       "assetDatas": [
         {
           "Name": "FirePlant",

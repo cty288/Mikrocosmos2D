@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2928140087
+CRC: 3801753050
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1db269cd90c9f4d345ce26e8cc0be5a1
+    Hash: 97d7345c563ea18ae82e846157e91a6f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 612412107538887f0581f6f635b77476
@@ -43,6 +43,7 @@ Assets:
 - Assets/03. Prefabs/Game/UI/BuffIcons/PermanentAffinityBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/PermanentPowerUpBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/PermanentHealthBuffIcon.prefab
+- Assets/03. Prefabs/Game/UI/BuffIcons/KrowEyeSpeedDownDeBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/VisionOcclusionDeBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/DieBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/VisionExpansionBuffIcon.prefab

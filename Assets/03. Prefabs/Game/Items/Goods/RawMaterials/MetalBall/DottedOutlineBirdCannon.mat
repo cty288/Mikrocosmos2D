@@ -33,12 +33,12 @@ Material:
     m_Floats:
     - _FlipHorizontalDirection: 1
     - _FlipVerticalDirection: 0
-    - _OutlineDot: 0.08
+    - _OutlineDot: 0.03
     - _OutlineDot2: -0.04
     - _OutlineExtrusion: 2.11
     - _OutlineSpeed: 0.0383
     - _OutlineTransparencyThreshold: 0.5
-    - _OutlineWidth: 8.7
+    - _OutlineWidth: 19.8
     - _Transparency: 0.86
     - _UseTexture: 0
     m_Colors:

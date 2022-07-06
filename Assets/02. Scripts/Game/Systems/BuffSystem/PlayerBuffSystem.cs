@@ -78,11 +78,22 @@ namespace Mikrocosmos
             buffSystem.ServerRegisterCallback<VisionOcclusionDebuff, BuffClientMessage>(TargetOnVisionOcclusion);
             //buffSystem.ServerRegisterClientCallback<PermanentAffinityBuff, OnPermanentAffinityAddition>(TargetOnPermanentAffinityBuff);
             buffSystem.ServerRegisterCallback<AimingSpeedDownDeBuff, BuffClientMessage>(OnServerAimingSpeedDownBuffUpdate);
-            
+            buffSystem.ServerRegisterCallback<KrowEyeSpeedDownDeBuff, BuffClientMessage>(
+                OnServerKrowEyeSpeedDownDeBuffUpdate);
+
             clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ClientLanguage;
             this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             
+        }
+
+        private void OnServerKrowEyeSpeedDownDeBuffUpdate(KrowEyeSpeedDownDeBuff buff, BuffStatus status, BuffClientMessage arg3) {
+            if (status == BuffStatus.OnStart) {
+                spaceshipModel.AddSpeedAndAcceleration(-buff.DecreasePercentage);
+            }
+            else if (status == BuffStatus.OnEnd) {
+                spaceshipModel.AddSpeedAndAcceleration(buff.DecreasePercentage);
+            }
         }
 
         private void OnServerAimingSpeedDownBuffUpdate(AimingSpeedDownDeBuff buff, BuffStatus status, BuffClientMessage message) {
