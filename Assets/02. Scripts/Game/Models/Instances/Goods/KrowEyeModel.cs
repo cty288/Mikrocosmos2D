@@ -36,9 +36,12 @@ namespace Mikrocosmos
 
         public override void OnServerHooked() {
             base.OnServerHooked();
-            teamBelongTo.Value = HookedByIdentity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>()
-                .matchInfo.Team;
-            Debug.Log("OnServerHooked");
+            if (teamBelongTo.Value == -1) {
+                teamBelongTo.Value = HookedByIdentity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>()
+                    .matchInfo.Team;
+                Debug.Log("OnServerHooked");
+            }
+            
         }
 
         [ServerCallback]

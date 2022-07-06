@@ -15,9 +15,20 @@ namespace Mikrocosmos
             }
         }
 
+        public static AudioSource singleton;
+
         private void Awake() {
             audioSource = GetComponent<AudioSource>();
-            DontDestroyOnLoad(gameObject);
+            if (singleton != null)
+            {
+                Destroy(gameObject);
+            }
+            else {
+                singleton = Singleton;
+                DontDestroyOnLoad(gameObject);
+            }
+
+         
         }
 
         public void OnSingletonInit() {

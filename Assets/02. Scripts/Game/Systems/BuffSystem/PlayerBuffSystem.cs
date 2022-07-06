@@ -56,9 +56,12 @@ namespace Mikrocosmos
         private IBuffSystem buffSystem;
         [SerializeField]
         private Language clientLanguage;
+
+        private ISpaceshipConfigurationModel spaceshipModel;
         
         private void Awake() {
             buffSystem = GetComponent<IBuffSystem>();
+            spaceshipModel = GetComponent<ISpaceshipConfigurationModel>();
         }
 
         public override void OnStartServer() {
@@ -74,13 +77,21 @@ namespace Mikrocosmos
 
             buffSystem.ServerRegisterCallback<VisionOcclusionDebuff, BuffClientMessage>(TargetOnVisionOcclusion);
             //buffSystem.ServerRegisterClientCallback<PermanentAffinityBuff, OnPermanentAffinityAddition>(TargetOnPermanentAffinityBuff);
+            buffSystem.ServerRegisterCallback<AimingSpeedDownDeBuff, BuffClientMessage>(OnServerAimingSpeedDownBuffUpdate);
+            
             clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ClientLanguage;
             this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             
         }
 
-        
+        private void OnServerAimingSpeedDownBuffUpdate(AimingSpeedDownDeBuff buff, BuffStatus status, BuffClientMessage message) {
+            if (status == BuffStatus.OnStart) {
+                spaceshipModel.AddSpeedAndAcceleration(-buff.DecreasePercentage);
+            }else if (status == BuffStatus.OnEnd) {
+                spaceshipModel.AddSpeedAndAcceleration(buff.DecreasePercentage);
+            }
+        }
 
 
         private void OnServerSpaceshipOverweight(OnServerSpaceshipOverweight e) {
@@ -187,31 +198,31 @@ namespace Mikrocosmos
         [TargetRpc]
         private void TargetOnVisionExpand(BuffStatus e, OnVisionExpansion message) {
             Debug.Log("Vision Expansion");
-            OnVisionExpansion buff = message;
+            OnVisionExpansion buffMessage = message;
             if (e == BuffStatus.OnStart || e == BuffStatus.OnUpdate ) {
                 this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange() {
-                    InnerAddition = buff.VisionRangeChangeEvent.InnerAddition,
-                    OuterAddition = buff.VisionRangeChangeEvent.OuterAddition
+                    InnerAddition = buffMessage.VisionRangeChangeEvent.InnerAddition,
+                    OuterAddition = buffMessage.VisionRangeChangeEvent.OuterAddition
                 });
                 
                 this.SendEvent<OnCameraViewChange>(new OnCameraViewChange() {
-                    RadiusAddition = buff.CameraViewChangeEvent.RadiusAddition
+                    RadiusAddition = buffMessage.CameraViewChangeEvent.RadiusAddition
                 });
             }
 
             if (e == BuffStatus.OnEnd) {
                 this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange()
                 {
-                    InnerAddition =- buff.VisionRangeChangeEvent.InnerAddition,
-                    OuterAddition =- buff.VisionRangeChangeEvent.OuterAddition
+                    InnerAddition =- buffMessage.VisionRangeChangeEvent.InnerAddition,
+                    OuterAddition =- buffMessage.VisionRangeChangeEvent.OuterAddition
                 });
 
                 this.SendEvent<OnCameraViewChange>(new OnCameraViewChange()
                 {
-                    RadiusAddition =- buff.CameraViewChangeEvent.RadiusAddition
+                    RadiusAddition =- buffMessage.CameraViewChangeEvent.RadiusAddition
                 });
             }
-            Debug.Log($"Vision Expansion: {buff.VisionRangeChangeEvent.InnerAddition}");
+            Debug.Log($"Vision Expansion: {buffMessage.VisionRangeChangeEvent.InnerAddition}");
         }
 
 

@@ -61,12 +61,14 @@ namespace Mikrocosmos
         private List<GameObject> allItemSlots = new List<GameObject>();
 
         private ResLoader resLoader;
+
+        private int slotCount = 0;
         private void Awake()
         {
             this.RegisterEvent<OnClientInventoryUpdate>(OnInventoryUpdate)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
-            this.RegisterEvent<OnStartInventoryInit>(OnInventoryInit).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnClientInventorySlotIncrease>(OnClientInventorySlotIncrease).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnGoodsUpdateViewControllerDurability>(OnGoodsUpdateDurability).UnRegisterWhenGameObjectDestroyed(gameObject);
             initialBackPackBG = transform.Find("InitialBackPackBG");
 
@@ -89,25 +91,38 @@ namespace Mikrocosmos
             }
         }
 
-        private void OnInventoryInit(OnStartInventoryInit e)
+        private void OnClientInventorySlotIncrease(OnClientInventorySlotIncrease e)
         {
+            if (e.IsInitialBackpack) {
+                for (int i = 0; i < e.AddedCount; i++)
+                {
+                    slotCount++;
 
-            for (int i = 0; i < e.InitialBackPackCapacity; i++)
-            {
-                GameObject slot = Instantiate(slotPrefab, initialBackPackBG);
-                slot.transform.SetAsLastSibling();
-                allItemSlots.Add(slot);
-                slot.transform.Find("ItemSlot/ItemShortcutID").GetComponent<TMP_Text>().text = (i+1).ToString();
-                selectedSlotLocalYStart =
-                    slot.transform.Find("ItemSlot").GetComponent<RectTransform>().anchoredPosition.y;
-               
+                    GameObject slot = Instantiate(slotPrefab, initialBackPackBG);
+                    slot.transform.SetAsLastSibling();
+                    allItemSlots.Add(slot);
+                    slot.transform.Find("ItemSlot/ItemShortcutID").GetComponent<TMP_Text>().text = (slotCount).ToString();
+                    selectedSlotLocalYStart =
+                        slot.transform.Find("ItemSlot").GetComponent<RectTransform>().anchoredPosition.y;
+                }
 
+
+                Image slotBG = allItemSlots[0].transform.Find("ItemSlot").GetComponent<Image>();
+                float alpha = slotBG.color.a;
+                slotBG.color = new Color(1, 1, 1, alpha);
             }
+            else {
+                for (int i = 0; i < e.AddedCount; i++) {
+                    slotCount++;
 
-
-            Image slotBG = allItemSlots[0].transform.Find("ItemSlot").GetComponent<Image>();
-            float alpha = slotBG.color.a;
-            slotBG.color = new Color(1, 1, 1, alpha);
+                    GameObject slot = Instantiate(slotPrefab, transform);
+                    slot.transform.SetSiblingIndex(transform.childCount - 2);
+                    
+                    allItemSlots.Add(slot);
+                    slot.transform.Find("ItemSlot/ItemShortcutID").GetComponent<TMP_Text>().text = (slotCount).ToString();
+                }
+            }
+           
 
         }
 

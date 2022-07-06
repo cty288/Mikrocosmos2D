@@ -14,6 +14,8 @@ namespace Mikrocosmos
 
     public enum RewardType {
         RandomBuff,
+        Money,
+        Slot
     }
     
     public class RewardsFactory  :  AbstractMikroController<Mikrocosmos>, ISingleton {
@@ -46,6 +48,12 @@ namespace Mikrocosmos
             foreach (NetworkMainGamePlayer player in players) {
                 result.Add(player, new List<string>());
             }
+
+            int totalMoney = 0;
+            int totalSlots = 0;
+            
+
+
             
             for (int i = 0; i < rewardNumber; i++) {
                 RewardType rewardType = (RewardType)(Random.Range(0, Enum.GetValues(typeof(RewardType)).Length));
@@ -63,8 +71,35 @@ namespace Mikrocosmos
                             PermanentBuffFactory.AddPermanentBuffToPlayer(buff, buffSystem, 3, 0);
                         }
                         break;
+                    case RewardType.Money:
+                        totalMoney += 100;
+                        break;
+                    case RewardType.Slot:
+                        totalSlots++;
+                        break;
                 }
             }
+
+
+
+
+
+            if (totalMoney > 0) {
+                foreach (NetworkMainGamePlayer player in result.Keys) {
+                    player.ControlledSpaceship.GetComponent<IPlayerTradingSystem>().ReceiveMoney(totalMoney);
+                    Language languege = player.ClientLanguage;
+                    result[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_MONEY", totalMoney, languege));
+                }
+            }
+
+            if (totalSlots > 0) {
+                foreach (NetworkMainGamePlayer player in result.Keys) {
+                    player.ControlledSpaceship.GetComponent<IPlayerInventorySystem>().ServerAddSlots(totalSlots);
+                    Language languege = player.ClientLanguage;
+                    result[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_SLOT", totalSlots, languege));
+                }
+            }
+            
 
             return result;
         }

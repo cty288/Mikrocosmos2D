@@ -10,8 +10,8 @@ namespace Mikrocosmos {
 	public partial class PlayerInfo : AbstractMikroController<Mikrocosmos> {
 		[SerializeField] private Image ImgAvatar;
 		[SerializeField] private TMP_Text TextName;
-		[SerializeField] private Button BtnPrepare;
 		[SerializeField] private Button BtnKick;
-		[SerializeField] private TMP_Text TextReadyStatus;
+		[SerializeField] private Button BtnPrepare;
+		[SerializeField] private Button BtnUnPrepare;
 	}
 }

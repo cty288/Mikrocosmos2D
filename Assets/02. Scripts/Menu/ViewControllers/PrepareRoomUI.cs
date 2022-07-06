@@ -125,21 +125,22 @@ namespace Mikrocosmos {
         }
 
         private void OnClientPrepareRoomPlayerListChange(OnClientPrepareRoomPlayerListChange e) {
-            int leftIndex = 0, rightIndex = 0;
+            int team1Index = 0, team2Index = 0;
             if (this && e.MatchInfos != null) {
                 foreach (PlayerMatchInfo playerMatchInfo in e.MatchInfos)
                 {
                     GameObject infoObj;
-                    if (playerMatchInfo.Team == 1)
-                    {
-                        infoObj = ObjTeam1Layout.transform.GetChild(leftIndex).gameObject;
-                        leftIndex++;
+                    if (playerMatchInfo.Team == 1) {
+                        infoObj = ObjTeam1Layout.transform.GetChild(team1Index).gameObject;
+                        ObjTeam1SlotsBG.transform.GetChild(team1Index).gameObject.SetActive(false);
+                        team1Index++;
                     }
-                    else
-                    {
-                        infoObj = ObjTeam2Layout.transform.GetChild(rightIndex).gameObject;
-                        rightIndex++;
+                    else {
+                        infoObj = ObjTeam2Layout.transform.GetChild(team2Index).gameObject;
+                        ObjTeam2SlotsBG.transform.GetChild(team1Index).gameObject.SetActive(false);
+                        team2Index++;
                     }
+                    
                     infoObj.SetActive(true);
                     bool isSelf = playerMatchInfo.ID == e.SelfInfo.ID;
                     infoObj.GetComponent<PlayerInfo>().SetInfo(playerMatchInfo.ID, playerMatchInfo.Name,
@@ -151,13 +152,14 @@ namespace Mikrocosmos {
                     }
                 }
 
-                for (int i = leftIndex; i < ObjTeam1Layout.transform.childCount; i++)
-                {
+                for (int i = team1Index; i < ObjTeam1Layout.transform.childCount; i++) {
                     ObjTeam1Layout.transform.GetChild(i).gameObject.SetActive(false);
+                    ObjTeam1SlotsBG.transform.GetChild(i).gameObject.SetActive(true);
                 }
-                for (int i = rightIndex; i < ObjTeam2Layout.transform.childCount; i++)
-                {
+                
+                for (int i = team2Index; i < ObjTeam2Layout.transform.childCount; i++) {
                     ObjTeam2Layout.transform.GetChild(i).gameObject.SetActive(false);
+                    ObjTeam2SlotsBG.transform.GetChild(i).gameObject.SetActive(true);
                 }
             }
            

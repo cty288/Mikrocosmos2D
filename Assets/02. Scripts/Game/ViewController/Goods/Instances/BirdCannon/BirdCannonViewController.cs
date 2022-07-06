@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework;
 using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
@@ -48,6 +49,12 @@ namespace Mikrocosmos
                     startUsed = true;
                     animator.SetTrigger("Shoot");
                     OnServerStartCharge();
+                    if (Model.HookedByIdentity &&
+                        Model.HookedByIdentity.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
+                        buffSystem.AddBuff<AimingSpeedDownDeBuff>(
+                            new AimingSpeedDownDeBuff(UntilAction.Allocate(() =>
+                                !startUsed || Model.HookedByIdentity == null)));
+                    }
                 }
             }
 
@@ -113,7 +120,7 @@ namespace Mikrocosmos
                     //TargetOnStartCharge(Model.HookedByIdentity.connectionToClient);
                     if (Model.HookedByIdentity.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
                         buffSystem.AddBuff<VisionExpansionBuff>(new VisionExpansionBuff(0.9f, CameraExpandRadius,
-                            new Vector2(25, 25), true));
+                            new Vector2(CameraExpandRadius, CameraExpandRadius), true));
                     }
                     Model.CanBeHooked = false;
                 }

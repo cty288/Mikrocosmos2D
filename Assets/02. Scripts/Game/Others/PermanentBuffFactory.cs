@@ -26,7 +26,7 @@ namespace Mikrocosmos
                     buffSystem.AddBuff<PermanentPowerUpBuff>(new PermanentPowerUpBuff(0.1f, initialLevel, progressInLevel));
                     break;
                 case PermanentBuffType.Speed:
-                    buffSystem.AddBuff<PermanentSpeedBuff>(new PermanentSpeedBuff(0.2f, initialLevel, progressInLevel));
+                    buffSystem.AddBuff<PermanentSpeedBuff>(new PermanentSpeedBuff(0.15f, initialLevel, progressInLevel));
                     break;
                 case PermanentBuffType.VisionExpansion:
                     buffSystem.AddBuff<PermanentVisionExpansionBuff>(

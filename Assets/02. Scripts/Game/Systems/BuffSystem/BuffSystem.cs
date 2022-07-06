@@ -277,7 +277,16 @@ namespace Mikrocosmos {
 
         bool HasBuff<T>(out T buff) where T : class, IBuff;
         bool HasBuff<T>() where T : class, IBuff;
-        void ServerRegisterCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage;
+        /// <summary>
+        /// Note: Register callback in this way will not be able to call the callback on clients because IBuff is not serializable by Mirror, use ServerRegisterCallback<T, T2>(Action<BuffStatus, T2> callback)
+        /// instead if you want to call the callback on clients.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="callback"></param>
+        void ServerRegisterCallback<T,T2>(Action<T, BuffStatus, T2> callback) where T2: BuffClientMessage where T: class, IBuff;
+
+        void ServerRegisterCallback<T, T2>(Action<BuffStatus, T2> callback) where T2 : BuffClientMessage;
 
         Action<IBuff> ServerOnBuffStart { get; set; }
 
@@ -357,7 +366,16 @@ namespace Mikrocosmos {
             return buffs.ContainsKey(typeof(T));
         }
 
-        public void ServerRegisterCallback<T,T2>(Action<BuffStatus, T2> callback) where T2: BuffClientMessage{
+        public void ServerRegisterCallback<T,T2>(Action<T, BuffStatus, T2> callback) where T2: BuffClientMessage where T: class, IBuff{
+            if (callbacks.ContainsKey(typeof(T))) {
+                callbacks[typeof(T)] += ((status, message) => callback.Invoke(buffs[typeof(T)] as T, status, message as T2));
+            }
+            else {
+                callbacks.Add(typeof(T), ((status, message) => callback.Invoke(buffs[typeof(T)] as T , status, message as T2)));
+            }
+        }
+
+        public void ServerRegisterCallback<T, T2>(Action<BuffStatus, T2> callback) where T2 : BuffClientMessage {
             if (callbacks.ContainsKey(typeof(T))) {
                 callbacks[typeof(T)] += ((status, message) => callback.Invoke(status, message as T2));
             }

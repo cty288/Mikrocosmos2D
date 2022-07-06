@@ -58,9 +58,10 @@ namespace Mikrocosmos
     }
 
 
-    public struct OnStartInventoryInit {
-        public int InventoryCapacity;
-        public int InitialBackPackCapacity;
+    public struct OnClientInventorySlotIncrease {
+        public int AddedCount;
+        public int BackPackCapacity;
+        public bool IsInitialBackpack;
     }
     public interface IPlayerInventorySystem : ISystem {
         void ServerHookToBackpack(string name, GameObject gameObject);
@@ -72,6 +73,7 @@ namespace Mikrocosmos
         void ServerRemoveFromBackpack(GameObject obj);
         void ServerDropFromBackpack(string name);
 
+        void ServerAddSlots(int count);
         int GetSlotIndexFromItemName(string name);
 
         void ServerSwitchSlot(int index);
@@ -114,7 +116,7 @@ namespace Mikrocosmos
         [SyncVar,SerializeField]
         private int currentIndex = 0;
         private int initialInventoryCapacity = 3;
-
+        private int maxInventoryCapacity = 10;
         IHookSystem hookSystem;
 
         private int GetBackPackTotalItemCount() {
@@ -146,9 +148,10 @@ namespace Mikrocosmos
 
         public override void OnStartAuthority() {
             base.OnStartAuthority();
-            this.SendEvent<OnStartInventoryInit>(new OnStartInventoryInit() {
-                InventoryCapacity = GetSlotCount(),
-                InitialBackPackCapacity = initialInventoryCapacity
+            this.SendEvent<OnClientInventorySlotIncrease>(new OnClientInventorySlotIncrease() {
+                AddedCount = GetSlotCount(),
+                BackPackCapacity = initialInventoryCapacity,
+                IsInitialBackpack = true
             });
             
         }
@@ -162,7 +165,22 @@ namespace Mikrocosmos
             this.RegisterEvent<OnSpaceshipRequestDropItems>(OnSpaceshipRequestDropItems)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
+        public void ServerAddSlots(int count) {
+            int remainingSlots = maxInventoryCapacity - backpackItems.Count;
+            if (count > remainingSlots) {
+                count = remainingSlots;
+            }
+            
+            for (int i = 0; i < count; i++) {
+                backpackItems.Add(new BackpackSlot());
+            }
 
+            TargetOnInventorySlotNumberIncrease(count, backpackItems.Count);
+            TargetOnInventoryUpdate(backpackItems, currentIndex);
+
+        }
+
+        
         private void OnSpaceshipRequestDropItems(OnSpaceshipRequestDropItems e) {
             if (e.SpaceshipIdentity == netIdentity) {
 
@@ -371,6 +389,8 @@ namespace Mikrocosmos
             }
         }
 
+        
+
         public int GetSlotIndexFromItemName(string name) { 
             for (int i = 0; i < backpackItems.Count; i++) {
                 if (backpackItems[i].PrefabName == name) {
@@ -434,7 +454,7 @@ namespace Mikrocosmos
         /// </summary>
         /// <returns></returns>
         public int GetSlotCount() {
-            return initialInventoryCapacity;
+            return Mathf.Max(initialInventoryCapacity, backpackItems.Count);
         }
 
         public int GetCurrentSlot() {
@@ -495,6 +515,15 @@ namespace Mikrocosmos
                 AllSlots = item,
                 Owner = netIdentity,
                 SelectedIndex = index
+            });
+        }
+
+        [TargetRpc]
+        private void TargetOnInventorySlotNumberIncrease(int increaseCount, int backpackCapacity) {
+            this.SendEvent<OnClientInventorySlotIncrease>(new OnClientInventorySlotIncrease() {
+                AddedCount = increaseCount,
+                BackPackCapacity = backpackCapacity,
+                IsInitialBackpack = false
             });
         }
     }

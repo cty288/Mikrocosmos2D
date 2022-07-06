@@ -153,8 +153,9 @@ namespace Mikrocosmos
         public float AccelerationDecreasePerMass { get; private set; } = 2;
 
         public void AddSpeedAndAcceleration(float percentage) {
-            MaxSpeed += initialMaxSpeed * percentage;
-            InitialAcceleration += startAcceleration * percentage;
+            MaxSpeed =Mathf.Clamp(MaxSpeed + initialMaxSpeed * percentage, 5, MaxMaxSpeed);
+            InitialAcceleration = Mathf.Clamp(InitialAcceleration + startAcceleration * percentage, minimumAcceleration,
+                200);
             GetTotalMass();
         }
 

@@ -43,7 +43,7 @@ namespace Polyglot
             var flags = text.hideFlags;
             text.hideFlags = HideFlags.DontSave;
             text.text = Localization.Get(key);
-
+            /*
             var direction = Localization.Instance.SelectedLanguageDirection;
 
             if (IsOppositeDirection(text.alignment, direction))
@@ -57,7 +57,7 @@ namespace Polyglot
                         text.alignment = TextAlignmentOptions.Left;
                         break;
                 }
-            }
+            }*/
             text.hideFlags = flags;
         }
 

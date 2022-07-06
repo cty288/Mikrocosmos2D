@@ -51,15 +51,18 @@ namespace Mikrocosmos
             OnSteamLobbyCreatedEvent = Callback<LobbyCreated_t>.Create(OnSteamLobbyCreated);
             OnSteamLobbyEnteredEvent = Callback<LobbyEnter_t>.Create(OnSteamLobbyEntered);
 
+            if (SteamManager.Initialized) {
+                GCHandle gchandle = GCHandle.Alloc(128 * 128, GCHandleType.Pinned);
+                SteamNetworkingUtils.SetConfigValue(
+                    ESteamNetworkingConfigValue.k_ESteamNetworkingConfig_SendBufferSize,
+                    ESteamNetworkingConfigScope.k_ESteamNetworkingConfig_Global,
+                    IntPtr.Zero,
+                    ESteamNetworkingConfigDataType.k_ESteamNetworkingConfig_Int32,
+                    gchandle.AddrOfPinnedObject());
+                gchandle.Free();                
+            }
+         
             
-            GCHandle gchandle = GCHandle.Alloc(128 * 128, GCHandleType.Pinned);
-            SteamNetworkingUtils.SetConfigValue(
-                ESteamNetworkingConfigValue.k_ESteamNetworkingConfig_SendBufferSize,
-                ESteamNetworkingConfigScope.k_ESteamNetworkingConfig_Global,
-                IntPtr.Zero,
-                ESteamNetworkingConfigDataType.k_ESteamNetworkingConfig_Int32,
-                gchandle.AddrOfPinnedObject());
-            gchandle.Free();
         }
 
         public void ServerChangeGameModeScene(GameMode gamemode) {

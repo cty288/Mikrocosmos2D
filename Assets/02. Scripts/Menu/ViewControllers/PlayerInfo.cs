@@ -14,6 +14,7 @@ namespace Mikrocosmos {
 
         private void Awake() {
             BtnPrepare.onClick.AddListener(OnPrepareClicked);
+            BtnUnPrepare.onClick.AddListener(OnPrepareClicked);
             BtnKick.onClick.AddListener(OnKickButtonClicked);
         }
 
@@ -30,21 +31,26 @@ namespace Mikrocosmos {
             TextName.text = name;
             prepared = isPrepared;
             if (isSelf) {
-                BtnPrepare.gameObject.SetActive(true);
+                
                 BtnKick.gameObject.SetActive(false);
-                TextReadyStatus.gameObject.SetActive(false);
-
+                //TextReadyStatus.gameObject.SetActive(false);
+                BtnUnPrepare.interactable = true;
                 if (prepared) {
-                    BtnPrepare.GetComponentInChildren<TMP_Text>().text = "Cancel";
+                    BtnUnPrepare.gameObject.SetActive(true);
+                    BtnPrepare.gameObject.SetActive(false);
                 }
                 else {
-                    BtnPrepare.GetComponentInChildren<TMP_Text>().text = "Prepare";
+                    BtnPrepare.gameObject.SetActive(true);
+                    BtnUnPrepare.gameObject.SetActive(false);
                 }
             }
             else {
-                TextReadyStatus.gameObject.SetActive(true);
+              //  TextReadyStatus.gameObject.SetActive(true);
                 BtnPrepare.gameObject.SetActive(false);
-                TextReadyStatus.text = (isPrepared ? "Prepared" : "UnPrepared");
+                BtnUnPrepare.interactable = false;
+                BtnUnPrepare.gameObject.SetActive(isPrepared);
+                
+              //  TextReadyStatus.text = (isPrepared ? "Prepared" : "UnPrepared");
                 if (isHost) { //host
                     BtnKick.gameObject.SetActive(true);
                 }

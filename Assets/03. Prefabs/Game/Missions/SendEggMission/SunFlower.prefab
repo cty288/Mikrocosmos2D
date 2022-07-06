@@ -105,7 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  buyBubblePrefab: {fileID: 7960412423497364994, guid: 41e2771c2472e4e4b9c06ccacf9ce425, type: 3}
+  buyBubblePrefab: {fileID: 7960412423497364994, guid: 0ba005dd2afa6ce40b555cd5ebe1a5bf, type: 3}
 --- !u!114 &5437633022175454495
 MonoBehaviour:
   m_ObjectHideFlags: 0

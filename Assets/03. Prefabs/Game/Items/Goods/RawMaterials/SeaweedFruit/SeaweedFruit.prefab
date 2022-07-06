@@ -325,4 +325,4 @@ MonoBehaviour:
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 0}
-  speedIncreasePercentage: 0.2
+  speedIncreasePercentage: 0.15

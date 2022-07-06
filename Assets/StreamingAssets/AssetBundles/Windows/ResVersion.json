@@ -45,9 +45,14 @@
     },
     {
       "AssetName": "buff_icons",
-      "MD5": "51f105ee52fd5e58f64095f6e6b02e48",
-      "FileSize": 297.006836,
+      "MD5": "6f07024124b651d7fadc707506f0d440",
+      "FileSize": 308.610352,
       "assetDatas": [
+        {
+          "Name": "AimingSpeedDownDeBuffIcon",
+          "OwnerBundleName": "buff_icons",
+          "AssetType": "UnityEngine.GameObject"
+        },
         {
           "Name": "BuffIcon",
           "OwnerBundleName": "buff_icons",
@@ -139,8 +144,8 @@
     },
     {
       "AssetName": "info_elements",
-      "MD5": "cec4725c26d9b645ea7d90b5590949cc",
-      "FileSize": 9643.034,
+      "MD5": "6340e7dfb845a021d7efc8616e8c31c5",
+      "FileSize": 9645.309,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -293,7 +298,7 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "ec41995fe0561bdcbe6055b16d385879",
+      "MD5": "9944f90936667ac1aba13765624e6c84",
       "FileSize": 1.91699219,
       "assetDatas": []
     },
