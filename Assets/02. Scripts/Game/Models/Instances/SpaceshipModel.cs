@@ -253,7 +253,7 @@ namespace Mikrocosmos
 
         private void RefreshAcceleration(float totalMass) {
             Acceleration = Mathf.Max(minimumAcceleration, InitialAcceleration - totalMass * AccelerationDecreasePerMass);
-            if (Math.Abs(Acceleration - minimumAcceleration) < 15) {
+            if (totalMass >= 40) {
                 this.SendEvent<OnServerSpaceshipOverweight>(new OnServerSpaceshipOverweight() {
                     Spaceship = gameObject,
                     Tolerance = 15,

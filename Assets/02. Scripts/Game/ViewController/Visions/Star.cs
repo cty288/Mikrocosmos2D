@@ -32,17 +32,20 @@ namespace Mikrocosmos
                     else {
                         if (rigidbody.TryGetComponent<IMeteorModel>(out IMeteorModel model))
                         {
-                            Vector2 direction = rigidbody.transform.position - transform.position;
-                            //get the perpendicular vector of direction
-                            Vector2 ppd = Vector2.Perpendicular(direction).normalized;
+                            if (model.HookState == HookState.Freed) {
+                                Vector2 direction = rigidbody.transform.position - transform.position;
+                                //get the perpendicular vector of direction
+                                Vector2 ppd = Vector2.Perpendicular(direction).normalized;
+
+                                direction = direction.normalized;
+
+                                ppd *= Random.Range(0, 2) == 1 ? 2 : -2;
+                                direction += ppd;
+                                rigidbody.AddForce(direction * (rigidbody.mass + rigidbody.velocity.magnitude) * meteorBounceForce, ForceMode2D.Impulse);
+
+                                model.StartAddTorqueForce(ppd.normalized * Random.Range(20, 50), 3f);
+                            }
                             
-                            direction = direction.normalized;
-
-                            ppd *= Random.Range(0, 2) == 1 ? 2 : -2;
-                            direction += ppd;
-                            rigidbody.AddForce(direction * (rigidbody.mass + rigidbody.velocity.magnitude) * meteorBounceForce, ForceMode2D.Impulse);
-
-                            model.StartAddTorqueForce(ppd.normalized * Random.Range(20, 50), 3f);
                         }
                     }
 

@@ -91,6 +91,7 @@ namespace Mikrocosmos
             }
         }
 
+        [SerializeField] private List<Sprite> itemRarityImages = new List<Sprite>();
         private void OnClientInventorySlotIncrease(OnClientInventorySlotIncrease e)
         {
             if (e.IsInitialBackpack) {
@@ -131,13 +132,23 @@ namespace Mikrocosmos
             Debug.Log($"Inventory size: {e.AllSlots.Count}");
             for (int i = 0; i < e.AllSlots.Count; i++)
             {
+                
                 Image itemImage = allItemSlots[i].transform.Find("ItemSlot/ItemImage").GetComponent<Image>();
                 TMP_Text itemText = allItemSlots[i].transform.Find("ItemSlot/ItemCount").GetComponent<TMP_Text>();
                 Image itemDurabilityImage = allItemSlots[i].transform.Find("ItemSlot/ItemDurabilityImage").GetComponent<Image>();
+                GameObject itemRarityParent = allItemSlots[i].transform.Find("ItemSlot/ItemTypeImage").gameObject;
+                
                 BackpackSlot slot = e.AllSlots[i];
                 
+                
                 if (slot.ClientSlotCount > 0) {
-                   
+                    itemRarityParent.SetActive(true);
+                    Image[] itemRarityImages = itemRarityParent.GetComponentsInChildren<Image>();
+
+                    for (int j = 0; j < itemRarityImages.Length; j++) {
+                        itemRarityImages[j].sprite = this.itemRarityImages[(int) slot.Rarity];
+                    }
+                    
                     itemDurabilityImage.enabled = true;
                     itemImage.color = new Color(1, 1, 1, 1);
                     Texture2D texture = resLoader.LoadSync<Texture2D>("assets/goods", slot.SpriteName);
@@ -147,6 +158,7 @@ namespace Mikrocosmos
                 }
                 else
                 {
+                    itemRarityParent.SetActive(false);
                     itemImage.color = new Color(1, 1, 1, 0);
                     itemText.text = "";
                     itemDurabilityImage.enabled = false;

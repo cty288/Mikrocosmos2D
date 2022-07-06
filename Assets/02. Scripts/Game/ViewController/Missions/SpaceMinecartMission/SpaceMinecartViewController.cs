@@ -22,7 +22,7 @@ namespace Mikrocosmos
 
         private Seeker pathfiner;
         private AILerp aiPath;
-
+        [SerializeField]
         private Vector2[] destinations = new Vector2[2];
         private StrangeMeteorTrigger trigger;
         private SpaceMinecartModel model;
@@ -56,8 +56,7 @@ namespace Mikrocosmos
         private bool canMove = false;
         private static readonly int MainTex = Shader.PropertyToID("_MainTex");
 
-        private Path team1Path;
-        private Path team2Path;
+     
 
         private void Awake() {
             Model = GetComponent<SpaceMinecartModel>();
@@ -122,7 +121,11 @@ namespace Mikrocosmos
         //team1: left, team2: right
         [ServerCallback]
         private void OnPlayerNumberUpdate() {
-            if (!reachDestination) {
+            if (!pathInitialized) {
+                canMove = false;
+                return;
+            }
+            if (!reachDestination && pathInitialized) {
                 if (teamPlayersInRange[0] == teamPlayersInRange[1]) {
                     canMove = false;
                     rightAnimator.SetBool("Move", false);
@@ -220,13 +223,14 @@ namespace Mikrocosmos
             destinations[0] = new Vector2(borders.x - 200, Random.Range(borders.z+10, borders.w-10));
             destinations[1] = new Vector2(borders.y + 200, Random.Range(borders.z + 10, borders.w - 10));
 
-            
+            transform.position = destinations[0];
             aiPath.speed = model.MaxSpeed;
             AstarPath.active.Scan();
 
-            pathfiner.StartPath(destinations[1], destinations[0], OnPathCalculate);
-            
-            
+            Path path = pathfiner.StartPath(transform.position, destinations[1], OnPathCalculate);
+          
+         
+
             trigger.OnPlayerEnterTrigger += OnPlayerEnterTrigger;
             trigger.OnPlayerExitTrigger += OnPlayerExitTrigger;
         }
@@ -250,26 +254,60 @@ namespace Mikrocosmos
             
         }
 
-
+        private bool pathInitialized = false;
         private void OnPathCalculate(Path path) {
             if (isServer) {
-                if (team1Path == null)
-                {
-                    team1Path = path;
-                    team1Path.Claim(team1Path);
-                    pathfiner.StartPath(destinations[0], destinations[1], OnPathCalculate);
-                }
-                else if (team2Path == null)
-                {
-                    team2Path = path;
-                    team2Path.Claim(team2Path);
+                if (!pathInitialized) {
+                    pathInitialized = true;
                     transform.position = path.vectorPath[path.vectorPath.Count / 2];
-                    RpcOnCompletePathCreate(path.vectorPath);
+                    RpcOnCompletePathCreate(path.vectorPath, false);
+
+                    this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
+                        Path path2 = pathfiner.StartPath(transform.position, destinations[0]);
+                        path2.BlockUntilCalculated();
+                        RpcReDrawPathToTeam(1, path2.vectorPath, true);
+                    });
+
                 }
+                
             }
         }
 
         private int clientRecordedTeam = 1;
+
+        [ClientRpc]
+        private void RpcReDrawPathToTeam(int team, List<Vector3> newPath, bool enabled) {
+            Vector3[] existingGamePositions = new Vector3[gamePathLine.positionCount];
+            gamePathLine.GetPositions(existingGamePositions);
+            List<Vector3> newGamePositions = existingGamePositions.ToList();
+            clientRecordedTeam = team;
+            if (team == 1)
+            {
+                //remove all vectors in newGamePositions whose x is less than transform.position.x, and replace them with newPath whose x is less than transform.position.x
+                newGamePositions.RemoveAll(x => x.x < transform.position.x);
+                newPath.Reverse();
+                newGamePositions.InsertRange(0, newPath);
+                gamePathLine.positionCount = newGamePositions.Count;
+                gamePathLine.SetPositions(newGamePositions.ToArray());
+
+                mapPathLine.positionCount = newGamePositions.Count;
+                mapPathLine.SetPositions(newGamePositions.ToArray());
+            }
+            else
+            {
+                newGamePositions.RemoveAll(x => x.x > transform.position.x);
+                newGamePositions.AddRange(newPath);
+                gamePathLine.positionCount = newGamePositions.Count;
+                gamePathLine.SetPositions(newGamePositions.ToArray());
+
+                mapPathLine.positionCount = newGamePositions.Count;
+                mapPathLine.SetPositions(newGamePositions.ToArray());
+            }
+
+            gamePathLine.enabled = enabled;
+            mapPathLine.enabled = enabled;
+        }
+
         [ClientRpc]
         private void RpcOnSwitchTeam(int team, List<Vector3> newPath) {
             Vector3[] existingGamePositions = new Vector3[gamePathLine.positionCount];
@@ -353,8 +391,8 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcOnCompletePathCreate(List<Vector3> paths) {
-
+        private void RpcOnCompletePathCreate(List<Vector3> paths, bool enabled) {
+            
             gamePathLine.positionCount = paths.Count;
             gamePathLine.SetPositions(paths.ToArray());
             Color targetColor = Color.gray;
@@ -369,6 +407,8 @@ namespace Mikrocosmos
             mapPathLine.DOColor(new Color2(mapPathLine.startColor, mapPathLine.endColor), new Color2(
                 targetColor, targetColor), 0.5f);
 
+            gamePathLine.enabled = enabled;
+            mapPathLine.enabled = enabled;
         }
     }
 }

@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
-    public interface IMeteorModel: IModel, IAffectedByGravity, IDamagable {
+    public interface IMeteorModel: IModel, IAffectedByGravity, IDamagable, IEntity {
         List<GameObject> Rewards { get; }
 
         public void StartAddTorqueForce(Vector2 addForce, float time);

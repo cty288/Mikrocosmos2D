@@ -24,6 +24,7 @@ namespace Mikrocosmos
 
         public string PrefabName;
         public string SpriteName;
+        public GoodsRarity Rarity;
         public List<GameObject> StackedObjects = new List<GameObject>();
         public int ClientSlotCount;
         public int Count
@@ -93,16 +94,19 @@ namespace Mikrocosmos
             writer.WriteString(slot.PrefabName);
             writer.WriteString(slot.SpriteName);
             writer.WriteInt(slot.Count);
+            writer.WriteInt((int) slot.Rarity);
         }
 
         public static BackpackSlot ReadBackpackItem(this NetworkReader reader) {
             string prefabName = reader.ReadString();
             string spriteName = reader.ReadString();
             int count = reader.ReadInt();
+            GoodsRarity rarity =(GoodsRarity) reader.ReadInt();
             return new BackpackSlot() {
                 PrefabName = prefabName, SpriteName = spriteName,
                 StackedObjects = null,
-                ClientSlotCount = count
+                ClientSlotCount = count,
+                Rarity = rarity
             };
         }
     }
@@ -223,6 +227,7 @@ namespace Mikrocosmos
                 if (gameObject.TryGetComponent<IGoods>(out IGoods goods))
                 {
                     goods.OnAddedToBackpack();
+                    slot.Rarity = goods.GoodRarity;
                 }
               
                 ServerSwitchSlot(backpackItems.FindIndex((backpackSlot => backpackSlot == slot)));
@@ -243,6 +248,7 @@ namespace Mikrocosmos
                 if (gameObject.TryGetComponent<IGoods>(out IGoods goods))
                 {
                     goods.OnAddedToBackpack();
+                    slot.Rarity = goods.GoodRarity;
                 }
                 
                 NetworkServer.UnSpawn(gameObject);
