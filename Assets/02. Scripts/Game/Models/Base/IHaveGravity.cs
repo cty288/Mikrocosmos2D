@@ -38,7 +38,15 @@ namespace Mikrocosmos
             return SelfMass;
         }
 
-       
+        public virtual void AddSpeedAndAcceleration(float percentage) {
+            
+        }
+
+        public virtual void AddMaximumHealth(float percentage) {
+            
+        }
+
+
         public virtual float GetMomentum() {
             return 0.5f * GetTotalMass() * bindedRigidbody.velocity.sqrMagnitude;
         }

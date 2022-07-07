@@ -20,6 +20,7 @@ namespace Mikrocosmos
         private static readonly int OnFillBuffFinished = Animator.StringToHash("OnFillBuffFinished");
 
         public override void SetBuffInfo(BuffInfo info) {
+            buffName = info.Name;
             if (!iconViewController) {
                 iconViewController = GetComponentInChildren<PermanentBuffIconViewController>();
                 PermanentBuffIconViewController icon = (PermanentBuffIconViewController)iconViewController;
@@ -42,7 +43,7 @@ namespace Mikrocosmos
                     previousLevel = info.PermanentRawMaterialBuffInfo.CurrentLevel;
                     titleText.text = localizedName + Localization.GetFormat("GAME_PERM_BUFF_LEVEL",
                         info.PermanentRawMaterialBuffInfo.CurrentLevel);
-
+                    
                     descriptionText.text = info.LocalizedDescription;
                     iconViewController.SetIconInfo(info);
                     initialized = true;
@@ -82,7 +83,18 @@ namespace Mikrocosmos
         }
 
         private void OnIconLevelNumberChanged(int oldValue, int newValue) {
-            titleText.text = localizedName + Localization.GetFormat("GAME_PERM_BUFF_LEVEL", newValue);
+            if (newValue <= 0) {
+                if (BuffInfoPanelViewController) {
+                    BuffInfoPanelViewController.RemoveBuffFromPanel(buffName);
+                }
+                else {
+                    Destroy(gameObject);
+                }
+            }
+            else {
+                titleText.text = localizedName + Localization.GetFormat("GAME_PERM_BUFF_LEVEL", newValue);
+            }
+           
         }
     }
 }

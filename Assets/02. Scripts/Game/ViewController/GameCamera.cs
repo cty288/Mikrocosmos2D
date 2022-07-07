@@ -86,10 +86,16 @@ namespace Mikrocosmos
            
         }
 
-        private void OnVisionPermanentChange(OnVisionPermanentChange e)
-        {
+        private void OnVisionPermanentChange(OnVisionPermanentChange e) {
             currentMinCameraRadius += (int)(minCameraRadius * e.IncreasePercentage);
-            cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
+            if (e.IncreasePercentage > 0) {
+                cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
+            }
+            else {
+                cinemachineTargetGroup.m_Targets[0].radius += (int) (minCameraRadius * e.IncreasePercentage);
+                cinemachineTargetGroup.m_Targets[0].radius = Mathf.Max(currentMinCameraRadius, cinemachineTargetGroup.m_Targets[0].radius);
+            }
+           
         }
 
         private void OnCameraViewChange(OnCameraViewChange e)
@@ -108,8 +114,11 @@ namespace Mikrocosmos
         }
 
         public void AddFollowingPlayer(Transform followingObj, bool isLocalPlayer) {
-            following = followingObj.gameObject;
-            cinemachineTargetGroup.AddMember(followingObj, isLocalPlayer ? 3 : 1, 25);
+            if (!following) {
+                following = followingObj.gameObject;
+                cinemachineTargetGroup.AddMember(followingObj, isLocalPlayer ? 3 : 1, 25);
+            }
+           
         }
 
         public static GameCamera Singleton {

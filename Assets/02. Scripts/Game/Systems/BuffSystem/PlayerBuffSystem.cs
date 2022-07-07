@@ -54,13 +54,14 @@ namespace Mikrocosmos
     }
     public class PlayerBuffSystem : AbstractNetworkedSystem {
         private IBuffSystem buffSystem;
-        [SerializeField]
+      
         private Language clientLanguage;
 
         private ISpaceshipConfigurationModel spaceshipModel;
 
         private Rigidbody2D rigidbody;
 
+      
         private void Awake() {
             buffSystem = GetComponent<IBuffSystem>();
             spaceshipModel = GetComponent<ISpaceshipConfigurationModel>();
@@ -87,9 +88,12 @@ namespace Mikrocosmos
             clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ClientLanguage;
             this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
-            
+
+           
+
         }
 
+        
         private void OnServerKrowEyeSpeedDownDeBuffUpdate(KrowEyeSpeedDownDeBuff buff, BuffStatus status, BuffClientMessage arg3) {
             if (status == BuffStatus.OnStart) {
                 spaceshipModel.AddSpeedAndAcceleration(-buff.DecreasePercentage);

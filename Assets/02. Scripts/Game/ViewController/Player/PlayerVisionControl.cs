@@ -51,12 +51,32 @@ namespace Mikrocosmos
                 currentMinInnerRadius += (int)(minInnerRadius * e.IncreasePercentage);
 
                 Light2D light = fovVision.GetComponent<Light2D>();
-                DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, Mathf.Max(light.pointLightInnerRadius, currentMinInnerRadius), 0.3f);
-                DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, Mathf.Max(light.pointLightInnerRadius, currentMinOuterRadius), 0.3f);
-
                 Light2D mapLight = fovVision.GetComponent<Light2D>();
-                DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x, Mathf.Max(mapLight.pointLightInnerRadius, currentMinInnerRadius), 0.3f);
-                DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, Mathf.Max(mapLight.pointLightOuterRadius, currentMinOuterRadius), 0.3f);
+                
+                if (e.IncreasePercentage > 0) {
+                  
+                    DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, Mathf.Max(light.pointLightInnerRadius, currentMinInnerRadius), 0.3f);
+                    DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, Mathf.Max(light.pointLightOuterRadius, currentMinOuterRadius), 0.3f);
+
+                    
+                    DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x, Mathf.Max(mapLight.pointLightInnerRadius, currentMinInnerRadius), 0.3f);
+                    DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, Mathf.Max(mapLight.pointLightOuterRadius, currentMinOuterRadius), 0.3f);
+                }
+                else {
+                    light.pointLightInnerRadius += (int)(minInnerRadius * e.IncreasePercentage);
+                    light.pointLightOuterRadius += (int) (minOuterRadius * e.IncreasePercentage);
+                    mapLight.pointLightInnerRadius += (int)(minInnerRadius * e.IncreasePercentage);
+                    mapLight.pointLightOuterRadius += (int)(minOuterRadius * e.IncreasePercentage);
+
+                    DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, Mathf.Max(light.pointLightInnerRadius, currentMinInnerRadius), 0.3f);
+                    DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, Mathf.Max(light.pointLightOuterRadius, currentMinOuterRadius), 0.3f);
+
+
+                    DOTween.To(() => mapLight.pointLightInnerRadius, x => mapLight.pointLightInnerRadius = x, Mathf.Max(mapLight.pointLightInnerRadius, currentMinInnerRadius), 0.3f);
+                    DOTween.To(() => mapLight.pointLightOuterRadius, x => mapLight.pointLightOuterRadius = x, Mathf.Max(mapLight.pointLightOuterRadius, currentMinOuterRadius), 0.3f);
+                    
+                }
+             
             }
            
         }

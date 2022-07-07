@@ -18,10 +18,20 @@ namespace Mikrocosmos
         }
 
         public override void OnLevelUp(int previousLevel, int currentLevel) {
-            if (OwnerIdentity.TryGetComponent<ISpaceshipConfigurationModel>(out ISpaceshipConfigurationModel spaceshipModel)) {
+            if (OwnerIdentity.TryGetComponent<IHaveMomentum>(out IHaveMomentum spaceshipModel)) {
                 spaceshipModel.AddSpeedAndAcceleration((currentLevel - previousLevel) * speedMultiplier);
             }
           
+        }
+
+        protected override void OnLevelProgressDecrease(int previousLevel, int currentLevel) {
+            if (previousLevel == currentLevel) {
+                return;
+            }
+            
+            if (OwnerIdentity.TryGetComponent<IHaveMomentum>(out IHaveMomentum spaceshipModel)) {
+                spaceshipModel.AddSpeedAndAcceleration((currentLevel - previousLevel) * speedMultiplier);
+            }
         }
 
         public override string Name { get; } = "PermanentSpeedUpBuff";

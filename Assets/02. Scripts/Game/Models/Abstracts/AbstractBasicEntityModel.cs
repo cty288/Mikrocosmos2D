@@ -237,10 +237,15 @@ namespace Mikrocosmos
             return SelfMass;
         }
 
-    
+        public virtual void AddSpeedAndAcceleration(float percentage) {
+
+
+            MaxSpeed *= (1 + percentage);
+            Acceleration *= (1 + percentage);
+        }
+
         
-            
-        
+
 
         public abstract string Name { get; set; }
 

@@ -19,10 +19,19 @@ namespace Mikrocosmos
 
         public override void OnLevelUp(int previousLevel, int currentLevel)
         {
-            if (OwnerIdentity.TryGetComponent<ISpaceshipConfigurationModel>(out ISpaceshipConfigurationModel spaceshipConfigurationModel)){
+            if (OwnerIdentity.TryGetComponent<IDamagable>(out IDamagable spaceshipConfigurationModel)){
                 spaceshipConfigurationModel.AddMaximumHealth((currentLevel - previousLevel) * healthMultiplier);
             }
 
+        }
+
+        protected override void OnLevelProgressDecrease(int previousLevel, int currentLevel) {
+            int difference = previousLevel - currentLevel;
+            if (difference > 0) {
+                if (OwnerIdentity.TryGetComponent<IDamagable>(out IDamagable spaceshipConfigurationModel)) {
+                    spaceshipConfigurationModel.AddMaximumHealth(-difference * healthMultiplier);
+                }
+            }
         }
 
         public override string Name { get; } = "PermanentHealthBuff";

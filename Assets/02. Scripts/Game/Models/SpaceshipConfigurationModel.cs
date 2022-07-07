@@ -6,16 +6,14 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface ISpaceshipConfigurationModel : IModel, IEntity  {
+    public interface ISpaceshipConfigurationModel : IModel, IEntity, IDamagable  {
 
         public float InitialAcceleration { get; }
         public float SelfMass { get; }
 
         public float AccelerationDecreasePerMass { get; }
 
-        public void AddSpeedAndAcceleration(float percentage);
-
-        public void AddMaximumHealth(float percentage);
+        
         public float BackpackMass { get; }
 
         public int EscapeNeedCount { get; }

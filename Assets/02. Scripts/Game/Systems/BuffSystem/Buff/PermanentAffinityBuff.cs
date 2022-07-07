@@ -31,6 +31,10 @@ namespace Mikrocosmos
 
         }
 
+        protected override void OnLevelProgressDecrease(int previousLevel, int currentLevel) {
+            
+        }
+
         public override string Name { get; } = "PermanentAffinityBuff";
         public override string GetLocalizedDescriptionText(Language language)
         {

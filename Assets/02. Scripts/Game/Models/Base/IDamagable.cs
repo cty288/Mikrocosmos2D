@@ -29,7 +29,8 @@ namespace Mikrocosmos
         int TakeRawDamage(int damage, NetworkIdentity damageDealer, int additionalOffset=0);
 
         void AddHealth(int health);
-
+        
+        public void AddMaximumHealth(float percentage);
         void OnReceiveExcessiveMomentum(float excessiveMomentum);
     }
 }

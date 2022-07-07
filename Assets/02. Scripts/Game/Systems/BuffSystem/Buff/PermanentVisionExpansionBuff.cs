@@ -31,6 +31,10 @@ namespace Mikrocosmos
             
         }
 
+        protected override void OnLevelProgressDecrease(int previousLevel, int currentLevel) {
+            
+        }
+
         public override string Name { get; } = "PermanentVisionExpansionBuff";
         public override string GetLocalizedDescriptionText(Language language) {
             return Localization.GetFormat("GAME_PERM_BUFF_VISION_EXPANSION_DESCRIPTION", language, ((int) (additionalVisionAdditionPercentage * 100)) * CurrentLevel);

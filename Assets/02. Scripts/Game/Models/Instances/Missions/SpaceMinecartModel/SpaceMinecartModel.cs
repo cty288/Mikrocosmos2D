@@ -15,5 +15,13 @@ namespace Mikrocosmos
         public float GetTotalMass() {
             return SelfMass;
         }
+
+        public void AddSpeedAndAcceleration(float percentage) {
+            
+        }
+
+        public void AddMaximumHealth(float percentage) {
+           
+        }
     }
 }

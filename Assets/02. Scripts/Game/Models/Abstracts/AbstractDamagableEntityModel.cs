@@ -131,6 +131,10 @@ namespace Mikrocosmos
            
         }
 
+        public virtual void AddMaximumHealth(float percentage) {
+            MaxHealth =   (Mathf.RoundToInt(MaxHealth * (1 + percentage)));
+        }
+        
         public abstract void OnServerTakeDamage(int oldHealth, NetworkIdentity damageDealer, int newHealth);
         public abstract void OnReceiveExcessiveMomentum(float excessiveMomentum);
 

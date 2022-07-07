@@ -30,15 +30,23 @@ namespace Mikrocosmos
             this.RegisterEvent<OnCameraViewChange>(OnCameraViewChange).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             currentMinCameraRadius = minMainCameraRange;
+            camera.orthographicSize = currentMinCameraRadius * 2.5f;
 
             this.RegisterEvent<OnVisionPermanentChange>(OnVisionPermanentChange).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
         private void OnVisionPermanentChange(OnVisionPermanentChange e) {
+            
             currentMinCameraRadius += minMainCameraRange * e.IncreasePercentage;
-           
+            if (e.IncreasePercentage > 0) {
+                DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, Mathf.Max(currentMinCameraRadius * 2.5f, camera.orthographicSize), 0.3f);
+            }
+            else {
+                camera.orthographicSize += (minMainCameraRange * e.IncreasePercentage) * 2.5f;
+                DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, Mathf.Max(currentMinCameraRadius * 2.5f, camera.orthographicSize), 0.3f);
+            }
 
-            DOTween.To(() => camera.orthographicSize, x => camera.orthographicSize = x, Mathf.Max(currentMinCameraRadius * 2.5f, camera.orthographicSize), 0.3f);
+            
         }
 
         private void OnCameraViewChange(OnCameraViewChange e) {

@@ -20,6 +20,10 @@ namespace Mikrocosmos
 
         }
 
+        protected override void OnLevelProgressDecrease(int previousLevel, int currentLevel) {
+            
+        }
+
         public override string Name { get; } = "PermanentPowerUpBuff";
         public override string GetLocalizedDescriptionText(Language language)
         {

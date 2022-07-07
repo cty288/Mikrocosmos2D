@@ -5824,7 +5824,7 @@ MonoBehaviour:
   damagePerMomentum: 1
   dropOneItemMomentumThreshold: 4
   minimumAcceleration: 30
-  <DieDizzyTime>k__BackingField: 5
+  <DieDizzyTime>k__BackingField: 10
   <RespawnInvincibleTime>k__BackingField: 5
   <InitialAcceleration>k__BackingField: 85
   <SelfMass>k__BackingField: 10
@@ -6044,6 +6044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  permanentLevelDeduceWhenDie: 1
 --- !u!114 &-7163176095287178716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6058,7 +6059,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientLanguage: 0
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0

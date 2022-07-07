@@ -5,6 +5,7 @@ using System.Linq;
 using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using Mirror;
 using Polyglot;
 using UnityEngine;
@@ -74,11 +75,13 @@ namespace Mikrocosmos {
 
         public int CurrentProgressInLevel { get; set; }
 
-        public int CurrentLevel { get; set; }
+        public int CurrentLevel { get; }
 
         public int ReadyToAddLevel { get; }
 
         public int ReadyToAddProgress { get; }
+
+        public int ReduceProgress(int amount);
 
     }
 
@@ -89,6 +92,7 @@ namespace Mikrocosmos {
        
         
         public void OnBuffAdded() {
+            
             RecalculateLevelAndProgress();
         }
         
@@ -129,8 +133,27 @@ namespace Mikrocosmos {
 
         }
 
-    
-        
+        public int ReduceProgress(int amount) {
+            //reduce progress in current level, if it is less than 0, then decrease current level until it is greater than 0
+            int previousLevel = CurrentLevel;
+            CurrentProgressInLevel -= amount;
+            while (CurrentProgressInLevel<0) {
+                int remaining = Mathf.Abs(CurrentProgressInLevel);
+                CurrentLevel--;
+                if (CurrentLevel > 0) {
+                    CurrentProgressInLevel = ProgressPerLevel[CurrentLevel] - remaining;
+                }else {
+                   // Owner.RemoveBuff(this);
+                    CurrentProgressInLevel = 0;
+                    break;
+                }
+            }
+
+            OnLevelProgressDecrease(previousLevel, CurrentLevel);
+            return CurrentLevel;
+        }
+
+        protected abstract void OnLevelProgressDecrease(int previousLevel, int currentLevel);
 
 
         //if current progress is greater than the maximum progress for current level, then increase current level until current progress is less than the maximum progress for current level
@@ -172,9 +195,10 @@ namespace Mikrocosmos {
         public abstract  int MaxLevel { get; set; }
         public abstract List<int> ProgressPerLevel { get; set; }
         public int CurrentProgressInLevel { get; set; }
-        public int CurrentLevel { get; set; }
+        public int CurrentLevel { get; protected set; }
         public int ReadyToAddLevel { get; private set; }
         public int ReadyToAddProgress { get; private set; }
+       
     }
 
     
@@ -277,6 +301,15 @@ namespace Mikrocosmos {
 
         bool HasBuff<T>(out T buff) where T : class, IBuff;
         bool HasBuff<T>() where T : class, IBuff;
+
+        void ForceTriggerUpdateBuff(IBuff buff);
+
+        void RawMaterialProgressDecrease(Type type, int progress);
+        
+        void RemoveBuff(IBuff buff);
+
+        List<IPermanentRawMaterialBuff> GetAllPermanentRawMaterialBuffs();
+        
         /// <summary>
         /// Note: Register callback in this way will not be able to call the callback on clients because IBuff is not serializable by Mirror, use ServerRegisterCallback<T, T2>(Action<BuffStatus, T2> callback)
         /// instead if you want to call the callback on clients.
@@ -300,13 +333,58 @@ namespace Mikrocosmos {
     {
         private Dictionary<Type, IBuff> buffs = new Dictionary<Type, IBuff>();
         private Dictionary<Type, Action<BuffStatus, BuffClientMessage>> callbacks = new Dictionary<Type, Action<BuffStatus, BuffClientMessage>>();
+        [SerializeField] private int permanentLevelDeduceWhenDie = 1;
+        public override void OnStartServer() {
+            base.OnStartServer();
+            this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
 
-        
+        private void OnPlayerDie(OnPlayerDie e) {
+            if (e.SpaceshipIdentity == netIdentity) {
+                List<IPermanentRawMaterialBuff> rawMaterialBuffs = GetAllPermanentRawMaterialBuffs();
+
+                foreach (IPermanentRawMaterialBuff buff in rawMaterialBuffs) {
+                    int progressDeduce = 0;
+                    int levelDecrease = permanentLevelDeduceWhenDie;
+                    for (int i = buff.CurrentLevel; i >= 1; i--) {
+                        if (levelDecrease <= 0) {
+                            break;
+                        }
+
+                        if (i == buff.MaxLevel) {
+                            progressDeduce += 1;
+                        }
+                        else {
+                            progressDeduce += buff.ProgressPerLevel[i];
+                        }
+
+                        levelDecrease--;
+                    }
+
+                    RawMaterialProgressDecrease(buff.GetType(), progressDeduce);
+
+                }
+            }
+        }
+        public void RawMaterialProgressDecrease(Type type, int progressDeduce) {
+            if (buffs.ContainsKey(type)) {
+                IPermanentRawMaterialBuff buff = buffs[type] as IPermanentRawMaterialBuff;
+                int resultLevel = buff.ReduceProgress(progressDeduce);
+                
+                ForceTriggerUpdateBuff(buff);
+                if (resultLevel <= 0) {
+                    RemoveBuff(buff);
+                }
+            }
+            
+        }
+
         public GameObject GetOwnerObject()
         {
             return gameObject;
         }
 
+        
         public void AddBuff<T>(IBuff buff) where T : IBuff {
 
             if (isServer) {
@@ -366,6 +444,26 @@ namespace Mikrocosmos {
             return buffs.ContainsKey(typeof(T));
         }
 
+        public void ForceTriggerUpdateBuff(IBuff buff) {
+            if (callbacks.ContainsKey(buff.GetType())) {
+                callbacks[buff.GetType()]?.Invoke(BuffStatus.OnUpdate, buff.MessageToClient);
+            }
+            ServerOnBuffUpdate?.Invoke(buff);
+        }
+
+       
+
+
+        public List<IPermanentRawMaterialBuff> GetAllPermanentRawMaterialBuffs() {
+            List<IPermanentRawMaterialBuff> rawMaterialBuffs = new List<IPermanentRawMaterialBuff>();
+            foreach (var buff in buffs) {
+                if (buff.Value is IPermanentRawMaterialBuff value) {
+                    rawMaterialBuffs.Add(value);
+                }
+            }
+            return rawMaterialBuffs;
+        }
+
         public void ServerRegisterCallback<T,T2>(Action<T, BuffStatus, T2> callback) where T2: BuffClientMessage where T: class, IBuff{
             if (callbacks.ContainsKey(typeof(T))) {
                 callbacks[typeof(T)] += ((status, message) => callback.Invoke(buffs[typeof(T)] as T, status, message as T2));
@@ -388,7 +486,35 @@ namespace Mikrocosmos {
         public Action<IBuff> ServerOnBuffUpdate { get; set; }
         public Action<IBuff> ServerOnBuffStop { get; set; }
 
+        public void RemoveBuff(IBuff buff) {
+            StartCoroutine(RemoveBuffFromList(buff.GetType(), buff));
+        }
+        
+        private IEnumerator RemoveBuffFromList(Type type, IBuff buff)
+        {
+            yield return new WaitForEndOfFrame();
+            if (isServer) {
+                if (buffs.ContainsKey(buff.GetType()))
+                {
+                   
+                    if (callbacks.ContainsKey(buff.GetType())) {
+                        callbacks[buff.GetType()]?.Invoke(BuffStatus.OnEnd, buff.MessageToClient);
+                    }
+                    
+                    if (buff is IUntilBuff untilBuff) {
+                        untilBuff.UntilAction.RecycleToCache();
+                    }
+                    if (buff is IHaveFrequencyBuff frequencyBuff) {
+                        frequencyBuff.OnActionFrequentTriggered.RecycleToCache();
+                    }
 
+                    ServerOnBuffStop?.Invoke(buff);
+                    buffs.Remove(buff.GetType());
+                }
+            }
+
+        }
+        
         private void Update()
         {
             if (isServer) {
@@ -417,8 +543,7 @@ namespace Mikrocosmos {
                     if (buff is IUntilBuff untilBuff) {
                         if (untilBuff.UntilAction.Finished) {
                             untilBuff.TotalCanBeTriggeredTime--;
-                            if (callbacks.ContainsKey(b.Key))
-                            {
+                            if (callbacks.ContainsKey(b.Key)) {
                                 callbacks[b.Key]?.Invoke(BuffStatus.OnTriggered, buff.MessageToClient);
                             }
                           

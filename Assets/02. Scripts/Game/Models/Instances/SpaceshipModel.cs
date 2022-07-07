@@ -165,7 +165,7 @@ namespace Mikrocosmos
 
         public void AddMaximumHealth(float percentage) {
             MaxHealth = Mathf.RoundToInt(MaxHealth + 100 * percentage);
-            CurrentHealth = Mathf.RoundToInt(CurrentHealth * (1 + percentage));
+            CurrentHealth = Mathf.Clamp(Mathf.RoundToInt(CurrentHealth +   (100 * percentage)), 0, MaxHealth);
         }
 
         public float BackpackMass {

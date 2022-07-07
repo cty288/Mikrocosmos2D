@@ -30,16 +30,16 @@ namespace Mikrocosmos
             }
             else {
                 buffIconProgress.DOKill();
-                int levelUpNumber = info.PermanentRawMaterialBuffInfo.CurrentLevel - IconLevel.Value;
-                if (levelUpNumber > 0) {
+                int levelChangeNumber = info.PermanentRawMaterialBuffInfo.CurrentLevel - IconLevel.Value;
+                if (levelChangeNumber > 0) {
                     buffIconProgress.DOFillAmount(1, 0.2f).OnComplete((() => {
                         buffIconProgress.fillAmount = 0;
                         IconLevel.Value++;
-                        levelUpNumber--;
+                        levelChangeNumber--;
                         this.GetSystem<IAudioSystem>().PlaySound("BuffUpgrade", SoundType.Sound2D);
                         
-                        if (levelUpNumber > 0) {
-                            buffIconProgress.DOFillAmount(1, 0.2f).SetLoops(levelUpNumber, LoopType.Restart).OnStepComplete((
+                        if (levelChangeNumber > 0) {
+                            buffIconProgress.DOFillAmount(1, 0.2f).SetLoops(levelChangeNumber, LoopType.Restart).OnStepComplete((
                                 () => {
                                     this.GetSystem<IAudioSystem>().PlaySound("BuffUpgrade", SoundType.Sound2D);
                                     IconLevel.Value++;
@@ -55,6 +55,32 @@ namespace Mikrocosmos
                         }
                     }));
                     
+                }else if (levelChangeNumber < 0) {
+                    int levelDownNumber = Mathf.Abs(levelChangeNumber);
+                    
+                    buffIconProgress.DOFillAmount(0, 0.2f).OnComplete((() => {
+                        buffIconProgress.fillAmount = 1;
+                        IconLevel.Value--;
+                        levelDownNumber--;
+                        
+                        
+                        if (levelDownNumber > 0)
+                        {
+                            buffIconProgress.DOFillAmount(0, 0.2f).SetLoops(levelDownNumber, LoopType.Restart).OnStepComplete((
+                                () => {
+                                    IconLevel.Value--;
+                                })).OnComplete(() => {
+                                buffIconProgress.fillAmount = 1;
+                                FillRemainingProgress(info.PermanentRawMaterialBuffInfo.CurrentProgressInLevel, info.PermanentRawMaterialBuffInfo.MaxProgressForCurrentLevel,
+                                    info.PermanentRawMaterialBuffInfo.CurrentLevel == info.PermanentRawMaterialBuffInfo.MaxLevel);
+                            });
+                        }
+                        else
+                        {
+                            FillRemainingProgress(info.PermanentRawMaterialBuffInfo.CurrentProgressInLevel, info.PermanentRawMaterialBuffInfo.MaxProgressForCurrentLevel,
+                                info.PermanentRawMaterialBuffInfo.CurrentLevel == info.PermanentRawMaterialBuffInfo.MaxLevel);
+                        }
+                    }));
                 }
                 else {
                     FillRemainingProgress(info.PermanentRawMaterialBuffInfo.CurrentProgressInLevel, info.PermanentRawMaterialBuffInfo.MaxProgressForCurrentLevel,

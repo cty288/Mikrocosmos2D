@@ -25,7 +25,9 @@ namespace Mikrocosmos
         /// </summary>
         /// <returns></returns>
         float GetTotalMass();
+        public void AddSpeedAndAcceleration(float percentage);
 
-      
+       
+
     }
 }

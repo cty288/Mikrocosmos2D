@@ -33,6 +33,10 @@ namespace Mikrocosmos
             return SelfMass;
         }
 
+        public virtual void AddSpeedAndAcceleration(float percentage) {
+            
+        }
+
         public float GetMomentum() {
             return 0.5f * GetTotalMass() * bindedRigidbody.velocity.sqrMagnitude;
         }

@@ -12,8 +12,9 @@ namespace Mikrocosmos
         protected TMP_Text titleText;
         protected TMP_Text descriptionText;
         protected BuffIconViewController iconViewController;
-
+        public BuffInfoPanelViewController BuffInfoPanelViewController;
         protected Animator animator;
+        protected string buffName;
 
         protected static readonly int OnCloseBigMap = Animator.StringToHash("OnCloseBigMap");
         protected static readonly int OnOpenBigMap = Animator.StringToHash("OnOpenBigMap");
@@ -46,6 +47,7 @@ namespace Mikrocosmos
             titleText.text = info.LocalizedName;
             descriptionText.text = info.LocalizedDescription;
             iconViewController.SetIconInfo(info);
+            buffName = info.Name;
         }
 
     }

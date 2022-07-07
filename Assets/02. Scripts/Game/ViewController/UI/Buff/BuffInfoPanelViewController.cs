@@ -33,7 +33,13 @@ namespace Mikrocosmos
         }
 
 
-        
+        public void RemoveBuffFromPanel(string name) {
+            if (buffNameToElement[name] != null)
+            {
+                buffNameToElement.Remove(name, out BuffElementViewController buffElement);
+                Destroy(buffElement.gameObject);
+            }
+        }
         private void OnBuffUpdate(ClientOnBuffUpdate e) {
             
             switch (e.UpdateMode) {
@@ -46,8 +52,8 @@ namespace Mikrocosmos
                         else {
                             buffElement = Instantiate(permanentBuffElementPrefab, permanentBuffLayoutGroup).GetComponent<BuffElementViewController>(); 
                         }
-                       
-                            
+                        buffElement.BuffInfoPanelViewController = this;
+
                         buffNameToElement.Add(e.BuffInfo.Name, buffElement);
                         
                         GameObject buffIconPrefab = resLoader.LoadSync<GameObject>("buff_icons", e.BuffInfo.Name+ "Icon");
@@ -64,10 +70,10 @@ namespace Mikrocosmos
                     }
                     break;
                 case BuffUpdateMode.Stop:
-                    if (buffNameToElement[e.BuffInfo.Name] != null) {
-                        buffNameToElement.Remove(e.BuffInfo.Name, out BuffElementViewController buffElement);
-                        Destroy(buffElement.gameObject);
+                    if (e.BuffInfo.PermanentRawMaterialBuffInfo.MaxLevel == 0) {
+                        RemoveBuffFromPanel(e.BuffInfo.Name);
                     }
+                  
                     break;
             }
         }
