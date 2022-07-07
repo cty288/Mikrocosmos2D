@@ -26,7 +26,7 @@ namespace Mikrocosmos
 
         [field: SerializeField ]
         public override float MaximumTime { get; set; } = 120f;
-        public override void OnStartMission(float overallProgress) {
+        public override void OnStartMission(float overallProgress, int numPlayers) {
             GameObject[] spawnPos = GameObject.FindGameObjectsWithTag("MinecartSpawnPos");
 
             spaceMinecraftInstance = Instantiate(spaceMinecartPrefab,

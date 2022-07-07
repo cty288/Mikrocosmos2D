@@ -739,7 +739,7 @@ GAME_BUFF_AIMING_SPEED_DOWN,,Aiming...,,,,,,,,,,,,,,,,,瞄准中...,瞄準中...
 GAME_BUFF_AIMING_SPEED_DOWN_DESCRIPTION,,You have to slow down to aim your target!,,,,,,,,,,,,,,,,,你必须减速以瞄准目标！,你必須減速以瞄準目標！,,,,,,,,,
 GAME_BUFF_EYE_SPEED_DOWN,,Signal Interfered,,,,,,,,,,,,,,,,,信号干扰,信號干擾,,,,,,,,,
 GAME_BUFF_EYE_SPEED_DOWN_DESCRIPTION,,You have been detected by a nearby Eye. Your speed has been decreased and your location has been exposed,,,,,,,,,,,,,,,,,你已被一个对方的眼侦测到，你的方位已暴露，且移动速度已被干扰,你已被一個對方的眼偵測到，你的方位已暴露，且移動速度已被干擾,,,,,,,,,
-GAME_BUFF_VISION_OCCLUSION_DESCRIPT,,Nasty slime!,,,,,,,,,,,,,,,,,讨厌的粘液！,"
+GAME_BUFF_VISION_OCCLUSION_DESCRIPTION,,Nasty slime!,,,,,,,,,,,,,,,,,讨厌的粘液！,"
 討厭的粘液！",,,,,,,,,
 GAME_BUFF,,Powerup: ,,,,,,,,,,,,,,,,,强化：,強化：,,,,,,,,,
 任务系统,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

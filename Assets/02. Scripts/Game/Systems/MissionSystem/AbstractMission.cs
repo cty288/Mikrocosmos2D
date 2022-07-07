@@ -33,12 +33,12 @@ namespace Mikrocosmos
 
         protected float startDifficulty;
 
-        public void OnMissionStart(float overallProgress) {
+        public void OnMissionStart(float overallProgress, int numPlayers) {
             startDifficulty = overallProgress;
-            OnStartMission(startDifficulty);
+            OnStartMission(startDifficulty, numPlayers);
         }
 
-        public abstract void OnStartMission(float overallProgress);
+        public abstract void OnStartMission(float overallProgress, int numPlayers);
 
         [ServerCallback]
         public void AnnounceWinners(List<NetworkMainGamePlayer> players) {

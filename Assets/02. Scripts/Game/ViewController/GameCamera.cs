@@ -49,10 +49,25 @@ namespace Mikrocosmos
 
             this.RegisterEvent<OnVisionPermanentChange>(OnVisionPermanentChange).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnShakeCamera>(OnShakeCamera).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnLocalPlayerKillEntity>(OnLocalPlayerKillEntity)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
             currentMinCameraRadius = minCameraRadius;
             vmCamera = GameObject.Find("CM vcam").GetComponent<CinemachineVirtualCamera>();
             virtualCameraNoise = vmCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
             
+        }
+
+        private void OnLocalPlayerKillEntity(OnLocalPlayerKillEntity e) {
+            if (e.KilledEntity.GetComponent<ISpaceshipConfigurationModel>()!=null) {
+                OnShakeCamera(new OnShakeCamera()
+                {
+                    Duration = 0.5f,
+                    Strength = 20,
+                    Viberato = 15
+                });
+            }
+           
         }
 
         public void OnShakeCamera(OnShakeCamera e) {

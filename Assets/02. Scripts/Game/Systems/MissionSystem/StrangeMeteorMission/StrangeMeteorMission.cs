@@ -25,7 +25,7 @@ namespace Mikrocosmos
 
         private List<StrangeMeteorViewController> activeMeteors = new List<StrangeMeteorViewController>();
         
-        public override void OnStartMission(float overallProgress) {
+        public override void OnStartMission(float overallProgress, int numPlayers) {
            
 
             var origins = GameObject.FindGameObjectsWithTag("Origin");
@@ -50,8 +50,15 @@ namespace Mikrocosmos
                 } while (tooCloseToExistingMeteors ||Physics2D.OverlapCircle(new Vector2(x, y), 1));
 
                 GameObject meteor = Instantiate(meteorPrefab, new Vector3(x, y, 0), Quaternion.identity);
-                meteor.GetComponent<StrangeMeteorModel>().PerPlayerProgressPerSecond1 =
-                    meteor.GetComponent<StrangeMeteorModel>().PerPlayerProgressPerSecond1 / Mathf.SmoothStep(1, 3, overallProgress);
+                StrangeMeteorModel model = meteor.GetComponent<StrangeMeteorModel>();
+
+                float perPlayerPerSecond = Mathf.Clamp(-0.5f * model.PerPlayerProgressPerSecond1 * numPlayers +
+                                                       3 * model.PerPlayerProgressPerSecond1,
+                    0.8f * model.PerPlayerProgressPerSecond, 1);
+
+
+                model.PerPlayerProgressPerSecond1 =
+                    perPlayerPerSecond / Mathf.SmoothStep(1, 2, overallProgress);
                 NetworkServer.Spawn(meteor);
                 activeMeteors.Add(meteor.GetComponent<StrangeMeteorViewController>());
             }

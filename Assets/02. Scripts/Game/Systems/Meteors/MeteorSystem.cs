@@ -8,6 +8,7 @@ using MikroFramework.Event;
 using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
@@ -22,23 +23,36 @@ namespace Mikrocosmos
 
         private List<BoxCollider2D> meteorSpawnPositions;
 
-        [SerializeField] private int meteorMinimumCount = 5;
+        [FormerlySerializedAs("meteorMaximumCount")] [SerializeField] private int meteorMaximumCountPerPlayer = 5;
+        private int meteorMaximumCount;
         [SerializeField] private int meteorSpawnInterval = 10;
+        private IGameProgressSystem gameProgressSystem;
         private void Awake() {
             NetworkedObjectPoolManager.AutoCreatePoolWhenAllocating = true;
             meteorSpawnPositions = transform.GetComponentsInChildren<BoxCollider2D>().ToList();
+           
         }
 
+
+        
         private IEnumerator CheckSpawnMeteor() {
             while (true) {
                 yield return new WaitForSeconds(meteorSpawnInterval);
-                if (activeMeteors.Count < meteorMinimumCount) {
+                meteorMaximumCountPerPlayer =
+                    Mathf.Clamp(Mathf.RoundToInt(meteorMaximumCountPerPlayer * gameProgressSystem.GetGameProgress()), NetworkManager.singleton.numPlayers * meteorMaximumCountPerPlayer/2,
+                        100);
+
+                meteorSpawnInterval =
+                    (Mathf.RoundToInt(meteorSpawnInterval * (1 + gameProgressSystem.GetGameProgress())));
+                if (activeMeteors.Count < meteorMaximumCountPerPlayer) {
                     SpawnMeteor();
                 }
             }
         }
         public override void OnStartServer() {
             base.OnStartServer();
+            meteorMaximumCount = NetworkManager.singleton.numPlayers * meteorMaximumCountPerPlayer;
+            gameProgressSystem = this.GetSystem<IGameProgressSystem>();
             Mikrocosmos.Interface.RegisterSystem<IMeteorSystem>(this);
             activeMeteors = GameObject.FindGameObjectsWithTag("Meteor").ToList();
             this.RegisterEvent<OnMeteorDestroyed>(OnMeteorDestroyed).UnRegisterWhenGameObjectDestroyed(gameObject);

@@ -79,7 +79,7 @@ namespace Mikrocosmos
 
         bool IsFinished { get; set; }
 
-        void OnMissionStart(float overallGameProgress);
+        void OnMissionStart(float overallGameProgress, int playerNum);
         void StopMission(bool runOutOfTime = true);
     }
 
@@ -160,7 +160,7 @@ namespace Mikrocosmos
 
         private void SwitchToMission(IMission mission, GameObject missionGameObject) {
             StartCoroutine(MissionMaximumTimeCheck(mission, missionGameObject));
-            mission.OnMissionStart(progressSystem.GetGameProgress());
+            mission.OnMissionStart(progressSystem.GetGameProgress(), NetworkManager.singleton.numPlayers);
             this.SendEvent<OnMissionStart>(new OnMissionStart(){MissionName = mission.MissionName});
             RpcNotifyMissionAlreadytart(new ClientMissionStartInfo() {
                 MissionDescriptionLocalizedKey = mission.MissionDescriptionLocalizedKey(),

@@ -65,7 +65,7 @@ namespace Mikrocosmos
                     break;
                 case BuffUpdateMode.Update:
                     
-                    if (buffNameToElement[e.BuffInfo.Name] != null) {
+                    if (buffNameToElement.ContainsKey(e.BuffInfo.Name)) {
                         buffNameToElement[e.BuffInfo.Name].SetBuffInfo(e.BuffInfo);
                     }
                     break;

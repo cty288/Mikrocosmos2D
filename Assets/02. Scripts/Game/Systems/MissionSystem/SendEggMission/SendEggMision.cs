@@ -34,7 +34,7 @@ namespace Mikrocosmos
         [SerializeField] private GameObject mapPointer;
 
         private GameObject sunFlower;
-        public override void OnStartMission(float overallProgress) {
+        public override void OnStartMission(float overallProgress, int numPlayers) {
             this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 

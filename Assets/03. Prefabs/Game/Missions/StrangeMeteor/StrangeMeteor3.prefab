@@ -634,7 +634,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
-  perPlayerProgressPerSecond: 0.02
+  perPlayerProgressPerSecond: 0.03
   <SelfMass>k__BackingField: 1500
   <Name>k__BackingField: StrangeMeteor3
 --- !u!114 &5020454429491970877

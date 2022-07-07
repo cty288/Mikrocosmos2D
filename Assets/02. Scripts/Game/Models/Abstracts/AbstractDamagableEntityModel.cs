@@ -14,6 +14,10 @@ namespace Mikrocosmos
         public int OldHealth;
         public NetworkIdentity DamageSource;
     }
+
+    public struct OnLocalPlayerKillEntity {
+        public GameObject KilledEntity;
+    }
     public abstract class AbstractDamagableEntityModel : AbstractBasicEntityModel, IDamagable{
 
         [field: SerializeField]
@@ -60,7 +64,7 @@ namespace Mikrocosmos
             while (true) {
                 yield return new WaitForSeconds(1f);
                 HealthRecoverTimer++;
-                if (HealthRecoverTimer > healthRecoverWaitTimeAfterDamage) {
+                if (HealthRecoverTimer > healthRecoverWaitTimeAfterDamage && CurrentHealth > 0) {
                     if (CurrentHealth <= healthRecoverThreshold) {
                         healthRecoverStart = true;
                     }
@@ -96,8 +100,9 @@ namespace Mikrocosmos
 
 
         public abstract int GetDamageFromExcessiveMomentum(float excessiveMomentum);
+        [ServerCallback]
         public int TakeRawDamage(int damage, NetworkIdentity damageDealer, int additionalDamage =0) {
-            if(damage<0){
+            if(damage<0 || CurrentHealth<=0){
                 return 0;
             }
             if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
@@ -111,6 +116,11 @@ namespace Mikrocosmos
             CurrentHealth -= (damage + additionalDamage);
             CurrentHealth = Mathf.Max(0, CurrentHealth);
             OnServerTakeDamage(oldHealth, damageDealer, CurrentHealth);
+            if (CurrentHealth == 0) {
+                if (damageDealer.GetComponent<ISpaceshipConfigurationModel>()!=null) { //is player
+                    TargetKilledByLocalPlayer(damageDealer.connectionToClient);
+                }
+            }
             this.SendEvent<OnEntityTakeDamage>(new OnEntityTakeDamage() {
                 Entity = this,
                 NewHealth = CurrentHealth,
@@ -142,9 +152,16 @@ namespace Mikrocosmos
 
         }
 
-        public virtual void OnClientMaxHealthChange(int oldMaxHealth, int newMaxHealth)
-        {
+        public virtual void OnClientMaxHealthChange(int oldMaxHealth, int newMaxHealth) {
+        }
 
+        [TargetRpc]
+        private void TargetKilledByLocalPlayer(NetworkConnection conn) {
+            if (this) {
+                this.SendEvent<OnLocalPlayerKillEntity>(new OnLocalPlayerKillEntity() {
+                    KilledEntity = gameObject
+                });
+            }
         }
     }
 }

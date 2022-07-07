@@ -198,7 +198,7 @@ namespace Mikrocosmos
         //对方UnHooked：正常
         //对方Hooked ：手动算速度
         protected virtual void OnCollisionEnter2D(Collision2D collision) {
-            if (isServer && Model.canDealMomentumDamage) {
+            if (Model.canDealMomentumDamage && isServer) {
                 if (collision.collider && !collider.isTrigger)
                 {
                     if (collision.collider.TryGetComponent<IDamagable>(out IDamagable model))

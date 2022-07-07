@@ -230,15 +230,25 @@ namespace Mikrocosmos
                 if (hasAuthority) {
                     int damage = Mathf.Abs(oldHealth - newHealth);
                     //get the percentile of damage between 0 to 20
-                    float strength = Mathf.Clamp((damage / 20f), 0.5f, 1f) * 10f;
-                    
-                    
-                    GameCamera.Singleton.OnShakeCamera(new OnShakeCamera()
-                    {
-                        Duration = 0.25f,
-                        Strength = strength,
-                        Viberato = 10
-                    });
+                    float strength = Mathf.Clamp((damage / 20f), 0.3f, 1f) * 10f;
+
+                    if (newHealth > 0) {
+                        GameCamera.Singleton.OnShakeCamera(new OnShakeCamera()
+                        {
+                            Duration = 0.25f,
+                            Strength = strength,
+                            Viberato = 10
+                        });
+                    }
+                    else {
+                        GameCamera.Singleton.OnShakeCamera(new OnShakeCamera()
+                        {
+                            Duration = 0.5f,
+                            Strength = 30,
+                            Viberato = 20
+                        });
+                    }
+                   
                 }
             }
         }

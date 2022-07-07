@@ -41,6 +41,8 @@ namespace Mikrocosmos
         GoodsConfigure PlanetRequestBuyItem(List<GoodsConfigure> possibleGoods);
 
         GoodsConfigure PlanetRequestSellItem(List<GoodsConfigure> possibleGoods);
+
+        List<GameObject> AllGoodsPrefabsInThisGame { get; }
     }
 
 
@@ -50,6 +52,10 @@ namespace Mikrocosmos
         [SerializeField] private List<CompoundResourceRecipe> compoundResourceRecipes;
 
         [SerializeField] private GameObject craftingEffect;
+        [SerializeField] private List<GameObject> allGoodsPrefabsInThisGame;
+
+        public List<GameObject> AllGoodsPrefabsInThisGame => allGoodsPrefabsInThisGame;
+
 
         private Dictionary<string, int> allCirculatingBuyItems = new Dictionary<string, int>();
 
@@ -65,10 +71,26 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             //register self to the system on the server
-            
 
-            allPlanets = new List<IPlanetTradingSystem>();
-            GameObject.FindGameObjectsWithTag("Planet").Select((o => o.GetComponent<IPlanetTradingSystem>())).ToList()
+            List<IPlanetModel> planetModels = new List<IPlanetModel>();
+
+            GameObject[] allPlanetObjects = GameObject.FindGameObjectsWithTag("Planet");
+            
+             allPlanetObjects.Select((o => o.GetComponent<IPlanetModel>())).ToList()
+                    .ForEach(p => planetModels.Add(p));
+
+             HashSet<GameObject> tempAllGoodsSet = new HashSet<GameObject>();
+             
+            foreach (var planet in planetModels) {
+                foreach (var sellItem in planet.SellItemList) {
+                    tempAllGoodsSet.Add(sellItem.GoodPrefab);
+                }
+            }
+
+            allGoodsPrefabsInThisGame = tempAllGoodsSet.ToList();
+             
+             allPlanets = new List<IPlanetTradingSystem>();
+             allPlanetObjects.Select((o => o.GetComponent<IPlanetTradingSystem>())).ToList()
                 .ForEach(p => allPlanets.Add(p));
 
             this.RegisterEvent<OnServerPlanetGenerateSellItem>(OnPlanetGenerateSellItem)
