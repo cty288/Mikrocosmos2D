@@ -108,7 +108,7 @@ namespace Mikrocosmos
         {
             Debug.Log($"Team {teamNumber} completed a transaction");
             float affinityIncreasment = this.GetSystem<IGlobalTradingSystem>()
-                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber));
+                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber), true);
 
             if (buffSystem != null)
             {

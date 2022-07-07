@@ -198,7 +198,7 @@ namespace Mikrocosmos
 
                 //currentSellItemLists.Remove(info);
                 SwitchSellItem(info);
-                ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>());
+                ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>(), false);
                 TargetOnBuyItemSuccess(e.HookedByIdentity.connectionToClient);
             }
 
@@ -229,7 +229,7 @@ namespace Mikrocosmos
 
                     //SwitchBuyItem();
 
-                    ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>());
+                    ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>(), true);
 
                     //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
                     // PlayerIdentity = e.HookedByIdentity
@@ -246,11 +246,11 @@ namespace Mikrocosmos
 
 
         [ServerCallback]
-        private void ChangeAffinity(int teamNumber, IBuffSystem buffSystem)
+        private void ChangeAffinity(int teamNumber, IBuffSystem buffSystem, bool isPlanetBuy)
         {
             Debug.Log($"Team {teamNumber} completed a transaction");
             float affinityIncreasment = this.GetSystem<IGlobalTradingSystem>()
-                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber));
+                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber), isPlanetBuy);
 
             if (buffSystem != null) {
                 if (buffSystem.HasBuff<PermanentAffinityBuff>(out PermanentAffinityBuff affinityBuff)) {
@@ -259,17 +259,24 @@ namespace Mikrocosmos
                 
             }
             
+            
             if (teamNumber == 1) {
+                float previousAffinity = affinityWithTeam1;
+                affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1 + affinityIncreasment, 0f, 1f);
+                float realChangeAmount = affinityWithTeam1 - previousAffinity;
+                
                 this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed() {
-                    ChangeAmount = affinityIncreasment
+                    ChangeAmount = realChangeAmount
                 });
-                affinityWithTeam1 += affinityIncreasment;
             }
             else {
-                affinityWithTeam1 -= affinityIncreasment;
+                float previousAffinity = affinityWithTeam1;
+                affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1 - affinityIncreasment, 0f, 1f);
+                float realChangeAmount = previousAffinity - affinityWithTeam1;
+
                 this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed()
                 {
-                    ChangeAmount = -affinityIncreasment
+                    ChangeAmount = -realChangeAmount
                 });
             }
 

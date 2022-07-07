@@ -494,7 +494,7 @@ namespace Mikrocosmos
                 {
                     if (rb.TryGetComponent<IAffectedByGravity>(out IAffectedByGravity target))
                     {
-                        float explosionForce = -1 * UniversalG(GravityModel, target, transform.position, rb.transform.position) * Time.fixedDeltaTime;
+                        float explosionForce = -1 * UniversalG(GravityModel, rb, transform.position, rb.transform.position) * Time.fixedDeltaTime;
                         if (target.AffectedByGravity)
                         {
                             target.ServerAddGravityForce(explosionForce, Center, GravityModel.GravityFieldRange);
@@ -508,11 +508,11 @@ namespace Mikrocosmos
 
         }
 
-        private float UniversalG(IHaveMomentum source, IHaveMomentum target, Vector2 sourcePos, Vector2 targetPos)
+        private float UniversalG(IHaveMomentum source, Rigidbody2D target, Vector2 sourcePos, Vector2 targetPos)
         {
 
             float sorceMass = source.GetTotalMass();
-            float destMass = target.GetTotalMass();
+            float destMass = target.mass;
             return (sorceMass * destMass / Distance(sourcePos, targetPos)) * GravityModel.G;
 
         }

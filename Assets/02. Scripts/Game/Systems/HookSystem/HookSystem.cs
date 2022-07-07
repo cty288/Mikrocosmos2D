@@ -86,10 +86,14 @@ namespace Mikrocosmos {
 
         [SerializeField] private Transform droppedItemSpawnPos;
 
-        
 
-        [field: SyncVar]
-        public bool IsHooking { get; private set; }
+
+
+        public bool IsHooking {
+            get {
+                return HookedItem != null;
+            }
+        }
 
         private float hookHoldTimer = 0;
 
@@ -190,6 +194,7 @@ namespace Mikrocosmos {
 
                         NetworkServer.Spawn(droppedObj);
                     }
+                    this.model.ServerUpdateMass();
                 }
                 
                 UpdateHookCollisions(false);
@@ -258,6 +263,8 @@ namespace Mikrocosmos {
 
               
                 UpdateHookCollisions(false);
+
+                this.model.ServerUpdateMass();
             }
         }
 
@@ -294,7 +301,6 @@ namespace Mikrocosmos {
 
         private void Update() {
             if (isServer) {
-                IsHooking = HookedItem != null;
                 useTimer += Time.deltaTime;
                 if (holdingHookButton) {
                     if (HookedItem != null && (HookedItem is ICanBeShotViewController)) {
@@ -400,6 +406,7 @@ namespace Mikrocosmos {
                         OldIdentity = null,
                         OwnerIdentity = netIdentity
                     });
+                    this.model.ServerUpdateMass();
                     return;
                 }
 
@@ -450,7 +457,7 @@ namespace Mikrocosmos {
                     //oldIdentity.gameObject.SetActive(false);
                     //NetworkServer.Destroy(oldIdentity.gameObject);
                 }
-                
+                this.model.ServerUpdateMass();
                 UpdateHookCollisions(false);
             }
         }
@@ -634,8 +641,8 @@ namespace Mikrocosmos {
 
                         UpdateHookCollisions(false);
                         model.OnServerHooked();
-                        
-                        
+
+                        this.model.ServerUpdateMass();
                         return true;
                     }
                 }
@@ -661,7 +668,7 @@ namespace Mikrocosmos {
                 }
 
             }
-            model.ServerUpdateMass();
+           
         }
 
         

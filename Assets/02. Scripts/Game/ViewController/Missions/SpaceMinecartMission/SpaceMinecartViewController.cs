@@ -236,7 +236,7 @@ namespace Mikrocosmos
         }
 
         private void OnCollisionEnter2D(Collision2D col) {
-            if (isServer && col.collider.gameObject.CompareTag("Border")) {
+            if (isServer &&pathInitialized &&  col.collider.gameObject.CompareTag("Border")) {
                 reachDestination = true;
                 canMove = true;
                 //end
@@ -258,18 +258,42 @@ namespace Mikrocosmos
         private void OnPathCalculate(Path path) {
             if (isServer) {
                 if (!pathInitialized) {
-                    pathInitialized = true;
-                    transform.position = path.vectorPath[path.vectorPath.Count / 2];
+                 
+
+                    
+                    //get the length of the path
+                    float pathLength = 0;
+                    List<Vector3> completePath = path.vectorPath;
+                    for (int i = 0; i < completePath.Count - 1; i++) {
+                        pathLength += Vector3.Distance(completePath[i], completePath[i + 1]);
+                    }
+                    
+                    pathLength /= 2f;
+                    //get the middle of the path
+                    float distance = 0;
+                    int middleIndex = 0;
+                    for (int i = 0; i < completePath.Count - 1; i++) {
+                        distance += Vector3.Distance(completePath[i], completePath[i + 1]);
+                        if (distance > pathLength)
+                        {
+                            middleIndex = i;
+                            break;
+                        }
+                    }
+
+                    // transform.position = existingGamePositions[middleIndex];
+                    aiPath.Teleport(completePath[middleIndex], false);
+                   
                     RpcOnCompletePathCreate(path.vectorPath, false);
 
                     this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
                         Path path2 = pathfiner.StartPath(transform.position, destinations[0]);
                         path2.BlockUntilCalculated();
                         RpcReDrawPathToTeam(1, path2.vectorPath, true);
+                        pathInitialized = true;
                     });
 
                 }
-                
             }
         }
 

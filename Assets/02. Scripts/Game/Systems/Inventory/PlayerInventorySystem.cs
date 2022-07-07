@@ -268,6 +268,7 @@ namespace Mikrocosmos
                     
                 }
                 TargetOnInventoryUpdate(backpackItems, currentIndex);
+                GetComponent<ISpaceshipConfigurationModel>().ServerUpdateMass();
             }
         }
 

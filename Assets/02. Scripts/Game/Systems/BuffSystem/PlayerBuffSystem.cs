@@ -58,10 +58,13 @@ namespace Mikrocosmos
         private Language clientLanguage;
 
         private ISpaceshipConfigurationModel spaceshipModel;
-        
+
+        private Rigidbody2D rigidbody;
+
         private void Awake() {
             buffSystem = GetComponent<IBuffSystem>();
             spaceshipModel = GetComponent<ISpaceshipConfigurationModel>();
+            rigidbody = GetComponent<Rigidbody2D>();
         }
 
         public override void OnStartServer() {
@@ -106,10 +109,9 @@ namespace Mikrocosmos
 
 
         private void OnServerSpaceshipOverweight(OnServerSpaceshipOverweight e) {
-            if (e.Spaceship == gameObject) {
+            if (e.Spaceship == gameObject && !buffSystem.HasBuff<OverweightDeBuff>()) {
                 buffSystem.AddBuff<OverweightDeBuff>(new OverweightDeBuff(1,
-                    UntilAction.Allocate((() =>
-                        Math.Abs(e.SpaceshipModel.Acceleration - e.MinimumAcceleration) >= e.Tolerance))));
+                    UntilAction.Allocate(() => rigidbody.mass < 80)));
             }
         }
 

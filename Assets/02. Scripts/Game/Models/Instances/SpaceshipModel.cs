@@ -91,7 +91,7 @@ namespace Mikrocosmos
         }
         public int EscapeNeedCount { get; } = 10;
         public float EscapeLossTime { get; } = 0.15f;
-        public float MaxMaxSpeed { get; } = 100;
+        public float MaxMaxSpeed { get; } = 500;
 
         private float initialMaxSpeed;
         private float startAcceleration;
@@ -253,7 +253,7 @@ namespace Mikrocosmos
 
         private void RefreshAcceleration(float totalMass) {
             Acceleration = Mathf.Max(minimumAcceleration, InitialAcceleration - totalMass * AccelerationDecreasePerMass);
-            if (totalMass >= 40) {
+            if (totalMass>=80) {
                 this.SendEvent<OnServerSpaceshipOverweight>(new OnServerSpaceshipOverweight() {
                     Spaceship = gameObject,
                     Tolerance = 15,
