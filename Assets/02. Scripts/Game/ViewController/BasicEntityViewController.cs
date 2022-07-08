@@ -48,6 +48,7 @@ namespace Mikrocosmos
 
     public interface IDamagableViewController : IHaveMomentumViewController { 
         public IDamagable DamagableModel { get; }
+        public Vector2 DamageTextSpawnOffset { get; }
 
     }
 

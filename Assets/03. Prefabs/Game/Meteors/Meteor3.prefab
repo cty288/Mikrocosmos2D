@@ -87,13 +87,17 @@ PrefabInstance:
       propertyPath: <HookedPositionOffset>k__BackingField.y
       value: 5.23
       objectReference: {fileID: 0}
+    - target: {fileID: 1128868329765695182, guid: d82769bab47f1a141a266a6c76903157, type: 3}
+      propertyPath: <DamageTextSpawnOffset>k__BackingField.y
+      value: 6.34
+      objectReference: {fileID: 0}
     - target: {fileID: 3789394192495447562, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3789394192495447562, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: m_InstanceId
-      value: -1385264
+      value: -1589526
       objectReference: {fileID: 0}
     - target: {fileID: 3789394192495447562, guid: d82769bab47f1a141a266a6c76903157, type: 3}
       propertyPath: m_ShapePathHash

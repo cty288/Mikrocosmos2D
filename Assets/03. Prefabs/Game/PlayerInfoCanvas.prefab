@@ -119,7 +119,6 @@ MonoBehaviour:
   playerNameText: {fileID: 5016221255185957216}
   healthBarFadeTime: 3
   healthBarFadeTimer: 0
-  opponentNameMaterial: {fileID: 2100000, guid: 678cb091912305f409f4cfb588d4813c, type: 2}
 --- !u!1 &1518436230222022567
 GameObject:
   m_ObjectHideFlags: 0

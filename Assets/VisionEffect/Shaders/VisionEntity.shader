@@ -70,7 +70,8 @@
             half4 _MainTex_ST;
             half4 _NormalMap_ST;
             float _AlphaValue;
-            uniform float4 _Color;
+           uniform half4 _Color;
+
             half4 _Tint;
             float _OutlineWidth;
             #if USE_SHAPE_LIGHT_TYPE_0
@@ -97,7 +98,7 @@
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 float4 clipVertex = o.positionCS / o.positionCS.w;
                 o.lightingUV = ComputeScreenPos(clipVertex).xy;
-                o.color = v.color;
+                o.color = v.color * _Color;
                 o.worldPos = mul (unity_ObjectToWorld, v.positionOS);
                 return o;
             }
@@ -118,7 +119,7 @@
                 #endif
                 
 				
-                half4 result = CombinedShapeLightShared(main, mask, i.lightingUV, i.worldPos) * _Tint ;
+                half4 result = CombinedShapeLightShared(main, mask, i.lightingUV, i.worldPos) * i.color ;
                 //_AlphaValue = CombinedShapeLightShared(main,mask, half2(0.5,0.5), mul(unity_ObjectToWorld, half2(0.5,0.5)));
                  
                 return result; //+ _Color;

@@ -735,6 +735,7 @@ MonoBehaviour:
   syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
   <HookedRotationZOffset>k__BackingField: 0
+  <DamageTextSpawnOffset>k__BackingField: {x: 0, y: 4.48}
   particles:
   - {fileID: 5253080046544566927}
   deathEffect: {fileID: 2635061704750544333, guid: a4380b49f3c69cd4a98f4f65081241b4, type: 3}
@@ -1010,6 +1011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  permanentLevelDeduceWhenDie: 1
 --- !u!114 &-4202198879838847946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1024,7 +1026,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientLanguage: 0
 --- !u!1 &8268555120520065621
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,6 +6174,10 @@ PrefabInstance:
     - target: {fileID: 481041332993962963, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_Name
       value: PlayerInfoCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 623387098172900922, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_Pivot.x

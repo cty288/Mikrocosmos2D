@@ -141,7 +141,7 @@ MonoBehaviour:
   - {x: 0.04270172, y: -3.0328565, z: 0}
   m_ShapePathHash: -960656257
   m_Mesh: {fileID: 0}
-  m_InstanceId: 394076
+  m_InstanceId: 247182
 --- !u!114 &3789394192495447793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,11 +250,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 2.42}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
   damageParticle: {fileID: 4980017880052449215, guid: 8066c86cd7eba934cb9206b82ec89dc0, type: 3}
   dieParticle: {fileID: 4453845215803279697, guid: 87733b43f21554b4b85849615e21e0d7, type: 3}
+  <DamageTextSpawnOffset>k__BackingField: {x: 0, y: 5.62}
 --- !u!114 &-7106308886407098970
 MonoBehaviour:
   m_ObjectHideFlags: 0

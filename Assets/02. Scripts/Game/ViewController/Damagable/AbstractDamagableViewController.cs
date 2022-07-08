@@ -37,6 +37,8 @@ namespace Mikrocosmos
         
         public abstract void RpcOnClientHealthChange(int oldHealth, int newHealth);
 
-        public IDamagable DamagableModel { get; protected set; } 
+        public IDamagable DamagableModel { get; protected set; }
+        [field:SerializeField]
+        public Vector2 DamageTextSpawnOffset { get; protected set; }
     }
 }

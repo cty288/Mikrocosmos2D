@@ -5768,6 +5768,7 @@ MonoBehaviour:
   syncInterval: 0
   <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
   <HookedRotationZOffset>k__BackingField: 0
+  <DamageTextSpawnOffset>k__BackingField: {x: 0, y: 4.48}
   particles:
   - {fileID: 2891157661316277379}
   - {fileID: 7714432983501222812}

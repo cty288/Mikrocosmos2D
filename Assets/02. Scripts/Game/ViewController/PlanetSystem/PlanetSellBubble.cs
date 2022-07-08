@@ -44,13 +44,12 @@ namespace Mikrocosmos
 
         private void OnClientMoneyChange(OnClientMoneyChange e) {
             if (e.NewMoney >= Price) {
-                priceText.material = Material.Instantiate(priceText.material);
-                priceText.material.SetColor("_Tint", Color.green);
+               
+                priceText.color = Color.green;
             }
             else {
-                
-                priceText.material = Material.Instantiate(priceText.material);
-                priceText.material.SetColor("_Tint", Color.red);
+
+                priceText.color = Color.red;
             }
            
         }

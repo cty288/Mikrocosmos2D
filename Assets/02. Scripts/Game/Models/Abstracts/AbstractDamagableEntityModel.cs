@@ -13,6 +13,7 @@ namespace Mikrocosmos
         public int NewHealth;
         public int OldHealth;
         public NetworkIdentity DamageSource;
+        public NetworkIdentity EntityIdentity;
     }
 
     public struct OnLocalPlayerKillEntity {
@@ -107,6 +108,14 @@ namespace Mikrocosmos
             }
             if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
                 if (buffSystem.HasBuff<InvincibleBuff>()) {
+                    this.SendEvent<OnEntityTakeDamage>(new OnEntityTakeDamage()
+                    {
+                        Entity = this,
+                        NewHealth = CurrentHealth,
+                        OldHealth = CurrentHealth,
+                        DamageSource = damageDealer,
+                        EntityIdentity = netIdentity
+                    });
                     return 0;
                 }
             }
@@ -125,7 +134,8 @@ namespace Mikrocosmos
                 Entity = this,
                 NewHealth = CurrentHealth,
                 OldHealth = oldHealth,
-                DamageSource = damageDealer
+                DamageSource = damageDealer,
+                EntityIdentity = netIdentity
             });
             //Debug.Log("Health Recover Timer 0");
             HealthRecoverTimer = 0f;
