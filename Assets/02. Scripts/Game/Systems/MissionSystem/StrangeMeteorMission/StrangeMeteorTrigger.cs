@@ -13,6 +13,8 @@ namespace Mikrocosmos
         private HashSet<PlayerSpaceship> playersInTrigger = new HashSet<PlayerSpaceship>();
 
         public HashSet<PlayerSpaceship> PlayersInTrigger => playersInTrigger;
+
+     
         private void OnTriggerEnter2D(Collider2D col) {
             if (NetworkServer.active) {
                 if (col.gameObject.TryGetComponent<PlayerSpaceship>(out PlayerSpaceship spaceship)) {

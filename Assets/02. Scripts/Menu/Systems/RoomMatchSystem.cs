@@ -95,6 +95,9 @@ namespace Mikrocosmos
         [Command]
         void CmdRequestKickPlayer(int id, NetworkIdentity requester);
 
+        [Command]
+        void CmdQuitRoom(NetworkIdentity requester);
+
         void ChangeRoomHost(NetworkIdentity identity);
 
         PlayerMatchInfo ClientGetMatchInfoCopy();
@@ -269,6 +272,11 @@ namespace Mikrocosmos
                 //PlayerMatchInfo player = FindPlayerByID(id);
                 KickPlayer(playerIdentities[id]);
             }
+        }
+
+        [Command(requiresAuthority = false)]
+        public void CmdQuitRoom(NetworkIdentity requester) {
+            requester.connectionToClient.Disconnect();
         }
 
         [ServerCallback]

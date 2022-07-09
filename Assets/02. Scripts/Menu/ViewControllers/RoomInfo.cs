@@ -26,6 +26,7 @@ namespace Mikrocosmos {
                 if (response.IsGaming) {
                     TextRoomStatus.text = "游戏中";
                 }
+                
                 else if (response.ServerPlayerNum >= response.ServerMaxPlayerNum) {
                     TextRoomStatus.text = "房间已满";
                 }

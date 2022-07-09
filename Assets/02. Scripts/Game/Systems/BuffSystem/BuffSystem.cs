@@ -334,6 +334,7 @@ namespace Mikrocosmos {
         private Dictionary<Type, IBuff> buffs = new Dictionary<Type, IBuff>();
         private Dictionary<Type, Action<BuffStatus, BuffClientMessage>> callbacks = new Dictionary<Type, Action<BuffStatus, BuffClientMessage>>();
         [SerializeField] private int permanentLevelDeduceWhenDie = 1;
+        [SerializeField] private int minimumPermanentBuffLevelToDeduct = 3;
         public override void OnStartServer() {
             base.OnStartServer();
             this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -344,6 +345,9 @@ namespace Mikrocosmos {
                 List<IPermanentRawMaterialBuff> rawMaterialBuffs = GetAllPermanentRawMaterialBuffs();
 
                 foreach (IPermanentRawMaterialBuff buff in rawMaterialBuffs) {
+                    if (buff.CurrentLevel < minimumPermanentBuffLevelToDeduct) {
+                        continue;
+                    }
                     int progressDeduce = 0;
                     int levelDecrease = permanentLevelDeduceWhenDie;
                     for (int i = buff.CurrentLevel; i >= 1; i--) {

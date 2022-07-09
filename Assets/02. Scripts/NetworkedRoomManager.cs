@@ -93,13 +93,13 @@ namespace Mikrocosmos
 
         private void OnSteamLobbyEntered(LobbyEnter_t callback) {
             if (!NetworkServer.active && !NetworkClient.active) {
-                
-                
-                string hostAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby),
+
+                CSteamID steamID = new CSteamID(callback.m_ulSteamIDLobby);
+                string hostAddress = SteamMatchmaking.GetLobbyData(steamID,
                     "HostAddress");
                 networkAddress = hostAddress;
                 Debug.Log(hostAddress);
-                StartJoiningClient(NetworkingMode.Steam);
+                StartJoiningClient(NetworkingMode.Steam, steamID);
             }
         }
 
@@ -261,7 +261,7 @@ namespace Mikrocosmos
 
             StartClient(uri);
         }
-        public void StartJoiningClient(NetworkingMode networkingMode)
+        public void StartJoiningClient(NetworkingMode networkingMode, CSteamID steamId = new CSteamID())
         {
             switch (networkingMode)
             {
@@ -274,7 +274,7 @@ namespace Mikrocosmos
                     telepathyTransport.enabled = true;
                     Transport.activeTransport = telepathyTransport;
                     transport = telepathyTransport;
-                    
+                   
                     NetworkingMode = NetworkingMode.Normal;
                    
                     break;
@@ -284,7 +284,7 @@ namespace Mikrocosmos
                     Transport.activeTransport = steamworksTransport;
                     transport = steamworksTransport;
                     NetworkingMode = NetworkingMode.Steam;
-                   
+                    joinedSteamGame = steamId;
                     break;
             }
             if (NetworkClient.active)

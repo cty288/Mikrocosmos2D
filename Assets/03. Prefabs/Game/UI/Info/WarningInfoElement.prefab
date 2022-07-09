@@ -786,8 +786,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.4553, y: -8.2229}
-  m_SizeDelta: {x: 289.1674, y: 29.0551}
+  m_AnchoredPosition: {x: -6.17, y: -8.2229}
+  m_SizeDelta: {x: 288.5967, y: 29.0551}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4927300110986055027
 CanvasRenderer:
@@ -817,7 +817,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Help Eggman retrieve the missing egg!
+  m_text: Some strange meteors just appeared near the border, they seem precious
+    to your boss!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 704e9cf8c3be7e343b56192e60fe9d0a, type: 2}
   m_sharedMaterial: {fileID: -7397191393735986667, guid: 704e9cf8c3be7e343b56192e60fe9d0a, type: 2}
@@ -844,7 +845,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.25
+  m_fontSize: 10.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

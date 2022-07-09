@@ -420,7 +420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3981231213636429864}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.14, y: 3.83, z: 0}
+  m_LocalPosition: {x: -0.14, y: 5.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -440,7 +440,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.17559862, y: 0.096904755}
+  m_Offset: {x: 0.98027706, y: 0.096904755}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -451,7 +451,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.0624366, y: 2.5330906}
+  m_Size: {x: 4.671793, y: 2.5330906}
   m_EdgeRadius: 0
 --- !u!114 &2993598904619125555
 MonoBehaviour:
@@ -467,7 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 4544
+    m_Bits: 20928
   maxDistance: 100
   detectTime: 1
   colliders: []
@@ -838,6 +838,7 @@ MonoBehaviour:
   shootChargeOneCycleTime: 1
   maxShootForce: 1200
   droppedItemSpawnPos: {fileID: 2601994127546760122}
+  animator: {fileID: 1426794900304426698}
   hookShootChargePercent: 0
 --- !u!95 &1860153339421768247
 Animator:
@@ -957,6 +958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 1
   syncInterval: 0.02
+  diamondPrefab: {fileID: 4273496871896645202, guid: 113f1df07d7042a4b93a23c0d811c2e7, type: 3}
 --- !u!114 &3290459578096298434
 MonoBehaviour:
   m_ObjectHideFlags: 0

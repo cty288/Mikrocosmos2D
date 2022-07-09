@@ -125,10 +125,10 @@ namespace Mikrocosmos
                         hookWhenEmptyReleased = true;
                     }
                     else {
-                        if (minHookPressTimer > minHookPressTimeInterval) {
+                        //if (minHookPressTimer > minHookPressTimeInterval) {
                             minHookPressTimer = 0;
                             hookSystem.CmdReleaseHookButton();
-                        }
+                       // }
                         
                     }
                 }

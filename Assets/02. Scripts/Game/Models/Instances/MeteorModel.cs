@@ -90,9 +90,14 @@ namespace Mikrocosmos
         private float ProperForce() {
             var pos = transform.position;
             var rb = GetComponent<Rigidbody2D>();
-            var Rb = GameObject.Find("Star").GetComponent<IHaveGravity>();
-            return InitialForceMultiplier * GetTotalMass() *
-                   Mathf.Sqrt(Rb.GetTotalMass() / Distance(pos, Vector3.zero));
+            if (GameObject.Find("Star").GetComponent<IHaveGravity>()!=null) {
+                var Rb = GameObject.Find("Star").GetComponent<IHaveGravity>();
+                return InitialForceMultiplier * GetTotalMass() *
+                       Mathf.Sqrt(Rb.GetTotalMass() / Distance(pos, Vector3.zero));
+            }
+
+            return 0;
+
         }
 
         private Vector2 ProperDirect(Vector2 pos) {

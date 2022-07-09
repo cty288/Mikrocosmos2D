@@ -5468,7 +5468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 4544
+    m_Bits: 20928
   maxDistance: 100
   detectTime: 1
   colliders: []
@@ -5872,6 +5872,7 @@ MonoBehaviour:
   shootChargeOneCycleTime: 1
   maxShootForce: 1200
   droppedItemSpawnPos: {fileID: 3151577699715661459}
+  animator: {fileID: 1426794900304426698}
   hookShootChargePercent: 0
 --- !u!95 &1860153339421768247
 Animator:
@@ -5991,6 +5992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 1
   syncInterval: 0.02
+  diamondPrefab: {fileID: 4273496871896645202, guid: 113f1df07d7042a4b93a23c0d811c2e7, type: 3}
 --- !u!114 &7101365055220562950
 MonoBehaviour:
   m_ObjectHideFlags: 0

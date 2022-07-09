@@ -108,7 +108,7 @@ namespace Mikrocosmos
         {
             Debug.Log($"Team {teamNumber} completed a transaction");
             float affinityIncreasment = this.GetSystem<IGlobalTradingSystem>()
-                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber), true);
+                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber), true, 0);
 
             if (buffSystem != null)
             {
@@ -233,7 +233,7 @@ namespace Mikrocosmos
         {
             DestroyBuyItem(currentBuyItemLists[index]);
         }
-        public void SwitchSellItem(TradingItemInfo switchedItem) {
+        public void SwitchSellItem(TradingItemInfo switchedItem, bool triggerCountdown) {
             
         }
 

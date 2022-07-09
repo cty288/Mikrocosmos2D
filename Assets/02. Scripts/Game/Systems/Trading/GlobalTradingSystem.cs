@@ -30,7 +30,7 @@ namespace Mikrocosmos
     
     public interface IGlobalTradingSystem : ISystem {
         AnimationCurve TradingCurve { get; set; }
-        float CalculateAffinityIncreasmentForOneTrade(float currentAffinityPrecent, bool IsPlanetBuy);
+        float CalculateAffinityIncreasmentForOneTrade(float currentAffinityPrecent, bool IsPlanetBuy, int price);
 
         float GetTotalAffinityWithTeam(int team);
 
@@ -163,11 +163,14 @@ namespace Mikrocosmos
                                         "Current Affinity for each completed trade. ")]
         public AnimationCurve TradingCurve { get; set; }
 
+        [SerializeField] private int standardPrice = 30;
         [ServerCallback]
-        public float CalculateAffinityIncreasmentForOneTrade(float currentAffinityPrecent, bool IsPlanetBuy) {
+        public float CalculateAffinityIncreasmentForOneTrade(float currentAffinityPrecent, bool IsPlanetBuy, int price) {
             float baseValue = TradingCurve.Evaluate(currentAffinityPrecent);
+            baseValue =  Mathf.Clamp((price / (float) standardPrice), 0.2f, 2f) * baseValue;
+
             if (IsPlanetBuy) {
-                baseValue *= 1.5f;
+               // baseValue *= 1.5f;
             }
             return baseValue;
         }

@@ -200,6 +200,8 @@ namespace Mikrocosmos
                 GameObject sellBubble = GenerateSellBubble(e.Price, generatedName, previousName,
                     generatedGoods.GoodRarity == GoodsRarity.RawResource);
                 if (sellBubble) {
+                    sellBubble.GetComponent<PlanetSellBubble>().ServerGoodsSelling = generatedGoods;
+                    sellBubble.GetComponent<PlanetSellBubble>().ServerGoodsObjectSelling = e.GeneratedItem;
                     e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellBubble.transform.Find("SellItemSpawnPos");
                     RpcGenerateSellBubble(e.Price, generatedName, previousName, generatedGoods.GoodRarity == GoodsRarity.RawResource);
                 }

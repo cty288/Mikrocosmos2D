@@ -154,19 +154,23 @@ namespace Mikrocosmos {
                 }
 
                 var enumerator = allSearchedServers.GetEnumerator();
-
-                for (int i = 0; i < TrRoomLayoutGroup.childCount; i++) {
-                    if (i < allSearchedServers.Count) {
-                        enumerator.MoveNext();
-                        TrRoomLayoutGroup.GetChild(i).gameObject.SetActive(true);
-                        DiscoveryResponse currentResponse = allSearchedServers[enumerator.Current.Key];
-                        TrRoomLayoutGroup.GetChild(i).GetComponent<RoomInfo>().SetRoomInfo(currentResponse);
-                    }
-                    else
+                if (TrRoomLayoutGroup) {
+                    for (int i = 0; i < TrRoomLayoutGroup.childCount; i++)
                     {
-                        TrRoomLayoutGroup.GetChild(i).gameObject.SetActive(false);
+                        if (i < allSearchedServers.Count)
+                        {
+                            enumerator.MoveNext();
+                            TrRoomLayoutGroup.GetChild(i).gameObject.SetActive(true);
+                            DiscoveryResponse currentResponse = allSearchedServers[enumerator.Current.Key];
+                            TrRoomLayoutGroup.GetChild(i).GetComponent<RoomInfo>().SetRoomInfo(currentResponse);
+                        }
+                        else
+                        {
+                            TrRoomLayoutGroup.GetChild(i).gameObject.SetActive(false);
+                        }
                     }
-                }
+            }
+               
            // }
            
           

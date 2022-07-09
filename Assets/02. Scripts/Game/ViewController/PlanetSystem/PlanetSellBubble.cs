@@ -17,6 +17,9 @@ namespace Mikrocosmos
         public int Price;
         //private static readonly int Tint = Shader.PropertyToID("_Tint");
         [SerializeField] private Sprite[] itemTypeSprites;
+
+        public IGoods ServerGoodsSelling;
+        public GameObject ServerGoodsObjectSelling;
         private void Awake() {
             priceText = transform.Find("SellPrice").GetComponent<Text>();
            

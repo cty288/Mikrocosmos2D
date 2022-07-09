@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.ResKit;
@@ -14,6 +15,7 @@ using Random = UnityEngine.Random;
 namespace Mikrocosmos {
     public enum HookAction {
         Hook,
+        BuyWhenHooked,
         UnHook,
         Shoot
     }
@@ -102,8 +104,8 @@ namespace Mikrocosmos {
         private Trigger2DCheck hookTrigger;
 
         private bool holdingHookButton = false;
-
-        private Animator animator;
+        [SerializeField]
+        private NetworkAnimator animator;
 
         private static ResLoader resLoader;
 
@@ -119,7 +121,7 @@ namespace Mikrocosmos {
         private void Awake() {
             model = GetBindedModel<ISpaceshipConfigurationModel>();
             hookTrigger = GetComponentInChildren<Trigger2DCheck>();
-            animator = GetComponent<Animator>();
+            animator = GetComponent<NetworkAnimator>();
             ResLoader.Create(loader => {
                 if (resLoader == null) {
                     resLoader = loader;
@@ -165,10 +167,10 @@ namespace Mikrocosmos {
                             HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                             HookedItem.Model.TryHook(netIdentity);
                             HookedItem.OnEntitySwitched(true);                            
-                            animator.SetBool("Hooking", true);
+                            animator.animator.SetBool("Hooking", true);
                         }
                         else {
-                            animator.SetBool("Hooking", false);
+                            animator.animator.SetBool("Hooking", false);
                             HookedItem = null;
                             HookedNetworkIdentity = null;
                         }
@@ -236,19 +238,19 @@ namespace Mikrocosmos {
                     HookedItem = nextItem.GetComponent<IHookableViewController>();
                     HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                     HookedItem.Model.TryHook(netIdentity);
-                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
+                    if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
                         HookedItem.OnEntitySwitched(true, 0.51f);
                     }
                     else {
                         HookedItem.OnEntitySwitched(true);
                     }
                     
-                    animator.SetBool("Hooking", true);
+                    animator.animator.SetBool("Hooking", true);
 
                 }
                 else
                 {
-                    animator.SetBool("Hooking", false);
+                    animator.animator.SetBool("Hooking", false);
                     HookedItem = null;
                     HookedNetworkIdentity = null;
                 }
@@ -276,8 +278,7 @@ namespace Mikrocosmos {
             }
 
             string itemName = "";
-            if (e.NewIdentity && e.NewIdentity.TryGetComponent<IHookable>(out IHookable hookable))
-            {
+            if (e.NewIdentity && e.NewIdentity.TryGetComponent<IHookable>(out IHookable hookable)) {
                 itemName = hookable.Name;
             }
 
@@ -321,7 +322,7 @@ namespace Mikrocosmos {
                     CheckHook();
                 }
 
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
+                if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
                     //animator.SetBool("Hooking", false);
                 }
             }
@@ -333,7 +334,7 @@ namespace Mikrocosmos {
         private void ServerReleaseHookButton() {
             holdingHookButton = false;
             HookAction targetAction = CheckHookAction();
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Hook"))
+            if (!animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Hook"))
             {
                 switch (targetAction)
                 {
@@ -342,6 +343,11 @@ namespace Mikrocosmos {
                         break;
                     case HookAction.UnHook:
                         UnHook();
+                        break;
+                    case HookAction.BuyWhenHooked:
+                        if (!TryBuyWhenHooking()) {
+                            UnHook();
+                        }
                         break;
                     case HookAction.Shoot:
                         TryShoot();
@@ -356,6 +362,8 @@ namespace Mikrocosmos {
                 GetComponent<NetworkAnimator>().ResetTrigger("StartHook");
             });
         }
+
+       
 
         [Command]
         public void CmdReleaseHookButton() {
@@ -406,6 +414,12 @@ namespace Mikrocosmos {
                         OldIdentity = null,
                         OwnerIdentity = netIdentity
                     });
+                    if (netIdentity && oldIdentity) {
+                        animator.SetTrigger("SwitchItem");
+                    }
+                    else {
+                        animator.animator.SetBool("Hooking", true);
+                    }
                     this.model.ServerUpdateMass();
                     return;
                 }
@@ -426,14 +440,18 @@ namespace Mikrocosmos {
                         HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                         HookedItem.Model.TryHook(netIdentity);
                         HookedItem.OnEntitySwitched(true);
+                        if (oldIdentity) {
+                            animator.SetTrigger("SwitchItem");
+                        }
+                        else {
+                            animator.animator.SetBool("Hooking", true);
+                        }
                     }
-                   
-                   
-                    animator.SetBool("Hooking", true);
-
-                }
-                else {
-                    animator.SetBool("Hooking", false);
+                    else {
+                        animator.animator.SetBool("Hooking", false);
+                    }
+                }else {
+                    animator.animator.SetBool("Hooking", false);
                     HookedItem = null;
                     HookedNetworkIdentity = null;
                 }
@@ -546,6 +564,35 @@ namespace Mikrocosmos {
                 model.ServerUpdateMass();
             }
         }
+        private bool TryBuyWhenHooking() {
+            if (!HookedItem.Model.CanBeAddedToInventory || HookedNetworkIdentity==null || HookedNetworkIdentity.GetComponent<IGoods>()==null) {
+                return false;
+            }
+            
+            List<PlanetSellBubble> allSellBubbles = hookTrigger.Colliders.FindAll((collider => collider.GetComponent<PlanetSellBubble>())).Select(collider => collider.GetComponent<PlanetSellBubble>()).ToList();
+            PlanetSellBubble targetBubble = null;
+            foreach (PlanetSellBubble bubble in allSellBubbles) {
+                if (bubble.ServerGoodsSelling != null && bubble.ServerGoodsObjectSelling && bubble.ServerGoodsSelling.Name ==
+                    HookedNetworkIdentity.GetComponent<IGoods>().Name) {
+                    targetBubble = bubble;
+                    break;
+                }
+            }
+
+            if (targetBubble == null) {
+                return false;
+            }
+
+            IGoods targetGoods = targetBubble.ServerGoodsSelling;
+            GameObject targetObj = targetBubble.ServerGoodsObjectSelling;
+            if (targetGoods.TryHook(netIdentity)) {
+                inventorySystem.ServerAddToBackpack(targetGoods.Name, targetObj);
+            }
+
+            return true;
+        }
+
+        
 
         [ServerCallback]
         public void UnHook(bool isShoot = false) {
@@ -570,7 +617,7 @@ namespace Mikrocosmos {
                     
                     HookedItem = null;
                     HookedNetworkIdentity = null;
-                    animator.SetBool("Hooking", false);
+                    animator.animator.SetBool("Hooking", false);
                 }
                 
             }
@@ -620,7 +667,7 @@ namespace Mikrocosmos {
 
                         HookedItem = vc;
                         HookedNetworkIdentity = identity.GetComponent<NetworkIdentity>();
-                        animator.SetBool("Hooking", true);
+                        animator.animator.SetBool("Hooking", true);
                         checkingHook = false;
                         if (HookedItem.Model.CanBeAddedToInventory)
                         {
@@ -702,7 +749,7 @@ namespace Mikrocosmos {
 
         [ServerCallback]
         private void TryHook() {
-            if (model.HookState == HookState.Freed && animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking")) {
+            if (model.HookState == HookState.Freed && animator.animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking")) {
                 GetComponent<NetworkAnimator>().SetTrigger("StartHook");
             }
 
@@ -717,6 +764,9 @@ namespace Mikrocosmos {
             }
             if (hookHoldTimer <= shootTimeThreshold) {
                 if (HookedItem != null) {
+                    if (hookTrigger.Triggered && hookTrigger.Colliders.Find((c => c.gameObject.layer == LayerMask.NameToLayer("PlanetSellBubble")))) {
+                        return HookAction.BuyWhenHooked;
+                    }
                     return HookAction.UnHook;
                 }
                 return HookAction.Hook;

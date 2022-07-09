@@ -72,7 +72,7 @@ namespace Mikrocosmos
 
         void SwitchBuyItem(TradingItemInfo switchedItem, GoodsRarity rarity);
 
-        void SwitchSellItem(TradingItemInfo switchedItem);
+        void SwitchSellItem(TradingItemInfo switchedItem, bool triggerCountdown);
 
         void DestroyBuyItem(int index);
 
@@ -86,13 +86,18 @@ namespace Mikrocosmos
         public GameObject currentItemGameObject;
         public int currentItemPrice;
         public float buyTime;
+        public bool sellTimeCountdownTriggered;
+        public float sellTimeCountdown;
 
-        public TradingItemInfo(GoodsConfigure currentItemConfig, IGoods currentItem, GameObject currentItemGameObject, int currentItemPrice)
+        public TradingItemInfo(GoodsConfigure currentItemConfig, IGoods currentItem, GameObject currentItemGameObject, int currentItemPrice, bool sellTimeCountdownTriggered = false, float sellTimeCountdown = 3f)
         {
             this.currentItemConfig = currentItemConfig;
             this.currentItem = currentItem;
             this.currentItemGameObject = currentItemGameObject;
             this.currentItemPrice = currentItemPrice;
+            this.sellTimeCountdownTriggered = false;
+            this.sellTimeCountdown = sellTimeCountdown;
+            this.sellTimeCountdownTriggered = sellTimeCountdownTriggered;
         }
     }
     public class PlanetTradingSystem : AbstractNetworkedSystem, IPlanetTradingSystem
@@ -121,7 +126,7 @@ namespace Mikrocosmos
 
         [SyncVar, SerializeField] private int sellItemCount = 1;
         [SyncVar, SerializeField] private int buyItemCount = 2;
-
+        [SerializeField] private float sellItemMaxCountdown = 3f;
 
         [SerializeField]
         private List<TradingItemInfo> currentBuyItemLists = new List<TradingItemInfo>();
@@ -151,7 +156,7 @@ namespace Mikrocosmos
             }
 
             for (int i = 0; i < sellItemCount; i++) {
-                SwitchSellItem(null);
+                SwitchSellItem(null, false);
             }
           
             
@@ -196,9 +201,9 @@ namespace Mikrocosmos
                     TeamNumber = playerTeam
                 });
 
-                //currentSellItemLists.Remove(info);
-                SwitchSellItem(info);
-                ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>(), false);
+                currentSellItemLists.Remove(info);
+                SwitchSellItem(info, true);
+                ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>(), false, currentSellingItem.RealPrice);
                 TargetOnBuyItemSuccess(e.HookedByIdentity.connectionToClient);
             }
 
@@ -229,7 +234,7 @@ namespace Mikrocosmos
 
                     //SwitchBuyItem();
 
-                    ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>(), true);
+                    ChangeAffinity(playerTeam, e.HookedByIdentity.GetComponent<IBuffSystem>(), true, info.currentItemPrice);
 
                     //this.SendEvent<OnServerPlayerMoneyNotEnough>(new OnServerPlayerMoneyNotEnough() {
                     // PlayerIdentity = e.HookedByIdentity
@@ -246,11 +251,11 @@ namespace Mikrocosmos
 
 
         [ServerCallback]
-        private void ChangeAffinity(int teamNumber, IBuffSystem buffSystem, bool isPlanetBuy)
+        private void ChangeAffinity(int teamNumber, IBuffSystem buffSystem, bool isPlanetBuy, int price)
         {
             Debug.Log($"Team {teamNumber} completed a transaction");
             float affinityIncreasment = this.GetSystem<IGlobalTradingSystem>()
-                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber), isPlanetBuy);
+                .CalculateAffinityIncreasmentForOneTrade(GetAffinityWithTeam(teamNumber), isPlanetBuy, price);
 
             if (buffSystem != null) {
                 if (buffSystem.HasBuff<PermanentAffinityBuff>(out PermanentAffinityBuff affinityBuff)) {
@@ -322,6 +327,16 @@ namespace Mikrocosmos
                 buyItem.buyTime -= Time.deltaTime;
             }
 
+            foreach (TradingItemInfo info in currentSellItemLists) {
+                if (info.sellTimeCountdownTriggered) {
+                    info.sellTimeCountdown -= Time.deltaTime;
+                    if (info.sellTimeCountdown <= 0) {
+                        SwitchSellItem(info, false);
+                        break;
+                    }
+                }
+            }
+
             currentBuyItemLists.Where((info => info.buyTime <= 0)).ToList()
                 .ForEach((info => SwitchBuyItem(info, info.currentItem.GoodRarity)));
         }
@@ -329,55 +344,67 @@ namespace Mikrocosmos
        
 
         [ServerCallback]
-        public void SwitchSellItem(TradingItemInfo switchedItem)
+        public void SwitchSellItem(TradingItemInfo switchedItem, bool triggerCountdown)
         {
             if (switchedItem != null) {
                 currentSellItemLists.Remove(switchedItem);
             }
-
+            GoodsConfigure selectedGoodsConfigure = null;
 
             if (currentSellItemLists.Count < sellItemCount) {
-                List<GoodsConfigure> rawMaterials = sellPackageModel.GetSellItemsWithRarity(GoodsRarity.RawResource);
-                List<GoodsConfigure> secondaryMaterials = sellPackageModel.GetSellItemsWithRarity(GoodsRarity.Secondary);
+              
+                if (!triggerCountdown) {
+                    List<GoodsConfigure> rawMaterials = sellPackageModel.GetSellItemsWithRarity(GoodsRarity.RawResource);
+                    List<GoodsConfigure> secondaryMaterials = sellPackageModel.GetSellItemsWithRarity(GoodsRarity.Secondary);
 
-                List<GoodsConfigure> targetList = secondaryMaterials;
+                    List<GoodsConfigure> targetList = secondaryMaterials;
 
 
-                if (rawMaterials.Any() && secondaryMaterials.Any()) {
-                    float chance = Random.Range(0f, 1f);
-                    if (chance <= itemRarity[0]) {
+                    if (rawMaterials.Any() && secondaryMaterials.Any()) {
+                        float chance = Random.Range(0f, 1f);
+                        if (chance <= itemRarity[0]) {
+                            targetList = rawMaterials;
+                        }
+                        else {
+                            targetList = secondaryMaterials;
+                        }
+                    }
+                    else
+                    {
                         targetList = rawMaterials;
                     }
-                    else {
-                        targetList = secondaryMaterials;
+
+
+                    //Remove all items in targetList that are already in currentSellItemLists
+                    targetList.RemoveAll(item => currentSellItemLists.Any(item2 =>
+                        item2.currentItem.Name == item.Good.Name || item.Good.Name == switchedItem?.currentItem.Name));
+
+                    if (targetList.Count == 0)
+                    {
+                        targetList.Add(currentSellItemLists[Random.Range(0, currentSellItemLists.Count)].currentItemConfig);
+                    }
+
+
+
+                    
+
+                    while (selectedGoodsConfigure == null || selectedGoodsConfigure.Good.Name == switchedItem?.currentItem.Name)
+                    {
+                        if (targetList.Count == 1)
+                        {
+                            selectedGoodsConfigure = targetList[0];
+                            break;
+                        }
+
+                        selectedGoodsConfigure = this.GetSystem<IGlobalTradingSystem>().PlanetRequestSellItem(targetList);
+                        targetList.Remove(selectedGoodsConfigure);
                     }
                 }
                 else {
-                    targetList = rawMaterials;
+                    selectedGoodsConfigure = switchedItem.currentItemConfig;
                 }
-
-
-                //Remove all items in targetList that are already in currentSellItemLists
-                targetList.RemoveAll(item => currentSellItemLists.Any(item2 =>
-                    item2.currentItem.Name == item.Good.Name || item.Good.Name == switchedItem?.currentItem.Name));
-
-                if (targetList.Count == 0) {
-                    targetList.Add(currentSellItemLists[Random.Range(0, currentSellItemLists.Count)].currentItemConfig);
-                }
-
-
-
-                GoodsConfigure selectedGoodsConfigure = null;
-
-                while (selectedGoodsConfigure == null  || selectedGoodsConfigure.Good.Name == switchedItem?.currentItem.Name) {
-                    if (targetList.Count == 1) {
-                        selectedGoodsConfigure = targetList[0];
-                        break;
-                    }
-                    
-                    selectedGoodsConfigure = this.GetSystem<IGlobalTradingSystem>().PlanetRequestSellItem(targetList);
-                    targetList.Remove(selectedGoodsConfigure);
-                }
+               
+                
 
             
               
@@ -396,8 +423,11 @@ namespace Mikrocosmos
                 int currentSellingItemPrice = Random.Range(basePrice - offset, basePrice + offset + 1);
                 currentSellingItemPrice = Mathf.Max(currentSellingItemPrice, 1);
                 currentSellingItem.RealPrice = currentSellingItemPrice;
+
+
+
                 currentSellItemLists.Add(new TradingItemInfo(currentSellingItemConfig, currentSellingItem,
-                    currentSellingItemObject, currentSellingItemPrice));
+                    currentSellingItemObject, currentSellingItemPrice, triggerCountdown));
                 
 
                 this.SendEvent<OnServerPlanetGenerateSellItem>(new OnServerPlanetGenerateSellItem()
@@ -408,6 +438,10 @@ namespace Mikrocosmos
                     CountTowardsGlobalIItemList = true,
                     PreviousItem = previousSellingItem
                 });
+
+                if (switchedItem!=null && !switchedItem.currentItem.TransactionFinished) {
+                    NetworkServer.Destroy(previousSellingItem);
+                }
             }
             else if(switchedItem!=null){
                 this.SendEvent<OnServerPlanetDestroySellItem>(new OnServerPlanetDestroySellItem() {

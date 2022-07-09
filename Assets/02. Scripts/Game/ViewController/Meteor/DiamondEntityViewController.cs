@@ -38,7 +38,7 @@ namespace Mikrocosmos
 
         private void OnEnable() {
             startDetect = false;
-            this.GetSystem<ITimeSystem>().AddDelayTask(0.4f, () => {
+            this.GetSystem<ITimeSystem>().AddDelayTask(0.6f, () => {
                 startDetect = true;
             });
         }
@@ -85,8 +85,11 @@ namespace Mikrocosmos
             //find the player that is closest to this object
             float closestDistance = float.MaxValue;
             int closestIndex = -1;
-            for (int i = 0; i < players.Count; i++)
-            {
+            for (int i = 0; i < players.Count; i++) {
+                if (players[i].GetComponent<ISpaceshipConfigurationModel>().CurrentHealth <= 0) {
+                    continue;
+                }
+                
                 float distance = Vector2.Distance(players[i].transform.position, transform.position);
                 if (distance < closestDistance)
                 {

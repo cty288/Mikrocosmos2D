@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5650487909868623853}
   - component: {fileID: 6347246023000867053}
   - component: {fileID: 6256694501442945532}
+  - component: {fileID: 6770163400799450945}
   m_Layer: 7
   m_Name: Trigger
   m_TagString: Untagged
@@ -74,6 +75,27 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 4544
+--- !u!50 &6770163400799450945
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8146538265801812984}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1001 &3418294474227853830
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -61,25 +61,34 @@ namespace Mikrocosmos {
         
 
         private void OnBackToMenuClicked() {
-           QuitRoom();
-           Invoke(nameof(QuitRoom), 0.3f);
+            StartCoroutine(QuitRoom());
+            //Invoke(nameof(QuitRoom), 0.3f);
             //SceneManager.LoadScene(0);
         }
 
-        private void QuitRoom() {
+        private IEnumerator QuitRoom() {
             if (NetworkServer.active)
             {
                 NetworkServer.DisconnectAll();
                 NetworkServer.Shutdown();
+                yield return new WaitForSeconds(0.1f);
                 NetworkServer.DisconnectAll();
                 NetworkServer.Shutdown();
+                NetworkClient.Shutdown();
+                NetworkClient.Disconnect();
+                //NetworkClient.Shutdown();
+                yield return new WaitForSeconds(0.1f);
+                SceneManager.LoadScene(0);
             }
-            else if (NetworkClient.active)
-            {
-                NetworkClient.Disconnect();
-                NetworkClient.Shutdown();
-                NetworkClient.Disconnect();
-                NetworkClient.Shutdown();
+            else if (NetworkClient.active) {
+                //NetworkClient.Disconnect();
+                //NetworkClient.connection.Disconnect();
+                //NetworkClient.Shutdown();
+                //NetworkClient.Disconnect();
+                //NetworkClient.Shutdown();
+                //Transport.activeTransport.ClientDisconnect();
+                
+                this.GetSystem<IRoomMatchSystem>().CmdQuitRoom(NetworkClient.localPlayer);
             }
             else
             {
