@@ -113,7 +113,7 @@ namespace Mikrocosmos
         private void OnMissionAnnounceWinners(OnMissionAnnounceWinners e) {
             Dictionary<NetworkMainGamePlayer, List<string>> playerToRewardNames = RewardsFactory.Singleton.AssignRewardsToPlayers(e.Winners, e.Difficulty);
             int difficulty = (Mathf.CeilToInt(e.Difficulty / 0.333334f));
-
+            
             List<string> winnerNames = new List<string>();
             foreach (NetworkMainGamePlayer winner in e.Winners) {
                 winnerNames.Add(winner.matchInfo.Name);

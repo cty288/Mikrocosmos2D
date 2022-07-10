@@ -32,6 +32,10 @@ namespace Mikrocosmos
         Opponent,
         Teammate
     }
+
+    public struct OnCriminalKilledByHunter {
+        public NetworkIdentity Hunter;
+    }
     public class BountyHunterSystem : AbstractNetworkedSystem, IBountyHunterSystem {
         [SerializeField] private int minimumVictiumToTriggerBountyHunter = 3;
 
@@ -69,6 +73,7 @@ namespace Mikrocosmos
                     killerTradingSystem.ReceiveMoney(bounty);
                 }
 
+                this.SendEvent<OnCriminalKilledByHunter>(new OnCriminalKilledByHunter() {Hunter = e.Killer});
                 RpcOnCriminalKilled(e.Killer.GetComponent<PlayerSpaceship>().Name, suspect.KillerName, bounty, e.SpaceshipIdentity);
             }
         }

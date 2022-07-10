@@ -59,6 +59,7 @@ namespace Mikrocosmos
         public bool IsSell;
         public GameObject Planet;
         public int TeamNumber;
+        public NetworkIdentity Trader;
     }
 
 
@@ -198,7 +199,8 @@ namespace Mikrocosmos
                     IsSell = true,
                     Price = currentSellingItem.RealPrice,
                     Planet = gameObject,
-                    TeamNumber = playerTeam
+                    TeamNumber = playerTeam,
+                    Trader = e.HookedByIdentity
                 });
 
                 currentSellItemLists.Remove(info);
@@ -229,7 +231,8 @@ namespace Mikrocosmos
                         IsSell = false,
                         Price = info.currentItemPrice,
                         Planet = gameObject,
-                        TeamNumber = playerTeam
+                        TeamNumber = playerTeam,
+                        Trader = e.HookedByIdentity
                     });
 
                     //SwitchBuyItem();

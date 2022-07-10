@@ -87,7 +87,8 @@ namespace Mikrocosmos
                         IsSell = false,
                         Price = info.currentItemPrice,
                         Planet = gameObject,
-                        TeamNumber = playerTeam
+                        TeamNumber = playerTeam,
+                        Trader = e.HookedByIdentity
                     });
 
                     //SwitchBuyItem();
