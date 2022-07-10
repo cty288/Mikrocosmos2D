@@ -710,6 +710,8 @@ GAME_COUNTDOWN_TIE,,Almost there -- Follow the path we believed in,,,,,,,,,,,,,,
 GAME_MISSION_UPCOMING,,Mission Upcoming!,,,,,,,,,,,,,,,,,任务即将开始！,任務即將開始！,,,,,,,,,
 GAME_INFO_EYE_DETECT,,"Your Eye just detected an 
 intruder!",,,,,,,,,,,,,,,,,你的眼刚刚侦测到了一个入侵者！,你的眼剛剛偵測到了一個入侵者！,,,,,,,,,
+GAME_INFO_PICKAXE,,Hook this item to get a pickaxe. The pickaxe has the maximum efficiency to mine meteors.,,,,,,,,,,,,,,,,,钩住这个物品以获得稿子。稿子是挖矿效率最高的工具,鉤住這個物品以獲得稿子。稿子是挖礦效率最高的工具,,,,,,,,,
+GAME_INFO_VALVE,,Hook this item to get more initial funds. You can trade with planets to build early advantages,,,,,,,,,,,,,,,,,钩住这个物品以获得更多起始资金。你可以用这些金币交易以建立前期优势,鉤住這個物品以獲得更多起始資金。你可以用這些金幣交易以建立前期優勢,,,,,,,,,
 BUFF系统,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 GAME_BUFF_DIE,,Lost Control,,,,,,,,,,,,,,,,,失去控制,失去控制,,,,,,,,,
 GAME_BUFF_DIE_DESCRIPTION,,Warning! The ship's control system was damaged by the impact and is self-repairing...,,,,,,,,,,,,,,,,,你的飞船受到严重打击，正在进行自我修复...,你的飛船受到嚴重打擊，正在進行自我修復...,,,,,,,,,

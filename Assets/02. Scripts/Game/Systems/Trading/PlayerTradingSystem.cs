@@ -30,7 +30,7 @@ namespace Mikrocosmos
 
 
         [SerializeField] private GameObject diamondPrefab;
-        [field: SyncVar(hook = nameof(OnClientMoneyChange))]
+        [field: SyncVar(hook = nameof(OnClientMoneyChange)), SerializeField]
         public int Money { get; set; } = 50;
 
 

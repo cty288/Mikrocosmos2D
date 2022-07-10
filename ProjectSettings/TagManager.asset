@@ -16,6 +16,8 @@ TagManager:
   - Team1Spawn
   - Team2Spawn
   - Origin
+  - Team2ValveSpawn
+  - Team1ValveSpawn
   layers:
   - Default
   - TransparentFX

@@ -415,7 +415,7 @@ namespace Mikrocosmos {
                         OwnerIdentity = netIdentity
                     });
                     if (netIdentity && oldIdentity) {
-                        animator.SetTrigger("SwitchItem");
+                        // animator.SetTrigger("SwitchItem");
                     }
                     else {
                         animator.animator.SetBool("Hooking", true);
@@ -441,7 +441,7 @@ namespace Mikrocosmos {
                         HookedItem.Model.TryHook(netIdentity);
                         HookedItem.OnEntitySwitched(true);
                         if (oldIdentity) {
-                            animator.SetTrigger("SwitchItem");
+                          //  animator.SetTrigger("SwitchItem");
                         }
                         else {
                             animator.animator.SetBool("Hooking", true);
