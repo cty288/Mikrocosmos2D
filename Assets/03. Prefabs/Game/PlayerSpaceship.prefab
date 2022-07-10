@@ -602,6 +602,7 @@ GameObject:
   - component: {fileID: 1066491073680755984}
   - component: {fileID: 8267636105090644251}
   - component: {fileID: -4202198879838847946}
+  - component: {fileID: 2612447642603113994}
   m_Layer: 6
   m_Name: PlayerSpaceship
   m_TagString: Untagged
@@ -1014,6 +1015,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   permanentLevelDeduceWhenDie: 1
+  minimumPermanentBuffLevelToDeduct: 3
 --- !u!114 &-4202198879838847946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,6 +1030,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+--- !u!114 &2612447642603113994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986015997137912893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75f8cee7c1e79947a2880e3526a667b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  multiKillTimeInterval: 30
 --- !u!1 &8268555120520065621
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,8 +6196,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 623387098172900922, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1426008559985661586, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: positionRelativeTo
+      value: 
+      objectReference: {fileID: 7986015997137912839}
     - target: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

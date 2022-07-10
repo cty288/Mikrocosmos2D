@@ -18,8 +18,11 @@ namespace Mikrocosmos
         private void OnTriggerEnter2D(Collider2D col) {
             if (NetworkServer.active) {
                 if (col.gameObject.TryGetComponent<PlayerSpaceship>(out PlayerSpaceship spaceship)) {
-                    OnPlayerEnterTrigger?.Invoke(spaceship);
-                    playersInTrigger.Add(spaceship);
+                    if (!playersInTrigger.Contains(spaceship)) {
+                        OnPlayerEnterTrigger?.Invoke(spaceship);
+                        playersInTrigger.Add(spaceship);
+                    }
+                    
                 }
             }
         }

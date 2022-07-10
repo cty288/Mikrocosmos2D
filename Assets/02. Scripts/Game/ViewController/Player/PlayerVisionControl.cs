@@ -106,6 +106,8 @@ namespace Mikrocosmos
 
         public override void OnStartClient() {
             base.OnStartClient();
+            this.RegisterEvent<OnClientSpaceshipCriminalityUpdate>(OnClientSpaceshipCriminalityUpdate)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
             if (!hasAuthority) {
                 visionRenderLight.SetActive(false);
                 fovVision.SetActive(false);
@@ -118,10 +120,33 @@ namespace Mikrocosmos
                 mapIconCanAlwaysSeenByLocalPlayer = true;
                // mapVisionRenderLight.SetActive(true);
                 mapFovVision.SetActive(true);
-                if (AlsoMaskedOnMap) {
+                //if (AlsoMaskedOnMap) {
+                foreach (SpriteRenderer sprite in visionAffectedSpritesOnMap) {
+                    sprite.material = Material.Instantiate(defaultSpriteLitMaterial);
+                    }
+                //}
+            }
+        }
+
+        private void OnClientSpaceshipCriminalityUpdate(OnClientSpaceshipCriminalityUpdate e) {
+            if (e.SpaceshipIdentity == netIdentity) {
+                if (e.Criminality > 0) {
+                    mapIconCanAlwaysSeenByLocalPlayer = true;
                     foreach (SpriteRenderer sprite in visionAffectedSpritesOnMap) {
                         sprite.material = Material.Instantiate(defaultSpriteLitMaterial);
                     }
+                }
+                else {
+                    int currentTeam = this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team;
+                    if (GetComponent<PlayerSpaceship>().ThisSpaceshipTeam != currentTeam) {
+                        mapIconCanAlwaysSeenByLocalPlayer = false;
+                        
+                        foreach (SpriteRenderer sprite in visionAffectedSpritesOnMap) {
+                            sprite.material = Material.Instantiate(visionEntityMaterial);
+                        }
+                        
+                    }
+
                 }
             }
         }

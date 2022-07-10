@@ -5634,6 +5634,7 @@ GameObject:
   - component: {fileID: -9087939266485156837}
   - component: {fileID: 551173345831575283}
   - component: {fileID: -7163176095287178716}
+  - component: {fileID: 7279632764201083873}
   m_Layer: 6
   m_Name: PlayerSpaceship2
   m_TagString: Untagged
@@ -6048,6 +6049,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   permanentLevelDeduceWhenDie: 1
+  minimumPermanentBuffLevelToDeduct: 3
 --- !u!114 &-7163176095287178716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6062,6 +6064,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+--- !u!114 &7279632764201083873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986015997137912893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b75f8cee7c1e79947a2880e3526a667b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  multiKillTimeInterval: 30
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0
@@ -11101,10 +11118,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerInfoCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 623387098172900922, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 1426008559985661586, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: positionRelativeTo
+      value: 
+      objectReference: {fileID: 7986015997137912839}
     - target: {fileID: 2818408610276081776, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -11193,10 +11210,6 @@ PrefabInstance:
       propertyPath: positionRelativeTo
       value: 
       objectReference: {fileID: 7986015997137912839}
-    - target: {fileID: 5016221255185957216, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
-      propertyPath: m_FontData.m_Font
-      value: 
-      objectReference: {fileID: 12800000, guid: 5e8c399e261896c468e662245f7f07aa, type: 3}
     - target: {fileID: 6180481581461423348, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: positionRelativeTo
       value: 

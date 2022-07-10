@@ -35,6 +35,7 @@ namespace Mikrocosmos
 
     public struct OnPlayerDie {
         public NetworkIdentity SpaceshipIdentity;
+        public NetworkIdentity Killer;
     }
 
     public struct OnClientSpaceshipHooked {
@@ -355,7 +356,8 @@ namespace Mikrocosmos
                });
 
                this.SendEvent<OnPlayerDie>(new OnPlayerDie() {
-                   SpaceshipIdentity = netIdentity
+                   SpaceshipIdentity = netIdentity,
+                   Killer = damageDealer
                });
            }
         }

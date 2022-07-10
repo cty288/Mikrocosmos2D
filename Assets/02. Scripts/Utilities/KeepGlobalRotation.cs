@@ -10,15 +10,16 @@ namespace Mikrocosmos{
 
         [SerializeField] private Transform positionRelativeTo;
 
+        [SerializeField]
         private Vector3 positionOffset;
-        private void Awake() {
-            positionOffset = positionRelativeTo.position - transform.position;
+        private void OnEnable() {
+            //positionOffset = positionRelativeTo.position - transform.position;
         }
 
         private void Update() {
             transform.rotation = Quaternion.Euler(rotation);
             if (positionRelativeTo) {
-                transform.position = positionRelativeTo.position - positionOffset;
+                transform.position = positionRelativeTo.position + positionOffset;
             }
           
         }

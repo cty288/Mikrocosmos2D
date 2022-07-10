@@ -36,7 +36,7 @@ namespace Mikrocosmos
             missionNameText.text = e.MissionNameLocalized + Localization.Get("GAME_MISSION_WINNER");
             rewardsText.text = "";
             for (int i = 0; i < e.RewardNames.Count; i++) {
-                rewardsText.text += $"-{e.RewardNames[i]}";
+                rewardsText.text += $"-  {e.RewardNames[i]}";
                 if (i != e.RewardNames.Count - 1) {
                     rewardsText.text += "\n";
                 }

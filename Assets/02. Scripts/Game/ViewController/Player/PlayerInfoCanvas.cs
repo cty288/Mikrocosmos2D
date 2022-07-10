@@ -9,6 +9,7 @@ using MikroFramework.TimeSystem;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 using UnityEngine.UI;
 
 namespace Mikrocosmos
@@ -26,15 +27,29 @@ namespace Mikrocosmos
         private float healthBarFadeTimer = 0;
         private bool healthBarFadeWaiting = false;
 
+        private Image crimeLevelImage;
       
         
         private void Awake() {
         
             this.RegisterEvent<OnClientSpaceshipHealthChange>(OnSpaceshipHealthChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
-
+            this.RegisterEvent<OnClientSpaceshipCriminalityUpdate>(OnClientSpaceshipCriminalityUpdate)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
             playerHealthBarBG = transform.Find("PlayerHealthBarBG").GetComponent<Image>();
             playerHealthBar = playerHealthBarBG.transform.Find("PlayerHealthBar").GetComponent<Image>();
+            crimeLevelImage = transform.Find("CrimeLevelImage").GetComponent<Image>();
+        }
+
+        private void OnClientSpaceshipCriminalityUpdate(OnClientSpaceshipCriminalityUpdate e) {
+            if (e.SpaceshipIdentity == GetComponentInParent<NetworkIdentity>()) {
+                if (e.Criminality > 0) {
+                    crimeLevelImage.gameObject.SetActive(true);
+                }
+                else {
+                    crimeLevelImage.gameObject.SetActive(false);
+                }
+            }
         }
 
         private void OnSpaceshipHealthChange(OnClientSpaceshipHealthChange e) {

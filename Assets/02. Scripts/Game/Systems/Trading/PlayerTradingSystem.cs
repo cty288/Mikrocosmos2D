@@ -122,7 +122,7 @@ namespace Mikrocosmos
             for (int i = 0; i < moneyList.Count; i++)
             {
                 GameObject diamond = NetworkedObjectPoolManager.Singleton.Allocate(diamondPrefab);
-                diamond.transform.position = transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
+                diamond.transform.position = transform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), 0);
                 //randomly set diamond's rotation
                 diamond.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
                 //set diamond's money

@@ -18,7 +18,7 @@ namespace Mikrocosmos
         }
 
         private void OnEntityTakeDamage(OnEntityTakeDamage e) {
-            if (e.DamageSource.GetComponent<ISpaceshipConfigurationModel>() != null) {
+            if (e.DamageSource &&  e.DamageSource.GetComponent<ISpaceshipConfigurationModel>() != null) {
                 Vector3 spawnOffset = Vector3.zero;
                 if (e.EntityIdentity.TryGetComponent<IDamagableViewController>(out IDamagableViewController damagableViewController)) {
                     spawnOffset = damagableViewController.DamageTextSpawnOffset;
