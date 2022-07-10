@@ -10,7 +10,12 @@ namespace Mikrocosmos
 {
     public interface IPlayerStatsSystem : ISystem {
         public int Score { get; }
-        
+        int EffectiveKills { get; }
+        int TotalKills { get; }
+        int TotalMoneyEarned { get; }
+        int TotalTransactions { get; }
+        int EffectiveDamage { get; }
+        int TotalDie { get; }
     }
 
     public struct OnPlayerMultiKillUpdate {
@@ -28,10 +33,26 @@ namespace Mikrocosmos
 
         //Not counting killing teammates
         private int effectiveKills = 0;
+
+        public int EffectiveKills => effectiveKills;
         private int totalKills = 0;
+
+        public int TotalKills => totalKills;
+        private int totalMoneyEarned = 0;
+
+        public int TotalMoneyEarned => totalMoneyEarned;
         private int killTeammatesCount = 0;
+        
+        private int totalTransactions = 0;
+
+        public int TotalTransactions => totalTransactions;
 
         private int effectiveDamage = 0;
+
+        public int EffectiveDamage => effectiveDamage;
+        private int totalDie = 0;
+
+        public int TotalDie => totalDie;
 
         private int currentMultiKills = 0;
 
@@ -51,6 +72,14 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnMissionAnnounceWinners>(OnMissionAnnounceWinners)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnPlayerReceiveMoney>(OnPlayerReceiveMoney)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnPlayerReceiveMoney(OnPlayerReceiveMoney e) {
+            if (e.Player == netIdentity) {
+                totalMoneyEarned += e.MoneyReceived;
+            }
         }
 
         private void OnMissionAnnounceWinners(OnMissionAnnounceWinners e) {
@@ -68,6 +97,7 @@ namespace Mikrocosmos
         private void OnTransactionFinished(OnServerTransactionFinished e) {
             if (e.Trader == netIdentity) {
                 Score += globalScoreSystem.ScorePerTransactionMoney * e.Price;
+                totalTransactions++;
             }
         }
 
@@ -116,6 +146,7 @@ namespace Mikrocosmos
             }
             else { //if the dead player is this player
                 currentMultiKills = 0;
+                totalDie++;
             }
         }
 

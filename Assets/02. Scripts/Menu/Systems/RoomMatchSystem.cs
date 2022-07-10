@@ -92,6 +92,8 @@ namespace Mikrocosmos
 
         List<PlayerMatchInfo> ServerGetAllPlayerMatchInfoByTeamID(int team);
 
+        List<PlayerMatchInfo> ServerGetAllPlayerMatchInfo();
+
         [Command]
         void CmdRequestKickPlayer(int id, NetworkIdentity requester);
 
@@ -263,6 +265,10 @@ namespace Mikrocosmos
 
         public List<PlayerMatchInfo> ServerGetAllPlayerMatchInfoByTeamID(int team) {
             return teamPlayers[team];
+        }
+
+        public List<PlayerMatchInfo> ServerGetAllPlayerMatchInfo() {
+            return playerMatchInfos;
         }
 
         [Command(requiresAuthority = false)]

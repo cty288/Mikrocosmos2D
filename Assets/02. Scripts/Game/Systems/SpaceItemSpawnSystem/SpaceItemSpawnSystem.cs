@@ -22,7 +22,7 @@ namespace Mikrocosmos {
         public override void OnStartServer() {
             base.OnStartServer();
             globalTradingSystem = this.GetSystem<IGlobalTradingSystem>();
-            startingObjSpawnNum = NetworkManager.singleton.numPlayers * startingObjSpawnCountPerPlayer;
+          
             StartCoroutine(SpawnSpaceItems());
             SpawnValves();
         }
@@ -54,6 +54,7 @@ namespace Mikrocosmos {
 
         private IEnumerator SpawnSpaceItems() {
             yield return new WaitForEndOfFrame();
+              startingObjSpawnNum = NetworkManager.singleton.numPlayers * startingObjSpawnCountPerPlayer;
             List<GameObject> allGoodsWithLowPrice = globalTradingSystem.AllGoodsPrefabsInThisGame.Where(obj => {
                 return obj.GetComponent<IGoods>().BasicSellPrice <= 20;
             }).ToList();

@@ -59,9 +59,11 @@ namespace Mikrocosmos
 
         [SyncVar]
         private int teamIndex;
-        
-      
-        
+
+        private IGameProgressSystem gameProgressSystem;
+
+
+
         [ServerCallback]
         public void SetPlayerDisplayInfo(int team, int teamIndex, string name)
         {
@@ -81,7 +83,7 @@ namespace Mikrocosmos
             this.RegisterEvent<OnPlayerDie>(OnServerPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
             buffSystem.ServerRegisterCallback<DieBuff, BuffClientMessage>(RpcOnDizzyBuff);
             buffSystem.ServerRegisterCallback<InvincibleBuff, BuffClientMessage>(RpcOnInvincibleBuff);
-            
+           
         }
 
 
@@ -111,6 +113,10 @@ namespace Mikrocosmos
 
         [ServerCallback]
         protected override void OnServerUpdate() {
+            if (gameProgressSystem.GameState != GameState.InGame) {
+                return;
+            }
+
             if (isUsing) {
                 hookSystem.OnServerPlayerHoldUseButton();
             }
@@ -119,13 +125,16 @@ namespace Mikrocosmos
 
 
         [Command]
-        private void CmdUpdateCanControl(bool isControl)
-        {
+        private void CmdUpdateCanControl(bool isControl) {
+            if (gameProgressSystem.GameState != GameState.InGame) {
+                return;
+            }
             isControlling = isControl;
         }
 
         [Command]
         private void CmdUpdateUsing(bool isUsing) {
+            
             this.isUsing = isUsing;
             if (!isUsing) {
                 hookSystem.OnServerPlayerReleaseUseButton();
@@ -137,6 +146,10 @@ namespace Mikrocosmos
         [Command]
         private void CmdUpdateMousePosition(Vector2 mousePos)
         {
+            if (gameProgressSystem.GameState != GameState.InGame)
+            {
+                return;
+            }
             mousePosition = mousePos;
         }
 
@@ -146,6 +159,10 @@ namespace Mikrocosmos
             Vector2 forceDir = (mousePos - transform.position)
                 .normalized;
             Vector2 targetAddedVelocity = forceDir * GetModel().Acceleration * Time.fixedDeltaTime;
+            if (gameProgressSystem.GameState != GameState.InGame)
+            {
+                targetAddedVelocity = Vector2.zero;
+            }
             if (rigidbody.velocity.magnitude <= Model.MaxSpeed || (rigidbody.velocity + targetAddedVelocity).magnitude <
                 rigidbody.velocity.magnitude)
             {
@@ -158,6 +175,10 @@ namespace Mikrocosmos
         {
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;
             float angle = Mathf.Atan2(dir.y, dir.x) * (180 / Mathf.PI) + 90;
+            if (gameProgressSystem.GameState != GameState.InGame)
+            {
+                return;
+            }
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.4f);
             // rigidbody.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), 0.2f));
         }
@@ -165,6 +186,10 @@ namespace Mikrocosmos
         [Command]
         private void CmdScrollMouseWhell(bool up)
         {
+            if (gameProgressSystem.GameState != GameState.InGame)
+            {
+                return;
+            }
             int currentSlot = inventorySystem.GetCurrentSlot();
             inventorySystem.ServerSwitchSlot(currentSlot + (up ? -1 : 1));
         }
@@ -176,6 +201,10 @@ namespace Mikrocosmos
         [Command]
         private void CmdPressShortCut(int index)
         {
+            if (gameProgressSystem.GameState != GameState.InGame)
+            {
+                return;
+            }            
             int backpackCapacity = inventorySystem.GetSlotCount();
             if (index < backpackCapacity)
             {

@@ -255,6 +255,7 @@ namespace Mikrocosmos
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
                     targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum), netIdentity);
+                        //    NetworkRoomManager.singleton.
                 }
             }
            

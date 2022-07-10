@@ -40,6 +40,7 @@ namespace Mikrocosmos
             selfSprites.AddRange(selfSprites[0].GetComponentsInChildren<SpriteRenderer>());
             buffSystem = GetComponent<IBuffSystem>();
             animator = GetComponent<Animator>();
+            gameProgressSystem = this.GetSystem<IGameProgressSystem>();
         }
 
 
@@ -101,9 +102,11 @@ namespace Mikrocosmos
 
 
                 //take item & put item (not shoot)
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                  
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    if (gameProgressSystem.GameState != GameState.InGame) {
+                        return;
+                    }
+
                     if (!hookSystem.HookedNetworkIdentity) {
                         
                         hookWhenEmptyReleased = false;
@@ -120,7 +123,9 @@ namespace Mikrocosmos
 
                 if (Input.GetKeyUp(KeyCode.Space))
                 {
-                    
+                    if (gameProgressSystem.GameState != GameState.InGame) {
+                        return;
+                    }
                     if (!hookWhenEmptyReleased) {
                         hookWhenEmptyReleased = true;
                     }
@@ -178,10 +183,6 @@ namespace Mikrocosmos
                     foreach (ParticleSystem particle in particles) {
                         particle.loop = true;
                         particle.Play();
-
-                     
-                        
-
                     }
                 }
                 else {

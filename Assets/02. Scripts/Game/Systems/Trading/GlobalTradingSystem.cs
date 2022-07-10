@@ -52,9 +52,32 @@ namespace Mikrocosmos
         [SerializeField] private List<CompoundResourceRecipe> compoundResourceRecipes;
 
         [SerializeField] private GameObject craftingEffect;
-        [SerializeField] private List<GameObject> allGoodsPrefabsInThisGame;
+        [SerializeField] private List<GameObject> allGoodsPrefabsInThisGame = new List<GameObject>();
 
-        public List<GameObject> AllGoodsPrefabsInThisGame => allGoodsPrefabsInThisGame;
+        public List<GameObject> AllGoodsPrefabsInThisGame {
+            get {
+                if (allGoodsPrefabsInThisGame.Count == 0) {
+                    GameObject[] allPlanetObjects = GameObject.FindGameObjectsWithTag("Planet");
+                    List<IPlanetModel> planetModels = new List<IPlanetModel>();
+                    allPlanetObjects.Select((o => o.GetComponent<IPlanetModel>())).ToList()
+                        .ForEach(p => planetModels.Add(p));
+
+                    HashSet<GameObject> tempAllGoodsSet = new HashSet<GameObject>();
+
+                    foreach (var planet in planetModels)
+                    {
+                        foreach (var sellItem in planet.SellItemList)
+                        {
+                            tempAllGoodsSet.Add(sellItem.GoodPrefab);
+                        }
+                    }
+
+                    allGoodsPrefabsInThisGame = tempAllGoodsSet.ToList();
+                }
+
+                return allGoodsPrefabsInThisGame;
+            }
+        }
 
 
         private Dictionary<string, int> allCirculatingBuyItems = new Dictionary<string, int>();

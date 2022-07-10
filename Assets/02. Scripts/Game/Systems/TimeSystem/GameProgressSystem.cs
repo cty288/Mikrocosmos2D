@@ -5,12 +5,17 @@ using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.BindableProperty;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Mikrocosmos
 {
-
+    public enum GameState {
+        InGame,
+        End
+    }
     public struct OnClientFinalCountdownTimerChange {
         public int Time;
     }
@@ -18,6 +23,9 @@ namespace Mikrocosmos
         
     }
 
+    public struct OnClientGameEnd {
+        public GameEndInfo GameEndInfo;
+    }
     public struct OnClientFinalCountDownTimerEnds {
         public int WinTeam;
         public List<string> WinNames;
@@ -27,6 +35,58 @@ namespace Mikrocosmos
 
     }
 
+    public class PlayerWinInfo {
+        public PlayerMatchInfo PlayerInfo;
+        public int Score;
+
+        public PlayerWinInfo(PlayerMatchInfo playerInfo, int score) {
+            PlayerInfo = playerInfo;
+            Score = score;
+        }
+
+        public PlayerWinInfo() {
+
+        }
+    }
+
+    public class CategoryWinner {
+        public CategoryWinningType CategoryWinningType;
+        public PlayerMatchInfo PlayerInfo;
+        public CategoryWinner(CategoryWinningType categoryWinningType, PlayerMatchInfo playerInfo)
+        {
+            CategoryWinningType = categoryWinningType;
+            PlayerInfo = playerInfo;
+        }
+
+        public CategoryWinner() {
+
+        }
+    }
+    public class GameEndInfo {
+        public int WinTeam;
+        public float Team1Affinity;
+        public List<PlayerWinInfo> PlayerWinInfos;
+        public List<CategoryWinner> CategoryWinners;
+
+        public GameEndInfo(int winTeam, float team1Affinity, List<PlayerWinInfo> playerWinInfos, List<CategoryWinner> categoryWinners) {
+            WinTeam = winTeam;
+            Team1Affinity = team1Affinity;
+            PlayerWinInfos = playerWinInfos;
+            CategoryWinners = categoryWinners;
+        }
+
+        public GameEndInfo() {
+            PlayerWinInfos = new List<PlayerWinInfo>();
+            CategoryWinners = new List<CategoryWinner>();
+        }
+    }
+
+    public enum CategoryWinningType {
+        MostTrade,
+        EarnMostMoney,
+        MostEffectiveKills,
+        DieLeast
+    }
     public interface IGameProgressSystem : ISystem {
         public BindableProperty<int> TotalTransactionTime { get; }
 
@@ -41,8 +101,14 @@ namespace Mikrocosmos
         /// </summary>
         /// <returns></returns>
         public Vector4 GetGameMapSize();
+
+        public GameState GameState { get; }
     }
     public class GameProgressSystem : AbstractNetworkedSystem, IGameProgressSystem {
+        [field: SerializeField, SyncVar] 
+        public GameState GameState { get; set; } = GameState.InGame;
+       
+
         protected DateTime globalTimer;
         [SerializeField] 
         private int globalTimerUpdateFrequencyInSeconds = 60;
@@ -55,8 +121,16 @@ namespace Mikrocosmos
         protected int finalCountDown = 60;
 
         [SerializeField] protected int finalCountdownTransactionThresholdPerPlayer = 15;
-        
 
+        private IGlobalScoreSystem globalScoreSystem;
+
+        [SerializeField] private CategoryWinningType[] categoryWinningTypes = new CategoryWinningType[] {
+            CategoryWinningType.MostTrade,
+            CategoryWinningType.EarnMostMoney,
+            CategoryWinningType.MostEffectiveKills,
+            CategoryWinningType.DieLeast
+        };
+        
         private bool finialCountDownStarted = false;
 
         private void Awake() {
@@ -66,12 +140,16 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             
-
+            
             this.RegisterEvent<OnServerTransactionFinished>(OnTransactionFinished)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
             globalTimer = DateTime.Now;
             StartCoroutine(GlobalTimerUpdate());
+            GameState = GameState.InGame;
+            this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
+                globalScoreSystem = this.GetSystem<IGlobalScoreSystem>();
+            });
         }
 
         IEnumerator GlobalTimerUpdate() {
@@ -105,11 +183,12 @@ namespace Mikrocosmos
             }
 
             if (winTeam != 0) {
-                List<PlayerMatchInfo> winPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(winTeam);
-                List<string> winNames = winPlayers.Select(x => x.Name).ToList();
-                
-                RpcOnFinialCountDownEnds(winTeam, winNames);
-            }else {
+                GameState = GameState.End;
+                GameEndInfo endInfo = GetGameEndInfo(winTeam);
+                //RpcOnFinialCountDownEnds(winTeam, winNames);
+                RpcOnGameEnd(endInfo);
+            }
+            else {
                 finalCountDown = 60;
                 StartCoroutine(FinalCountDownTimerStart());
                RpcOnTieTimerStarted();
@@ -125,6 +204,9 @@ namespace Mikrocosmos
             }
         }
 
+
+
+       
         [ServerCallback]
         protected void StartFinalCountDown() {
             finialCountDownStarted = true;
@@ -161,6 +243,19 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
+        protected void RpcOnGameEnd(GameEndInfo gameEndInfo) {
+            this.SendEvent<OnClientGameEnd>(new OnClientGameEnd() {
+                GameEndInfo = gameEndInfo
+            });
+            
+            Debug.Log($"All Winners: {gameEndInfo.PlayerWinInfos.Count}");
+            foreach (PlayerWinInfo info in gameEndInfo.PlayerWinInfos) {
+                Debug.Log($"All Winners: {info.PlayerInfo.Name} -- Score: {info.Score}");
+            }
+            Debug.Log($"All Winners -- Most Trade: {gameEndInfo.CategoryWinners[0].PlayerInfo.Name}");
+        }
+
+        [ClientRpc]
         protected void RpcOnTieTimerStarted()
         {
             this.SendEvent<OnTieTimerStart>();
@@ -184,6 +279,76 @@ namespace Mikrocosmos
                 });
             }
            
+        }
+
+
+        [ServerCallback]
+        private GameEndInfo GetGameEndInfo(int winTeam)
+        {
+            float team1Affinity = this.GetSystem<IGlobalTradingSystem>().GetTotalAffinityWithTeam(1);
+
+            List<PlayerMatchInfo> allPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo();
+            Dictionary<PlayerMatchInfo, IPlayerStatsSystem> playerToStats =
+                new Dictionary<PlayerMatchInfo, IPlayerStatsSystem>();
+
+
+            foreach (PlayerMatchInfo player in allPlayers) {
+                playerToStats.Add(player, player.Identity.connectionToClient.identity
+                    .GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.GetComponent<IPlayerStatsSystem>());
+            }
+
+
+            List<PlayerWinInfo> playerWinInfos = new List<PlayerWinInfo>();
+            foreach (PlayerMatchInfo player in allPlayers) {
+                playerWinInfos.Add(GetWinInfoForPlayer(player, playerToStats[player], winTeam));
+            }
+
+            playerWinInfos.Sort(((info1, info2) => -info1.Score.CompareTo(info2.Score)));
+            List<CategoryWinner> categoryWinners = new List<CategoryWinner>();
+            foreach (CategoryWinningType winningType in categoryWinningTypes) {
+                categoryWinners.Add(GetWinnerForCategory(winningType, playerToStats, allPlayers));
+            }
+
+            return new GameEndInfo(winTeam, team1Affinity, playerWinInfos, categoryWinners);
+        }
+
+        private PlayerWinInfo GetWinInfoForPlayer(PlayerMatchInfo player, IPlayerStatsSystem statsSystem, int winTeam) {
+            int score = statsSystem.Score;
+            if (winTeam == player.Team)
+            {
+                score = (Mathf.RoundToInt(score * globalScoreSystem.WinningTeamScoreMultiplier));
+            }
+
+            return new PlayerWinInfo(player, score);
+        }
+
+
+        
+        private CategoryWinner GetWinnerForCategory(CategoryWinningType winningType,
+            Dictionary<PlayerMatchInfo, IPlayerStatsSystem> allPlayersAndStats, List<PlayerMatchInfo> allPlayers) {
+            switch (winningType) {
+                case CategoryWinningType.DieLeast:
+                    allPlayers.Sort(((info1, info2) =>
+                        allPlayersAndStats[info1].TotalDie.CompareTo(allPlayersAndStats[info2].TotalDie)));
+                    return new CategoryWinner(winningType, allPlayers.First());
+                    break;
+                case CategoryWinningType.EarnMostMoney:
+                    allPlayers.Sort(((info1, info2) =>
+                        -allPlayersAndStats[info1].TotalMoneyEarned.CompareTo(allPlayersAndStats[info2].TotalMoneyEarned)));
+                    return new CategoryWinner(winningType, allPlayers.First());
+                    break;
+                case CategoryWinningType.MostEffectiveKills:
+                    allPlayers.Sort(((info1, info2) =>
+                        -allPlayersAndStats[info1].EffectiveKills.CompareTo(allPlayersAndStats[info2].EffectiveKills)));
+                    return new CategoryWinner(winningType, allPlayers.First());
+                    break;
+                case CategoryWinningType.MostTrade:
+                    allPlayers.Sort(((info1, info2) =>
+                        -allPlayersAndStats[info1].TotalTransactions.CompareTo(allPlayersAndStats[info2].TotalTransactions)));
+                    return new CategoryWinner(winningType, allPlayers.First());
+                    break;
+                default: return null;
+            }
         }
 
     }

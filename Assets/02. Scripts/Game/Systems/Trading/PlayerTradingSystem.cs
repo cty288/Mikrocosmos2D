@@ -4,6 +4,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 namespace Mikrocosmos
 {
@@ -16,6 +17,11 @@ namespace Mikrocosmos
 
     public struct OnClientMoneyNotEnough {
         
+    }
+
+    public struct OnPlayerReceiveMoney {
+        public NetworkIdentity Player;
+        public int MoneyReceived;
     }
     public interface IPlayerTradingSystem : ISystem
     {
@@ -47,6 +53,10 @@ namespace Mikrocosmos
 
         public void ReceiveMoney(int count) {
             Money += count;
+            this.SendEvent<OnPlayerReceiveMoney>(new OnPlayerReceiveMoney() {
+                Player = netIdentity,
+                MoneyReceived = count
+            });
         }
 
         public override void OnStartServer()
