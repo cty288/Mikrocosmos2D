@@ -4,16 +4,23 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-   // [ExecuteInEditMode]
+    [ExecuteInEditMode]
     public class UIParticle : MonoBehaviour
     {
         private List<ScaleData> scaleDatas = null;
+        [SerializeField]
+        private Camera camera;
+        
+        
         void Awake()
         {
+            
             scaleDatas = new List<ScaleData>();
-            foreach (ParticleSystem p in transform.GetComponentsInChildren<ParticleSystem>(true))
-            {
-                scaleDatas.Add(new ScaleData() { transform = p.transform, beginScale = p.transform.localScale });
+            foreach (ParticleSystem p in transform.GetComponentsInChildren<ParticleSystem>(true)) {
+                scaleDatas.Add(new ScaleData() {
+                    transform = p.transform, beginScale = p.transform.localScale, GravityScale = p.gravityModifier / camera.orthographicSize,
+                    ParticleSystem = p
+                });
             }
         }
 
@@ -24,10 +31,9 @@ namespace Mikrocosmos
             float designScale = designWidth / designHeight;
             float scaleRate = (float)Screen.width / (float)Screen.height;
 
-            foreach (ScaleData scale in scaleDatas)
-            {
-                if (scale.transform != null)
-                {
+            foreach (ScaleData scale in scaleDatas) {
+                if (scale.transform != null) {
+                    scale.ParticleSystem.gravityModifier = scale.GravityScale * camera.orthographicSize;
                     if (scaleRate < designScale)
                     {
                         float scaleFactor = scaleRate / designScale;
@@ -43,12 +49,14 @@ namespace Mikrocosmos
 
         private float lastwidth = 0f;
         private float lastheight = 0f;
+        private float lastCameraSize = 0f;
 
         void Update () {
-            if (lastwidth != Screen.width || lastheight != Screen.height)
+            if (lastwidth != Screen.width || lastheight != Screen.height || lastCameraSize!= camera.orthographicSize)
             {
                 lastwidth = Screen.width;
                 lastheight = Screen.height;
+                lastCameraSize = camera.orthographicSize;
                 Start();
             }
            
@@ -58,6 +66,8 @@ namespace Mikrocosmos
         {
             public Transform transform;
             public Vector3 beginScale = Vector3.one;
+            public float GravityScale;
+            public ParticleSystem ParticleSystem;
         }
     }
 }
