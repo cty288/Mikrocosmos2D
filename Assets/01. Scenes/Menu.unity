@@ -6162,7 +6162,7 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 60
-  offlineScene: Assets/01. Scenes/Menu.unity
+  offlineScene: 
   onlineScene: Assets/01. Scenes/PrepareRoom.unity
   transport: {fileID: 872660649}
   networkAddress: localhost
@@ -8457,6 +8457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7fe8308e4c3324487238dc2d27b14c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 1
 --- !u!4 &1271512777
 Transform:
   m_ObjectHideFlags: 0

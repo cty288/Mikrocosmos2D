@@ -69,6 +69,7 @@ namespace Mikrocosmos {
         private IEnumerator QuitRoom() {
             if (NetworkServer.active)
             {
+                this.GetSystem<IRoomMatchSystem>().CmdQuitRoom(NetworkClient.localPlayer);
                 NetworkServer.DisconnectAll();
                 NetworkServer.Shutdown();
                 yield return new WaitForSeconds(0.1f);

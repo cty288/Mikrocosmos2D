@@ -144,7 +144,10 @@ namespace Mikrocosmos {
             
             // Debug.Log($"Find a room: Room owner: {room.HostName}; Room Player Count: {room.ServerPlayerNum}; uri: {room.Uri};");
            // if (room.IsLAN) {
-                if (allSearchedServers.ContainsKey(room.ServerID))
+           if (room.ServerPlayerNum <= 0) {
+               return;
+           }
+           if (allSearchedServers.ContainsKey(room.ServerID))
                 {
                     allSearchedServers[room.ServerID] = room;
                 }

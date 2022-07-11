@@ -5,9 +5,11 @@ using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.TimeSystem;
+using Mirror;
 using Polyglot;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Mikrocosmos
@@ -31,16 +33,35 @@ namespace Mikrocosmos
 
         private GameObject smallAnimalsObject;
         private GameObject statisticsPanel;
+        private Button exitGameButton;
         private void Awake() {
             animator = GetComponent<Animator>();
             this.RegisterEvent<OnClientGameEnd>(OnClientGameEnd).UnRegisterWhenGameObjectDestroyed(gameObject);
             statisticsPanel = transform.Find("EndingScreen/Statistics").gameObject;
             smallAnimalsObject = transform.Find("EndingScreen/BG2").gameObject;
+            exitGameButton = transform.Find("EndingScreen/ExitButton").GetComponent<Button>();
+            exitGameButton.onClick.AddListener(OnExitGame);
+        }
+
+        private void OnExitGame() {
+            if (NetworkClient.active) {
+                this.GetSystem<IRoomMatchSystem>().CmdQuitRoom(NetworkClient.localPlayer);
+            }
+
+            if (NetworkServer.active) {
+                NetworkRoomManager.singleton.StopHost();
+                NetworkServer.DisconnectAll();
+                NetworkServer.Shutdown();
+            }
+
+            SceneManager.LoadScene("Menu");
         }
 
         private void OnClientGameEnd(OnClientGameEnd e) {
             animator.SetTrigger("Start");
             SetUpAllInfo(e.GameEndInfo);
+            NetworkManager.singleton.offlineScene = "";
+
         }
 
 
@@ -116,9 +137,11 @@ namespace Mikrocosmos
 
             affinityBars[0].DOFillAmount(Mathf.Min(team1Affinity, 0.25f), 1f);
             affinityBars[1].DOFillAmount(Mathf.Min(0.25f, team2Affinity), 1f).SetEase(Ease.OutCubic).OnComplete(() => {
-                this.GetSystem<ITimeSystem>().AddDelayTask(0.4f, () => {
+                
+                this.GetSystem<ITimeSystem>().AddDelayTask(0.3f, () => {
                     affinityBars[0].DOFillAmount(team1Affinity, 0.3f);
                     affinityBars[1].DOFillAmount(team2Affinity, 0.3f).OnComplete(() => {
+                        transform.Find("EndingScreen").DOShakePosition(0.4f, 100f, 30);
                         if (gameEndInfo.WinTeam == 1)
                         {
                             teamWinTexts[0].SetActive(true);

@@ -220,7 +220,7 @@ namespace Mikrocosmos
             {
                 steamworksTransport.enabled = false;
             }
-
+            offlineScene = SceneManager.GetSceneByName("Menu").name;
             switch (networkingMode) {
                 case NetworkingMode.Normal:
                     telepathyTransport.enabled = true;
@@ -250,7 +250,7 @@ namespace Mikrocosmos
             transport = telepathyTransport;
 
             NetworkingMode = NetworkingMode.Normal;
-
+            offlineScene = SceneManager.GetSceneByName("Menu").name;
             if (NetworkClient.active)
             {
                 NetworkClient.Disconnect();
@@ -261,6 +261,10 @@ namespace Mikrocosmos
 
             StartClient(uri);
         }
+
+       
+
+       
         public void StartJoiningClient(NetworkingMode networkingMode, CSteamID steamId = new CSteamID())
         {
             switch (networkingMode)

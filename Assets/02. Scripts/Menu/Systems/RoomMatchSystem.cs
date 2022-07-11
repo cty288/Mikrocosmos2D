@@ -282,6 +282,9 @@ namespace Mikrocosmos
 
         [Command(requiresAuthority = false)]
         public void CmdQuitRoom(NetworkIdentity requester) {
+            if (NetworkServer.active && requester.hasAuthority) {
+                NetworkRoomManager.singleton.StopHost();
+            }
             requester.connectionToClient.Disconnect();
         }
 
