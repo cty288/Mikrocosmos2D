@@ -33,6 +33,11 @@ namespace Mikrocosmos
          
 
             this.RegisterEvent<OnTieTimerStart>(OnTieTimerStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnClientGameEnd>(OnClientGameEnd).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnClientGameEnd(OnClientGameEnd obj) {
+            finalCountdownText.gameObject.SetActive(false);
         }
 
         private void OnTieTimerStart(OnTieTimerStart e) {

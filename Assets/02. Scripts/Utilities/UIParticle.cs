@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    [ExecuteInEditMode]
+    //[ExecuteInEditMode]
     public class UIParticle : MonoBehaviour
     {
         private List<ScaleData> scaleDatas = null;
@@ -14,7 +14,9 @@ namespace Mikrocosmos
         
         void Awake()
         {
-            
+            if (!camera) {
+                camera = Camera.main;
+            }
             scaleDatas = new List<ScaleData>();
             foreach (ParticleSystem p in transform.GetComponentsInChildren<ParticleSystem>(true)) {
                 scaleDatas.Add(new ScaleData() {

@@ -121,15 +121,15 @@ namespace Mikrocosmos
             if (teamNumber == 1)
             {
                 this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed() {
-                    ChangeAmount = affinityIncreasment
+                    ChangeAmount = 0
                 });
-                affinityWithTeam1 += affinityIncreasment;
+                affinityWithTeam1 += 0;
             }
             else
             {
-                affinityWithTeam1 -= affinityIncreasment;
+                affinityWithTeam1 -= 0;
                 this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed() {
-                    ChangeAmount = -affinityIncreasment
+                    ChangeAmount = -0
                 });
             }
 

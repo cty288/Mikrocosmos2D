@@ -1,10 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -33,6 +32,8 @@ namespace Mikrocosmos
         float CalculateAffinityIncreasmentForOneTrade(float currentAffinityPrecent, bool IsPlanetBuy, int price);
 
         float GetTotalAffinityWithTeam(int team);
+
+        float GetRelativeAffinityWithTeam(int team);
 
         float MinimumCompositeSpeedForCraftingCompounds { get; }
 
@@ -206,6 +207,21 @@ namespace Mikrocosmos
             }
 
             return totalAffinityWithTeam2;
+        }
+
+        public float GetRelativeAffinityWithTeam(int team) {
+            float relativeAffinityWithTeam1 = 0;
+            foreach (var planet in allPlanets) {
+                relativeAffinityWithTeam1 += planet.GetAffinityWithTeam(1);
+            }
+
+            relativeAffinityWithTeam1 /= allPlanets.Count;
+
+            if (team == 1) {
+                return relativeAffinityWithTeam1;
+            }
+
+            return 1 - relativeAffinityWithTeam1;
         }
 
         /// <summary>

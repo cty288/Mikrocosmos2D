@@ -134,22 +134,33 @@ namespace Mikrocosmos
           
         }
 
+        [SerializeField] private bool debugMode = true;
+
         public float MusicVolume {
             get
             {
+                if (debugMode) {
+                    return 0.3f;
+                }
                 return ES3.Load<float>(MusicVolumeStorageKey, 0.3f);
             }
             set
             {
                 value = Mathf.Clamp01(value);
                 bgm.volume = value;
-              
+                if (debugMode) {
+                    return;
+                }
                 ES3.Save<float>(MusicVolumeStorageKey, value);
             }
         }
         public float SoundVolume {
             get
             {
+                if (debugMode)
+                {
+                    return 0.5f;
+                }
                 return ES3.Load<float>(SoundVolumeStorageKey, 0.5f);
             }
             set
@@ -157,7 +168,10 @@ namespace Mikrocosmos
                 value = Mathf.Clamp01(value);
                 sound2D.volume = value;
                 sound3D.volume = value;
-
+                if (debugMode)
+                {
+                    return;
+                }
                 ES3.Save<float>(SoundVolumeStorageKey, value);
             }
         }

@@ -6102,6 +6102,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   multiKillTimeInterval: 30
+  <Score>k__BackingField: 0
 --- !u!1 &8295490642847367845
 GameObject:
   m_ObjectHideFlags: 0
@@ -11237,6 +11238,10 @@ PrefabInstance:
       propertyPath: positionRelativeTo
       value: 
       objectReference: {fileID: 7986015997137912839}
+    - target: {fileID: 6887001970695420883, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
 --- !u!224 &7110352067371324430 stripped

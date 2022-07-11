@@ -28,8 +28,8 @@ namespace Mikrocosmos
         private bool healthBarFadeWaiting = false;
 
         private Image crimeLevelImage;
-      
-        
+        [SerializeField] private List<Sprite> crimeLevelSprites;
+
         private void Awake() {
         
             this.RegisterEvent<OnClientSpaceshipHealthChange>(OnSpaceshipHealthChange)
@@ -45,6 +45,7 @@ namespace Mikrocosmos
             if (e.SpaceshipIdentity == GetComponentInParent<NetworkIdentity>()) {
                 if (e.Criminality > 0) {
                     crimeLevelImage.gameObject.SetActive(true);
+                    crimeLevelImage.sprite = crimeLevelSprites[Mathf.Min(e.Criminality - 1, 2)];
                 }
                 else {
                     crimeLevelImage.gameObject.SetActive(false);

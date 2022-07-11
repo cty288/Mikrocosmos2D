@@ -1068,6 +1068,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   multiKillTimeInterval: 30
+  <Score>k__BackingField: 0
 --- !u!1 &8268555120520065621
 GameObject:
   m_ObjectHideFlags: 0
@@ -6216,10 +6217,6 @@ PrefabInstance:
     - target: {fileID: 481041332993962963, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_Name
       value: PlayerInfoCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 623387098172900922, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1426008559985661586, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: positionRelativeTo

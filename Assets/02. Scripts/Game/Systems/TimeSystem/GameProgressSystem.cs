@@ -169,8 +169,8 @@ namespace Mikrocosmos
             }
 
             int winTeam = 0;
-            float team1Affinity = this.GetSystem<IGlobalTradingSystem>().GetTotalAffinityWithTeam(1);
-            float team2Affinity = this.GetSystem<IGlobalTradingSystem>().GetTotalAffinityWithTeam(2);
+            float team1Affinity = this.GetSystem<IGlobalTradingSystem>().GetRelativeAffinityWithTeam(1);
+            float team2Affinity = this.GetSystem<IGlobalTradingSystem>().GetRelativeAffinityWithTeam(2);
 
             if (team1Affinity > team2Affinity) {
                 winTeam = 1;
@@ -285,7 +285,7 @@ namespace Mikrocosmos
         [ServerCallback]
         private GameEndInfo GetGameEndInfo(int winTeam)
         {
-            float team1Affinity = this.GetSystem<IGlobalTradingSystem>().GetTotalAffinityWithTeam(1);
+            float team1Affinity = this.GetSystem<IGlobalTradingSystem>().GetRelativeAffinityWithTeam(1);
 
             List<PlayerMatchInfo> allPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo();
             Dictionary<PlayerMatchInfo, IPlayerStatsSystem> playerToStats =

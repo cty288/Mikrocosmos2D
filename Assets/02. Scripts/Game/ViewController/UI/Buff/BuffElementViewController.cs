@@ -43,12 +43,14 @@ namespace Mikrocosmos
                 iconViewController = GetComponentInChildren<BuffIconViewController>();
             }
 
-            
-            titleText.text = info.LocalizedName;
-            descriptionText.text = info.LocalizedDescription;
-            iconViewController.SetIconInfo(info);
-            buffName = info.Name;
+            if (titleText && descriptionText) {
+                titleText.text = info.LocalizedName;
+                descriptionText.text = info.LocalizedDescription;
+                iconViewController.SetIconInfo(info);
+                buffName = info.Name;
+            }
         }
+          
 
     }
 }
