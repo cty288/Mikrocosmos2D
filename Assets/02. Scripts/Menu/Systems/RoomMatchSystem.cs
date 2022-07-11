@@ -9,6 +9,7 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
@@ -162,6 +163,7 @@ namespace Mikrocosmos
         public override void OnStopServer() {
             base.OnStopServer();
             teamPlayers.Clear();
+            
             this.UnRegisterEvent<OnServerStartGame>(OnServerStartGame);
             Destroy(this.gameObject);
         }

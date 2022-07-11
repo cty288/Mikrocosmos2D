@@ -36,8 +36,8 @@ namespace Mikrocosmos {
                 return;
             }
 #if UNITY_EDITOR
-            team2PlayerNum++;
-            team1PlayerNum++;
+           // team2PlayerNum++;
+            //team1PlayerNum++;
 #endif
             for (int i = 0; i < team1PlayerNum-1; i++) {
                 GameObject valve = GameObject.Instantiate(valveObjects[0], valveTeam1SpawnPoints[i].transform.position,

@@ -114,6 +114,9 @@ namespace Mikrocosmos
 
         private void OnTriggerStay2D(Collider2D col) {
             if (isServer) {
+                if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
+                    return;
+                }
                 if (col.gameObject.CompareTag("PlayerAbsorbTrigger")) {
                     if (!waitingToCheckAbsorbing && Model.HookState == HookState.Freed && GoodsModel.AbsorbedToBackpack && GoodsModel.TransactionFinished && !absorbing)
                     {

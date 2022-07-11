@@ -42,6 +42,9 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public void AnnounceWinners(List<NetworkMainGamePlayer> players) {
+            if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
+                return;
+            }
             this.SendEvent<OnMissionAnnounceWinners>(new OnMissionAnnounceWinners() {
                 Difficulty = startDifficulty,
                 MissionNameLocalizedKey = MissionNameLocalizedKey(),

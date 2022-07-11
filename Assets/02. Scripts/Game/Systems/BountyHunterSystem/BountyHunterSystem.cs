@@ -18,6 +18,7 @@ namespace Mikrocosmos
     public struct OnClientSpaceshipCriminalityUpdate {
         public NetworkIdentity SpaceshipIdentity;
         public int Criminality;
+        public BountyType BountyType;
     }
     public class KillerInfo {
         public int KillerTotalKills;
@@ -207,7 +208,8 @@ namespace Mikrocosmos
             this.SendEvent<OnClientSpaceshipCriminalityUpdate>(new OnClientSpaceshipCriminalityUpdate()
             {
                 Criminality = 1 + ((killNumber - minimumVictiumToTriggerBountyHunter) / 2),
-                SpaceshipIdentity = killerIdentity
+                SpaceshipIdentity = killerIdentity,
+                BountyType = bountyType                
             });
         }
 
@@ -239,7 +241,8 @@ namespace Mikrocosmos
             this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(message);
             this.SendEvent<OnClientSpaceshipCriminalityUpdate>(new OnClientSpaceshipCriminalityUpdate() {
                 Criminality = 1 + ((killNumber - minimumVictiumToTriggerBountyHunter) / 2),
-                SpaceshipIdentity = killerIdentity
+                SpaceshipIdentity = killerIdentity,
+                BountyType = bountyType
             });
         }
     }

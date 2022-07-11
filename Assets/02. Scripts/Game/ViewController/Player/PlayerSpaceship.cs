@@ -45,6 +45,7 @@ namespace Mikrocosmos
         private List<Sprite> teamSprites;
 
         [SerializeField] private List<Sprite> mapSprites;
+        [SerializeField] private List<Sprite> mapSpritesWhenHunted;
 
         [SyncVar]
         public string Name;

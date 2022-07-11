@@ -53,6 +53,9 @@ namespace Mikrocosmos
         protected override void Update() {
             base.Update();
             if (isServer) {
+                if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
+                    return;
+                }
                 if (startDetect && triggerCheck.Triggered && !targetPlayer) {
                     OnTriggered();
                 }

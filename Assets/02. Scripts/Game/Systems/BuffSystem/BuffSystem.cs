@@ -6,6 +6,7 @@ using MikroFramework;
 using MikroFramework.ActionKit;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using Mirror;
 using Polyglot;
 using UnityEngine;
@@ -198,7 +199,7 @@ namespace Mikrocosmos {
         public int CurrentLevel { get; protected set; }
         public int ReadyToAddLevel { get; private set; }
         public int ReadyToAddProgress { get; private set; }
-       
+
     }
 
     
@@ -214,6 +215,8 @@ namespace Mikrocosmos {
 
         [field: SerializeField]
         public float RemainingTime { get; set; }
+
+        
 
         public MikroAction OnTimedActionEnd { get;  set; } = CallbackAction.Allocate(() => { });
 
@@ -335,9 +338,13 @@ namespace Mikrocosmos {
         private Dictionary<Type, Action<BuffStatus, BuffClientMessage>> callbacks = new Dictionary<Type, Action<BuffStatus, BuffClientMessage>>();
         [SerializeField] private int permanentLevelDeduceWhenDie = 1;
         [SerializeField] private int minimumPermanentBuffLevelToDeduct = 3;
+        private IGameProgressSystem progressSystem;
         public override void OnStartServer() {
             base.OnStartServer();
             this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.GetSystem<ITimeSystem>().AddDelayTask(0.2f, () => {
+                progressSystem = this.GetSystem<IGameProgressSystem>();
+            });
         }
 
         private void OnPlayerDie(OnPlayerDie e) {
@@ -392,6 +399,10 @@ namespace Mikrocosmos {
         public void AddBuff<T>(IBuff buff) where T : IBuff {
 
             if (isServer) {
+                if (progressSystem == null || progressSystem.GameState != GameState.InGame)
+                {
+                    return;
+                }
                 if (!buffs.ContainsKey(buff.GetType())) {
                     StartCoroutine(AddNewBuffToList(typeof(T), buff));
                 }
@@ -522,6 +533,10 @@ namespace Mikrocosmos {
         private void Update()
         {
             if (isServer) {
+                if (progressSystem== null ||  progressSystem.GameState != GameState.InGame) {
+                    return;
+                }
+                
                 foreach (KeyValuePair<Type, IBuff> b in buffs) {
                     IBuff buff = b.Value;
                     

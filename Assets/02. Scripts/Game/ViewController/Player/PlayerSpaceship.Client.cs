@@ -41,36 +41,66 @@ namespace Mikrocosmos
             buffSystem = GetComponent<IBuffSystem>();
             animator = GetComponent<Animator>();
             gameProgressSystem = this.GetSystem<IGameProgressSystem>();
+            this.RegisterEvent<OnClientSpaceshipCriminalityUpdate>(OnCrimelityUpdate).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
+       
 
-        
+
         private void OnMassChanged(OnMassChanged e)
         {
             Debug.Log(e.newMass);
         }
 
         private bool hookWhenEmptyReleased = true;
-        public override void OnStartClient()
-        {
+        public override void OnStartClient() {
             base.OnStartClient();
             this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => {
-                if (this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team ==
-                    ThisSpaceshipTeam) {
-                    if (hasAuthority) {
-                        transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[2];
-                    }
-                    else {
-                        transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[0];
-                    }
-                  
-                }
-                else
-                {
-                    transform.Find("MapPlayer").GetComponent<SpriteRenderer>().sprite = mapSprites[1];
-                }
+                ChangeToNormalMapSprite();
             });
             transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>().sprite = teamSprites[teamIndex];
+        }
+
+        private void OnCrimelityUpdate(OnClientSpaceshipCriminalityUpdate e) {
+            if (e.SpaceshipIdentity == netIdentity) {
+                if (e.Criminality == 0) {
+                    ChangeToNormalMapSprite();
+                    return;
+                }
+                Sprite targetSprite = null;
+                switch (e.BountyType) {
+                    case BountyType.Opponent:
+                        targetSprite = mapSpritesWhenHunted[1];
+                        break;
+                    case BountyType.Self:
+                        targetSprite = mapSpritesWhenHunted[2];
+                        break;
+                    case BountyType.Teammate:
+                        targetSprite = mapSpritesWhenHunted[0];
+                        break;
+                }
+                Transform mapPlayer = transform.Find("MapPlayer");
+                mapPlayer.GetComponent<SpriteRenderer>().sprite = targetSprite;
+                mapPlayer.DOScale(new Vector3(30, 30, 1), 0.5f);
+            }
+        }
+        private void ChangeToNormalMapSprite() {
+            Transform mapPlayer = transform.Find("MapPlayer");
+            if (this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team ==
+                ThisSpaceshipTeam) {
+               
+                if (hasAuthority) {
+                    mapPlayer.GetComponent<SpriteRenderer>().sprite = mapSprites[2];
+                }
+                else {
+                    mapPlayer.GetComponent<SpriteRenderer>().sprite = mapSprites[0];
+                }
+            }
+            else {
+                mapPlayer.GetComponent<SpriteRenderer>().sprite = mapSprites[1];
+            }
+
+            mapPlayer.DOScale(new Vector3(10, 10, 1), 0.5f);
         }
 
         [SerializeField] private List<ParticleSystem> particles;

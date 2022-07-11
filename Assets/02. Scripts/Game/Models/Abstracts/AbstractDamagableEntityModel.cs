@@ -63,6 +63,9 @@ namespace Mikrocosmos
 
         private IEnumerator RecoverHealth() {
             while (true) {
+                if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) { 
+                    break;
+                }
                 yield return new WaitForSeconds(1f);
                 HealthRecoverTimer++;
                 if (HealthRecoverTimer > healthRecoverWaitTimeAfterDamage && CurrentHealth > 0) {
@@ -103,7 +106,10 @@ namespace Mikrocosmos
         public abstract int GetDamageFromExcessiveMomentum(float excessiveMomentum);
         [ServerCallback]
         public int TakeRawDamage(int damage, NetworkIdentity damageDealer, int additionalDamage =0) {
-            if(damage<0 || CurrentHealth<=0){
+            if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
+                return 0;
+            }
+            if (damage<0 || CurrentHealth<=0){
                 return 0;
             }
             if (TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
