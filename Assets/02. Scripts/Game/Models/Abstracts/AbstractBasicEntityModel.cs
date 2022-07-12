@@ -156,7 +156,7 @@ namespace Mikrocosmos
                 HookedByIdentity.GetComponent<Animator>().SetBool("Hooking", false);*/
                 HookState = HookState.Freed;
                 
-                gameObject.layer = clientOriginalLayer;
+             
                 if (!isShoot) {
                     bindedRigidibody.velocity = HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
                     bindedRigidibody.angularVelocity = 0;
@@ -220,7 +220,7 @@ namespace Mikrocosmos
         protected virtual void Awake() {
             originalMaxSpeed = MaxSpeed;
             bindedRigidibody = GetComponent<Rigidbody2D>();
-            clientOriginalLayer = gameObject.layer;
+          
         }
 
         //[ServerCallback]
@@ -250,7 +250,7 @@ namespace Mikrocosmos
         public abstract string Name { get; set; }
 
       
-        private LayerMask clientOriginalLayer;
+       // private LayerMask clientOriginalLayer;
         protected virtual void OnHookStateChanged(HookState oldState, HookState newState) {
             if (newState == HookState.Hooked) {
                
@@ -262,7 +262,6 @@ namespace Mikrocosmos
             if (newState == HookState.Freed)
             {
                 if (this) {
-                    gameObject.layer = clientOriginalLayer;
                     OnClientFreed();
                 }
               

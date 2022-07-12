@@ -16,6 +16,8 @@ namespace Mikrocosmos
         private ISpaceshipConfigurationModel playerModel;
         private NetworkIdentity identity;
         private Collider2D trigger;
+
+        [SerializeField] private bool canAbsorbWhenBackpackEmpty = false;
         private void Awake() {
             inventorySystem = GetComponentInParent<IPlayerInventorySystem>();
             this.RegisterEvent<OnItemDropped>(OnSpaceshipItemDropped).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -61,11 +63,12 @@ namespace Mikrocosmos
                     return;
                 }
                 if (col.gameObject.TryGetComponent<IGoodsViewController>(out IGoodsViewController goodsViewController)) {
-                    //can't absorb if no element in packpack
-                    if (inventorySystem.FindItemExists(goodsViewController.GoodsModel.Name)) {
-                        goodsViewController.TryAbsorb(inventorySystem, transform.parent.gameObject);
-                        itemsCantAbsorb.Add(col.gameObject);
+                    
+                    if (!inventorySystem.FindItemExists(goodsViewController.GoodsModel.Name) && !canAbsorbWhenBackpackEmpty) {
+                        return;
                     }
+                    goodsViewController.TryAbsorb(inventorySystem, transform.parent.gameObject);
+                    itemsCantAbsorb.Add(col.gameObject);
                 }
             }
         }
