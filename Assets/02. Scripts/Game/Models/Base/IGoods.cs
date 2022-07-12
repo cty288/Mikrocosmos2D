@@ -12,6 +12,8 @@ namespace Mikrocosmos
        
         public GoodsRarity GoodRarity { get; set; }
 
+        public bool DroppableFromBackpack { get; set; }
+
         public bool TransactionFinished { get; set; }
 
         public bool DestroyedBySun { get; set; }

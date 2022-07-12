@@ -57,7 +57,7 @@ namespace Mikrocosmos
         }
 
         public override void OnAddedToBackpack() {
-            AbsorbedToBackpack = false;
+           // AbsorbedToBackpack = false;
         }
     }
 }

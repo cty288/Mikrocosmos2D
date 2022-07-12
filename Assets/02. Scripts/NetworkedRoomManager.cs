@@ -298,7 +298,7 @@ namespace Mikrocosmos
                 NetworkClient.Disconnect();
                 NetworkClient.Shutdown();
             }
-            
+            offlineScene = SceneManager.GetSceneByName("Menu").name;
             StartClient();
         }
 

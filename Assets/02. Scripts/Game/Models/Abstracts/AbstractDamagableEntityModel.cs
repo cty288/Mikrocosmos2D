@@ -132,7 +132,7 @@ namespace Mikrocosmos
             CurrentHealth = Mathf.Max(0, CurrentHealth);
             OnServerTakeDamage(oldHealth, damageDealer, CurrentHealth);
             if (CurrentHealth == 0) {
-                if (damageDealer.GetComponent<ISpaceshipConfigurationModel>()!=null) { //is player
+                if (damageDealer && damageDealer.GetComponent<ISpaceshipConfigurationModel>()!=null) { //is player
                     TargetKilledByLocalPlayer(damageDealer.connectionToClient);
                 }
             }

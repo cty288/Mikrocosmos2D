@@ -5274,7 +5274,8 @@ GameObject:
   - component: {fileID: 4767774530755864340}
   - component: {fileID: 6585232768564636103}
   - component: {fileID: 7895894523818557772}
-  m_Layer: 0
+  - component: {fileID: 3895458700563621656}
+  m_Layer: 15
   m_Name: ItemAbsorbTrigger
   m_TagString: PlayerAbsorbTrigger
   m_Icon: {fileID: 0}
@@ -5311,7 +5312,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 15
 --- !u!50 &7895894523818557772
 Rigidbody2D:
   serializedVersion: 4
@@ -5333,6 +5334,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &3895458700563621656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2343620008203484032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 651296c3a685d544f99e28776eb4c493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3124164895484654146
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.ResKit;
@@ -23,6 +24,11 @@ namespace Mikrocosmos {
     public struct OnHookItemSwitched {
         public NetworkIdentity OldIdentity;
         public NetworkIdentity NewIdentity;
+        public NetworkIdentity OwnerIdentity;
+    }
+
+    public struct OnHookedItemUnHooked {
+        public GameObject GameObject;
         public NetworkIdentity OwnerIdentity;
     }
     public struct OnItemShot {
@@ -602,6 +608,11 @@ namespace Mikrocosmos {
                 
                 
                 HookedItem.Model.UnHook(isShoot);
+                this.SendEvent<OnHookedItemUnHooked>(new OnHookedItemUnHooked()
+                {
+                    GameObject = HookedNetworkIdentity.gameObject,
+                    OwnerIdentity = netIdentity
+                });
                 if (HookedItem.Model.CanBeAddedToInventory)
                 {
                     Debug.Log("HookSystem: Ready to remove from current backpack");
@@ -614,7 +625,7 @@ namespace Mikrocosmos {
                         OldIdentity = HookedNetworkIdentity,
                         OwnerIdentity = netIdentity
                     });                    
-                    
+                  
                     HookedItem = null;
                     HookedNetworkIdentity = null;
                     animator.animator.SetBool("Hooking", false);

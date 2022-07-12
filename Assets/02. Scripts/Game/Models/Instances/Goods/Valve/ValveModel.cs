@@ -6,13 +6,18 @@ namespace Mikrocosmos
 {
     public class ValveModel : BasicGoodsModel {
         [SerializeField] private int money = 50;
-        public override void OnServerHooked()
-        {
-            base.OnServerHooked();
-            if (HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem playerTradingSystem)) {
-                playerTradingSystem.ReceiveMoney(money);
+        private bool hasHooked = false;
+        public override void OnServerHooked() {
+            if (!hasHooked) {
+                hasHooked = true;
+                base.OnServerHooked();
+                if (HookedByIdentity.TryGetComponent<IPlayerTradingSystem>(out IPlayerTradingSystem playerTradingSystem))
+                {
+                    playerTradingSystem.ReceiveMoney(money);
+                }
+                UnHook();
             }
-            UnHook();
+             
         }
     }
 }

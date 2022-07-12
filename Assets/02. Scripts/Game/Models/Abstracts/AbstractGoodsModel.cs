@@ -44,6 +44,8 @@ namespace Mikrocosmos
         [field: SerializeField] public int BasicSellPrice { get; set; }
         [field: SerializeField] public int BasicBuyPrice { get; set; }
         [field: SerializeField] public GoodsRarity GoodRarity { get; set; }
+        [field: SerializeField]
+        public bool DroppableFromBackpack { get; set; } = true;
 
         [field: SyncVar(hook = nameof(OnTransactionStatusChanged))]
         public bool TransactionFinished { get; set; } = true;

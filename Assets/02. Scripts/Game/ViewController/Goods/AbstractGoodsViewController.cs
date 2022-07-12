@@ -112,13 +112,43 @@ namespace Mikrocosmos
         private bool absorbing = false;
         private bool waitingToCheckAbsorbing = false;
 
+        [ServerCallback]
+        public void TryAbsorb(IPlayerInventorySystem invneInventorySystem, GameObject absorbedTarget) {
+            if (isServer) {
+                if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
+                    return;
+                }
+
+                if (GoodsModel.AbsorbedToBackpack && !waitingToCheckAbsorbing && Model.HookState == HookState.Freed &&
+                    GoodsModel.TransactionFinished && !absorbing) {
+                    absorbSpaceship = absorbedTarget;
+                  
+                    if (invneInventorySystem.ServerCheckCanAddToBackpack(GoodsModel, out var slot)) {
+                        waitingToCheckAbsorbing = true;
+                        this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
+                            waitingToCheckAbsorbing = false;
+                            if (this && !absorbing) {
+
+                                if (Mathf.Abs(Vector2.Distance(transform.position,
+                                        absorbSpaceship.transform.position)) <= 20) {
+                                    absorbing = true;
+                                }
+                            }
+                        });
+                        
+                    }
+                }
+            }
+        }
+
+        /*
         private void OnTriggerStay2D(Collider2D col) {
             if (isServer) {
                 if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
                     return;
                 }
                 if (col.gameObject.CompareTag("PlayerAbsorbTrigger")) {
-                    if (!waitingToCheckAbsorbing && Model.HookState == HookState.Freed && GoodsModel.AbsorbedToBackpack && GoodsModel.TransactionFinished && !absorbing)
+                    if (GoodsModel.AbsorbedToBackpack && !waitingToCheckAbsorbing && Model.HookState == HookState.Freed   && GoodsModel.TransactionFinished && !absorbing)
                     {
                         absorbSpaceship = col.transform.parent.gameObject;
                         if (absorbSpaceship.TryGetComponent<IPlayerInventorySystem>(out var playerInventorySystem))
@@ -142,7 +172,7 @@ namespace Mikrocosmos
                     }
                 }
             }
-        }
+        }*/
 
         protected override void OnCollisionEnter2D(Collision2D collision) {
             base.OnCollisionEnter2D(collision);
@@ -314,5 +344,6 @@ namespace Mikrocosmos
 
         public Transform FollowingPoint { get; set; }
         public IGoods GoodsModel { get; private set; }
+    
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -77,6 +78,8 @@ namespace Mikrocosmos
         void ServerAddSlots(int count);
         int GetSlotIndexFromItemName(string name);
 
+        bool FindItemExists(string name);
+
         void ServerSwitchSlot(int index);
         int GetSlotCount();
         int GetCurrentSlot();
@@ -145,6 +148,19 @@ namespace Mikrocosmos
 
             return slots;
         }
+
+        private List<BackpackSlot> GetNonEmptySlotsWithDroppableItems()
+        {
+            List<BackpackSlot> slots = new List<BackpackSlot>();
+            foreach (BackpackSlot slot in backpackItems)
+            {
+                if (slot is { Count: > 0 } && slot.StackedObjects[0].GetComponent<IGoods>().DroppableFromBackpack) {
+                    slots.Add(slot);
+                }
+            }
+
+            return slots;
+        }
         private void Awake() {
           //  ResLoader.Create(loader => resLoader = loader);
             hookSystem = GetComponent<IHookSystem>();
@@ -188,12 +204,12 @@ namespace Mikrocosmos
         private void OnSpaceshipRequestDropItems(OnSpaceshipRequestDropItems e) {
             if (e.SpaceshipIdentity == netIdentity) {
 
-                int backpackItemCount = GetBackPackTotalItemCount();
-                if (backpackItemCount > 0) {
+                List<BackpackSlot> slots = GetNonEmptySlotsWithDroppableItems();
 
-                    int realDropCount = Mathf.Min(e.NumberItemRequest, backpackItemCount);
-                    List<BackpackSlot> slots = GetNonEmptySlots();
-
+                if (slots.Count > 0) {
+                    int totalItemCount = slots.Sum(slot => slots.Count);
+                    int realDropCount = Mathf.Min(e.NumberItemRequest, totalItemCount);
+                    
                     int dropped = 0;
                     BackpackSlot dropSlot = slots[Random.Range(0, slots.Count)];
                     while (dropped < realDropCount) {
@@ -204,7 +220,7 @@ namespace Mikrocosmos
                         ServerDropFromBackpack(dropSlot.PrefabName);
                         dropped++;
                     }
-                }
+               }
                 
             }
         }
@@ -406,6 +422,17 @@ namespace Mikrocosmos
             }
 
             return -1;
+        }
+
+        public bool FindItemExists(string name) {
+            for (int i = 0; i < backpackItems.Count; i++) {
+                if (backpackItems[i].PrefabName == name && backpackItems[i].Count>0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         [ServerCallback]
