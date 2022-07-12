@@ -207,7 +207,7 @@ namespace Mikrocosmos
                 List<BackpackSlot> slots = GetNonEmptySlotsWithDroppableItems();
 
                 if (slots.Count > 0) {
-                    int totalItemCount = slots.Sum(slot => slots.Count);
+                    int totalItemCount = slots.Sum(slot => slot.Count);
                     int realDropCount = Mathf.Min(e.NumberItemRequest, totalItemCount);
                     
                     int dropped = 0;
