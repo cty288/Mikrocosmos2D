@@ -88,7 +88,7 @@ namespace Mikrocosmos
         DieLeast
     }
     public interface IGameProgressSystem : ISystem {
-        public BindableProperty<int> TotalTransactionTime { get; }
+        public BindableProperty<int> TotalTransactionMoney { get; }
 
         /// <summary>
         /// This returns an estimated overall game progress, based on the maximum between overall trading progress and overall time passed.
@@ -120,7 +120,8 @@ namespace Mikrocosmos
         [SerializeField, SyncVar(hook = nameof(ClientOnCountdownChange))] 
         protected int finalCountDown = 60;
 
-        [SerializeField] protected int finalCountdownTransactionThresholdPerPlayer = 15;
+        [FormerlySerializedAs("finalCountdownTransactionThresholdPerPlayer")] 
+        [SerializeField] protected int finalCountdownMoneyThresholdPerPlayer = 15;
 
         private IGlobalScoreSystem globalScoreSystem;
 
@@ -197,9 +198,10 @@ namespace Mikrocosmos
 
         [ServerCallback]
         private void OnTransactionFinished(OnServerTransactionFinished e) {
-            TotalTransactionTime.Value++;
+            
+            TotalTransactionMoney.Value+=e.Price;
             int totalPlayerCount = NetworkServer.connections.Count;
-            if (TotalTransactionTime.Value >= finalCountdownTransactionThresholdPerPlayer * totalPlayerCount && !finialCountDownStarted) {
+            if (TotalTransactionMoney.Value >= finalCountdownMoneyThresholdPerPlayer * totalPlayerCount && !finialCountDownStarted) {
                 StartFinalCountDown();
             }
         }
@@ -215,12 +217,12 @@ namespace Mikrocosmos
             StartCoroutine(FinalCountDownTimerStart());
         }
 
-        public BindableProperty<int> TotalTransactionTime { get; protected set; } = new BindableProperty<int>(0);
+        public BindableProperty<int> TotalTransactionMoney { get; protected set; } = new BindableProperty<int>(0);
        
         public float GetGameProgress() {
             int totalPlayerCount = NetworkServer.connections.Count;
             return Mathf.Max(
-                TotalTransactionTime.Value / ((float) (finalCountdownTransactionThresholdPerPlayer * totalPlayerCount)),
+                TotalTransactionMoney.Value / ((float) (finalCountdownMoneyThresholdPerPlayer * totalPlayerCount)),
                 (float) (DateTime.Now.Subtract(globalTimer).TotalMinutes / maximumGameTime));
         }
 
