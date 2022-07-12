@@ -313,8 +313,9 @@ MonoBehaviour:
   <BasicSellPrice>k__BackingField: 25
   <BasicBuyPrice>k__BackingField: 40
   <GoodRarity>k__BackingField: 1
+  <DroppableFromBackpack>k__BackingField: 1
   <DestroyedBySun>k__BackingField: 1
-  <AbsorbedToBackpack>k__BackingField: 0
+  <AbsorbedToBackpack>k__BackingField: 1
   <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0.01
   <AffectedByGravity>k__BackingField: 1
