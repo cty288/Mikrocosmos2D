@@ -43,6 +43,8 @@ namespace Mikrocosmos
         private CSteamID joinedSteamGame;
         public override void Awake() {
             base.Awake();
+            if (Application.isEditor)
+                Application.runInBackground = true;
             networkAddress = NetworkUtility.GetLocalIPAddress();
             showRoomGUI = false;
             telepathyTransport = GetComponent<TelepathyTransport>();

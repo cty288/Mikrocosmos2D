@@ -55,10 +55,11 @@ namespace Mikrocosmos
                 return;
             }
 
-            if (playerModel.CurrentHealth <= 0) {
-                return;
-            }
+           
             if (NetworkServer.active) {
+                if (playerModel.CurrentHealth <= 0) {
+                    return;
+                }
                 if (col.gameObject.TryGetComponent<IGoodsViewController>(out IGoodsViewController goodsViewController)) {
                     //can't absorb if no element in packpack
                     if (inventorySystem.FindItemExists(goodsViewController.GoodsModel.Name)) {
