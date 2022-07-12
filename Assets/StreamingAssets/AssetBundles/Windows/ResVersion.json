@@ -149,8 +149,8 @@
     },
     {
       "AssetName": "info_elements",
-      "MD5": "1afa00954f048e7446dfe0b96c3b3f98",
-      "FileSize": 9659.228,
+      "MD5": "2370e4d3cca87c4490a942bc513952fc",
+      "FileSize": 9660.025,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -303,14 +303,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "26697efb052dcceed475888dcd46fea8",
+      "MD5": "a6f8210920ad303e680ce0a610ef0d56",
       "FileSize": 1.91699219,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "8ec8b97ded838154df24c0bfebde5206",
-      "FileSize": 1557.13965,
+      "MD5": "82d74ab15589931d33e40e9201609aa2",
+      "FileSize": 1558.03418,
       "assetDatas": [
         {
           "Name": "FirePlant",

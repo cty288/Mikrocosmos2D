@@ -11,7 +11,7 @@ namespace Mikrocosmos
             base.OnServerSpaceshipHit(damage, spaceship);
             if (damage > 0) {
                 if (spaceship.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
-                    buffSystem.AddBuff<VisionOcclusionDebuff>(new VisionOcclusionDebuff(5));
+                    buffSystem.AddBuff<VisionOcclusionDebuff>(new VisionOcclusionDebuff(2.5f));
                 }
             }
         }

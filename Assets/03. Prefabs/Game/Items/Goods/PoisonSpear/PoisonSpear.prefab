@@ -343,13 +343,13 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 50
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 1
-  <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 1.5
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
-  <SelfMass>k__BackingField: 4
+  <SelfMass>k__BackingField: 7.5
   <Name>k__BackingField: PoisonSpear
   <BasicSellPrice>k__BackingField: 30
   <BasicBuyPrice>k__BackingField: 45

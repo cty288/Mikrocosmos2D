@@ -191,7 +191,7 @@ namespace Mikrocosmos
         [ServerCallback]
         public float CalculateAffinityIncreasmentForOneTrade(float currentAffinityPrecent, bool IsPlanetBuy, int price) {
             float baseValue = TradingCurve.Evaluate(currentAffinityPrecent);
-            baseValue =  Mathf.Clamp((price / (float) standardPrice), 0.2f, 2f) * baseValue;
+            baseValue =  Mathf.Clamp((price / (float) standardPrice), 0.1f, 2f) * baseValue;
 
             if (IsPlanetBuy) {
                // baseValue *= 1.5f;

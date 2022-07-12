@@ -1071,7 +1071,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  multiKillTimeInterval: 30
   <Score>k__BackingField: 0
 --- !u!1 &8268555120520065621
 GameObject:

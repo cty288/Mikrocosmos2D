@@ -25,10 +25,10 @@ namespace Mikrocosmos
         public NetworkIdentity Victim;
     }
     public class PlayerStatsSystem : AbstractNetworkedSystem, IPlayerStatsSystem {
-        [SerializeField] private float multiKillTimeInterval = 30f;
+      //  [SerializeField] private float multiKillTimeInterval = 30f;
         [field: SerializeField] public int Score { get; set; } = 0;
 
-        private DateTime lastKillTime;
+      //  private DateTime lastKillTime;
         private int thisSpaceshipTeam;
 
         //Not counting killing teammates
@@ -59,7 +59,7 @@ namespace Mikrocosmos
         private IGlobalScoreSystem globalScoreSystem;
         public override void OnStartServer() {
             base.OnStartServer();
-            lastKillTime = DateTime.Now;
+        //    lastKillTime = DateTime.Now;
             thisSpaceshipTeam = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Team;
             
             globalScoreSystem = this.GetSystem<IGlobalScoreSystem>();
@@ -127,15 +127,10 @@ namespace Mikrocosmos
                     }
 
                     totalKills++;
+                    currentMultiKills++;
+                   
 
-                    if ((DateTime.Now - lastKillTime).TotalSeconds <= multiKillTimeInterval) {
-                        currentMultiKills++;
-                    }
-                    else {
-                        currentMultiKills = 1;
-                    }
-
-                    lastKillTime = DateTime.Now;
+                  //  lastKillTime = DateTime.Now;
                     this.SendEvent<OnPlayerMultiKillUpdate>(new OnPlayerMultiKillUpdate() {
                         MultiKillNumber = currentMultiKills,
                         Player = netIdentity,

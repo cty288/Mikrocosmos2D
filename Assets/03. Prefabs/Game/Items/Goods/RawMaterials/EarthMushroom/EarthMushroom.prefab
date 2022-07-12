@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <SelfMass>k__BackingField
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <CanBeUsed>k__BackingField
@@ -45,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <BasicBuyPrice>k__BackingField
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <MaxDurability>k__BackingField
@@ -62,6 +62,10 @@ PrefabInstance:
     - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: <InitialForceMultiplier>k__BackingField
       value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <AdditionalMassWhenHookedMultiplier>k__BackingField
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_AssetId

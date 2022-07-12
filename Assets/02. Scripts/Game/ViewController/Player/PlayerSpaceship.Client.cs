@@ -81,7 +81,7 @@ namespace Mikrocosmos
                 }
                 Transform mapPlayer = transform.Find("MapPlayer");
                 mapPlayer.GetComponent<SpriteRenderer>().sprite = targetSprite;
-                mapPlayer.DOScale(new Vector3(30, 30, 1), 0.5f);
+                mapPlayer.DOScale(new Vector3(15, 15, 1), 0.5f);
             }
         }
         private void ChangeToNormalMapSprite() {
@@ -91,16 +91,19 @@ namespace Mikrocosmos
                
                 if (hasAuthority) {
                     mapPlayer.GetComponent<SpriteRenderer>().sprite = mapSprites[2];
+                    mapPlayer.DOScale(new Vector3(15, 15, 1), 0.5f);
                 }
                 else {
                     mapPlayer.GetComponent<SpriteRenderer>().sprite = mapSprites[0];
+                    mapPlayer.DOScale(new Vector3(10, 10, 1), 0.5f);                    
                 }
             }
             else {
                 mapPlayer.GetComponent<SpriteRenderer>().sprite = mapSprites[1];
+                mapPlayer.DOScale(new Vector3(10, 10, 1), 0.5f);
             }
 
-            mapPlayer.DOScale(new Vector3(10, 10, 1), 0.5f);
+            
         }
 
         [SerializeField] private List<ParticleSystem> particles;

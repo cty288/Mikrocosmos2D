@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  <HookedPositionOffset>k__BackingField: {x: 0, y: 2.42}
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 3.87}
   <HookedRotationZOffset>k__BackingField: 0
   <IsMaskable>k__BackingField: 1
   damageParticle: {fileID: 4980017880052449215, guid: 8066c86cd7eba934cb9206b82ec89dc0, type: 3}

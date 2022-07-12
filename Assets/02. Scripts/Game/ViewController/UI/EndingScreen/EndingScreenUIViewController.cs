@@ -69,6 +69,7 @@ namespace Mikrocosmos
             if (gameEndInfo != null && affinityBars[0].fillAmount > 0) {
                 
                 float team1Affinity = ((float) Math.Round(affinityBars[0].fillAmount * 100, 1));
+                float team2Affinity = ((float)Math.Round(affinityBars[1].fillAmount * 100, 1));
                 if (gameEndInfo.Team1Affinity > 0.2f)
                 {
                     affinityTexts[0].SetActive(true);
@@ -80,7 +81,7 @@ namespace Mikrocosmos
                 {
                     affinityTexts[1].SetActive(true);
                     affinityTexts[1].GetComponent<TMP_Text>().text =
-                        (100 - team1Affinity).ToString()+"%";
+                        team2Affinity.ToString()+"%";
                 }
             }
            

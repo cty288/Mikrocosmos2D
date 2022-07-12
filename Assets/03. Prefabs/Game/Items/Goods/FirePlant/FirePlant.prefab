@@ -544,7 +544,7 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
-  <SelfMass>k__BackingField: 7.5
+  <SelfMass>k__BackingField: 10
   <Name>k__BackingField: FirePlant
   <BasicSellPrice>k__BackingField: 30
   <BasicBuyPrice>k__BackingField: 45
