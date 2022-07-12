@@ -71,4 +71,4 @@ MonoBehaviour:
   - {fileID: 3789394192495447563, guid: aa6e7186f20aaba4f8937b23ec63a253, type: 3}
   - {fileID: 3789394192495447563, guid: 762a8a5423b8b45438fcd43922779f30, type: 3}
   - {fileID: 3789394192495447563, guid: 60d663a9fd63fc942b8cfb4446ead8af, type: 3}
-  <MaximumTime>k__BackingField: 90
+  <MaximumTime>k__BackingField: 60

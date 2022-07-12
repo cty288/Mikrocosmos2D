@@ -50,7 +50,6 @@ MonoBehaviour:
     - Polyglot.Scripts
     - where-allocations
     - Mirror.Authenticators
-    - Elringus.SpriteGlow.Runtime
     - Steamworks
     - PsdPlugin
     - AstarPathfindingProjectEditor
