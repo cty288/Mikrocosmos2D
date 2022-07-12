@@ -703,7 +703,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5997552, y: 1}
+    m_SensorSize: {x: 1.600271, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -23338,7 +23338,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   <ScorePerEffectiveDamage>k__BackingField: 1
-  <ScorePerTransactionMoney>k__BackingField: 2
+  <ScorePerTransactionMoney>k__BackingField: 1
   <ScorePerEffectiveKill>k__BackingField: 30
   <ScorePerBountyFinished>k__BackingField: 100
   <ScorePerMissionFinished>k__BackingField: 100
