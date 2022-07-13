@@ -756,6 +756,7 @@ GAME_MISSION_SPACE_MINECART_DESCRIPTION,,"A cosmic minecart full of resources ju
 GAME_MISSION_WINNER,,: Winners,,,,,,,,,,,,,,,,,：胜利玩家,：勝利玩家,,,,,,,,,
 GAME_MISSION_REWARD_MONEY,,+{0} diamonds,,,,,,,,,,,,,,,,,+{0} 钻石,+{0} 鑽石,,,,,,,,,
 GAME_MISSION_REWARD_SLOT,,+{0} backpack capacity,,,,,,,,,,,,,,,,,+{0}背包容量,+{0}背包容量,,,,,,,,,
+GAME_AFFINITY_INCREASMENT,,+{0}% global affinity,,,,,,,,,,,,,,,,,‘+{0}全局好感度,+{0}全局好感度,,,,,,,,,
 主菜单,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 MENU_FIRST_TIME_USER,,New player? Give yourself a cool name!,,,,,,,,,,,,,,,,,第一次游戏？ 来个炫酷的名字吧！,第一次遊戲？來個炫酷的名字吧！,,,,,,,,,
 MENU_HOST_GAME,,Host Game,,,,,,,,,,,,,,,,,创建主机,創建主機,,,,,,,,,
