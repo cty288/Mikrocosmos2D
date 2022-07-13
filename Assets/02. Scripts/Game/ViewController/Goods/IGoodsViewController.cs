@@ -10,7 +10,7 @@ namespace Mikrocosmos
         public Transform FollowingPoint { get; set; }
         public IGoods GoodsModel { get; }
 
-        public void TryAbsorb(IPlayerInventorySystem invneInventorySystem, GameObject absorbedTarget);
+        public bool TryAbsorb(IPlayerInventorySystem invneInventorySystem, GameObject absorbedTarget);
     }
 
     public interface ICanBeUsedGoodsViewController : IGoodsViewController {

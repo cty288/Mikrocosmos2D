@@ -67,8 +67,12 @@ namespace Mikrocosmos
                     if (!inventorySystem.FindItemExists(goodsViewController.GoodsModel.Name) && !canAbsorbWhenBackpackEmpty) {
                         return;
                     }
-                    goodsViewController.TryAbsorb(inventorySystem, transform.parent.gameObject);
-                    itemsCantAbsorb.Add(col.gameObject);
+
+
+                    if (goodsViewController.TryAbsorb(inventorySystem, transform.parent.gameObject)) {
+                        itemsCantAbsorb.Add(col.gameObject);
+                    }
+                    
                 }
             }
         }

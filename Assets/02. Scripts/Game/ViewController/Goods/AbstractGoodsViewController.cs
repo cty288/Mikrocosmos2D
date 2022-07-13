@@ -113,10 +113,10 @@ namespace Mikrocosmos
         private bool waitingToCheckAbsorbing = false;
 
         [ServerCallback]
-        public void TryAbsorb(IPlayerInventorySystem invneInventorySystem, GameObject absorbedTarget) {
+        public bool TryAbsorb(IPlayerInventorySystem invneInventorySystem, GameObject absorbedTarget) {
             if (isServer) {
                 if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
-                    return;
+                    return false;
                 }
 
                 if (GoodsModel.AbsorbedToBackpack && !waitingToCheckAbsorbing && Model.HookState == HookState.Freed &&
@@ -125,6 +125,7 @@ namespace Mikrocosmos
                   
                     if (invneInventorySystem.ServerCheckCanAddToBackpack(GoodsModel, out var slot)) {
                         waitingToCheckAbsorbing = true;
+                        
                         this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
                             waitingToCheckAbsorbing = false;
                             if (this && !absorbing) {
@@ -135,10 +136,12 @@ namespace Mikrocosmos
                                 }
                             }
                         });
-                        
+                        return true;
                     }
                 }
             }
+
+            return false;
         }
 
         /*
