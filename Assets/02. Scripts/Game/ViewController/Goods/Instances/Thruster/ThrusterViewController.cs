@@ -30,7 +30,7 @@ namespace Mikrocosmos
         protected override void OnServerItemUsed() {
             base.OnServerItemUsed();
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Using")) {
-                if (!boostTriggered) {
+                if (!boostTriggered && Model.HookedByIdentity && GoodsModel.Durability >= 100) {
                     boostTriggered = true;
                     Model.HookedByIdentity.GetComponent<Rigidbody2D>()
                         .AddForce(boostForce * Model.GetTotalMass() * (Model.MaxSpeed / 30f) * transform.right, ForceMode2D.Impulse);
