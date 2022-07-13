@@ -52,7 +52,7 @@ namespace Mikrocosmos
                 List<NetworkMainGamePlayer> winners = matchInfo.Select((info => {
                     return info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>();
                 })).ToList();
-                AnnounceWinners(winners);
+                AnnounceWinners(winners, e.WinningTeam);
 
                 //AssignPermanentBuffToPlayers(buffSystem);
             }

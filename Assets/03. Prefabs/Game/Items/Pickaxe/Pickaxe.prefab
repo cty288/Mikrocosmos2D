@@ -203,13 +203,13 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 50
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 1
-  <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 1
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
-  <SelfMass>k__BackingField: 0
+  <SelfMass>k__BackingField: 5
   <Name>k__BackingField: Pickaxe
   <BasicSellPrice>k__BackingField: 0
   <BasicBuyPrice>k__BackingField: 0

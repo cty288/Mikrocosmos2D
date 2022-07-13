@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MikroFramework.Architecture;
 using MikroFramework.Singletons;
+using Mirror;
 using Polyglot;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -24,14 +25,24 @@ namespace Mikrocosmos
                 return SingletonProperty<RewardsFactory>.Singleton;
             }
         }
+
+        private IGlobalTradingSystem globalTradingSystem;
+
+        private void Awake() {
+            globalTradingSystem = this.GetSystem<IGlobalTradingSystem>();
+        }
+
         /// <summary>
         /// Return a dictionary that stores a list of reward names for each player, where the names are localized for each player according to their languages
         /// </summary>
         /// <param name="players"></param>
         /// <param name="difficulty"></param>
         /// <returns></returns>
-        public Dictionary<NetworkMainGamePlayer, List<string>> AssignRewardsToPlayers(List<NetworkMainGamePlayer> allPlayers, List<NetworkMainGamePlayer> winners, float difficulty) {
-        
+        public Dictionary<NetworkMainGamePlayer, List<string>> AssignRewardsToPlayers(List<NetworkMainGamePlayer> allPlayers, List<NetworkMainGamePlayer> winners, float difficulty, int winnerTeam) {
+
+            if (!NetworkServer.active) {
+                return null;
+            }
             int rewardNumber = Mathf.CeilToInt(difficulty / 0.333334f);
 
             List<PermanentBuffType> allBuffs = GetAllBuffTypes();
@@ -53,7 +64,22 @@ namespace Mikrocosmos
             int totalSlots = 0;
             
             //affinity increasment is always rewarded
-            
+            float winningTeamAffinity = globalTradingSystem.GetRelativeAffinityWithTeam(winnerTeam);
+            float losingTeamAffinity = 1 - winningTeamAffinity;
+            if (winningTeamAffinity < losingTeamAffinity) {
+                float affinityIncreasment = (losingTeamAffinity - winningTeamAffinity) / 2;
+                if (affinityIncreasment >= 0.01f) {
+                    affinityIncreasment += Random.Range(-0.03f, 0.03f);
+                    affinityIncreasment = Mathf.Clamp(affinityIncreasment, 0.01f, 0.25f);
+                    globalTradingSystem.AddAffinityToAllPlanets(winnerTeam, affinityIncreasment);
+                }
+                foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
+
+                    Language languege = player.ClientLanguage;
+                    allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_AFFINITY_INCREASMENT", languege,
+                        (Mathf.RoundToInt(affinityIncreasment * 100))));
+                }
+            }
 
             
             for (int i = 0; i < rewardNumber; i++) {

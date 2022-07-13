@@ -115,6 +115,7 @@ namespace Mikrocosmos
                 if (isUsing &&  collision.collider.TryGetComponent<PlayerSpaceship>(out var spaceship)) {
                     model.ReduceDurability(20);
                     spaceship.GetComponent<Rigidbody2D>().AddForce(-transform.right * model.BounceForce, ForceMode2D.Impulse);
+
                 }
             }
         }

@@ -389,7 +389,7 @@ namespace Mikrocosmos {
                 UnHook(true);
                 
                 this.SendEvent<OnItemShot>(new OnItemShot() {
-                    Force = force,
+                    Force = force * hookable.Model.SelfMass,
                     TargetShotItem = hookable as ICanBeShotViewController,
                     BindedVelocity = binRigidbody.velocity
                 });

@@ -480,7 +480,7 @@ MonoBehaviour:
   <GoodRarity>k__BackingField: 1
   <DroppableFromBackpack>k__BackingField: 1
   <DestroyedBySun>k__BackingField: 1
-  <AbsorbedToBackpack>k__BackingField: 1
+  <AbsorbedToBackpack>k__BackingField: 0
   <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0
   <AffectedByGravity>k__BackingField: 0

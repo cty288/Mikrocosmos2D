@@ -13,6 +13,7 @@ namespace Mikrocosmos
         public List<NetworkMainGamePlayer> Winners;
         public float Difficulty;
         public string MissionNameLocalizedKey;
+        public int WinningTeam;
     }
     public abstract class AbstractGameMission : AbstractNetworkedSystem, IMission
     {
@@ -41,14 +42,15 @@ namespace Mikrocosmos
         public abstract void OnStartMission(float overallProgress, int numPlayers);
 
         [ServerCallback]
-        public void AnnounceWinners(List<NetworkMainGamePlayer> players) {
+        public void AnnounceWinners(List<NetworkMainGamePlayer> players, int team) {
             if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
                 return;
             }
             this.SendEvent<OnMissionAnnounceWinners>(new OnMissionAnnounceWinners() {
                 Difficulty = startDifficulty,
                 MissionNameLocalizedKey = MissionNameLocalizedKey(),
-                Winners = players
+                Winners = players,
+                WinningTeam = team
             });
         }
      

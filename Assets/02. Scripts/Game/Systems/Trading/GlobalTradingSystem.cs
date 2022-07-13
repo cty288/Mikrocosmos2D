@@ -44,6 +44,8 @@ namespace Mikrocosmos
         GoodsConfigure PlanetRequestSellItem(List<GoodsConfigure> possibleGoods);
 
         List<GameObject> AllGoodsPrefabsInThisGame { get; }
+
+        void AddAffinityToAllPlanets(int team, float amount);
     }
 
 
@@ -77,6 +79,12 @@ namespace Mikrocosmos
                 }
 
                 return allGoodsPrefabsInThisGame;
+            }
+        }
+
+        public void AddAffinityToAllPlanets(int team, float amount) {
+            foreach (var planet in allPlanets) {
+                planet.ChangeAffinity(amount, team);
             }
         }
 

@@ -116,7 +116,7 @@ namespace Mikrocosmos
                 .Select(info => info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>())
                 .ToList();
 
-            Dictionary<NetworkMainGamePlayer, List<string>> allPlayersWithLocalizedRewards = RewardsFactory.Singleton.AssignRewardsToPlayers(allPlayers, e.Winners, e.Difficulty);
+            Dictionary<NetworkMainGamePlayer, List<string>> allPlayersWithLocalizedRewards = RewardsFactory.Singleton.AssignRewardsToPlayers(allPlayers, e.Winners, e.Difficulty, e.WinningTeam);
             int difficulty = (Mathf.CeilToInt(e.Difficulty / 0.333334f));
             
             List<string> winnerNames = new List<string>();

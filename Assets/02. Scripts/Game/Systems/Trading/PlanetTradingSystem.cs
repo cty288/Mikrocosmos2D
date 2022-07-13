@@ -77,6 +77,8 @@ namespace Mikrocosmos
 
         void DestroyBuyItem(int index);
 
+        public void ChangeAffinity(float changeAmount, int team);
+
         // IGoods ServerGetCurrentBuyItem();
     }
 
@@ -248,7 +250,32 @@ namespace Mikrocosmos
         }
 
 
+        public void ChangeAffinity(float changeAmount, int team) {
 
+            if (team == 1)
+            {
+                float previousAffinity = affinityWithTeam1;
+                affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1 + changeAmount, 0f, 1f);
+                float realChangeAmount = affinityWithTeam1 - previousAffinity;
+
+                this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed()
+                {
+                    ChangeAmount = realChangeAmount
+                });
+            }
+            else
+            {
+                float previousAffinity = affinityWithTeam1;
+                affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1 - changeAmount, 0f, 1f);
+                float realChangeAmount = previousAffinity - affinityWithTeam1;
+
+                this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed() {
+                    ChangeAmount = -realChangeAmount
+                });
+            }
+
+            affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1, 0f, 1f);
+        }
 
 
 
@@ -266,29 +293,8 @@ namespace Mikrocosmos
                 }
                 
             }
-            
-            
-            if (teamNumber == 1) {
-                float previousAffinity = affinityWithTeam1;
-                affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1 + affinityIncreasment, 0f, 1f);
-                float realChangeAmount = affinityWithTeam1 - previousAffinity;
-                
-                this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed() {
-                    ChangeAmount = realChangeAmount
-                });
-            }
-            else {
-                float previousAffinity = affinityWithTeam1;
-                affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1 - affinityIncreasment, 0f, 1f);
-                float realChangeAmount = previousAffinity - affinityWithTeam1;
 
-                this.SendEvent<OnServerAffinityWithTeam1Changed>(new OnServerAffinityWithTeam1Changed()
-                {
-                    ChangeAmount = -realChangeAmount
-                });
-            }
-
-            affinityWithTeam1 = Mathf.Clamp(affinityWithTeam1, 0f, 1f);
+            ChangeAffinity(affinityIncreasment, teamNumber);
         }
 
         //initialization
@@ -458,6 +464,8 @@ namespace Mikrocosmos
         public void DestroyBuyItem(int index) {
             DestroyBuyItem(currentBuyItemLists[index]);
         }
+
+        
 
 
         [ServerCallback]

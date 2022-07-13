@@ -234,6 +234,11 @@ namespace Mikrocosmos
         {
             DestroyBuyItem(currentBuyItemLists[index]);
         }
+
+        public void ChangeAffinity(float changeAmount, int team) {
+            
+        }
+
         public void SwitchSellItem(TradingItemInfo switchedItem, bool triggerCountdown) {
             
         }
