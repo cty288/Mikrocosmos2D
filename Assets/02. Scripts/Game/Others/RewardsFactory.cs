@@ -73,11 +73,13 @@ namespace Mikrocosmos
                     affinityIncreasment = Mathf.Clamp(affinityIncreasment, 0.01f, 0.25f);
                     globalTradingSystem.AddAffinityToAllPlanets(winnerTeam, affinityIncreasment);
                 }
+
+            
                 foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
 
                     Language languege = player.ClientLanguage;
                     allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_AFFINITY_INCREASMENT", languege,
-                        (Mathf.RoundToInt(affinityIncreasment * 100))));
+                        Localization.Get($"GAME_AFFINITY_INCREASMENT_{Mathf.Clamp((Mathf.FloorToInt(affinityIncreasment / 0.08f))+1,1,3)}", languege)));
                 }
             }
 
