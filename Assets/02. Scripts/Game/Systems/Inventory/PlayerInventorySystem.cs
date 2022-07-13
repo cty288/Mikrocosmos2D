@@ -154,7 +154,7 @@ namespace Mikrocosmos
             List<BackpackSlot> slots = new List<BackpackSlot>();
             foreach (BackpackSlot slot in backpackItems)
             {
-                if (slot is { Count: > 0 } && slot.StackedObjects[0].GetComponent<IGoods>().DroppableFromBackpack) {
+                if (slot is { Count: > 0 } && slot.StackedObjects[0] && slot.StackedObjects[0].GetComponent<IGoods>().DroppableFromBackpack) {
                     slots.Add(slot);
                 }
             }
