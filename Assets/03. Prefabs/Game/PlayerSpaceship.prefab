@@ -877,7 +877,7 @@ MonoBehaviour:
   <HookedNetworkIdentity>k__BackingField: {fileID: 0}
   shootTimeThreshold: 0.15
   shootChargeOneCycleTime: 1
-  maxShootForce: 1200
+  maxShootForce: 500
   droppedItemSpawnPos: {fileID: 2601994127546760122}
   animator: {fileID: 1426794900304426698}
   hookShootChargePercent: 0

@@ -34,6 +34,7 @@ namespace Mikrocosmos {
     public struct OnItemShot {
         public ICanBeShotViewController TargetShotItem;
         public Vector2 Force;
+        public Vector2 BindedVelocity;
     }
 
     public struct OnItemRobbed {
@@ -117,6 +118,8 @@ namespace Mikrocosmos {
 
         private IPlayerInventorySystem inventorySystem;
 
+        private Rigidbody2D binRigidbody;
+
         
         /// <summary>
         /// 0-0.5: charge up; 0.5-0: charge down
@@ -128,6 +131,7 @@ namespace Mikrocosmos {
             model = GetBindedModel<ISpaceshipConfigurationModel>();
             hookTrigger = GetComponentInChildren<Trigger2DCheck>();
             animator = GetComponent<NetworkAnimator>();
+            binRigidbody = GetComponent<Rigidbody2D>();
             ResLoader.Create(loader => {
                 if (resLoader == null) {
                     resLoader = loader;
@@ -380,13 +384,16 @@ namespace Mikrocosmos {
             if (isServer) {
                 Vector2 force = transform.up * maxShootForce * realShootPercent;
                 Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
-                this.SendEvent<OnItemShot>(new OnItemShot()
-                {
-                    Force = force,
-                    TargetShotItem = HookedItem as ICanBeShotViewController
-                });
+
+                IHookableViewController hookable = HookedItem;
                 UnHook(true);
-               
+                
+                this.SendEvent<OnItemShot>(new OnItemShot() {
+                    Force = force,
+                    TargetShotItem = hookable as ICanBeShotViewController,
+                    BindedVelocity = binRigidbody.velocity
+                });
+
             }
             
         }

@@ -68,6 +68,10 @@ namespace Mikrocosmos
                         return;
                     }
 
+                    if (!goodsViewController.GoodsModel.CanBeHooked ||
+                        goodsViewController.GoodsModel.HookState == HookState.Hooked) {
+                        return;
+                    }
 
                     if (goodsViewController.TryAbsorb(inventorySystem, transform.parent.gameObject)) {
                         itemsCantAbsorb.Add(col.gameObject);

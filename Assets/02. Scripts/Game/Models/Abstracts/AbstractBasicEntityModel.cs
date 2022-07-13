@@ -187,7 +187,7 @@ namespace Mikrocosmos
                 
                 // this.GetModel<ICollisionMaskModel>().Release();
             }
-            bindedRigidibody.mass = GetTotalMass();
+            bindedRigidibody.mass = Mathf.Max(5,  GetTotalMass());
             this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
             {
                 Identity = netIdentity,

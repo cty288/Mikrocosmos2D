@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
@@ -111,7 +112,11 @@ namespace Mikrocosmos
 
         [ServerCallback]
         private void OnMissionAnnounceWinners(OnMissionAnnounceWinners e) {
-            Dictionary<NetworkMainGamePlayer, List<string>> playerToRewardNames = RewardsFactory.Singleton.AssignRewardsToPlayers(e.Winners, e.Difficulty);
+            List<NetworkMainGamePlayer> allPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo()
+                .Select(info => info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>())
+                .ToList();
+
+            Dictionary<NetworkMainGamePlayer, List<string>> allPlayersWithLocalizedRewards = RewardsFactory.Singleton.AssignRewardsToPlayers(allPlayers, e.Winners, e.Difficulty);
             int difficulty = (Mathf.CeilToInt(e.Difficulty / 0.333334f));
             
             List<string> winnerNames = new List<string>();
@@ -119,8 +124,8 @@ namespace Mikrocosmos
                 winnerNames.Add(winner.matchInfo.Name);
             }
 
-            foreach (NetworkMainGamePlayer player in playerToRewardNames.Keys) {
-                TargetNotifyRewardsGenerated(player.connectionToClient, playerToRewardNames[player], winnerNames,
+            foreach (NetworkMainGamePlayer player in allPlayersWithLocalizedRewards.Keys) {
+                TargetNotifyRewardsGenerated(player.connectionToClient, allPlayersWithLocalizedRewards[player], winnerNames,
                     e.MissionNameLocalizedKey, difficulty);
             }
         }

@@ -265,6 +265,7 @@ namespace Mikrocosmos
                 {
                     goods.OnAddedToBackpack();
                     slot.Rarity = goods.GoodRarity;
+                    goods.TryHook(netIdentity);
                 }
                 
                 NetworkServer.UnSpawn(gameObject);
@@ -496,6 +497,10 @@ namespace Mikrocosmos
         }
 
         public bool ServerCheckCanAddToBackpack(IGoods goods, out BackpackSlot targetSlot) {
+           // if (goods.HookState == HookState.Hooked) {
+              //  targetSlot = null;
+                //return false;
+            //}
             BackpackSlot firstEmptySlot = null;
             foreach (BackpackSlot slot in backpackItems) {
                 if (slot.Count > 0 && slot.PrefabName == goods.Name) {

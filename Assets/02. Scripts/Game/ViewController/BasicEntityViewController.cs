@@ -128,7 +128,7 @@ namespace Mikrocosmos
 
         private void OnItemShot(OnItemShot e) {
             if (e.TargetShotItem == this as ICanBeShotViewController) {
-                rigidbody.velocity = Model.HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
+                rigidbody.velocity = e.BindedVelocity;
                 rigidbody.AddForce(e.Force, ForceMode2D.Impulse);
             }
         }

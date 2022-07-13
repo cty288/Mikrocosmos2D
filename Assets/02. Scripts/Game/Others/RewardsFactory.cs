@@ -30,29 +30,30 @@ namespace Mikrocosmos
         /// <param name="players"></param>
         /// <param name="difficulty"></param>
         /// <returns></returns>
-        public Dictionary<NetworkMainGamePlayer, List<string>> AssignRewardsToPlayers(List<NetworkMainGamePlayer> players, float difficulty) {
+        public Dictionary<NetworkMainGamePlayer, List<string>> AssignRewardsToPlayers(List<NetworkMainGamePlayer> allPlayers, List<NetworkMainGamePlayer> winners, float difficulty) {
         
             int rewardNumber = Mathf.CeilToInt(difficulty / 0.333334f);
 
             List<PermanentBuffType> allBuffs = GetAllBuffTypes();
 
-            List<IBuffSystem> buffSystems = players.Select((info => {
+            List<IBuffSystem> buffSystems = winners.Select((info => {
                 return info.ControlledSpaceship
                     .GetComponent<IBuffSystem>();
             })).ToList();
 
 
-            Dictionary<NetworkMainGamePlayer, List<string>> result =
+            Dictionary<NetworkMainGamePlayer, List<string>> allPlayersWithRewardNames =
                 new Dictionary<NetworkMainGamePlayer, List<string>>();
 
-            foreach (NetworkMainGamePlayer player in players) {
-                result.Add(player, new List<string>());
+            foreach (NetworkMainGamePlayer player in allPlayers) {
+                allPlayersWithRewardNames.Add(player, new List<string>());
             }
 
             int totalMoney = 0;
             int totalSlots = 0;
             
-
+            //affinity increasment is always rewarded
+            
 
             
             for (int i = 0; i < rewardNumber; i++) {
@@ -63,9 +64,9 @@ namespace Mikrocosmos
                         int randomBuff = Random.Range(0, allBuffs.Count);
                         PermanentBuffType buff = allBuffs[randomBuff];
                         allBuffs.RemoveAt(randomBuff);
-                        foreach (NetworkMainGamePlayer player in result.Keys) {
+                        foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
                             Language languege = player.ClientLanguage;
-                            result[player].Add(GetBuffNameLocalized(buff, languege));
+                            allPlayersWithRewardNames[player].Add(GetBuffNameLocalized(buff, languege));
                         }
                         foreach (IBuffSystem buffSystem in buffSystems) {
                             PermanentBuffFactory.AddPermanentBuffToPlayer(buff, buffSystem, 3, 0);
@@ -85,23 +86,28 @@ namespace Mikrocosmos
 
 
             if (totalMoney > 0) {
-                foreach (NetworkMainGamePlayer player in result.Keys) {
+                foreach (NetworkMainGamePlayer player in winners) {
                     player.ControlledSpaceship.GetComponent<IPlayerTradingSystem>().ReceiveMoney(totalMoney);
+                }
+                foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
                     Language languege = player.ClientLanguage;
-                    result[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_MONEY", totalMoney, languege));
+                    allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_MONEY", totalMoney, languege));
                 }
             }
 
             if (totalSlots > 0) {
-                foreach (NetworkMainGamePlayer player in result.Keys) {
+                foreach (NetworkMainGamePlayer player in winners) {
                     player.ControlledSpaceship.GetComponent<IPlayerInventorySystem>().ServerAddSlots(totalSlots);
+                }
+                foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
+                    
                     Language languege = player.ClientLanguage;
-                    result[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_SLOT", totalSlots, languege));
+                    allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_SLOT", totalSlots, languege));
                 }
             }
             
 
-            return result;
+            return allPlayersWithRewardNames;
         }
 
         
