@@ -61,7 +61,7 @@ namespace Mikrocosmos
         }
 
         private void OnPlayerDie(OnPlayerDie e) {
-            if (currentCriminals.ContainsKey(e.SpaceshipIdentity)) {
+            if (currentCriminals.ContainsKey(e.SpaceshipIdentity) && e.Killer.GetComponent<PlayerSpaceship>()) {
                 KillerInfo suspect = currentCriminals[e.SpaceshipIdentity];
                 if (suspect.KillerTeam == e.Killer.GetComponent<PlayerSpaceship>().ThisSpaceshipTeam) {
                     return;
