@@ -212,7 +212,11 @@ namespace Mikrocosmos
                     transform.position = FollowingPoint.position;
                 }
 
-                if (absorbing && absorbSpaceship && GoodsModel.AbsorbedToBackpack && Model.HookState == HookState.Freed) {
+                if (absorbing && absorbSpaceship && GoodsModel.AbsorbedToBackpack) {
+                    if (Model.HookState != HookState.Freed) {
+                        absorbing = false;
+                        return;
+                    }
                     rigidbody.MovePosition(Vector2.Lerp(transform.position, absorbSpaceship.transform.position,
                         5f * Time.fixedDeltaTime));
 

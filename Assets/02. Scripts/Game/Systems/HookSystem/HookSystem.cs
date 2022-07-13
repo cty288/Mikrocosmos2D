@@ -381,18 +381,22 @@ namespace Mikrocosmos {
         }
         public void ServerShootTrigger()
         {
-            if (isServer) {
+            if (isServer && this) {
                 Vector2 force = transform.up * maxShootForce * realShootPercent;
                 Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
 
                 IHookableViewController hookable = HookedItem;
                 UnHook(true);
-                
-                this.SendEvent<OnItemShot>(new OnItemShot() {
-                    Force = force * hookable.Model.SelfMass,
-                    TargetShotItem = hookable as ICanBeShotViewController,
-                    BindedVelocity = binRigidbody.velocity
-                });
+                if (hookable!=null) {
+                    //bug
+                    this.SendEvent<OnItemShot>(new OnItemShot()
+                    {
+                        Force = force * hookable.Model.SelfMass,
+                        TargetShotItem = hookable as ICanBeShotViewController,
+                        BindedVelocity = binRigidbody.velocity
+                    });
+                }
+               
 
             }
             
