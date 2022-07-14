@@ -45,4 +45,4 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/MikroFramework/Runtime/Examples/ResKit/06. LoadSceneABExample/TestABScene.unity
 Dependencies:
-- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/1.0/Windows/mftest
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/mftest

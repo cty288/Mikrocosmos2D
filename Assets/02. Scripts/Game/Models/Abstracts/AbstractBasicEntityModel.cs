@@ -145,6 +145,9 @@ namespace Mikrocosmos
         /// </summary>
         [ServerCallback]
         public void UnHook(bool isShoot) {
+            if (!bindedRigidibody || this) {
+                return;
+            }
             //优化一下
             if (HookedByIdentity) {
                 
@@ -161,10 +164,9 @@ namespace Mikrocosmos
                     bindedRigidibody.velocity = HookedByIdentity.GetComponent<Rigidbody2D>().velocity;
                     bindedRigidibody.angularVelocity = 0;
                 }
-                if (this is ICanBeUsed model)
-                {
-                    if (model.IsUsing)
-                    {
+                
+                if (this is ICanBeUsed model) {
+                    if (model.IsUsing) {
                         model.OnItemStopUsed();
                     }
                 }
@@ -188,8 +190,7 @@ namespace Mikrocosmos
                 // this.GetModel<ICollisionMaskModel>().Release();
             }
             bindedRigidibody.mass = Mathf.Max(5,  GetTotalMass());
-            this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
-            {
+            this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged() {
                 Identity = netIdentity,
                 HookState = HookState,
                 HookedByIdentity = this.HookedByIdentity

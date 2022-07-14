@@ -17,7 +17,7 @@ namespace MikroFramework.ResKit
 
         private ResTable recordedRes = new ResTable();
 
-
+        public bool IsReady { get; private set; } = false;
         public static ResLoader Allocate() {
             ResLoader resLoader = SafeObjectPool<ResLoader>.Singleton.Allocate();
             return resLoader;
@@ -43,13 +43,14 @@ namespace MikroFramework.ResKit
             if (!ResData.Exists) {
                 //resdata does not exist, initialize a new resdata
                 ResData.Singleton.Init(() => {
-                    onInitFinished?.Invoke(new ResLoader());
+                    onInitFinished?.Invoke(new ResLoader(){IsReady = true});
+                    
                 },(error) => {
                     Debug.LogError(error);
                 });
             }
             else {
-                onInitFinished?.Invoke(new ResLoader());
+                onInitFinished?.Invoke(new ResLoader(){IsReady = true});
             }
         }
 

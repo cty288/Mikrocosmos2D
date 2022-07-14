@@ -1,0 +1,54 @@
+ManifestFileVersion: 0
+CRC: 2292885837
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: eeb17ba56d80f1b2ac5f8eb173f0ca6a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c21d61fe394c58399df3c6fb5c7c99b3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile3.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile306.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile105.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile5.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile202.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile301.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile107.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile303.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile208.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile305.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile4.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile309.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile307.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile207.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile104.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile106.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile205.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile203.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile201.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile308.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile200.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile109.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile1.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile0.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile204.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile100.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile101.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile209.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile300.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile2.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile108.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile206.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile304.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile103.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile102.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile302.png
+Dependencies: []

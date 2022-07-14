@@ -31,4 +31,4 @@ Assets:
 - Assets/MikroFramework/Runtime/Examples/AudioKit/01. BasicExample/Resources/War
   loop.prefab
 Dependencies:
-- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/1.0/Windows/mftest
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/mftest
