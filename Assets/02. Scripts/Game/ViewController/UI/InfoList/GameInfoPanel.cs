@@ -5,6 +5,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.ResKit;
 using UnityEngine;
+using UnityEngine.U2D;
 
 namespace Mikrocosmos
 {
@@ -37,29 +38,18 @@ namespace Mikrocosmos
             Sprite iconSprite = null;
             Sprite infoContainerSpriteName = null;
             Sprite infoSliderSprite = null;
+            SpriteAtlas atlas = resLoader.LoadSync<SpriteAtlas>("info", $"InfoSpriteAtlas");
+        
             if (!string.IsNullOrEmpty(e.Info.InfoElementIconAssetName)) {
-                Texture2D texture = resLoader.LoadSync<Texture2D>("info_icon_sprite", e.Info.InfoElementIconAssetName);
-                if (texture) {
-                    iconSprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-                }
+                iconSprite = atlas.GetSprite($"{e.Info.InfoElementIconAssetName}");
             }
 
-            if (!string.IsNullOrEmpty(e.Info.InfoContainerSpriteAssetName))
-            {
-                Texture2D texture = resLoader.LoadSync<Texture2D>("info_container_sprites", e.Info.InfoContainerSpriteAssetName);
-                if (texture)
-                {
-                    infoContainerSpriteName = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-                }
+            if (!string.IsNullOrEmpty(e.Info.InfoContainerSpriteAssetName)) {
+                infoContainerSpriteName = atlas.GetSprite($"{e.Info.InfoContainerSpriteAssetName}");
             }
 
-            if (!string.IsNullOrEmpty(e.Info.InfoContainerSliderAssetName))
-            {
-                Texture2D texture = resLoader.LoadSync<Texture2D>("info_slider_sprites", e.Info.InfoContainerSliderAssetName);
-                if (texture)
-                {
-                    infoSliderSprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-                }
+            if (!string.IsNullOrEmpty(e.Info.InfoContainerSliderAssetName)) {
+                infoSliderSprite = atlas.GetSprite($"{e.Info.InfoContainerSliderAssetName}");
             }
 
             if (!infoNameToElement.ContainsKey(e.Info.Name)) {

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3801753050
+CRC: 3489631832
 Hashes:
   AssetFileHash:
     serializedVersion: 2
     Hash: 97d7345c563ea18ae82e846157e91a6f
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 612412107538887f0581f6f635b77476
+    Hash: 50cc2f16cc5a3cd83907ca063391c5c9
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -26,6 +26,8 @@ ClassTypes:
 - Class: 222
   Script: {instanceID: 0}
 - Class: 224
+  Script: {instanceID: 0}
+- Class: 687078895
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
 - AssemblyName: MikroFramework

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.elringus.spriteglow": "https://github.com/Elringus/SpriteGlow.git#package",
+    "com.unity.assetbundlebrowser": "https://github.com/Unity-Technologies/AssetBundles-Browser.git",
     "com.unity.cinemachine": "2.8.4",
     "com.unity.collab-proxy": "1.15.16",
     "com.unity.feature.2d": "1.0.0",

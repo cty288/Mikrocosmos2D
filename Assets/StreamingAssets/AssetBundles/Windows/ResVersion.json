@@ -45,8 +45,8 @@
     },
     {
       "AssetName": "buff_icons",
-      "MD5": "1b7a1e32b243bc387a26085ce42a8111",
-      "FileSize": 309.2832,
+      "MD5": "a813d9bb757e7f13f0b5cc27e98ab1ee",
+      "FileSize": 266.4082,
       "assetDatas": [
         {
           "Name": "AimingSpeedDownDeBuffIcon",
@@ -121,36 +121,96 @@
       ]
     },
     {
-      "AssetName": "info_container_sprites",
-      "MD5": "871ca7585db3c558d59629cd548b7fc4",
-      "FileSize": 32.9541,
+      "AssetName": "info",
+      "MD5": "6d3b6d4a7660eca5ee136e76cf74ca41",
+      "FileSize": 144.2041,
       "assetDatas": [
         {
           "Name": "InfoBar_Green",
-          "OwnerBundleName": "info_container_sprites",
+          "OwnerBundleName": "info",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "InfoBar_Pink",
-          "OwnerBundleName": "info_container_sprites",
+          "OwnerBundleName": "info",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "InfoBar_Purple",
-          "OwnerBundleName": "info_container_sprites",
+          "OwnerBundleName": "info",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "InfoBar_Yellow",
-          "OwnerBundleName": "info_container_sprites",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoIcon_Green",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoIcon_Pink",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoIcon_Purple",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoIcon_Yellow",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoProgress_Green",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoProgress_Pink",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoProgress_Purple",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoProgress_Yellow",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "InfoSpriteAtlas",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.U2D.SpriteAtlas"
+        },
+        {
+          "Name": "SendEggMissionInfoIcon",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "SpaceMinecartMissionInfoIcon",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "StrangeMeteorMissionInfoIcon",
+          "OwnerBundleName": "info",
           "AssetType": "UnityEngine.Texture2D"
         }
       ]
     },
     {
       "AssetName": "info_elements",
-      "MD5": "2370e4d3cca87c4490a942bc513952fc",
-      "FileSize": 9660.025,
+      "MD5": "8acd8cac9c36f1eada9d050f3f9698cc",
+      "FileSize": 9660.711,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -161,75 +221,6 @@
           "Name": "WarningInfoElement",
           "OwnerBundleName": "info_elements",
           "AssetType": "UnityEngine.GameObject"
-        }
-      ]
-    },
-    {
-      "AssetName": "info_icon_sprite",
-      "MD5": "233295eae4758427d6d52040fb000b8c",
-      "FileSize": 242.234375,
-      "assetDatas": [
-        {
-          "Name": "InfoIcon_Green",
-          "OwnerBundleName": "info_icon_sprite",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "InfoIcon_Pink",
-          "OwnerBundleName": "info_icon_sprite",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "InfoIcon_Purple",
-          "OwnerBundleName": "info_icon_sprite",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "InfoIcon_Yellow",
-          "OwnerBundleName": "info_icon_sprite",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "SendEggMissionInfoIcon",
-          "OwnerBundleName": "info_icon_sprite",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "SpaceMinecartMissionInfoIcon",
-          "OwnerBundleName": "info_icon_sprite",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "StrangeMeteorMissionInfoIcon",
-          "OwnerBundleName": "info_icon_sprite",
-          "AssetType": "UnityEngine.Texture2D"
-        }
-      ]
-    },
-    {
-      "AssetName": "info_slider_sprites",
-      "MD5": "96dfd440070d6a39cae4b103d0827d02",
-      "FileSize": 50.30371,
-      "assetDatas": [
-        {
-          "Name": "InfoProgress_Green",
-          "OwnerBundleName": "info_slider_sprites",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "InfoProgress_Pink",
-          "OwnerBundleName": "info_slider_sprites",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "InfoProgress_Purple",
-          "OwnerBundleName": "info_slider_sprites",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "InfoProgress_Yellow",
-          "OwnerBundleName": "info_slider_sprites",
-          "AssetType": "UnityEngine.Texture2D"
         }
       ]
     },
@@ -279,9 +270,14 @@
     },
     {
       "AssetName": "profile",
-      "MD5": "5cf8951cce2e4fda270977fa7d3c4c67",
-      "FileSize": 1386.69922,
+      "MD5": "eebcf040c526f6bd528fdfa9971b4ef5",
+      "FileSize": 631.615234,
       "assetDatas": [
+        {
+          "Name": "AvatarAtlas",
+          "OwnerBundleName": "profile",
+          "AssetType": "UnityEngine.U2D.SpriteAtlas"
+        },
         {
           "Name": "profile0",
           "OwnerBundleName": "profile",
@@ -490,14 +486,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "cbc13661a79a960deffbb2cef99c848b",
-      "FileSize": 1.94726563,
+      "MD5": "6ae368f89c2e4173fa17d3bbf8cc5fb0",
+      "FileSize": 1.86621094,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "f680884c6af185f5c102f3be6c5239a6",
-      "FileSize": 1549.6416,
+      "MD5": "9df6cc3dd83aecb3ee7acfab9779c7fc",
+      "FileSize": 4665.35938,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -703,6 +699,11 @@
           "Name": "ThrusterSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "ItemAtlas",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "UnityEngine.U2D.SpriteAtlas"
         },
         {
           "Name": "PickaxeSprite",

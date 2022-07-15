@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
+using Mirror;
 using Mirror.FizzySteam;
 using UnityEngine;
 
@@ -34,7 +35,19 @@ namespace Mikrocosmos
         }
         
     }
-    
+
+    public static class AvatarWriter
+    {
+        public static void WriteAvatar(this NetworkWriter writer, Avatar value) {
+            writer.WriteList(value.GetAllElements());
+        }
+
+        public static Avatar ReadAvatar(this NetworkReader reader) {
+            List<AvatarElement> avatarElements = reader.ReadList<AvatarElement>();
+            return new Avatar(avatarElements);
+        }
+    }
+
 
     [Serializable] 
     [ES3Serializable] 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MikroFramework.ResKit;
 using MikroFramework.Singletons;
 using UnityEngine;
+using UnityEngine.U2D;
 
 namespace Mikrocosmos
 {
@@ -23,12 +24,12 @@ namespace Mikrocosmos
             if (cashedSprites.ContainsKey(assetIndex)) {
                 return cashedSprites[assetIndex];
             }
-            Texture2D texture = resLoader.LoadSync<Texture2D>("profile", $"profile{assetIndex}");
-            
-            if (texture) {
-                Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height),
-                    new Vector2(0.5f, 0.5f), 100.0f, 1, SpriteMeshType.FullRect);
-                
+            SpriteAtlas atlas = resLoader.LoadSync<SpriteAtlas>("profile", $"AvatarAtlas");
+            Sprite sprite = atlas.GetSprite($"profile{assetIndex}");
+            //sprite.packingMode = SpritePackingMode.Rectangle;
+            if (sprite)
+            {
+                Debug.Log($"Packing Mode: {sprite.packingMode}");
                 cashedSprites.Add(assetIndex, sprite);
                 return sprite;
             }

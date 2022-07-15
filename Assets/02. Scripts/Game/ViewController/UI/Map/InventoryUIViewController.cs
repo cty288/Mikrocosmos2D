@@ -9,6 +9,7 @@ using MikroFramework.ResKit;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -151,8 +152,10 @@ namespace Mikrocosmos
                     
                     itemDurabilityImage.enabled = true;
                     itemImage.color = new Color(1, 1, 1, 1);
-                    Texture2D texture = resLoader.LoadSync<Texture2D>("assets/goods", slot.SpriteName);
-                    Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                    SpriteAtlas atlas = resLoader.LoadSync<SpriteAtlas>("assets/goods", $"ItemAtlas");
+
+                    Sprite sprite = atlas.GetSprite(slot.SpriteName);
+                    //Sprite  = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
                     itemImage.sprite = sprite;
                     itemText.text = slot.ClientSlotCount.ToString();
                 }

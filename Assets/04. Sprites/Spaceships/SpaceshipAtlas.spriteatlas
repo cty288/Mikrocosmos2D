@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpaceshipAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: fe2b7b5a23b92dc48bd0a2d3dd2f94df, type: 3}
+    - {fileID: 102900000, guid: d51ec5dd96a7a934e8a4e377805c7a4e, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 8db04b100eef51b4bbdd15df9c31a2c4, type: 3}
+  - {fileID: 21300000, guid: 9cf98d60b75b6a94e80c7cf0814f45f0, type: 3}
+  - {fileID: 21300000, guid: bfbb20b021e3c30428bab935788f3f94, type: 3}
+  - {fileID: 21300000, guid: 57a5b7518fcdb6b4a9b79324f8626c88, type: 3}
+  - {fileID: 21300000, guid: b8456b6161d8dff4ea5c70d2cb1d2d79, type: 3}
+  - {fileID: 21300000, guid: eb62d6a1364710f4f94af07d9bfd7e71, type: 3}
+  - {fileID: 21300000, guid: c8ce66e14edcb5b49af73545038fbbd1, type: 3}
+  - {fileID: 21300000, guid: d6602bf141662eb47813e4b38b7fee12, type: 3}
+  - {fileID: 21300000, guid: ba750412c34048a4bb1ef6799a63215c, type: 3}
+  - {fileID: 21300000, guid: 0fd9f172e5cc18c49ba51dc942ca612e, type: 3}
+  - {fileID: 21300000, guid: 25bc45b21090b0a48905143c4b396106, type: 3}
+  - {fileID: 21300000, guid: 663c8393e5e64564cb4fe9d162b48aac, type: 3}
+  - {fileID: 21300000, guid: 906bad935b4e25c4ba3426e6984d6fa4, type: 3}
+  - {fileID: 21300000, guid: 2cfcabf37bd1870498664cd0dd1b1e92, type: 3}
+  - {fileID: 21300000, guid: cd2351649d891fd4b908c5f9d223d5c3, type: 3}
+  - {fileID: 21300000, guid: d3a76c949407c8742ac849aa04970075, type: 3}
+  - {fileID: 21300000, guid: 0782dbb4ec6f29c44a3831b048ebde7e, type: 3}
+  - {fileID: 21300000, guid: 1dcc1e050dc501444b23d8287664ade7, type: 3}
+  - {fileID: 21300000, guid: f3175625bcfa6ed4a8c40129212ed4e6, type: 3}
+  - {fileID: 21300000, guid: 15ffc765990e46342a030c1fb10764c6, type: 3}
+  - {fileID: 21300000, guid: 728505856ae1902459ac45a1f09aec00, type: 3}
+  - {fileID: 21300000, guid: e0879c16e7032ce4181b851678932ff2, type: 3}
+  - {fileID: 21300000, guid: c6962e26aa4997649bd5a6b1600e6ba0, type: 3}
+  - {fileID: 21300000, guid: 8185e786b0916764da71ee1df449e9f1, type: 3}
+  - {fileID: 21300000, guid: 14bf8ba6db3aa75448715c612f806b41, type: 3}
+  - {fileID: 21300000, guid: 48297ca6c7c75ac41b016e41a23aeeb5, type: 3}
+  - {fileID: 21300000, guid: 825f418793b95d241b50a87d8f503695, type: 3}
+  - {fileID: 21300000, guid: 4f3d032832d16284d95f1c4026e86dd2, type: 3}
+  - {fileID: 21300000, guid: 3dbe85281d4e01047b77f0c3c196fc83, type: 3}
+  - {fileID: 21300000, guid: 4db2a6281fba338419d081b684c0ab2c, type: 3}
+  - {fileID: 21300000, guid: db65a7b960ccc5a46813a700ff1dbc26, type: 3}
+  - {fileID: 21300000, guid: b64a78b99bf9d7149a01f2d22ba1ec33, type: 3}
+  - {fileID: 21300000, guid: 664996f91b8841e4b8ac01bec5df6515, type: 3}
+  - {fileID: 21300000, guid: 7b53e9f9a83b31445a5ccb98b69b18ef, type: 3}
+  - {fileID: 21300000, guid: f9df4e3aa8deb304994a922b278c0b79, type: 3}
+  - {fileID: 21300000, guid: 5563a66a2e8053e4f8fb4fd8a1370022, type: 3}
+  - {fileID: 21300000, guid: 6ec86beaa44f16a49a34f820fd47ce32, type: 3}
+  - {fileID: 21300000, guid: d7f5081b013be364ab68c1c1e6400bd2, type: 3}
+  - {fileID: 21300000, guid: ddd3b91b45a9aa64da8b3f0f6ff8f36a, type: 3}
+  - {fileID: 21300000, guid: 4de6d92b35f33e346ad6a1a2783e6ce3, type: 3}
+  - {fileID: 21300000, guid: 1d79667b5d8656344a5da5d007e25010, type: 3}
+  - {fileID: 21300000, guid: a75d3e9b643d4d049b261440f1b4e214, type: 3}
+  - {fileID: 21300000, guid: a42751bbbf261d44e870256942279816, type: 3}
+  - {fileID: 21300000, guid: 75ad54cbabc1bd14eb3244d010225592, type: 3}
+  - {fileID: 21300000, guid: 4504aecb5674ac64b9e4db8abacffefd, type: 3}
+  - {fileID: 21300000, guid: 9c27660ce06272f4b985642447a38234, type: 3}
+  - {fileID: 21300000, guid: 12c908bc92110c445967c5086b1e000c, type: 3}
+  - {fileID: 21300000, guid: 0aad8e2d9f98cd14e925d5dbd4382800, type: 3}
+  - {fileID: 21300000, guid: ce14d27dda6a13b49bc3c283e49c9979, type: 3}
+  - {fileID: 21300000, guid: b4c3e6ddfac4c5c47bc4267c8ecb9cc7, type: 3}
+  - {fileID: 21300000, guid: 78a7136e84ffc2b41a8551dcfab13d04, type: 3}
+  - {fileID: 21300000, guid: 808a2c6e489a4dd42aae810fe7ea0602, type: 3}
+  - {fileID: 21300000, guid: b195fc6ee30e59a4fa00471e97f54321, type: 3}
+  - {fileID: 21300000, guid: 759a97ee51a1ab248aae5904e37f4fe9, type: 3}
+  - {fileID: 21300000, guid: e52630fe326605840a8e6a9770fa1b8d, type: 3}
+  - {fileID: 21300000, guid: 0d88740f67f65dd429de3c66def7eb03, type: 3}
+  - {fileID: 21300000, guid: dec21e0f1d2e5794eaed441fbcf6a8ba, type: 3}
+  - {fileID: 21300000, guid: e986684f6d3e168479f44fb558587702, type: 3}
+  - {fileID: 21300000, guid: fcc7425f2ae8e194f93b93ec2acd86d4, type: 3}
+  - {fileID: 21300000, guid: 580b919feea04a545ad73f7cc3fae7f4, type: 3}
+  - {fileID: 21300000, guid: a881c3bf7eb0bb7428f3c7e009cacc63, type: 3}
+  - {fileID: 21300000, guid: 06dbc1cf93fce6d479634f744740c111, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - spaceship2_run2
+  - spaceship2_run5
+  - spaceship2_shoot__5
+  - spaceship2_run6
+  - spaceship2_shoot__1
+  - spaceship blue-01
+  - spaceship1_shoot__3
+  - spaceship2_hooked_3
+  - spaceship2_shoot_6
+  - spaceship2_suck__4
+  - spaceship2_hooked_0
+  - spaceship2_catched
+  - spaceship1_hooked_2
+  - spaceship1_suck_3
+  - spaceship2_shoot__3
+  - spaceship1_shoot__5
+  - spaceship1_run1
+  - spaceship1_shoot__1
+  - spaceship1_hooked_3
+  - spaceship1_suck_5
+  - spaceship2_suck__6
+  - spaceship2_hooked_1
+  - spaceship1_run4
+  - spaceship1_suck_4
+  - spaceship red-01
+  - spaceship1_run5
+  - spaceship2_run3
+  - spaceship1_run0
+  - spaceship1_shoot__6
+  - spaceship lightgreen-01
+  - spaceship1_suck_6
+  - spaceship2_suck__3
+  - spaceship2_suck__2
+  - spaceship2_suck__5
+  - spaceship2_hooked_2
+  - spaceship2_run1
+  - spaceship1_suck_1
+  - spaceship1_shoot__4
+  - spaceship1_suck_2
+  - spaceship2
+  - spaceship1_hooked_0
+  - spaceship pink-01
+  - spaceship1
+  - spaceship blue-01
+  - spaceship2_run4
+  - spaceship2_run0
+  - Spaceship green-01
+  - spaceship2_suck__1
+  - spaceship2_hooked_4
+  - spaceship1_hooked_5
+  - spaceship1_run6
+  - spaceship2_hooked_5
+  - spaceship yellow-01
+  - spaceship1_run3
+  - spaceship1_shoot__2
+  - spaceship1_run2
+  - spaceship2_shoot__2
+  - spaceship1_hooked_4
+  - spaceship1_hooked_1
+  - spaceship2_shoot__4
+  - spaceship purple-01
+  - spaceship1_catched
+  m_RenderDataMap: {}
+  m_Tag: SpaceshipAtlas
+  m_IsVariant: 0

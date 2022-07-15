@@ -145,7 +145,7 @@ namespace Mikrocosmos
         /// </summary>
         [ServerCallback]
         public void UnHook(bool isShoot) {
-            if (!bindedRigidibody || this) {
+            if (!bindedRigidibody || !this) {
                 return;
             }
             //优化一下

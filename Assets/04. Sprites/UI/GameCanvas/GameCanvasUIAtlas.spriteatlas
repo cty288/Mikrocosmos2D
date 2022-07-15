@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GameCanvasUIAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 6563ef1d5c7d08340a00479c98f2f071, type: 3}
+    - {fileID: 102900000, guid: 2a8e9f0e0ffda0545ad669ecaa3a6038, type: 3}
+    - {fileID: 102900000, guid: d49e3067a77cf944cbf74c371cd27c55, type: 3}
+    - {fileID: 102900000, guid: 50c59ff98ceab024fb5b6e2060fed880, type: 3}
+    - {fileID: 102900000, guid: 81b800ed0c7862943b20a2435b2978a7, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
+  - {fileID: 21300000, guid: 74531c02b55f69248b5717424c12ffa9, type: 3}
+  - {fileID: 21300000, guid: cfddab52f2626ce449aa3847a7b1cf62, type: 3}
+  - {fileID: 21300000, guid: 43cc22b286b7a9349906ee505258be9e, type: 3}
+  - {fileID: 21300000, guid: ddfebfb2d89a5b943987d6d56e19fa68, type: 3}
+  - {fileID: 21300000, guid: e23def4313e646f40b1e235bea4769e6, type: 3}
+  - {fileID: 21300000, guid: 3dad079358b2ae842a9012ed1368c459, type: 3}
+  - {fileID: 21300000, guid: 526f6e44433bf9949a2198fe0c9c4cfc, type: 3}
+  - {fileID: 21300000, guid: 323f705424d3c17469bcdd90398115d7, type: 3}
+  - {fileID: 21300000, guid: f7998615a2fbb6f40bfd1e189dacc1dd, type: 3}
+  - {fileID: 21300000, guid: 89c3f625c9d8a7c4784bbef04114510b, type: 3}
+  - {fileID: 21300000, guid: a3080b65fc4dc3842a38400bdbe01a01, type: 3}
+  - {fileID: 21300000, guid: b20d429555eaba744ba0fc9600553999, type: 3}
+  - {fileID: 21300000, guid: 5348fdb5c4801644c86979f5b2873fa7, type: 3}
+  - {fileID: 21300000, guid: 24907316d9a851f4b86145a0c688ea7a, type: 3}
+  - {fileID: 21300000, guid: a5cd6d87d58ae3a4fb2e916a91e59357, type: 3}
+  - {fileID: 21300000, guid: b914adf7785e67947b8cd859f96cef32, type: 3}
+  - {fileID: 21300000, guid: 6604b9a8cd8311a479a3ff2293585c7e, type: 3}
+  - {fileID: 21300000, guid: 8ef9d2b8cda15fa44893f59f588b5760, type: 3}
+  - {fileID: 21300000, guid: f82124c8c30c6b6499f6185e44e2e61a, type: 3}
+  - {fileID: 21300000, guid: ac74d709f12cb7446bba6dbbeb5530cd, type: 3}
+  - {fileID: 21300000, guid: 219b612923a5d174e881fc8c2f4e5629, type: 3}
+  - {fileID: 21300000, guid: d2a08349b920bfe4a8e90c04def57354, type: 3}
+  - {fileID: 21300000, guid: e2fc6a3a488c9df4f9830eb8503e2e2d, type: 3}
+  - {fileID: 21300000, guid: 2c99775a3aaf6e2438ed1b1e6440cb07, type: 3}
+  - {fileID: 21300000, guid: 17974d2b315506a4cbad24efcbc666f4, type: 3}
+  - {fileID: 21300000, guid: 050dcddb70a1d4446bdcfa0c5d7aa347, type: 3}
+  - {fileID: 21300000, guid: 8f3eb93da58248847ba2187ac2e82159, type: 3}
+  - {fileID: 21300000, guid: 74034d3d7b3a3184292557e19b3c2a0b, type: 3}
+  - {fileID: 21300000, guid: 7069ac6d25bb5f043b7805603ed4e9e1, type: 3}
+  - {fileID: 21300000, guid: 191cbb7d1d5d861449dbeed54492bf99, type: 3}
+  - {fileID: 21300000, guid: 421133bdb961b8841bb9e6cf26fd882a, type: 3}
+  - {fileID: 21300000, guid: 907a2eedc102f034e8e7297a06231879, type: 3}
+  - {fileID: 21300000, guid: 7f96bd1ef950a1744ae5aa20f147f906, type: 3}
+  - {fileID: 21300000, guid: ff5e5c7e8e836f24f83a68d70ae6779d, type: 3}
+  - {fileID: 21300000, guid: 4b629f8e160add54b8c30a6a75915ed9, type: 3}
+  - {fileID: 21300000, guid: 5403726f2fccab94f849ba99604acd9f, type: 3}
+  - {fileID: 21300000, guid: 1840fd7f66b2bfa4fbfb37e0410013a0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - durability_weapon
+  - spaceship4
+  - durability_compound
+  - planet6
+  - thin ripple
+  - circle ring
+  - explosion sword
+  - click3-01
+  - click4-01
+  - Charge_BG
+  - square ring
+  - inventory full-01
+  - click8-01
+  - label 2-01 1
+  - explosion triangle2
+  - label 1-01 1
+  - winner alert middle
+  - durability_normal
+  - explosion ring1
+  - spaceship1
+  - explosion circle
+  - explosion star
+  - SelectedIcon
+  - click7-01
+  - Charge_Icon
+  - escape_icon_01
+  - winner alert top bar
+  - click2-01
+  - inventory blank-01
+  - inventory_countbg
+  - winner alert whole
+  - Winner alert title
+  - winner alert crown
+  - label 2-01
+  - click1-01
+  - winner alert bottom bar
+  - click5-01
+  - escape_icon_02
+  m_RenderDataMap: {}
+  m_Tag: GameCanvasUIAtlas
+  m_IsVariant: 0

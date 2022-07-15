@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 479137911
+CRC: 2822363290
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: bbe3f69344050b1fe9a8867ac80c0157
+    Hash: f7c4397b6995828cf160f1ccdee1ed2c
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 2e88a085ec1360869eb79f3a424f127d
+    Hash: ff76084daedf3025dc4a8fec31d713c3
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -75,6 +75,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
@@ -116,10 +118,11 @@ Assets:
 - Assets/03. Prefabs/Game/Items/Goods/Temporary/Banana2/Banana.prefab
 - Assets/04. Sprites/Items/Goods/RawMaterials/FireOre/FireOreSprite.png
 - Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite_1.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Mask/DottedOutlineMask.mat
+- Assets/04. Sprites/Items/ItemAtlas.spriteatlasv2
 - Assets/04. Sprites/Items/Goods/BananaSprite.png
 - Assets/04. Sprites/Items/Goods/RawMaterials/SeaweedFruit/SeaweedFruitSprite.png
 - Assets/04. Sprites/Items/Goods/FirePlant/FirePlant/FirePlantSprite.png
+- Assets/03. Prefabs/Game/Items/Goods/Temporary/Mask/DottedOutlineMask.mat
 - Assets/03. Prefabs/Game/Items/Goods/FirePlant/FirePlant.prefab
 - Assets/04. Sprites/Missions/SendEggMission/SunflowerSonSprite.png
 - Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite.png

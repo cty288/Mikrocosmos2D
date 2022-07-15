@@ -1,17 +1,19 @@
 ManifestFileVersion: 0
-CRC: 759159557
+CRC: 1663402820
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b92aa0d0e67bf45926819f6e7a7ed95c
+    Hash: 46ffcefa7fe1b64de830db0a9add4b08
   TypeTreeHash:
     serializedVersion: 2
-    Hash: c21d61fe394c58399df3c6fb5c7c99b3
+    Hash: c29c357128feff56790ec9816c4fc93d
 HashAppended: 0
 ClassTypes:
 - Class: 28
   Script: {instanceID: 0}
 - Class: 213
+  Script: {instanceID: 0}
+- Class: 687078895
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
@@ -29,6 +31,7 @@ Assets:
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile309.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile307.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile207.png
+- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/AvatarAtlas.spriteatlasv2
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile104.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile106.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile205.png

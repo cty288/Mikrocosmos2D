@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PrepareRoomAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: eef99415ca4391445988b4b2eff9c234, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: bc15dc210644c174ca06c3464391a34c, type: 3}
+  - {fileID: 21300000, guid: 08288e36ce58f284bbff45080318910f, type: 3}
+  - {fileID: 21300000, guid: 9f186d963ae54b84182c5a1c2d6a4478, type: 3}
+  - {fileID: 21300000, guid: ba8471b6c871b8345b4df07795cfcc76, type: 3}
+  - {fileID: 21300000, guid: 380f44b64c667f746aee61efab29656d, type: 3}
+  - {fileID: 21300000, guid: 7ef280a71506c3b44bddc7d3e7e53b7f, type: 3}
+  - {fileID: 21300000, guid: cbf243f78f960e74f89a767e037e1f2f, type: 3}
+  - {fileID: 21300000, guid: 8149ee38a8ad2dc4e8192db9576238ea, type: 3}
+  - {fileID: 21300000, guid: e132f458d5c8a2749b3705e489df6667, type: 3}
+  - {fileID: 21300000, guid: f4943fd881f28a342a970cead6ffe5f0, type: 3}
+  - {fileID: 21300000, guid: bbb85c0ba004ed04a9d9473828921c4c, type: 3}
+  - {fileID: 21300000, guid: 93cbb01c3a00d72469bfbd2ba3e77935, type: 3}
+  - {fileID: 21300000, guid: 0d0a782dd46fe6140bedfba5ad6268d4, type: 3}
+  - {fileID: 21300000, guid: 6ae3f30e9b567b742a00ec4c13d3566e, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - "\u7EA2\u5934\u5934"
+  - red bar
+  - blue loading
+  - blue bar
+  - red slot
+  - button
+  - prepared
+  - red loading
+  - blue ready
+  - blue slot
+  - background color
+  - red ready
+  - blank slot
+  - "\u84DD\u5934\u5934"
+  m_RenderDataMap: {}
+  m_Tag: PrepareRoomAtlas
+  m_IsVariant: 0
