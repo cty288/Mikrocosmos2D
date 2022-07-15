@@ -40,22 +40,42 @@ namespace Mikrocosmos
     [ES3Serializable] 
     public class Avatar {
         [ES3Serializable] 
-        public List<AvatarElement> Elements;
+        public Dictionary<int, AvatarElement> Elements;
+
+        public List<AvatarElement> GetAllElements() {
+            List<AvatarElement> elements = new List<AvatarElement>();
+            foreach (var element in Elements.Values) {
+                elements.Add(element);
+            }   
+
+            return elements;
+        }
 
         public Avatar(IEnumerable<AvatarElement> elements) {
-            Elements = new List<AvatarElement>();
-            Elements.AddRange(elements);
+            Elements = new Dictionary<int, AvatarElement>();
+            foreach (var element in elements)
+            {
+                Elements.Add(element.ElementIndex, element);
+            }
         }
 
         public void AddElement(AvatarElement element) {
-            Elements.Add(element);
+            if (!Elements.ContainsKey(element.ElementIndex)) {
+                Elements.Add(element.ElementIndex, element);
+            }
+        }
+
+        public void UpdateOffset(int index, Vector2 offset) {
+            if (Elements.ContainsKey(index)) {
+                Elements[index].Offset = offset;
+            }
         }
 
         public void RemoveElement(int index) {
-            Elements.RemoveAll((element => element.ElementIndex == index));
+            Elements.Remove(index);
         }
         public Avatar() {
-            Elements = new List<AvatarElement>();
+            Elements = new Dictionary<int, AvatarElement>();
         }
     }
 
@@ -63,6 +83,8 @@ namespace Mikrocosmos
 
     public interface IClientAvatarModel: IModel {
         public Avatar Avatar { get; }
+
+        void SaveAvatar(Avatar avatar);
     }
     public class ClientAvatarModel : AbstractModel, IClientAvatarModel {
         
@@ -71,6 +93,12 @@ namespace Mikrocosmos
             
         }
 
+        
+
         public Avatar Avatar { get; protected set; }
+        public void SaveAvatar(Avatar avatar) {
+            Avatar = avatar;
+            ES3.Save("client_avatar", avatar);
+        }
     }
 }

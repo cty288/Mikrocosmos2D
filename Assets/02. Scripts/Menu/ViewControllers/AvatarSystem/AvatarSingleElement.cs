@@ -12,6 +12,7 @@ namespace Mikrocosmos
         public int ReplacedIndex;
         public bool IsBase;
         public int ElementLayer;
+        public bool RefreshShowcase;
     }
     public class AvatarSingleElement : AbstractMikroController<Mikrocosmos>, ICanSendEvent {
         private GameObject selectedObject;

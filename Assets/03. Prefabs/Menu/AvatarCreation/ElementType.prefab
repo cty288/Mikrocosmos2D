@@ -127,6 +127,8 @@ MonoBehaviour:
   elementIndexRange: {x: 0, y: 100}
   elementLayoutPageWidth: 1260
   avatarSelectionElementPrefab: {fileID: 5369284084849288651, guid: 2d2d741be0de95e4ca559c46da7c8b16, type: 3}
+  elementLayer: 0
+  itemPerPage: 6
 --- !u!1 &790422819181403721
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +256,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 620, y: -0.000045776}
+  m_AnchoredPosition: {x: 636, y: -0.000045776}
   m_SizeDelta: {x: 17.6097, y: 45.5048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &790422819468993465

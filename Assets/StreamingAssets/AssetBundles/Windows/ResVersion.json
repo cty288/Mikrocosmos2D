@@ -279,8 +279,8 @@
     },
     {
       "AssetName": "profile",
-      "MD5": "d50660eb8a3353670bdd3151b7d6426e",
-      "FileSize": 1369.373,
+      "MD5": "5cf8951cce2e4fda270977fa7d3c4c67",
+      "FileSize": 1386.69922,
       "assetDatas": [
         {
           "Name": "profile0",
@@ -490,7 +490,7 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "bba948648523b8ad6ec16f3677b855a1",
+      "MD5": "cbc13661a79a960deffbb2cef99c848b",
       "FileSize": 1.94726563,
       "assetDatas": []
     },
