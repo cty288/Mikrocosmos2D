@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,11 +9,24 @@ namespace Mikrocosmos
     public class CategoryWinnerElement : MonoBehaviour {
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text descriptionText;
+        private AvatarElementViewController avatarElement;
 
-        public void SetInfo(string name, string descriptionText)
-        {
+        private Avatar avatar;
+        private void Awake() {
+            avatarElement = GetComponentInChildren<AvatarElementViewController>(true);
+        }
+
+        private void Start() {
+            avatarElement.SetAvatar(avatar);
+        }
+
+
+        public void SetInfo(string name, string descriptionText, Avatar avatar) {
+            this.avatar = avatar;
+          
             nameText.text = name;
             this.descriptionText.text = descriptionText;
+           
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ namespace Mikrocosmos
     public class AvatarSelectionElementButton : AbstractMikroController<Mikrocosmos>, IPointerDownHandler, IPointerUpHandler, ICanSendEvent {
         private Image image;
         private AvatarSingleElement element;
+        public UnityEvent OnSelected;
         private AvatarElementTypeLayout layout;
 
         private void Awake() {
@@ -26,7 +28,11 @@ namespace Mikrocosmos
         
         public void OnPointerUp(PointerEventData eventData) {
             image.DOFade(0f, 0.4f);
-            layout.SelectElement(element.AssetIndex, true);
+            OnSelected?.Invoke();
+            if (layout) {
+                layout.SelectElement(element.AssetIndex, true);
+            }
+         
         }
         
     }

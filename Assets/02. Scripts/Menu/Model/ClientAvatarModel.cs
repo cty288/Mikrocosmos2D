@@ -8,6 +8,10 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
+
+    public struct OnClientAvatarSet {
+        public Avatar avatar;
+    }
     [Serializable]
     [ES3Serializable]
     public class AvatarElement {
@@ -45,6 +49,22 @@ namespace Mikrocosmos
         public static Avatar ReadAvatar(this NetworkReader reader) {
             List<AvatarElement> avatarElements = reader.ReadList<AvatarElement>();
             return new Avatar(avatarElements);
+        }
+
+        public static void WriteAvatarElement(this NetworkWriter writer, AvatarElement value)
+        {
+            writer.WriteInt(value.ElementIndex);
+            writer.WriteInt(value.Layer);
+            writer.WriteVector2(value.Offset);
+        }
+
+        public static AvatarElement ReadAvatarElement(this NetworkReader reader)
+        {
+            int elementIndex = reader.ReadInt();
+            int layer = reader.ReadInt();
+            Vector2 offset = reader.ReadVector2();
+            AvatarElement avatarElement = new AvatarElement(elementIndex, offset, layer);
+            return avatarElement;
         }
     }
 
@@ -112,6 +132,9 @@ namespace Mikrocosmos
         public void SaveAvatar(Avatar avatar) {
             Avatar = avatar;
             ES3.Save("client_avatar", avatar);
+            this.SendEvent<OnClientAvatarSet>(new OnClientAvatarSet() {
+                avatar = Avatar
+            });
         }
     }
 }

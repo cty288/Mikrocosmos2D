@@ -9,9 +9,17 @@ using MikroFramework.Event;
 
 namespace Mikrocosmos {
 	public partial class MenuPanel : AbstractMikroController<Mikrocosmos> {
+       
+       
         private void Awake() {
             this.GetModel<ILocalPlayerInfoModel>().NameInfo.RegisterWithInitValue(OnNameChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+           
+           
+        }
+
+        private void OnEnable() {
+            
         }
 
         private void OnNameChange(string oldName, string newName) {

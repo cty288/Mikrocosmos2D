@@ -11,11 +11,12 @@ namespace Mikrocosmos {
 	public partial class PlayerInfo : AbstractMikroController<Mikrocosmos> {
         private int id = -1;
         private bool prepared = false;
-
+        private AvatarElementViewController avatarElement;
         private void Awake() {
             BtnPrepare.onClick.AddListener(OnPrepareClicked);
             BtnUnPrepare.onClick.AddListener(OnPrepareClicked);
             BtnKick.onClick.AddListener(OnKickButtonClicked);
+            avatarElement = GetComponentInChildren<AvatarElementViewController>();
         }
 
         private void OnKickButtonClicked() {
@@ -26,10 +27,11 @@ namespace Mikrocosmos {
             this.SendCommand<ClientPrepareCommand>();
         }
 
-        public void SetInfo(int id, string name, bool isPrepared, bool isSelf, bool isHost) {
+        public void SetInfo(int id, string name, Avatar avatar, bool isPrepared, bool isSelf, bool isHost) {
             this.id = id;
             TextName.text = name;
             prepared = isPrepared;
+            avatarElement.SetAvatar(avatar);
             if (isSelf) {
                 
                 BtnKick.gameObject.SetActive(false);

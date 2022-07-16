@@ -11,7 +11,7 @@ namespace Mikrocosmos
         private List<AvatarElementTypeLayout> elementTypeLayouts = new List<AvatarElementTypeLayout>();
 
         private void Awake() {
-            elementTypeLayouts = transform.Find("obj_AvatarLayout").GetComponentsInChildren<AvatarElementTypeLayout>()
+            elementTypeLayouts = transform.Find("obj_AvatarLayout").GetComponentsInChildren<AvatarElementTypeLayout>(true)
                 .ToList();
         }
 

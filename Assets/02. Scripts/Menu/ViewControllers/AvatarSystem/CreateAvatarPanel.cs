@@ -12,14 +12,27 @@ namespace Mikrocosmos {
         private IClientAvatarModel avatarModel;
         private ChangeAvatarPanelAvatarShowcase showcase;
         private AvatarElementViewController showcaseAvatar;
+        private ILocalPlayerInfoModel localPlayerInfo;
         private void Awake() {
             selectionPanel = ObjCreateAvatarPanel.transform.Find("AvatarSelectionPanel")
                 .GetComponent<AvatarElementSelectionPanel>();
             avatarModel = this.GetModel<IClientAvatarModel>();
             BtnRandom.onClick.AddListener(OnRandomAvatarButtonClicked);
             BtnSaveLook.onClick.AddListener(OnSaveLookButtonClicked);
-            showcase = GetComponentInChildren<ChangeAvatarPanelAvatarShowcase>();
-            showcaseAvatar = showcase.GetComponentInChildren<AvatarElementViewController>();
+            showcase = GetComponentInChildren<ChangeAvatarPanelAvatarShowcase>(true);
+            showcaseAvatar = showcase.GetComponentInChildren<AvatarElementViewController>(true);
+            localPlayerInfo = this.GetModel<ILocalPlayerInfoModel>();
+            BtnBack.onClick.AddListener(OnClosePanel);
+            InputName.onValueChanged.AddListener(OnInputFieldNameChanged);
+        }
+
+        private void OnClosePanel() {
+            GetComponentInParent<MenuUI>().CloseAvatarPanel();
+        }
+
+        private void OnInputFieldNameChanged(string name) {
+            localPlayerInfo.ChangeName(name);
+            CheckCanEnableBackButton();
         }
 
         private void OnSaveLookButtonClicked() {
@@ -32,25 +45,25 @@ namespace Mikrocosmos {
                 }
             }
             avatarModel.SaveAvatar(showcase.RecordedExistingAvatar);
-            BtnBack.interactable = true;
+            CheckCanEnableBackButton();
         }
 
-        public void SaveAvatar() {
-
+        private void CheckCanEnableBackButton() {
+            BtnBack.interactable = (!String.IsNullOrEmpty(InputName.text) && avatarModel.Avatar.Elements.Count > 0);
         }
+
+     
         private void OnRandomAvatarButtonClicked() {
             selectionPanel.RandomSelect();
         }
 
-       
+        private void OnEnable() {
+            InputName.text = localPlayerInfo.NameInfo.Value;
+        }
+
         private void Start() {
             selectionPanel.StartFill(avatarModel.Avatar);
-            if (avatarModel.Avatar.Elements.Count == 0) {
-                BtnBack.interactable = false;
-            }
-            else {
-                BtnBack.interactable = true;
-            }
+            CheckCanEnableBackButton();
         }
     }
 }

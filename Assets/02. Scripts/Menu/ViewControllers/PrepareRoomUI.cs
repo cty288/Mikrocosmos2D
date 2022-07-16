@@ -153,7 +153,7 @@ namespace Mikrocosmos {
                     
                     infoObj.SetActive(true);
                     bool isSelf = playerMatchInfo.ID == e.SelfInfo.ID;
-                    infoObj.GetComponent<PlayerInfo>().SetInfo(playerMatchInfo.ID, playerMatchInfo.Name,
+                    infoObj.GetComponent<PlayerInfo>().SetInfo(playerMatchInfo.ID, playerMatchInfo.Name, playerMatchInfo.Avatar,
                         playerMatchInfo.Prepared, isSelf, e.IsHost);
                     if (isSelf)
                     {

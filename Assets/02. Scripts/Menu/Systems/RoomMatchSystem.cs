@@ -27,8 +27,8 @@ namespace Mikrocosmos
         public bool Prepared;
         public NetworkIdentity Identity;
         public int TeamIndex;
-      
-        
+        public Avatar Avatar;
+
         public bool Equals(PlayerMatchInfo other) {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -52,7 +52,8 @@ namespace Mikrocosmos
                 Identity = this.Identity,
                 Name = this.Name,
                 Prepared = this.Prepared,
-                Team = this.Team
+                Team = this.Team,
+                Avatar = this.Avatar
             };
         }
     }
@@ -78,7 +79,7 @@ namespace Mikrocosmos
         GameMode GameMode { get; }
         void ServerChangeGameMode(GameMode newGameMode);
 
-        void ServerRoomPlayerJoinMatch(string name, NetworkConnection conn);
+        void ServerRoomPlayerJoinMatch(string name, Avatar avatar, NetworkConnection conn);
       
         void ServerRoomPlayerLeaveMatch(int id);
 
@@ -174,11 +175,13 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        public void ServerRoomPlayerJoinMatch(string name, NetworkConnection conn) {
+        public void ServerRoomPlayerJoinMatch(string name, Avatar avatar, NetworkConnection conn) {
             playerIdentities.Add(maxId, conn.identity);
-            
-            PlayerMatchInfo matchInfo = new PlayerMatchInfo()
-                {ID = maxId, Name = name, Team = GetNewTeamNum(), Prepared = false, Identity = conn.identity};
+
+            PlayerMatchInfo matchInfo = new PlayerMatchInfo() {
+                ID = maxId, Name = name, Team = GetNewTeamNum(), Prepared = false, Identity = conn.identity,
+                Avatar = avatar
+            };
             
             maxId++;
             playerMatchInfos.Add(matchInfo);

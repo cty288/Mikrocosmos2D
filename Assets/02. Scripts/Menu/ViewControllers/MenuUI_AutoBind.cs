@@ -8,7 +8,7 @@ using MikroFramework.Architecture;
 
 namespace Mikrocosmos {
 	public partial class MenuUI : AbstractMikroController<Mikrocosmos> {
-		[SerializeField] private GameObject ObjNewPlayerPanelParent;
+	//	[SerializeField] private GameObject ObjNewPlayerPanelParent;
 		[SerializeField] private TMP_InputField InputNameInput;
 		[SerializeField] private Button BtnNameConfirmButton;
 		[SerializeField] private GameObject ObjMenuPanel;

@@ -23,7 +23,7 @@ namespace Mikrocosmos
             CmdSetLanguage(Localization.Instance.SelectedLanguage);
             
             if (isServer) {
-                CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value);
+                CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value, this.GetModel<IClientAvatarModel>().Avatar);
             }
             else {
                 StartCoroutine(DelayJoinMatch());
@@ -34,7 +34,7 @@ namespace Mikrocosmos
 
         IEnumerator DelayJoinMatch() {
             yield return new WaitForSeconds(0.3f);
-            CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value);
+            CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value, this.GetModel<IClientAvatarModel>().Avatar);
         }
         
 

@@ -92,7 +92,7 @@ namespace Mikrocosmos
             for (int i = 0; i < info.CategoryWinners.Count; i++) {
                 CategoryWinner winnerInfo = info.CategoryWinners[i];
                 categoryWinElements[i].SetInfo(winnerInfo.PlayerInfo.Name,
-                    GetCategoryDescriptionLocalized(winnerInfo.CategoryWinningType));
+                    GetCategoryDescriptionLocalized(winnerInfo.CategoryWinningType), winnerInfo.PlayerInfo.Avatar);
             }
             
             //affinity text and winning text

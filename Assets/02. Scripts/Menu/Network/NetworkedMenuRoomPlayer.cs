@@ -52,15 +52,15 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        private void ServerJoinMatch(string name) {
+        private void ServerJoinMatch(string name, Avatar avatar) {
             
-            this.GetSystem<IRoomMatchSystem>().ServerRoomPlayerJoinMatch(name, connectionToClient);
+            this.GetSystem<IRoomMatchSystem>().ServerRoomPlayerJoinMatch(name, avatar, connectionToClient);
         }
 
         [Command] 
-        private void CmdJoinMatch(string name) {
+        private void CmdJoinMatch(string name, Avatar avatar) {
            Debug.Log("CMD Join Match");
-           ServerJoinMatch(name);
+           ServerJoinMatch(name, avatar);
         }
 
         [Command]
