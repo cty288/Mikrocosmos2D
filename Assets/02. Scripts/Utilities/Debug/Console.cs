@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
@@ -16,10 +17,14 @@ namespace Mikrocosmos
 
     public struct CommandArg {
         public CommandType CommandArgType;
-        public string Destription;
-        public CommandArg(CommandType commandArgType, string destription) {
+        public string ArgumentName;
+        public object DefaultValue;
+        public string Description;
+        public CommandArg(CommandType commandArgType, string argumentName, string description="", object defaultValue = null) {
             CommandArgType = commandArgType;
-            Destription = destription;
+            ArgumentName = argumentName;
+            DefaultValue = defaultValue;
+            Description = description;
         }
     }
     /// <summary>
@@ -32,11 +37,20 @@ namespace Mikrocosmos
         private static readonly Dictionary<string, CommandArg[]> commands = new Dictionary<string, CommandArg[]>() {
             {"help", Array.Empty<CommandArg>()},
             {"cls", Array.Empty<CommandArg>()},
-            {"addMoney", new [] {new CommandArg(CommandType.INT, "value")}},
+            {"addMoney", new [] {
+                new CommandArg(CommandType.INT, "value"),
+                new CommandArg(CommandType.STRING, "playerName", "",NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().matchInfo.Name)
+            }},
             {"gameManager", new [] {
                 new CommandArg(CommandType.STRING,"playerName"),
-                new CommandArg(CommandType.BOOL, "isManager")
-            } }
+                new CommandArg(CommandType.BOOL, "isManager","", true),
+            } },
+            {"addBuff", new [] {
+              
+                new CommandArg(CommandType.INT, "buffID{0:4}"),
+                new CommandArg(CommandType.INT, "buffLevel", "",1),
+                new CommandArg(CommandType.STRING, "playerName","", NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().matchInfo.Name),
+            }}
         };
         
       
@@ -73,24 +87,33 @@ namespace Mikrocosmos
                             output = Clear();
                             break;
                         case "addMoney":
-                            output = AddMoney(int.Parse(args[1]));
+                            output = AddMoney(int.Parse(args[1]), args[2]);
                             break;
                         case "gameManager":
                             output = GiveGameManager(args[1], bool.Parse(args[2]));
                             break;
+                        case "addBuff":
+                            output = AddBuff(args[3], int.Parse(args[1]), int.Parse(args[2]), args[0]);
+                            break;
                         // ¥ÌŒÛ÷∏¡Ó
                         default:
-                            output = "Unable to find the command.";
+                            output = "Unable to find the command. Type /help to view the command list.";
                             break;
                     }
                 }
                
             }
             else {
-                output = "Unable to find the command.";
+                output = "Unable to find the command. Type /help to view the command list.";
             }
            
             return output;
+        }
+
+        private static string AddBuff(string s, int parse, int i, string commandName) {
+            Mikrocosmos.Interface.GetSystem<ICommandSystem>()
+                .CmdRequestAddBuff(NetworkClient.localPlayer,s, parse, i, commandName);
+            return "Notifying Server...";
         }
 
         private static string GiveGameManager(string s, bool parse) {
@@ -103,9 +126,9 @@ namespace Mikrocosmos
             return "Notifying Server...";
         }
 
-        private static string AddMoney(int parse) {
+        private static string AddMoney(int parse, string name) {
             Mikrocosmos.Interface.GetSystem<ICommandSystem>()
-                .CmdRequestAddMoneyCommand(NetworkClient.localPlayer, parse);
+                .CmdRequestAddMoneyCommand(NetworkClient.localPlayer, parse, name);
             return "Notifying Server...";
         }
 
@@ -117,12 +140,18 @@ namespace Mikrocosmos
         private static string GetCommandComplete(string commandName) {
             CommandArg[] args = commands[commandName];
             string output = "";
-            output += $"<b><color=yellow>- {commandName}";
+            output += $"<color=yellow><b>- /{commandName}</b>";
             foreach (CommandArg arg in args)
             {
-                output += $"  <{arg.CommandArgType} {arg.Destription}>";
+                if (arg.DefaultValue != null) {
+                    output += $"  [<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName} = {arg.DefaultValue}</color>]";
+                }
+                else {
+                    output += $"  <<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName}</color>>";
+                }
+               
             }
-            output += "</color></b>";
+            output += "</color>";
             return output;
         }
         
@@ -130,7 +159,8 @@ namespace Mikrocosmos
         private static bool CheckArguments(List<string> inputArgs, CommandArg[] commandArgs, out string output) {
             output = "";
             string commandName = inputArgs[0];
-            if (inputArgs.Count -1 != commandArgs.Length) {
+            int defaultArgCount = commandArgs.Select(arg => arg.DefaultValue != null).Count();
+            if (inputArgs.Count - 1 < commandArgs.Length - defaultArgCount || inputArgs.Count - 1 > commandArgs.Length) {
                 output = "Invalid arguments.\n";
                 output += GetCommandComplete(commandName);
                 return false;
@@ -139,12 +169,16 @@ namespace Mikrocosmos
             bool success = true;
             for (int i = 1; i < inputArgs.Count; i++) {
                 CommandArg commandArg = commandArgs[i - 1];
-
+                //use CommandFunction to try parse if the argument is a function
+                
+                
                 switch (commandArg.CommandArgType) {
                     case CommandType.INT:
-                        if (!int.TryParse(inputArgs[i], out int _)) {
-                            success = false;
-                        } 
+                        if (ParseInt(inputArgs[i], out int o)) { //compare int
+                            inputArgs[i] = o.ToString();
+                            break;
+                        }
+                        success = false;
                         break;
                     case CommandType.BOOL:
                         if (!bool.TryParse(inputArgs[i], out bool _)) {
@@ -156,16 +190,81 @@ namespace Mikrocosmos
                 }
 
                 if (!success) {
-                    output = $"Invalid arguments for {commandArg.CommandArgType}.\n";
+                    output = $"Invalid arguments for {commandArg.CommandArgType}: {commandArg.ArgumentName}.\n";
                     break;
                 }
             }
+
+           
 
             if (!success) {
                 output += GetCommandComplete(commandName);
                 return false;
             }
+
+
+            for (int i = inputArgs.Count - 1; i < commandArgs.Length; i++)
+            {
+                CommandArg commandArg = commandArgs[i];
+                if (commandArg.DefaultValue == null) {
+                    success = false;
+                    output = $"Missing arguments for {commandArg.CommandArgType}: {commandArg.ArgumentName}.\n";
+                    break;
+                }else {
+                    inputArgs.Add(commandArg.DefaultValue.ToString());
+                }
+            }
+
+            if (!success)
+            {
+                output += GetCommandComplete(commandName);
+                return false;
+            }
+            
             output = "";
+            return true;
+        }
+
+
+        private static bool ParseInt(string intStr, out int output) {
+            
+            if (!int.TryParse(intStr, out output)) { //compare int
+                if (intStr.StartsWith("RandomInt(") && intStr.EndsWith(")"))
+                {
+                    string[] range = intStr.Substring(10, intStr.Length - 11).Split(',');
+
+                    if (range.Length == 2) {
+                        bool minOK = int.TryParse(range[0], out int min);
+                        bool maxOK = int.TryParse(range[1], out int max);
+                        if (minOK && maxOK) {
+                            output = Random.Range(min, max + 1);
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                if (intStr.StartsWith("RandomFloat(") && intStr.EndsWith(")"))
+                {
+                    string[] range = intStr.Substring(12, intStr.Length - 13).Split(',');
+                    if (range.Length == 2)
+                    {
+                        bool minOK = float.TryParse(range[0], out float min);
+                        bool maxOK = float.TryParse(range[1], out float max);
+                        if (minOK && maxOK)
+                        {
+                            output = Random.Range((int)min, (int)max);
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+
+                return false;
+
+            }
+
             return true;
         }
 

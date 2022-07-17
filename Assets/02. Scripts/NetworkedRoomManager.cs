@@ -143,8 +143,15 @@ namespace Mikrocosmos
 
         public override void OnStopServer() {
             base.OnStopServer();
-            
-           
+        }
+
+        public override void OnStopClient() {
+            base.OnStopClient();
+            if (NetworkingMode == NetworkingMode.Steam) {
+                SteamMatchmaking.LeaveLobby(joinedSteamGame);
+                joinedSteamGame = new CSteamID();
+                DebugCanvas.IsOpening = false;
+            }
         }
 
         /*

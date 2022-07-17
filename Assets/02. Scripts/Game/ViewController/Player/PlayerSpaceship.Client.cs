@@ -135,7 +135,7 @@ namespace Mikrocosmos
 
 
                 //take item & put item (not shoot)
-                if (Input.GetKeyDown(KeyCode.Space)) {
+                if (Input.GetKeyDown(KeyCode.Space) && !DebugCanvas.IsOpening) {
                     if (gameProgressSystem.GameState != GameState.InGame) {
                         return;
                     }
@@ -154,7 +154,7 @@ namespace Mikrocosmos
                     hookSystem.CmdPressHookButton();
                 }
 
-                if (Input.GetKeyUp(KeyCode.Space))
+                if (Input.GetKeyUp(KeyCode.Space) && !DebugCanvas.IsOpening)
                 {
                     if (gameProgressSystem.GameState != GameState.InGame) {
                         return;

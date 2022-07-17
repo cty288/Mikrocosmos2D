@@ -162,7 +162,13 @@ namespace Mikrocosmos {
             int previousLevel = CurrentLevel;
             int totalProgress = 0;
             for (int i = 0; i < ReadyToAddLevel; i++) {
-                totalProgress += ProgressPerLevel[i];
+                if (i >= ProgressPerLevel.Count) {
+                    totalProgress += ProgressPerLevel[^1];
+                }
+                else {
+                    totalProgress += ProgressPerLevel[i];
+                }
+               
             }
             totalProgress += ReadyToAddProgress;
 
@@ -308,7 +314,9 @@ namespace Mikrocosmos {
         void ForceTriggerUpdateBuff(IBuff buff);
 
         void RawMaterialProgressDecrease(Type type, int progress);
-        
+
+        void RawMaterialLevelDecrease(Type type, int level);
+
         void RemoveBuff(IBuff buff);
 
         List<IPermanentRawMaterialBuff> GetAllPermanentRawMaterialBuffs();
@@ -388,6 +396,36 @@ namespace Mikrocosmos {
                 }
             }
             
+        }
+
+        public void RawMaterialLevelDecrease(Type type, int level) {
+            int progressDeduce = 0;
+            int levelDecrease = level;
+            if (buffs.ContainsKey(type) && buffs[type] is IPermanentRawMaterialBuff) {
+                IPermanentRawMaterialBuff rawMaterial = buffs[type] as IPermanentRawMaterialBuff;
+
+                for (int i = rawMaterial.CurrentLevel; i >= 1; i--)
+                {
+                    if (levelDecrease <= 0)
+                    {
+                        break;
+                    }
+
+                    if (i == rawMaterial.MaxLevel)
+                    {
+                        progressDeduce += 1;
+                    }
+                    else
+                    {
+                        progressDeduce += rawMaterial.ProgressPerLevel[i];
+                    }
+
+                    levelDecrease--;
+                }
+
+                RawMaterialProgressDecrease(type, progressDeduce);
+            }
+          
         }
 
         public GameObject GetOwnerObject()

@@ -9,13 +9,24 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
+
+    public struct OnClientReceiveMessage {
+        public string Message;
+        public string Name;
+        public Avatar avatar;
+        public int Team;
+    }
     public struct OnLogMessage {
         public string message;
     }
 
     public interface ICommandSystem: ISystem {
-        void CmdRequestAddMoneyCommand(NetworkIdentity player, int money);
+        void CmdRequestAddMoneyCommand(NetworkIdentity player, int money, string targetName);
         void CmdGiveGameManager(NetworkIdentity requester, string playerName, bool isManager);
+
+        void CmdRequestAddBuff(NetworkIdentity requester, string playerName, int buffID, int level, string commandName);
+
+        void CmdSendChatMessage(NetworkIdentity requester, string message);
     }
   public class CommandSystem : AbstractNetworkedSystem, ICommandSystem {
 
@@ -23,6 +34,8 @@ namespace Mikrocosmos
       private HashSet<NetworkIdentity> gameManagers = new HashSet<NetworkIdentity>();
 
       [SerializeField] private List<NetworkIdentity> allPlayers = new List<NetworkIdentity>();
+
+      
 
       private void Awake() {
           Application.logMessageReceived += OnLogMessage;
@@ -88,28 +101,44 @@ namespace Mikrocosmos
           this.SendEvent<OnLogMessage>(new OnLogMessage() { message = message });
       }
 
+      private List<PlayerMatchInfo> FindAllPlayersWithName(string name) {
+          List<PlayerMatchInfo> matchInfos = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo();
+          List<PlayerMatchInfo> allPlayersWithTheName = matchInfos.FindAll(x => x.Name == name);
+          return allPlayersWithTheName;
+      }
+
         #region NetworkCommands
         [Command(requiresAuthority = false)]
-        public void CmdRequestAddMoneyCommand(NetworkIdentity player, int money) {
+        public void CmdRequestAddMoneyCommand(NetworkIdentity player, int money, string targetName) {
             if (CheckPlayerIsManager(player, "addMoney")) {
-                PlayerMatchInfo playerInfo = player.GetComponent<NetworkMainGamePlayer>().matchInfo;
-                player.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship.GetComponent<IPlayerTradingSystem>()
-                    .ReceiveMoney(money);
-                RpcGetLogMessage($"<color=green>{playerInfo.Name} added {money} money</color>");
+
+                List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(targetName);
+                if (allPlayersWithTheName.Count == 0) {
+                    TargetGetLogMessage(player.connectionToClient, "<color=red>Failed to execute this command: no such player exists</color>");
+                    return;
+                }
+
+                
+                foreach (PlayerMatchInfo info in allPlayersWithTheName) {
+                     info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                        .GetComponent<IPlayerTradingSystem>().ReceiveMoney(money);
+
+                     RpcGetLogMessage($"<color=green>{info.Name} added {money} money</color>");
+                }
             }
             else {
-                TargetGetLogMessage(player.connectionToClient, "Failed to execute this command: no authority");
+                TargetGetLogMessage(player.connectionToClient, "<color=red>Failed to execute this command: no authority</color>");
             }
         }
 
         [Command(requiresAuthority = false)]
         public void CmdGiveGameManager(NetworkIdentity requester, string playerName, bool isManager) {
             if (CheckPlayerIsManager(requester, "gameManager")) {
-                List<PlayerMatchInfo> matchInfos = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo();
-                List<PlayerMatchInfo> allPlayersWithTheName = matchInfos.FindAll(x => x.Name == playerName);
+
+                List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(playerName);
 
                 if (allPlayersWithTheName.Count == 0) {
-                    TargetGetLogMessage(requester.connectionToClient, "Failed to execute this command: no such player exists");
+                    TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no such player exists</color>");
                     return;
                 }
                 
@@ -120,7 +149,7 @@ namespace Mikrocosmos
                     }
                     else {
                         if (info.Identity.hasAuthority) {
-                            TargetGetLogMessage(requester.connectionToClient, "Failed to execute this command: you can't remove the host from the game manager list!");
+                            TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: you can't remove the host from the game manager list!</color>");
                             return;
                         }
                         gameManagers.Remove(info.Identity.connectionToClient.identity);
@@ -129,11 +158,72 @@ namespace Mikrocosmos
                 }
             }
             else {
-                TargetGetLogMessage(requester.connectionToClient, "Failed to execute this command: no authority");
+                TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no authority</color>");
             }
         }
 
+        [Command(requiresAuthority = false)]
+        public void CmdRequestAddBuff(NetworkIdentity requester, string playerName, int buffID, int level,
+            string commandName) {
+            List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(playerName);
+            if (CheckPlayerIsManager(requester, commandName)) {
+                if (allPlayersWithTheName.Count == 0) {
+                    TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no such player exists</color>");
+                    return;
+                }
+
+                if (buffID < 0 || buffID >= Enum.GetValues(typeof(PermanentBuffType)).Length) {
+                    TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: invalid buff ID</color>");
+                    return;
+                }
+
+                foreach (PlayerMatchInfo info in allPlayersWithTheName) {
+                    IBuffSystem buffSystem = info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                        .GetComponent<IBuffSystem>();
+                    if (level >= 0) {
+                        PermanentBuffFactory.AddPermanentBuffToPlayer((PermanentBuffType)buffID, buffSystem, level);
+                    }
+                    else {
+                        PermanentBuffFactory.ReducePermanentBuffForPlayer((PermanentBuffType)buffID, buffSystem, -level);
+                    }
+                    
+                    RpcGetLogMessage("<color=green>Player " + playerName + $" added level {level} to buff {(PermanentBuffType)buffID}" + "</color>");
+                }
+            }
+            else {
+                TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no authority</color>");
+            }
+        }
+
+
+
         #endregion
+
+
+        #region Chat
+        [Command(requiresAuthority = false)]
+        public void CmdSendChatMessage(NetworkIdentity requester, string message) {
+            PlayerMatchInfo matchInfo = requester.GetComponent<NetworkMainGamePlayer>().matchInfo;
+            Avatar avatar = matchInfo.Avatar;
+            string name = matchInfo.Name;
+            int team = matchInfo.Team;
+            RpcReceiveChatMessage(message, name, team, avatar);
+        }
+
+
+        [ClientRpc]
+        private void RpcReceiveChatMessage(string message, string name, int team, Avatar avatar) {
+            this.SendEvent<OnClientReceiveMessage>(new OnClientReceiveMessage() {
+                avatar = avatar,
+                Message = message,
+                Name = name,
+                Team = team
+            });
+        }
+
+
+        #endregion
+
 
     }
 }
