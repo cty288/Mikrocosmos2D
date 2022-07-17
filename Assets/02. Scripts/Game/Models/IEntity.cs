@@ -5,6 +5,9 @@ using UnityEngine;
 namespace Mikrocosmos
 {
     public interface IEntity : IHookable, ICanBeShot {
+        public bool Frozen { get; }
+        
+        public void SetFrozen(bool freeze);
         void ResetEntity();
     }
 

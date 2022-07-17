@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1133179267551477265}
   - component: {fileID: 1145151507007897450}
   - component: {fileID: -8888974966106577546}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,6 +121,7 @@ MonoBehaviour:
   <BasicSellPrice>k__BackingField: 10
   <BasicBuyPrice>k__BackingField: 5
   <GoodRarity>k__BackingField: 0
+  <DroppableFromBackpack>k__BackingField: 1
   <DestroyedBySun>k__BackingField: 1
   <AbsorbedToBackpack>k__BackingField: 1
   <IsSell>k__BackingField: 1

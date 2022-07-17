@@ -71,7 +71,7 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public void ServerAddGravityForce(float force, Vector2 position, float range) {
-            if (TransactionFinished && !HookedByIdentity) {
+            if (TransactionFinished && !HookedByIdentity && !Frozen) {
                 //Debug.Log("Affected");
                 GetComponent<Rigidbody2D>().AddExplosionForce(force, position, range);
             }

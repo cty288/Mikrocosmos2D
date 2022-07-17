@@ -12,7 +12,7 @@ namespace Mikrocosmos
         private void OnTriggerEnter2D(Collider2D collider) {
             if (NetworkServer.active) {
                 if (PhysicsUtility.IsInLayerMask(collider.gameObject, targetLayer)) {
-                    if (collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum model)) {
+                    if (collider.gameObject != transform.parent.gameObject && collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum model)) {
                         RaycastHit2D hit = Physics2D.Raycast(transform.position,
                             (collider.transform.position - transform.position).normalized,3f);
 

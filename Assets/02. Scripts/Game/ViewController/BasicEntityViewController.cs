@@ -137,7 +137,7 @@ namespace Mikrocosmos
         protected Transform hookedByTr;
         protected virtual void FixedUpdate() {
 
-            if (isServer) {
+            if (isServer && Model!=null) {
                 if (Model.HookState == HookState.Hooked)
                 {
                      hookedByTr = Model.HookedByTransform;
@@ -304,7 +304,13 @@ namespace Mikrocosmos
 
         protected virtual void OnServerUpdate() {
             if (Model.HookState == HookState.Freed) {
-                rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, Model.MaxSpeed);
+                if (Model.Frozen) {
+                    rigidbody.velocity = Vector2.zero;
+                }
+                else {
+                    rigidbody.velocity = Vector2.ClampMagnitude(rigidbody.velocity, Model.MaxSpeed);
+                }
+               
             }
         }
 

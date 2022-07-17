@@ -22,7 +22,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bullet
   - Water
   - UI
   - Player
@@ -31,11 +31,11 @@ TagManager:
   - Planet
   - Border
   - PlanetBuyItemTrigger
-  - Meteor
-  - Special
+  - 
+  - IgnoreItem
   - PlanetSellBubble
   - ItemAbsorbTrigger
-  - 
+  - Item
   - 
   - 
   - 

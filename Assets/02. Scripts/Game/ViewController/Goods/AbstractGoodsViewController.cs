@@ -119,9 +119,13 @@ namespace Mikrocosmos
                     return false;
                 }
 
+                if (Model.Frozen) {
+                    return false;
+                }
+                
                 if (GoodsModel.AbsorbedToBackpack && !waitingToCheckAbsorbing && Model.HookState == HookState.Freed &&
                     GoodsModel.TransactionFinished && !absorbing) {
-                    absorbSpaceship = absorbedTarget;
+                   
                   
                     if (invneInventorySystem.ServerCheckCanAddToBackpack(GoodsModel, out var slot)) {
                         waitingToCheckAbsorbing = true;
@@ -129,9 +133,9 @@ namespace Mikrocosmos
                         this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
                             waitingToCheckAbsorbing = false;
                             if (this && !absorbing) {
-
+                                absorbSpaceship = absorbedTarget;
                                 if (Mathf.Abs(Vector2.Distance(transform.position,
-                                        absorbSpaceship.transform.position)) <= 20) {
+                                        absorbSpaceship.transform.position)) <= 15) {
                                     absorbing = true;
                                 }
                             }
@@ -213,10 +217,17 @@ namespace Mikrocosmos
                 }
 
                 if (absorbing && absorbSpaceship && GoodsModel.AbsorbedToBackpack) {
-                    if (Model.HookState != HookState.Freed) {
+                    if (Model.HookState != HookState.Freed || Model.Frozen) {
                         absorbing = false;
+                        absorbSpaceship = null;
                         return;
                     }
+                    if (Vector2.Distance(transform.position, absorbSpaceship.transform.position) > 15) {
+                        absorbing = false;
+                        absorbSpaceship = null;
+                        return;
+                    }                    
+
                     rigidbody.MovePosition(Vector2.Lerp(transform.position, absorbSpaceship.transform.position,
                         5f * Time.fixedDeltaTime));
 
@@ -227,7 +238,8 @@ namespace Mikrocosmos
                             playerInventorySystem.ServerAddToBackpack(GoodsModel.Name, gameObject);
                         }
                         absorbSpaceship = null;
-                    }
+                    } 
+                    
                 }
             }
 

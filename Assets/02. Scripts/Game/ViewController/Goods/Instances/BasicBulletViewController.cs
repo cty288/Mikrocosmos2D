@@ -99,8 +99,7 @@ namespace Mikrocosmos
         protected bool hit = false;
         protected override  void OnCollisionEnter2D(Collision2D collision) {
             if (isServer) {
-                if (collision.collider ) {
-                   
+                if (collision.collider && collision.collider!=shooterWeapon) {
                     if (collision.collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum entity)) {
                         //StartCoroutine(SetVelocityToZero());
                         

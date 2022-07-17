@@ -11,7 +11,7 @@ namespace Mikrocosmos
         [SerializeField] private LayerMask targetLayer;
         private void OnTriggerEnter2D(Collider2D collider) {
             if (NetworkServer.active) {
-                if (PhysicsUtility.IsInLayerMask(collider.gameObject, targetLayer)) {
+                if (PhysicsUtility.IsInLayerMask(collider.gameObject, targetLayer) && collider.gameObject!=transform.parent.gameObject) {
                     if (collider.TryGetComponent<IHaveMomentum>(out IHaveMomentum model)) {
                         RaycastHit2D hit = Physics2D.Raycast(transform.position,
                             (collider.transform.position - transform.position).normalized, 3f);

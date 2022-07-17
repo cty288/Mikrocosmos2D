@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4393072372654218832}
   - component: {fileID: 5530643465068819287}
   - component: {fileID: 741519811665012769}
+  - component: {fileID: 3593874063502261343}
   m_Layer: 7
   m_Name: KnockTrigger
   m_TagString: Untagged
@@ -63,7 +64,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 4288
+    m_Bits: 78016
+--- !u!50 &3593874063502261343
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793026267204214860}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &2688238684005888297
 PrefabInstance:
   m_ObjectHideFlags: 0

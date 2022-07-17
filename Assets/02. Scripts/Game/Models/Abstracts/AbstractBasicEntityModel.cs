@@ -111,6 +111,13 @@ namespace Mikrocosmos
             }
         }
 
+        public bool Frozen { get; private set; } = false;
+
+        public void SetFrozen(bool freeze) {
+            Frozen = freeze;
+            bindedRigidibody.constraints = freeze ? RigidbodyConstraints2D.FreezeAll : RigidbodyConstraints2D.None;
+        }
+
         public void ResetEntity() {
             if (isServer) {
                 UnHook();

@@ -62,9 +62,12 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             Vector2 Center = this.transform.position;
-            initialForce = ProperForce();
-            this.gameObject.GetComponent<Rigidbody2D>()
-                .AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
+            if (GameObject.Find("Star")) {
+                initialForce = ProperForce();
+                this.gameObject.GetComponent<Rigidbody2D>()
+                    .AddForce(initialForce * ProperDirect(Center), ForceMode2D.Impulse);
+            }
+            
         }
 
 
@@ -90,6 +93,7 @@ namespace Mikrocosmos
         private float ProperForce() {
             var pos = transform.position;
             var rb = GetComponent<Rigidbody2D>();
+            
             if (GameObject.Find("Star").GetComponent<IHaveGravity>()!=null) {
                 var Rb = GameObject.Find("Star").GetComponent<IHaveGravity>();
                 return InitialForceMultiplier * GetTotalMass() *

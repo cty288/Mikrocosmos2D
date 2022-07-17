@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TutorialSpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 1
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 2
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: a1b7629a49d954a42ab2352079e302df, type: 3}
+    - {fileID: 102900000, guid: 3de4382911b18744792ea79766a48f3c, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: fa24bed1aba65b943b3da7f7872e6925, type: 3}
+  - {fileID: 21300000, guid: 79ea9334f5edbb84aaed695ef10693f9, type: 3}
+  - {fileID: 21300000, guid: 7c2af55414ecf4e489f73207959874cb, type: 3}
+  - {fileID: 21300000, guid: 513cff854b3de8542aee1e44a8c58100, type: 3}
+  - {fileID: 21300000, guid: 1d2f6295713f95146a0d65186267ea31, type: 3}
+  - {fileID: 21300000, guid: 4c08887679257ab44a4808d6aa7f38d4, type: 3}
+  - {fileID: 21300000, guid: 9c59f978718c5b94c8aeec04b2eca7fd, type: 3}
+  - {fileID: 21300000, guid: 4302d71cb040e204f942e7af7d2787d3, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - EarthBag_2
+  - TutorialTables_1
+  - TutorialTables_3
+  - EarthBag_3
+  - TutorialTables_2
+  - EarthBag_0
+  - EarthBag_4
+  - EarthBag_1
+  m_RenderDataMap: {}
+  m_Tag: TutorialSpriteAtlas
+  m_IsVariant: 0

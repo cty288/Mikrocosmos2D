@@ -4,6 +4,7 @@ using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 namespace Mikrocosmos
 {
@@ -22,14 +23,14 @@ namespace Mikrocosmos
 
         private void OnEntityTakeDamage(OnEntityTakeDamage e) {
             if (e.Entity == Model) {
-                OnServerHealthChange(e.OldHealth, e.NewHealth);
+                OnServerTakeDamage(e.OldHealth, e.NewHealth, e.DamageSource);
                 
             }
         }
 
 
         [ServerCallback]
-        public virtual void OnServerHealthChange(int oldHealth, int newHealth) {
+        public virtual void OnServerTakeDamage(int oldHealth, int newHealth, NetworkIdentity damageSource) {
             RpcOnClientHealthChange(oldHealth, newHealth);
         }
 

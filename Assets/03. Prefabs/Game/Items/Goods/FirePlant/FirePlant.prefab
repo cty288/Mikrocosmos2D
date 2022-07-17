@@ -207,7 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayers:
     serializedVersion: 2
-    m_Bits: 5057
+    m_Bits: 78785
   maxDistance: 100
   detectTime: 1
   colliders: []
