@@ -243,7 +243,7 @@ namespace Mikrocosmos {
 
 
                     
-                    nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
+                    nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>(true).transform.position;
 
                     
                     HookedItem = nextItem.GetComponent<IHookableViewController>();

@@ -60,12 +60,15 @@ namespace Mikrocosmos
         }
 
 
+        
         public void OnAnimationBulletShoot() {
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-            bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            bullet.GetComponent<BasicBulletViewController>().SetShotoer(netIdentity, GetComponent<Collider2D>());
-            bullet.GetComponent<Rigidbody2D>().AddForce(-bullet.transform.right * shootForce, ForceMode2D.Impulse);
-            NetworkServer.Spawn(bullet);
+            if (isServer) {
+                GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+                bullet.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                bullet.GetComponent<BasicBulletViewController>().SetShotoer(netIdentity, GetComponent<Collider2D>());
+                bullet.GetComponent<Rigidbody2D>().AddForce(-bullet.transform.right * shootForce, ForceMode2D.Impulse);
+                NetworkServer.Spawn(bullet);
+            }
         }
         public override void RpcOnClientHealthChange(int oldHealth, int newHealth) {
             if (newHealth < oldHealth) {

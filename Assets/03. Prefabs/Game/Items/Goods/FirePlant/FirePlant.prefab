@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 1324916421463062396}
   - component: {fileID: -6688074193047113738}
   - component: {fileID: 5757890879573261063}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: FirePlant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ MonoBehaviour:
   sendInterval: 0.01
   syncPosition: 1
   syncRotation: 1
-  syncScale: 0
+  syncScale: 1
   interpolatePosition: 0
   interpolateRotation: 0
   interpolateScale: 0
@@ -542,7 +542,7 @@ MonoBehaviour:
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
-  <canDealMomentumDamage>k__BackingField: 1
+  <canDealMomentumDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 10
   <Name>k__BackingField: FirePlant
