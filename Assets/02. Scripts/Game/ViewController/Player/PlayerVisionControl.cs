@@ -83,6 +83,7 @@ namespace Mikrocosmos
 
         private void OnVisionRangeChange(OnVisionRangeChange e) {
             if (hasAuthority) {
+                
                 Light2D light = fovVision.GetComponent<Light2D>();
                 DOTween.To(() => light.pointLightInnerRadius, x => light.pointLightInnerRadius = x, Mathf.Max(currentMinInnerRadius + e.InnerAddition, currentMinInnerRadius), 0.3f);
                 DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, Mathf.Max(currentMinOuterRadius + e.InnerAddition, currentMinOuterRadius), 0.3f);

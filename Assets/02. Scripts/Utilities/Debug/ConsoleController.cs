@@ -122,6 +122,7 @@ namespace Mikrocosmos
                             }
                         }else {
                             this.GetSystem<ICommandSystem>().CmdSendChatMessage(NetworkClient.localPlayer, input);
+                            Console.AddToConsoleHistory(input);
                         }
                         inputField.text = "";
                         inputField.ForceLabelUpdate();

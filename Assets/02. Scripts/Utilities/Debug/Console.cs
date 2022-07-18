@@ -62,6 +62,12 @@ namespace Mikrocosmos
         #endregion
 
         #region 静态公有方法
+
+        public static void AddToConsoleHistory(string text) {
+            consoleHistory.Add(text);
+            position = consoleHistory.Count;
+        }
+
         /// <summary>
         /// 向控制台输入指令。
         /// </summary>
@@ -71,7 +77,7 @@ namespace Mikrocosmos
         {
             // 分割字符串获取参数列表
             List<string> args = new List<string>(input.Split(' '));
-            consoleHistory.Add(input);
+            consoleHistory.Add("/"+input);
             position = consoleHistory.Count;
             // 控制与回调
             string output = null;
@@ -170,29 +176,39 @@ namespace Mikrocosmos
             for (int i = 1; i < inputArgs.Count; i++) {
                 CommandArg commandArg = commandArgs[i - 1];
                 //use CommandFunction to try parse if the argument is a function
-                
-                
-                switch (commandArg.CommandArgType) {
-                    case CommandType.INT:
-                        if (ParseInt(inputArgs[i], out int o)) { //compare int
-                            inputArgs[i] = o.ToString();
-                            break;
-                        }
-                        success = false;
-                        break;
-                    case CommandType.BOOL:
-                        if (!bool.TryParse(inputArgs[i], out bool _)) {
-                            success = false;
-                        }
-                        break;
-                    case CommandType.STRING:
-                        break;
-                }
+                inputArgs[i] = CommandFunctions.ProcessArgument(inputArgs[i], out bool parseSuccess,
+                    out string parseFailedMessage);
 
-                if (!success) {
-                    output = $"Invalid arguments for {commandArg.CommandArgType}: {commandArg.ArgumentName}.\n";
-                    break;
+                if (parseSuccess) {
+                    switch (commandArg.CommandArgType)
+                    {
+                        case CommandType.INT:
+                            if (!int.TryParse(inputArgs[i], out int _)) {
+                                success = false;
+                            }
+                            break;
+                        case CommandType.BOOL:
+                            if (!bool.TryParse(inputArgs[i], out bool _))
+                            {
+                                success = false;
+                            }
+                            break;
+                        case CommandType.STRING:
+                            break;
+                    }
+
+                    if (!success)
+                    {
+                        output = $"Invalid arguments for {commandArg.CommandArgType}: {commandArg.ArgumentName}.\n";
+                        break;
+                    }
                 }
+                else {
+                    output = parseFailedMessage +"\n";
+                    output += GetCommandComplete(commandName);
+                    return false;
+                }
+                
             }
 
            

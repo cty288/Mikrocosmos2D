@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3976416717896738311
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -963758100097498679, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: destroyWhenHit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -963758100097498679, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: damageReduceBySpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 184873933405369767, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 184873933405369767, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8547401568eb4f646a48b747d6de88da, type: 3}
+    - target: {fileID: 184873933405369767, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 773197963524302722, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: <Name>k__BackingField
+      value: AggressiveKrowBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 773197963524302722, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: <Damage>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 773197963524302722, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: <MaxSpeed>k__BackingField
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724491109129085724, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982627, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_Name
+      value: AgressiveKrowBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982681, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_AssetId
+      value: abf08b8361cec5342b0e070f948ee117
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5222149471336982687, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5659450030232754890, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4296c318b7783a946935efe0bd778766, type: 2}
+    - target: {fileID: 8574758588292966924, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+      propertyPath: m_Radius
+      value: 0.95
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8574758588292966924, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+--- !u!1 &9176045386180071012 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5222149471336982627, guid: 01e0adb2a99b2b841a22b6ff757cb4ad, type: 3}
+  m_PrefabInstance: {fileID: 3976416717896738311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!70 &3425305344927479395
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9176045386180071012}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.19, y: 0}
+  m_Size: {x: 2.75, y: 1.57}
+  m_Direction: 1

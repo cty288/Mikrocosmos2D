@@ -13,11 +13,10 @@ namespace Mikrocosmos
         }
 
         private void Update() {
-            if (Input.GetKeyUp(KeyCode.T)) {
-                
-                    IsOpening = true;
-                    debugPanel.gameObject.SetActive(true);
-                
+            if (Input.GetKeyDown(KeyCode.T) || Input.GetKeyDown(KeyCode.Slash))
+            {
+                IsOpening = true;
+                debugPanel.gameObject.SetActive(true);
             }
 
             if (Input.GetKeyDown(KeyCode.Escape)) {
