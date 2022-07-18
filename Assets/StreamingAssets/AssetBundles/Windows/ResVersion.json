@@ -45,8 +45,8 @@
     },
     {
       "AssetName": "buff_icons",
-      "MD5": "a813d9bb757e7f13f0b5cc27e98ab1ee",
-      "FileSize": 266.4082,
+      "MD5": "ff857de571421041da367c5bf741523a",
+      "FileSize": 265.688477,
       "assetDatas": [
         {
           "Name": "AimingSpeedDownDeBuffIcon",
@@ -209,8 +209,8 @@
     },
     {
       "AssetName": "info_elements",
-      "MD5": "8acd8cac9c36f1eada9d050f3f9698cc",
-      "FileSize": 9660.711,
+      "MD5": "c14374762bfd0c6dac065bc8b907a37a",
+      "FileSize": 9663.813,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -486,14 +486,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "6ae368f89c2e4173fa17d3bbf8cc5fb0",
+      "MD5": "a5277869d60ccfee8652563860904255",
       "FileSize": 1.86621094,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "9df6cc3dd83aecb3ee7acfab9779c7fc",
-      "FileSize": 4665.35938,
+      "MD5": "cd441425e503e40fd9dc298404fbc5e1",
+      "FileSize": 7022.008,
       "assetDatas": [
         {
           "Name": "FirePlant",

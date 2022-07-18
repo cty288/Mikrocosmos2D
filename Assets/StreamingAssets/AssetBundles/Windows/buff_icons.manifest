@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3687155238
+CRC: 1215360292
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 209d8de412e85ab989966e1430acd5ba
+    Hash: 28bd2c69d03241706ef8fcc1195425ee
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 23c0ef0ee3a7e5d44c19cfb00908dff5
+    Hash: c1344c7ff175d4420780664cf7411283
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -15,6 +15,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ad93dd09ec0ccad4a887149432659e38, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -26,6 +28,8 @@ ClassTypes:
 - Class: 687078895
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
+- AssemblyName: MikroFramework
+  ClassName: MikroFramework.BindableProperty.BindableProperty`1[System.Int32]
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
 - AssemblyName: UnityEngine.UI

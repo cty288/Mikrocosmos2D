@@ -27,13 +27,11 @@ namespace Mikrocosmos
                 icon.OnFillImageFinished += OnFillImageFinished;
             }
 
-
-            this.GetSystem<ITimeSystem>().AddDelayTask(Random.Range(0.1f,0.015f), () => {
-                if (this&& animator) {
-                    animator.SetTrigger("OnInfoUpdate");
-                }
-             
-            });
+            if (this && animator)
+            {
+                animator.SetTrigger("OnInfoUpdate");
+            }
+          
             float waitTime = 0f;
            
             if (titleText.color.a < 0.5f) {
