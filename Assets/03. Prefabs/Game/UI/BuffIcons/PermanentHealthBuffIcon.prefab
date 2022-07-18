@@ -113,7 +113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6696202566598432641, guid: c825010e0d1fda14283442fc8a479635, type: 3}
       propertyPath: m_Name
-      value: PermanentPowerHealthBuff
+      value: PermanentHealthBuffIcon
       objectReference: {fileID: 0}
     - target: {fileID: 7904383807597867959, guid: c825010e0d1fda14283442fc8a479635, type: 3}
       propertyPath: m_FillAmount
@@ -126,22 +126,3 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3655973554031529167, guid: c825010e0d1fda14283442fc8a479635, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c825010e0d1fda14283442fc8a479635, type: 3}
---- !u!1 &2162187477987873734 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6696202566598432641, guid: c825010e0d1fda14283442fc8a479635, type: 3}
-  m_PrefabInstance: {fileID: 4822249984183977031}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9144690213189022762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2162187477987873734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad93dd09ec0ccad4a887149432659e38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IconLevel:
-    value: 0

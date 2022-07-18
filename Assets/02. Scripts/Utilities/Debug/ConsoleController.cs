@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -26,6 +27,8 @@ namespace Mikrocosmos
         private List<GameObject> allTexts = new List<GameObject>();
         
         private PlayerMatchInfo matchInfo;
+
+        private string allText = "";
         private void Awake() {
            
         }
@@ -57,10 +60,22 @@ namespace Mikrocosmos
             //StartCoroutine(RefreshMessage(message));
             LayoutRebuilder.ForceRebuildLayoutImmediate(textLayout);
             allTexts.Add(message);
+            allText += message + $"{e.Name}: {e.Message}\n";
+        }
+
+
+        private void OnApplicationQuit() {
+            //save all text to file 
+            if (File.Exists(Application.persistentDataPath + "/chat.txt")) {
+                File.Delete(Application.persistentDataPath + "/chat.txt");
+            }
+            File.WriteAllText($"{Application.persistentDataPath}/output.txt", allText);
+
         }
 
         private void OnLogError(OnLogMessage e) {
             AddOutputText(e.message+"\n");
+            
         }
 
         private void AddOutputText(string message) {
@@ -70,6 +85,7 @@ namespace Mikrocosmos
             text.DOFade(0, 0);
             allTexts.Add(outputText);
             StartCoroutine(RefreshOutputPanel(text));
+            allText += message + "\n";
         }
 
         private IEnumerator RefreshMessage(GameObject message) {

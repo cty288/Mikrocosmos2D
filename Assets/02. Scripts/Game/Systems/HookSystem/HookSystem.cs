@@ -235,16 +235,17 @@ namespace Mikrocosmos {
                 NetworkIdentity oldIdentity = HookedNetworkIdentity;
 
 
-                if (e.CurrentCount>0) {
+                if (e.CurrentCount>0 && e.NextObject) {
 
                     GameObject nextItem = e.NextObject;
                     nextItem.SetActive(true);
                     NetworkServer.Spawn(nextItem);
 
 
-
+                    
                     nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>().transform.position;
 
+                    
                     HookedItem = nextItem.GetComponent<IHookableViewController>();
                     HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                     HookedItem.Model.TryHook(netIdentity);
@@ -386,12 +387,15 @@ namespace Mikrocosmos {
                 Debug.Log($"Force: {force}, {transform.up}, {maxShootForce}, {realShootPercent}");
 
                 IHookableViewController hookable = HookedItem;
+                NetworkIdentity hookeNetworkIdentity = HookedNetworkIdentity;
                 UnHook(true);
-                if (hookable!=null) {
+
+                
+                if (hookable!=null && hookeNetworkIdentity) {
                     //bug
                     this.SendEvent<OnItemShot>(new OnItemShot()
                     {
-                        Force = force * hookable.Model.SelfMass,
+                        Force = force * hookeNetworkIdentity.GetComponent<Rigidbody2D>().mass,
                         TargetShotItem = hookable as ICanBeShotViewController,
                         BindedVelocity = binRigidbody.velocity
                     });
@@ -786,7 +790,12 @@ namespace Mikrocosmos {
             }
             if (hookHoldTimer <= shootTimeThreshold) {
                 if (HookedItem != null) {
-                    if (hookTrigger.Triggered && hookTrigger.Colliders.Find((c => c.gameObject.layer == LayerMask.NameToLayer("PlanetSellBubble")))) {
+                    if (hookTrigger.Triggered && hookTrigger.Colliders.Find((c => {
+                            if (!c.gameObject) {
+                                return false;
+                            }
+                            return c.gameObject.layer == LayerMask.NameToLayer("PlanetSellBubble");
+                        }))) {
                         return HookAction.BuyWhenHooked;
                     }
                     return HookAction.UnHook;

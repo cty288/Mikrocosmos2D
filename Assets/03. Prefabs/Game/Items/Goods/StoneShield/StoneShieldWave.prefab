@@ -107,6 +107,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StoneShieldWave
       objectReference: {fileID: 0}
+    - target: {fileID: 6410031578183631850, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631851, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -308,9 +312,11 @@ MonoBehaviour:
   <MaxSpeed>k__BackingField: 70
   <CanBeHooked>k__BackingField: 0
   <CanBeAddedToInventory>k__BackingField: 0
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 0.5
   <Damage>k__BackingField: 10
@@ -332,8 +338,8 @@ MonoBehaviour:
   <HookedPositionOffset>k__BackingField: {x: 0, y: 0}
   <HookedRotationZOffset>k__BackingField: 0
   Force: 0
-  shooter: {fileID: 0}
   destroyWhenHit: 0
+  damageReduceBySpeed: 1
   LastTime: 1.5
   FlySpeed: 40
 --- !u!114 &4329412435070151956

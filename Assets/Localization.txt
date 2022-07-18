@@ -797,5 +797,38 @@ AVATAR_RANDOM,,Random,,,,,,,,,,,,,,,,,随机,隨機,,,,,,,,,
 AVATAR_SAVE,,Save Look,,,,,,,,,,,,,,,,,保存外观,保存外觀,,,,,,,,,
 教学,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 TUTORIAL_MOVE,,Hold RMB to Move towards your cursor.,,,,,,,,,,,,,,,,,按住鼠标右键移动飞船至该方向,按住鼠標右鍵移動飛船至該方向,,,,,,,,,
+TUTORIAL_GOAL,,"The goal of your game is to trade with as many planets as possible to increase their ""affinity"". At the end of the game, the team with the highest friendship with all planets wins",,,,,,,,,,,,,,,,,你游戏的目标是与尽可能多的星球交易以提升“好感度”。在游戏结束时，与所有星球好感度最高的队伍获胜,你游戲的目標是與盡可能多的星球交易以提升“好感度”。在遊戲結束時，與所有星球好感度最高的隊伍獲勝,,,,,,,,,
+TUTORIAL_AFFINITY,,"The progress bar here represents the current affinity between the planet and the two teams, with its colors representing the two teams",,,,,,,,,,,,,,,,,此处的进度条代表该星球目前与两个队伍的好感度，其颜色分别代表两个队伍,此處的進度條代表該星球目前與兩個隊伍的好感度，其顏色分別代表兩個隊伍,,,,,,,,,
+TUTORIAL_HOOK,,"Press Space Bar to use your Hook. Your hook can catch anything, including players!
+Press Space Bar again to unhook that item.",,,,,,,,,,,,,,,,,"按空格键使用你的钩子。你的钩子可以钩住包括玩家在内的任何物品！
+再次按空格以放开你的钩子","按空格鍵使用你的鉤子。你的鉤子可以鉤住包括玩家在內的任何物品！
+再次按空格以放開你的鉤子",,,,,,,,,
+TUTORIAL_TRY_HOOK,,Try hook this meteor!,,,,,,,,,,,,,,,,,试着钩住这个陨石！,試著鉤住這個隕石！,,,,,,,,,
+TUTORIAl_BUBBLES,,The right bubble represents the item that the planet is currently selling. The left one represents the item that it wants to buy from you,,,,,,,,,,,,,,,,,星球右边的气泡代表它正在出售的物品；左边的气泡代表其想要从你手中购买的物品,星球右邊的氣泡代表它正在出售的物品；左邊的氣泡代表其想要從你手中購買的物品,,,,,,,,,
+TUTORIAL_MONEY,,The diamond icon on the lower-left corner represents your money. You need money to buy items,,,,,,,,,,,,,,,,,右下角的钻石标志代表你的金钱。你需要金钱才能从星球处购买物品,右下角的鑽石標誌代表你的金錢。你需要金錢才能從星球處購買物品,,,,,,,,,
+TUTORIAL_SELL,,"Now, try buy this mushroom! You can hook the mushroom in the bubble to buy it.
+
+After you buy it, your team's affinity with this planet will increase..",,,,,,,,,,,,,,,,,"现在试着购买这个蘑菇！购买一个物品只需要钩住气泡内的物品即可。
+
+在你完成购买后，你的队伍与这个星球的好感度将会增加","現在試著購買這個蘑菇！購買一個物品只需要鉤住氣泡內的物品即可。
+
+在你完成購買後，你的隊伍與這個星球的好感度將會增加",,,,,,,,,
+TUTORIAL_BUY,,"When you hook an item, the icon appears on the border of your screen navigates you to a planet that want to buy this item.
+
+To sell an item, go to that planet, and unhook this item on the corresponding bubblee",,,,,,,,,,,,,,,,,"当你勾住一个物品时, 屏幕边框上的图标会将你导航到一个想要购买该物品的星球。
+
+要出售该物品, 只需要去那个星球, 然后在相应的气泡上放开你的钩子","當你勾住一個物品時, 屏幕邊框上的圖標會將你導航到一個想要購買該物品的星球。
+
+要出售該物品, 只需要去那個星球, 然後在相應的氣泡上放開你的鉤子",,,,,,,,,
+TUTORIAL_WEAPONS,,"In the real game, there are a varity of items that planets sell. Items in the game can also be used, and each of which has different functions.
+
+To use an item, simply press LMB",,,,,,,,,,,,,,,,,"在实际游戏中，星球会出售各式各样的物品。物品除了交易外还可以使用，且每个物品有不同的功能。
+
+你可以使用鼠标左键使用这些物品。","在實際遊戲中，星球會出售各式各樣的物品。物品除了交易外還可以使用，且每個物品有不同的功能。
+
+你可以使用鼠標左鍵使用這些物品。",,,,,,,,,
+TUTORIAL_TRY_USE,,Try hook and use these items!,,,,,,,,,,,,,,,,,试着钩住这些物品并使用他们！,試著鉤住這些物品並使用他們！,,,,,,,,,
+TUTORIAL_METEORS,,You can break these meteors to get resources and money. Pickaxes are the most efficient tools to mine them,,,,,,,,,,,,,,,,,"你可以破坏这些陨石来获得额外资源和金钱。稿子是开采这些陨石的最有效的工具
+",你可以破壞這些隕石來獲得額外資源和金錢。稿子是開採這些隕石的最有效的工具,,,,,,,,,
 其他,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 COMMA,,", ",,,,,,,,,,,,,,,,,，,，,,,,,,,,,

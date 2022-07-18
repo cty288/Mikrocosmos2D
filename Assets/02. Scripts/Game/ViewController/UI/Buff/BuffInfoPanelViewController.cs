@@ -48,8 +48,7 @@ namespace Mikrocosmos
                         BuffElementViewController buffElement = null;
                         if (e.BuffInfo.PermanentRawMaterialBuffInfo.MaxLevel == 0) { //non-permanent buff
                             buffElement = Instantiate(nonPermanentBuffElementPrefab, nonPermanentBuffLayoutGroup).GetComponent<BuffElementViewController>();
-                        }
-                        else {
+                        }else {
                             buffElement = Instantiate(permanentBuffElementPrefab, permanentBuffLayoutGroup).GetComponent<BuffElementViewController>(); 
                         }
                         buffElement.BuffInfoPanelViewController = this;
@@ -58,15 +57,15 @@ namespace Mikrocosmos
                         
                         GameObject buffIconPrefab = resLoader.LoadSync<GameObject>("buff_icons", e.BuffInfo.Name+ "Icon");
                         Debug.Log($"Buff Icon Prefab: {buffIconPrefab == null}");
-                        Instantiate(buffIconPrefab, buffElement.transform.Find("BuffIconSpawnPosition"));
+                        GameObject buffIcon = Instantiate(buffIconPrefab, buffElement.transform.Find("BuffIconSpawnPosition"));
 
-                        buffElement.SetBuffInfo(e.BuffInfo);
+                        buffElement.SetBuffInfo(e.BuffInfo, buffIcon);
                     }
                     break;
                 case BuffUpdateMode.Update:
                     
                     if (buffNameToElement.ContainsKey(e.BuffInfo.Name)) {
-                        buffNameToElement[e.BuffInfo.Name].SetBuffInfo(e.BuffInfo);
+                        buffNameToElement[e.BuffInfo.Name].SetBuffInfo(e.BuffInfo, null);
                     }
                     break;
                 case BuffUpdateMode.Stop:

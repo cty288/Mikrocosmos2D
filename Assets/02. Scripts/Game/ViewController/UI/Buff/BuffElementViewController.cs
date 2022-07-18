@@ -13,6 +13,7 @@ namespace Mikrocosmos
         protected TMP_Text descriptionText;
         protected BuffIconViewController iconViewController;
         public BuffInfoPanelViewController BuffInfoPanelViewController;
+        [SerializeField]
         protected Animator animator;
         protected string buffName;
 
@@ -22,7 +23,7 @@ namespace Mikrocosmos
         private void Awake() {
             titleText = transform.Find("TitleText").GetComponent<TMP_Text>();
             descriptionText = transform.Find("DescriptionText").GetComponent<TMP_Text>();
-            animator = GetComponent<Animator>();
+         
             this.RegisterEvent<OnFullMapCanvasOpen>(OnFullMapCanvasOpen).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnFullMapCanvasClose>(OnFullMapCanvasClose).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -37,10 +38,10 @@ namespace Mikrocosmos
             animator.ResetTrigger(OnCloseBigMap);
         }
 
-        public virtual void SetBuffInfo(BuffInfo info) {
-            
-            if (!iconViewController) {
-                iconViewController = GetComponentInChildren<BuffIconViewController>();
+        public virtual void SetBuffInfo(BuffInfo info, GameObject buffIconCreated) {
+
+            if (!iconViewController && buffIconCreated) {
+                iconViewController = buffIconCreated.AddComponent<BuffIconViewController>();
             }
 
             if (titleText && descriptionText) {

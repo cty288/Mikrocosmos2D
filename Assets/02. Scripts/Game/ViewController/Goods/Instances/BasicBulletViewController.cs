@@ -127,7 +127,7 @@ namespace Mikrocosmos
                             }
 
                             if (entity is IHookable hookable) {
-                                if (hookable.CanBeHooked && hookable.HookedByIdentity) {
+                                if (hookable.HookedByIdentity) {
                                     hookable.HookedByIdentity.GetComponent<IDamagable>().TakeRawDamage(damage, shooterPlayer);
                                     OnServerSpaceshipHit(damage, collision.collider.gameObject);
                                 }
