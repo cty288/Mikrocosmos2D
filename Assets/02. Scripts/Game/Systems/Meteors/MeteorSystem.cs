@@ -38,13 +38,15 @@ namespace Mikrocosmos
         private IEnumerator CheckSpawnMeteor() {
             while (true) {
                 yield return new WaitForSeconds(meteorSpawnInterval);
-                meteorMaximumCountPerPlayer =
-                    Mathf.Clamp(Mathf.RoundToInt(meteorMaximumCountPerPlayer * gameProgressSystem.GetGameProgress()), NetworkManager.singleton.numPlayers * meteorMaximumCountPerPlayer/2,
-                        100);
+
+                meteorMaximumCount =
+                    Mathf.Clamp(Mathf.RoundToInt(meteorMaximumCountPerPlayer * (1-gameProgressSystem.GetGameProgress())), NetworkManager.singleton.numPlayers * meteorMaximumCountPerPlayer/2,
+                        NetworkManager.singleton.numPlayers * meteorMaximumCountPerPlayer * 2);
 
                 meteorSpawnInterval =
                     (Mathf.RoundToInt(meteorSpawnInterval * (1 + gameProgressSystem.GetGameProgress())));
-                if (activeMeteors.Count < meteorMaximumCountPerPlayer) {
+               
+                if (activeMeteors.Count < meteorMaximumCount) {
                     SpawnMeteor();
                 }
             }
