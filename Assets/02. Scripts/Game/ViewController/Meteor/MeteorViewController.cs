@@ -24,19 +24,23 @@ namespace Mikrocosmos
         [SerializeField] private GameObject damageParticle;
         [SerializeField] private GameObject dieParticle;
 
+        
+        
+        
        
         protected override void Awake()
         {
             base.Awake();
             DamagableModel = GetComponent<IDamagable>();
             spriteRenderer = GetComponent<SpriteRenderer>();
-          
+            
         }
 
         public override void OnStartServer()
         {
             base.OnStartServer();
             this.RegisterEvent<OnEntityTakeDamage>(OnEntityTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.transform.position += new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
         }
 
         private void OnEntityTakeDamage(OnEntityTakeDamage e)

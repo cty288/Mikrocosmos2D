@@ -562,7 +562,7 @@ MonoBehaviour:
   syncInterval: 0.1
   <MoveMode>k__BackingField: 0
   <MaxSpeed>k__BackingField: 100
-  <CanBeHooked>k__BackingField: 1
+  <CanBeHooked>k__BackingField: 0
   <CanBeAddedToInventory>k__BackingField: 0
   <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
   <HookState>k__BackingField: 0

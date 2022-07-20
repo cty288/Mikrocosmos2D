@@ -52,6 +52,7 @@ MonoBehaviour:
     - Mirror.Authenticators
     - Elringus.SpriteGlow.Runtime
     - Steamworks
+    - Pixeye
     - PsdPlugin
     - AstarPathfindingProjectEditor
     - PPv2URPConverters

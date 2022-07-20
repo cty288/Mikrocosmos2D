@@ -100,6 +100,9 @@ namespace Mikrocosmos
                 return 1;
             else return (dist);
         }
+
+        [field: SerializeField]
+        public string Name { get; }
     }
 
    

@@ -17,11 +17,16 @@ namespace Mikrocosmos
         private Dictionary<string, InfoElement> infoNameToElement = new Dictionary<string, InfoElement>();
         private ResLoader resLoader;
         
+        
         private void Awake() {
             this.RegisterEvent<OnInfoStartOrUpdate>(OnInfoStartOrUpdate).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnInfoStop>(OnInfoStop).UnRegisterWhenGameObjectDestroyed(gameObject);
             layoutGroup = transform.Find("List/LayoutGroup");
             ResLoader.Create((loader => resLoader = loader ));
+        }
+
+        private void OnDestroy() {
+            resLoader.ReleaseAllAssets();
         }
 
         private void OnInfoStop(OnInfoStop e) {

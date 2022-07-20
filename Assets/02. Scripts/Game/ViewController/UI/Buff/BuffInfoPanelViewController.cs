@@ -28,6 +28,10 @@ namespace Mikrocosmos
             permanentBuffLayoutGroup = transform.Find("BuffList2/BuffLayoutGroup");
         }
 
+        private void OnDestroy() {
+            resLoader.ReleaseAllAssets();
+        }
+
         private void Start() {
             this.RegisterEvent<ClientOnBuffUpdate>(OnBuffUpdate);
         }

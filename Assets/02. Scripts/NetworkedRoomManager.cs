@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using MikroFramework.Architecture;
+using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
 using Mirror;
 using Mirror.FizzySteam;
@@ -63,9 +64,21 @@ namespace Mikrocosmos
                     gchandle.AddrOfPinnedObject());
                 gchandle.Free();                
             }
-         
-            
+
+            StartCoroutine(AddAllGoodsToRegisteredPool());
         }
+
+        IEnumerator AddAllGoodsToRegisteredPool() {
+            while (!ResData.Exists) {
+                yield return null;
+            }
+
+            List<GoodsPropertiesItem> allGoodsProperties =
+                this.GetModel<IGoodsConfigurationModel>().GetAllGoodProperties();
+            foreach (GoodsPropertiesItem goodsProperties in allGoodsProperties) {
+                spawnPrefabs.Add(goodsProperties.GoodsPrefab);
+            }
+        }            
 
         public void ServerChangeGameModeScene(GameMode gamemode) {
             GameplayScene = GameModeScenes[(int)gamemode].ToString();

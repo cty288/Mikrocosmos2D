@@ -20,6 +20,11 @@ namespace Mikrocosmos
             });
         }
 
+        protected override void OnBeforeDestroy() {
+            base.OnBeforeDestroy();
+            resLoader.ReleaseAllAssets();
+        }
+
         public Sprite GetSpriteElementFromAsset(int assetIndex) {
             if (cashedSprites.ContainsKey(assetIndex)) {
                 return cashedSprites[assetIndex];

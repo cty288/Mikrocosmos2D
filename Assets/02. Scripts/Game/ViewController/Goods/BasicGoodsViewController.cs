@@ -28,6 +28,20 @@ namespace Mikrocosmos
             }
         }
 
+        protected void DealDamage(IDamagable victim) {
+            int damage = GoodsModel.Damage;
+
+            if (Owner) {
+                Owner.TryGetComponent<IBuffSystem>(out var ownerBuffSystem);
+                if (ownerBuffSystem != null) {
+                    if (ownerBuffSystem.HasBuff<PermanentPowerUpBuff>(out PermanentPowerUpBuff powerBuff)) {
+                        damage *= (1 + Mathf.RoundToInt(powerBuff.CurrentLevel * powerBuff.AdditionalDamageAdditionPercentage));
+                    }
+                }
+            }
+
+            victim.TakeRawDamage(damage, Model.HookedByIdentity);
+        }
 
         [ServerCallback]
         protected override void OnServerItemUsed() {

@@ -290,7 +290,7 @@ MonoBehaviour:
   healthRecoverWaitTimeAfterDamage: 5
   maxDamageReceive: 6
   HealthRecoverTimer: 0
-  <SelfMass>k__BackingField: 20
+  <SelfMass>k__BackingField: 500
   <StartDirection>k__BackingField: {x: 0, y: 0}
   <InitialForceMultiplier>k__BackingField: 0.0002
   <AffectedByGravity>k__BackingField: 1

@@ -24,7 +24,10 @@ namespace Mikrocosmos
         public GameObject GeneratedItem;
         public GameObject PreviousItem;
         public bool CountTowardsGlobalIItemList;
+        public float RepeatSellCountdownRemainingTime;
     }
+
+    
 
     public struct OnServerPlanetGenerateBuyingItem
     {
@@ -92,7 +95,7 @@ namespace Mikrocosmos
         public bool sellTimeCountdownTriggered;
         public float sellTimeCountdown;
 
-        public TradingItemInfo(GoodsConfigure currentItemConfig, IGoods currentItem, GameObject currentItemGameObject, int currentItemPrice, bool sellTimeCountdownTriggered = false, float sellTimeCountdown = 3f)
+        public TradingItemInfo(GoodsConfigure currentItemConfig, IGoods currentItem, GameObject currentItemGameObject, int currentItemPrice, bool sellTimeCountdownTriggered = false, float sellTimeCountdown = 2f)
         {
             this.currentItemConfig = currentItemConfig;
             this.currentItem = currentItem;
@@ -308,6 +311,7 @@ namespace Mikrocosmos
                         ParentPlanet = this.gameObject,
                         Price = info.currentItemPrice,
                         CountTowardsGlobalIItemList = false,
+                        RepeatSellCountdownRemainingTime = -1
                     });
                 }
               
@@ -411,6 +415,7 @@ namespace Mikrocosmos
                 }
                 else {
                     selectedGoodsConfigure = switchedItem.currentItemConfig;
+                    
                 }
                
                 
@@ -434,9 +439,9 @@ namespace Mikrocosmos
                 currentSellingItem.RealPrice = currentSellingItemPrice;
 
 
-
-                currentSellItemLists.Add(new TradingItemInfo(currentSellingItemConfig, currentSellingItem,
-                    currentSellingItemObject, currentSellingItemPrice, triggerCountdown));
+                TradingItemInfo newInfo = new TradingItemInfo(currentSellingItemConfig, currentSellingItem,
+                    currentSellingItemObject, currentSellingItemPrice, triggerCountdown);
+                currentSellItemLists.Add(newInfo);
                 
 
                 this.SendEvent<OnServerPlanetGenerateSellItem>(new OnServerPlanetGenerateSellItem()
@@ -445,7 +450,8 @@ namespace Mikrocosmos
                     ParentPlanet = this.gameObject,
                     Price = currentSellingItemPrice,
                     CountTowardsGlobalIItemList = true,
-                    PreviousItem = previousSellingItem
+                    PreviousItem = previousSellingItem,
+                    RepeatSellCountdownRemainingTime = triggerCountdown?  newInfo.sellTimeCountdown: -1
                 });
 
                 if (switchedItem!=null && !switchedItem.currentItem.TransactionFinished) {
@@ -623,6 +629,11 @@ namespace Mikrocosmos
         private void TargetOnSellItemSuccess(NetworkConnection connection)
         {
             this.GetSystem<IAudioSystem>().PlaySound("Sell", SoundType.Sound2D);
+        }
+
+        [ClientRpc]
+        private void RpcOnRepeatSellCountdownTriggered() {
+
         }
 
     }

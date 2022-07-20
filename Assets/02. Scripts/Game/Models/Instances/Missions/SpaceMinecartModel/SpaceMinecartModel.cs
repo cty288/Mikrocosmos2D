@@ -23,5 +23,8 @@ namespace Mikrocosmos
         public void AddMaximumHealth(float percentage) {
            
         }
+
+
+        public string Name { get; } = "SpaceMinecart";
     }
 }

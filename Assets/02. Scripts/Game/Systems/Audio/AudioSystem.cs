@@ -102,6 +102,11 @@ namespace Mikrocosmos
             }
         }
 
+        protected override void OnBeforeDestroy() {
+            base.OnBeforeDestroy();
+            resLoader.ReleaseAllAssets();
+        }
+
         private void Play(string clipName, Dictionary<string, AudioClip> dict, AudioSource audioSource, float relativeVolume, Action<AudioClip, AudioSource, float> action)
         {
             if (!dict.ContainsKey(clipName)) {

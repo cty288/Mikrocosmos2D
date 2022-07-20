@@ -29,11 +29,11 @@ namespace Mikrocosmos
 
        [SerializeField] private bool destroyWhenHit = false;
 
-       [SerializeField] private bool damageReduceBySpeed = true;
-
-       private int additionalDamageFactor = 0;
+    
+       protected int additionalDamageFactor = 0;
         protected void Start() {
             base.Awake();
+            
             animator = GetComponent<NetworkAnimator>();
            
             if (shooterPlayer) {
@@ -108,7 +108,7 @@ namespace Mikrocosmos
                                                        (Mathf.Min(  rigidbody.velocity.magnitude / model.MaxSpeed,
                                                            2))));
 
-                        if (!damageReduceBySpeed) {
+                        if (!model.DamageReducedBySpeed) {
                             damage = model.Damage;
                         }
 

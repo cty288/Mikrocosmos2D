@@ -198,21 +198,24 @@ namespace Mikrocosmos
                 }
                 
                 GameObject sellBubble = GenerateSellBubble(e.Price, generatedName, previousName,
-                    generatedGoods.GoodRarity == GoodsRarity.RawResource);
+                    generatedGoods.GoodRarity == GoodsRarity.RawResource, e.RepeatSellCountdownRemainingTime);
+                
                 if (sellBubble) {
+                    
                     sellBubble.GetComponent<PlanetSellBubble>().ServerGoodsSelling = generatedGoods;
                     sellBubble.GetComponent<PlanetSellBubble>().ServerGoodsObjectSelling = e.GeneratedItem;
                     e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellBubble.transform.Find("SellItemSpawnPos");
-                    RpcGenerateSellBubble(e.Price, generatedName, previousName, generatedGoods.GoodRarity == GoodsRarity.RawResource);
+                    RpcGenerateSellBubble(e.Price, generatedName, previousName, generatedGoods.GoodRarity == GoodsRarity.RawResource, e.RepeatSellCountdownRemainingTime);
                 }
 
                 if (!e.CountTowardsGlobalIItemList) {
-                    RpcGenerateSellBubble(e.Price, generatedName, previousName, generatedGoods.GoodRarity == GoodsRarity.RawResource);
+                    RpcGenerateSellBubble(e.Price, generatedName, previousName,
+                        generatedGoods.GoodRarity == GoodsRarity.RawResource, e.RepeatSellCountdownRemainingTime);
                 }
             }
         }
 
-        private GameObject GenerateSellBubble(int price,string bubbleToGenerate,  string bubbleToDestroy, bool isRaw) {
+        private GameObject GenerateSellBubble(int price,string bubbleToGenerate,  string bubbleToDestroy, bool isRaw, float repeatSellRemainingTime) {
             GameObject oldBubble = null;
             if (!String.IsNullOrEmpty(bubbleToDestroy)) {
                 if (ClientSellBubbles.ContainsKey(bubbleToDestroy)) {
@@ -236,7 +239,7 @@ namespace Mikrocosmos
             }
             
             
-            sellBubble.GetComponent<PlanetSellBubble>().SetPrice(price, isRaw);
+            sellBubble.GetComponent<PlanetSellBubble>().SetInfo(price,repeatSellRemainingTime, isRaw);
            
             ClientSellBubbles.Add(bubbleToGenerate, sellBubble);
             return sellBubble;
@@ -310,9 +313,9 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcGenerateSellBubble(int price, string bubbleToGenerate, string bubbleToDestroy, bool isRaw) {
+        private void RpcGenerateSellBubble(int price, string bubbleToGenerate, string bubbleToDestroy, bool isRaw, float repeatSellRemainingTime) {
             if (isClientOnly) {
-                GenerateSellBubble(price, bubbleToGenerate, bubbleToDestroy, isRaw);
+                GenerateSellBubble(price, bubbleToGenerate, bubbleToDestroy, isRaw, repeatSellRemainingTime);
             }
         }
 

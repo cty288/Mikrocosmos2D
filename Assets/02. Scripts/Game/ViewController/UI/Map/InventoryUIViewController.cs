@@ -76,6 +76,10 @@ namespace Mikrocosmos
             ResLoader.Create((loader => resLoader = loader));
         }
 
+        private void OnDestroy() {
+            resLoader.ReleaseAllAssets();
+        }
+
         private void OnGoodsUpdateDurability(OnGoodsUpdateViewControllerDurability e) {
             Image itemImage = allItemSlots[e.SlotNumber].transform.Find("ItemSlot/ItemDurabilityImage").GetComponent<Image>();
             if (e.DurabilitySprite == null && !e.UsePreviousSprite) {

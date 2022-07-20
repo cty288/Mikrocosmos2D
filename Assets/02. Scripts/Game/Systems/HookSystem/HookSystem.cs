@@ -114,7 +114,7 @@ namespace Mikrocosmos {
         [SerializeField]
         private NetworkAnimator animator;
 
-        private static ResLoader resLoader;
+       
 
         private IPlayerInventorySystem inventorySystem;
 
@@ -132,12 +132,7 @@ namespace Mikrocosmos {
             hookTrigger = GetComponentInChildren<Trigger2DCheck>();
             animator = GetComponent<NetworkAnimator>();
             binRigidbody = GetComponent<Rigidbody2D>();
-            ResLoader.Create(loader => {
-                if (resLoader == null) {
-                    resLoader = loader;
-                }
-                
-            });
+       
             inventorySystem = GetComponent<IPlayerInventorySystem>();
 
             this.RegisterEvent<OnItemRobbed>(OnRobbed).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -415,13 +410,7 @@ namespace Mikrocosmos {
             }
         }
 
-        private void OnDestroy() {
-            if (resLoader != null) {
-                resLoader.ReleaseAllAssets();
-            }
-          
-            //resLoader = null;
-        }
+     
 
         [ServerCallback]
         private void OnServerSwitchItemSlot(OnSwitchItemSlot e) {
@@ -467,8 +456,7 @@ namespace Mikrocosmos {
                         else {
                             animator.animator.SetBool("Hooking", true);
                         }
-                    }
-                    else {
+                    }else {
                         animator.animator.SetBool("Hooking", false);
                     }
                 }else {
@@ -623,11 +611,11 @@ namespace Mikrocosmos {
                 
                 
                 HookedItem.Model.UnHook(isShoot);
-                this.SendEvent<OnHookedItemUnHooked>(new OnHookedItemUnHooked()
-                {
+                this.SendEvent<OnHookedItemUnHooked>(new OnHookedItemUnHooked() {
                     GameObject = HookedNetworkIdentity.gameObject,
                     OwnerIdentity = netIdentity
                 });
+                
                 if (HookedItem.Model.CanBeAddedToInventory)
                 {
                     Debug.Log("HookSystem: Ready to remove from current backpack");
@@ -646,6 +634,8 @@ namespace Mikrocosmos {
                     animator.animator.SetBool("Hooking", false);
                 }
                 
+            }else {
+                animator.animator.SetBool("Hooking", false);
             }
 
             model.ServerUpdateMass();
@@ -775,7 +765,8 @@ namespace Mikrocosmos {
 
         [ServerCallback]
         private void TryHook() {
-            if (model.HookState == HookState.Freed && animator.animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking")) {
+            //TODO: HookedItem==null 可能不太行
+            if (model.HookState == HookState.Freed && (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking") || HookedItem==null)) {
                 GetComponent<NetworkAnimator>().SetTrigger("StartHook");
             }
 

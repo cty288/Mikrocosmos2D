@@ -13,16 +13,15 @@ namespace Mikrocosmos
         [SerializeField] private GameObject fire1;
         [SerializeField] private GameObject fire2;
 
-        private Trigger2DCheck fireCheck;
+
         private bool isUsing = false;
 
-        [SerializeField] private int damagePer02;
+       
 
       
         protected override void Awake() {
             base.Awake();
             animator = GetComponent<Animator>();
-            fireCheck = GetComponentInChildren<Trigger2DCheck>();
         }
 
         protected override void OnServerItemUsed() {
@@ -70,21 +69,8 @@ namespace Mikrocosmos
         public void DealDamageToDamagable(GameObject target) {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Using")) {
                 Debug.Log($"Deal Damage to target: {target.name}");
-                int damage = damagePer02;
-                if (Owner)
-                {
-                    Owner.TryGetComponent<IBuffSystem>(out var ownerBuffSystem);
-                    if (ownerBuffSystem != null)
-                    {
-                        if (ownerBuffSystem.HasBuff<PermanentPowerUpBuff>(out PermanentPowerUpBuff powerBuff))
-                        {
-                            damage *= (1 + Mathf.RoundToInt(powerBuff.CurrentLevel * powerBuff.AdditionalDamageAdditionPercentage));
-                        }
-                    }
-                }
-                
-                target.GetComponent<IDamagable>().TakeRawDamage(damage, Model.HookedByIdentity);
-                
+               DealDamage(target.GetComponent<IDamagable>());
+               
             }
         }
 

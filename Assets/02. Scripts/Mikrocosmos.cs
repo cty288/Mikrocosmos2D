@@ -11,6 +11,7 @@ namespace Mikrocosmos
         protected override void Init() {
             this.RegisterModel<ILocalPlayerInfoModel>(new LocalPlayerInfoModel());
             this.RegisterModel<IClientAvatarModel>(new ClientAvatarModel());
+            this.RegisterModel<IGoodsConfigurationModel>(new GoodsConfigurationModel());
             // this.RegisterModel<ISpaceshipConfigurationModel>(new SpaceshipConfigurationModel());
             // this.RegisterModel<ISpaceshipModel>(new SpaceshipModel());
             this.RegisterSystem<ITimeSystem>(new TimeSystem());

@@ -106,6 +106,9 @@ namespace Mikrocosmos
 
             return ret;
         }
+
+        [field: SerializeField]
+        public string Name { get; set; }
     }
 
     

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Utilities;
@@ -35,21 +36,12 @@ namespace Mikrocosmos
     public abstract class AbstractGoodsModel : AbstractBasicEntityModel, IGoods, IAffectedByGravity,
     ICanSendQuery{
 
-        [field: SyncVar, SerializeField]
-        public override float SelfMass { get; set; }
-
-        [field: SyncVar, SerializeField]
-        public override string Name { get; set; } = "Goods";
-
-        [field: SerializeField] public int BasicSellPrice { get; set; }
-        [field: SerializeField] public int BasicBuyPrice { get; set; }
-        [field: SerializeField] public GoodsRarity GoodRarity { get; set; }
-        [field: SerializeField]
-        public bool DroppableFromBackpack { get; set; } = true;
+       
 
         [field: SyncVar(hook = nameof(OnTransactionStatusChanged))]
         public bool TransactionFinished { get; set; } = true;
 
+        
         [field: SerializeField] public bool DestroyedBySun { get; set; } = true;
         [field: SerializeField] public bool AbsorbedToBackpack { get; set; } = false;
 
@@ -63,9 +55,57 @@ namespace Mikrocosmos
 
         protected Trigger2DCheck triggerCheck;
 
+        protected IGoodsConfigurationModel configurationModel;
+
+
+        [field: SyncVar, SerializeField]
+        public override float SelfMass { get; set; }
+
+        [field: SyncVar, SerializeField]
+        public override string Name { get; set; } = "Goods";
+
+        [field: SerializeField] public int BasicSellPrice { get; set; }
+        [field: SerializeField] public int BasicBuyPrice { get; set; }
+        [field: SerializeField] public GoodsRarity GoodRarity { get; set; }
+        [field: SerializeField]
+        public bool DroppableFromBackpack { get; set; } = true;
+
+      
+
+        
         protected override void Awake() {
             base.Awake();
+            
+            configurationModel = this.GetModel<IGoodsConfigurationModel>();
             triggerCheck = GetComponent<Trigger2DCheck>();
+            if (NetworkServer.active) {
+                gameObject.name = CommonUtility.DeleteCloneName(gameObject);
+                int index = gameObject.name.IndexOf('(');
+                if (index != -1)
+                {
+                    gameObject.name = gameObject.name.Substring(0, index);
+                }
+            
+                gameObject.name = gameObject.name.TrimEnd();
+                GoodsPropertiesItem properties = configurationModel.FindGoodsPropertiesByPrefabName(gameObject.name);
+                if (properties != null) {
+                    Name = properties.Name;
+                    BasicBuyPrice = properties.TradingProperties.BasicBuyPrice;
+                    BasicSellPrice = properties.TradingProperties.BasicSellPrice;
+                    GoodRarity = properties.TradingProperties.Rarity;
+                    if (this is ICanDealDamage dealDamageModel)
+                    {
+                        dealDamageModel.Damage = properties.Damage;
+                    }
+
+                    SelfMass = properties.SelfMass;
+                    AdditionalMassWhenHookedMultiplier = properties.AdditionalMassWhenHooked;
+                    DroppableFromBackpack = properties.DroppableFromBackpack;
+                    AbsorbedToBackpack = properties.CanAbsorbToBackpack;
+                    CanBeAddedToInventory = properties.CanBeAddedToInventory;
+                }
+             
+            }
         }
 
 
@@ -182,5 +222,7 @@ namespace Mikrocosmos
                 });
             }
         }
+
+        public int Damage { get; set; }
     }
 }

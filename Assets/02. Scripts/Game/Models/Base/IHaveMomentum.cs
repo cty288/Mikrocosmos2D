@@ -9,7 +9,11 @@ namespace Mikrocosmos
         ByPhysics,
         ByTransform
     }
-    public interface IHaveMomentum {
+
+    public interface IHaveName {
+        public string Name { get; }
+    }
+    public interface IHaveMomentum: IHaveName {
 
         MoveMode MoveMode { get; set; }
         float MaxSpeed { get; }

@@ -14,10 +14,7 @@ namespace Mikrocosmos
 
         public float AddedMomentum => addedMomentum;
 
-        [SerializeField]
-        private int addedDamage;
-
-        public int AddedDamage => addedDamage;
+                
 
         public float AddedForce => addedForce;
 

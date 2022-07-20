@@ -54,6 +54,10 @@ namespace Mikrocosmos
         public float GravityFieldRange { get; protected set; }
         [field: SerializeField, SyncVar]
         public float G { get; protected set; }
+
+
+        [field: SerializeField]
+        public string Name { get; }
     }
 
    

@@ -5,7 +5,11 @@ using UnityEngine;
 
 namespace Mikrocosmos
 {
-    public interface IGoods :  IModel, IEntity{
+
+    public interface ICanDealDamage {
+        public int Damage { get; set; }
+    }
+    public interface IGoods :  IModel, IEntity, ICanDealDamage {
         public int BasicSellPrice { get; set; }
    
         public int BasicBuyPrice { get; set; }

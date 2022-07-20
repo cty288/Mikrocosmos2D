@@ -86,6 +86,10 @@ PrefabInstance:
       propertyPath: reduceDurabilityInstantlyAfterUse
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2517722696999079066, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
+      propertyPath: <AdditionalMassWhenHookedMultiplier>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6410031578183631632, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_AssetId
       value: aa0845d926eeb8e42a7935fd8f32fba0

@@ -36,6 +36,16 @@ namespace Mikrocosmos
 
         protected override void Awake() {
             base.Awake();
+            if (NetworkServer.active) {
+                GoodsPropertiesItem properties = configurationModel.FindGoodsPropertiesByPrefabName(gameObject.name);
+                if (properties != null) {
+                    CanBeUsed = properties.UseableProperties.CanBeUsed;
+                    UseMode = properties.UseableProperties.UseMode;
+                    Frequency = properties.UseableProperties.UseFrequency;
+                    MaxDurability = properties.UseableProperties.MaxDurability;
+                }
+             
+            }
             Durability = MaxDurability;
         }
 

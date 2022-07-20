@@ -440,7 +440,7 @@ namespace Mikrocosmos
         public void ServerSwitchSlot(int index) {
             
            
-            if (hookSystem.HookedItem==null || hookSystem.HookedItem.Model.CanBeAddedToInventory) {
+            if (hookSystem.HookedItem==null || hookSystem.HookedNetworkIdentity==null || hookSystem.HookedItem.Model.CanBeAddedToInventory) {
                 GameObject switchedGameObject = null;
                 if (index != currentIndex) {
                     if (index < 0)

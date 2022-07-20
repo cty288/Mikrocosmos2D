@@ -43,7 +43,7 @@ namespace Mikrocosmos
             pools = new Dictionary<string, NetworkedGameObjectPool>();
             resLoader = new ResLoader();
         }
-
+        
         public NetworkedGameObjectPool GetOrCreatePool(GameObject prefab)
         {
             return CreatePool(prefab, 10, 50);

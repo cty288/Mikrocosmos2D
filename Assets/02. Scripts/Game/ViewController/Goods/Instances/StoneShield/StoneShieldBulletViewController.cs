@@ -75,7 +75,7 @@ namespace Mikrocosmos
                     else {
                         if (entity is IDamagable damagable) {
                             //Debug.Log("Bullet Speed: " + rigidbody.velocity.magnitude);
-                            damagable.TakeRawDamage(Damage, shooterPlayer);
+                            damagable.TakeRawDamage(Damage + Damage * additionalDamageFactor, shooterPlayer);
                         }
                     }
                 }
