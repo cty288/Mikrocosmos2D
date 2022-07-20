@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 
 
 namespace Mikrocosmos
@@ -25,6 +27,8 @@ namespace Mikrocosmos
         void CmdGiveGameManager(NetworkIdentity requester, string playerName, bool isManager);
 
         void CmdRequestAddBuff(NetworkIdentity requester, string playerName, int buffID, int level, string commandName);
+
+        void CmdRequestDM(NetworkIdentity requester, string playerName, string message);
 
         void CmdSendChatMessage(NetworkIdentity requester, string message);
     }
@@ -101,10 +105,31 @@ namespace Mikrocosmos
           this.SendEvent<OnLogMessage>(new OnLogMessage() { message = message });
       }
 
-      private List<PlayerMatchInfo> FindAllPlayersWithName(string name) {
+
+      private List<PlayerMatchInfo> CheckNameFormat(string name, PlayerMatchInfo requesterInfo)
+      {
           List<PlayerMatchInfo> matchInfos = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo();
-          List<PlayerMatchInfo> allPlayersWithTheName = matchInfos.FindAll(x => x.Name == name);
-          return allPlayersWithTheName;
+            switch (name) {
+                case "@a":
+                    return matchInfos;
+                case "@t":
+                    return matchInfos.Where((info => info.Team == requesterInfo.Team)).ToList();
+                default:
+                    return null;
+          }
+      }
+      private List<PlayerMatchInfo> FindAllPlayersWithName(string name, NetworkIdentity requester) {
+          PlayerMatchInfo requesterInfo =
+              requester.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo;
+
+            List<PlayerMatchInfo> formatCheckResult = CheckNameFormat(name, requesterInfo);
+            if (formatCheckResult != null) {
+                return formatCheckResult;
+            }
+            
+            List<PlayerMatchInfo> matchInfos = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo(); 
+            List<PlayerMatchInfo> allPlayersWithTheName = matchInfos.FindAll(x => x.Name == name); 
+            return allPlayersWithTheName;
       }
 
         #region NetworkCommands
@@ -112,7 +137,7 @@ namespace Mikrocosmos
         public void CmdRequestAddMoneyCommand(NetworkIdentity player, int money, string targetName) {
             if (CheckPlayerIsManager(player, "addMoney")) {
 
-                List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(targetName);
+                List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(targetName, player);
                 if (allPlayersWithTheName.Count == 0) {
                     TargetGetLogMessage(player.connectionToClient, "<color=red>Failed to execute this command: no such player exists</color>");
                     return;
@@ -135,7 +160,7 @@ namespace Mikrocosmos
         public void CmdGiveGameManager(NetworkIdentity requester, string playerName, bool isManager) {
             if (CheckPlayerIsManager(requester, "gameManager")) {
 
-                List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(playerName);
+                List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(playerName, requester);
 
                 if (allPlayersWithTheName.Count == 0) {
                     TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no such player exists</color>");
@@ -165,7 +190,7 @@ namespace Mikrocosmos
         [Command(requiresAuthority = false)]
         public void CmdRequestAddBuff(NetworkIdentity requester, string playerName, int buffID, int level,
             string commandName) {
-            List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(playerName);
+            List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(playerName, requester);
             if (CheckPlayerIsManager(requester, commandName)) {
                 if (allPlayersWithTheName.Count == 0) {
                     TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no such player exists</color>");
@@ -187,7 +212,7 @@ namespace Mikrocosmos
                         PermanentBuffFactory.ReducePermanentBuffForPlayer((PermanentBuffType)buffID, buffSystem, -level);
                     }
                     
-                    RpcGetLogMessage("<color=green>Player " + playerName + $" added level {level} to buff {(PermanentBuffType)buffID}" + "</color>");
+                    RpcGetLogMessage("<color=green>Player " + info.Name + $" added level {level} to buff {(PermanentBuffType)buffID}" + "</color>");
                 }
             }
             else {
@@ -195,7 +220,19 @@ namespace Mikrocosmos
             }
         }
 
+        [Command(requiresAuthority = false)]
+        public void CmdRequestDM(NetworkIdentity requester, string playerName, string message) {
+            List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(playerName, requester);
+            if (allPlayersWithTheName.Count == 0) {
+                TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no such player exists</color>");
+                return;
+            }
 
+            foreach (PlayerMatchInfo info in allPlayersWithTheName) {
+                TargetGetLogMessage(info.Identity.connectionToClient, "<color=#FF00C4><b>DM from " + requester.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Name + ":</b> " + message + "</color>");
+                TargetGetLogMessage(requester.connectionToClient, $"<color=green>Successfully sent message to {info.Name}</color>");
+            }
+        }
 
         #endregion
 

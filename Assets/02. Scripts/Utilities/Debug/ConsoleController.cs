@@ -86,6 +86,7 @@ namespace Mikrocosmos
             allTexts.Add(outputText);
             StartCoroutine(RefreshOutputPanel(text));
             allText += message + "\n";
+            LayoutRebuilder.ForceRebuildLayoutImmediate(textLayout);
         }
 
         private IEnumerator RefreshMessage(GameObject message) {
@@ -106,6 +107,7 @@ namespace Mikrocosmos
         private void Update()
         {
             string input = inputField.text;     // 获取输入文本
+        
             // 按下回车输入指令
             if (Input.GetKeyDown(KeyCode.Return)) {
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) { //new line
@@ -143,13 +145,6 @@ namespace Mikrocosmos
                         inputField.text = "";
                         inputField.ForceLabelUpdate();
                     }
-
-
-
-
-
-
-
                 }
             }
             // 按下上跳转到上一条指令

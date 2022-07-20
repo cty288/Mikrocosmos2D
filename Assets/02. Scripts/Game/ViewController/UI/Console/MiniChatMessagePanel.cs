@@ -36,7 +36,17 @@ namespace Mikrocosmos
 
         private void Start() {
             this.RegisterEvent<OnClientReceiveMessage>(OnReceiveMessage).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnLogMessage>(OnLogMessage).UnRegisterWhenGameObjectDestroyed(gameObject);
             matchInfo = this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy();
+        }
+        
+        private void OnLogMessage(OnLogMessage e) {
+            fadeTimer = fadeTime;
+            faded = false;
+            messageText.DOFade(1, 0);
+            
+            messageText.text += e.message;
+            messageText.text += "\n";
         }
 
         private void OnReceiveMessage(OnClientReceiveMessage e) {

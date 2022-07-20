@@ -20,11 +20,13 @@ namespace Mikrocosmos
         public string ArgumentName;
         public object DefaultValue;
         public string Description;
-        public CommandArg(CommandType commandArgType, string argumentName, string description="", object defaultValue = null) {
+        public Vector2 ValueRange;
+        public CommandArg(CommandType commandArgType, string argumentName, string description = "", object defaultValue = null, Vector2 valueRange = new Vector2()) {
             CommandArgType = commandArgType;
             ArgumentName = argumentName;
             DefaultValue = defaultValue;
             Description = description;
+            ValueRange = valueRange;
         }
     }
     /// <summary>
@@ -47,9 +49,13 @@ namespace Mikrocosmos
             } },
             {"addBuff", new [] {
               
-                new CommandArg(CommandType.INT, "buffID{0:4}"),
-                new CommandArg(CommandType.INT, "buffLevel", "",1),
+                new CommandArg(CommandType.INT, "buffID", "", null, new Vector2(0,4)),
+                new CommandArg(CommandType.INT, "buffLevel", "",1, new Vector2(1,5)),
                 new CommandArg(CommandType.STRING, "playerName","", NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().matchInfo.Name),
+            }},
+            {"dm", new [] {
+                new CommandArg(CommandType.STRING, "message",""),
+                new CommandArg(CommandType.STRING, "playerName", ""),
             }}
         };
         
@@ -101,6 +107,9 @@ namespace Mikrocosmos
                         case "addBuff":
                             output = AddBuff(args[3], int.Parse(args[1]), int.Parse(args[2]), args[0]);
                             break;
+                        case "dm":
+                            output = DM(args[1], args[2]);
+                            break;
                         // 错误指令
                         default:
                             output = "Unable to find the command. Type /help to view the command list.";
@@ -114,6 +123,12 @@ namespace Mikrocosmos
             }
            
             return output;
+        }
+
+        private static string DM(string s, string s1) {
+            Mikrocosmos.Interface.GetSystem<ICommandSystem>()
+                .CmdRequestDM(NetworkClient.localPlayer, s1, s);
+            return "Notifying Server...";
         }
 
         private static string AddBuff(string s, int parse, int i, string commandName) {
@@ -142,18 +157,21 @@ namespace Mikrocosmos
 
 
 
-
+        //FF00C4
         private static string GetCommandComplete(string commandName) {
             CommandArg[] args = commands[commandName];
             string output = "";
             output += $"<color=yellow><b>- /{commandName}</b>";
-            foreach (CommandArg arg in args)
-            {
+            foreach (CommandArg arg in args) {
+                string valueRangeString = "";
+                if (arg.ValueRange != Vector2.zero) {
+                    valueRangeString = $" <color=#FF00C4>{{{arg.ValueRange.x}:{arg.ValueRange.y}}}</color>";
+                }
                 if (arg.DefaultValue != null) {
-                    output += $"  [<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName} = {arg.DefaultValue}</color>]";
+                    output += $"  [<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName}{valueRangeString} = {arg.DefaultValue}</color>]";
                 }
                 else {
-                    output += $"  <<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName}</color>>";
+                    output += $"  <<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName}{valueRangeString}</color>>";
                 }
                
             }
@@ -185,6 +203,12 @@ namespace Mikrocosmos
                         case CommandType.INT:
                             if (!int.TryParse(inputArgs[i], out int _)) {
                                 success = false;
+                            }
+                            
+                            if (commandArg.ValueRange != Vector2.zero) {
+                                if (int.Parse(inputArgs[i]) < commandArg.ValueRange.x || int.Parse(inputArgs[i]) > commandArg.ValueRange.y) {
+                                    success = false;
+                                }
                             }
                             break;
                         case CommandType.BOOL:
@@ -242,47 +266,8 @@ namespace Mikrocosmos
         }
 
 
-        private static bool ParseInt(string intStr, out int output) {
-            
-            if (!int.TryParse(intStr, out output)) { //compare int
-                if (intStr.StartsWith("RandomInt(") && intStr.EndsWith(")"))
-                {
-                    string[] range = intStr.Substring(10, intStr.Length - 11).Split(',');
-
-                    if (range.Length == 2) {
-                        bool minOK = int.TryParse(range[0], out int min);
-                        bool maxOK = int.TryParse(range[1], out int max);
-                        if (minOK && maxOK) {
-                            output = Random.Range(min, max + 1);
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-
-                if (intStr.StartsWith("RandomFloat(") && intStr.EndsWith(")"))
-                {
-                    string[] range = intStr.Substring(12, intStr.Length - 13).Split(',');
-                    if (range.Length == 2)
-                    {
-                        bool minOK = float.TryParse(range[0], out float min);
-                        bool maxOK = float.TryParse(range[1], out float max);
-                        if (minOK && maxOK)
-                        {
-                            output = Random.Range((int)min, (int)max);
-                            return true;
-                        }
-                    }
-
-                    return false;
-                }
-
-                return false;
-
-            }
-
-            return true;
-        }
+        
+        
 
         /// <summary>
         /// 获取控制台上一条历史记录。
