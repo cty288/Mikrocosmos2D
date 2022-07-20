@@ -181,10 +181,10 @@ namespace Mikrocosmos
                     float angle = Mathf.Atan2(positionOffset.y, positionOffset.x) * Mathf.Rad2Deg;
                     
                     Debug.Log($"Angle: {angle}");
-                    if ((angle > 90 && angle <= 180))
+                    if ((angle >= 90 && angle <= 180)) //sec
                     {
                         angle -= 180;
-                    }else if ((angle < -90 && angle >= -180)) {
+                    }else if ((angle <= -90 && angle >= -180)) { //third
                         angle += 180;
                     }
 

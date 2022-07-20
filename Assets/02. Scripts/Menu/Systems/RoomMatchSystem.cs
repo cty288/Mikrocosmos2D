@@ -6,6 +6,7 @@ using MikroFramework.Event;
 using MikroFramework.Singletons;
 using MikroFramework.TimeSystem;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 using UnityEngine.Networking.Types;
 using UnityEngine.SceneManagement;
@@ -27,6 +28,7 @@ namespace Mikrocosmos
         public bool Prepared;
         public NetworkIdentity Identity;
         public int TeamIndex;
+        public Language Language;
         public Avatar Avatar;
 
         public bool Equals(PlayerMatchInfo other) {
@@ -79,7 +81,7 @@ namespace Mikrocosmos
         GameMode GameMode { get; }
         void ServerChangeGameMode(GameMode newGameMode);
 
-        void ServerRoomPlayerJoinMatch(string name, Avatar avatar, NetworkConnection conn);
+        void ServerRoomPlayerJoinMatch(string name, Avatar avatar, Language language, NetworkConnection conn);
       
         void ServerRoomPlayerLeaveMatch(int id);
 
@@ -175,12 +177,13 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        public void ServerRoomPlayerJoinMatch(string name, Avatar avatar, NetworkConnection conn) {
+        public void ServerRoomPlayerJoinMatch(string name, Avatar avatar, Language language, NetworkConnection conn) {
             playerIdentities.Add(maxId, conn.identity);
 
             PlayerMatchInfo matchInfo = new PlayerMatchInfo() {
                 ID = maxId, Name = name, Team = GetNewTeamNum(), Prepared = false, Identity = conn.identity,
-                Avatar = avatar
+                Avatar = avatar,
+                Language = language
             };
             
             maxId++;

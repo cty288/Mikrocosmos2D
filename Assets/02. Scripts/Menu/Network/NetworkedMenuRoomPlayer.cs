@@ -19,7 +19,7 @@ namespace Mikrocosmos
         [SerializeField]
         private PlayerMatchInfo matchInfo = null;
 
-        private Language clientLanguage;
+        
         
         public PlayerMatchInfo MatchInfo {
             get => matchInfo;
@@ -41,7 +41,6 @@ namespace Mikrocosmos
                 this.SendEvent<OnRoomPlayerJoinGame>(new OnRoomPlayerJoinGame() {
                     Connection = obj.connection,
                     MatchInfo = matchInfo,
-                    ClientLanguage = clientLanguage
                 });
             }
         }
@@ -52,15 +51,15 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        private void ServerJoinMatch(string name, Avatar avatar) {
+        private void ServerJoinMatch(string name, Language language, Avatar avatar) {
             
-            this.GetSystem<IRoomMatchSystem>().ServerRoomPlayerJoinMatch(name, avatar, connectionToClient);
+            this.GetSystem<IRoomMatchSystem>().ServerRoomPlayerJoinMatch(name, avatar, language,  connectionToClient);
         }
 
         [Command] 
-        private void CmdJoinMatch(string name, Avatar avatar) {
+        private void CmdJoinMatch(string name, Language language, Avatar avatar) {
            Debug.Log("CMD Join Match");
-           ServerJoinMatch(name, avatar);
+           ServerJoinMatch(name, language, avatar);
         }
 
         [Command]
@@ -93,10 +92,7 @@ namespace Mikrocosmos
             }
         }
 
-        [Command]
-        private void CmdSetLanguage(Language language) {
-            this.clientLanguage = language;
-        }
+        
 
       
         #endregion

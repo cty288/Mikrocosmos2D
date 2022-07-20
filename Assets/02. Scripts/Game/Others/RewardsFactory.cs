@@ -77,7 +77,7 @@ namespace Mikrocosmos
             
                 foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
 
-                    Language languege = player.ClientLanguage;
+                    Language languege = player.matchInfo.Language;
                     allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_AFFINITY_INCREASMENT", languege,
                         Localization.Get($"GAME_AFFINITY_INCREASMENT_{Mathf.Clamp((Mathf.FloorToInt(affinityIncreasment / 0.08f))+1,1,3)}", languege)));
                 }
@@ -93,7 +93,7 @@ namespace Mikrocosmos
                         PermanentBuffType buff = allBuffs[randomBuff];
                         allBuffs.RemoveAt(randomBuff);
                         foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
-                            Language languege = player.ClientLanguage;
+                            Language languege = player.matchInfo.Language;
                             allPlayersWithRewardNames[player].Add(GetBuffNameLocalized(buff, languege));
                         }
                         foreach (IBuffSystem buffSystem in buffSystems) {
@@ -118,8 +118,8 @@ namespace Mikrocosmos
                     player.ControlledSpaceship.GetComponent<IPlayerTradingSystem>().ReceiveMoney(totalMoney);
                 }
                 foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
-                    Language languege = player.ClientLanguage;
-                    allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_MONEY", totalMoney, languege));
+                    Language languege = player.matchInfo.Language;
+                    allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_MONEY", languege, totalMoney));
                 }
             }
 
@@ -129,8 +129,8 @@ namespace Mikrocosmos
                 }
                 foreach (NetworkMainGamePlayer player in allPlayersWithRewardNames.Keys) {
                     
-                    Language languege = player.ClientLanguage;
-                    allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_SLOT", totalSlots, languege));
+                    Language languege = player.matchInfo.Language;
+                    allPlayersWithRewardNames[player].Add(Localization.GetFormat("GAME_MISSION_REWARD_SLOT",languege, totalSlots));
                 }
             }
             

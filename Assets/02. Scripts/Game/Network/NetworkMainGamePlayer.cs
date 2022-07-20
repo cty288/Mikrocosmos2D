@@ -28,10 +28,7 @@ namespace Mikrocosmos
         public NetworkIdentity ControlledSpaceship;
 
         [SerializeField] public List<GameObject> spaceshipPrefabs;
-        [SerializeField]
-        private Language clientLanguage;
-
-        public Language ClientLanguage => clientLanguage;
+       
 
         public override void OnStartServer() {
             base.OnStartServer();
@@ -47,7 +44,6 @@ namespace Mikrocosmos
         private void OnRoomPlayerJoinGame(OnRoomPlayerJoinGame e) {
             if (e.Connection == connectionToClient) {
                 matchInfo = e.MatchInfo;
-                clientLanguage = e.ClientLanguage;
                 SpawnSpaceshipForThisPlayer(matchInfo, e.Connection);
               
             }

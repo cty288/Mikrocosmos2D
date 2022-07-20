@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Serializer;
 using MikroFramework.Singletons;
-using Newtonsoft.Json;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
 namespace MikroFramework.Serializer

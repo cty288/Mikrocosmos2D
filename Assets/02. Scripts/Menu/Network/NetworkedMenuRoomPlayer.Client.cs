@@ -20,10 +20,10 @@ namespace Mikrocosmos
             this.RegisterEvent<OnClientRequestPrepare>(OnClientRequestPrepare)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
-            CmdSetLanguage(Localization.Instance.SelectedLanguage);
+        
             
             if (isServer) {
-                CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value, this.GetModel<IClientAvatarModel>().Avatar);
+                CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value, Localization.Instance.SelectedLanguage, this.GetModel<IClientAvatarModel>().Avatar);
             }
             else {
                 StartCoroutine(DelayJoinMatch());
@@ -34,7 +34,7 @@ namespace Mikrocosmos
 
         IEnumerator DelayJoinMatch() {
             yield return new WaitForSeconds(0.3f);
-            CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value, this.GetModel<IClientAvatarModel>().Avatar);
+            CmdJoinMatch(this.GetModel<ILocalPlayerInfoModel>().NameInfo.Value, Localization.Instance.SelectedLanguage, this.GetModel<IClientAvatarModel>().Avatar);
         }
         
 

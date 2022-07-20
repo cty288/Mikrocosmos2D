@@ -33,6 +33,7 @@ MonoBehaviour:
     - Mirror.Examples
     - ES3
     - Mirror
+    - GSTU
     - MikroFramework
     - UniRx
     - com.rlabrecque.steamworks.net
@@ -51,8 +52,8 @@ MonoBehaviour:
     - where-allocations
     - Mirror.Authenticators
     - Elringus.SpriteGlow.Runtime
-    - Steamworks
     - Pixeye
+    - Steamworks
     - PsdPlugin
     - AstarPathfindingProjectEditor
     - PPv2URPConverters

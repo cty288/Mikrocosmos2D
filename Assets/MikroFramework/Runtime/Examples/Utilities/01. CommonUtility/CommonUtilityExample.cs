@@ -14,6 +14,8 @@ namespace MikroFramework.Examples {
             CommonUtility.CopyText("Test copy test");
         }
 
+      
+
     }
 }
 #endif

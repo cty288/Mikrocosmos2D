@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoogleSheetsToUnity;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
@@ -75,7 +76,7 @@ namespace Mikrocosmos
             buffSystem.ServerOnBuffStop += OnServerBuffStop;
 
           //  buffSystem.ServerRegisterCallback<PermanentSpeedBuff, BuffClientMessage>(OnServerPermanentSpeedBuff);
-
+          
             buffSystem.ServerRegisterCallback<VisionExpansionBuff, OnVisionExpansion>(TargetOnVisionExpand);
             buffSystem.ServerRegisterCallback<PermanentVisionExpansionBuff, OnPermanentVisionExpansion>(TargetOnVisionPermenantExpand);
 
@@ -85,7 +86,7 @@ namespace Mikrocosmos
             buffSystem.ServerRegisterCallback<KrowEyeSpeedDownDeBuff, BuffClientMessage>(
                 OnServerKrowEyeSpeedDownDeBuffUpdate);
 
-            clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ClientLanguage;
+            clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Language;
             this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 

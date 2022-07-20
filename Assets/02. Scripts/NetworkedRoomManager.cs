@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using GoogleSheetsToUnity;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
@@ -42,6 +43,8 @@ namespace Mikrocosmos
         protected Callback<LobbyEnter_t> OnSteamLobbyEnteredEvent;
 
         private CSteamID joinedSteamGame;
+
+        
         public override void Awake() {
             base.Awake();
             if (Application.isEditor)
@@ -66,7 +69,10 @@ namespace Mikrocosmos
             }
 
             StartCoroutine(AddAllGoodsToRegisteredPool());
+           
         }
+
+        
 
         IEnumerator AddAllGoodsToRegisteredPool() {
             while (!ResData.Exists) {

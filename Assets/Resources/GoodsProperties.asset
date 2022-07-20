@@ -17,7 +17,7 @@ MonoBehaviour:
     GoodsPrefab: {fileID: 5674123710821168156, guid: aa0845d926eeb8e42a7935fd8f32fba0, type: 3}
     TradingProperties:
       BasicBuyPrice: 50
-      BasicSellPrice: 35
+      BasicSellPrice: 36
       Rarity: 1
     UseableProperties:
       CanBeUsed: 1
@@ -220,8 +220,8 @@ MonoBehaviour:
   - Name: Thruster
     GoodsPrefab: {fileID: 4045048935829913654, guid: a352970fedecd48438f21d98b9aa0a61, type: 3}
     TradingProperties:
-      BasicBuyPrice: 50
-      BasicSellPrice: 40
+      BasicBuyPrice: 40
+      BasicSellPrice: 30
       Rarity: 1
     UseableProperties:
       CanBeUsed: 1
