@@ -15,6 +15,7 @@ namespace Mikrocosmos
             // NetworkRoomManager.singleton.OnStartServer();
             ((NetworkedRoomManager) NetworkRoomManager.singleton).ServerChangeGameModeScene(gameMode);
             
+            
           NetworkRoomManager.singleton.ServerChangeScene(((NetworkRoomManager)NetworkRoomManager.singleton)
                 .GameplayScene);
             this.SendEvent<OnServerStartGame>();

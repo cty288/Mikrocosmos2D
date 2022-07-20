@@ -6,11 +6,16 @@ using GoogleSheetsToUnity;
 using MikroFramework.Architecture;
 using MikroFramework.DataStructures;
 using MikroFramework.ResKit;
+using Polyglot;
 using UnityEngine;
 #if UNITY_EDITOR
 #endif
 namespace Mikrocosmos
 {
+
+    public struct OnGoodsPropertiesUpdated {
+        public List<GoodsPropertiesItem> allItemProperties;
+    }
     [Serializable]
     public struct ItemTradeProperties {
         public int BasicBuyPrice;
@@ -68,7 +73,6 @@ namespace Mikrocosmos
 
     public interface IGoodsConfigurationModel : IModel {
         GoodsPropertiesItem FindGoodsPropertiesByPrefabName(string name);
-        List<GoodsPropertiesItem> GetAllGoodProperties();
     }
 
 
@@ -127,12 +131,54 @@ namespace Mikrocosmos
             SpreadsheetManager.Write(
                 new GSTU_Search("1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "ItemsConfig", "A2"),
                 new ValueRange(combined), null);*/
-            SpreadsheetManager.Read(new GSTU_Search("1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "ItemsConfig"),
-                HotUpdateItemConfig);
-        
-            
+            //SpreadsheetManager.Read(new GSTU_Search("1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "ItemsConfig"),
+                //HotUpdateItemConfig);
 
+            CoroutineRunner.Singleton.RunCoroutine(GoogleDownload.DownloadSheet(
+                "1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "1586537549", OnDownloadSheet,
+                GoogleDriveDownloadFormat.CSV));
         }
+
+        private void OnDownloadSheet(string text) {
+            if (text != null) {
+                List<List<string>> rows;
+                text = text.Replace("\r\n", "\n");
+
+                rows = CsvReader.Parse(text);
+
+                Dictionary<string, List<string>> elements = new Dictionary<string, List<string>>();
+                foreach (List<string> list in rows)
+                {
+                    elements.Add(list[0], list);
+                }
+
+                foreach (GoodsPropertiesItem goodsData in goodsProperties.GoodsDatas)
+                {
+                    var cells = elements[goodsData.Name];
+                    goodsData.TradingProperties.BasicBuyPrice = int.Parse(cells[1]);
+                    goodsData.TradingProperties.BasicSellPrice = int.Parse(cells[2]);
+                    goodsData.TradingProperties.Rarity = (GoodsRarity)Enum.Parse(typeof(GoodsRarity), cells[3]);
+                    goodsData.UseableProperties.CanBeUsed = bool.Parse(cells[4]);
+                    goodsData.UseableProperties.UseMode = (ItemUseMode)Enum.Parse(typeof(ItemUseMode), cells[5]);
+                    goodsData.UseableProperties.UseFrequency = float.Parse(cells[6]);
+                    goodsData.UseableProperties.MaxDurability = int.Parse(cells[7]);
+                    goodsData.Damage = int.Parse(cells[8]);
+                    goodsData.SelfMass = float.Parse(cells[9]);
+                    goodsData.AdditionalMassWhenHooked = float.Parse(cells[10]);
+                    goodsData.DroppableFromBackpack = bool.Parse(cells[11]);
+                    goodsData.CanAbsorbToBackpack = bool.Parse(cells[12]);
+                    goodsData.CanBeAddedToInventory = bool.Parse(cells[13]);
+                }
+
+             
+            }
+            goodsPropertiesTable.Add(goodsProperties.GoodsDatas);
+            this.SendEvent<OnGoodsPropertiesUpdated>(new OnGoodsPropertiesUpdated() {
+                allItemProperties = goodsPropertiesTable.Items
+            });
+        }
+
+       
 
         private void HotUpdateItemConfig(GstuSpreadSheet e) {
 
@@ -168,8 +214,6 @@ namespace Mikrocosmos
             return null;
         }
 
-        public List<GoodsPropertiesItem> GetAllGoodProperties() {
-            return goodsPropertiesTable.Items;
-        }
+     
     }
 }

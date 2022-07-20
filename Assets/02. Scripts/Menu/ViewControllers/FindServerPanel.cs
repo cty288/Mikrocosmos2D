@@ -107,8 +107,9 @@ namespace Mikrocosmos {
 
         private void GetSteamLobbies() {
             if (SteamManager.Initialized) {
-                
+                SteamMatchmaking.AddRequestLobbyListDistanceFilter(ELobbyDistanceFilter.k_ELobbyDistanceFilterWorldwide);
                 SteamMatchmaking.RequestLobbyList();
+              
             }
         }
         private void OnSteamLobbyGet(LobbyMatchList_t result)

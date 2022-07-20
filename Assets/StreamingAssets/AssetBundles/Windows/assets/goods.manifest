@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1917572210
+CRC: 2505135669
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d59618f611106e47db553241ecb19eec
+    Hash: e41543e180b88da21ba3d465ab2ad035
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 0238b6290ea985fa2ca3bc5a2da75a96
+    Hash: d6f620490eafb90240e78ab4d62c44b7
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -23,6 +23,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 58
   Script: {instanceID: 0}
+- Class: 60
+  Script: {instanceID: 0}
 - Class: 61
   Script: {instanceID: 0}
 - Class: 70
@@ -35,6 +37,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 96
   Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7107a95bf135c6c4ba3f90e2a431efee, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 7272634b3e5ad84448fb935731751944, type: 3}
 - Class: 114
@@ -67,6 +71,10 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 534aeb91442d26a49bbc4384f472df5d, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 9d1de09509287094b9b15a251c817147, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 68f6cc8c67d4fb54ab397fb9754ab8b3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f20e9dd21104eaa48813b32046ca1c91, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 7c1ec26cc22c0924ea51c8c6137844bb, type: 3}
 - Class: 114
@@ -113,8 +121,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: cde434166412da54cb9f800f23f8579d, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: f20e9dd21104eaa48813b32046ca1c91, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -165,7 +171,7 @@ Assets:
 - Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite_2.png
 - Assets/04. Sprites/Items/Goods/RawMaterials/MetalBall/MetalBallSprite.png
 - Assets/03. Prefabs/Game/Items/Goods/Temporary/Banana/DottedOutlineBanana.mat
-- Assets/02. Scripts/Game/Models/GoodsProperties.asset
+- Assets/Resources/GoodsProperties.asset
 - Assets/04. Sprites/Items/Goods/RawMaterials/Kindle/KindleSprite.png
 - Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite_5.png
 - Assets/03. Prefabs/Game/Items/Goods/LeafKnife/LeafKnife.prefab

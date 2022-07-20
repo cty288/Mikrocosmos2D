@@ -39,7 +39,7 @@ namespace Mikrocosmos
                     }
                 }
             }
-
+         
             victim.TakeRawDamage(damage, Model.HookedByIdentity);
         }
 

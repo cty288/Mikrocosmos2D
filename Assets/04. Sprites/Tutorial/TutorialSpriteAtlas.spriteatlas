@@ -46,28 +46,47 @@ SpriteAtlas:
     packables:
     - {fileID: 102900000, guid: a1b7629a49d954a42ab2352079e302df, type: 3}
     - {fileID: 102900000, guid: 3de4382911b18744792ea79766a48f3c, type: 3}
+    - {fileID: 102900000, guid: 93fd839185f5bc5489b9d1217abe3cf0, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 903c0c0149bf6bc4c80bd63c1736ed87, type: 3}
   - {fileID: 21300000, guid: fa24bed1aba65b943b3da7f7872e6925, type: 3}
+  - {fileID: 21300000, guid: f68623536c42fa04fa4a5581c30752d5, type: 3}
   - {fileID: 21300000, guid: 79ea9334f5edbb84aaed695ef10693f9, type: 3}
   - {fileID: 21300000, guid: 7c2af55414ecf4e489f73207959874cb, type: 3}
+  - {fileID: 21300000, guid: a8df99b4fa5c8de499b868a4a2eadc88, type: 3}
+  - {fileID: 21300000, guid: 8547401568eb4f646a48b747d6de88da, type: 3}
   - {fileID: 21300000, guid: 513cff854b3de8542aee1e44a8c58100, type: 3}
   - {fileID: 21300000, guid: 1d2f6295713f95146a0d65186267ea31, type: 3}
+  - {fileID: 21300000, guid: c27d8ea57db7c544cb50d42e453ac583, type: 3}
+  - {fileID: 21300000, guid: f13217b5a0a18114da835ae862aba6df, type: 3}
+  - {fileID: 21300000, guid: 79d1d726e3a93ad44b7f50c2ad59224c, type: 3}
   - {fileID: 21300000, guid: 4c08887679257ab44a4808d6aa7f38d4, type: 3}
   - {fileID: 21300000, guid: 9c59f978718c5b94c8aeec04b2eca7fd, type: 3}
+  - {fileID: 21300000, guid: ae867ec830f1a384b95f93da6a115c79, type: 3}
   - {fileID: 21300000, guid: 4302d71cb040e204f942e7af7d2787d3, type: 3}
+  - {fileID: 21300000, guid: 3015e75ca6a20c440870e07410cfe8b8, type: 3}
   m_PackedSpriteNamesToIndex:
+  - EarthbagBullet_1
   - EarthBag_2
+  - EarthbagAttack_0
   - TutorialTables_1
   - TutorialTables_3
+  - EarthbagBullet_2
+  - EarthbagBullet_0
   - EarthBag_3
   - TutorialTables_2
+  - EarthbagAttack_5
+  - EarthbagAttack_2
+  - EarthbagAttack_1
   - EarthBag_0
   - EarthBag_4
+  - EarthbagAttack_3
   - EarthBag_1
+  - EarthbagAttack_4
   m_RenderDataMap: {}
   m_Tag: TutorialSpriteAtlas
   m_IsVariant: 0

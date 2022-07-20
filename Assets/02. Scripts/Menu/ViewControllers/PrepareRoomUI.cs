@@ -90,6 +90,7 @@ namespace Mikrocosmos {
                 //Transport.activeTransport.ClientDisconnect();
                 
                 this.GetSystem<IRoomMatchSystem>().CmdQuitRoom(NetworkClient.localPlayer);
+                NetworkManager.singleton.StopClient();
             }
             else
             {

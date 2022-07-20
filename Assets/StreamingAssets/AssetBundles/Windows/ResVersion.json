@@ -45,8 +45,8 @@
     },
     {
       "AssetName": "buff_icons",
-      "MD5": "ff857de571421041da367c5bf741523a",
-      "FileSize": 265.688477,
+      "MD5": "09da6b610db12072f2c1e832501a6e9a",
+      "FileSize": 266.018555,
       "assetDatas": [
         {
           "Name": "AimingSpeedDownDeBuffIcon",
@@ -209,8 +209,8 @@
     },
     {
       "AssetName": "info_elements",
-      "MD5": "c14374762bfd0c6dac065bc8b907a37a",
-      "FileSize": 9663.813,
+      "MD5": "d4c18d70959acd9b8172d0af2203202f",
+      "FileSize": 9673.467,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -486,14 +486,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "a5277869d60ccfee8652563860904255",
+      "MD5": "3f2e4e170f7c74372f88c8b5d46ccc83",
       "FileSize": 1.86621094,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "cd441425e503e40fd9dc298404fbc5e1",
-      "FileSize": 7022.008,
+      "MD5": "012dac02c86c24e10bc210634b128391",
+      "FileSize": 7069.741,
       "assetDatas": [
         {
           "Name": "FirePlant",
@@ -714,6 +714,11 @@
           "Name": "SunflowerSonSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "GoodsProperties",
+          "OwnerBundleName": "assets/goods",
+          "AssetType": "Mikrocosmos.GoodsProperties"
         },
         {
           "Name": "TolietSprite",

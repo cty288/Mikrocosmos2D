@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using GoogleSheetsToUnity;
 using MikroFramework.Architecture;
+using MikroFramework.Event;
 using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
 using Mirror;
@@ -47,6 +48,8 @@ namespace Mikrocosmos
         
         public override void Awake() {
             base.Awake();
+            this.RegisterEvent<OnGoodsPropertiesUpdated>(OnGoodsPropertiesUpdated)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
             if (Application.isEditor)
                 Application.runInBackground = true;
             networkAddress = NetworkUtility.GetLocalIPAddress();
@@ -56,7 +59,7 @@ namespace Mikrocosmos
 
             OnSteamLobbyCreatedEvent = Callback<LobbyCreated_t>.Create(OnSteamLobbyCreated);
             OnSteamLobbyEnteredEvent = Callback<LobbyEnter_t>.Create(OnSteamLobbyEntered);
-
+         
             if (SteamManager.Initialized) {
                 GCHandle gchandle = GCHandle.Alloc(128 * 128, GCHandleType.Pinned);
                 SteamNetworkingUtils.SetConfigValue(
@@ -68,23 +71,17 @@ namespace Mikrocosmos
                 gchandle.Free();                
             }
 
-            StartCoroutine(AddAllGoodsToRegisteredPool());
            
         }
 
-        
-
-        IEnumerator AddAllGoodsToRegisteredPool() {
-            while (!ResData.Exists) {
-                yield return null;
-            }
-
-            List<GoodsPropertiesItem> allGoodsProperties =
-                this.GetModel<IGoodsConfigurationModel>().GetAllGoodProperties();
+        private void OnGoodsPropertiesUpdated(OnGoodsPropertiesUpdated e) {
+            List<GoodsPropertiesItem> allGoodsProperties = e.allItemProperties;
             foreach (GoodsPropertiesItem goodsProperties in allGoodsProperties) {
                 spawnPrefabs.Add(goodsProperties.GoodsPrefab);
             }
+            
         }            
+
 
         public void ServerChangeGameModeScene(GameMode gamemode) {
             GameplayScene = GameModeScenes[(int)gamemode].ToString();
@@ -170,6 +167,7 @@ namespace Mikrocosmos
                 SteamMatchmaking.LeaveLobby(joinedSteamGame);
                 joinedSteamGame = new CSteamID();
                 DebugCanvas.IsOpening = false;
+                
             }
         }
 
