@@ -18,8 +18,8 @@ EditorBuildSettings:
     path: Assets/01. Scenes/Tutorial.unity
     guid: 2ff8d363d2f448446ad158d9ce39088e
   - enabled: 0
-    path: Assets/01. Scenes/New Scene.unity
-    guid: 483658e722f812b4a9f930c9ffdb46e0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/Mirror/Examples/Room/Scenes/OfflineScene.unity
     guid: 9e6f14982412b2545a0911ebaaa46a23

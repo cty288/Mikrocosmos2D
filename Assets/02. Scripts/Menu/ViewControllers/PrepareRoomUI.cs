@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using MikroFramework;
@@ -30,6 +31,8 @@ namespace Mikrocosmos {
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnClientGameModeChanged>(OnClientGameModeChanged)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnClientReadyToEnterGameplayScene>(OnReadyToEnterGameplayScene)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
 
             BtnChangeSide.onClick.AddListener(OnSwitchSideClicked);
             BtnTestMode.onClick.AddListener(OnTestModeButtonClicked);
@@ -38,6 +41,11 @@ namespace Mikrocosmos {
             BtnRoomLeaderStartRoom.gameObject.SetActive(false);
             DropdownGameMode.interactable = NetworkServer.active;
             DropdownGameMode.onValueChanged.AddListener(OnDropDownValueChanged);
+        }
+
+        private void OnReadyToEnterGameplayScene(OnClientReadyToEnterGameplayScene e) {
+            ObjGameReadyToStartBG.SetActive(true);
+            ObjGameReadyToStartBG.GetComponent<Image>().DOFade(1, 2f);
         }
 
         private void OnClientGameModeChanged(OnClientGameModeChanged e) {
@@ -99,13 +107,14 @@ namespace Mikrocosmos {
         }
         private void OnTestModeButtonClicked() {
             if (NetworkServer.active) {
-                this.SendCommand<ServerStartGameCommand>(new ServerStartGameCommand(this.GetSystem<IRoomMatchSystem>().GameMode));
+                this.GetSystem<IRoomMatchSystem>().ServerReadyToEnterGameplayScene();
             }
         }
 
         private void OnHostStartGameButtonClicked() {
             if (NetworkServer.active) {
-                this.SendCommand<ServerStartGameCommand>(new ServerStartGameCommand(this.GetSystem<IRoomMatchSystem>().GameMode));
+                this.GetSystem<IRoomMatchSystem>().ServerReadyToEnterGameplayScene();
+                
             }
         }
 

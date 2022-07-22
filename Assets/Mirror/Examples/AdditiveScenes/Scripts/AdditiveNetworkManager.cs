@@ -44,8 +44,7 @@ namespace Mirror.Examples.AdditiveScenes
         {
             Debug.Log("Loading Scenes");
 
-            foreach (string sceneName in subScenes)
-            {
+            foreach (string sceneName in subScenes) {
                 yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
                 // Debug.Log($"Loaded {sceneName}");
             }

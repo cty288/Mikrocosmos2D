@@ -211,7 +211,7 @@ namespace Mikrocosmos
                     }
                 }
 
-                if (isControlling && Model.HookState == HookState.Freed) {
+                if (gameProgressSystem.GameState== GameState.InGame && isControlling && Model.HookState == HookState.Freed) {
                     selfMotionAnimator.SetBool("Controlling", true);
                     foreach (ParticleSystem particle in particles) {
                         particle.loop = true;
@@ -220,11 +220,8 @@ namespace Mikrocosmos
                 }
                 else {
                     selfMotionAnimator.SetBool("Controlling", false);
-                    foreach (ParticleSystem particle in particles)
-                    {
+                    foreach (ParticleSystem particle in particles) {
                          particle.loop = false;
-                        //particle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-                        //  particle.SetActive(false);
                     }
                 }
             }

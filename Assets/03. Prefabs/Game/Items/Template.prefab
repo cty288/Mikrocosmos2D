@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 6410031578183631632}
   - component: {fileID: 6410031578183631639}
   - component: {fileID: 1133179267551477265}
-  - component: {fileID: 1145151507007897450}
   - component: {fileID: -8888974966106577546}
   m_Layer: 16
   m_Name: Template
@@ -116,15 +115,15 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
+  <DestroyedBySun>k__BackingField: 1
+  <AbsorbedToBackpack>k__BackingField: 1
+  <IsSell>k__BackingField: 1
   <SelfMass>k__BackingField: 0.1
   <Name>k__BackingField: Banana
   <BasicSellPrice>k__BackingField: 10
   <BasicBuyPrice>k__BackingField: 5
   <GoodRarity>k__BackingField: 0
   <DroppableFromBackpack>k__BackingField: 1
-  <DestroyedBySun>k__BackingField: 1
-  <AbsorbedToBackpack>k__BackingField: 1
-  <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0.01
   <AffectedByGravity>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1
@@ -260,28 +259,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1145151507007897450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2cbc52526ea384ba280d13cd1a57b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.01
-  target: {fileID: 1133179267551477265}
-  clientAuthority: 0
-  syncVelocity: 1
-  clearVelocity: 0
-  velocitySensitivity: 0.1
-  syncAngularVelocity: 1
-  clearAngularVelocity: 0
-  angularVelocitySensitivity: 0.1
 --- !u!114 &-8888974966106577546
 MonoBehaviour:
   m_ObjectHideFlags: 0

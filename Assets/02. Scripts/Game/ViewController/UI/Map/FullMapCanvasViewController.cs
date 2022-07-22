@@ -22,18 +22,20 @@ namespace Mikrocosmos
         }
 
         private void Update() {
-            if (Input.GetKeyDown(KeyCode.Tab)) {
-                fullMapPanel.SetActive(true);
-                this.SendEvent<OnFullMapCanvasOpen>();
-                this.GetSystem<IAudioSystem>().PlaySound("OpenBigMap", SoundType.Sound2D);
-            }
+            if (this.GetSystem<IGameProgressSystem>().GameState == GameState.InGame) {
+                if (Input.GetKeyDown(KeyCode.Tab)) {
+                    fullMapPanel.SetActive(true);
+                    this.SendEvent<OnFullMapCanvasOpen>();
+                    this.GetSystem<IAudioSystem>().PlaySound("OpenBigMap", SoundType.Sound2D);
+                }
 
-            if (Input.GetKeyUp(KeyCode.Tab))
-            {
-                fullMapPanel.SetActive(false);
-                this.SendEvent<OnFullMapCanvasClose>();
-                this.GetSystem<IAudioSystem>().PlaySound("OpenBigMap", SoundType.Sound2D);
+                if (Input.GetKeyUp(KeyCode.Tab)) {
+                    fullMapPanel.SetActive(false);
+                    this.SendEvent<OnFullMapCanvasClose>();
+                    this.GetSystem<IAudioSystem>().PlaySound("OpenBigMap", SoundType.Sound2D);
+                }
             }
+          
             
         }
     }

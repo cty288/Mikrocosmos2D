@@ -5,11 +5,13 @@ using MikroFramework.TimeSystem;
 using Mirror;
 using UnityEngine;
 
-namespace Mikrocosmos
-{
+namespace Mikrocosmos {
     public struct OnClientGameModeChanged {
         public GameMode NewGameMode;
     }
+
+    public struct OnClientReadyToEnterGameplayScene{}
+
     public partial interface IRoomMatchSystem : ISystem {
         void ClientKickPlayer(int kickedId);
     }
@@ -51,7 +53,11 @@ namespace Mikrocosmos
            
         }
 
-
+        [ClientRpc]
+        private void RpcReadyToEnterGameScene() {
+            //4 secs
+            this.SendEvent<OnClientReadyToEnterGameplayScene>(new OnClientReadyToEnterGameplayScene());
+        }
        
     }
 }

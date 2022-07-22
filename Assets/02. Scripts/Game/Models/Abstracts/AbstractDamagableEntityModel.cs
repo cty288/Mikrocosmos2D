@@ -45,7 +45,7 @@ namespace Mikrocosmos
         [SerializeField]
         private float HealthRecoverTimer = 0f;
         private bool healthRecoverStart = false;
-
+        private IGameProgressSystem gameProgressSystem;
         public override void OnStartServer() {
             base.OnStartServer();
             CurrentHealth = MaxHealth;
@@ -54,6 +54,7 @@ namespace Mikrocosmos
         }
 
         private void StartRecoverHealthCoroutine() {
+            gameProgressSystem = this.GetSystem<IGameProgressSystem>();
             if (gameObject.activeInHierarchy) {
                 StopAllCoroutines();
                 StartCoroutine(RecoverHealth());
@@ -63,7 +64,7 @@ namespace Mikrocosmos
 
         private IEnumerator RecoverHealth() {
             while (true) {
-                if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) { 
+                if (gameProgressSystem!=null && this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) { 
                     break;
                 }
                 yield return new WaitForSeconds(1f);

@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GameUIAvatar
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: b481406948511ad47a5432848a4b11d5, type: 3}
+    - {fileID: 102900000, guid: 3ebaea8cb7a22644a863ae80f7ff4095, type: 3}
+    - {fileID: 102900000, guid: 8120eb6e42303a349b087b1e0801c024, type: 3}
+    - {fileID: 102900000, guid: ec10ac6c36e45904bb930d43b2924d29, type: 3}
+    - {fileID: 102900000, guid: 4a8656a6dfdc20a44aa681868d59caa8, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 898304002d4435f478a46b850500a572, type: 3}
+  - {fileID: 21300000, guid: 45fb99c0f803ad640aae0da0c5d56a30, type: 3}
+  - {fileID: 21300000, guid: 012c567277e9ccb4a8f7d3d25705bfbd, type: 3}
+  - {fileID: 21300000, guid: eaa15ce2c361b414094e21fbeb6f1041, type: 3}
+  - {fileID: 21300000, guid: 75ba1124e851bba49a20e3a0dfb3c609, type: 3}
+  - {fileID: 21300000, guid: 10c0bd24756381945ae73d6ce8450a11, type: 3}
+  - {fileID: 21300000, guid: db2aba94ee027e74988c592923c8232a, type: 3}
+  - {fileID: 21300000, guid: d99f3fc40a3250b4786b76033ce45ffc, type: 3}
+  - {fileID: 21300000, guid: 0d97e696089774648afcb80d17752161, type: 3}
+  - {fileID: 21300000, guid: 40762e4797cb7a1418415b92a5f16915, type: 3}
+  - {fileID: 21300000, guid: 7e44ae97b378f9c41891f6626c5a008f, type: 3}
+  - {fileID: 21300000, guid: 47594cd78b362cc439132b6a5a6b43b3, type: 3}
+  - {fileID: 21300000, guid: dd5f5a58a9c572342bc7d723463f6a02, type: 3}
+  - {fileID: 21300000, guid: 40cb0f88b645e274494b42113d7db5ad, type: 3}
+  - {fileID: 21300000, guid: 3e1130e9f74c1844e955e59a8838f8b4, type: 3}
+  - {fileID: 21300000, guid: d1f7a43a308a6dd4e8648091ad91c215, type: 3}
+  - {fileID: 21300000, guid: 6c61b40b2a7325846b504bc25281c358, type: 3}
+  - {fileID: 21300000, guid: 651ea49b915d82e41b6b862c2eabca51, type: 3}
+  - {fileID: 21300000, guid: 2c05a80c217e5894c90e895265dd81e5, type: 3}
+  - {fileID: 21300000, guid: 4a9b771c6b3e500478d90168d220e278, type: 3}
+  - {fileID: 21300000, guid: af77213cf56013a419bada3d3b2c3632, type: 3}
+  - {fileID: 21300000, guid: be50ac8cae4457f408168e777ced940a, type: 3}
+  - {fileID: 21300000, guid: 91f25fccf85d5fc46ad4cc94bae2a2c7, type: 3}
+  - {fileID: 21300000, guid: 50fb17dcbcf595347a468d961bc871a9, type: 3}
+  - {fileID: 21300000, guid: 5e33d2fcb4b543e40bc6a8866df7e99b, type: 3}
+  - {fileID: 21300000, guid: daf27b4d4dbe3284087cf77711ae9835, type: 3}
+  - {fileID: 21300000, guid: 04f6907de9d6799478a85b792e7a530f, type: 3}
+  - {fileID: 21300000, guid: f0c8fdcd39110f9468a709b0bc6da257, type: 3}
+  - {fileID: 21300000, guid: 10d1955e7ecbef141bbd71060970a441, type: 3}
+  - {fileID: 21300000, guid: 3517b5afe826422408f719e398b623a2, type: 3}
+  - {fileID: 21300000, guid: 1b14b6df3f7cd164c8170c45c832d0d4, type: 3}
+  - {fileID: 21300000, guid: 7a741cdf2879bac42800fe46c9aebbb8, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - alert message 4
+  - ending red bar
+  - alert message 6
+  - begin5
+  - alert message 1
+  - alert message 5
+  - end cartoon
+  - team1_filled
+  - ending rod
+  - alert message 3
+  - begin6
+  - team1_empty
+  - team2_empty
+  - affinity_bg
+  - begin4
+  - begin3
+  - background layer-01
+  - ending score board
+  - begin2
+  - ending name tag
+  - ending badge
+  - ending third place
+  - aliens used
+  - alert message 2
+  - team2_filled
+  - ending name tags
+  - ending second place
+  - begin1
+  - ending blue bar
+  - affinity_bg2
+  - ending first place
+  - ending photoframe
+  m_RenderDataMap: {}
+  m_Tag: GameUIAvatar
+  m_IsVariant: 0

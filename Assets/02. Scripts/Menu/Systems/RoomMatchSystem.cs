@@ -104,6 +104,8 @@ namespace Mikrocosmos
         [Command]
         void CmdQuitRoom(NetworkIdentity requester);
 
+        void ServerReadyToEnterGameplayScene();
+
         void ChangeRoomHost(NetworkIdentity identity);
 
         PlayerMatchInfo ClientGetMatchInfoCopy();
@@ -296,6 +298,21 @@ namespace Mikrocosmos
             requester.connectionToClient.Disconnect();
         }
 
+        [ServerCallback]
+        public void ServerReadyToEnterGameplayScene() {
+            ((NetworkedRoomManager)NetworkRoomManager.singleton).ServerChangeGameModeScene(GameMode);
+            RpcReadyToEnterGameScene();
+
+            this.GetSystem<ITimeSystem>().AddDelayTask(4, () => {
+                NetworkRoomManager.singleton.ServerChangeScene(((NetworkRoomManager) NetworkRoomManager.singleton)
+                    .GameplayScene);
+                this.SendEvent<OnServerStartGame>();
+            });
+        }
+
+
+
+        
         [ServerCallback]
         public void KickPlayer(NetworkIdentity target) {
             target.connectionToClient.Disconnect();

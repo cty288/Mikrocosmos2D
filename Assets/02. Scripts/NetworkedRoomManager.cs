@@ -153,6 +153,8 @@ namespace Mikrocosmos
             SteamMatchmaking.SetLobbyData(joinedSteamGame, "GameName",
                "Mikrocosmos");
             Debug.Log("Room player count:" + SteamMatchmaking.GetNumLobbyMembers(joinedSteamGame));
+
+          //  StartCoroutine(LoadScene());
         }
 
 
@@ -214,8 +216,6 @@ namespace Mikrocosmos
             base.OnServerSceneChanged(sceneName);
             if (sceneName == RoomScene || sceneName == offlineScene) {
                 IsInGame = false;
-               
-               
             }
             else if (sceneName == GameplayScene) {
                 IsInGame = true;
@@ -223,6 +223,8 @@ namespace Mikrocosmos
                     SteamMatchmaking.SetLobbyData(joinedSteamGame, "IsGaming",
                         "true");
                 }
+
+                //StartCoroutine(LoadScene());
             }
         }
 
@@ -261,6 +263,7 @@ namespace Mikrocosmos
                     telepathyTransport.port = (ushort)Random.Range(7777, 15000);
                     NetworkingMode = NetworkingMode.Normal;
                     StartHost();
+                 //   StartCoroutine(LoadScene());
                     break;
                 case NetworkingMode.Steam:
                     steamworksTransport.enabled = true;
@@ -271,6 +274,8 @@ namespace Mikrocosmos
                     break;
             }
         }
+        
+        
 
         public void StartJoiningClient(Uri uri) {
             if (steamworksTransport)

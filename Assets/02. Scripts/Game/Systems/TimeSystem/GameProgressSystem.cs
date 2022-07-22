@@ -13,6 +13,7 @@ using UnityEngine.Serialization;
 namespace Mikrocosmos
 {
     public enum GameState {
+        NotStarted,
         InGame,
         End
     }
@@ -23,6 +24,9 @@ namespace Mikrocosmos
         
     }
 
+    public struct OnClientBeginGameCountdownStart {
+        public float Time;
+    }
     public struct OnClientGameEnd {
         public GameEndInfo GameEndInfo;
     }
@@ -106,8 +110,10 @@ namespace Mikrocosmos
     }
     public class GameProgressSystem : AbstractNetworkedSystem, IGameProgressSystem {
         [field: SerializeField, SyncVar] 
-        public GameState GameState { get; set; } = GameState.InGame;
-       
+        public GameState GameState { get; set; } = GameState.NotStarted;
+
+        [SerializeField] private float gameStartCountdown = 3;
+        
 
         protected DateTime globalTimer;
         [SerializeField] 
@@ -124,6 +130,8 @@ namespace Mikrocosmos
         [SerializeField] protected int finalCountdownMoneyThresholdPerPlayer = 15;
 
         private IGlobalScoreSystem globalScoreSystem;
+        private int connectedPlayer = 0;
+        private float gameForceStartTimeout = 10;
 
         [SerializeField] private CategoryWinningType[] categoryWinningTypes = new CategoryWinningType[] {
             CategoryWinningType.MostTrade,
@@ -144,14 +152,44 @@ namespace Mikrocosmos
             
             this.RegisterEvent<OnServerTransactionFinished>(OnTransactionFinished)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnMainGamePlayerConnected)
+                .UnRegisterWhenGameObjectDestroyed(this.gameObject);
 
+            
             globalTimer = DateTime.Now;
             StartCoroutine(GlobalTimerUpdate());
-            GameState = GameState.InGame;
+            GameState = GameState.NotStarted;
             this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
                 globalScoreSystem = this.GetSystem<IGlobalScoreSystem>();
             });
+            this.GetSystem<ITimeSystem>().AddDelayTask(gameForceStartTimeout, () => {
+                if (GameState == GameState.NotStarted) {
+                    ReadyToStartGame();
+                }
+            });
         }
+
+        [ServerCallback]
+        private void OnMainGamePlayerConnected(OnNetworkedMainGamePlayerConnected e) {
+            connectedPlayer++;
+            if (connectedPlayer >= NetworkServer.connections.Count && GameState == GameState.NotStarted) {
+                this.GetSystem<ITimeSystem>().AddDelayTask(2f, () => {
+                    ReadyToStartGame();
+                });
+            }
+        }
+
+
+        [ServerCallback]
+        private void ReadyToStartGame() {
+            this.GetSystem<ITimeSystem>().AddDelayTask(gameStartCountdown+0.1f, () => {
+                GameState = GameState.InGame;
+            });
+            RpcOnBeginGameCountdownStart(gameStartCountdown);
+        }
+
+
+        
 
         IEnumerator GlobalTimerUpdate() {
             while (true) {
@@ -263,15 +301,13 @@ namespace Mikrocosmos
             this.SendEvent<OnTieTimerStart>();
         }
 
+
         [ClientRpc]
-        protected void RpcOnFinialCountDownEnds(int winTeam, List<string> winNames)
-        {
-            this.SendEvent<OnClientFinalCountDownTimerEnds>(new OnClientFinalCountDownTimerEnds() {
-                WinTeam = winTeam,
-                WinNames = winNames
+        private void RpcOnBeginGameCountdownStart(float time) {
+            this.SendEvent<OnClientBeginGameCountdownStart>(new OnClientBeginGameCountdownStart() {
+                Time = time
             });
         }
-
 
         [ClientCallback]
         protected void ClientOnCountdownChange(int oldTime, int newTime) {
@@ -280,8 +316,9 @@ namespace Mikrocosmos
                     Time = newTime
                 });
             }
-           
         }
+
+        
 
 
         [ServerCallback]

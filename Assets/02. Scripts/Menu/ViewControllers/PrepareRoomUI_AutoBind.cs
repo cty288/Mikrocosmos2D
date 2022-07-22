@@ -20,5 +20,6 @@ namespace Mikrocosmos {
 		[SerializeField] private GameObject ObjTeam2Panel;
 		[SerializeField] private GameObject ObjTeam2SlotsBG;
 		[SerializeField] private GameObject ObjTeam2Layout;
+		[SerializeField] private GameObject ObjGameReadyToStartBG;
 	}
 }

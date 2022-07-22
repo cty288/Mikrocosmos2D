@@ -114,7 +114,7 @@ namespace Mikrocosmos
 
         [ServerCallback]
         protected override void OnServerUpdate() {
-            if (gameProgressSystem.GameState != GameState.InGame) {
+            if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame) {
                 return;
             }
 
@@ -127,9 +127,7 @@ namespace Mikrocosmos
 
         [Command]
         private void CmdUpdateCanControl(bool isControl) {
-            if (gameProgressSystem.GameState != GameState.InGame) {
-                return;
-            }
+           
             isControlling = isControl;
         }
 
@@ -147,7 +145,7 @@ namespace Mikrocosmos
         [Command]
         private void CmdUpdateMousePosition(Vector2 mousePos)
         {
-            if (gameProgressSystem.GameState != GameState.InGame)
+            if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame)
             {
                 return;
             }
@@ -160,7 +158,7 @@ namespace Mikrocosmos
             Vector2 forceDir = (mousePos - transform.position)
                 .normalized;
             Vector2 targetAddedVelocity = forceDir * GetModel().Acceleration * Time.fixedDeltaTime;
-            if (gameProgressSystem.GameState != GameState.InGame)
+            if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame)
             {
                 targetAddedVelocity = Vector2.zero;
             }
@@ -176,7 +174,7 @@ namespace Mikrocosmos
         {
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;
             float angle = Mathf.Atan2(dir.y, dir.x) * (180 / Mathf.PI) + 90;
-            if (gameProgressSystem.GameState != GameState.InGame)
+            if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame)
             {
                 return;
             }
@@ -228,6 +226,10 @@ namespace Mikrocosmos
             base.FixedUpdate();
             if (isServer)
             {
+                if (gameProgressSystem != null && gameProgressSystem.GameState != GameState.InGame) {
+                    return;
+                }
+                
                 if (buffSystem.HasBuff<DieBuff>()) {
                     return;
                 }

@@ -18,7 +18,7 @@ namespace Mikrocosmos
             
           NetworkRoomManager.singleton.ServerChangeScene(((NetworkRoomManager)NetworkRoomManager.singleton)
                 .GameplayScene);
-            this.SendEvent<OnServerStartGame>();
+           // this.SendEvent<OnServerStartGame>();
         }
 
         public ServerStartGameCommand() {

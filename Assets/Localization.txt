@@ -705,6 +705,7 @@ MENU_SERVER_START_MATCH_FAILED,,"Sorry, an error occurred while we were starting
 MENU_AUTHENTICATE_FAILED,,Authentication failed! Please make sure you are not using any cheating plugins and re-enter the game!,,,,,,,,,,,,,,,,,身份验证失败！请确保你没有使用任何作弊工具并重新进入游戏！,身份驗證失敗！請確保你沒有使用任何作弊工具並重新進入遊戲！,,,,,,,,,
 游戏内提示,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 GAME_COUNTDOWN_START,,COUNTDOWN ALERT,,,,,,,,,,,,,,,,,倒计时开始！,倒計時警告！,,,,,,,,,
+GAME_START_COUNTDOWN_START,,Begin Game,,,,,,,,,,,,,,,,,即将开始,即將開始,,,,,,,,,
 GAME_COUNTDOWN_WIN,,win!,,,,,,,,,,,,,,,,,胜利,勝利,,,,,,,,,
 GAME_COUNTDOWN_TIE,,Almost there -- Follow the path we believed in,,,,,,,,,,,,,,,,,形势焦灼,形勢焦灼,,,,,,,,,
 GAME_MISSION_UPCOMING,,Mission Upcoming!,,,,,,,,,,,,,,,,,任务即将开始！,任務即將開始！,,,,,,,,,
