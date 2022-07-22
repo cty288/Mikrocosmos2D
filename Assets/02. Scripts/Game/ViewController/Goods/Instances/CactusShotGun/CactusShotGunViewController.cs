@@ -41,7 +41,8 @@ namespace Mikrocosmos
                     //GameObject bullet = Instantiate(this.bullet, shootTransform.position, shootTransform.rotation);
                     bullet.transform.position = shootTransform.position;
                     bullet.transform.rotation = shootTransform.rotation;
-                    
+                    bullet.GetComponentInChildren<TrailRenderer>().Clear();
+                    bullet.GetComponentInChildren<TrailRenderer>().emitting = true;
                     IBuffSystem buffSystem = null;
                     if (Owner)
                     {
@@ -53,9 +54,9 @@ namespace Mikrocosmos
                     NetworkServer.Spawn(bullet);
                 }
             }
-
-           
         }
+
+        
 
         public void OnShootAnimationEnds()
         {

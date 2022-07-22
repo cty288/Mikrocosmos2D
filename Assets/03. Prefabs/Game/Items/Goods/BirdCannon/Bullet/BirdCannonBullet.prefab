@@ -545,7 +545,6 @@ MonoBehaviour:
   <HookedRotationZOffset>k__BackingField: 0
   Force: 0
   destroyWhenHit: 1
-  damageReduceBySpeed: 0
 --- !u!114 &773197963524302722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,7 +570,7 @@ MonoBehaviour:
   <canDealMomentumDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 1
-  <Damage>k__BackingField: 100
+  <DamageReducedBySpeed>k__BackingField: 0
   <Name>k__BackingField: BirdCannonBullet
 --- !u!114 &4329412435070151956
 MonoBehaviour:

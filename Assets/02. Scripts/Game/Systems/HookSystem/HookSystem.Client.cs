@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using Mirror;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ namespace Mikrocosmos
                 {
                     NewHookItemName = newHookName
                 });
+                ClientHookedItemName.Value = newHookName;
             }
            
         }
@@ -46,5 +48,7 @@ namespace Mikrocosmos
                 spaceship = NewIdentity
             });
         }
+
+        public BindableProperty<string> ClientHookedItemName { get; private set; } = new BindableProperty<string>();
     }
 }

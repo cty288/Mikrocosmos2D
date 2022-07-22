@@ -17,7 +17,7 @@ public class BulletModel : AbstractBasicEntityModel, IBulletModel {
     [field: SyncVar, SerializeField]
     public override float SelfMass { get;  set; }
     
-    [field: SyncVar]
+    [field: SyncVar, SerializeField]
     public int Damage { get;  set; }
 
     [field: SerializeField] public bool DamageReducedBySpeed { get; set; } = true;
@@ -41,9 +41,12 @@ public class BulletModel : AbstractBasicEntityModel, IBulletModel {
         }
         
         if (NetworkServer.active) {
-            Name = configurationModel.FindGoodsPropertiesByPrefabName(name).Name;
-            Damage = configurationModel.FindGoodsPropertiesByPrefabName(name).Damage;
-            SelfMass = configurationModel.FindGoodsPropertiesByPrefabName(name).SelfMass;
+            if (configurationModel.FindGoodsPropertiesByPrefabName(name) != null) {
+                Name = configurationModel.FindGoodsPropertiesByPrefabName(name).Name;
+                Damage = configurationModel.FindGoodsPropertiesByPrefabName(name).Damage;
+                SelfMass = configurationModel.FindGoodsPropertiesByPrefabName(name).SelfMass;
+            }
+           
         }
     }
 

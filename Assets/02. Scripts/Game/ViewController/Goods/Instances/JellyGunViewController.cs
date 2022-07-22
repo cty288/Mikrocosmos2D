@@ -47,6 +47,8 @@ public class JellyGunViewController : BasicGoodsViewController {
             bullet.GetComponent<BasicBulletViewController>().SetShotoer(Model.HookedByIdentity,GetComponent<Collider2D>(), buffSystem);
             bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
             bullet.transform.rotation = transform.rotation;
+              bullet.GetComponentInChildren<TrailRenderer>().Clear();
+                    bullet.GetComponentInChildren<TrailRenderer>().emitting = true;
             NetworkServer.Spawn(bullet);
         }
     }

@@ -73,6 +73,8 @@ namespace Mikrocosmos
 
     public interface IGoodsConfigurationModel : IModel {
         GoodsPropertiesItem FindGoodsPropertiesByPrefabName(string name);
+
+        List<GoodsPropertiesItem> GetAllGoodsProperties();
     }
 
 
@@ -214,6 +216,8 @@ namespace Mikrocosmos
             return null;
         }
 
-     
+        public List<GoodsPropertiesItem> GetAllGoodsProperties() {
+            return goodsPropertiesTable.Items;
+        }
     }
 }

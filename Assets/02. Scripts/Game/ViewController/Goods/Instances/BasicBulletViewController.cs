@@ -40,8 +40,7 @@ namespace Mikrocosmos
                 Physics2D.IgnoreCollision(shooterPlayer.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
             }
 
-            if (shooterWeapon)
-            {
+            if (shooterWeapon) {
                 Physics2D.IgnoreCollision(shooterWeapon, GetComponent<Collider2D>(), true);
             }
         }

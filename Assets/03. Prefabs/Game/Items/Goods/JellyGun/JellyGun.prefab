@@ -379,7 +379,7 @@ MonoBehaviour:
   <AlsoMaskedOnMap>k__BackingField: 0
   DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
   bullet: {fileID: 5222149471336982627, guid: b2688ff8c17fe014ab2ec4bafac8b42a, type: 3}
-  shootForce: 200
+  shootForce: 250
 --- !u!212 &8825376392211092377 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}

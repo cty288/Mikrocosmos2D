@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using GoogleSheetsToUnity;
 using MikroFramework.Architecture;
@@ -45,6 +46,8 @@ namespace Mikrocosmos
 
         private CSteamID joinedSteamGame;
 
+
+
         
         public override void Awake() {
             base.Awake();
@@ -71,7 +74,10 @@ namespace Mikrocosmos
                 gchandle.Free();                
             }
 
-           
+            List<GoodsPropertiesItem> allGoodsProperties =
+                this.GetModel<IGoodsConfigurationModel>().GetAllGoodsProperties();
+            spawnPrefabs.AddRange(allGoodsProperties.Select((item => item.GoodsPrefab)));
+
         }
 
         private void OnGoodsPropertiesUpdated(OnGoodsPropertiesUpdated e) {

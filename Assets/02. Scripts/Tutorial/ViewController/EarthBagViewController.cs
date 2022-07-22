@@ -28,7 +28,7 @@ namespace Mikrocosmos
             RpcOnClientHealthChange(oldHealth, newHealth);
             base.OnServerTakeDamage(oldHealth, newHealth, damageSource);
             if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
-                if (damageSource.transform.position.x > transform.position.x) {
+                if (damageSource && damageSource.transform.position.x > transform.position.x) {
                     animator.SetTrigger("HurtRight");
                 }
                 else {

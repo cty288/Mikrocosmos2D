@@ -130,7 +130,7 @@ namespace Mikrocosmos
             }
 
             PlanetBuyBubble bubbleScript = buyBubble.GetComponent<PlanetBuyBubble>();
-            bubbleScript.UpdateInfo(price, maxTime);
+            bubbleScript.UpdateInfo(price, maxTime, bubbleToGenerate);
 
 
             ClientBuyBubbles.Add(bubbleToGenerate, buyBubble);

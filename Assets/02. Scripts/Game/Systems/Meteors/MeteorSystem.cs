@@ -26,6 +26,7 @@ namespace Mikrocosmos
         [FormerlySerializedAs("meteorMaximumCount")] [SerializeField] private int meteorMaximumCountPerPlayer = 5;
         private int meteorMaximumCount;
         [SerializeField] private int meteorSpawnInterval = 10;
+        [SerializeField] private int meteorSpawnCountEachInterval = 10;
         private IGameProgressSystem gameProgressSystem;
         private void Awake() {
             NetworkedObjectPoolManager.AutoCreatePoolWhenAllocating = true;
@@ -75,21 +76,25 @@ namespace Mikrocosmos
 
         private void SpawnMeteor() {
             Collider2D spawnPositionArea = meteorSpawnPositions[Random.Range(0, meteorSpawnPositions.Count)];
-            Vector2 spawnPosition = new Vector2(
-                Random.Range(spawnPositionArea.bounds.min.x, spawnPositionArea.bounds.max.x),
-                Random.Range(spawnPositionArea.bounds.min.y, spawnPositionArea.bounds.max.y));
+            for (int i = 0; i < meteorSpawnCountEachInterval; i++) {
+                Vector2 spawnPosition = new Vector2(
+                    Random.Range(spawnPositionArea.bounds.min.x, spawnPositionArea.bounds.max.x),
+                    Random.Range(spawnPositionArea.bounds.min.y, spawnPositionArea.bounds.max.y));
 
 
-            var meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)], spawnPosition,
-                Quaternion.identity);
+                var meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)], spawnPosition,
+                    Quaternion.identity);
+
+                meteor.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+                meteor.GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * Random.Range(0, 10);
+
+                meteor.GetComponent<Collider2D>().isTrigger = false;
+
+                activeMeteors.Add(meteor);
+                NetworkServer.Spawn(meteor);
+            }
             
-            meteor.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-            meteor.GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * Random.Range(0, 10);
-            
-            meteor.GetComponent<Collider2D>().isTrigger = false;
           
-            activeMeteors.Add(meteor);
-            NetworkServer.Spawn(meteor);
         }
 
 

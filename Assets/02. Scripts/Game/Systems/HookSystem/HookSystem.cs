@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MikroFramework;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
@@ -77,6 +78,8 @@ namespace Mikrocosmos {
         void UnHook(bool isShoot = false);
 
         bool IsHooking { get; }
+
+        BindableProperty<string> ClientHookedItemName { get; }
     }
     public partial class HookSystem : AbstractNetworkedSystem, IHookSystem {
 
@@ -284,7 +287,7 @@ namespace Mikrocosmos {
             }
 
             string itemName = "";
-            if (e.NewIdentity && e.NewIdentity.TryGetComponent<IHookable>(out IHookable hookable)) {
+            if (e.NewIdentity && e.NewIdentity.TryGetComponent<IHaveName>(out IHaveName hookable)) {
                 itemName = hookable.Name;
             }
 
@@ -607,7 +610,7 @@ namespace Mikrocosmos {
         public void UnHook(bool isShoot = false) {
             UpdateHookCollisions(true);
 
-            if (HookedItem != null) {
+            if (HookedItem != null && HookedNetworkIdentity != null) {
                 
                 
                 HookedItem.Model.UnHook(isShoot);
