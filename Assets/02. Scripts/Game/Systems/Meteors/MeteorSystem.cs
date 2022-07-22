@@ -59,8 +59,31 @@ namespace Mikrocosmos
             Mikrocosmos.Interface.RegisterSystem<IMeteorSystem>(this);
             activeMeteors = GameObject.FindGameObjectsWithTag("Meteor").ToList();
             this.RegisterEvent<OnMeteorDestroyed>(OnMeteorDestroyed).UnRegisterWhenGameObjectDestroyed(gameObject);
-
+            SpawnInitialMeteors();
             StartCoroutine(CheckSpawnMeteor());
+        }
+
+        private void SpawnInitialMeteors() {
+            foreach (BoxCollider2D position in meteorSpawnPositions) {
+                for (int i = 0; i < meteorSpawnCountEachInterval * 1.5f; i++)
+                {
+                    Vector2 spawnPosition = new Vector2(
+                        Random.Range(position.bounds.min.x, position.bounds.max.x),
+                        Random.Range(position.bounds.min.y, position.bounds.max.y));
+
+
+                    var meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Count)], spawnPosition,
+                        Quaternion.identity);
+
+                    meteor.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+                    meteor.GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * Random.Range(0, 10);
+
+                    meteor.GetComponent<Collider2D>().isTrigger = false;
+
+                    activeMeteors.Add(meteor);
+                    NetworkServer.Spawn(meteor);
+                }
+            }
         }
 
         private void OnMeteorDestroyed(OnMeteorDestroyed e) {

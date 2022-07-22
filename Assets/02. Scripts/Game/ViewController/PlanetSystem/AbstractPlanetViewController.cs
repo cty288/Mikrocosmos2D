@@ -7,6 +7,7 @@ using MikroFramework.Event;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,8 @@ namespace Mikrocosmos
         IHaveGravityViewController {
          Dictionary<string, GameObject> ClientBuyBubbles { get; }
          Dictionary<string, GameObject> ClientSellBubbles { get; }
+
+         float OrbitalProgress { get; set; }
     }
     public abstract class AbstractPlanetViewController : AbstractNetworkedController<Mikrocosmos>, IPlanetViewController
     {
@@ -61,7 +64,7 @@ namespace Mikrocosmos
 
             rigidbody = GetComponent<Rigidbody2D>();
             
-            progress = initialProgress;
+            OrbitalProgress = initialProgress;
 
             buyBubbleLayout = transform.Find("Canvas/BuyBubbleLayout");
             sellBubbleLayout = transform.Find("Canvas/SellBubbleLayout");
@@ -354,8 +357,8 @@ namespace Mikrocosmos
         public GameObject target;
 
         public float speed = 100;
-        [SerializeField]
-        float progress = 0;
+        [field: FormerlySerializedAs("progress")]
+        public float OrbitalProgress { get; set; }
       
         float distance = 0;
         public float x = 5;
@@ -468,9 +471,9 @@ namespace Mikrocosmos
         void OvalRotate()
         {
 
-            progress += (Time.fixedDeltaTime * speed);
-            progress %= 360;
-            Vector3 p = new Vector3(x * Mathf.Cos(progress * Mathf.Deg2Rad), z * Mathf.Sin(progress * Mathf.Deg2Rad) * distance, 0);
+            OrbitalProgress += (Time.fixedDeltaTime * speed);
+            OrbitalProgress %= 360;
+            Vector3 p = new Vector3(x * Mathf.Cos(OrbitalProgress * Mathf.Deg2Rad), z * Mathf.Sin(OrbitalProgress * Mathf.Deg2Rad) * distance, 0);
             if (GravityModel.MoveMode == MoveMode.ByPhysics)
             {
                 rigidbody.MovePosition(target.transform.position + p);
