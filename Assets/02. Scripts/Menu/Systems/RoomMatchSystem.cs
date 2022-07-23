@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using MikroFramework.Singletons;
@@ -30,6 +31,7 @@ namespace Mikrocosmos
         public int TeamIndex;
         public Language Language;
         public Avatar Avatar;
+        public bool IsSpectator;
 
         public bool Equals(PlayerMatchInfo other) {
             if (ReferenceEquals(null, other)) return false;
@@ -96,14 +98,18 @@ namespace Mikrocosmos
 
         List<PlayerMatchInfo> ServerGetAllPlayerMatchInfoByTeamID(int team);
 
-        List<PlayerMatchInfo> ServerGetAllPlayerMatchInfo();
+        int GetActivePlayerNumber();
+
+        List<PlayerMatchInfo> ServerGetAllPlayerMatchInfo(bool includeSpectators);
 
         [Command]
         void CmdRequestKickPlayer(int id, NetworkIdentity requester);
 
         [Command]
         void CmdQuitRoom(NetworkIdentity requester);
-
+        
+        void ServerChangeSpectatorInGame(NetworkIdentity requester);
+        
         void ServerReadyToEnterGameplayScene();
 
         void ChangeRoomHost(NetworkIdentity identity);
@@ -209,6 +215,10 @@ namespace Mikrocosmos
                 Host = host
             });
             playerIdentities.Remove(id);
+            if (infoToRemove!=null && teamPlayers.Keys.Count >= infoToRemove.Team) {
+                teamPlayers[infoToRemove.Team].Remove(infoToRemove);
+            }
+          
         }
 
         public void ServerRoomPlayerChangeTeam(int id) {
@@ -219,6 +229,27 @@ namespace Mikrocosmos
                 MatchInfos = playerMatchInfos,
                 Host = host
             });
+        }
+
+    
+        public void ServerChangeSpectatorInGame(NetworkIdentity requester) {
+            PlayerMatchInfo matchInfo = requester.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo;
+            int team = matchInfo.Team;
+            
+            if (matchInfo != null) {
+                matchInfo.IsSpectator = !matchInfo.IsSpectator;
+                
+                if (matchInfo.IsSpectator) {
+                    //playerMatchInfos.Remove(matchInfo);
+                    //playerIdentities.Remove(matchInfo.ID);
+                    teamPlayers[team].Remove(matchInfo);
+                }
+                else {
+                   // playerMatchInfos.Add(matchInfo);
+                  //  playerIdentities.Add(matchInfo.ID, requester);
+                    teamPlayers[team].Add(matchInfo);
+                }
+            }
         }
 
         [ServerCallback]
@@ -236,12 +267,17 @@ namespace Mikrocosmos
         public bool ServerGetIsTeamSizeEqual() {
             int t1=0, t2=0;
             foreach (PlayerMatchInfo playerMatchInfo in playerMatchInfos) {
-                if (playerMatchInfo.Team == 1) {
-                    t1++;
+                if (!playerMatchInfo.IsSpectator) {
+                    if (playerMatchInfo.Team == 1)
+                    {
+                        t1++;
+                    }
+                    else
+                    {
+                        t2++;
+                    }
                 }
-                else {
-                    t2++;
-                }
+              
             }
 
             return t1 == t2;
@@ -277,7 +313,14 @@ namespace Mikrocosmos
             return teamPlayers[team];
         }
 
-        public List<PlayerMatchInfo> ServerGetAllPlayerMatchInfo() {
+        public int GetActivePlayerNumber() {
+            return ServerGetAllPlayerMatchInfo(false).Count();
+        }
+
+        public List<PlayerMatchInfo> ServerGetAllPlayerMatchInfo(bool includeSpectators) {
+            if (!includeSpectators) {
+                return playerMatchInfos.Where((info => !info.IsSpectator)).ToList();
+            }
             return playerMatchInfos;
         }
 
@@ -297,6 +340,8 @@ namespace Mikrocosmos
             }
             requester.connectionToClient.Disconnect();
         }
+
+       
 
         [ServerCallback]
         public void ServerReadyToEnterGameplayScene() {

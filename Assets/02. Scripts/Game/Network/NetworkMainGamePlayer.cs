@@ -40,7 +40,12 @@ namespace Mikrocosmos
             });
          
         }
+        public override void OnStopServer() {
+            base.OnStopServer();
+           // this.GetSystem<IRoomMatchSystem>().ServerRoomPlayerLeaveMatch(matchInfo.ID);
+        }
 
+        
         private void OnRoomPlayerJoinGame(OnRoomPlayerJoinGame e) {
             if (e.Connection == connectionToClient) {
                 matchInfo = e.MatchInfo;
@@ -58,7 +63,7 @@ namespace Mikrocosmos
         private void SpawnSpaceshipForThisPlayer(PlayerMatchInfo matchInfo, NetworkConnection conn) {
 
             GameObject spaceship = Instantiate(spaceshipPrefabs[matchInfo.Team-1], transform.position, Quaternion.identity);
-            spaceship.GetComponent<PlayerSpaceship>().SetPlayerDisplayInfo(matchInfo.Team, matchInfo.TeamIndex, matchInfo.Name);
+            spaceship.GetComponent<PlayerSpaceship>().SetPlayerDisplayInfo(matchInfo);
             NetworkServer.Spawn(spaceship, conn);
             
             ControlledSpaceship = spaceship.GetComponent<NetworkIdentity>();

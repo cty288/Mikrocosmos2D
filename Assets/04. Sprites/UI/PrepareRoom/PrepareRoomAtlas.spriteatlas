@@ -33,6 +33,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: eef99415ca4391445988b4b2eff9c234, type: 3}
+    - {fileID: 102900000, guid: d97c70fef3241a5429e836601b929bad, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}

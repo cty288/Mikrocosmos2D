@@ -17,7 +17,9 @@ namespace Mikrocosmos
         }
 
         private void Start() {
-            avatarElement.SetAvatar(avatar);
+            if (avatar != null) {
+                avatarElement.SetAvatar(avatar);
+            }
         }
 
 

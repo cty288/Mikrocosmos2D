@@ -104,7 +104,10 @@ namespace Mikrocosmos
 
         protected override void OnBeforeDestroy() {
             base.OnBeforeDestroy();
-            resLoader.ReleaseAllAssets();
+            if (resLoader != null) {
+                resLoader.ReleaseAllAssets();
+            }
+        
         }
 
         private void Play(string clipName, Dictionary<string, AudioClip> dict, AudioSource audioSource, float relativeVolume, Action<AudioClip, AudioSource, float> action)

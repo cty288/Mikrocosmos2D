@@ -31,7 +31,8 @@ namespace Mikrocosmos
         [field: SyncVar]
         public bool CanControl { get; set; } = true;
 
-        
+        [field: SyncVar, SerializeField]
+        public PlayerMatchInfo matchInfo { get; private set; }
 
         [SerializeField, SyncVar]
         private bool isUsing = false;
@@ -66,15 +67,14 @@ namespace Mikrocosmos
 
 
         [ServerCallback]
-        public void SetPlayerDisplayInfo(int team, int teamIndex, string name)
-        {
-           
+        public void SetPlayerDisplayInfo(PlayerMatchInfo info) {
+            this.matchInfo = info;
             selfSprites[0].sprite = teamSprites[teamIndex];
 
-            this.teamIndex = teamIndex;
+            this.teamIndex = info.TeamIndex;
 
-            this.Name = name;
-            ThisSpaceshipTeam = team;
+            this.Name = info.Name;
+            ThisSpaceshipTeam = info.Team;
             RpcSetTeamSprite(teamIndex);
         }
 
@@ -205,8 +205,7 @@ namespace Mikrocosmos
                 return;
             }            
             int backpackCapacity = inventorySystem.GetSlotCount();
-            if (index < backpackCapacity)
-            {
+            if (index < backpackCapacity && index!= inventorySystem.GetCurrentSlot()) {
                 inventorySystem.ServerSwitchSlot(index);
             }
         }

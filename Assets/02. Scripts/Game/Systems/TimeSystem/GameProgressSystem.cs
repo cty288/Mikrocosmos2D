@@ -127,11 +127,12 @@ namespace Mikrocosmos
         protected int finalCountDown = 60;
 
         [FormerlySerializedAs("finalCountdownTransactionThresholdPerPlayer")] 
-        [SerializeField] protected int finalCountdownMoneyThresholdPerPlayer = 15;
+       [SerializeField] protected int finalCountdownMoneyThresholdPerPlayer = 15;
 
         private IGlobalScoreSystem globalScoreSystem;
         private int connectedPlayer = 0;
         private float gameForceStartTimeout = 10;
+        private IRoomMatchSystem roomMatchSystem;
 
         [SerializeField] private CategoryWinningType[] categoryWinningTypes = new CategoryWinningType[] {
             CategoryWinningType.MostTrade,
@@ -148,7 +149,7 @@ namespace Mikrocosmos
 
         public override void OnStartServer() {
             base.OnStartServer();
-            
+            roomMatchSystem = this.GetSystem<IRoomMatchSystem>();
             
             this.RegisterEvent<OnServerTransactionFinished>(OnTransactionFinished)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -238,7 +239,7 @@ namespace Mikrocosmos
         private void OnTransactionFinished(OnServerTransactionFinished e) {
             
             TotalTransactionMoney.Value+=e.Price;
-            int totalPlayerCount = NetworkServer.connections.Count;
+            int totalPlayerCount = roomMatchSystem.GetActivePlayerNumber();
             if (TotalTransactionMoney.Value >= finalCountdownMoneyThresholdPerPlayer * totalPlayerCount && !finialCountDownStarted) {
                 StartFinalCountDown();
             }
@@ -258,7 +259,7 @@ namespace Mikrocosmos
         public BindableProperty<int> TotalTransactionMoney { get; protected set; } = new BindableProperty<int>(0);
        
         public float GetGameProgress() {
-            int totalPlayerCount = NetworkServer.connections.Count;
+            int totalPlayerCount = roomMatchSystem.GetActivePlayerNumber();
             return Mathf.Max(
                 TotalTransactionMoney.Value / ((float) (finalCountdownMoneyThresholdPerPlayer * totalPlayerCount)),
                 (float) (DateTime.Now.Subtract(globalTimer).TotalMinutes / maximumGameTime));
@@ -287,12 +288,6 @@ namespace Mikrocosmos
             this.SendEvent<OnClientGameEnd>(new OnClientGameEnd() {
                 GameEndInfo = gameEndInfo
             });
-            
-            Debug.Log($"All Winners: {gameEndInfo.PlayerWinInfos.Count}");
-            foreach (PlayerWinInfo info in gameEndInfo.PlayerWinInfos) {
-                Debug.Log($"All Winners: {info.PlayerInfo.Name} -- Score: {info.Score}");
-            }
-            Debug.Log($"All Winners -- Most Trade: {gameEndInfo.CategoryWinners[0].PlayerInfo.Name}");
         }
 
         [ClientRpc]
@@ -326,7 +321,7 @@ namespace Mikrocosmos
         {
             float team1Affinity = this.GetSystem<IGlobalTradingSystem>().GetRelativeAffinityWithTeam(1);
 
-            List<PlayerMatchInfo> allPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo();
+            List<PlayerMatchInfo> allPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo(false);
             Dictionary<PlayerMatchInfo, IPlayerStatsSystem> playerToStats =
                 new Dictionary<PlayerMatchInfo, IPlayerStatsSystem>();
 
@@ -365,29 +360,34 @@ namespace Mikrocosmos
         
         private CategoryWinner GetWinnerForCategory(CategoryWinningType winningType,
             Dictionary<PlayerMatchInfo, IPlayerStatsSystem> allPlayersAndStats, List<PlayerMatchInfo> allPlayers) {
-            switch (winningType) {
-                case CategoryWinningType.DieLeast:
-                    allPlayers.Sort(((info1, info2) =>
-                        allPlayersAndStats[info1].TotalDie.CompareTo(allPlayersAndStats[info2].TotalDie)));
-                    return new CategoryWinner(winningType, allPlayers.First());
-                    break;
-                case CategoryWinningType.EarnMostMoney:
-                    allPlayers.Sort(((info1, info2) =>
-                        -allPlayersAndStats[info1].TotalMoneyEarned.CompareTo(allPlayersAndStats[info2].TotalMoneyEarned)));
-                    return new CategoryWinner(winningType, allPlayers.First());
-                    break;
-                case CategoryWinningType.MostEffectiveKills:
-                    allPlayers.Sort(((info1, info2) =>
-                        -allPlayersAndStats[info1].EffectiveKills.CompareTo(allPlayersAndStats[info2].EffectiveKills)));
-                    return new CategoryWinner(winningType, allPlayers.First());
-                    break;
-                case CategoryWinningType.MostTrade:
-                    allPlayers.Sort(((info1, info2) =>
-                        -allPlayersAndStats[info1].TotalTransactions.CompareTo(allPlayersAndStats[info2].TotalTransactions)));
-                    return new CategoryWinner(winningType, allPlayers.First());
-                    break;
-                default: return null;
+            if (allPlayers.Any()) {
+                switch (winningType) {
+                    case CategoryWinningType.DieLeast:
+                        allPlayers.Sort(((info1, info2) =>
+                            allPlayersAndStats[info1].TotalDie.CompareTo(allPlayersAndStats[info2].TotalDie)));
+                        return new CategoryWinner(winningType, allPlayers.First());
+                        break;
+                    case CategoryWinningType.EarnMostMoney:
+                        allPlayers.Sort(((info1, info2) =>
+                            -allPlayersAndStats[info1].TotalMoneyEarned.CompareTo(allPlayersAndStats[info2].TotalMoneyEarned)));
+                        return new CategoryWinner(winningType, allPlayers.First());
+                        break;
+                    case CategoryWinningType.MostEffectiveKills:
+                        allPlayers.Sort(((info1, info2) =>
+                            -allPlayersAndStats[info1].EffectiveKills.CompareTo(allPlayersAndStats[info2].EffectiveKills)));
+                        return new CategoryWinner(winningType, allPlayers.First());
+                        break;
+                    case CategoryWinningType.MostTrade:
+                        allPlayers.Sort(((info1, info2) =>
+                            -allPlayersAndStats[info1].TotalTransactions.CompareTo(allPlayersAndStats[info2].TotalTransactions)));
+                        return new CategoryWinner(winningType, allPlayers.First());
+                        break;
+                    default: return null;
+                }
             }
+
+            return null;
+
         }
 
     }

@@ -15,6 +15,16 @@ namespace Mikrocosmos
         STRING
     }
 
+    public struct Command {
+        public CommandArg[] Args;
+        public bool Hidden;
+
+        public Command(CommandArg[] args, bool hidden = false) {
+            Args = args;
+            Hidden = hidden;
+        }
+    }
+
     public struct CommandArg {
         public CommandType CommandArgType;
         public string ArgumentName;
@@ -36,27 +46,28 @@ namespace Mikrocosmos
     {
         #region 指令列表
 
-        private static readonly Dictionary<string, CommandArg[]> commands = new Dictionary<string, CommandArg[]>() {
-            {"help", Array.Empty<CommandArg>()},
-            {"cls", Array.Empty<CommandArg>()},
-            {"addMoney", new [] {
+        private static readonly Dictionary<string, Command> commands = new Dictionary<string, Command>() {
+            {"help", new Command(Array.Empty<CommandArg>())},
+            {"cls", new Command(Array.Empty<CommandArg>())},
+            {"addMoney", new Command(new [] {
                 new CommandArg(CommandType.INT, "value"),
                 new CommandArg(CommandType.STRING, "playerName", "",NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().matchInfo.Name)
-            }},
-            {"gameManager", new [] {
+            })},
+            {"gameManager",  new Command(new [] {
                 new CommandArg(CommandType.STRING,"playerName"),
                 new CommandArg(CommandType.BOOL, "isManager","", true),
-            } },
-            {"addBuff", new [] {
+            })},
+            {"addBuff", new Command(new [] {
               
                 new CommandArg(CommandType.INT, "buffID", "", null, new Vector2(0,4)),
                 new CommandArg(CommandType.INT, "buffLevel", "",1, new Vector2(1,5)),
                 new CommandArg(CommandType.STRING, "playerName","", NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>().matchInfo.Name),
-            }},
-            {"dm", new [] {
+            })},
+            {"dm", new Command(new [] {
                 new CommandArg(CommandType.STRING, "message",""),
                 new CommandArg(CommandType.STRING, "playerName", ""),
-            }}
+            })},
+            {"imtherealdeveloper", new Command(Array.Empty<CommandArg>(), true)}
         };
         
       
@@ -110,6 +121,9 @@ namespace Mikrocosmos
                         case "dm":
                             output = DM(args[1], args[2]);
                             break;
+                        case "imtherealdeveloper":
+                            output = Spectator();
+                            break;
                         // 错误指令
                         default:
                             output = "Unable to find the command. Type /help to view the command list.";
@@ -123,6 +137,11 @@ namespace Mikrocosmos
             }
            
             return output;
+        }
+
+        private static string Spectator() {
+            Mikrocosmos.Interface.GetSystem<ICommandSystem>().CmdRequestSpectator(NetworkClient.localPlayer);
+            return "Notifying Server...";
         }
 
         private static string DM(string s, string s1) {
@@ -159,30 +178,39 @@ namespace Mikrocosmos
 
         //FF00C4
         private static string GetCommandComplete(string commandName) {
-            CommandArg[] args = commands[commandName];
-            string output = "";
-            output += $"<color=yellow><b>- /{commandName}</b>";
-            foreach (CommandArg arg in args) {
-                string valueRangeString = "";
-                if (arg.ValueRange != Vector2.zero) {
-                    valueRangeString = $" <color=#FF00C4>{{{arg.ValueRange.x}:{arg.ValueRange.y}}}</color>";
+            if (!commands[commandName].Hidden) {
+                CommandArg[] args = commands[commandName].Args;
+                string output = "";
+                output += $"<color=yellow><b>- /{commandName}</b>";
+                foreach (CommandArg arg in args)
+                {
+                    string valueRangeString = "";
+                    if (arg.ValueRange != Vector2.zero)
+                    {
+                        valueRangeString = $" <color=#FF00C4>{{{arg.ValueRange.x}:{arg.ValueRange.y}}}</color>";
+                    }
+                    if (arg.DefaultValue != null)
+                    {
+                        output += $"  [<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName}{valueRangeString} = {arg.DefaultValue}</color>]";
+                    }
+                    else
+                    {
+                        output += $"  <<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName}{valueRangeString}</color>>";
+                    }
+
                 }
-                if (arg.DefaultValue != null) {
-                    output += $"  [<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName}{valueRangeString} = {arg.DefaultValue}</color>]";
-                }
-                else {
-                    output += $"  <<b>{arg.CommandArgType}</b>: <color=orange>{arg.ArgumentName}{valueRangeString}</color>>";
-                }
-               
+                output += "</color>";
+                return output;
             }
-            output += "</color>";
-            return output;
+
+            return "";
         }
         
         
-        private static bool CheckArguments(List<string> inputArgs, CommandArg[] commandArgs, out string output) {
+        private static bool CheckArguments(List<string> inputArgs, Command command, out string output) {
             output = "";
             string commandName = inputArgs[0];
+            CommandArg[] commandArgs = command.Args;
             int defaultArgCount = commandArgs.Select(arg => arg.DefaultValue != null).Count();
             if (inputArgs.Count - 1 < commandArgs.Length - defaultArgCount || inputArgs.Count - 1 > commandArgs.Length) {
                 output = "Invalid arguments.\n";
@@ -308,8 +336,12 @@ namespace Mikrocosmos
             string output = null;
 
             foreach (var commandsKey in commands.Keys) {
-                output +=  GetCommandComplete(commandsKey); ;
-                output += "\n";
+                string temp = GetCommandComplete(commandsKey);
+                if (!String.IsNullOrEmpty(temp)) {
+                    output += temp;
+                    output += "\n";
+                }
+               
             }
            
             return output;

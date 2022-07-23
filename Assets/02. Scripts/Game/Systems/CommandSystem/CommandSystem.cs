@@ -30,6 +30,8 @@ namespace Mikrocosmos
 
         void CmdRequestDM(NetworkIdentity requester, string playerName, string message);
 
+        void CmdRequestSpectator(NetworkIdentity requester);
+
         void CmdSendChatMessage(NetworkIdentity requester, string message);
     }
   public class CommandSystem : AbstractNetworkedSystem, ICommandSystem {
@@ -108,7 +110,7 @@ namespace Mikrocosmos
 
       private List<PlayerMatchInfo> CheckNameFormat(string name, PlayerMatchInfo requesterInfo)
       {
-          List<PlayerMatchInfo> matchInfos = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo();
+          List<PlayerMatchInfo> matchInfos = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo(true);
             switch (name) {
                 case "@a":
                     return matchInfos;
@@ -127,7 +129,7 @@ namespace Mikrocosmos
                 return formatCheckResult;
             }
             
-            List<PlayerMatchInfo> matchInfos = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo(); 
+            List<PlayerMatchInfo> matchInfos = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo(true); 
             List<PlayerMatchInfo> allPlayersWithTheName = matchInfos.FindAll(x => x.Name == name); 
             return allPlayersWithTheName;
       }
@@ -231,6 +233,18 @@ namespace Mikrocosmos
             foreach (PlayerMatchInfo info in allPlayersWithTheName) {
                 TargetGetLogMessage(info.Identity.connectionToClient, "<color=#FF00C4><b>DM from " + requester.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Name + ":</b> " + message + "</color>");
                 TargetGetLogMessage(requester.connectionToClient, $"<color=green>Successfully sent message to {info.Name}</color>");
+            }
+        }
+
+        [Command(requiresAuthority = false)]
+        public void CmdRequestSpectator(NetworkIdentity requester) {
+            PlayerMatchInfo matchInfo = requester.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo;
+            this.GetSystem<IRoomMatchSystem>().ServerChangeSpectatorInGame(requester);
+            if (matchInfo.IsSpectator) {
+                TargetGetLogMessage(requester.connectionToClient, "<color=green>You are not considered as a \"player\" now. Use the same command to undo this.</color>");
+            }
+            else {
+                TargetGetLogMessage(requester.connectionToClient, "<color=green>You are now considered as a \'player\' now.</color>");
             }
         }
 

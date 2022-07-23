@@ -18,7 +18,7 @@ namespace Mikrocosmos
         private void OnTriggerEnter2D(Collider2D col) {
             if (NetworkServer.active) {
                 if (col.gameObject.TryGetComponent<PlayerSpaceship>(out PlayerSpaceship spaceship)) {
-                    if (!playersInTrigger.Contains(spaceship)) {
+                    if (!playersInTrigger.Contains(spaceship) && !spaceship.matchInfo.IsSpectator) {
                         OnPlayerEnterTrigger?.Invoke(spaceship);
                         playersInTrigger.Add(spaceship);
                     }
@@ -30,6 +30,9 @@ namespace Mikrocosmos
         private void OnTriggerExit2D(Collider2D other) {
             if (NetworkServer.active) {
                 if (other.gameObject.TryGetComponent<PlayerSpaceship>(out PlayerSpaceship spaceship)) {
+                    if (spaceship.matchInfo.IsSpectator) {
+                        return;
+                    }
                     OnPlayerExitTrigger?.Invoke(spaceship);
                     playersInTrigger.Remove(spaceship);
                 }

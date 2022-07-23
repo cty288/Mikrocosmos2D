@@ -92,7 +92,7 @@ namespace Mikrocosmos
         [SerializeField] private List<GameObject> allMissions;
 
         private IGameProgressSystem progressSystem;
-
+        private IRoomMatchSystem roomMatchSystem;
 
         private void Awake() {
             Mikrocosmos.Interface.RegisterSystem<IGameMissionSystem>(this);
@@ -103,7 +103,7 @@ namespace Mikrocosmos
             progressSystem = this.GetSystem<IGameProgressSystem>();
             allMissions.Shuffle();
             StartCoroutine(WaitToSwitchMission());
-
+            roomMatchSystem = this.GetSystem<IRoomMatchSystem>();
             this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnMissionAnnounceWinners>(OnMissionAnnounceWinners)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -112,7 +112,7 @@ namespace Mikrocosmos
 
         [ServerCallback]
         private void OnMissionAnnounceWinners(OnMissionAnnounceWinners e) {
-            List<NetworkMainGamePlayer> allPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo()
+            List<NetworkMainGamePlayer> allPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo(true)
                 .Select(info => info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>())
                 .ToList();
 
@@ -165,7 +165,7 @@ namespace Mikrocosmos
 
         private void SwitchToMission(IMission mission, GameObject missionGameObject) {
             StartCoroutine(MissionMaximumTimeCheck(mission, missionGameObject));
-            mission.OnMissionStart(progressSystem.GetGameProgress(), NetworkManager.singleton.numPlayers);
+            mission.OnMissionStart(progressSystem.GetGameProgress(), roomMatchSystem.GetActivePlayerNumber());
             this.SendEvent<OnMissionStart>(new OnMissionStart(){MissionName = mission.MissionName});
             RpcNotifyMissionAlreadytart(new ClientMissionStartInfo() {
                 MissionDescriptionLocalizedKey = mission.MissionDescriptionLocalizedKey(),

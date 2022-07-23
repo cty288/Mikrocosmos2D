@@ -21,6 +21,7 @@ namespace Mikrocosmos
         [SerializeField]
         private List<GameObject> meteorPrefabs;
 
+        private IRoomMatchSystem roomMatchSystem;
         private List<BoxCollider2D> meteorSpawnPositions;
 
         [FormerlySerializedAs("meteorMaximumCount")] [SerializeField] private int meteorMaximumCountPerPlayer = 5;
@@ -34,6 +35,7 @@ namespace Mikrocosmos
            
         }
 
+        
 
         
         private IEnumerator CheckSpawnMeteor() {
@@ -41,8 +43,8 @@ namespace Mikrocosmos
                 yield return new WaitForSeconds(meteorSpawnInterval);
 
                 meteorMaximumCount =
-                    Mathf.Clamp(Mathf.RoundToInt(meteorMaximumCountPerPlayer * (1-gameProgressSystem.GetGameProgress())), NetworkManager.singleton.numPlayers * meteorMaximumCountPerPlayer/2,
-                        NetworkManager.singleton.numPlayers * meteorMaximumCountPerPlayer * 2);
+                    Mathf.Clamp(Mathf.RoundToInt(meteorMaximumCountPerPlayer * (1-gameProgressSystem.GetGameProgress())), roomMatchSystem.GetActivePlayerNumber() * meteorMaximumCountPerPlayer/2,
+                        roomMatchSystem.GetActivePlayerNumber() * meteorMaximumCountPerPlayer * 2);
 
                 meteorSpawnInterval =
                     (Mathf.RoundToInt(meteorSpawnInterval * (1 + gameProgressSystem.GetGameProgress())));
@@ -60,6 +62,7 @@ namespace Mikrocosmos
             activeMeteors = GameObject.FindGameObjectsWithTag("Meteor").ToList();
             this.RegisterEvent<OnMeteorDestroyed>(OnMeteorDestroyed).UnRegisterWhenGameObjectDestroyed(gameObject);
             SpawnInitialMeteors();
+            roomMatchSystem = this.GetSystem<IRoomMatchSystem>();
             StartCoroutine(CheckSpawnMeteor());
         }
 

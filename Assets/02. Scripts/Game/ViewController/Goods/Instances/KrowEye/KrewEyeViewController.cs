@@ -7,6 +7,7 @@ using MikroFramework.Event;
 using Mirror;
 using Polyglot;
 using UnityEngine;
+using UnityEngine.Networking.Types;
 using UnityEngine.U2D;
 
 namespace Mikrocosmos
@@ -56,21 +57,24 @@ namespace Mikrocosmos
         private void OnSpaceshipEnterTrigger(PlayerSpaceship e) {
             if (krowEyeModel.TeamBelongTo.Value != -1) {
                 if (e.ThisSpaceshipTeam != krowEyeModel.TeamBelongTo.Value) {
-                    
-                    List<PlayerMatchInfo> matchInfo =
-                        this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(krowEyeModel.TeamBelongTo.Value);
+                    if (!e.matchInfo.IsSpectator) {
+                        List<PlayerMatchInfo> matchInfo =
+                            this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(krowEyeModel.TeamBelongTo.Value);
 
-                    List<NetworkConnectionToClient> connections = matchInfo.Select((info => {
-                        return info.Identity.connectionToClient;
-                    })).ToList();
+                        List<NetworkConnectionToClient> connections = matchInfo.Select((info => {
+                            return info.Identity.connectionToClient;
+                        })).ToList();
 
-                    foreach (NetworkConnectionToClient connection in connections) {
-                        TargetAlertTeamMembers(connection);
-                    }
+                        foreach (NetworkConnectionToClient connection in connections)
+                        {
+                            TargetAlertTeamMembers(connection);
+                        }
 
-                    if (e.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
-                        buffSystem.AddBuff<KrowEyeSpeedDownDeBuff>(new KrowEyeSpeedDownDeBuff(
-                            UntilAction.Allocate(() => !spaceshipDetectTrigger.PlayersInTrigger.Contains(e))));
+                        if (e.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem))
+                        {
+                            buffSystem.AddBuff<KrowEyeSpeedDownDeBuff>(new KrowEyeSpeedDownDeBuff(
+                                UntilAction.Allocate(() => !spaceshipDetectTrigger.PlayersInTrigger.Contains(e))));
+                        }
                     }
                 }
             }
