@@ -97,7 +97,8 @@ namespace Mikrocosmos {
         [SerializeField] private float maxShootForce = 80f;
 
         [SerializeField] private Transform droppedItemSpawnPos;
-
+        [field: SerializeField]
+        public BindableProperty<string> ClientHookedItemName { get; private set; } = new BindableProperty<string>();
 
 
 

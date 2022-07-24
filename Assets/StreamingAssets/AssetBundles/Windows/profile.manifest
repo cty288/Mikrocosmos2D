@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1663402820
+CRC: 3740134503
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1fe2fcf8bee6bc1a2884bfbcea4e4e34
+    Hash: 4c7ecf79e79337a44c429abb3265756e
   TypeTreeHash:
     serializedVersion: 2
     Hash: c29c357128feff56790ec9816c4fc93d
@@ -21,7 +21,6 @@ Assets:
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile306.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile105.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile5.png
-- Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile202.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile301.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile107.png
 - Assets/04. Sprites/UI/AvatarSystem/AvatarElements/profile303.png

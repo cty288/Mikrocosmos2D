@@ -32,6 +32,8 @@ namespace Mikrocosmos
 
         void CmdRequestSpectator(NetworkIdentity requester);
 
+        void CmdGive(NetworkIdentity requester, int itemID, int amount, string playerName);
+
         void CmdSendChatMessage(NetworkIdentity requester, string message);
     }
   public class CommandSystem : AbstractNetworkedSystem, ICommandSystem {
@@ -188,6 +190,39 @@ namespace Mikrocosmos
                 TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no authority</color>");
             }
         }
+        [Command(requiresAuthority = false)]
+        public void CmdGive(NetworkIdentity requester, int itemID, int amount, string playerName) {
+            /*
+            List<PlayerMatchInfo> allPlayersWithTheName = FindAllPlayersWithName(playerName, requester);
+            if (CheckPlayerIsManager(requester, "give"))
+            {
+                if (allPlayersWithTheName.Count == 0) {
+                    TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no such player exists</color>");
+                    return;
+                }
+
+                foreach (PlayerMatchInfo info in allPlayersWithTheName) {
+                    
+                    IBuffSystem buffSystem = info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().ControlledSpaceship
+                        .GetComponent<IBuffSystem>();
+                    if (level >= 0)
+                    {
+                        PermanentBuffFactory.AddPermanentBuffToPlayer((PermanentBuffType)buffID, buffSystem, level);
+                    }
+                    else
+                    {
+                        PermanentBuffFactory.ReducePermanentBuffForPlayer((PermanentBuffType)buffID, buffSystem, -level);
+                    }
+
+                    RpcGetLogMessage("<color=green>Player " + info.Name + $" added level {level} to buff {(PermanentBuffType)buffID}" + "</color>");
+                }
+            }
+            else
+            {
+                TargetGetLogMessage(requester.connectionToClient, "<color=red>Failed to execute this command: no authority</color>");
+            }*/
+        }
+
 
         [Command(requiresAuthority = false)]
         public void CmdRequestAddBuff(NetworkIdentity requester, string playerName, int buffID, int level,
@@ -247,6 +282,8 @@ namespace Mikrocosmos
                 TargetGetLogMessage(requester.connectionToClient, "<color=green>You are now considered as a \'player\' now.</color>");
             }
         }
+
+       
 
         #endregion
 

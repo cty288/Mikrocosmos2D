@@ -49,6 +49,6 @@ namespace Mikrocosmos
             });
         }
 
-        public BindableProperty<string> ClientHookedItemName { get; private set; } = new BindableProperty<string>();
+      
     }
 }
