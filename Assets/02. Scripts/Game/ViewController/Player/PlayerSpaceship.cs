@@ -155,20 +155,29 @@ namespace Mikrocosmos
 
         [ServerCallback]
         private void ServerMove(Vector3 mousePos) {
-            if (Vector3.Distance(mousePos, transform.position) < 5 && (serverHorizontal==0 && serverVertical ==0)) {
+            if (Vector3.Distance(mousePos, transform.position) < 5 && (serverHorizontal==0)) {
                 return;
             }
 
-            Vector2 forceDir = (mousePos - transform.position)
-                .normalized;
-
-            if (serverHorizontal != 0 || serverVertical != 0) {
-                forceDir = new Vector2(serverHorizontal, serverVertical);
+            
+            Vector2 forceDir = Vector2.zero;
+            if (isControlling) {
+                forceDir = (mousePos - transform.position).normalized;
             }
+           
+            Vector2 transformRight = transform.right;
+            forceDir += transformRight * serverHorizontal;
+
+            /*if (serverHorizontal != 0 || serverVertical != 0) {
+                forceDir = new Vector2(serverHorizontal, serverVertical);
+            }*/
+
             
             Vector2 targetAddedVelocity = forceDir * GetModel().Acceleration * Time.fixedDeltaTime;
-            if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame)
-            {
+            
+
+
+            if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame) {
                 targetAddedVelocity = Vector2.zero;
             }
 
@@ -248,7 +257,7 @@ namespace Mikrocosmos
                 }
                 
                 //Debug.Log("Hasauthority");
-                if ((isControlling ||  serverHorizontal!=0 || serverVertical!=0) && Model.HookState == HookState.Freed && CanControl) {
+                if ((isControlling ||  serverHorizontal!=0 ) && Model.HookState == HookState.Freed && CanControl) {
                     ServerMove(mousePosition);
                 }
 

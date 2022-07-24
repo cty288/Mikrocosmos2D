@@ -122,7 +122,7 @@ namespace Mikrocosmos
             if (hasAuthority && isClient)
             {
                
-                if (Input.GetMouseButtonDown(1)) {
+                if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.W)) {
                     if (Model.HookState == HookState.Freed) {
                         CmdUpdateCanControl(true);
                     }
@@ -135,11 +135,11 @@ namespace Mikrocosmos
 
                 if (Model.HookState == HookState.Freed) {
                     clientHorizontal.Value = Input.GetAxis("Horizontal");
-                    clientVertical.Value = Input.GetAxis("Vertical");
+                  //  clientVertical.Value = Input.GetAxis("Vertical");
                 }
                 else {
                     clientHorizontal.Value = 0;
-                    clientVertical.Value = 0;
+                   // clientVertical.Value = 0;
                 }
                
                 if (Input.GetMouseButtonDown(0)) {
@@ -187,7 +187,7 @@ namespace Mikrocosmos
                     }
                 }
 
-                if (Input.GetMouseButtonUp(1)) {
+                if (Input.GetMouseButtonUp(1) || Input.GetKeyUp(KeyCode.W)) {
                     CmdUpdateCanControl(false);
                 }
 
