@@ -64,6 +64,8 @@ namespace Mikrocosmos
 
         private IGameProgressSystem gameProgressSystem;
 
+        private float serverHorizontal = 0;
+        private float serverVertical = 0;
 
 
         [ServerCallback]
@@ -145,33 +147,45 @@ namespace Mikrocosmos
         [Command]
         private void CmdUpdateMousePosition(Vector2 mousePos)
         {
-            if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame)
-            {
+            if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame) {
                 return;
             }
             mousePosition = mousePos;
         }
 
         [ServerCallback]
-        private void ServerMove(Vector3 mousePos)
-        {
+        private void ServerMove(Vector3 mousePos) {
+            if (Vector3.Distance(mousePos, transform.position) < 5 && (serverHorizontal==0 && serverVertical ==0)) {
+                return;
+            }
+
             Vector2 forceDir = (mousePos - transform.position)
                 .normalized;
+
+            if (serverHorizontal != 0 || serverVertical != 0) {
+                forceDir = new Vector2(serverHorizontal, serverVertical);
+            }
+            
             Vector2 targetAddedVelocity = forceDir * GetModel().Acceleration * Time.fixedDeltaTime;
             if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame)
             {
                 targetAddedVelocity = Vector2.zero;
             }
+
             if (rigidbody.velocity.magnitude <= Model.MaxSpeed || (rigidbody.velocity + targetAddedVelocity).magnitude <
-                rigidbody.velocity.magnitude)
-            {
+                rigidbody.velocity.magnitude) {
                 //rigidbody.AddForce(forceDir * GetModel().MoveForce);
                 rigidbody.velocity += targetAddedVelocity;
             }
         }
+
+        
         [ServerCallback]
         private void ServerRotate(Vector2 mousePos)
         {
+            if (Vector3.Distance(mousePos, transform.position) < 5) {
+                return;
+            }
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;
             float angle = Mathf.Atan2(dir.y, dir.x) * (180 / Mathf.PI) + 90;
             if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame)
@@ -234,7 +248,7 @@ namespace Mikrocosmos
                 }
                 
                 //Debug.Log("Hasauthority");
-                if (isControlling && Model.HookState == HookState.Freed && CanControl) {
+                if ((isControlling ||  serverHorizontal!=0 || serverVertical!=0) && Model.HookState == HookState.Freed && CanControl) {
                     ServerMove(mousePosition);
                 }
 
@@ -298,6 +312,16 @@ namespace Mikrocosmos
             }
             
            
+        }
+
+        [Command]
+        private void CmdOnClientHorizontalChanged(float oldHorizontal, float horizontal) {
+            serverHorizontal = horizontal;
+        }
+
+        [Command]
+        private void CmdOnClientVerticalChanged(float arg1, float vertical) {
+            serverVertical = vertical;
         }
     }
 

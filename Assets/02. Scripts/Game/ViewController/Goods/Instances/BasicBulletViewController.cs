@@ -140,7 +140,11 @@ namespace Mikrocosmos
                     Debug.Log($"Bullet Destroy {gameObject.name}");
                    
                 }
-                animator.SetTrigger("Hit");
+
+                if (animator) {
+                    animator.SetTrigger("Hit");
+                }
+               
                 DestroySelf();
             }
         }
@@ -152,7 +156,7 @@ namespace Mikrocosmos
         protected override void Update() {
             base.Update();
             if (isServer) {
-                if (rigidbody.velocity.magnitude < 1f && animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
+                if (rigidbody.velocity.magnitude < 1f && animator && animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) {
                     animator.SetTrigger("Hit");
                    
                     DestroySelf();

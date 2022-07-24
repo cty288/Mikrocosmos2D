@@ -16,10 +16,10 @@ GameObject:
   - component: {fileID: 1133179267551477265}
   - component: {fileID: 1145151507007897450}
   - component: {fileID: 7009927598964169536}
-  - component: {fileID: 2517722696999079066}
-  - component: {fileID: 4623635824010423997}
   - component: {fileID: 5368087662972855746}
   - component: {fileID: 4166255472177508466}
+  - component: {fileID: -1853457126529848383}
+  - component: {fileID: -4235951886906140060}
   m_Layer: 7
   m_Name: Toliet
   m_TagString: Untagged
@@ -237,65 +237,9 @@ MonoBehaviour:
   visionEntityMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
   visionAffectedSprites:
   - {fileID: 6410031578183631637}
+  visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
---- !u!114 &2517722696999079066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f99d8d5b9cd55a4d95552d02d803f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  <MoveMode>k__BackingField: 1
-  <MaxSpeed>k__BackingField: 50
-  <CanBeAddedToInventory>k__BackingField: 1
-  <HookState>k__BackingField: 0
-  <HookedByIdentity>k__BackingField: {fileID: 0}
-  <HookedByTransform>k__BackingField: {fileID: 0}
-  <Acceleration>k__BackingField: 0
-  <SelfMass>k__BackingField: 10
-  <Name>k__BackingField: Toliet
-  <BasicSellPrice>k__BackingField: 50
-  <BasicBuyPrice>k__BackingField: 30
-  <GoodRarity>k__BackingField: 1
-  <IsSell>k__BackingField: 1
-  <CanBeUsed>k__BackingField: 0
-  <UseMode>k__BackingField: 0
-  <Frequency>k__BackingField: 0
-  <Durability>k__BackingField: 0
-  <MaxDurability>k__BackingField: 0
---- !u!114 &4623635824010423997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6410031578183631850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b46ff1cb7e87ed14fa105476fd9e4ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  <HookedPositionOffset>k__BackingField: {x: 0, y: 3.86}
-  <HookedRotationZOffset>k__BackingField: 0
-  <IsMaskable>k__BackingField: 1
-  buyMaterial: {fileID: 2100000, guid: 7173985434666114a93124af8ba673ab, type: 2}
-  sellMaterial: {fileID: 2100000, guid: a8538a7f171760141b72d0592ef24ab0, type: 2}
-  visionMaterial: {fileID: 2100000, guid: 908d79952cc41704c835cb1ecc1527fc, type: 2}
-  defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  visionAffectedSprites:
-  - {fileID: 6410031578183631637}
-  <CanBeMasked>k__BackingField: 1
-  DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
-  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
+  <AlsoMaskedOnMap>k__BackingField: 0
 --- !u!58 &5368087662972855746
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -330,3 +274,49 @@ MonoBehaviour:
   maxDistance: 100
   detectTime: 1
   colliders: []
+--- !u!114 &-1853457126529848383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5af11a9e8ef0b2409ae2cded8f0f388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  <HookedPositionOffset>k__BackingField: {x: 0, y: 0}
+  <HookedRotationZOffset>k__BackingField: 0
+  Force: 0
+  destroyWhenHit: 1
+--- !u!114 &-4235951886906140060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410031578183631850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 311063edff106cd4eb942c1bd167e39e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  <MoveMode>k__BackingField: 0
+  <MaxSpeed>k__BackingField: 80
+  <CanBeHooked>k__BackingField: 0
+  <CanBeAddedToInventory>k__BackingField: 0
+  <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
+  <HookState>k__BackingField: 0
+  <HookedByIdentity>k__BackingField: {fileID: 0}
+  <HookedByTransform>k__BackingField: {fileID: 0}
+  <canDealMomentumDamage>k__BackingField: 1
+  <Acceleration>k__BackingField: 0
+  <SelfMass>k__BackingField: 0.5
+  <Damage>k__BackingField: 1000
+  <DamageReducedBySpeed>k__BackingField: 0
+  <Name>k__BackingField: TolietBullet

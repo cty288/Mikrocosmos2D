@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using MikroFramework.Architecture;
+using MikroFramework.BindableProperty;
 using MikroFramework.Event;
 using MikroFramework.TimeSystem;
 using MikroFramework.Utilities;
@@ -21,8 +22,9 @@ namespace Mikrocosmos
 
         private Animator animator;
 
-        private float minHookPressTimeInterval = 0.8f;
-        private float minHookPressTimer = 0f;
+        private BindableProperty<float> clientHorizontal = new BindableProperty<float>(0);
+        private BindableProperty<float> clientVertical = new BindableProperty<float>(0);
+
         private Vector2 clientPreviousMousePosition = Vector2.zero;
         private ISpaceshipConfigurationModel GetModel()
         {
@@ -102,8 +104,15 @@ namespace Mikrocosmos
                 mapPlayer.GetComponent<SpriteRenderer>().sprite = mapSprites[1];
                 mapPlayer.DOScale(new Vector3(10, 10, 1), 0.5f);
             }
+        }
 
-            
+
+        public override void OnStartAuthority() {
+            base.OnStartAuthority();
+            clientHorizontal.RegisterOnValueChaned(CmdOnClientHorizontalChanged)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            clientVertical.RegisterOnValueChaned(CmdOnClientVerticalChanged)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
         [SerializeField] private List<ParticleSystem> particles;
@@ -112,9 +121,8 @@ namespace Mikrocosmos
             base.Update();
             if (hasAuthority && isClient)
             {
-                minHookPressTimer += Time.deltaTime;
-                if (Input.GetMouseButtonDown(1))
-                {
+               
+                if (Input.GetMouseButtonDown(1)) {
                     if (Model.HookState == HookState.Freed) {
                         CmdUpdateCanControl(true);
                     }
@@ -124,6 +132,15 @@ namespace Mikrocosmos
                     }
                 }
 
+
+                if (Model.HookState == HookState.Freed) {
+                    clientHorizontal.Value = Input.GetAxis("Horizontal");
+                    clientVertical.Value = Input.GetAxis("Vertical");
+                }
+                else {
+                    clientHorizontal.Value = 0;
+                    clientVertical.Value = 0;
+                }
                
                 if (Input.GetMouseButtonDown(0)) {
                     CmdUpdateUsing(true);
@@ -164,20 +181,17 @@ namespace Mikrocosmos
                     }
                     else {
                         //if (minHookPressTimer > minHookPressTimeInterval) {
-                            minHookPressTimer = 0;
-                            hookSystem.CmdReleaseHookButton();
+                        hookSystem.CmdReleaseHookButton();
                        // }
                         
                     }
                 }
 
-
-                if (Input.GetMouseButtonUp(1))
-                {
+                if (Input.GetMouseButtonUp(1)) {
                     CmdUpdateCanControl(false);
-
                 }
 
+                
                 ClientCheckMouseScroll();
 
                 for (int i = 48; i <= 57; i++) {
@@ -196,7 +210,6 @@ namespace Mikrocosmos
                         CmdPressShortCut(index);
                     }
                 }
-
             }
 
 
@@ -225,8 +238,7 @@ namespace Mikrocosmos
                     }
                 }
             }
-
-
+            
         }
 
         private float lastScroll = 0;

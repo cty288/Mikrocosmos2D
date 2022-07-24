@@ -227,7 +227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -18.000122, y: 0.0000038147}
+  m_AnchoredPosition: {x: -18, y: 0.0000038147}
   m_SizeDelta: {x: 378, y: 940.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1292553831
@@ -1619,7 +1619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -18.000122, y: 0.0000038147}
+  m_AnchoredPosition: {x: -18, y: 0.0000038147}
   m_SizeDelta: {x: 378, y: 940.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5735273285122596878
@@ -2701,7 +2701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 135}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 742.9996, y: -252.70312}
+  m_AnchoredPosition: {x: 742.9995, y: -252.70312}
   m_SizeDelta: {x: 50, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &5735273285332092850
@@ -3731,7 +3731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 950.9993, y: 0}
+  m_AnchoredPosition: {x: 950.99927, y: 0}
   m_SizeDelta: {x: 100, y: -83.39514}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &5735273285543935769
@@ -5837,7 +5837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -986.9998, y: 0}
+  m_AnchoredPosition: {x: -986.99976, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5735273285905723231
@@ -29428,7 +29428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -360.99957, y: -173}
+  m_AnchoredPosition: {x: -360.99963, y: -173}
   m_SizeDelta: {x: -1179.3, y: 77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5735273286808241115
@@ -47621,7 +47621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

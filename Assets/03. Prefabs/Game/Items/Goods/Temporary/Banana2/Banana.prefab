@@ -291,8 +291,9 @@ MonoBehaviour:
   defaultSpriteMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   visionAffectedSprites:
   - {fileID: 3471998429313085514}
+  visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
-  DurabilityCountTextPrefab: {fileID: 5935408020982162880, guid: 5f770b17f17baa146b8140010b9ef221, type: 3}
-  DurabilityCountTextSpawnLocalPosition: {x: 0, y: 83.6}
-  bananaPrefab: {fileID: 5222149471336982627, guid: b2688ff8c17fe014ab2ec4bafac8b42a, type: 3}
-  ShootForce: 1000
+  <AlsoMaskedOnMap>k__BackingField: 0
+  DurabilityCountSprite: {fileID: 0}
+  bananaPrefab: {fileID: 6410031578183631850, guid: ec3005f1e80d76c4f894b978a65f0f2d, type: 3}
+  ShootForce: 200

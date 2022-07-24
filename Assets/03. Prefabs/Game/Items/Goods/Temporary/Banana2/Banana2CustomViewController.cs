@@ -10,15 +10,19 @@ public class Banana2CustomViewController : BasicGoodsViewController {
 
     protected override void OnServerItemUsed() {
         base.OnServerItemUsed();
-        GameObject banana = Instantiate(bananaPrefab, transform.position + transform.up* 3, Quaternion.identity);
-        // banana.GetComponent<ICanBeUsed>().MaxDurability = 100;
-        banana.GetComponent<BulletViewController>().shooter = GetComponent<Collider2D>();
-        banana.GetComponent<Rigidbody2D>()
-            .AddForce(Model.HookedByIdentity.transform.up.normalized * 50,
-                ForceMode2D.Impulse);
-        banana.GetComponent<BulletViewController>().Force = ShootForce;
+
+
+     
+
         
-        NetworkServer.Spawn(banana);
+
+        GameObject bullet = Instantiate(bananaPrefab, transform.position + transform.up* 3, Quaternion.identity);
+        // banana.GetComponent<ICanBeUsed>().MaxDurability = 100;
+        bullet.GetComponent<BasicBulletViewController>().SetShotoer(Model.HookedByIdentity, GetComponent<Collider2D>(), null);
+        bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * ShootForce, ForceMode2D.Impulse);
+        bullet.transform.rotation = transform.rotation;
+
+        NetworkServer.Spawn(bullet);
 
     }
 }
