@@ -209,8 +209,8 @@
     },
     {
       "AssetName": "info_elements",
-      "MD5": "d4c18d70959acd9b8172d0af2203202f",
-      "FileSize": 9673.467,
+      "MD5": "cb9bbfd4d90fc5ea0485169160b6c377",
+      "FileSize": 9677.651,
       "assetDatas": [
         {
           "Name": "MissionInfoElement",
@@ -270,8 +270,8 @@
     },
     {
       "AssetName": "profile",
-      "MD5": "eebcf040c526f6bd528fdfa9971b4ef5",
-      "FileSize": 631.615234,
+      "MD5": "064d8e95b700dc6a0716b040c3d4f12d",
+      "FileSize": 632.676758,
       "assetDatas": [
         {
           "Name": "AvatarAtlas",
@@ -365,11 +365,6 @@
         },
         {
           "Name": "profile201",
-          "OwnerBundleName": "profile",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "profile202",
           "OwnerBundleName": "profile",
           "AssetType": "UnityEngine.Texture2D"
         },
@@ -486,14 +481,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "3f2e4e170f7c74372f88c8b5d46ccc83",
+      "MD5": "d4212db16f238da14b9aa4571c2704e5",
       "FileSize": 1.86621094,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "012dac02c86c24e10bc210634b128391",
-      "FileSize": 7069.741,
+      "MD5": "541067d4a777d8ba53e56d0444e383df",
+      "FileSize": 7068.501,
       "assetDatas": [
         {
           "Name": "FirePlant",

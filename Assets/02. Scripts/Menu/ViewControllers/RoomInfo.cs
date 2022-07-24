@@ -47,6 +47,7 @@ namespace Mikrocosmos {
             }
 
             if (response.IsLAN) {
+               // Uri uri = new Uri()
                 NetworkManager.singleton.GetComponent<TelepathyTransport>().port = (ushort)response.Uri.Port;
                 ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(response.Uri);
             }

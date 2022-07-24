@@ -6629,7 +6629,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: Assets/01. Scenes/PrepareRoom.unity
   transport: {fileID: 872660649}
-  networkAddress: localhost
+  networkAddress: 127.0.0.1
   maxConnections: 8
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 2091793786591750142, guid: 3765a9e6322d48240a46b94e3626a4d3, type: 3}

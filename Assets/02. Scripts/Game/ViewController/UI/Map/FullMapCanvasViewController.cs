@@ -19,6 +19,7 @@ namespace Mikrocosmos
 
         private void Awake() {
             fullMapPanel = transform.Find("FullMap").gameObject;
+            
         }
 
         private void Update() {
