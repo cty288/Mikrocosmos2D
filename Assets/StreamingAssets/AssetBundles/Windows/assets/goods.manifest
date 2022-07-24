@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2505135669
+CRC: 4156621984
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e41543e180b88da21ba3d465ab2ad035
+    Hash: 7d5b5889a2a7113e13395b32c5b4e0c3
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d6f620490eafb90240e78ab4d62c44b7
+    Hash: 8a20af0d73c393c31ec72be154443737
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -139,7 +139,11 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.RenderPipelines.Universal.Runtime
   ClassName: UnityEngine.Rendering.Universal.LightUtility/LightMeshVertex
 - AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.ArgumentCache
+- AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentListenerMode
 - AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.UnityEvent
 Assets:

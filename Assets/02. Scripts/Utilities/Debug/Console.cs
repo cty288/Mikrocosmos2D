@@ -67,6 +67,11 @@ namespace Mikrocosmos
                 new CommandArg(CommandType.STRING, "message",""),
                 new CommandArg(CommandType.STRING, "playerName", ""),
             })},
+            {"give", new Command(new [] {
+                new CommandArg(CommandType.INT, "itemID", "", null, new Vector2(0, Mikrocosmos.Interface.GetModel<IGoodsConfigurationModel>().GetAllGoodsProperties().Count-1)),
+                new CommandArg(CommandType.INT, "itemCount", "", 1),
+                new CommandArg(CommandType.STRING, "playerName", "")
+            })},
             {"imtherealdeveloper", new Command(Array.Empty<CommandArg>(), true)}
         };
         
@@ -124,6 +129,9 @@ namespace Mikrocosmos
                         case "imtherealdeveloper":
                             output = Spectator();
                             break;
+                        case "give":
+                            output = Give(int.Parse(args[1]), args[3], int.Parse(args[2]));
+                            break;
                         // ¥ÌŒÛ÷∏¡Ó
                         default:
                             output = "Unable to find the command. Type /help to view the command list.";
@@ -137,6 +145,12 @@ namespace Mikrocosmos
             }
            
             return output;
+        }
+
+        private static string Give(int itemID, string playerName, int amount) {
+            Mikrocosmos.Interface.GetSystem<ICommandSystem>()
+                .CmdGive(NetworkClient.localPlayer, itemID, amount, playerName);
+            return "Notifying Server...";
         }
 
         private static string Spectator() {

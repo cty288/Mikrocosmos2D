@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
@@ -14,7 +15,7 @@ namespace Mikrocosmos
         private Image[] itemTypeImages;
         public int Price;
         public float Time;
-
+        [SerializeField]
         private string goodsName;
         private Animator animator;
 
@@ -43,20 +44,24 @@ namespace Mikrocosmos
                 if (NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>()) {
                     clientLocalPlayerHookSystem = NetworkClient.localPlayer.GetComponent<NetworkMainGamePlayer>()
                         .ControlledSpaceship.GetComponent<IHookSystem>();
-                    clientLocalPlayerHookSystem.ClientHookedItemName.RegisterWithInitValue(OnClientHookItemChanged)
-                        .UnRegisterWhenGameObjectDestroyed(gameObject);
                 }
             }
         }
 
-        private void OnClientHookItemChanged(string oldName, string newName) {
-            if (newName == goodsName) {
-                animator.SetBool("IsTriggered", true);
+        private void Update() {
+            if (clientLocalPlayerHookSystem!=null) {
+                if (clientLocalPlayerHookSystem.ClientHookedItemName.Value == goodsName) {
+                    animator.SetBool("IsTriggered", true);
+                }
+                else
+                {
+                    animator.SetBool("IsTriggered", false);
+                }
             }
-            else {
-                animator.SetBool("IsTriggered", false);
-            }
+           
         }
+
+   
         
         public void UpdateInfo(int price, float time, string goodsName, bool isRaw = false) {
             RegisterClientHookSystem();
@@ -64,10 +69,7 @@ namespace Mikrocosmos
             priceText.text = Price.ToString();
             this.goodsName = goodsName;
             this.Time = time;
-            if (clientLocalPlayerHookSystem != null) {
-                OnClientHookItemChanged("", clientLocalPlayerHookSystem.ClientHookedItemName.Value);
-            }
-            
+
             if (itemTypeImages.Length>0) {
                 foreach (var itemTypeImage in itemTypeImages) {
                     itemTypeImage.enabled = true;
@@ -83,9 +85,7 @@ namespace Mikrocosmos
                 foreach (var itemTypeImage in itemTypeImages) {
                     itemTypeImage.enabled = false;
                 }
-              
             }
-           
         }
 
 
