@@ -59,6 +59,7 @@ namespace Mikrocosmos {
 
         private void OnEnable() {
             InputName.text = localPlayerInfo.NameInfo.Value;
+            selectionPanel.SelectElementFromExistingAvatar(avatarModel.Avatar);
         }
 
         private void Start() {

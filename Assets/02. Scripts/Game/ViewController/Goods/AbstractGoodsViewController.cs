@@ -45,10 +45,10 @@ namespace Mikrocosmos
             });
 
             this.RegisterEvent<ClientOnBuyItemInitialized>(OnBuyItemInitialized)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
 
             this.RegisterEvent<OnClientGoodsTransactionStatusChanged>(OnClientBuyGoods)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
          
             ClientUpdateCanBeMasked();
         
@@ -66,7 +66,7 @@ namespace Mikrocosmos
             base.OnStartServer();
             globalTradingSystem = this.GetSystem<IGlobalTradingSystem>();
             this.RegisterEvent<OnServerGoodsCraftSuccess>(OnCraftItemSuccess)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
         }
 
         [ServerCallback]
@@ -247,11 +247,8 @@ namespace Mikrocosmos
          
         }
 
-        private void OnEnable() {
-            /*
-            if (Model.HookedByIdentity) {
-                
-            }*/
+        protected virtual void OnEnable() {
+            
         }
         
         protected override void Update() {

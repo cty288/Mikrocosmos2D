@@ -4,6 +4,7 @@ using System.Linq;
 using MikroFramework;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.TimeSystem;
 using Mirror;
 using Polyglot;
 using UnityEngine;
@@ -48,11 +49,16 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
             this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnNetworkedMainGamePlayerConnected)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
 
             spaceshipDetectTrigger.OnPlayerEnterTrigger += OnSpaceshipEnterTrigger;
+            this.GetSystem<ITimeSystem>().AddDelayTask(0.3f, () => {
+                RpcOnTeamChange(-1, krowEyeModel.TeamBelongTo.Value);
+            });
 
         }
+
+        
 
         private void OnSpaceshipEnterTrigger(PlayerSpaceship e) {
             if (krowEyeModel.TeamBelongTo.Value != -1) {
@@ -73,7 +79,7 @@ namespace Mikrocosmos
                         if (e.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem))
                         {
                             buffSystem.AddBuff<KrowEyeSpeedDownDeBuff>(new KrowEyeSpeedDownDeBuff(
-                                UntilAction.Allocate(() => !spaceshipDetectTrigger.PlayersInTrigger.Contains(e))));
+                                UntilAction.Allocate(() => !spaceshipDetectTrigger.PlayersInTrigger.Contains(e) || krowEyeModel.TeamBelongTo.Value==-1)));
                         }
                     }
                 }
@@ -86,6 +92,7 @@ namespace Mikrocosmos
 
         private void OnServerTeamChange(int oldTeam, int newTeam) {
             Debug.Log($"OnTeamChange: {newTeam}");
+            spaceshipDetectTrigger.Clear();
             RpcOnTeamChange(oldTeam, newTeam);
             /*
             if (newTeam == -1) {
@@ -119,7 +126,7 @@ namespace Mikrocosmos
             TargetCloseVision(identity.connectionToClient);
         }
 
-
+        
 
         #region Client
 
@@ -127,11 +134,12 @@ namespace Mikrocosmos
         private void RpcOnTeamChange(int oldTeam, int newTeam) {
             if (newTeam == -1) {
                 animator.SetTrigger("Idle");
+                mapUI.GetComponent<Animator>().SetTrigger("NoTeam");
+                mapUI.SetActive(false);
             } else if (oldTeam != newTeam) {
                 int thisClientTeam = NetworkClient.connection.identity.GetComponent<NetworkMainGamePlayer>().matchInfo
                     .Team;
                 mapUI.SetActive(thisClientTeam == newTeam);
-
                 if (newTeam == 1) {
                     animator.SetTrigger("Team1");
                     mapUI.GetComponent<Animator>().SetTrigger("Team1");

@@ -493,6 +493,7 @@ MonoBehaviour:
   reduceDurabilityInstantlyAfterUse: 0
   reduceDurabilityIfNotReducedWhenSwitchedToOtherSlotsAfterUse: 1
   clientCanSee: []
+  deactiveTimeAfterHooked: 60
 --- !u!114 &1333402916691061790
 MonoBehaviour:
   m_ObjectHideFlags: 0

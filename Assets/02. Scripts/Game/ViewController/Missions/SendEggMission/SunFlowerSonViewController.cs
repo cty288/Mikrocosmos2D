@@ -33,7 +33,7 @@ namespace Mikrocosmos
 
         public override void OnStartClient() {
             base.OnStartClient();
-            this.RegisterEvent<OnClientGoodsTransactionStatusChanged>(OnTransactionStatusChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnClientGoodsTransactionStatusChanged>(OnTransactionStatusChanged).UnRegisterWhenGameObjectDestroyed(gameObject, true);
             mapUI.SetActive(false);
             this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => {
                 TurnMapUI(GoodsModel.TransactionFinished);

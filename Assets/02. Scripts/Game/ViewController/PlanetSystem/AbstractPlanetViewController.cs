@@ -129,14 +129,14 @@ namespace Mikrocosmos
         {
             base.OnStartServer();
             this.RegisterEvent<OnServerPlanetGenerateSellItem>(OnServerPlanetGenerateSellItem)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
             this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnServerPlanetGenerateBuyingItem)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
             this.RegisterEvent<OnServerPlanetDestroySellItem>(OnServerPlanetDestroySellItem)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
 
             this.RegisterEvent<OnServerPlanetDestroyBuyItem>(OnServerPlanetDestroyBuyItem)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
             if (target) {
                 distance = Vector3.Distance(target.transform.position, transform.position);
             } 

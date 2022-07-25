@@ -15,16 +15,25 @@ namespace Mikrocosmos
         public HashSet<PlayerSpaceship> PlayersInTrigger => playersInTrigger;
 
      
-        private void OnTriggerEnter2D(Collider2D col) {
+        private void OnTriggerStay2D(Collider2D col) {
             if (NetworkServer.active) {
                 if (col.gameObject.TryGetComponent<PlayerSpaceship>(out PlayerSpaceship spaceship)) {
                     if (!playersInTrigger.Contains(spaceship) && !spaceship.matchInfo.IsSpectator) {
                         OnPlayerEnterTrigger?.Invoke(spaceship);
                         playersInTrigger.Add(spaceship);
                     }
-                    
                 }
             }
+        }
+
+        public void Clear() {
+            foreach (PlayerSpaceship spaceship in playersInTrigger) {
+                if (spaceship.matchInfo.IsSpectator) {
+                    continue;
+                }
+                OnPlayerExitTrigger?.Invoke(spaceship);
+            }
+            playersInTrigger.Clear();
         }
 
         private void OnTriggerExit2D(Collider2D other) {

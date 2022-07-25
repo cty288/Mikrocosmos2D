@@ -53,7 +53,7 @@ namespace Mikrocosmos
       public override void OnStartServer() {
           base.OnStartServer();
           this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnPlayerConnected)
-              .UnRegisterWhenGameObjectDestroyed(gameObject);
+              .UnRegisterWhenGameObjectDestroyed(gameObject, true);
         
       }
 

@@ -19,7 +19,7 @@ namespace Mikrocosmos
         public override void OnStartClient() {
             base.OnStartClient();
             this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnClientAffinityWithTeam1Changed)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
         }
 
         protected override void OnCollisionEnter2D(Collision2D collision) {

@@ -123,7 +123,7 @@ namespace Mikrocosmos
 
         public override void OnStartServer() {
             base.OnStartServer();
-            this.RegisterEvent<OnItemShot>(OnItemShot).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnItemShot>(OnItemShot).UnRegisterWhenGameObjectDestroyed(gameObject, true);
         }
 
         private void OnItemShot(OnItemShot e) {

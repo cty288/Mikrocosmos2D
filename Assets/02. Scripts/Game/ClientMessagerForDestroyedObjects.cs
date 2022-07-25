@@ -19,7 +19,7 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             this.RegisterEvent<OnItemDurabilityChange>(OnItemDurabilityChange)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
             
         }
 

@@ -39,7 +39,7 @@ namespace Mikrocosmos
         public override void OnStartServer()
         {
             base.OnStartServer();
-            this.RegisterEvent<OnEntityTakeDamage>(OnEntityTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnEntityTakeDamage>(OnEntityTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject, true);
             this.transform.position += new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
         }
 

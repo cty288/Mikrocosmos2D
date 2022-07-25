@@ -47,13 +47,16 @@ namespace Mikrocosmos
             affinityText = pointer.Find("AffinityText").GetComponent<TMP_Text>();
             distanceText = pointer.Find("DistanceText").GetComponent<TMP_Text>();
             // pointerBG = transform.Find("Pointer/PointerBG").GetComponent<Image>();
-            this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnAffinityWithTeam1Changed)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+          
             BindedGameObject = gameObject;
         }
 
-       
-        
+        private void OnEnable() {
+            this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnAffinityWithTeam1Changed)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+
         private void Start() {
             targetPlanet = GetComponent<Window_Pointer>().target.GetComponent<IPlanetTradingSystem>();
             targetPlanetTransform = GetComponent<Window_Pointer>().target.transform;

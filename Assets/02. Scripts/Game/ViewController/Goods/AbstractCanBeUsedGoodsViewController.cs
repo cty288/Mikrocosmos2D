@@ -25,15 +25,15 @@ namespace Mikrocosmos
 
         public override void OnStartServer() {
             base.OnStartServer();
-            this.RegisterEvent<OnItemUsed>(OnServerItemUsed).UnRegisterWhenGameObjectDestroyed(gameObject);
-            this.RegisterEvent<OnItemBroken>(OnServerItemBroken).UnRegisterWhenGameObjectDestroyed(gameObject);
-            this.RegisterEvent<OnHookItemSwitched>(OnServerItemSwitched).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnItemUsed>(OnServerItemUsed).UnRegisterWhenGameObjectDestroyed(gameObject, true);
+            this.RegisterEvent<OnItemBroken>(OnServerItemBroken).UnRegisterWhenGameObjectDestroyed(gameObject, true);
+            this.RegisterEvent<OnHookItemSwitched>(OnServerItemSwitched).UnRegisterWhenGameObjectDestroyed(gameObject, true);
             this.RegisterEvent<OnItemDurabilityChange>(OnItemDurabilityChange)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
-            this.RegisterEvent<OnItemStopUsed>(OnItemStopUsed).UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
+            this.RegisterEvent<OnItemStopUsed>(OnItemStopUsed).UnRegisterWhenGameObjectDestroyed(gameObject, true);
             
             this.RegisterEvent<OnServerItemAddedToBackpack>(OnItemAddedToBackpack)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
             // this.RegisterEvent<OnBackpackItemRemoved>(OnItemStopBeingSelected)
             //  .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -61,7 +61,7 @@ namespace Mikrocosmos
 
         private void OnItemStopUsed(OnItemStopUsed e) {
             if (e.Model == GoodsModel) {
-                OnServerItemStopUsed();
+                 OnServerItemStopUsed();
             }
         }
 

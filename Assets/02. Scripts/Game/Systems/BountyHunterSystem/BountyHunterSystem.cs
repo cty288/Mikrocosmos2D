@@ -57,9 +57,9 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             this.RegisterEvent<OnPlayerMultiKillUpdate>(OnPlayerMultiKillUpdate)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
 
-            this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject, true);
             
             allPlayersWithTeam.Add(1, this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(1));
             allPlayersWithTeam.Add(2, this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(2));

@@ -13,7 +13,7 @@ namespace Mikrocosmos
         {
             base.OnStartServer();
             this.RegisterEvent<OnServerObjectHookStateChanged>(OnHookStatusChanged)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
         }
 
         private void OnHookStatusChanged(OnServerObjectHookStateChanged e)

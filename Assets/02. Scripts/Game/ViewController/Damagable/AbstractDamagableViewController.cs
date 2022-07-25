@@ -18,7 +18,7 @@ namespace Mikrocosmos
 
         public override void OnStartServer() {
             base.OnStartServer();
-            this.RegisterEvent<OnEntityTakeDamage>(OnEntityTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnEntityTakeDamage>(OnEntityTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject, true);
         }
 
         private void OnEntityTakeDamage(OnEntityTakeDamage e) {

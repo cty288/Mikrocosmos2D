@@ -349,7 +349,7 @@ namespace Mikrocosmos {
         private IGameProgressSystem progressSystem;
         public override void OnStartServer() {
             base.OnStartServer();
-            this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject, true);
             this.GetSystem<ITimeSystem>().AddDelayTask(0.2f, () => {
                 progressSystem = this.GetSystem<IGameProgressSystem>();
             });

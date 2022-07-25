@@ -34,7 +34,7 @@ namespace Mikrocosmos
             base.OnStartServer();
             //spawn spaceship
             this.RegisterEvent<OnRoomPlayerJoinGame>(OnRoomPlayerJoinGame)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+                .UnRegisterWhenGameObjectDestroyed(gameObject, true);
             this.SendEvent<OnNetworkedMainGamePlayerConnected>(new OnNetworkedMainGamePlayerConnected() {
                 connection =  connectionToClient
             });

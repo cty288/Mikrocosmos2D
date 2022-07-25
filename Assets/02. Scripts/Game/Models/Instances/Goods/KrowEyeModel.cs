@@ -15,13 +15,14 @@ namespace Mikrocosmos
         public List<NetworkIdentity> ClientCanSee => clientCanSee;
 
         private BindableProperty<int> teamBelongTo = new BindableProperty<int>(-1);
-
+        
         public BindableProperty<int> TeamBelongTo => teamBelongTo;
 
+        [SerializeField] private float deactiveTimeAfterHooked = 10;
 
         public override void OnStartServer() {
             base.OnStartServer();
-            teamBelongTo.RegisterWithInitValue(OnTeamBelongToChanged).UnRegisterWhenGameObjectDestroyed(gameObject);
+            teamBelongTo.RegisterWithInitValue(OnTeamBelongToChanged).UnRegisterWhenGameObjectDestroyed(gameObject, true);
         }
 
         
@@ -37,7 +38,7 @@ namespace Mikrocosmos
         public override void OnServerHooked() {
             base.OnServerHooked();
             if (teamBelongTo.Value == -1) {
-                teamBelongTo.Value = HookedByIdentity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>()
+                teamBelongTo.Value = HookedByIdentity.GetComponent<PlayerSpaceship>()
                     .matchInfo.Team;
                 Debug.Log("OnServerHooked");
             }
@@ -49,10 +50,16 @@ namespace Mikrocosmos
             if (newTeam != -1) {
                 StopVisionForAllCurrentTeams();
                 StartVisionForAllTeamMembers(newTeam);
+                StartCoroutine(DeactiveAfterHooked());
 
             }else {
                 StopVisionForAllCurrentTeams();
             }
+        }
+
+        private IEnumerator DeactiveAfterHooked() {
+            yield return new WaitForSeconds(deactiveTimeAfterHooked);
+            TeamBelongTo.Value = -1;
         }
 
         [ServerCallback]
