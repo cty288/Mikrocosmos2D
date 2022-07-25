@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ItemInventoryAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 473a28c55508bb24199137aca8fee008, type: 3}
+    bindAsDefault: 0
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: c6664e90cacfac441a3a8f0ac484be64, type: 3}
+  - {fileID: 21300000, guid: 775fd7516f30cea4c89c8ba5819e86fa, type: 3}
+  - {fileID: 21300000, guid: 003bb7c1a9aa20547881353bebfa9e0d, type: 3}
+  - {fileID: 21300000, guid: 14a67bc1dc09f1740a720485ceb188ae, type: 3}
+  - {fileID: 21300000, guid: bedeb44261b1e97438920ba264de2bc2, type: 3}
+  - {fileID: 21300000, guid: 7cb689f2ca01156458d93236e01ffa9d, type: 3}
+  - {fileID: 21300000, guid: e3c7f11613b6ba84ca01a6642ffa54fe, type: 3}
+  - {fileID: 21300000, guid: 1047d417df1608947896bf4da85eabb5, type: 3}
+  - {fileID: 21300000, guid: 7d3296670ec98064da1b64adb28a81cd, type: 3}
+  - {fileID: 21300000, guid: 69be34b8b5c691b47a2467369f06c62d, type: 3}
+  - {fileID: 21300000, guid: 76bb5cb8b1bda474fac919a66d8ab949, type: 3}
+  - {fileID: 21300000, guid: 0f7eacf87e37a7c4c8bcdf6a375272ce, type: 3}
+  - {fileID: 21300000, guid: 2dd1571905c2f2044b23654204f34d33, type: 3}
+  - {fileID: 21300000, guid: 10cd09bb52ee66d4bae108dad2078c11, type: 3}
+  - {fileID: 21300000, guid: 1248742c96a847c44b2f7f5b9e1ac78e, type: 3}
+  - {fileID: 21300000, guid: a3a5b49c0935fd547a5565ce7882af4d, type: 3}
+  - {fileID: 21300000, guid: dd83751d7a215fd44999f123b326a98a, type: 3}
+  - {fileID: 21300000, guid: 7172fdfe21287d347ac80924141ba03b, type: 3}
+  - {fileID: 21300000, guid: b85bce3f2fe462e4fa965e3af9599a22, type: 3}
+  - {fileID: 21300000, guid: f29ef2afd321cf245a37ea7c6ee41b10, type: 3}
+  - {fileID: 21300000, guid: 0ee527bf9e76e4e499ffa295e03a43ef, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - SunflowerSonSprite
+  - ThrusterSprite
+  - MetalBallSprite
+  - FireOreSprite
+  - PoisonSpearSprite
+  - StatelliteSprite
+  - FlowerSprite
+  - LeafKnifeSprite
+  - JellyGunSprite
+  - SeaweedFruitSprite
+  - BirdCannonSprite
+  - PickaxeSprite
+  - KrowEyeSprite
+  - MaskSprite
+  - EarthMushroomSprite
+  - StoneShieldSprite
+  - BananaSprite
+  - CactusShotgunSprite
+  - KindleSprite
+  - TolietSprite
+  - FirePlantSprite
+  m_RenderDataMap: {}
+  m_Tag: ItemInventoryAtlas
+  m_IsVariant: 0

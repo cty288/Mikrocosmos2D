@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
 using Mirror.FizzySteam;
+#endif
 using Polyglot;
 using UnityEngine;
 using UnityEngine.Networking.Types;

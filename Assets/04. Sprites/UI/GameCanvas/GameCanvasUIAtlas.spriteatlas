@@ -20,7 +20,19 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 8
@@ -37,12 +49,17 @@ SpriteAtlas:
     - {fileID: 102900000, guid: d49e3067a77cf944cbf74c371cd27c55, type: 3}
     - {fileID: 102900000, guid: 50c59ff98ceab024fb5b6e2060fed880, type: 3}
     - {fileID: 102900000, guid: 81b800ed0c7862943b20a2435b2978a7, type: 3}
+    - {fileID: 2800000, guid: a9bdf32aabc038a40b493aa654744020, type: 3}
+    - {fileID: 2800000, guid: 347a04e14291a8c4487f546cecdf23f8, type: 3}
+    - {fileID: 2800000, guid: 6eeb06a126550e34abaf8fc6bd45609d, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
+  - {fileID: 21300000, guid: 6eeb06a126550e34abaf8fc6bd45609d, type: 3}
+  - {fileID: 21300000, guid: 347a04e14291a8c4487f546cecdf23f8, type: 3}
   - {fileID: 21300000, guid: 74531c02b55f69248b5717424c12ffa9, type: 3}
   - {fileID: 21300000, guid: cfddab52f2626ce449aa3847a7b1cf62, type: 3}
   - {fileID: 21300000, guid: 43cc22b286b7a9349906ee505258be9e, type: 3}
@@ -65,6 +82,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ac74d709f12cb7446bba6dbbeb5530cd, type: 3}
   - {fileID: 21300000, guid: 219b612923a5d174e881fc8c2f4e5629, type: 3}
   - {fileID: 21300000, guid: d2a08349b920bfe4a8e90c04def57354, type: 3}
+  - {fileID: 21300000, guid: a9bdf32aabc038a40b493aa654744020, type: 3}
   - {fileID: 21300000, guid: e2fc6a3a488c9df4f9830eb8503e2e2d, type: 3}
   - {fileID: 21300000, guid: 2c99775a3aaf6e2438ed1b1e6440cb07, type: 3}
   - {fileID: 21300000, guid: 17974d2b315506a4cbad24efcbc666f4, type: 3}
@@ -82,6 +100,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 1840fd7f66b2bfa4fbfb37e0410013a0, type: 3}
   m_PackedSpriteNamesToIndex:
   - durability_weapon
+  - MoneyUI
+  - nav_outline
   - spaceship4
   - durability_compound
   - planet6
@@ -104,6 +124,7 @@ SpriteAtlas:
   - explosion circle
   - explosion star
   - SelectedIcon
+  - nav_progress
   - click7-01
   - Charge_Icon
   - escape_icon_01

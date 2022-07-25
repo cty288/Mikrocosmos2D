@@ -6,7 +6,11 @@ using MikroFramework;
 using TMPro;
 using MikroFramework.Architecture;
 using Mirror;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
 using Steamworks;
+using Mirror.FizzySteam;
+#endif
+
 
 namespace Mikrocosmos {
     public struct OnJoinRoomButtonClicked {
@@ -52,7 +56,10 @@ namespace Mikrocosmos {
                 ((NetworkedRoomManager)NetworkManager.singleton).StartJoiningClient(response.Uri);
             }
             else {
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
+
                 SteamMatchmaking.JoinLobby(response.HostSteamLobbyID);
+#endif
             }
             this.SendEvent(new OnJoinRoomButtonClicked());
 

@@ -9,9 +9,12 @@ using MikroFramework.Event;
 using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
 using Mirror;
-using Mirror.FizzySteam;
-using NHibernate.Linq;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
 using Steamworks;
+using Mirror.FizzySteam;
+#endif
+
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -39,12 +42,14 @@ namespace Mikrocosmos
         
 
         private TelepathyTransport telepathyTransport;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
         private FizzySteamworks steamworksTransport;
 
         protected Callback<LobbyCreated_t> OnSteamLobbyCreatedEvent;
         protected Callback<LobbyEnter_t> OnSteamLobbyEnteredEvent;
 
         private CSteamID joinedSteamGame;
+#endif
 
 
 
@@ -58,6 +63,7 @@ namespace Mikrocosmos
             networkAddress = NetworkUtility.GetLocalIPAddress();
             showRoomGUI = false;
             telepathyTransport = GetComponent<TelepathyTransport>();
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
             steamworksTransport = GetComponent<FizzySteamworks>();
 
             OnSteamLobbyCreatedEvent = Callback<LobbyCreated_t>.Create(OnSteamLobbyCreated);
@@ -73,7 +79,7 @@ namespace Mikrocosmos
                     gchandle.AddrOfPinnedObject());
                 gchandle.Free();                
             }
-
+#endif
             List<GoodsPropertiesItem> allGoodsProperties =
                 this.GetModel<IGoodsConfigurationModel>().GetAllGoodsProperties();
             spawnPrefabs.AddRange(allGoodsProperties.Select((item => item.GoodsPrefab)));
@@ -114,7 +120,7 @@ namespace Mikrocosmos
                 : Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
             return gamePlayer;
         }
-
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
         private void OnSteamLobbyEntered(LobbyEnter_t callback) {
             if (!NetworkServer.active && !NetworkClient.active) {
 
@@ -156,9 +162,9 @@ namespace Mikrocosmos
 
           //  StartCoroutine(LoadScene());
         }
+#endif
 
-
-        #region Server
+#region Server
         
         public override void OnRoomServerConnect(NetworkConnectionToClient conn) {
             base.OnRoomServerConnect(conn);
@@ -171,12 +177,14 @@ namespace Mikrocosmos
 
         public override void OnStopClient() {
             base.OnStopClient();
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
             if (NetworkingMode == NetworkingMode.Steam) {
                 SteamMatchmaking.LeaveLobby(joinedSteamGame);
                 joinedSteamGame = new CSteamID();
                 DebugCanvas.IsOpening = false;
                 
             }
+#endif
         }
 
         /*
@@ -219,10 +227,12 @@ namespace Mikrocosmos
             }
             else if (sceneName == GameplayScene) {
                 IsInGame = true;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
                 if (NetworkingMode == NetworkingMode.Steam) {
                     SteamMatchmaking.SetLobbyData(joinedSteamGame, "IsGaming",
                         "true");
                 }
+#endif
 
                 //StartCoroutine(LoadScene());
             }
@@ -238,22 +248,26 @@ namespace Mikrocosmos
             return "";
         }
      
-        #endregion
+#endregion
 
         public override void OnRoomStopClient() {
             base.OnRoomStopClient();
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
             if (NetworkingMode == NetworkingMode.Steam) {
                 SteamMatchmaking.LeaveLobby(joinedSteamGame);
                 joinedSteamGame = new CSteamID();
             }
+#endif
         }
 
         public void StartHosting(NetworkingMode networkingMode) {
             telepathyTransport.enabled = false;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
             if (steamworksTransport)
             {
                 steamworksTransport.enabled = false;
             }
+#endif
             offlineScene = SceneManager.GetSceneByName("Menu").name;
             switch (networkingMode) {
                 case NetworkingMode.Normal:
@@ -266,11 +280,13 @@ namespace Mikrocosmos
                  //   StartCoroutine(LoadScene());
                     break;
                 case NetworkingMode.Steam:
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
                     steamworksTransport.enabled = true;
                     Transport.activeTransport = steamworksTransport;
                     transport = steamworksTransport;
                     SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, maxConnections);
                     NetworkingMode = NetworkingMode.Steam;
+#endif
                     break;
             }
         }
@@ -278,10 +294,12 @@ namespace Mikrocosmos
         
 
         public void StartJoiningClient(Uri uri) {
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
             if (steamworksTransport)
             {
                 steamworksTransport.enabled = false;
             }
+#endif
             telepathyTransport.enabled = true;
             Transport.activeTransport = telepathyTransport;
             transport = telepathyTransport;
@@ -299,18 +317,23 @@ namespace Mikrocosmos
             StartClient(uri);
         }
 
-       
 
-       
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
         public void StartJoiningClient(NetworkingMode networkingMode, CSteamID steamId = new CSteamID())
+#else
+        public void StartJoiningClient(NetworkingMode networkingMode)
+#endif
         {
             switch (networkingMode)
             {
                 case NetworkingMode.Normal:
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
+
                     if (steamworksTransport)
                     {
                         steamworksTransport.enabled = false;
                     }
+#endif
                     networkAddress = "localhost";//NetworkUtility.GetLocalIPAddress();
                     telepathyTransport.enabled = true;
                     Transport.activeTransport = telepathyTransport;
@@ -320,12 +343,15 @@ namespace Mikrocosmos
                    
                     break;
                 case NetworkingMode.Steam:
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
+
                     telepathyTransport.enabled = false;                    
                     steamworksTransport.enabled = true;
                     Transport.activeTransport = steamworksTransport;
                     transport = steamworksTransport;
                     NetworkingMode = NetworkingMode.Steam;
                     joinedSteamGame = steamId;
+#endif
                     break;
             }
             if (NetworkClient.active)

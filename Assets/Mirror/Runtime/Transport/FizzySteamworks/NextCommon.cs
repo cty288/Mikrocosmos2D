@@ -1,4 +1,5 @@
-#if !DISABLESTEAMWORKS
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
+
 using Steamworks;
 using System;
 using System.Runtime.InteropServices;

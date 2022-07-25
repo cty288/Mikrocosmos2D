@@ -38,7 +38,7 @@ namespace Mikrocosmos
                 if (other.TryGetComponent<IDamagable>(out IDamagable target))
                 {
                     if (check) {
-                        RaycastHit2D hit = Physics2D.Raycast(transform.position,
+                        RaycastHit2D hit = Physics2D.Raycast(transform.parent.position,
                             (other.transform.position - transform.position).normalized, 3f);
 
                         if (hit.collider) {

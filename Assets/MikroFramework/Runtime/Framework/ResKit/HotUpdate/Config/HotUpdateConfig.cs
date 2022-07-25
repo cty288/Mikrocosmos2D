@@ -24,8 +24,21 @@ namespace MikroFramework.ResKit
         /// </summary>
         public static string LocalResVersionFilePath {
             get {
+#if UNITY_EDITOR
                 return Application.streamingAssetsPath + "/AssetBundles/" + ResKitUtility.CurrentPlatformName +
                        "/ResVersion.json";
+#else
+                if (Application.platform == RuntimePlatform.Android) {
+                  //  return Application.dataPath + "!assets"+ "/AssetBundles/" + ResKitUtility.CurrentPlatformName + "/ResVersion.json";
+                 return Application.streamingAssetsPath + "/AssetBundles/" + ResKitUtility.CurrentPlatformName +
+                                       "/ResVersion.json";
+                }
+                else {
+                      return Application.streamingAssetsPath + "/AssetBundles/" + ResKitUtility.CurrentPlatformName +
+                       "/ResVersion.json";
+                }
+#endif
+
             }
         }
 
@@ -33,7 +46,20 @@ namespace MikroFramework.ResKit
         /// Path that the local AssetBundle files saved
         /// </summary>
         public static string LocalAssetBundleFolder {
-            get { return Application.streamingAssetsPath + "/AssetBundles/" + ResKitUtility.CurrentPlatformName + "/"; }
+            get {
+#if UNITY_EDITOR
+                return Application.streamingAssetsPath + "/AssetBundles/" + ResKitUtility.CurrentPlatformName + "/";
+#else
+                if (Application.platform == RuntimePlatform.Android) {
+                    return Application.streamingAssetsPath + "/AssetBundles/" + ResKitUtility.CurrentPlatformName + "/";
+                   // return Application.dataPath + "!assets"+ "/AssetBundles/" + ResKitUtility.CurrentPlatformName + "/";
+                }
+                else {
+                    return Application.streamingAssetsPath + "/AssetBundles/" + ResKitUtility.CurrentPlatformName + "/";
+                }
+#endif
+
+            }
         }
 
         /// <summary>

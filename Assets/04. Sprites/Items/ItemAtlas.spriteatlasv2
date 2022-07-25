@@ -18,7 +18,7 @@ SpriteAtlasAsset:
       textureCompression: 0
       filterMode: 1
       generateMipMaps: 0
-      readable: 1
+      readable: 0
       crunchedCompression: 0
       sRGB: 1
     platformSettings: []
@@ -28,7 +28,7 @@ SpriteAtlasAsset:
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 0
-      enableTightPacking: 0
+      enableTightPacking: 1
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1

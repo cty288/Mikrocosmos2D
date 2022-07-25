@@ -779,6 +779,15 @@ MonoBehaviour:
   deathEffect: {fileID: 2635061704750544333, guid: a4380b49f3c69cd4a98f4f65081241b4, type: 3}
   hitParticlePrefab: {fileID: 5608423231812658629, guid: 4a769b6e4f56d274c94ec341728691ab, type: 3}
   isControlling: 0
+  <matchInfo>k__BackingField:
+    ID: 0
+    Name: 
+    Team: 0
+    Prepared: 0
+    Identity: {fileID: 0}
+    TeamIndex: 0
+    Language: 0
+    IsSpectator: 0
   isUsing: 0
   teamSprites:
   - {fileID: 21300000, guid: eb62d6a1364710f4f94af07d9bfd7e71, type: 3}
@@ -880,6 +889,8 @@ MonoBehaviour:
   shootChargeOneCycleTime: 1
   maxShootForce: 50
   droppedItemSpawnPos: {fileID: 2601994127546760122}
+  <ClientHookedItemName>k__BackingField:
+    value: 
   animator: {fileID: 1426794900304426698}
   hookShootChargePercent: 0
 --- !u!95 &1860153339421768247

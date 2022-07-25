@@ -4,7 +4,9 @@ using System.Net;
 using Mikrocosmos;
 using Mirror;
 using Mirror.Discovery;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
 using Steamworks;
+#endif
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -32,7 +34,9 @@ public class DiscoveryResponse : NetworkMessage
     public string HostName;
     public bool IsLAN;
     public string HostSteamAddress;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
     public CSteamID HostSteamLobbyID;
+#endif
     public IPEndPoint EndPoint { get; set; }
 
    
@@ -41,7 +45,7 @@ public class DiscoveryResponse : NetworkMessage
 public class MenuServerFoundUnityEvent : UnityEvent<DiscoveryResponse> { };
 public class MenuNetworkDiscovery : NetworkDiscoveryBase<DiscoveryRequest, DiscoveryResponse>
 {
-    #region Server
+#region Server
     public long ServerId { get; private set; }
 
     [Tooltip("Transport to be advertised during discovery")]
@@ -106,9 +110,9 @@ public class MenuNetworkDiscovery : NetworkDiscoveryBase<DiscoveryRequest, Disco
         }
     }
 
-    #endregion
+#endregion
 
-    #region Client
+#region Client
 
     /// <summary>
     /// Create a message that will be broadcasted on the network to discover servers
@@ -148,5 +152,5 @@ public class MenuNetworkDiscovery : NetworkDiscoveryBase<DiscoveryRequest, Disco
         OnServerFound.Invoke(response);
     }
 
-    #endregion
+#endregion
 }

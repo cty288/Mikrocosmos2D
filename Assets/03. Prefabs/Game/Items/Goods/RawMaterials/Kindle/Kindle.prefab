@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b85bce3f2fe462e4fa965e3af9599a22, type: 3}
+      objectReference: {fileID: 21300000, guid: f2a6b104fc326564cbdab3ea5f445098, type: 3}
     - target: {fileID: 6410031578183631637, guid: b58fb26c4d4008f46ab0037d23e551c6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -319,5 +319,5 @@ MonoBehaviour:
   visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
-  DurabilityCountSprite: {fileID: 0}
+  DurabilityCountColor: {r: 0, g: 0, b: 0, a: 0}
   damageIncreasePercentage: 0.15

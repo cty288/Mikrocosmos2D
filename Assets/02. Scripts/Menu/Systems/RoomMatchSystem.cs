@@ -10,6 +10,7 @@ using Mirror;
 using Polyglot;
 using UnityEngine;
 using UnityEngine.Networking.Types;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -152,8 +153,9 @@ namespace Mikrocosmos
             teamPlayers = new Dictionary<int, List<PlayerMatchInfo>>();
             teamPlayers.Add(1, new List<PlayerMatchInfo>());
             teamPlayers.Add(2, new List<PlayerMatchInfo>());
+            
 
-                
+
             int t1Index = -1, t2Index = -1;
 
             foreach (PlayerMatchInfo playerMatchInfo in playerMatchInfos) {

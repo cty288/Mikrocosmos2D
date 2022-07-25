@@ -42,8 +42,11 @@ namespace Mikrocosmos
                     if (spaceship.matchInfo.IsSpectator) {
                         return;
                     }
-                    OnPlayerExitTrigger?.Invoke(spaceship);
-                    playersInTrigger.Remove(spaceship);
+
+                    if (playersInTrigger.Contains(spaceship)) {
+                        OnPlayerExitTrigger?.Invoke(spaceship);
+                        playersInTrigger.Remove(spaceship);
+                    }
                 }
             }
             

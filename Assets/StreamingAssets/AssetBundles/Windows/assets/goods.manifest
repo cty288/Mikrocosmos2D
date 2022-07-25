@@ -1,196 +1,42 @@
 ManifestFileVersion: 0
-CRC: 1715302793
+CRC: 2301965651
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 65ac74c8920334a4802c47586497bcd9
+    Hash: a87f6dfbc244fd8a505eacff5e826a30
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8a20af0d73c393c31ec72be154443737
+    Hash: c29c357128feff56790ec9816c4fc93d
 HashAppended: 0
 ClassTypes:
-- Class: 1
-  Script: {instanceID: 0}
-- Class: 4
-  Script: {instanceID: 0}
-- Class: 21
-  Script: {instanceID: 0}
 - Class: 28
-  Script: {instanceID: 0}
-- Class: 48
-  Script: {instanceID: 0}
-- Class: 50
-  Script: {instanceID: 0}
-- Class: 58
-  Script: {instanceID: 0}
-- Class: 60
-  Script: {instanceID: 0}
-- Class: 61
-  Script: {instanceID: 0}
-- Class: 70
-  Script: {instanceID: 0}
-- Class: 74
-  Script: {instanceID: 0}
-- Class: 91
-  Script: {instanceID: 0}
-- Class: 95
-  Script: {instanceID: 0}
-- Class: 96
-  Script: {instanceID: 0}
-- Class: 114
-  Script: {fileID: 11500000, guid: 7107a95bf135c6c4ba3f90e2a431efee, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 7272634b3e5ad84448fb935731751944, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 058a3304973f74d4490dbcad44e39cdf, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 311063edff106cd4eb942c1bd167e39e, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: b46ff1cb7e87ed14fa105476fd9e4ebc, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 70848c4cb992748418834496819ae51a, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: efeb2cd6803c7e34c8310a15382e1f7d, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 52a7f5503a2505a49aca73bf2063239a, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: bbf355d86d3245949a8d2e29322f6b7e, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 0b2509b752622df4cb0bd630a430be04, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: afc8cd290c5077248b16faa66d008b4d, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: e103ccf06e718624bac7eb83ab7a0f7b, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: eac87e66466a1fd47b0b79ada3842fd0, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 3484c07865f39ae4b800bf67fed1a85d, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 534aeb91442d26a49bbc4384f472df5d, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 9d1de09509287094b9b15a251c817147, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 68f6cc8c67d4fb54ab397fb9754ab8b3, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: f20e9dd21104eaa48813b32046ca1c91, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 7c1ec26cc22c0924ea51c8c6137844bb, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 3f99d8d5b9cd55a4d95552d02d803f49, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 2c0ddfc42a109774b9d75472c85f0f55, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 2bfea0b13fdd02941bad2fbba4ba28c2, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 384bc511d353eaa4fb504844a5535b72, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: e8bbe79709a6b384ba721e2666383d67, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 2b46d332440183e4e8ff9fd9fe06454c, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 5833f4d93833f8e43b0aede280ce527b, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: ab2cbc52526ea384ba280d13cd1a57b9, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: e080dec2d1559a9488510af5e0758324, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 9dc4c5d80178d9945bf8edd927b4b509, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: e5af11a9e8ef0b2409ae2cded8f0f388, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: e5d82cc105e79334a974d907e9d3055a, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: d2c2216fd391fe848b292a470536734f, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 895b089ac32dd2b46927ee71124312c3, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 034d4b5fd95d89444ac154c2c45d1da6, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: b629bd1565be586478c0c6b213fec5d0, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 83bb869c09fdab84f90b1203c47546c2, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: cde434166412da54cb9f800f23f8579d, type: 3}
-- Class: 115
-  Script: {instanceID: 0}
-- Class: 212
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 - Class: 687078895
   Script: {instanceID: 0}
-SerializeReferenceClassIdentifiers:
-- AssemblyName: Mikrocosmos
-  ClassName: Mikrocosmos.GoodsPropertiesItem
-- AssemblyName: Mikrocosmos
-  ClassName: Mikrocosmos.ItemTradeProperties
-- AssemblyName: Mikrocosmos
-  ClassName: Mikrocosmos.UseableItemProperties
-- AssemblyName: Unity.RenderPipelines.Universal.Runtime
-  ClassName: UnityEngine.Rendering.Universal.LightUtility/LightMeshVertex
-- AssemblyName: UnityEngine.CoreModule
-  ClassName: UnityEngine.Events.ArgumentCache
-- AssemblyName: UnityEngine.CoreModule
-  ClassName: UnityEngine.Events.PersistentCallGroup
-- AssemblyName: UnityEngine.CoreModule
-  ClassName: UnityEngine.Events.PersistentListenerMode
-- AssemblyName: UnityEngine.CoreModule
-  ClassName: UnityEngine.Events.UnityEvent
+SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/04. Sprites/Items/Goods/Thruster/ThrusterSprite.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Banana/Banana.prefab
-- Assets/04. Sprites/Items/Goods/Eye/KrowEye1/KrowEyeSprite.png
-- Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite_5.png
-- Assets/03. Prefabs/Game/Items/Template.prefab
-- Assets/04. Sprites/Items/Goods/CactusShotgun/CactusShotgunSprite.png
-- Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite_4.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Banana/BananaTemp.prefab
-- Assets/04. Sprites/Items/Goods/RawMaterials/Flower/FlowerSprite.png
-- Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite_2.png
-- Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite_6.png
-- Assets/04. Sprites/Items/Goods/StoneShield/StoneShield/StoneShieldSprite.png
-- Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite_3.png
-- Assets/04. Sprites/Items/Goods/PoisonSpear/PoisonSpearSprite.png
-- Assets/04. Sprites/Items/Goods/StatelliteSprite.png
-- Assets/VisionEffect/Sprites/TolietSprite.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Mask/Mask.prefab
-- Assets/04. Sprites/Items/Goods/BirdCannon/BirdCannon/BirdCannonSprite.png
-- Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite_3.png
-- Assets/04. Sprites/Items/Goods/MaskSprite.png
-- Assets/04. Sprites/Items/Pickaxe/PickaxeSprite.png
-- Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite_6.png
-- Assets/04. Sprites/Items/Goods/RawMaterials/EarthMushroom/EarthMushroomSprite.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Satellite/Statellite.prefab
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Toliet/Toliet.prefab
-- Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite_2.png
-- Assets/04. Sprites/Items/Goods/RawMaterials/MetalBall/MetalBallSprite.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Banana/DottedOutlineBanana.mat
-- Assets/Resources/GoodsProperties.asset
-- Assets/04. Sprites/Items/Goods/RawMaterials/Kindle/KindleSprite.png
-- Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite_5.png
-- Assets/03. Prefabs/Game/Items/Goods/LeafKnife/LeafKnife.prefab
-- Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite_4.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Banana2/Banana.prefab
-- Assets/04. Sprites/Items/Goods/RawMaterials/FireOre/FireOreSprite.png
-- Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite_1.png
-- Assets/04. Sprites/Items/ItemAtlas.spriteatlasv2
-- Assets/04. Sprites/Items/Goods/BananaSprite.png
-- Assets/04. Sprites/Items/Goods/RawMaterials/SeaweedFruit/SeaweedFruitSprite.png
-- Assets/04. Sprites/Items/Goods/FirePlant/FirePlant/FirePlantSprite.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Mask/DottedOutlineMask.mat
-- Assets/03. Prefabs/Game/Items/Goods/FirePlant/FirePlant.prefab
-- Assets/04. Sprites/Missions/SendEggMission/SunflowerSonSprite.png
-- Assets/04. Sprites/Items/Goods/JellyGun/JellyGunSprite.png
-- Assets/03. Prefabs/Game/Items/Goods/Temporary/Satellite/DottedOutlineStatellite.mat
-- Assets/04. Sprites/Items/Goods/LeafKnife/LeafKnifeSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/MetalBallSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/ThrusterSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/KrowEyeSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/KindleSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/CactusShotgunSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/FlowerSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/StoneShieldSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/PoisonSpearSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/FireOreSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/FirePlantSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/StatelliteSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/SeaweedFruitSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/BananaSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/TolietSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/BirdCannonSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/SunflowerSonSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/MaskSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/PickaxeSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/JellyGunSprite.png
+- Assets/04. Sprites/Items/ItemInventoryAtlas.spriteatlas
+- Assets/04. Sprites/Items/ItemInventorySprite/EarthMushroomSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/LeafKnifeSprite.png
 Dependencies: []

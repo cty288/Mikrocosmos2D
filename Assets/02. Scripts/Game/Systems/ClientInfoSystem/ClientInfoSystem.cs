@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
-using Mirror.FizzySteam;
+
 using UnityEngine;
 
 namespace Mikrocosmos {

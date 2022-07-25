@@ -34,6 +34,10 @@ SpriteAtlas:
     packables:
     - {fileID: 102900000, guid: feed796ad22abca4f806903940c2ee9e, type: 3}
     - {fileID: 102900000, guid: 5747028dead1d804d9513adf2afc6364, type: 3}
+    - {fileID: 102900000, guid: 5808b443f3d1a8148930e49674ae534a, type: 3}
+    - {fileID: 2800000, guid: c5866289705a71740a2bd894ddbba531, type: 3}
+    - {fileID: 2800000, guid: 8ce1d6a28ec0523499897f6f5feb7820, type: 3}
+    - {fileID: 2800000, guid: 5a35d33b95f3edd42a6248f0f3c0755c, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -42,32 +46,54 @@ SpriteAtlas:
   - {fileID: 21300000, guid: c491eea06137c39498479d16a5724484, type: 3}
   - {fileID: 21300000, guid: 47faa011c15a33d429f4e8caba3b0cf6, type: 3}
   - {fileID: 21300000, guid: 1f863192e3ad60848b417da67f269629, type: 3}
+  - {fileID: 21300000, guid: 8ce1d6a28ec0523499897f6f5feb7820, type: 3}
   - {fileID: 21300000, guid: 613313d2a8cfd4446ab1e29703ec9403, type: 3}
   - {fileID: 21300000, guid: bc8566b69a2798c42919257e2f7713b4, type: 3}
   - {fileID: 21300000, guid: 957c9ad65a71fa1478e8e6526d9dcabc, type: 3}
+  - {fileID: 21300000, guid: 30a201f6f73d1c244937360533807e0d, type: 3}
+  - {fileID: 21300000, guid: c3c0f08711920d743b9fc4b45de3116a, type: 3}
   - {fileID: 21300000, guid: c621e4d70e9fa454796fcd13c10740d3, type: 3}
   - {fileID: 21300000, guid: 2459157847948654f83f1ef809c75e57, type: 3}
   - {fileID: 21300000, guid: 7562bad8713d18444835504695cb2e4b, type: 3}
+  - {fileID: 21300000, guid: 8a7234f8ade27fd4984405776aa7e2bd, type: 3}
+  - {fileID: 21300000, guid: c5866289705a71740a2bd894ddbba531, type: 3}
+  - {fileID: 21300000, guid: 221f090aa887a3d429b6ab657f408cef, type: 3}
   - {fileID: 21300000, guid: 1dfbbd0ad2356d44cbb5bd2f7fe0c9d0, type: 3}
+  - {fileID: 21300000, guid: 469ca62afcee5d8489cfe10d9ec06c2a, type: 3}
+  - {fileID: 21300000, guid: 7a4c0fea8e77b3a498f857ea4ba67add, type: 3}
+  - {fileID: 21300000, guid: 5a35d33b95f3edd42a6248f0f3c0755c, type: 3}
+  - {fileID: 21300000, guid: 15ef6efbcc08d16499dc27049043faae, type: 3}
   - {fileID: 21300000, guid: 392ac10c8eb6c4f40884eda5e1ec95eb, type: 3}
   - {fileID: 21300000, guid: 44ec909e448b5954ca5ac6b1d2eda044, type: 3}
   - {fileID: 21300000, guid: f23b23fe2e64efa4fbd850f59c159c90, type: 3}
+  - {fileID: 21300000, guid: ac8dcb6f1508dc2479fba26bf7b95ae5, type: 3}
   - {fileID: 21300000, guid: 626540bf3ad26ef4aa1a6fc1ad50ccd0, type: 3}
   - {fileID: 21300000, guid: cabf54cf936614b4d829c28332fbb1ac, type: 3}
   m_PackedSpriteNamesToIndex:
   - InfoProgress_Purple
   - InfoBar_Purple
   - SpaceMinecartMissionInfoIcon
+  - info_long_red
   - InfoIcon_Green
   - InfoBar_Yellow
   - InfoProgress_Pink
+  - scroll7-01
+  - scroll1-01
   - InfoBar_Green
   - StrangeMeteorMissionInfoIcon
   - InfoIcon_Yellow
+  - scroll5-01
+  - info_slider
+  - scroll4-01
   - InfoBar_Pink
+  - scroll6-01
+  - scroll3-01
+  - info_long_blue
+  - scroll2-01
   - InfoIcon_Purple
   - InfoProgress_Yellow
   - SendEggMissionInfoIcon
+  - scroll8-01
   - InfoIcon_Pink
   - InfoProgress_Green
   m_RenderDataMap: {}

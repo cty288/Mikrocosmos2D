@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AvatarUI
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 5802ee6d190eaf64f98df62a9c009999, type: 3}
+    - {fileID: 2800000, guid: a3296f421b37041489d3f6a031f37415, type: 3}
+    - {fileID: 2800000, guid: b5cc230b67163244bb44d16304dd3cc4, type: 3}
+    - {fileID: 2800000, guid: 17c2ecd958e283a41b0c6bc5b8137344, type: 3}
+    - {fileID: 2800000, guid: 5b18eae3738f38a4a8577af9cc983191, type: 3}
+    - {fileID: 2800000, guid: 653f26b0fa2e2d04398087752509d010, type: 3}
+    - {fileID: 2800000, guid: 8eff906f0c2abaa49b4bfcc448252363, type: 3}
+    - {fileID: 2800000, guid: 4291a994a3e3c374dbf740b7c4e413ce, type: 3}
+    - {fileID: 2800000, guid: ec145fc320ff15f4fa03edbd17fcc5fe, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 653f26b0fa2e2d04398087752509d010, type: 3}
+  - {fileID: 21300000, guid: a3296f421b37041489d3f6a031f37415, type: 3}
+  - {fileID: 21300000, guid: ec145fc320ff15f4fa03edbd17fcc5fe, type: 3}
+  - {fileID: 21300000, guid: 5b18eae3738f38a4a8577af9cc983191, type: 3}
+  - {fileID: 21300000, guid: 4291a994a3e3c374dbf740b7c4e413ce, type: 3}
+  - {fileID: 21300000, guid: 17c2ecd958e283a41b0c6bc5b8137344, type: 3}
+  - {fileID: 21300000, guid: b5cc230b67163244bb44d16304dd3cc4, type: 3}
+  - {fileID: 21300000, guid: 5802ee6d190eaf64f98df62a9c009999, type: 3}
+  - {fileID: 21300000, guid: 8eff906f0c2abaa49b4bfcc448252363, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - scroll bar icon
+  - frame
+  - triangle icons
+  - profile image
+  - select box
+  - profile choose reference
+  - middle dark box
+  - customize box
+  - scroll bar
+  m_RenderDataMap: {}
+  m_Tag: AvatarUI
+  m_IsVariant: 0

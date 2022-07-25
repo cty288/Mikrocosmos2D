@@ -8,7 +8,10 @@ using TMPro;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using Mirror;
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
 using Steamworks;
+#endif
+
 
 namespace Mikrocosmos {
 	public partial class FindServerPanel : AbstractMikroController<Mikrocosmos> {
@@ -18,10 +21,11 @@ namespace Mikrocosmos {
 
         [SerializeField] private float joinRoomTimeout = 10f;
         private float joinRoomTimeoutTimer = 0f;
-        
 
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
         protected Callback<LobbyMatchList_t> OnSteamLobbyGetCallback;
         protected Callback<LobbyDataUpdate_t> OnSteamLobbyDataGetCallback;
+#endif
         private void Awake() {
             this.RegisterEvent<OnStartNetworkDiscovery>(OnNetworkDiscoveryStart)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -40,12 +44,12 @@ namespace Mikrocosmos {
             TextJoinRoomPanelInfo.text = "Joining room...";
             BtnCloseJoinRoomPanel.gameObject.SetActive(false);
         }
-
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
         private void Start() {
             OnSteamLobbyGetCallback = Callback<LobbyMatchList_t>.Create(OnSteamLobbyGet);
             OnSteamLobbyDataGetCallback = Callback<LobbyDataUpdate_t>.Create(OnSteamLobbyDataGet);
         }
-
+#endif
         
         
 
@@ -99,11 +103,14 @@ namespace Mikrocosmos {
                     TrRoomLayoutGroup.GetChild(i).gameObject.SetActive(false);
                 }
                 (NetworkManager.singleton.GetComponent<MenuNetworkDiscovery>()).StartDiscovery();
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
                 GetSteamLobbies();
+#endif
                 yield return new WaitForSeconds(3f);
                
             }
         }
+#if !DISABLESTEAMWORKS && !UNITY_ANDROID
 
         private void GetSteamLobbies() {
             if (SteamManager.Initialized) {
@@ -112,6 +119,7 @@ namespace Mikrocosmos {
               
             }
         }
+
         private void OnSteamLobbyGet(LobbyMatchList_t result)
         {
             for (int i = 0; i < result.m_nLobbiesMatching; i++) {
@@ -138,9 +146,11 @@ namespace Mikrocosmos {
                 Debug.Log($"Lobby member host name : {hostName}, count: {playerCount}");
             }
         }
+
         private void OnSteamLobbyDataGet(LobbyDataUpdate_t result) {
             
         }
+#endif
         private void OnNetworkRefreshRooms(DiscoveryResponse room) {
             
             // Debug.Log($"Find a room: Room owner: {room.HostName}; Room Player Count: {room.ServerPlayerNum}; uri: {room.Uri};");
