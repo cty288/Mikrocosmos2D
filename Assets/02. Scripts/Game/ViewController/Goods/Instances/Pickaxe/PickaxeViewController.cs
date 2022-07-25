@@ -20,8 +20,9 @@ namespace Mikrocosmos
             this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability()
             {
                 DurabilityFraction = basicInfo.Durability / (float)basicInfo.MaxDurability,
-                DurabilitySprite = DurabilityCountSprite,
-                SlotNumber = slotNumber
+                DurabilityColor = DurabilityCountColor,
+                SlotNumber = slotNumber,
+                UsePreviousSprite = true
             });
         
           

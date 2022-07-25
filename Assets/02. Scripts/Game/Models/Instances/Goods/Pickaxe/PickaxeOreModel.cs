@@ -11,7 +11,7 @@ namespace Mikrocosmos
         
         public override void OnServerHooked() {
             base.OnServerHooked();
-            UnHook();
+            UnHook(false);
         }
     }
 }

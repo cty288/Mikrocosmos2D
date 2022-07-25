@@ -30,6 +30,8 @@ namespace Mikrocosmos
 
         void AddHealth(int health);
         
+        bool CanAutoRecoverHealth { get; set; }
+        
         public void AddMaximumHealth(float percentage);
         void OnReceiveExcessiveMomentum(float excessiveMomentum);
     }

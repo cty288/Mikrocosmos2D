@@ -11,12 +11,12 @@ namespace Mikrocosmos
     public struct OnGoodsUpdateViewControllerDurability {
         public int SlotNumber;
         public float DurabilityFraction;
-        public Sprite DurabilitySprite;
+        public Color DurabilityColor;
         public bool UsePreviousSprite;
     }
     public class BasicGoodsViewController : AbstractCanBeUsedGoodsViewController, ICanSendEvent {
      
-        [SerializeField] protected Sprite DurabilityCountSprite;
+     
 
 
         protected NetworkIdentity Owner {
@@ -117,15 +117,16 @@ namespace Mikrocosmos
             if (basicInfo.MaxDurability >= 0 && basicInfo.CanBeUsed) {
                 this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability() {
                     DurabilityFraction = basicInfo.Durability /(float) basicInfo.MaxDurability,
-                    DurabilitySprite =  DurabilityCountSprite,
-                    SlotNumber = slotNumber
+                    DurabilityColor =  DurabilityCountColor,
+                    SlotNumber = slotNumber,
+                    UsePreviousSprite = true
                 });
             }
             else {
                 this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability()
                 {
                     DurabilityFraction = 0,
-                    DurabilitySprite = null,
+                    DurabilityColor = new Color(0,0,0,0),
                     SlotNumber = slotNumber
                 });
             }
@@ -139,10 +140,12 @@ namespace Mikrocosmos
             this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability()
             {
                 DurabilityFraction = basicInfo.Durability / (float)basicInfo.MaxDurability,
-                DurabilitySprite = DurabilityCountSprite,
-                SlotNumber = slotNumber
+                DurabilityColor = this.DurabilityCountColor,
+                SlotNumber = slotNumber,
+                UsePreviousSprite = true
             });
         }
+        
 
         [ClientCallback]
         protected GameObject GetCurrentSelectedSlotObject(int index) {

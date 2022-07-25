@@ -85,16 +85,40 @@ namespace Mikrocosmos
             buffSystem.ServerRegisterCallback<AimingSpeedDownDeBuff, BuffClientMessage>(OnServerAimingSpeedDownBuffUpdate);
             buffSystem.ServerRegisterCallback<KrowEyeSpeedDownDeBuff, BuffClientMessage>(
                 OnServerKrowEyeSpeedDownDeBuffUpdate);
+            buffSystem.ServerRegisterCallback<CriminalDeBuff, BuffClientMessage>(OnServerCriminalDeBuffUpdate);
 
             clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Language;
             this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
-
-           
+            this.RegisterEvent<OnNewCriminalGenerated>(OnNewCriminalGenerated)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnCriminalKilledByHunter>(OnCriminalKilledByHunter)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
 
         }
 
-        
+        private void OnServerCriminalDeBuffUpdate(CriminalDeBuff buff, BuffStatus status, BuffClientMessage arg3) {
+            if (status == BuffStatus.OnStart) {
+                spaceshipModel.CanAutoRecoverHealth = false;
+            }else if (status == BuffStatus.OnEnd) {
+                spaceshipModel.CanAutoRecoverHealth = true;
+            }
+        }
+
+        private void OnCriminalKilledByHunter(OnCriminalKilledByHunter e) {
+            if (e.Criminal == netIdentity) {
+                buffSystem.RemoveBuff<CriminalDeBuff>();
+            }
+        }
+
+        private void OnNewCriminalGenerated(OnNewCriminalGenerated e) {
+            if (e.Criminal == netIdentity) {
+                buffSystem.AddBuff<CriminalDeBuff>(new CriminalDeBuff());
+              
+            }
+        }
+
+
         private void OnServerKrowEyeSpeedDownDeBuffUpdate(KrowEyeSpeedDownDeBuff buff, BuffStatus status, BuffClientMessage arg3) {
             if (status == BuffStatus.OnStart) {
                 spaceshipModel.AddSpeedAndAcceleration(-buff.DecreasePercentage);
@@ -219,8 +243,8 @@ namespace Mikrocosmos
             OnVisionExpansion buffMessage = message;
             if (e == BuffStatus.OnStart || e == BuffStatus.OnUpdate ) {
                 this.SendEvent<OnVisionRangeChange>(new OnVisionRangeChange() {
-                    InnerAddition = buffMessage.VisionRangeChangeEvent.InnerAddition,
-                    OuterAddition = buffMessage.VisionRangeChangeEvent.OuterAddition
+                    InnerAddition = (int) (buffMessage.VisionRangeChangeEvent.InnerAddition),
+                    OuterAddition =(int)(buffMessage.VisionRangeChangeEvent.OuterAddition)
                 });
                 
                 this.SendEvent<OnCameraViewChange>(new OnCameraViewChange() {

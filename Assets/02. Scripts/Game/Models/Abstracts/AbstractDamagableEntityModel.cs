@@ -69,7 +69,7 @@ namespace Mikrocosmos
                 }
                 yield return new WaitForSeconds(1f);
                 HealthRecoverTimer++;
-                if (HealthRecoverTimer > healthRecoverWaitTimeAfterDamage && CurrentHealth > 0) {
+                if (CanAutoRecoverHealth && HealthRecoverTimer > healthRecoverWaitTimeAfterDamage && CurrentHealth > 0) {
                     if (CurrentHealth <= healthRecoverThreshold) {
                         healthRecoverStart = true;
                     }
@@ -157,6 +157,8 @@ namespace Mikrocosmos
             }
            
         }
+
+        public bool CanAutoRecoverHealth { get; set; } = true;
 
         public virtual void AddMaximumHealth(float percentage) {
             MaxHealth =   (Mathf.RoundToInt(MaxHealth * (1 + percentage)));

@@ -129,7 +129,7 @@ namespace Mikrocosmos
             if (EscapeCounter >= EscapeNeedCount)
             {
                 EscapeCounter = 0;
-                UnHook();
+                UnHook(false);
                 rigidbody.AddForce(transform.up * 75 * rigidbody.mass, ForceMode2D.Impulse);
             }
 

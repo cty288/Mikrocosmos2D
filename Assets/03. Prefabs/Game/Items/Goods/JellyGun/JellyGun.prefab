@@ -377,7 +377,7 @@ MonoBehaviour:
   visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
-  DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
+  DurabilityCountColor: {r: 0.05490196, g: 0.4627451, b: 0.4627451, a: 1}
   bullet: {fileID: 5222149471336982627, guid: b2688ff8c17fe014ab2ec4bafac8b42a, type: 3}
   shootForce: 250
 --- !u!212 &8825376392211092377 stripped

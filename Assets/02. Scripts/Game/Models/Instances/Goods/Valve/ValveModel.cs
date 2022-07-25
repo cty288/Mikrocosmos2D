@@ -15,7 +15,7 @@ namespace Mikrocosmos
                 {
                     playerTradingSystem.ReceiveMoney(money);
                 }
-                UnHook();
+                UnHook(false);
             }
              
         }

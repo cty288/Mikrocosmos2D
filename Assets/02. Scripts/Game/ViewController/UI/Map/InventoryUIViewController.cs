@@ -81,17 +81,41 @@ namespace Mikrocosmos
         }
 
         private void OnGoodsUpdateDurability(OnGoodsUpdateViewControllerDurability e) {
-            Image itemImage = allItemSlots[e.SlotNumber].transform.Find("ItemSlot/ItemDurabilityImage").GetComponent<Image>();
-            if (e.DurabilitySprite == null && !e.UsePreviousSprite) {
-                itemImage.color = new Color(1, 1, 1, 0f);
+            Image itemDurabilityImage = allItemSlots[e.SlotNumber].transform.Find("ItemSlot/ItemDurabilityImage").GetComponent<Image>();
+            Image itemImage = allItemSlots[e.SlotNumber].transform.Find("ItemSlot/ItemImage").GetComponent<Image>();
+            if (e.DurabilityColor.a == 0 && !e.UsePreviousSprite) {
+                itemDurabilityImage.DOKill(false);
+                itemDurabilityImage.color = new Color(1, 1, 1, 0f);
+                itemImage.color = Color.white;
             }
             else {
-                itemImage.color = new Color(1, 1, 1, 1f);
+                //itemImage.color = new Color(1, 1, 1, 1f);
                 if (!e.UsePreviousSprite) {
-                    itemImage.sprite = e.DurabilitySprite;
+                    itemDurabilityImage.color = e.DurabilityColor;
+                    itemImage.color = Color.white;                    
+                }
+
+                if (e.DurabilityFraction >= 0.3f) {
+                    itemDurabilityImage.DOKill(false);
+                    itemImage.DOKill(false);
+                    itemDurabilityImage.color = e.DurabilityColor;
+                    itemImage.color = Color.white;
+                }
+                else {
+                    if (e.DurabilityFraction <= 0f) {
+                        itemDurabilityImage.DOKill(false);
+                        itemImage.DOKill(false);
+                        itemImage.color = new Color(1, 1, 1, 0f);
+                    }
+                    else {
+                        if (!DOTween.IsTweening(itemDurabilityImage)) {
+                            itemDurabilityImage.DOColor(Color.red, 0.7f).SetLoops(-1, LoopType.Yoyo);
+                            itemImage.DOColor(Color.red, 0.7f).SetLoops(-1, LoopType.Yoyo);
+                        }
+                    }
                 }
                
-                DOTween.To(() => itemImage.fillAmount, x => itemImage.fillAmount = x, e.DurabilityFraction, 0.2f);
+                DOTween.To(() => itemDurabilityImage.fillAmount, x => itemDurabilityImage.fillAmount = x, e.DurabilityFraction, 0.2f);
                 Debug.Log($"Durability Fraction: {e.DurabilityFraction}");
             }
         }
@@ -155,6 +179,7 @@ namespace Mikrocosmos
                     }
                     
                     itemDurabilityImage.enabled = true;
+                    
                     itemImage.color = new Color(1, 1, 1, 1);
                     SpriteAtlas atlas = resLoader.LoadSync<SpriteAtlas>("assets/goods", $"ItemAtlas");
 
@@ -166,7 +191,11 @@ namespace Mikrocosmos
                 else
                 {
                     itemRarityParent.SetActive(false);
+                    itemDurabilityImage.DOKill(false);
+                    itemImage.DOKill(false);
+                    
                     itemImage.color = new Color(1, 1, 1, 0);
+                   // itemDurabilityImage.sprite = null;
                     itemText.text = "";
                     itemDurabilityImage.enabled = false;
                   

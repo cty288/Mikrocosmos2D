@@ -19,7 +19,7 @@ namespace Mikrocosmos
                 hookableViewController.Model.TryHook(hookedBy);
             }
             else {
-                hookableViewController.Model.UnHook(false);
+                hookableViewController.Model.UnHook(false, false);
                 hookSystem.HookedItem = null;
             }
         }

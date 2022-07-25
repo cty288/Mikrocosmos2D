@@ -53,8 +53,7 @@ namespace Mikrocosmos
                 previousLevel = CurrentLevel;
                 return new OnPermanentVisionExpansion()
                 {
-                    VisionChangeEvent = new OnVisionPermanentChange()
-                    {
+                    VisionChangeEvent = new OnVisionPermanentChange() {
                         IncreasePercentage = IncreaseLevel * additionalVisionAdditionPercentage
                     }
                 }; 

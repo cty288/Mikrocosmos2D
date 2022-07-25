@@ -17,7 +17,7 @@ namespace Mikrocosmos
     }
     public abstract class AbstractCanBeUsedGoodsViewController : AbstractGoodsViewController, ICanBeUsedGoodsViewController{
         public new ICanBeUsed GoodsModel { get; protected set; }
-
+        [SerializeField] protected Color DurabilityCountColor;
         protected override void Awake() {
             base.Awake();
             GoodsModel = GetComponent<ICanBeUsed>();
@@ -31,9 +31,33 @@ namespace Mikrocosmos
             this.RegisterEvent<OnItemDurabilityChange>(OnItemDurabilityChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnItemStopUsed>(OnItemStopUsed).UnRegisterWhenGameObjectDestroyed(gameObject);
+            
+            this.RegisterEvent<OnServerItemAddedToBackpack>(OnItemAddedToBackpack)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
             // this.RegisterEvent<OnBackpackItemRemoved>(OnItemStopBeingSelected)
             //  .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
+
+        private void OnItemAddedToBackpack(OnServerItemAddedToBackpack e) {
+            if (e.goods == GoodsModel) {
+                //OnServerDurabilityChange();
+                CanBeUsedGoodsBasicInfo basicInfo = new CanBeUsedGoodsBasicInfo()
+                {
+                    CanBeUsed = GoodsModel.CanBeUsed,
+                    Durability = GoodsModel.Durability,
+                    Frequency = GoodsModel.Frequency,
+                    MaxDurability = GoodsModel.MaxDurability,
+                    UseMode = GoodsModel.UseMode
+                };
+
+                if (e.HookedBy) {
+
+                    ClientMessagerForDestroyedObjects.Singleton.OnItemAddedToBackpack(e.HookedBy, basicInfo,
+                        e.SlotIndex, DurabilityCountColor);
+                }
+            }
+        }
+
 
         private void OnItemStopUsed(OnItemStopUsed e) {
             if (e.Model == GoodsModel) {
@@ -302,6 +326,9 @@ namespace Mikrocosmos
             OnClientOwnerDurabilityChange(basicInfo, slotNumber);
         }
 
+      
+
+      
 
         protected abstract void OnServerItemUsed();
         protected abstract void OnServerItemStopUsed();
@@ -326,5 +353,6 @@ namespace Mikrocosmos
 
        protected abstract void OnClientItemDurabilityChange(CanBeUsedGoodsBasicInfo basicInfo);
        protected abstract void OnClientOwnerDurabilityChange(CanBeUsedGoodsBasicInfo basicInfo, int slotNumber);
+       
     }
 }

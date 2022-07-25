@@ -186,7 +186,7 @@ MonoBehaviour:
   visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
-  DurabilityCountSprite: {fileID: 0}
+  DurabilityCountColor: {r: 0.05490196, g: 0.4627451, b: 0.4627451, a: 1}
 --- !u!114 &6410031578183631632
 MonoBehaviour:
   m_ObjectHideFlags: 0

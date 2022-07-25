@@ -72,7 +72,7 @@ namespace Mikrocosmos
         [ServerCallback]
         private void OnCraftItemSuccess(OnServerGoodsCraftSuccess e) {
             if (e.Item1 == GoodsModel || e.Item2 == GoodsModel) {
-                Model.UnHook();
+                Model.UnHook(false);
                 NetworkServer.Destroy(gameObject);
             }
         }
@@ -127,7 +127,7 @@ namespace Mikrocosmos
                     GoodsModel.TransactionFinished && !absorbing) {
                    
                   
-                    if (invneInventorySystem.ServerCheckCanAddToBackpack(GoodsModel, out var slot)) {
+                    if (invneInventorySystem.ServerCheckCanAddToBackpack(GoodsModel, out var slot, out int index)) {
                         waitingToCheckAbsorbing = true;
                         
                         this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {

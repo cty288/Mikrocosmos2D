@@ -56,7 +56,7 @@ namespace Mikrocosmos
             RpcOnClientTakeDamage(oldHealth, newHealth);
             if (newHealth <= 0 && oldHealth > 0) {
                 if (Model.HookedByIdentity) {
-                    Model.UnHook();
+                    Model.UnHook(false);
                 }
 
                 GenerateRewards();

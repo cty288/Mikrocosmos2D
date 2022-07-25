@@ -20,6 +20,10 @@ namespace Mikrocosmos
         public int Criminality;
         public BountyType BountyType;
     }
+
+    public struct OnNewCriminalGenerated {
+        public NetworkIdentity Criminal;
+    }
     public class KillerInfo {
         public int KillerTotalKills;
         public int KillerTeam;
@@ -36,6 +40,7 @@ namespace Mikrocosmos
 
     public struct OnCriminalKilledByHunter {
         public NetworkIdentity Hunter;
+        public NetworkIdentity Criminal;
     }
     public class BountyHunterSystem : AbstractNetworkedSystem, IBountyHunterSystem {
         [SerializeField] private int minimumVictiumToTriggerBountyHunter = 3;
@@ -75,7 +80,10 @@ namespace Mikrocosmos
                     killerTradingSystem.ReceiveMoney(bounty);
                 }
 
-                this.SendEvent<OnCriminalKilledByHunter>(new OnCriminalKilledByHunter() {Hunter = e.Killer});
+                this.SendEvent<OnCriminalKilledByHunter>(new OnCriminalKilledByHunter() {
+                    Hunter = e.Killer,
+                    Criminal = e.SpaceshipIdentity
+                });
                 RpcOnCriminalKilled(e.Killer.GetComponent<PlayerSpaceship>().Name, suspect.KillerName, bounty, e.SpaceshipIdentity);
             }
         }
@@ -87,6 +95,7 @@ namespace Mikrocosmos
             }
             if (!currentCriminals.ContainsKey(e.Player)) {
                 if (e.MultiKillNumber >= minimumVictiumToTriggerBountyHunter) {
+                    
                     //A new criminal
                     currentCriminals.Add(e.Player,
                         new KillerInfo() {
@@ -111,6 +120,9 @@ namespace Mikrocosmos
             int otherTeam = killerTeam == 1 ? 2 : 1;
 
             bool killerMessageSent = false;
+            this.SendEvent<OnNewCriminalGenerated>(new OnNewCriminalGenerated() {
+                Criminal = killer
+            });
             foreach (PlayerMatchInfo info in allPlayersWithTeam[killerTeam]) {
                 if (!killerMessageSent && info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>()
                         .ControlledSpaceship == killer) {
@@ -169,8 +181,8 @@ namespace Mikrocosmos
             this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage() {
                 AutoDestroyWhenTimeUp = true,
                 // Description = "",
-                Name = $"CriminalKilled_{criminalName}",
-                RemainingTime = 8f,
+                Name = $"CriminalUpdate_{criminalName}",
+                RemainingTime = 10f,
                 ShowRemainingTime = false,
                 InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
                 Title = Localization.GetFormat("BOUNTY_KILLED", criminalName, hunterName, bounty)
@@ -185,10 +197,10 @@ namespace Mikrocosmos
         private void TargetOnCriminalInfoUpdate(NetworkConnection connection, string killerName,
             BountyType bountyType, NetworkIdentity killerIdentity, int killNumber) {
             ClientInfoMessage message = new ClientInfoMessage() {
-                AutoDestroyWhenTimeUp = true,
+               // AutoDestroyWhenTimeUp = true,
                 // Description = "",
-                Name = $"CriminalUpdate_{connection.connectionId}",
-                RemainingTime = 15f,
+                Name = $"CriminalUpdate_{killerName}",
+                RemainingTime = -1f,
                 //Title = Localization.Get("GAME_INFO_EYE_DETECT"),
                 ShowRemainingTime = false,
                 InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL
@@ -219,10 +231,10 @@ namespace Mikrocosmos
         private void TargetOnNewCriminalGenerate(NetworkConnection connection, string killerName,
             BountyType bountyType, NetworkIdentity killerIdentity, int killNumber) {
             ClientInfoMessage message = new ClientInfoMessage() {
-                AutoDestroyWhenTimeUp = true,
+                //AutoDestroyWhenTimeUp = true,
                 // Description = "",
-                Name = $"NewCriminal_{connection.connectionId}",
-                RemainingTime = 15f,
+                Name = $"CriminalUpdate_{killerName}",
+                RemainingTime = -1f,
                 //Title = Localization.Get("GAME_INFO_EYE_DETECT"),
                 ShowRemainingTime = false,
                 InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL

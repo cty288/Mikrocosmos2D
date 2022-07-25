@@ -105,9 +105,9 @@ namespace Mikrocosmos
 
 
         [ServerCallback]
-        public void UnHook() {
+        public void UnHook(bool isUnHookedByHookButton) {
             if (HookedByIdentity) {
-                HookedByIdentity.GetComponent<IHookSystem>().UnHook();
+                HookedByIdentity.GetComponent<IHookSystem>().UnHook(isUnHookedByHookButton);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Mikrocosmos
 
         public void ResetEntity() {
             if (isServer) {
-                UnHook();
+                UnHook(false);
                 OnReset();
             }
         }
@@ -133,7 +133,7 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        protected virtual void OnServerBeforeUnHooked() {
+        protected virtual void OnServerBeforeUnHooked(bool isUnhookedByHookButton) {
 
         }
 
@@ -151,7 +151,7 @@ namespace Mikrocosmos
         /// Unhook self if hooked
         /// </summary>
         [ServerCallback]
-        public void UnHook(bool isShoot) {
+        public void UnHook(bool isShoot, bool isUnHookedByHookButton) {
             if (!bindedRigidibody || !this) {
                 return;
             }
@@ -159,7 +159,7 @@ namespace Mikrocosmos
             if (HookedByIdentity) {
                 
                 Debug.Log("UnHooked");
-                OnServerBeforeUnHooked();
+                OnServerBeforeUnHooked(isUnHookedByHookButton);
                 /*
                 HookedByIdentity.GetComponent<IHookSystem>().HookedItem = null;
                 HookedByIdentity.GetComponent<IHookSystem>().HookedNetworkIdentity = null;

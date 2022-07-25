@@ -42,9 +42,9 @@ namespace Mikrocosmos
          
         bool canDealMomentumDamage { get; set; }
 
-        void UnHook(bool isShoot);
+        void UnHook(bool isShoot, bool isUnHookedByHookButton);
 
-        void UnHook();
+        void UnHook(bool isUnHookedByHookButton);
     }
 
     public enum ItemUseMode {

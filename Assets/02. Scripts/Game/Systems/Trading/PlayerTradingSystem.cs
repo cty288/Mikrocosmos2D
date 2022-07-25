@@ -104,7 +104,7 @@ namespace Mikrocosmos
                 {
                     if (diff > 0)
                     {
-                        if (moneyList[index] < 15)
+                        if (moneyList[index] < (totalMoney / 2))
                         {
                             moneyList[index] += 1;
                             diff -= 1;

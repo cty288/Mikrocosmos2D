@@ -20,6 +20,11 @@ namespace Mikrocosmos
             base.OnStartServer();
             this.RegisterEvent<OnItemDurabilityChange>(OnItemDurabilityChange)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+            
+        }
+
+        public void OnItemAddedToBackpack(NetworkIdentity identity, CanBeUsedGoodsBasicInfo basicInfo, int slotIndex, Color durabilityColor) {
+            TargetOnItemAddedToInventory(identity.connectionToClient, basicInfo, slotIndex, durabilityColor);
         }
 
         private void OnItemDurabilityChange(OnItemDurabilityChange e) {
@@ -49,8 +54,22 @@ namespace Mikrocosmos
             RpcSpawnParticle(position, index);
         }
 
+        [TargetRpc]
+        protected void TargetOnItemAddedToInventory(NetworkConnection conn, CanBeUsedGoodsBasicInfo basicInfo,
+            int slotNumber, Color durabilityColor) {
+            if (slotNumber >= 0)
+            {
+                this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability()
+                {
+                    DurabilityFraction = basicInfo.Durability / (float)basicInfo.MaxDurability,
+                    DurabilityColor = durabilityColor,
+                    SlotNumber = slotNumber,
+                    UsePreviousSprite = false
+                });
+            }
+        }
 
-      
+
         [TargetRpc]
         protected void TargetOnItemDurabilityChange(NetworkConnection conn, CanBeUsedGoodsBasicInfo basicInfo,
             int slotNumber) {
@@ -58,7 +77,7 @@ namespace Mikrocosmos
                 this.SendEvent<OnGoodsUpdateViewControllerDurability>(new OnGoodsUpdateViewControllerDurability()
                 {
                     DurabilityFraction = basicInfo.Durability / (float)basicInfo.MaxDurability,
-                    DurabilitySprite = null,
+                    DurabilityColor = Color.white,
                     UsePreviousSprite = true,
                     SlotNumber = slotNumber
                 });

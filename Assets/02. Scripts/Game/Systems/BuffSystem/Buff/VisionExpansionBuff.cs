@@ -42,8 +42,8 @@ namespace Mikrocosmos {
             {
                 CameraViewChangeEvent = new OnCameraViewChange() { RadiusAddition =factor * (int)this.cameraRangeAddition },
                 VisionRangeChangeEvent = new OnVisionRangeChange()
-                    { InnerAddition = factor * (int)visionLightExpansion.x, 
-                        OuterAddition = factor * (int)this.visionLightExpansion.y }
+                    { InnerAddition = factor *  (int) (visionLightExpansion.x * 1.5f), 
+                        OuterAddition = factor * (int) (this.visionLightExpansion.y * 1.5f) }
             };
         }
         public void OnBuffStacked(VisionExpansionBuff addedBuff) {

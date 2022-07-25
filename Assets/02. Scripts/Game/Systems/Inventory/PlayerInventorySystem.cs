@@ -84,7 +84,7 @@ namespace Mikrocosmos
         int GetSlotCount();
         int GetCurrentSlot();
 
-        bool ServerCheckCanAddToBackpack(IGoods goods, out BackpackSlot targetSlot);
+        bool ServerCheckCanAddToBackpack(IGoods goods, out BackpackSlot targetSlot, out int index);
         List<BackpackSlot> BackpackItems { get; }
 
     }
@@ -234,16 +234,21 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public void ServerHookToBackpack(string name, GameObject gameObject) {
-            BackpackSlot slot = FindItemStackInBackpack(name);
+            BackpackSlot slot = FindItemStackInBackpack(name, out int index);
 
             if (slot != null) {
                 slot.PrefabName = name;
                 slot.SpriteName =  name + "Sprite";
                 slot.StackedObjects.Insert(0,gameObject);
-                if (gameObject.TryGetComponent<IGoods>(out IGoods goods))
-                {
+                if (gameObject.TryGetComponent<IGoods>(out IGoods goods)) {
                     goods.OnAddedToBackpack();
                     slot.Rarity = goods.GoodRarity;
+                    this.SendEvent<OnServerItemAddedToBackpack>(new OnServerItemAddedToBackpack()
+                    {
+                        goods = goods,
+                        HookedBy = goods.HookedByIdentity,
+                        SlotIndex = index
+                    });
                 }
               
                 ServerSwitchSlot(backpackItems.FindIndex((backpackSlot => backpackSlot == slot)));
@@ -255,7 +260,8 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public void ServerAddToBackpack(string name, GameObject gameObject) {
-           ServerCheckCanAddToBackpack(gameObject.GetComponent<IGoods>(), out BackpackSlot slot);
+           ServerCheckCanAddToBackpack(gameObject.GetComponent<IGoods>(), out BackpackSlot slot, out int index);
+           bool hookSuccess = true;
             if (slot != null)
             {
                 slot.PrefabName = name;
@@ -265,9 +271,22 @@ namespace Mikrocosmos
                 {
                     goods.OnAddedToBackpack();
                     slot.Rarity = goods.GoodRarity;
-                    goods.TryHook(netIdentity);
+                    if (goods.TryHook(netIdentity)) {
+                        this.SendEvent<OnServerItemAddedToBackpack>(new OnServerItemAddedToBackpack()
+                        {
+                            goods = goods,
+                            HookedBy = netIdentity,
+                            SlotIndex = index
+                        });
+                    }
+                    else {
+                        hookSuccess = false;
+                    }
                 }
-                
+
+                if (!hookSuccess) {
+                    return;
+                }
                 NetworkServer.UnSpawn(gameObject);
                 gameObject.SetActive(false);
                 
@@ -317,7 +336,7 @@ namespace Mikrocosmos
         }
 
         public void ServerRemoveFromBackpack(string name) {
-            BackpackSlot slot = FindItemStackInBackpack(name);
+            BackpackSlot slot = FindItemStackInBackpack(name, out int index);
             if (slot != null && slot.Count > 0)
             {
 
@@ -347,7 +366,7 @@ namespace Mikrocosmos
         public void ServerRemoveFromBackpack(GameObject obj) {
             IGoods goods = obj.GetComponent<IGoods>();
             if (goods != null) {
-                BackpackSlot slot = FindItemStackInBackpack(goods.Name);
+                BackpackSlot slot = FindItemStackInBackpack(goods.Name, out int index);
 
                 if (slot != null && slot.Count > 0) {
                     GameObject oldObj = null;
@@ -378,7 +397,7 @@ namespace Mikrocosmos
 
         [ServerCallback]
         public void ServerDropFromBackpack(string name) {
-            BackpackSlot slot = FindItemStackInBackpack(name);
+            BackpackSlot slot = FindItemStackInBackpack(name, out int index);
             if (slot != null) {
                 int prevCount = slot.Count;
                 
@@ -496,27 +515,33 @@ namespace Mikrocosmos
             return currentIndex;
         }
 
-        public bool ServerCheckCanAddToBackpack(IGoods goods, out BackpackSlot targetSlot) {
+        public bool ServerCheckCanAddToBackpack(IGoods goods, out BackpackSlot targetSlot, out int index) {
            // if (goods.HookState == HookState.Hooked) {
               //  targetSlot = null;
                 //return false;
             //}
+            index = -1;
             BackpackSlot firstEmptySlot = null;
-            foreach (BackpackSlot slot in backpackItems) {
-                if (slot.Count > 0 && slot.PrefabName == goods.Name) {
+            int firstEmptyIndex = -1;
+            for (int i = 0; i < backpackItems.Count; i++) {
+                BackpackSlot slot = backpackItems[i];
+                if (slot.Count > 0 && slot.PrefabName == goods.Name)
+                {
                     targetSlot = slot;
+                    index = i;
                     return true;
                 }
 
-                if (slot.Count == 0 && firstEmptySlot==null) {
-                    if (slot == backpackItems[currentIndex] && hookSystem.IsHooking) {
+                if (slot.Count == 0 && firstEmptySlot == null) {
+                    if (slot == backpackItems[currentIndex] && hookSystem.IsHooking) { 
                         continue;
                     }
                     firstEmptySlot = slot;
+                    firstEmptyIndex = i;
                 }
             }
-
             targetSlot = firstEmptySlot;
+            index = firstEmptyIndex;
             return firstEmptySlot!=null;
         }
 
@@ -527,16 +552,20 @@ namespace Mikrocosmos
             }
         }
 
-        private BackpackSlot FindItemStackInBackpack(string name) {
+        private BackpackSlot FindItemStackInBackpack(string name, out int index) {
             BackpackSlot firstEmptySlot = null;
+            index = -1;
 
-            foreach (BackpackSlot item in backpackItems) {
+            for (int i = 0; i < backpackItems.Count; i++) {
+                BackpackSlot item = backpackItems[i];
                 //available slot with the same name
-                if (item.PrefabName == name && item.Count>0) {
+                if (item.PrefabName == name && item.Count > 0) {
+                    index = i;
                     return item;
                 }
 
                 if (item.Count <= 0 && firstEmptySlot == null) {
+                    index = i;
                     firstEmptySlot = item;
                 }
             }

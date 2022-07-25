@@ -473,15 +473,15 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
+  <DestroyedBySun>k__BackingField: 1
+  <AbsorbedToBackpack>k__BackingField: 0
+  <IsSell>k__BackingField: 1
   <SelfMass>k__BackingField: 15
   <Name>k__BackingField: KrowEye
   <BasicSellPrice>k__BackingField: 20
   <BasicBuyPrice>k__BackingField: 30
   <GoodRarity>k__BackingField: 1
   <DroppableFromBackpack>k__BackingField: 1
-  <DestroyedBySun>k__BackingField: 1
-  <AbsorbedToBackpack>k__BackingField: 0
-  <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0
   <AffectedByGravity>k__BackingField: 0
   <CanBeUsed>k__BackingField: 1
@@ -519,7 +519,7 @@ MonoBehaviour:
   visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
-  DurabilityCountSprite: {fileID: 0}
+  DurabilityCountColor: {r: 0.05490196, g: 0.4627451, b: 0.4627451, a: 1}
   <IsOn>k__BackingField: 1
 --- !u!1001 &8258779453494656542
 PrefabInstance:

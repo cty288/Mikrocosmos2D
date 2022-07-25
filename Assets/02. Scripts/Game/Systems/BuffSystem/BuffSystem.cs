@@ -318,7 +318,7 @@ namespace Mikrocosmos {
         void RawMaterialLevelDecrease(Type type, int level);
 
         void RemoveBuff(IBuff buff);
-
+        void RemoveBuff<T>() where T:class, IBuff;
         List<IPermanentRawMaterialBuff> GetAllPermanentRawMaterialBuffs();
         
         /// <summary>
@@ -504,8 +504,8 @@ namespace Mikrocosmos {
             ServerOnBuffUpdate?.Invoke(buff);
         }
 
-       
 
+        
 
         public List<IPermanentRawMaterialBuff> GetAllPermanentRawMaterialBuffs() {
             List<IPermanentRawMaterialBuff> rawMaterialBuffs = new List<IPermanentRawMaterialBuff>();
@@ -540,18 +540,19 @@ namespace Mikrocosmos {
         public Action<IBuff> ServerOnBuffStop { get; set; }
 
         public void RemoveBuff(IBuff buff) {
-            StartCoroutine(RemoveBuffFromList(buff.GetType(), buff));
+            StartCoroutine(RemoveBuffFromList(buff.GetType()));
         }
-        
-        private IEnumerator RemoveBuffFromList(Type type, IBuff buff)
+        public void RemoveBuff<T>() where T : class, IBuff {
+            StartCoroutine(RemoveBuffFromList(typeof(T)));
+        }
+        private IEnumerator RemoveBuffFromList(Type type)
         {
             yield return new WaitForEndOfFrame();
             if (isServer) {
-                if (buffs.ContainsKey(buff.GetType()))
-                {
-                   
-                    if (callbacks.ContainsKey(buff.GetType())) {
-                        callbacks[buff.GetType()]?.Invoke(BuffStatus.OnEnd, buff.MessageToClient);
+                if (buffs.ContainsKey(type)) {
+                    IBuff buff = buffs[type];
+                    if (callbacks.ContainsKey(type)) {
+                        callbacks[type]?.Invoke(BuffStatus.OnEnd, buff.MessageToClient);
                     }
                     
                     if (buff is IUntilBuff untilBuff) {

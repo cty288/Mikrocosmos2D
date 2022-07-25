@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1215360292
+CRC: 1847690122
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 28bd2c69d03241706ef8fcc1195425ee
+    Hash: 3345fdecbd41b8e6718b3f5b20b7be35
   TypeTreeHash:
     serializedVersion: 2
     Hash: c1344c7ff175d4420780664cf7411283
@@ -35,6 +35,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
+- Assets/03. Prefabs/Game/UI/BuffIcons/CriminalDeBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/AimingSpeedDownDeBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/InvincibleBuffIcon.prefab
 - Assets/03. Prefabs/Game/UI/BuffIcons/PermanentSpeedUpBuffIcon.prefab

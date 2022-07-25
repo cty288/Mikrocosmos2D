@@ -152,9 +152,10 @@ namespace Mikrocosmos
 
         //deal with trading
         [ServerCallback]
-        protected override void OnServerBeforeUnHooked() {
-            base.OnServerBeforeUnHooked();
-            if (triggerCheck) {
+        protected override void OnServerBeforeUnHooked(bool isUnhookedByHookButton) {
+            base.OnServerBeforeUnHooked(isUnhookedByHookButton);
+            
+            if (triggerCheck && isUnhookedByHookButton) {
                 if (triggerCheck.Triggered) {
                     
                     foreach (Collider2D collider in triggerCheck.Colliders) {

@@ -1,11 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
 
 namespace Mikrocosmos
 {
+
+    public struct OnServerItemAddedToBackpack {
+        public IGoods goods;
+        public NetworkIdentity HookedBy;
+        public int SlotIndex;
+    }
     public class BasicGoodsModel : AbstractCanBeUsedGoodsModel {
 
         [SerializeField] private bool reduceDurabilityInstantlyAfterUse = true;
@@ -58,6 +65,7 @@ namespace Mikrocosmos
 
         public override void OnAddedToBackpack() {
            // AbsorbedToBackpack = false;
+           
         }
     }
 }

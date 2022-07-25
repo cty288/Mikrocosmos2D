@@ -75,7 +75,7 @@ namespace Mikrocosmos {
 
         bool Hook(GameObject hookedBy);
 
-        void UnHook(bool isShoot = false);
+        void UnHook(bool isUnHookByHookButton, bool isShoot = false);
 
         bool IsHooking { get; }
 
@@ -161,7 +161,7 @@ namespace Mikrocosmos {
                 if (e.DroppedObject) {
                     if (e.DroppedCurrentSlot) { //dropped current selected slot
                         if (HookedItem != null) {
-                            HookedItem.Model.UnHook(false);
+                            HookedItem.Model.UnHook(false, false);
                         }
                        
                         //like removed from backpack
@@ -197,7 +197,7 @@ namespace Mikrocosmos {
                             droppedItemSpawnPos.position.y + Random.Range(-0.5f, 0.5f));
 
                         droppedObj.transform.position = spawnPos;
-                        droppedObj.GetComponent<IHookable>().UnHook(false);
+                        droppedObj.GetComponent<IHookable>().UnHook(false, false);
                         Vector2 randomForce = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
 
                         droppedObj.GetComponent<Rigidbody2D>().AddForce(randomForce * Random.Range(-5f, 5f),
@@ -216,7 +216,7 @@ namespace Mikrocosmos {
         private void OnItemBroken(OnItemBroken e) {
             if (HookedItem!=null && e.Item == HookedItem.Model) {
                 Debug.Log("HookSystem: Item Broken");
-                UnHook();
+                UnHook(false);
                 //NetworkServer.Destroy(go);
             } 
             else if (e.Item != null && (HookedItem==null || e.Item != HookedItem.Model)) {
@@ -352,11 +352,11 @@ namespace Mikrocosmos {
                         TryHook();
                         break;
                     case HookAction.UnHook:
-                        UnHook();
+                        UnHook(true);
                         break;
                     case HookAction.BuyWhenHooked:
                         if (!TryBuyWhenHooking()) {
-                            UnHook();
+                            UnHook(true);
                         }
                         break;
                     case HookAction.Shoot:
@@ -387,7 +387,7 @@ namespace Mikrocosmos {
 
                 IHookableViewController hookable = HookedItem;
                 NetworkIdentity hookeNetworkIdentity = HookedNetworkIdentity;
-                UnHook(true);
+                UnHook(true, true);
 
                 
                 if (hookable!=null && hookeNetworkIdentity) {
@@ -573,7 +573,7 @@ namespace Mikrocosmos {
         [ServerCallback]
         private void OnRobbed(OnItemRobbed e) {
             if (e.Victim == netIdentity && e.HookedItem == HookedItem.Model) {
-                UnHook();
+                UnHook(false);
                 model.ServerUpdateMass();
             }
         }
@@ -608,13 +608,13 @@ namespace Mikrocosmos {
         
 
         [ServerCallback]
-        public void UnHook(bool isShoot = false) {
+        public void UnHook(bool isUnHookedByHookButton, bool isShoot = false) {
             UpdateHookCollisions(true);
 
             if (HookedItem != null && HookedNetworkIdentity != null) {
-                
-                
-                HookedItem.Model.UnHook(isShoot);
+
+
+                HookedItem.Model.UnHook(isShoot, isUnHookedByHookButton);
                 this.SendEvent<OnHookedItemUnHooked>(new OnHookedItemUnHooked() {
                     GameObject = HookedNetworkIdentity.gameObject,
                     OwnerIdentity = netIdentity

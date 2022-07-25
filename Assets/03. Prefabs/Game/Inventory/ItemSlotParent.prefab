@@ -48,6 +48,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 3073399844879683958, guid: 62a50b9e636093e418804b8336ef9030, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3073399844879683958, guid: 62a50b9e636093e418804b8336ef9030, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3073399844879683958, guid: 62a50b9e636093e418804b8336ef9030, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3073399844879683958, guid: 62a50b9e636093e418804b8336ef9030, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3073399844879683958, guid: 62a50b9e636093e418804b8336ef9030, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9165105899096525442, guid: 62a50b9e636093e418804b8336ef9030, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

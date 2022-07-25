@@ -282,7 +282,7 @@ MonoBehaviour:
   visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
-  DurabilityCountSprite: {fileID: 21300000, guid: faafd4a1603e4da4ba4538da07de6755, type: 3}
+  DurabilityCountColor: {r: 0.05490196, g: 0.4627451, b: 0.4627451, a: 1}
   wave: {fileID: 5222149471336982627, guid: ec1758291f27d0e489113ad41ee46451, type: 3}
 --- !u!114 &6851574334146095325
 MonoBehaviour:
@@ -308,15 +308,15 @@ MonoBehaviour:
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 1
   <Acceleration>k__BackingField: 0
+  <DestroyedBySun>k__BackingField: 1
+  <AbsorbedToBackpack>k__BackingField: 1
+  <IsSell>k__BackingField: 1
   <SelfMass>k__BackingField: 10
   <Name>k__BackingField: StoneShield
   <BasicSellPrice>k__BackingField: 25
   <BasicBuyPrice>k__BackingField: 40
   <GoodRarity>k__BackingField: 1
   <DroppableFromBackpack>k__BackingField: 1
-  <DestroyedBySun>k__BackingField: 1
-  <AbsorbedToBackpack>k__BackingField: 1
-  <IsSell>k__BackingField: 1
   <InitialForceMultiplier>k__BackingField: 0.01
   <AffectedByGravity>k__BackingField: 1
   <CanBeUsed>k__BackingField: 1

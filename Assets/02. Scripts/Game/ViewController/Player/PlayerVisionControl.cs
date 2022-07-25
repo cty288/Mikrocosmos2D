@@ -47,8 +47,8 @@ namespace Mikrocosmos
 
         private void OnVisionPermanentChange(OnVisionPermanentChange e) {
             if (hasAuthority) {
-                currentMinOuterRadius += (int)(minOuterRadius * e.IncreasePercentage);
-                currentMinInnerRadius += (int)(minInnerRadius * e.IncreasePercentage);
+                currentMinOuterRadius += (int)(minOuterRadius * e.IncreasePercentage * 1.5f);
+                currentMinInnerRadius += (int)(minInnerRadius * e.IncreasePercentage * 1.5f);
 
                 Light2D light = fovVision.GetComponent<Light2D>();
                 Light2D mapLight = fovVision.GetComponent<Light2D>();
