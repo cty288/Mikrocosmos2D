@@ -37,8 +37,8 @@ namespace Mikrocosmos
         
         [HideInInspector] public NetworkingMode NetworkingMode;
 
-        [SerializeField][Scene]
-        private List<string> GameModeScenes;
+        [SerializeField]
+        private List<string> GameModeSceneNames;
         
 
         private TelepathyTransport telepathyTransport;
@@ -51,13 +51,19 @@ namespace Mikrocosmos
         private CSteamID joinedSteamGame;
 #endif
 
-
+        private ResLoader resLoader;
+        private string mapSceneName;
 
         
         public override void Awake() {
             base.Awake();
             this.RegisterEvent<OnGoodsPropertiesUpdated>(OnGoodsPropertiesUpdated)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            ResLoader.Create((loader => resLoader = loader));
+            StartCoroutine(LoadScenes());
+
+            
             if (Application.isEditor)
                 Application.runInBackground = true;
             networkAddress = NetworkUtility.GetLocalIPAddress();
@@ -92,11 +98,22 @@ namespace Mikrocosmos
                 spawnPrefabs.Add(goodsProperties.GoodsPrefab);
             }
             
-        }            
+        }
+
+
+        private IEnumerator LoadScenes() {
+            yield return new WaitForSeconds(1f);
+            while (resLoader ==null ||  !resLoader.IsReady || !ResData.Exists) {
+                yield return null;
+            }
+            yield return null;
+            yield return null;
+            resLoader.LoadSync<AssetBundle>("map");
+        }
 
 
         public void ServerChangeGameModeScene(GameMode gamemode) {
-            GameplayScene = GameModeScenes[(int)gamemode].ToString();
+            mapSceneName = GameModeSceneNames[(int)gamemode].ToString();
         }
         public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer) {
             NetworkedMenuRoomPlayer player = roomPlayer.GetComponent<NetworkedMenuRoomPlayer>();
@@ -220,6 +237,43 @@ namespace Mikrocosmos
             this.SendEvent<OnAllPlayersReadyStatusChanged>(new OnAllPlayersReadyStatusChanged() { IsAllPlayerReady = false });
         }
 
+        protected override void SceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer) {
+            Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
+
+            if (IsSceneActive(RoomScene))
+            {
+                // cant be ready in room, add to ready list
+                PendingPlayer pending;
+                pending.conn = conn;
+                pending.roomPlayer = roomPlayer;
+                pendingPlayers.Add(pending);
+                return;
+            }
+
+            StartCoroutine(CreatePlayer(conn, roomPlayer));
+        }
+
+        private IEnumerator CreatePlayer(NetworkConnectionToClient conn, GameObject roomPlayer) {
+            while (!subscenesLoaded)
+                yield return null;
+
+            GameObject gamePlayer = OnRoomServerCreateGamePlayer(conn, roomPlayer);
+            if (gamePlayer == null)
+            {
+                // get start position from base class
+                Transform startPos = GetStartPosition();
+                gamePlayer = startPos != null
+                    ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
+                    : Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+            }
+
+            if (!OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer))
+                yield break;
+
+            // replace room player with game player
+            NetworkServer.ReplacePlayerForConnection(conn, gamePlayer, true);
+        }
+
         public override void OnServerSceneChanged(string sceneName) {
             base.OnServerSceneChanged(sceneName);
             if (sceneName == RoomScene || sceneName == offlineScene) {
@@ -233,13 +287,84 @@ namespace Mikrocosmos
                         "true");
                 }
 #endif
-
+                StartCoroutine(ServerLoadSubScenes());
+              
                 //StartCoroutine(LoadScene());
             }
         }
 
+        private bool subscenesLoaded = false;
+        IEnumerator ServerLoadSubScenes() {
+            yield return SceneManager.LoadSceneAsync(mapSceneName, new LoadSceneParameters {
+                loadSceneMode = LoadSceneMode.Additive,
+                localPhysicsMode = LocalPhysicsMode.Physics2D // change this to .Physics2D for a 2D game
+            });
+
+            subscenesLoaded = true;
+        }
+        public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling) {
+            if (sceneOperation == SceneOperation.UnloadAdditive)
+                StartCoroutine(UnloadAdditive(newSceneName));
+
+            if (sceneOperation == SceneOperation.LoadAdditive)
+                StartCoroutine(LoadAdditive(newSceneName));
+        }
 
 
+        bool isInTransition;
+
+
+
+        IEnumerator LoadAdditive(string sceneName) {
+            isInTransition = true;
+            // host client is on server...don't load the additive scene again
+            if (mode == NetworkManagerMode.ClientOnly)
+            {
+                // Start loading the additive subscene
+                loadingSceneAsync = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+                while (loadingSceneAsync != null && !loadingSceneAsync.isDone)
+                    yield return null;
+            }
+
+            // Reset these to false when ready to proceed
+            NetworkClient.isLoadingScene = false;
+            isInTransition = false;
+            OnClientSceneChanged();
+
+        }
+
+        IEnumerator UnloadAdditive(string sceneName)
+        {
+            isInTransition = true;
+
+            if (mode == NetworkManagerMode.ClientOnly)
+            {
+                yield return SceneManager.UnloadSceneAsync(sceneName);
+                yield return Resources.UnloadUnusedAssets();
+            }
+
+            // Reset these to false when ready to proceed
+            NetworkClient.isLoadingScene = false;
+            isInTransition = false;
+            OnClientSceneChanged();
+
+            // There is no call to FadeOut here on purpose.
+            // Expectation is that a LoadAdditive will follow
+            // that will call FadeOut after that scene loads.
+        }
+
+
+        public override void OnClientSceneChanged()
+        {
+            //Debug.Log($"{System.DateTime.Now:HH:mm:ss:fff} OnClientSceneChanged {isInTransition}");
+
+            // Only call the base method if not in a transition.
+            // This will be called from DoTransition after setting doingTransition to false
+            // but will also be called first by Mirror when the scene loading finishes.
+            if (!isInTransition)
+                base.OnClientSceneChanged();
+        }
         public string GetHostName() {
             if (NetworkServer.active) {
                return  this.GetSystem<IRoomMatchSystem>().ServerGetHostInfo().Name;

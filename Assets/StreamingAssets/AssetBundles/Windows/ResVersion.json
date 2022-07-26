@@ -230,6 +230,23 @@
       ]
     },
     {
+      "AssetName": "map",
+      "MD5": "bfac3e6013bee96424bc7dbb9f248672",
+      "FileSize": 23503.5625,
+      "assetDatas": [
+        {
+          "Name": "MainGame",
+          "OwnerBundleName": "map",
+          "AssetType": "UnityEditor.SceneAsset"
+        },
+        {
+          "Name": "Tutorial",
+          "OwnerBundleName": "map",
+          "AssetType": "UnityEditor.SceneAsset"
+        }
+      ]
+    },
+    {
       "AssetName": "mftest",
       "MD5": "3fc8346f2226ce39dcb4c2f2c3361e0b",
       "FileSize": 435.743164,
@@ -486,8 +503,8 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "4ef19e9528685c946f0eb400c578d5c2",
-      "FileSize": 1.86621094,
+      "MD5": "ca38aa1ebada2db7b7be9d48e9c3c4f5",
+      "FileSize": 1.90625,
       "assetDatas": []
     },
     {

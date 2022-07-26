@@ -6666,20 +6666,47 @@ MonoBehaviour:
   - {fileID: 3960199376576208779, guid: 5430f21635ab6ad4fad0c877444f2d90, type: 3}
   - {fileID: 9083827622510945190, guid: 3ca7853999872d64c8e295e72835a939, type: 3}
   - {fileID: 9176045386180071012, guid: abf08b8361cec5342b0e070f948ee117, type: 3}
+  - {fileID: 3676955980554718322, guid: 1db7f74dd6707d94e9a567c802cd6656, type: 3}
+  - {fileID: 4306381364211785162, guid: e30eeeae0f112a143909d8249998460d, type: 3}
+  - {fileID: 7023734452961163205, guid: 43527040f782a0f45b9a3bef3d2ba1c1, type: 3}
+  - {fileID: 9026579231533034849, guid: 7559ae67d0448f340b9dbf886c2a2644, type: 3}
+  - {fileID: 3456219584007792411, guid: 76eff278b2c6eab4fb0d162fae9c16aa, type: 3}
+  - {fileID: 7002757598774541960, guid: dd2cd77fbceecf24eb048a5b2ee5a0d6, type: 3}
+  - {fileID: 1332422627526565124, guid: 1a322510943285f47ad65874930a3879, type: 3}
+  - {fileID: 4230597691075214787, guid: 8e9bfe14cbf52974b8fcdc24b552e7bd, type: 3}
+  - {fileID: 4564881380991704232, guid: 390a415ca8030574cb3fa305e3f584ff, type: 3}
+  - {fileID: 4604806632519271721, guid: 6d9ba016050b54f46a4356d05f5c9838, type: 3}
+  - {fileID: 6239780219056165928, guid: 36773a506f3e0d14abd657df6b913a89, type: 3}
+  - {fileID: 5204113640749930422, guid: 57f9e6428ed16524ab9494adf56d75df, type: 3}
+  - {fileID: 5447812768943667419, guid: fad325e9b11c7c34e985b473a546b0b6, type: 3}
+  - {fileID: 1546541824714299389, guid: 9d6fb4418c678d642967404005a4fd71, type: 3}
+  - {fileID: 1546541824714299389, guid: fb9ec2779d5442d4eadfe5202dbdb36c, type: 3}
+  - {fileID: 1546541824714299389, guid: eada2c82e30aad348b7244cd3523c062, type: 3}
+  - {fileID: 1546541824714299389, guid: 87c1063381c545d4ea213493d8357938, type: 3}
+  - {fileID: 1546541824714299389, guid: d142b12f80a729b4a9a4cba5b9a81dd5, type: 3}
+  - {fileID: 1546541824714299389, guid: c97f77e4e112ae9498298625bbcf0c53, type: 3}
+  - {fileID: 1546541824714299389, guid: 48b255bd099f0a54688424df3c0edd54, type: 3}
+  - {fileID: 1546541824714299389, guid: b5c338d831f5f7646b8aaebad1045854, type: 3}
+  - {fileID: 1546541824714299389, guid: 1fb0add8f82d1db469f4d0d09086e4fa, type: 3}
+  - {fileID: 1546541824714299389, guid: 6989dfdc7e84de64cbea379772de8715, type: 3}
+  - {fileID: 8567091222311588135, guid: bfe39edfd6a18f742af0fb53403839e8, type: 3}
+  - {fileID: 6497101958703423604, guid: 94e5d8f484e775244bf4abbe634605c7, type: 3}
+  - {fileID: 3489238277466601265, guid: d50083e4e0b2ee74a9d7a926898eb487, type: 3}
+  - {fileID: 4394376499988764204, guid: 97904e47cec44124a82b2dbe0788af3f, type: 3}
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 7748040167451011738, guid: 728c8b14dd30eaa41896b442b2bbd183, type: 3}
   RoomScene: Assets/01. Scenes/PrepareRoom.unity
-  GameplayScene: Assets/01. Scenes/MainGame.unity
+  GameplayScene: Assets/01. Scenes/GameScene.unity
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
   matchSystemPrefab: {fileID: 7969864455404771155, guid: a50626b64beb33d4191f882b662eebb0, type: 3}
   IsInGame: 0
   NetworkingMode: 0
-  GameModeScenes:
-  - Assets/01. Scenes/MainGame.unity
-  - Assets/01. Scenes/Tutorial.unity
+  GameModeSceneNames:
+  - MainGame
+  - Tutorial
 --- !u!4 &872660644
 Transform:
   m_ObjectHideFlags: 0

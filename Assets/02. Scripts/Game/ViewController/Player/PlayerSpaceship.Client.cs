@@ -42,12 +42,14 @@ namespace Mikrocosmos
             selfSprites.AddRange(selfSprites[0].GetComponentsInChildren<SpriteRenderer>());
             buffSystem = GetComponent<IBuffSystem>();
             animator = GetComponent<Animator>();
-            gameProgressSystem = this.GetSystem<IGameProgressSystem>();
+           
             this.RegisterEvent<OnClientSpaceshipCriminalityUpdate>(OnCrimelityUpdate).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
-       
 
+        private void Start() {
+            gameProgressSystem = this.GetSystem<IGameProgressSystem>();
+        }
 
         private void OnMassChanged(OnMassChanged e)
         {
