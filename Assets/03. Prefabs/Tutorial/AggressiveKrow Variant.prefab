@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 304312059}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.87, y: -2.7, z: 0}
+  m_LocalPosition: {x: -11.2, y: -3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -254,6 +254,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5092159081732998017, guid: 316f07e4419956947b04c29462b24bc4, type: 3}
+      propertyPath: healthRecoverPerSecond
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5092159081732998017, guid: 316f07e4419956947b04c29462b24bc4, type: 3}
+      propertyPath: healthRecoverThreshold
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5092159081732998017, guid: 316f07e4419956947b04c29462b24bc4, type: 3}
+      propertyPath: <MaxHealth>k__BackingField
+      value: 10000
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 882750534543619283, guid: 316f07e4419956947b04c29462b24bc4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 316f07e4419956947b04c29462b24bc4, type: 3}
@@ -286,6 +298,7 @@ MonoBehaviour:
   <DamageTextSpawnOffset>k__BackingField: {x: 0, y: 0}
   attackTimeInterval: 2
   bulletPrefab: {fileID: 9176045386180071012, guid: abf08b8361cec5342b0e070f948ee117, type: 3}
+  shootForce: 50
 --- !u!4 &4330285073920311161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3856461604829539881, guid: 316f07e4419956947b04c29462b24bc4, type: 3}

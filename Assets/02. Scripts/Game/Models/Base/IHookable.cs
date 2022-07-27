@@ -42,8 +42,17 @@ namespace Mikrocosmos
          
         bool canDealMomentumDamage { get; set; }
 
-        void UnHook(bool isShoot, bool isUnHookedByHookButton);
+        /// <summary>
+        /// This should only called by the hook
+        /// </summary>
+        /// <param name="isShoot"></param>
+        /// <param name="isUnHookedByHookButton"></param>
+        void UnHookByHook(bool isShoot, bool isUnHookedByHookButton);
 
+        /// <summary>
+        /// Call this method if the object want to unhooked from its owner
+        /// </summary>
+        /// <param name="isUnHookedByHookButton"></param>
         void UnHook(bool isUnHookedByHookButton);
     }
 

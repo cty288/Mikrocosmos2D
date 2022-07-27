@@ -161,7 +161,7 @@ namespace Mikrocosmos {
                 if (e.DroppedObject) {
                     if (e.DroppedCurrentSlot) { //dropped current selected slot
                         if (HookedItem != null) {
-                            HookedItem.Model.UnHook(false, false);
+                            HookedItem.Model.UnHookByHook(false, false);
                         }
                        
                         //like removed from backpack
@@ -197,7 +197,7 @@ namespace Mikrocosmos {
                             droppedItemSpawnPos.position.y + Random.Range(-0.5f, 0.5f));
 
                         droppedObj.transform.position = spawnPos;
-                        droppedObj.GetComponent<IHookable>().UnHook(false, false);
+                        droppedObj.GetComponent<IHookable>().UnHookByHook(false, false);
                         Vector2 randomForce = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
 
                         droppedObj.GetComponent<Rigidbody2D>().AddForce(randomForce * Random.Range(-5f, 5f),
@@ -614,7 +614,7 @@ namespace Mikrocosmos {
             if (HookedItem != null && HookedNetworkIdentity != null) {
 
 
-                HookedItem.Model.UnHook(isShoot, isUnHookedByHookButton);
+                HookedItem.Model.UnHookByHook(isShoot, isUnHookedByHookButton);
                 this.SendEvent<OnHookedItemUnHooked>(new OnHookedItemUnHooked() {
                     GameObject = HookedNetworkIdentity.gameObject,
                     OwnerIdentity = netIdentity

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 28648146
+CRC: 449527287
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fdc562ccff0293d30220172f034ab5c9
+    Hash: cc0163ddc54b04da769998553dd4d070
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
@@ -20,4 +20,5 @@ Assets:
 - Assets/08. Audios/Sell.wav
 - Assets/08. Audios/Team2Hook.ogg
 - Assets/08. Audios/Buy.ogg
+- Assets/08. Audios/BGM/maou_bgm_cyber11.mp3
 Dependencies: []

@@ -3,11 +3,21 @@
   "ABMD5List": [
     {
       "AssetName": "audio",
-      "MD5": "f770b17311b4f474fd98f15c4edc4847",
-      "FileSize": 365.773438,
+      "MD5": "52ff630b6fa4f1ce27ada1033522da2b",
+      "FileSize": 10166.9951,
       "assetDatas": [
         {
           "Name": "AddMoney",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "09_IMAscore_Tron",
+          "OwnerBundleName": "audio",
+          "AssetType": "UnityEngine.AudioClip"
+        },
+        {
+          "Name": "maou_bgm_cyber11",
           "OwnerBundleName": "audio",
           "AssetType": "UnityEngine.AudioClip"
         },
@@ -127,8 +137,8 @@
     },
     {
       "AssetName": "info",
-      "MD5": "f772ece6123c76d77e79e8b77d017631",
-      "FileSize": 168.960938,
+      "MD5": "c4704e5de7295c42aff7ea779c32024c",
+      "FileSize": 194.804688,
       "assetDatas": [
         {
           "Name": "InfoBar_Green",
@@ -214,8 +224,8 @@
     },
     {
       "AssetName": "profile",
-      "MD5": "dd526f8f407adb014cad5f2c56886a61",
-      "FileSize": 260.032227,
+      "MD5": "04331b1ac4a8f400e58042ea463836a1",
+      "FileSize": 258.819336,
       "assetDatas": [
         {
           "Name": "AvatarAtlas",
@@ -401,14 +411,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "8d270b878066f172d10815d21b6b0852",
+      "MD5": "3dcb1b04a72ca1bac136602ff2bc5ac0",
       "FileSize": 1.66308594,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "ab3f1000d59eeb5dc0b04faac7dc437e",
-      "FileSize": 297.333984,
+      "MD5": "fbedcb59f05877957cc4043eb4f37c04",
+      "FileSize": 443.635742,
       "assetDatas": [
         {
           "Name": "ItemInventoryAtlas",

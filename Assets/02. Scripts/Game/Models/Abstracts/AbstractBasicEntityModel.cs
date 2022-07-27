@@ -151,7 +151,7 @@ namespace Mikrocosmos
         /// Unhook self if hooked
         /// </summary>
         [ServerCallback]
-        public void UnHook(bool isShoot, bool isUnHookedByHookButton) {
+        public void UnHookByHook(bool isShoot, bool isUnHookedByHookButton) {
             if (!bindedRigidibody || !this) {
                 return;
             }

@@ -88,6 +88,7 @@ namespace Mikrocosmos {
                 //NetworkClient.Shutdown();
                 yield return new WaitForSeconds(0.1f);
                 SceneManager.LoadScene(0);
+                NetworkManager.singleton.StopClient();
             }
             else if (NetworkClient.active) {
                 //NetworkClient.Disconnect();
