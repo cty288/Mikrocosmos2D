@@ -17,4 +17,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/Tutorial.unity
     guid: 2ff8d363d2f448446ad158d9ce39088e
+  - enabled: 0
+    path: Assets/Mirror/Examples/AdditiveLevels/Scenes/Offline.unity
+    guid: 9959d9d8e637be64dab77006a85135c1
+  - enabled: 0
+    path: Assets/Mirror/Examples/AdditiveLevels/Scenes/Online.unity
+    guid: 3c63960543989ea41ba3d3fb04d6dcf3
+  - enabled: 0
+    path: Assets/Mirror/Examples/AdditiveLevels/Scenes/SubLevel1.unity
+    guid: 91c0fa5f4542be14dbad5c838292056b
+  - enabled: 0
+    path: Assets/Mirror/Examples/AdditiveLevels/Scenes/SubLevel2.unity
+    guid: e8e2dc8c3ef824b468c6f6e1980a4b27
   m_configObjects: {}

@@ -19,17 +19,17 @@ namespace Mikrocosmos
         }
         
         public void StartAnimate(int money) {
-            float minGreen = 0.660593f;
+            Color minBlue = new Color(0.2836477f, 0.653459f, 1f);
+            Color maxBlue = new Color(0, 0.5987263f, 1f);
             float minRed = 0.6666666f;
 
 
-            Color targetColor = new Color(minGreen, 1f, minGreen, 1);
+            Color targetColor = minBlue;
             float maxMoney = 100;
             int moneyAbs = Mathf.Abs(money);
 
             if (money > 0) {
-                targetColor = new Color(minGreen - minGreen * (moneyAbs / maxMoney), 1f,
-                    minGreen - minGreen * (moneyAbs / maxMoney), 1);
+                targetColor = Color.Lerp(minBlue, maxBlue, moneyAbs / maxMoney);
             }
             else {
                 targetColor = new Color(1f, minRed - minRed * (moneyAbs / maxMoney),

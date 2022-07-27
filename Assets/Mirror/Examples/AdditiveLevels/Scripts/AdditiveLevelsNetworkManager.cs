@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using MikroFramework.ResKit;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,8 +9,7 @@ namespace Mirror.Examples.AdditiveLevels
     public class AdditiveLevelsNetworkManager : NetworkManager
     {
         [Header("Additive Scenes - First is start scene")]
-
-        [Scene, Tooltip("Add additive scenes here.\nFirst entry will be players' start scene")]
+        [Tooltip("Add additive scenes here.\nFirst entry will be players' start scene")]
         public string[] additiveScenes;
 
         [Header("Fade Control - See child FadeCanvas")]
@@ -23,7 +23,13 @@ namespace Mirror.Examples.AdditiveLevels
         // This is managed in LoadAdditive, UnloadAdditive, and checked in OnClientSceneChanged
         bool isInTransition;
 
+        private ResLoader resLoader;
         #region Scene Management
+
+        public override void Awake() {
+            base.Awake();
+            ResLoader.Create((loader => resLoader = loader));
+        }
 
         /// <summary>
         /// Called on the server when a scene is completed loaded, when the scene load was initiated by the server with ServerChangeScene().
@@ -37,8 +43,10 @@ namespace Mirror.Examples.AdditiveLevels
                 StartCoroutine(ServerLoadSubScenes());
         }
 
-        IEnumerator ServerLoadSubScenes()
-        {
+        IEnumerator ServerLoadSubScenes() {
+            resLoader.LoadSync<AssetBundle>("map");
+            
+            
             foreach (string additiveScene in additiveScenes)
                 yield return SceneManager.LoadSceneAsync(additiveScene, new LoadSceneParameters
                 {
@@ -67,8 +75,9 @@ namespace Mirror.Examples.AdditiveLevels
                 StartCoroutine(LoadAdditive(sceneName));
         }
 
-        IEnumerator LoadAdditive(string sceneName)
-        {
+        IEnumerator LoadAdditive(string sceneName) {
+            resLoader.LoadSync<AssetBundle>("map");
+            
             isInTransition = true;
 
             // This will return immediately if already faded in

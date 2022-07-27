@@ -45,6 +45,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: bedeb44261b1e97438920ba264de2bc2, type: 3}
   - {fileID: 21300000, guid: 7cb689f2ca01156458d93236e01ffa9d, type: 3}
   - {fileID: 21300000, guid: e3c7f11613b6ba84ca01a6642ffa54fe, type: 3}
+  - {fileID: 21300000, guid: 7202040735481ab40b76797c3369c242, type: 3}
   - {fileID: 21300000, guid: 1047d417df1608947896bf4da85eabb5, type: 3}
   - {fileID: 21300000, guid: 7d3296670ec98064da1b64adb28a81cd, type: 3}
   - {fileID: 21300000, guid: 69be34b8b5c691b47a2467369f06c62d, type: 3}
@@ -54,11 +55,14 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 10cd09bb52ee66d4bae108dad2078c11, type: 3}
   - {fileID: 21300000, guid: 1248742c96a847c44b2f7f5b9e1ac78e, type: 3}
   - {fileID: 21300000, guid: a3a5b49c0935fd547a5565ce7882af4d, type: 3}
+  - {fileID: 21300000, guid: 04118acccad3df94c91e25d66430458d, type: 3}
   - {fileID: 21300000, guid: dd83751d7a215fd44999f123b326a98a, type: 3}
   - {fileID: 21300000, guid: 7172fdfe21287d347ac80924141ba03b, type: 3}
   - {fileID: 21300000, guid: b85bce3f2fe462e4fa965e3af9599a22, type: 3}
   - {fileID: 21300000, guid: f29ef2afd321cf245a37ea7c6ee41b10, type: 3}
   - {fileID: 21300000, guid: 0ee527bf9e76e4e499ffa295e03a43ef, type: 3}
+  - {fileID: 21300000, guid: d20346effab0f0a4d95bd50f47f8da9d, type: 3}
+  - {fileID: 21300000, guid: 3c5aafefc4167e445964a0153c0bea46, type: 3}
   m_PackedSpriteNamesToIndex:
   - SunflowerSonSprite
   - ThrusterSprite
@@ -67,6 +71,7 @@ SpriteAtlas:
   - PoisonSpearSprite
   - StatelliteSprite
   - FlowerSprite
+  - JellyGunDebuff3
   - LeafKnifeSprite
   - JellyGunSprite
   - SeaweedFruitSprite
@@ -76,11 +81,14 @@ SpriteAtlas:
   - MaskSprite
   - EarthMushroomSprite
   - StoneShieldSprite
+  - JellyGunDebuff1
   - BananaSprite
   - CactusShotgunSprite
   - KindleSprite
   - TolietSprite
   - FirePlantSprite
+  - JellyGunDebuff2
+  - JellyGunDebuff0
   m_RenderDataMap: {}
   m_Tag: ItemInventoryAtlas
   m_IsVariant: 0

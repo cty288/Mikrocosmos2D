@@ -39,6 +39,8 @@ namespace Mikrocosmos
 
         bool ServerRequestCraftGoods(IGoods item1, IGoods item2, Vector2 position);
 
+        Vector2 GetMoneyAdditionAndInterval(float percentage);
+
         GoodsConfigure PlanetRequestBuyItem(List<GoodsConfigure> possibleGoods);
 
         GoodsConfigure PlanetRequestSellItem(List<GoodsConfigure> possibleGoods);
@@ -56,6 +58,9 @@ namespace Mikrocosmos
 
         [SerializeField] private GameObject craftingEffect;
         [SerializeField] private List<GameObject> allGoodsPrefabsInThisGame = new List<GameObject>();
+
+        [SerializeField] private AnimationCurve moneyAdditionCurve;
+        [SerializeField] private AnimationCurve moneyAdditionalFrequencyCurve;
 
         public List<GameObject> AllGoodsPrefabsInThisGame {
             get {
@@ -273,6 +278,11 @@ namespace Mikrocosmos
             });
             RpcSpawnCraftingEffect(position);
             return true;
+        }
+
+        public Vector2 GetMoneyAdditionAndInterval(float percentage) {
+            return new Vector2(moneyAdditionalFrequencyCurve.Evaluate(percentage),
+                moneyAdditionCurve.Evaluate(percentage));
         }
 
         public GoodsConfigure PlanetRequestBuyItem(List<GoodsConfigure> possibleGoods) {

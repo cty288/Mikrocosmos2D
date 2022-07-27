@@ -16,6 +16,7 @@ Shader "examples/week 10/VHS"
         _WaveAmount("Sine lines amount", float) = 1
         _WaveSpeed("Sine lines speed", float) = 0
         _WaveDisplacement("Sine lines displacement", float) = 0
+		_Strength("Effect Strength", Range(0,1)) = 1
     }
     SubShader
     {
@@ -46,6 +47,7 @@ Shader "examples/week 10/VHS"
             float _WaveAmount;
             float _WaveDisplacement;
             float _WaveSpeed;
+            float _Strength;
             
             float rand (float2 uv) {
                 return frac(sin(dot(uv.xy, float2(12.9898, 78.233))) * 43758.5453123);
@@ -95,9 +97,10 @@ Shader "examples/week 10/VHS"
                 float r = tex2D(_MainTex, uv + float2(offset + _ChromaticAberration + lineDisplacement + waveDisplacement, 0) * _MainTex_TexelSize.xy).r;
                 float g = tex2D(_MainTex, uv + float2(offset - lineDisplacement + waveDisplacement, 0) * _MainTex_TexelSize.xy).g;
                 float b = tex2D(_MainTex, uv - float2(offset + _ChromaticAberration - lineDisplacement + waveDisplacement, 0) * _MainTex_TexelSize.xy).b;
-                
-                float3 color = float3(r, g, b);
-
+                float a = tex2D(_MainTex, uv + float2(offset + _ChromaticAberration + lineDisplacement + waveDisplacement, 0) * _MainTex_TexelSize.xy).a;
+                float4 color = float4(r, g, b,a);
+                float4 originalColor =  tex2D(_MainTex, uv).rgba;
+				
                 color *= max(0.7, rand(uv + _Time.x));
                
                 float noise = tex2D(_NoiseTexture, uv * _NoiseTexture_ST.xy).x;
@@ -105,7 +108,7 @@ Shader "examples/week 10/VHS"
                 float lines2 = step(0.5, frac(uv.y * _LineAmount + _Time.y * _LineSpeed * 5));
                 color += step(0.75, 1.0 - lines2) * step(waves, noise) * 0.10;
 
-                return float4(color, 1.0);
+                return lerp(originalColor, color, _Strength);
             }
             ENDCG
         }

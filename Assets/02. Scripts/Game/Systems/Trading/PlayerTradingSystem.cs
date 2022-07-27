@@ -5,6 +5,8 @@ using MikroFramework.Event;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Networking.Types;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Mikrocosmos
 {
@@ -23,13 +25,13 @@ namespace Mikrocosmos
         public NetworkIdentity Player;
         public int MoneyReceived;
     }
-    public interface IPlayerTradingSystem : ISystem
-    {
+    public interface IPlayerTradingSystem : ISystem {
         public int Money { get; }
 
         public void SpendMoney(int count);
 
-        public void ReceiveMoney(int count);
+        public void ReceiveMoney(int count, bool playSound = true);
+
     }
 
     public class PlayerTradingSystem : AbstractNetworkedSystem, IPlayerTradingSystem {
@@ -40,7 +42,12 @@ namespace Mikrocosmos
         public int Money { get; set; } = 50;
 
 
-        
+     
+       
+        [SerializeField] private int addMoneyThreshold = 20;
+
+        private IGlobalTradingSystem globalTradingSystem;
+        private IGameProgressSystem gameProgressSystem;
         public void SpendMoney(int count) {
             if (Money >= count) {
                 Money -= count;
@@ -51,12 +58,13 @@ namespace Mikrocosmos
             }
         }
 
-        public void ReceiveMoney(int count) {
+        public void ReceiveMoney(int count, bool playSound = true) {
             Money += count;
             this.SendEvent<OnPlayerReceiveMoney>(new OnPlayerReceiveMoney() {
                 Player = netIdentity,
                 MoneyReceived = count
             });
+            TargetOnReceiveMoney(playSound, count);
         }
 
         public override void OnStartServer()
@@ -65,6 +73,23 @@ namespace Mikrocosmos
             this.RegisterEvent<OnServerPlayerMoneyNotEnough>(OnServerPlayerMoneyNotEnough)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnPlayerDie>(OnPlayerDie).UnRegisterWhenGameObjectDestroyed(gameObject);
+            globalTradingSystem = this.GetSystem<IGlobalTradingSystem>();
+            gameProgressSystem = this.GetSystem<IGameProgressSystem>();
+            StartCoroutine(AutoAddMoney());
+        }
+
+        private IEnumerator AutoAddMoney() {
+            while (true) {
+                
+                //(new Renderer2DData().rendererFeatures[0] as CustomRenderPassFeature).settings.material
+                float percentage = Mathf.Clamp01(Money / (float) addMoneyThreshold);
+                Vector2 moneyAdditionStat = globalTradingSystem.GetMoneyAdditionAndInterval(percentage);
+                yield return new WaitForSeconds(moneyAdditionStat.x);
+                if (Money < addMoneyThreshold && gameProgressSystem.GameState == GameState.InGame) {
+                    float addMoneyAmount = Mathf.Min(addMoneyThreshold - Money, moneyAdditionStat.y);
+                    ReceiveMoney((Mathf.RoundToInt(addMoneyAmount)), false);
+                }
+            }
         }
 
         private void OnPlayerDie(OnPlayerDie e) {
@@ -162,9 +187,17 @@ namespace Mikrocosmos
                     OldMoney = oldMoney,
                     NewMoney = newMoney
                 });
+                /*
                 if (newMoney > oldMoney) {
                     this.GetSystem<IAudioSystem>().PlaySound("AddMoney", SoundType.Sound2D);
-                }
+                }*/
+            }
+        }
+
+        [TargetRpc]
+        private void TargetOnReceiveMoney(bool playSound, int moneyReceive) {
+            if (playSound) {
+                this.GetSystem<IAudioSystem>().PlaySound("AddMoney", SoundType.Sound2D);
             }
         }
 

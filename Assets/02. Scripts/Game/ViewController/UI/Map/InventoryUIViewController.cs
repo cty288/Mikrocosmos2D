@@ -86,7 +86,7 @@ namespace Mikrocosmos
             if (e.DurabilityColor.a == 0 && !e.UsePreviousSprite) {
                 itemDurabilityImage.DOKill(false);
                 itemDurabilityImage.color = new Color(1, 1, 1, 0f);
-                itemImage.color = Color.white;
+                itemImage.color = new Color(1, 1, 1, 0);
             }
             else {
                 //itemImage.color = new Color(1, 1, 1, 1f);

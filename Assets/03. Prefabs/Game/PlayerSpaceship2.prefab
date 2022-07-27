@@ -56,6 +56,7 @@ MonoBehaviour:
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
@@ -166,6 +167,7 @@ MonoBehaviour:
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 2
+  m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 20
   m_NormalMapQuality: 1
@@ -5125,6 +5127,7 @@ MonoBehaviour:
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 2
+  m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 20
   m_NormalMapQuality: 1
@@ -5812,6 +5815,15 @@ MonoBehaviour:
   deathEffect: {fileID: 7185770661961320848, guid: 403bdccd6022c0046ac27a8be0362666, type: 3}
   hitParticlePrefab: {fileID: 5608423231812658629, guid: 4a769b6e4f56d274c94ec341728691ab, type: 3}
   isControlling: 0
+  <matchInfo>k__BackingField:
+    ID: 0
+    Name: 
+    Team: 0
+    Prepared: 0
+    Identity: {fileID: 0}
+    TeamIndex: 0
+    Language: 0
+    IsSpectator: 0
   isUsing: 0
   teamSprites:
   - {fileID: 21300000, guid: 14bf8ba6db3aa75448715c612f806b41, type: 3}
@@ -5913,6 +5925,8 @@ MonoBehaviour:
   shootChargeOneCycleTime: 1
   maxShootForce: 50
   droppedItemSpawnPos: {fileID: 3151577699715661459}
+  <ClientHookedItemName>k__BackingField:
+    value: 
   animator: {fileID: 1426794900304426698}
   hookShootChargePercent: 0
 --- !u!95 &1860153339421768247
@@ -6035,6 +6049,7 @@ MonoBehaviour:
   syncInterval: 0.02
   diamondPrefab: {fileID: 4273496871896645202, guid: 113f1df07d7042a4b93a23c0d811c2e7, type: 3}
   <Money>k__BackingField: 10
+  addMoneyThreshold: 50
 --- !u!114 &7101365055220562950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6282,6 +6297,7 @@ MonoBehaviour:
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
   m_OverlapOperation: 0
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2

@@ -102,6 +102,7 @@ namespace Mikrocosmos
             base.OnStartServer();
             progressSystem = this.GetSystem<IGameProgressSystem>();
             allMissions.Shuffle();
+            
             StartCoroutine(WaitToSwitchMission());
             roomMatchSystem = this.GetSystem<IRoomMatchSystem>();
             this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);

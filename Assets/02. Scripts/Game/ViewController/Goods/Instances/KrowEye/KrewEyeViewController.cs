@@ -76,8 +76,7 @@ namespace Mikrocosmos
                             TargetAlertTeamMembers(connection);
                         }
 
-                        if (e.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem))
-                        {
+                        if (e.TryGetComponent<IBuffSystem>(out IBuffSystem buffSystem)) {
                             buffSystem.AddBuff<KrowEyeSpeedDownDeBuff>(new KrowEyeSpeedDownDeBuff(
                                 UntilAction.Allocate(() => !spaceshipDetectTrigger.PlayersInTrigger.Contains(e) || krowEyeModel.TeamBelongTo.Value==-1)));
                         }

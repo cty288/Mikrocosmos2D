@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using GoogleSheetsToUnity;
 using MikroFramework;
 using MikroFramework.Architecture;
@@ -122,9 +123,11 @@ namespace Mikrocosmos
         private void OnServerKrowEyeSpeedDownDeBuffUpdate(KrowEyeSpeedDownDeBuff buff, BuffStatus status, BuffClientMessage arg3) {
             if (status == BuffStatus.OnStart) {
                 spaceshipModel.AddSpeedAndAcceleration(-buff.DecreasePercentage);
+                TargetOnKrowEyeImageEffect(true);
             }
             else if (status == BuffStatus.OnEnd) {
                 spaceshipModel.AddSpeedAndAcceleration(buff.DecreasePercentage);
+                TargetOnKrowEyeImageEffect(false);
             }
         }
 
@@ -171,7 +174,6 @@ namespace Mikrocosmos
             BuffInfo buffInfo = SetupBuffInfo(buff,clientLanguage);
             TargetUpdateBuffInfo(buffInfo, BuffUpdateMode.Update);
         }
-
 
         private BuffInfo SetupBuffInfo(IBuff buff, Language language)
         {
@@ -282,6 +284,23 @@ namespace Mikrocosmos
             this.SendEvent<OnClientVisionOcculsionBuff>(new OnClientVisionOcculsionBuff() {
                 status = e
             });
+        }
+
+        [TargetRpc]
+        private void TargetOnKrowEyeImageEffect(bool isOn) {
+            if (isOn) {
+                Material material = ImageEffectController.Singleton.TurnOnScriptableRendererFeature(0);
+                DOTween.Kill(material);
+                material.SetFloat("_Strength", 0);
+                material.DOFloat(0.5f, "_Strength", 1f);
+            }
+            else {
+                Material material = ImageEffectController.Singleton.GetScriptableRendererFeatureMaterial(0);
+                DOTween.Kill(material);
+                material.DOFloat(0, "_Strength", 1f).OnComplete(() => {
+                    ImageEffectController.Singleton.TurnOffScriptableRendererFeature(0);
+                });
+            }
         }
     }
 

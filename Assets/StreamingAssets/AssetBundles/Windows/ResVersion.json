@@ -3,7 +3,7 @@
   "ABMD5List": [
     {
       "AssetName": "audio",
-      "MD5": "d048f2618034b5496a3542c9452db7a4",
+      "MD5": "f770b17311b4f474fd98f15c4edc4847",
       "FileSize": 365.773438,
       "assetDatas": [
         {
@@ -213,67 +213,6 @@
       ]
     },
     {
-      "AssetName": "info_elements",
-      "MD5": "da423b843c3910394d489ef389f7f28a",
-      "FileSize": 9677.65,
-      "assetDatas": [
-        {
-          "Name": "MissionInfoElement",
-          "OwnerBundleName": "info_elements",
-          "AssetType": "UnityEngine.GameObject"
-        },
-        {
-          "Name": "WarningInfoElement",
-          "OwnerBundleName": "info_elements",
-          "AssetType": "UnityEngine.GameObject"
-        }
-      ]
-    },
-    {
-      "AssetName": "mftest",
-      "MD5": "3fc8346f2226ce39dcb4c2f2c3361e0b",
-      "FileSize": 435.743164,
-      "assetDatas": [
-        {
-          "Name": "War loop",
-          "OwnerBundleName": "mftest",
-          "AssetType": "UnityEngine.AudioClip"
-        },
-        {
-          "Name": "Asteroid_1",
-          "OwnerBundleName": "mftest",
-          "AssetType": "UnityEngine.Texture2D"
-        },
-        {
-          "Name": "Cylinder",
-          "OwnerBundleName": "mftest",
-          "AssetType": "UnityEngine.GameObject"
-        },
-        {
-          "Name": "TestABObj",
-          "OwnerBundleName": "mftest",
-          "AssetType": "UnityEngine.GameObject"
-        }
-      ]
-    },
-    {
-      "AssetName": "mftest2",
-      "MD5": "e681bec26a80aa712f10209e5b503da6",
-      "FileSize": 5.11328125,
-      "assetDatas": [
-        {
-          "Name": "War loop",
-          "OwnerBundleName": "mftest2",
-          "AssetType": "UnityEngine.GameObject"
-        },
-        {
-          "Name": "TestABObj",
-          "OwnerBundleName": "mftest2",
-          "AssetType": "UnityEngine.GameObject"
-        }
-      ]
-    },
-    {
       "AssetName": "profile",
       "MD5": "dd526f8f407adb014cad5f2c56886a61",
       "FileSize": 260.032227,
@@ -461,33 +400,9 @@
       ]
     },
     {
-      "AssetName": "scene",
-      "MD5": "006d5e40e5c87f2d0b92db2bc3b34555",
-      "FileSize": 26.50293,
-      "assetDatas": [
-        {
-          "Name": "HotUpdateExampleScene",
-          "OwnerBundleName": "scene",
-          "AssetType": "UnityEditor.SceneAsset"
-        }
-      ]
-    },
-    {
-      "AssetName": "test_sphere",
-      "MD5": "7876d6f324538a103593e7ce94b515c3",
-      "FileSize": 44.4736328,
-      "assetDatas": [
-        {
-          "Name": "Sphere",
-          "OwnerBundleName": "test_sphere",
-          "AssetType": "UnityEngine.GameObject"
-        }
-      ]
-    },
-    {
       "AssetName": "Windows",
-      "MD5": "4ef19e9528685c946f0eb400c578d5c2",
-      "FileSize": 1.86621094,
+      "MD5": "8d270b878066f172d10815d21b6b0852",
+      "FileSize": 1.66308594,
       "assetDatas": []
     },
     {
@@ -604,18 +519,6 @@
           "Name": "TolietSprite",
           "OwnerBundleName": "assets/goods",
           "AssetType": "UnityEngine.Texture2D"
-        }
-      ]
-    },
-    {
-      "AssetName": "test/scene_test.ab",
-      "MD5": "dfbd6563e837a0e3146cf2a34882ea2c",
-      "FileSize": 53.6865234,
-      "assetDatas": [
-        {
-          "Name": "TestABScene",
-          "OwnerBundleName": "test/scene_test.ab",
-          "AssetType": "UnityEditor.SceneAsset"
         }
       ]
     }

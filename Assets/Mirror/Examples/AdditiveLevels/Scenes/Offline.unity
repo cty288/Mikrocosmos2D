@@ -407,8 +407,8 @@ MonoBehaviour:
   playerSpawnMethod: 1
   spawnPrefabs: []
   additiveScenes:
-  - Assets/Mirror/Examples/AdditiveLevels/Scenes/SubLevel1.unity
-  - Assets/Mirror/Examples/AdditiveLevels/Scenes/SubLevel2.unity
+  - SubLevel1
+  - SubLevel2
   fadeInOut: {fileID: 1300359890}
 --- !u!4 &1074858617
 Transform:

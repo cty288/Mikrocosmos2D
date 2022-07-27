@@ -67,12 +67,12 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _HorizontalGlitchWidth: 15.9
-    - _Intensity: 0
+    - _Intensity: 0.056
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RGBGlichingIntensity: 0.007
+    - _RGBGlichingIntensity: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -81,5 +81,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _NightVisionColor: {r: 0, g: 0.4811321, b: 0.13, a: 1}
+    - _NightVisionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

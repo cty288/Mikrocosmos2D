@@ -23,7 +23,7 @@ SpriteAtlas:
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 2048
+      m_MaxTextureSize: 4096
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 1
@@ -47,17 +47,23 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 928b30e90587bd4458f2a9577e0d228a, type: 3}
     - {fileID: 2800000, guid: 9c2c2ccb404136e4599a0ba36c46c854, type: 3}
     - {fileID: 2800000, guid: c72fe754f8ed5864a891c3b497ad1b36, type: 3}
+    - {fileID: 2800000, guid: ffcd8b0b23a38054a8b2016cbf697ae0, type: 3}
+    - {fileID: 2800000, guid: 7f4ac730e9adea147a7fb50d7d089123, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 7f4ac730e9adea147a7fb50d7d089123, type: 3}
   - {fileID: 21300000, guid: c72fe754f8ed5864a891c3b497ad1b36, type: 3}
   - {fileID: 21300000, guid: 928b30e90587bd4458f2a9577e0d228a, type: 3}
+  - {fileID: 21300000, guid: ffcd8b0b23a38054a8b2016cbf697ae0, type: 3}
   - {fileID: 21300000, guid: 9c2c2ccb404136e4599a0ba36c46c854, type: 3}
   m_PackedSpriteNamesToIndex:
+  - menu_bg
   - MinimapBg
   - MinimapBorder
+  - 9bea509bfa7013287df023b5026808a
   - MapOrbits
   m_RenderDataMap: {}
   m_Tag: MapAtlas

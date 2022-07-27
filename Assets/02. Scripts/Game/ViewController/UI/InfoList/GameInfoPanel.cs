@@ -59,9 +59,11 @@ namespace Mikrocosmos
 
             if (!infoNameToElement.ContainsKey(e.Info.Name)) {
 
-                  GameObject elementPrefab = resLoader.LoadSync<GameObject>("info_elements", e.Info.InfoElementPrefabAssetName);
-
-                  InfoElement spawnedInfoElement =  Instantiate(elementPrefab, layoutGroup)
+                // GameObject elementPrefab = resLoader.LoadSync<GameObject>("info_elements", e.Info.InfoElementPrefabAssetName);
+                GameObject elementPrefab =
+                    resLoader.LoadSync<GameObject>($"resources://{e.Info.InfoElementPrefabAssetName}");
+                
+                InfoElement spawnedInfoElement =  Instantiate(elementPrefab, layoutGroup)
                     .GetComponent<InfoElement>();
                 spawnedInfoElement.transform.SetAsFirstSibling();
 
