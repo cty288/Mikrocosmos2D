@@ -1,48 +1,48 @@
 ManifestFileVersion: 0
-CRC: 1505008703
+CRC: 1720630569
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: mftest
-      Dependencies: {}
-    Info_1:
-      Name: test/scene_test.ab
-      Dependencies:
-        Dependency_0: mftest
-    Info_2:
-      Name: mftest2
-      Dependencies:
-        Dependency_0: mftest
-    Info_3:
-      Name: test_sphere
-      Dependencies: {}
-    Info_4:
-      Name: scene
-      Dependencies:
-        Dependency_0: mftest2
-    Info_5:
       Name: assets/goods
       Dependencies: {}
-    Info_6:
+    Info_1:
       Name: buff_icons
       Dependencies: {}
-    Info_7:
+    Info_2:
       Name: info_elements
       Dependencies:
         Dependency_0: info
-    Info_8:
+    Info_3:
       Name: audio
       Dependencies: {}
-    Info_9:
+    Info_4:
       Name: profile
       Dependencies: {}
-    Info_10:
+    Info_5:
       Name: info
       Dependencies: {}
-    Info_11:
+    Info_6:
+      Name: scene
+      Dependencies:
+        Dependency_0: mftest2
+    Info_7:
+      Name: test/scene_test.ab
+      Dependencies:
+        Dependency_0: mftest
+    Info_8:
       Name: map
       Dependencies:
         Dependency_0: assets/goods
         Dependency_1: info_elements
         Dependency_2: profile
         Dependency_3: info
+    Info_9:
+      Name: mftest
+      Dependencies: {}
+    Info_10:
+      Name: mftest2
+      Dependencies:
+        Dependency_0: mftest
+    Info_11:
+      Name: test_sphere
+      Dependencies: {}

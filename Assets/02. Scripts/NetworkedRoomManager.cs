@@ -106,8 +106,7 @@ namespace Mikrocosmos
             while (resLoader ==null ||  !resLoader.IsReady || !ResData.Exists) {
                 yield return null;
             }
-            yield return null;
-            yield return null;
+          
             resLoader.LoadSync<AssetBundle>("map");
         }
 
@@ -295,10 +294,8 @@ namespace Mikrocosmos
 
         private bool subscenesLoaded = false;
         IEnumerator ServerLoadSubScenes() {
-            yield return SceneManager.LoadSceneAsync(mapSceneName, new LoadSceneParameters {
-                loadSceneMode = LoadSceneMode.Additive,
-                localPhysicsMode = LocalPhysicsMode.Physics2D // change this to .Physics2D for a 2D game
-            });
+            yield return SceneManager.LoadSceneAsync(mapSceneName, LoadSceneMode.Additive);
+
 
             subscenesLoaded = true;
         }
@@ -306,8 +303,13 @@ namespace Mikrocosmos
             if (sceneOperation == SceneOperation.UnloadAdditive)
                 StartCoroutine(UnloadAdditive(newSceneName));
 
-            if (sceneOperation == SceneOperation.LoadAdditive)
+            if (sceneOperation == SceneOperation.LoadAdditive && mode != NetworkManagerMode.ClientOnly) {
                 StartCoroutine(LoadAdditive(newSceneName));
+            }else if (sceneOperation == SceneOperation.Normal && mode == NetworkManagerMode.ClientOnly) {
+                StartCoroutine(LoadAdditive(newSceneName));
+            }
+               
+            
         }
 
 
@@ -317,14 +319,20 @@ namespace Mikrocosmos
 
         IEnumerator LoadAdditive(string sceneName) {
             isInTransition = true;
+            
             // host client is on server...don't load the additive scene again
             if (mode == NetworkManagerMode.ClientOnly)
             {
-                // Start loading the additive subscene
-                loadingSceneAsync = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
-                while (loadingSceneAsync != null && !loadingSceneAsync.isDone)
+                if (sceneName == GameplayScene) {
+                    // Start loading the additive subscene
                     yield return null;
+                    loadingSceneAsync = SceneManager.LoadSceneAsync(
+                        GameModeSceneNames[(int) this.GetSystem<IRoomMatchSystem>().GameMode].ToString(),
+                        LoadSceneMode.Additive);
+
+                    while (loadingSceneAsync != null && !loadingSceneAsync.isDone)
+                        yield return null;
+                }
             }
 
             // Reset these to false when ready to proceed
