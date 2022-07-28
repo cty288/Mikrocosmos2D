@@ -64,8 +64,9 @@ namespace Mikrocosmos
 
         private IEnumerator RecoverHealth() {
             while (true) {
-                if (gameProgressSystem!=null && this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) { 
-                    break;
+                if (gameProgressSystem!=null && this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
+                    yield return null;
+                    continue;
                 }
                 yield return new WaitForSeconds(1f);
                 HealthRecoverTimer++;
