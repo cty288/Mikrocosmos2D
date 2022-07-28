@@ -107,6 +107,7 @@ namespace Mikrocosmos
         /// <returns></returns>
         public Vector4 GetGameMapSize();
 
+        float MaximumGameTime { get; }
         public GameState GameState { get; }
     }
     public class GameProgressSystem : AbstractNetworkedSystem, IGameProgressSystem {
@@ -123,6 +124,8 @@ namespace Mikrocosmos
         [Tooltip("In Minutes")]
 
         [SerializeField] protected float maximumGameTime = 15;
+
+        public float MaximumGameTime => maximumGameTime;
         [Tooltip("In Seconds")]
         [SerializeField] 
         protected int finalCountDown = 60;
