@@ -13,10 +13,10 @@ namespace MikroFramework
             resLoader = new ResLoader();
             StartCoroutine(LoadAB());
         }
-
+        
         IEnumerator LoadAB() {
             yield return new WaitForSeconds(3f);
-            resLoader.LoadSync<AssetBundle>("test/scene_test.ab");
+            resLoader.LoadSync<AssetBundle>("scene");
             SceneManager.LoadScene("TestABScene");
         }
 

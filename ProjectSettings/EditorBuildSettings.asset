@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Mirror/Examples/AdditiveLevels/Scenes/SubLevel2.unity
     guid: e8e2dc8c3ef824b468c6f6e1980a4b27
+  - enabled: 0
+    path: Assets/MikroFramework/Runtime/Examples/ResKit/06. LoadSceneABExample/Entrance.unity
+    guid: d4aa9385672b0ba40afe2a6c5e1a71f9
   m_configObjects: {}

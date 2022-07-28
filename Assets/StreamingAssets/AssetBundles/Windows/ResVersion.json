@@ -3,16 +3,11 @@
   "ABMD5List": [
     {
       "AssetName": "audio",
-      "MD5": "52ff630b6fa4f1ce27ada1033522da2b",
-      "FileSize": 10166.9951,
+      "MD5": "9a02b85900331f8b25cf2e23839591da",
+      "FileSize": 3158.005,
       "assetDatas": [
         {
           "Name": "AddMoney",
-          "OwnerBundleName": "audio",
-          "AssetType": "UnityEngine.AudioClip"
-        },
-        {
-          "Name": "09_IMAscore_Tron",
           "OwnerBundleName": "audio",
           "AssetType": "UnityEngine.AudioClip"
         },
@@ -55,8 +50,8 @@
     },
     {
       "AssetName": "buff_icons",
-      "MD5": "44930e2221aec0b50eabe1e2f4d6dd8e",
-      "FileSize": 266.3711,
+      "MD5": "ffd2f0a09934b69e3bcbb1c8264ca5d4",
+      "FileSize": 258.3789,
       "assetDatas": [
         {
           "Name": "AimingSpeedDownDeBuffIcon",
@@ -137,7 +132,7 @@
     },
     {
       "AssetName": "info",
-      "MD5": "c4704e5de7295c42aff7ea779c32024c",
+      "MD5": "19861811ef1cc3521ac628ebc89f739a",
       "FileSize": 194.804688,
       "assetDatas": [
         {
@@ -224,8 +219,8 @@
     },
     {
       "AssetName": "profile",
-      "MD5": "04331b1ac4a8f400e58042ea463836a1",
-      "FileSize": 258.819336,
+      "MD5": "96d9c6f69b6543a483492db522745617",
+      "FileSize": 258.9961,
       "assetDatas": [
         {
           "Name": "AvatarAtlas",
@@ -323,6 +318,11 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
+          "Name": "profile202",
+          "OwnerBundleName": "profile",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
           "Name": "profile203",
           "OwnerBundleName": "profile",
           "AssetType": "UnityEngine.Texture2D"
@@ -411,14 +411,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "3dcb1b04a72ca1bac136602ff2bc5ac0",
+      "MD5": "0caced064834da04b7c08c9102b1e9bf",
       "FileSize": 1.66308594,
       "assetDatas": []
     },
     {
       "AssetName": "assets/goods",
-      "MD5": "fbedcb59f05877957cc4043eb4f37c04",
-      "FileSize": 443.635742,
+      "MD5": "ab3f1000d59eeb5dc0b04faac7dc437e",
+      "FileSize": 297.333984,
       "assetDatas": [
         {
           "Name": "ItemInventoryAtlas",

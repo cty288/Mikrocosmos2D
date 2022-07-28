@@ -15,7 +15,7 @@ namespace Mikrocosmos
         private Animator animator;
         private TMP_Text finalCountdownText;
         private TMP_Text playerWinText;
-
+        private float remainingTime = 0;
         private void Awake() {
             animator = GetComponent<Animator>();
             finalCountdownText = transform.Find("FinalCountdownTimer").GetComponent<TMP_Text>();
@@ -27,11 +27,7 @@ namespace Mikrocosmos
             this.RegisterEvent<OnClientFinalCountDownTimerEnds>(OnFinalCountdownEnd)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
-            this.RegisterEvent<OnClientFinalCountdownTimerChange>(OnFinalCountdownChange)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
-
-         
-
+      
             this.RegisterEvent<OnTieTimerStart>(OnTieTimerStart).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnClientGameEnd>(OnClientGameEnd).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -45,15 +41,24 @@ namespace Mikrocosmos
             playerWinText.text = "";
             playerWinText.text += $"{Localization.Get("GAME_COUNTDOWN_TIE")}";
             this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => playerWinText.gameObject.SetActive(false));
+            remainingTime = e.Time;
         }
 
-        private void OnFinalCountdownChange(OnClientFinalCountdownTimerChange e) {
-            finalCountdownText.text = e.Time.ToString();
+        private void Update() {
+            if (remainingTime > 0) {
+                remainingTime -= Time.deltaTime;
+                remainingTime = Mathf.Max(0, remainingTime);
+                
+                finalCountdownText.text = $"{Mathf.CeilToInt(remainingTime)}";
+            }
         }
+
+        
 
         private void OnFinalCountdownStart(OnClientFinalCountdownTimerStart e) {
             finalCountdownText.gameObject.SetActive(true);
             animator.SetTrigger("Start");
+            remainingTime = e.Time;
         }
 
         private void OnFinalCountdownEnd(OnClientFinalCountDownTimerEnds e) {

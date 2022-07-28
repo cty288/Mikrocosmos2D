@@ -17,11 +17,12 @@ namespace Mikrocosmos
         InGame,
         End
     }
+    /*
     public struct OnClientFinalCountdownTimerChange {
         public int Time;
-    }
+    }*/
     public struct OnClientFinalCountdownTimerStart {
-        
+        public float Time;
     }
 
     public struct OnClientBeginGameCountdownStart {
@@ -36,7 +37,7 @@ namespace Mikrocosmos
     }
 
     public struct OnTieTimerStart {
-
+        public float Time;
     }
 
     public class PlayerWinInfo {
@@ -123,7 +124,7 @@ namespace Mikrocosmos
 
         [SerializeField] protected float maximumGameTime = 15;
         [Tooltip("In Seconds")]
-        [SerializeField, SyncVar(hook = nameof(ClientOnCountdownChange))] 
+        [SerializeField] 
         protected int finalCountDown = 60;
 
         [FormerlySerializedAs("finalCountdownTransactionThresholdPerPlayer")] 
@@ -203,11 +204,8 @@ namespace Mikrocosmos
         }
         
         private IEnumerator FinalCountDownTimerStart() {
-            while (finalCountDown> 0) {
-                finalCountDown--;
-                yield return new WaitForSeconds(1);
-            }
-
+           
+            yield return new WaitForSeconds(finalCountDown);
             int winTeam = 0;
             float team1Affinity = this.GetSystem<IGlobalTradingSystem>().GetRelativeAffinityWithTeam(1);
             float team2Affinity = this.GetSystem<IGlobalTradingSystem>().GetRelativeAffinityWithTeam(2);
@@ -231,7 +229,7 @@ namespace Mikrocosmos
             else {
                 finalCountDown = 60;
                 StartCoroutine(FinalCountDownTimerStart());
-               RpcOnTieTimerStarted();
+                RpcOnTieTimerStarted(finalCountDown);
             }
         }
 
@@ -252,7 +250,7 @@ namespace Mikrocosmos
         protected void StartFinalCountDown() {
             finialCountDownStarted = true;
             Debug.Log("StartFinalCountdown");
-            RpcOnFinialCountDownStarted();
+            RpcOnFinialCountDownStarted(finalCountDown);
             StartCoroutine(FinalCountDownTimerStart());
         }
 
@@ -278,9 +276,15 @@ namespace Mikrocosmos
 
 
         [ClientRpc]
-        protected void RpcOnFinialCountDownStarted() {
+        protected void RpcOnFinialCountDownStarted(float time) {
             Debug.Log("Target Start Final Countdown");
-            this.SendEvent<OnClientFinalCountdownTimerStart>(new OnClientFinalCountdownTimerStart());
+            this.SendEvent<OnClientFinalCountdownTimerStart>(new OnClientFinalCountdownTimerStart() {
+                Time = time
+            });
+            this.SendEvent<OnClientNextCountdown>(new OnClientNextCountdown() {
+                remainingTime = time,
+                ShowAffinityForLastTime = false
+            });
         }
 
         [ClientRpc]
@@ -288,12 +292,19 @@ namespace Mikrocosmos
             this.SendEvent<OnClientGameEnd>(new OnClientGameEnd() {
                 GameEndInfo = gameEndInfo
             });
+           
         }
 
         [ClientRpc]
-        protected void RpcOnTieTimerStarted()
+        protected void RpcOnTieTimerStarted(float time)
         {
-            this.SendEvent<OnTieTimerStart>();
+            this.SendEvent<OnTieTimerStart>(new OnTieTimerStart() {
+                Time = time
+            });
+            this.SendEvent<OnClientNextCountdown>(new OnClientNextCountdown() {
+                remainingTime = time,
+                ShowAffinityForLastTime = false
+            });
         }
 
 
@@ -304,6 +315,7 @@ namespace Mikrocosmos
             });
         }
 
+        /*
         [ClientCallback]
         protected void ClientOnCountdownChange(int oldTime, int newTime) {
             if (newTime > 0) {
@@ -311,7 +323,7 @@ namespace Mikrocosmos
                     Time = newTime
                 });
             }
-        }
+        }*/
 
         
 

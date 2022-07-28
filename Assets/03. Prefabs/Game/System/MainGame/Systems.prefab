@@ -50,7 +50,7 @@ MonoBehaviour:
   <GameState>k__BackingField: 0
   gameStartCountdown: 3
   globalTimerUpdateFrequencyInSeconds: 60
-  maximumGameTime: 13
+  maximumGameTime: 12
   finalCountDown: 60
   finalCountdownMoneyThresholdPerPlayer: 1500
   categoryWinningTypes: 00000000010000000200000003000000
@@ -205,8 +205,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.20134346
     - serializedVersion: 3
-      time: 0.5888039
-      value: 1.7406801
+      time: 0.6096169
+      value: 1.8105654
       inSlope: 2.9556634
       outSlope: 1.9283899
       tangentMode: 1

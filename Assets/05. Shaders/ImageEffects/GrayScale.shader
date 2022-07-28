@@ -3,12 +3,15 @@ Shader "Unlit/GrayScale"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+		_Strength("Strength", Range(0,1)) = 1
     }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
-
+        Cull Off
+        ZWrite Off
+        ZTest Always
         Pass
         {
             CGPROGRAM
@@ -34,6 +37,7 @@ Shader "Unlit/GrayScale"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            float _Strength;
 
             v2f vert (appdata v)
             {
@@ -46,11 +50,12 @@ Shader "Unlit/GrayScale"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
-                return col;
+                fixed4 FragColor = tex2D(_MainTex,i.uv);
+                fixed4 originalColor = FragColor;
+				fixed average = 0.2126 * FragColor.r + 0.7152 * FragColor.g + 0.0722 * FragColor.b;
+				FragColor = fixed4(average,average,average,FragColor.a);
+				return lerp(originalColor, FragColor, _Strength);
+
             }
             ENDCG
         }

@@ -87,6 +87,7 @@ namespace Mikrocosmos
             buffSystem.ServerRegisterCallback<KrowEyeSpeedDownDeBuff, BuffClientMessage>(
                 OnServerKrowEyeSpeedDownDeBuffUpdate);
             buffSystem.ServerRegisterCallback<CriminalDeBuff, BuffClientMessage>(OnServerCriminalDeBuffUpdate);
+            buffSystem.ServerRegisterCallback<DieBuff, BuffClientMessage>(TargetOnDieBuff);
 
             clientLanguage = connectionToClient.identity.GetComponent<NetworkMainGamePlayer>().matchInfo.Language;
             this.RegisterEvent<OnServerSpaceshipOverweight>(OnServerSpaceshipOverweight)
@@ -97,6 +98,8 @@ namespace Mikrocosmos
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
         }
+
+       
 
         private void OnServerCriminalDeBuffUpdate(CriminalDeBuff buff, BuffStatus status, BuffClientMessage arg3) {
             if (status == BuffStatus.OnStart) {
@@ -302,6 +305,26 @@ namespace Mikrocosmos
                 });
             }
         }
+
+        [TargetRpc]
+        private void TargetOnDieBuff(BuffStatus status, BuffClientMessage arg2) {
+            if (status == BuffStatus.OnStart) {
+                Material material = ImageEffectController.Singleton.TurnOnScriptableRendererFeature(1);
+                DOTween.Kill(material);
+                material.SetFloat("_Strength", 0);
+                material.DOFloat(1f, "_Strength", 0.5f);
+            }
+            else if (status == BuffStatus.OnEnd) {
+                Material material = ImageEffectController.Singleton.GetScriptableRendererFeatureMaterial(1);
+                DOTween.Kill(material);
+                material.DOFloat(0, "_Strength", 0.5f).OnComplete(() => {
+                    ImageEffectController.Singleton.TurnOffScriptableRendererFeature(1);
+                });
+            }
+        }
+
+
+        
     }
 
     public struct ClientOnBuffUpdate {

@@ -37,6 +37,11 @@ namespace Mikrocosmos
         public string MissionName;
     }
 
+    public struct OnClientNextCountdown {
+        public float remainingTime;
+        public float Team1Affinity;
+        public bool ShowAffinityForLastTime;
+    }
     public struct OnClientRewardsGeneratedForMission {
         public string MissionNameLocalized;
         public List<string> WinnerNames;
@@ -93,7 +98,9 @@ namespace Mikrocosmos
 
         private IGameProgressSystem progressSystem;
         private IRoomMatchSystem roomMatchSystem;
-
+        private int nextMissionRemainingTime = 0;
+        private IGlobalTradingSystem globalTradingSystem;
+        
         private void Awake() {
             Mikrocosmos.Interface.RegisterSystem<IGameMissionSystem>(this);
         }
@@ -101,6 +108,7 @@ namespace Mikrocosmos
         public override void OnStartServer() {
             base.OnStartServer();
             progressSystem = this.GetSystem<IGameProgressSystem>();
+            this.globalTradingSystem = this.GetSystem<IGlobalTradingSystem>();
             allMissions.Shuffle();
             
             StartCoroutine(WaitToSwitchMission());
@@ -131,18 +139,20 @@ namespace Mikrocosmos
             }
         }
 
-
+      
         private IEnumerator WaitToSwitchMission() {
-            int waitTime = Random.Range(averageGapTimeBetweenMissions - 20,
+            while (progressSystem.GameState!= GameState.InGame) {
+                yield return null;
+            }
+            
+            nextMissionRemainingTime = Random.Range(averageGapTimeBetweenMissions - 20,
                 averageGapTimeBetweenMissions + 21);
-
-            Debug.Log($" Mission waitTime: {waitTime}");
-
-            yield return new WaitForSeconds(waitTime - 10);
-
-            //notify client that a mission is about to start
-            //first check if it's possible to get a mission
-            if (progressSystem.GetGameProgress() < 0.9) {
+            RpcNotifyClientNextMissionCountdown(globalTradingSystem.GetRelativeAffinityWithTeam(1),
+                nextMissionRemainingTime + 10);
+            yield return new WaitForSeconds(nextMissionRemainingTime);
+           
+      
+            if (progressSystem.GetGameProgress() < 1) {
                 if (allMissions.Count > 0) {
                     GameObject nextMission = Instantiate(allMissions[0]);
                     allMissions.RemoveAt(0);
@@ -190,7 +200,9 @@ namespace Mikrocosmos
 
         private void OnMissionStop(OnMissionStop e) {
             RpcNotifyMissionStop(new ClientMissionStopInfo() {MissionName = e.Mission.MissionName});
-            StartCoroutine(WaitToSwitchMission());
+            if (progressSystem.GetGameProgress() < 1) {
+                StartCoroutine(WaitToSwitchMission());
+            }
         }
         
 
@@ -243,5 +255,16 @@ namespace Mikrocosmos
                 WinnerNames = winnerNames
             });
         }
+
+
+        [ClientRpc]
+        private void RpcNotifyClientNextMissionCountdown(float currentTeam1Affinity, float time) {
+            this.SendEvent<OnClientNextCountdown>(new OnClientNextCountdown() {
+                remainingTime = time,
+                Team1Affinity = currentTeam1Affinity,
+                ShowAffinityForLastTime = true
+            });
+        }
+
     }
 }

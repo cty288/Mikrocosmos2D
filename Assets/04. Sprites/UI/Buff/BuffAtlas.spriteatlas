@@ -45,12 +45,16 @@ SpriteAtlas:
   - {fileID: 21300000, guid: c43add96f4d502e46981acf6ce827946, type: 3}
   - {fileID: 21300000, guid: d03365b68cc846348b249a5b4ebbd053, type: 3}
   - {fileID: 21300000, guid: 57849ae6778c2d84a9395df89f4bcb03, type: 3}
+  - {fileID: 21300000, guid: 7202040735481ab40b76797c3369c242, type: 3}
   - {fileID: 21300000, guid: 308e49697bac9454db0751dc03f57070, type: 3}
   - {fileID: 21300000, guid: 9f400fcac1480c84294ae3686515bc18, type: 3}
   - {fileID: 21300000, guid: ac9d44ac371b5c54982649fa3158a03d, type: 3}
   - {fileID: 21300000, guid: b9b159ccd3ea3824f9e53b4919692ab8, type: 3}
+  - {fileID: 21300000, guid: 04118acccad3df94c91e25d66430458d, type: 3}
   - {fileID: 21300000, guid: 5775560e14386604796e02a9e9108e7f, type: 3}
   - {fileID: 21300000, guid: eaa4345e09375834db889c53477349f1, type: 3}
+  - {fileID: 21300000, guid: d20346effab0f0a4d95bd50f47f8da9d, type: 3}
+  - {fileID: 21300000, guid: 3c5aafefc4167e445964a0153c0bea46, type: 3}
   m_PackedSpriteNamesToIndex:
   - buff_die
   - buff_poison
@@ -59,12 +63,16 @@ SpriteAtlas:
   - buff_health
   - buff_vision_expand
   - buff frame
+  - JellyGunDebuff3
   - debuff_overweight
   - buff_power
   - buff_invincible
   - buff_affinity
+  - JellyGunDebuff1
   - buff_speed
   - buff_vision_occlusion
+  - JellyGunDebuff2
+  - JellyGunDebuff0
   m_RenderDataMap: {}
   m_Tag: BuffAtlas
   m_IsVariant: 0
