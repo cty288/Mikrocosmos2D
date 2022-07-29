@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
+using MikroFramework.Utilities;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Mikrocosmos
 {
@@ -47,15 +49,47 @@ namespace Mikrocosmos
 
         private IEnumerator LoadItemPrefabs(Action<List<GameObject>> onFinished) {
             List<GameObject> result = new List<GameObject>();
-            foreach (string itemBundle in allItemBundles) {
+            foreach (string itemBundle in allItemBundles)
+            {
+                AssetBundleRequest request = null;
+
                 AssetBundle bundle = resLoader.LoadSync<AssetBundle>(itemBundle);
-                AssetBundleRequest request = bundle.LoadAllAssetsAsync<GameObject>();
-                while (!request.isDone) {
+                if (bundle != null)
+                {
+                    request = bundle.LoadAllAssetsAsync<GameObject>();
+                }
+
+
+                while (request != null && !request.isDone && !ResManager.IsSimulationModeLogic)
+                {
                     yield return null;
                 }
 
-                List<GameObject> allGameObjects = request.allAssets.Select((o => o as GameObject)).ToList();
-                result.AddRange(allGameObjects.Where((o => o.GetComponent<IGoods>() != null)));
+                List<GameObject> allGameObjects = null;
+#if UNITY_EDITOR
+                if (ResManager.IsSimulationModeLogic)
+                {
+                    string[] assetPaths =
+                        UnityEditor.AssetDatabase.GetAssetPathsFromAssetBundle(itemBundle);
+
+                    if (assetPaths.Length > 0)
+                    {
+                        List<Object> allAssets = assetPaths.Select((o) => {
+                            return UnityEditor.AssetDatabase.LoadAssetAtPath<Object>(o);
+                        }).ToList();
+
+
+                        allGameObjects = allAssets.Where((o => o is GameObject)).Select((o => o as GameObject))
+                            .ToList();
+                    }
+                }
+#endif
+                if (!ResManager.IsSimulationModeLogic)
+                {
+                    allGameObjects = request.allAssets.Select((o => o as GameObject)).ToList();
+                }
+
+                result.AddRange(allGameObjects.Where((o => o.GetComponent<IPlanetModel>() != null)));
             }
 
             onFinished?.Invoke(result);
@@ -64,13 +98,39 @@ namespace Mikrocosmos
         private IEnumerator LoadPlanetPrefabs(Action<List<GameObject>> onFinished) {
             List<GameObject> result = new List<GameObject>();
             foreach (string planetBundle in allPlanetBundles) {
+                AssetBundleRequest request = null;
+
                 AssetBundle bundle = resLoader.LoadSync<AssetBundle>(planetBundle);
-                AssetBundleRequest request = bundle.LoadAllAssetsAsync<GameObject>();
-                while (!request.isDone) {
+                if (bundle != null) {
+                    request = bundle.LoadAllAssetsAsync<GameObject>();
+                }
+               
+
+                while (request!=null && !request.isDone && !ResManager.IsSimulationModeLogic) {
                     yield return null;
                 }
 
-                List<GameObject> allGameObjects = request.allAssets.Select((o => o as GameObject)).ToList();
+                List<GameObject> allGameObjects = null;
+#if UNITY_EDITOR
+                if (ResManager.IsSimulationModeLogic) {
+                    string[] assetPaths =
+                        UnityEditor.AssetDatabase.GetAssetPathsFromAssetBundle(planetBundle);
+
+                    if (assetPaths.Length > 0) {
+                        List<Object> allAssets = assetPaths.Select((o) => {
+                            return UnityEditor.AssetDatabase.LoadAssetAtPath<Object>(o);
+                        }).ToList();
+
+
+                        allGameObjects = allAssets.Where((o => o is GameObject)).Select((o => o as GameObject))
+                            .ToList();
+                    }
+                }
+#endif
+                if (!ResManager.IsSimulationModeLogic) {
+                    allGameObjects = request.allAssets.Select((o => o as GameObject)).ToList();
+                }
+               
                 result.AddRange(allGameObjects.Where((o => o.GetComponent<IPlanetModel>() != null)));
             }
 

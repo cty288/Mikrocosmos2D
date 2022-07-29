@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -26,24 +27,20 @@ namespace Mikrocosmos
     public class PlanetOrbitManagementSystem : AbstractNetworkedSystem {
         [SerializeField] private List<OrbitalGroup> orbitalGroups;
         [SerializeField] private float minimumAngle = 50;
-        [SerializeField] private List<GameObject> allAvailablePlanets;
+        
+        private List<GameObject> allAvailablePlanets;
         
 
-        private void Awake() {
-            //iterate through fixPlanets in each orbital group and remove them from the allAvailablePlanets list
-            foreach (var orbitalGroup in orbitalGroups) {
-                foreach (var fixedPlanet in orbitalGroup.FixedPlanets) {
-                    allAvailablePlanets.Remove(fixedPlanet);
-                }
-            }
-        }
-
-        private void Start() {
+        public override void OnStartServer() {
+            base.OnStartServer();
+            LoadAllPlanets();
+            
             foreach (OrbitalGroup orbitalGroup in orbitalGroups) {
                 int additionalPlanet = orbitalGroup.OrbitalInfo.MaxPlanetsOnThisOrbit - orbitalGroup.FixedPlanets.Count;
                 additionalPlanet = Mathf.Clamp(additionalPlanet, 0, allAvailablePlanets.Count);
-                
-                for (int i = 0; i < additionalPlanet; i++) {
+
+                for (int i = 0; i < additionalPlanet; i++)
+                {
                     GameObject planet = allAvailablePlanets[Random.Range(0, allAvailablePlanets.Count)];
                     allAvailablePlanets.Remove(planet);
                     orbitalGroup.FixedPlanets.Add(planet);
@@ -52,16 +49,17 @@ namespace Mikrocosmos
                 float startAngle = Random.Range(0, 360f);
                 float maxAngle = (360f / orbitalGroup.FixedPlanets.Count) - minimumAngle;
                 float angle = startAngle;
-                
 
-                
-                for (int i = 0; i < orbitalGroup.FixedPlanets.Count; i++) {
+
+
+                for (int i = 0; i < orbitalGroup.FixedPlanets.Count; i++)
+                {
                     GameObject planet =
                         Instantiate(orbitalGroup.FixedPlanets[i], orbitalGroup.OrbitalInfo.StartPosition,
                             Quaternion.identity);
                     IPlanetViewController planetViewController = planet.GetComponent<IPlanetViewController>();
                     planetViewController.Target = orbitalGroup.OrbitalInfo.OrbitTarget;
-                    
+
                     planetViewController.X = orbitalGroup.OrbitalInfo.X;
                     planetViewController.Z = orbitalGroup.OrbitalInfo.Z;
                     planetViewController.OrbitalSpeed = orbitalGroup.OrbitalInfo.OrbitSpeed;
@@ -69,11 +67,21 @@ namespace Mikrocosmos
                         planetViewController.OrbitalProgress = angle;
                     }
                     else {
-                        
+
                         angle = (angle + Random.Range(minimumAngle, maxAngle)) % 360f;
                         planetViewController.OrbitalProgress = angle;
                     }
                     NetworkServer.Spawn(planet);
+                }
+            }
+        }
+
+        private void LoadAllPlanets() {
+            IGameResourceModel resourceModel = this.GetModel<IGameResourceModel>();
+            allAvailablePlanets = resourceModel.GetAllPlanetPrefabs();
+            foreach (var orbitalGroup in orbitalGroups) {
+                foreach (var fixedPlanet in orbitalGroup.FixedPlanets) {
+                    allAvailablePlanets.Remove(fixedPlanet);
                 }
             }
         }
