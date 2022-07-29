@@ -67,7 +67,8 @@ namespace MikroFramework.ResKit
         /// </summary>
         public static string RemoteResVersionURL {
             get {
-                return Application.dataPath + "/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Remote/" +
+                
+                return "https://mikrocosmos2.sfo3.digitaloceanspaces.com/AssetBundles/"  +
                        ResKitUtility.CurrentPlatformName + "/ResVersion.json";
             }
         }
@@ -77,8 +78,7 @@ namespace MikroFramework.ResKit
         /// </summary>
         public static string RemoteAssetBundleBaseURL {
             get {
-                return Application.dataPath + "/MikroFramework/Runtime/Framework/ResKit/HotUpdate/Remote/" +
-                       ResKitUtility.CurrentPlatformName + "/";
+                return @"https://mikrocosmos2.sfo3.digitaloceanspaces.com/AssetBundles" + "/" + ResKitUtility.CurrentPlatformName + "/";
             }
         }
 

@@ -1,0 +1,42 @@
+ManifestFileVersion: 0
+CRC: 659920331
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2a5d8d0850cd314f80e8ec7d7fad190d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c29c357128feff56790ec9816c4fc93d
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/04. Sprites/Items/ItemInventorySprite/MetalBallSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/ThrusterSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/KrowEyeSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/KindleSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/CactusShotgunSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/FlowerSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/StoneShieldSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/PoisonSpearSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/FireOreSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/FirePlantSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/StatelliteSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/SeaweedFruitSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/BananaSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/TolietSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/BirdCannonSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/SunflowerSonSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/MaskSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/PickaxeSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/JellyGunSprite.png
+- Assets/04. Sprites/Items/ItemInventoryAtlas.spriteatlas
+- Assets/04. Sprites/Items/ItemInventorySprite/EarthMushroomSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/LeafKnifeSprite.png
+Dependencies: []

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Managers;
 using MikroFramework.ResKit;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,7 +36,7 @@ namespace MikroFramework.Examples
             }
         }
 
-        public Text downloadText;
+        public TMP_Text downloadText;
         protected override void OnHotUpdateResourcesDownloading(float downloadProgress, float totalDownloadSize, float alreadyDownloadedFileSize,
             float downloadingFileDownloadedSize, float downloadSpeed) {
             downloadText.text = $"Total downloaded progress: {HotUpdateManager.Singleton.Downloader.GetDownloadProgress()}" +
@@ -50,7 +51,7 @@ namespace MikroFramework.Examples
         }
 
         protected override void OnResourceCompletenessValidated(List<ABMD5Base> updatedResourceInfos) {
-            downloadText.text = "";
+            //downloadText.text = "";
         }
 
         protected override void OnRedundantFilesDeleted() {

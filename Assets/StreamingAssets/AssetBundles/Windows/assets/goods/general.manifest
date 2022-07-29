@@ -1,0 +1,114 @@
+ManifestFileVersion: 0
+CRC: 3925672366
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 490de20e607d05fed60c016083cc5f16
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b3e7d1d77aff20d5258da537cb185520
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 60
+  Script: {instanceID: 0}
+- Class: 61
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7107a95bf135c6c4ba3f90e2a431efee, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 52a7f5503a2505a49aca73bf2063239a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2d0495378802ad84bb1828722d128e8d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b97b552651bb5ee4a9b8e2217dd28ebf, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 68f6cc8c67d4fb54ab397fb9754ab8b3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f3cddec3d35bdfc4ba65f3719edd8e08, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 641e9be3f42f6c74eaadc6ad2b4cd792, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ab2cbc52526ea384ba280d13cd1a57b9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 55772c178867d4743991d95658d8990c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c99e156107c0c7a43b2f25d3930fced4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a3777963a83dcb644990f919e96441a9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.TextMeshPro
+  ClassName: TMPro.VertexGradient
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+Assets:
+- Assets/04. Sprites/Items/General/ItemSpriteAtlas_General.spriteatlas
+- Assets/04. Sprites/Items/General/Pickaxe/PickaxeOpenSprite_0.png
+- Assets/06 Animations/Items/General/Pickaxe/Pickaxe.anim
+- Assets/03. Prefabs/Game/Items/General/Pickaxe/Pickaxe.prefab
+- Assets/04. Sprites/Items/General/Pickaxe/PickaxeOpenSprite_3.png
+- Assets/04. Sprites/Items/General/Pickaxe/PickaxeSprite_01.png
+- Assets/04. Sprites/Items/General/Vault/RedVault.png
+- Assets/04. Sprites/Items/General/Pickaxe/PickaxeOriginSprite.png
+- Assets/06 Animations/Items/General/Pickaxe/Pickaxe.controller
+- Assets/03. Prefabs/Game/Items/General/Valve/ValveTeam2.prefab
+- Assets/04. Sprites/Items/General/Vault/BlueVault.png
+- Assets/04. Sprites/Items/General/Pickaxe/PickaxeOpenSprite_1.png
+- Assets/04. Sprites/Items/General/Pickaxe/PickaxeOpenSprite_4.png
+- Assets/04. Sprites/Items/General/Pickaxe/PickaxeOpenSprite_2.png
+- Assets/03. Prefabs/Game/Items/General/Valve/ValveTeam1.prefab
+- Assets/03. Prefabs/Game/Items/General/Pickaxe/PickaxeOre.prefab
+- Assets/04. Sprites/Items/General/Pickaxe/PickaxeOpenSprite_5.png
+Dependencies:
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/fonts
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/goods/default
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/goods_inventory

@@ -1,19 +1,48 @@
 ManifestFileVersion: 0
-CRC: 2792549643
+CRC: 3022568043
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: assets/goods
-      Dependencies: {}
-    Info_1:
       Name: buff_icons
       Dependencies: {}
-    Info_2:
+    Info_1:
       Name: audio
       Dependencies: {}
-    Info_3:
+    Info_2:
       Name: profile
       Dependencies: {}
-    Info_4:
+    Info_3:
       Name: info
+      Dependencies: {}
+    Info_4:
+      Name: assets/fonts
+      Dependencies: {}
+    Info_5:
+      Name: assets/planets/default
+      Dependencies:
+        Dependency_0: assets/planets/general
+        Dependency_1: assets/goods/default
+    Info_6:
+      Name: assets/planets/general
+      Dependencies:
+        Dependency_0: assets/fonts
+    Info_7:
+      Name: assets/planets/tutorial
+      Dependencies: {}
+    Info_8:
+      Name: assets/goods/general
+      Dependencies:
+        Dependency_0: assets/fonts
+        Dependency_1: assets/goods/default
+        Dependency_2: assets/goods_inventory
+    Info_9:
+      Name: assets/goods/default
+      Dependencies:
+        Dependency_0: assets/fonts
+        Dependency_1: assets/goods_inventory
+    Info_10:
+      Name: assets/goods_inventory
+      Dependencies: {}
+    Info_11:
+      Name: data
       Dependencies: {}

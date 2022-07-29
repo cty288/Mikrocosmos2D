@@ -46,7 +46,6 @@ namespace Mikrocosmos
     [Serializable]
     public class GoodsPropertiesItem {
         public string Name;
-        public GameObject GoodsPrefab;
         public ItemTradeProperties TradingProperties;
         public UseableItemProperties UseableProperties;
         public int Damage;
@@ -75,6 +74,8 @@ namespace Mikrocosmos
         GoodsPropertiesItem FindGoodsPropertiesByPrefabName(string name);
 
         List<GoodsPropertiesItem> GetAllGoodsProperties();
+
+        void LoadGoodsProperties(Action onFinished);
     }
 
 
@@ -82,7 +83,7 @@ namespace Mikrocosmos
         public TableIndex<string, GoodsPropertiesItem> NameIndex { get; private set; }
 
         public GoodsPropertiesTable() {
-            NameIndex = new TableIndex<string, GoodsPropertiesItem>(item => item.GoodsPrefab.name);
+            NameIndex = new TableIndex<string, GoodsPropertiesItem>(item => item.Name);
         }
         protected override void OnClear() {
             NameIndex.Clear();
@@ -104,43 +105,54 @@ namespace Mikrocosmos
         private GoodsPropertiesTable goodsPropertiesTable;
       
         protected override void OnInit() {
-
-            goodsProperties = Resources.Load<GoodsProperties>("GoodsProperties");
+            ResLoader.Create((loader => resLoader = loader));
+            //goodsProperties = Resources.Load<GoodsProperties>("GoodsProperties");
             goodsPropertiesTable = new GoodsPropertiesTable();
 
+            #region Reference
             /*
-            List<List<string>> combined = new List<List<string>>();
-            foreach (GoodsPropertiesItem goodsData in goodsProperties.GoodsDatas) {
-                List<string> entry = new List<string>() {
-                    goodsData.Name.ToString(),
-                    goodsData.TradingProperties.BasicBuyPrice.ToString(),
-                    goodsData.TradingProperties.BasicSellPrice.ToString(),
-                    ((int) goodsData.TradingProperties.Rarity).ToString(),
-                    (goodsData.UseableProperties.CanBeUsed).ToString(),
-                    ((int) goodsData.UseableProperties.UseMode).ToString(),
-                    goodsData.UseableProperties.UseFrequency.ToString(),
-                    goodsData.UseableProperties.MaxDurability.ToString(),
-                    goodsData.Damage.ToString(),
-                    goodsData.SelfMass.ToString(),
-                    goodsData.AdditionalMassWhenHooked.ToString(),
-                    goodsData.DroppableFromBackpack.ToString(),
-                    goodsData.CanAbsorbToBackpack.ToString(),
-                    goodsData.CanBeAddedToInventory.ToString(),
-                };
-                combined.Add(entry);
-            }
+         List<List<string>> combined = new List<List<string>>();
+         foreach (GoodsPropertiesItem goodsData in goodsProperties.GoodsDatas) {
+             List<string> entry = new List<string>() {
+                 goodsData.Name.ToString(),
+                 goodsData.TradingProperties.BasicBuyPrice.ToString(),
+                 goodsData.TradingProperties.BasicSellPrice.ToString(),
+                 ((int) goodsData.TradingProperties.Rarity).ToString(),
+                 (goodsData.UseableProperties.CanBeUsed).ToString(),
+                 ((int) goodsData.UseableProperties.UseMode).ToString(),
+                 goodsData.UseableProperties.UseFrequency.ToString(),
+                 goodsData.UseableProperties.MaxDurability.ToString(),
+                 goodsData.Damage.ToString(),
+                 goodsData.SelfMass.ToString(),
+                 goodsData.AdditionalMassWhenHooked.ToString(),
+                 goodsData.DroppableFromBackpack.ToString(),
+                 goodsData.CanAbsorbToBackpack.ToString(),
+                 goodsData.CanBeAddedToInventory.ToString(),
+             };
+             combined.Add(entry);
+         }
 
-            SpreadsheetManager.Write(
-                new GSTU_Search("1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "ItemsConfig", "A2"),
-                new ValueRange(combined), null);*/
+         SpreadsheetManager.Write(
+             new GSTU_Search("1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "ItemsConfig", "A2"),
+             new ValueRange(combined), null);*/
             //SpreadsheetManager.Read(new GSTU_Search("1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "ItemsConfig"),
-                //HotUpdateItemConfig);
+            //HotUpdateItemConfig);
 
+
+            #endregion
+
+        }
+        public void LoadGoodsProperties(Action onFinished) {
+            goodsProperties = resLoader.LoadSync<GoodsProperties>("data", "GoodsProperties");
             CoroutineRunner.Singleton.RunCoroutine(GoogleDownload.DownloadSheet(
-                "1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "1586537549", OnDownloadSheet,
+                "1Y11EVzCozMt-bg4p36o83lepK25EZ8U7hZdNsabb1Vk", "1586537549",(s => {
+                    OnDownloadSheet(s);
+                    onFinished?.Invoke();
+                } ),
                 GoogleDriveDownloadFormat.CSV));
         }
 
+        
         private void OnDownloadSheet(string text) {
             if (text != null) {
                 List<List<string>> rows;
@@ -219,5 +231,7 @@ namespace Mikrocosmos
         public List<GoodsPropertiesItem> GetAllGoodsProperties() {
             return goodsPropertiesTable.Items;
         }
+
+        
     }
 }

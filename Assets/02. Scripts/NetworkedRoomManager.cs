@@ -51,13 +51,14 @@ namespace Mikrocosmos
         private CSteamID joinedSteamGame;
 #endif
 
+        private IGameResourceModel resourceModel;
 
 
         
         public override void Awake() {
             base.Awake();
-            this.RegisterEvent<OnGoodsPropertiesUpdated>(OnGoodsPropertiesUpdated)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            resourceModel = this.GetModel<IGameResourceModel>();
             if (Application.isEditor)
                 Application.runInBackground = true;
             networkAddress = NetworkUtility.GetLocalIPAddress();
@@ -80,19 +81,14 @@ namespace Mikrocosmos
                 gchandle.Free();                
             }
 #endif
-            List<GoodsPropertiesItem> allGoodsProperties =
-                this.GetModel<IGoodsConfigurationModel>().GetAllGoodsProperties();
-            spawnPrefabs.AddRange(allGoodsProperties.Select((item => item.GoodsPrefab)));
 
+            AddPrefabsToRegisteredPrefabs();
         }
 
-        private void OnGoodsPropertiesUpdated(OnGoodsPropertiesUpdated e) {
-            List<GoodsPropertiesItem> allGoodsProperties = e.allItemProperties;
-            foreach (GoodsPropertiesItem goodsProperties in allGoodsProperties) {
-                spawnPrefabs.Add(goodsProperties.GoodsPrefab);
-            }
-            
-        }            
+        private void AddPrefabsToRegisteredPrefabs() {
+            spawnPrefabs.AddRange(resourceModel.GetAllItemPrefabs());
+            spawnPrefabs.AddRange(resourceModel.GetAllPlanetPrefabs());
+        }
 
 
         public void ServerChangeGameModeScene(GameMode gamemode) {

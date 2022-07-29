@@ -1,0 +1,335 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20e9dd21104eaa48813b32046ca1c91, type: 3}
+  m_Name: GoodsProperties
+  m_EditorClassIdentifier: 
+  GoodsDatas:
+  - Name: BirdCannon
+    TradingProperties:
+      BasicBuyPrice: 50
+      BasicSellPrice: 35
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0
+      MaxDurability: 10
+    Damage: 0
+    SelfMass: 15
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: BirdCannonBullet
+    TradingProperties:
+      BasicBuyPrice: 50
+      BasicSellPrice: 35
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0
+      MaxDurability: 10
+    Damage: 100
+    SelfMass: 1
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 0
+    CanAbsorbToBackpack: 0
+    CanBeAddedToInventory: 0
+  - Name: CactusShotgun
+    TradingProperties:
+      BasicBuyPrice: 38
+      BasicSellPrice: 25
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 1
+      UseFrequency: 1
+      MaxDurability: 14
+    Damage: 0
+    SelfMass: 15
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: CactusBullet
+    TradingProperties:
+      BasicBuyPrice: 50
+      BasicSellPrice: 35
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0
+      MaxDurability: 10
+    Damage: 15
+    SelfMass: 0.5
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 0
+    CanAbsorbToBackpack: 0
+    CanBeAddedToInventory: 0
+  - Name: FirePlant
+    TradingProperties:
+      BasicBuyPrice: 45
+      BasicSellPrice: 30
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 1
+      UseFrequency: 0
+      MaxDurability: 80
+    Damage: 15
+    SelfMass: 10
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: JellyGun
+    TradingProperties:
+      BasicBuyPrice: 25
+      BasicSellPrice: 15
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 1
+      UseFrequency: 0.55
+      MaxDurability: 20
+    Damage: 0
+    SelfMass: 5
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: JellyBullet
+    TradingProperties:
+      BasicBuyPrice: 50
+      BasicSellPrice: 35
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0
+      MaxDurability: 10
+    Damage: 20
+    SelfMass: 0.5
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 0
+    CanAbsorbToBackpack: 0
+    CanBeAddedToInventory: 0
+  - Name: KrowEye
+    TradingProperties:
+      BasicBuyPrice: 30
+      BasicSellPrice: 20
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0
+      MaxDurability: -1
+    Damage: 0
+    SelfMass: 7.5
+    AdditionalMassWhenHooked: 1.5
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 0
+    CanBeAddedToInventory: 1
+  - Name: LeafKnife
+    TradingProperties:
+      BasicBuyPrice: 30
+      BasicSellPrice: 20
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 1
+      MaxDurability: 15
+    Damage: 30
+    SelfMass: 7.5
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: PoisonSpear
+    TradingProperties:
+      BasicBuyPrice: 45
+      BasicSellPrice: 30
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0.8
+      MaxDurability: 15
+    Damage: 30
+    SelfMass: 7.5
+    AdditionalMassWhenHooked: 1.5
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: StoneShield
+    TradingProperties:
+      BasicBuyPrice: 40
+      BasicSellPrice: 25
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 1
+      UseFrequency: 0
+      MaxDurability: 200
+    Damage: 0
+    SelfMass: 10
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: StoneShieldBullet
+    TradingProperties:
+      BasicBuyPrice: 50
+      BasicSellPrice: 35
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0
+      MaxDurability: 10
+    Damage: 0
+    SelfMass: 0.5
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 0
+    CanAbsorbToBackpack: 0
+    CanBeAddedToInventory: 0
+  - Name: Thruster
+    TradingProperties:
+      BasicBuyPrice: 45
+      BasicSellPrice: 30
+      Rarity: 1
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 1
+      UseFrequency: 0
+      MaxDurability: 1500
+    Damage: 0
+    SelfMass: 15
+    AdditionalMassWhenHooked: 2
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: EarthMushroom
+    TradingProperties:
+      BasicBuyPrice: 7
+      BasicSellPrice: 5
+      Rarity: 0
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0.25
+      MaxDurability: 1
+    Damage: 0
+    SelfMass: 2
+    AdditionalMassWhenHooked: 1.5
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: FireOre
+    TradingProperties:
+      BasicBuyPrice: 7
+      BasicSellPrice: 5
+      Rarity: 0
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0.25
+      MaxDurability: 1
+    Damage: 0
+    SelfMass: 2
+    AdditionalMassWhenHooked: 1.5
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: Flower
+    TradingProperties:
+      BasicBuyPrice: 7
+      BasicSellPrice: 5
+      Rarity: 0
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0.25
+      MaxDurability: 1
+    Damage: 0
+    SelfMass: 2
+    AdditionalMassWhenHooked: 1.5
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: Kindle
+    TradingProperties:
+      BasicBuyPrice: 7
+      BasicSellPrice: 5
+      Rarity: 0
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0.25
+      MaxDurability: 1
+    Damage: 0
+    SelfMass: 2
+    AdditionalMassWhenHooked: 1.5
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: MetalBall
+    TradingProperties:
+      BasicBuyPrice: 7
+      BasicSellPrice: 5
+      Rarity: 0
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0.25
+      MaxDurability: 1
+    Damage: 0
+    SelfMass: 2
+    AdditionalMassWhenHooked: 1.5
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: SeaweedFruit
+    TradingProperties:
+      BasicBuyPrice: 7
+      BasicSellPrice: 5
+      Rarity: 0
+    UseableProperties:
+      CanBeUsed: 1
+      UseMode: 0
+      UseFrequency: 0.25
+      MaxDurability: 1
+    Damage: 0
+    SelfMass: 2
+    AdditionalMassWhenHooked: 1.5
+    DroppableFromBackpack: 1
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
+  - Name: Pickaxe
+    TradingProperties:
+      BasicBuyPrice: 7
+      BasicSellPrice: 5
+      Rarity: 0
+    UseableProperties:
+      CanBeUsed: 0
+      UseMode: 0
+      UseFrequency: 0.25
+      MaxDurability: -1
+    Damage: 0
+    SelfMass: 5
+    AdditionalMassWhenHooked: 1
+    DroppableFromBackpack: 0
+    CanAbsorbToBackpack: 1
+    CanBeAddedToInventory: 1
