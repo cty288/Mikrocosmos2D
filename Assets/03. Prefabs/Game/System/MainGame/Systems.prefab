@@ -1,5 +1,119 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2482368178330345156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4006924061896113849}
+  - component: {fileID: 6675918359157632526}
+  - component: {fileID: 7444328747128751723}
+  m_Layer: 0
+  m_Name: PlanetOrbitManagementSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4006924061896113849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2482368178330345156}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2802125480154994508}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6675918359157632526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2482368178330345156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02175b4b184d2b64fb303ef324878d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  orbitalGroups:
+  - FixedPlanets:
+    - {fileID: 1546541824714299389, guid: 9d6fb4418c678d642967404005a4fd71, type: 3}
+    - {fileID: 1546541824714299389, guid: eada2c82e30aad348b7244cd3523c062, type: 3}
+    OrbitalInfo:
+      OrbitTarget: {fileID: 0}
+      OrbitSpeed: 1.2
+      X: 49
+      Z: 0.6
+      MaxPlanetsOnThisOrbit: 2
+      StartPosition: {x: -85.5, y: -13.8, z: 0}
+  - FixedPlanets:
+    - {fileID: 1546541824714299389, guid: d142b12f80a729b4a9a4cba5b9a81dd5, type: 3}
+    OrbitalInfo:
+      OrbitTarget: {fileID: 0}
+      OrbitSpeed: 1
+      X: 85.86
+      Z: 1.8
+      MaxPlanetsOnThisOrbit: 2
+      StartPosition: {x: -50.4, y: 12.400001, z: 0}
+  - FixedPlanets:
+    - {fileID: 1546541824714299389, guid: 48b255bd099f0a54688424df3c0edd54, type: 3}
+    OrbitalInfo:
+      OrbitTarget: {fileID: 0}
+      OrbitSpeed: 0.9
+      X: 120
+      Z: 0.8
+      MaxPlanetsOnThisOrbit: 3
+      StartPosition: {x: -143.9, y: 53, z: 0}
+  - FixedPlanets:
+    - {fileID: 1546541824714299389, guid: 1fb0add8f82d1db469f4d0d09086e4fa, type: 3}
+    OrbitalInfo:
+      OrbitTarget: {fileID: 0}
+      OrbitSpeed: 0.6
+      X: 155
+      Z: 1.2
+      MaxPlanetsOnThisOrbit: 3
+      StartPosition: {x: -114.3, y: 40.2, z: 0}
+  minimumAngle: 50
+  allAvailablePlanets:
+  - {fileID: 1546541824714299389, guid: 9d6fb4418c678d642967404005a4fd71, type: 3}
+  - {fileID: 1546541824714299389, guid: fb9ec2779d5442d4eadfe5202dbdb36c, type: 3}
+  - {fileID: 1546541824714299389, guid: eada2c82e30aad348b7244cd3523c062, type: 3}
+  - {fileID: 1546541824714299389, guid: 87c1063381c545d4ea213493d8357938, type: 3}
+  - {fileID: 1546541824714299389, guid: d142b12f80a729b4a9a4cba5b9a81dd5, type: 3}
+  - {fileID: 1546541824714299389, guid: c97f77e4e112ae9498298625bbcf0c53, type: 3}
+  - {fileID: 1546541824714299389, guid: 48b255bd099f0a54688424df3c0edd54, type: 3}
+  - {fileID: 1546541824714299389, guid: b5c338d831f5f7646b8aaebad1045854, type: 3}
+  - {fileID: 1546541824714299389, guid: 1fb0add8f82d1db469f4d0d09086e4fa, type: 3}
+  - {fileID: 1546541824714299389, guid: 6989dfdc7e84de64cbea379772de8715, type: 3}
+--- !u!114 &7444328747128751723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2482368178330345156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 1
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &2802125479658402463
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +571,7 @@ Transform:
   - {fileID: 2802125480008531921}
   - {fileID: 2802125480811902932}
   - {fileID: 2802125480872093611}
-  - {fileID: 2802125480637036277}
+  - {fileID: 4006924061896113849}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -656,86 +770,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
-  visible: 0
-  m_AssetId: d800faf3a00e8ef4cbfd1b31fa7237f6
-  hasSpawned: 0
---- !u!1 &2802125480637036276
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2802125480637036277}
-  - component: {fileID: 2802125480637036234}
-  - component: {fileID: 2802125480637036235}
-  m_Layer: 0
-  m_Name: PlanetOrbitManagementSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2802125480637036277
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802125480637036276}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2802125480154994508}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2802125480637036234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802125480637036276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02175b4b184d2b64fb303ef324878d66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  orbitalGroups:
-  - Planets:
-    - {fileID: 0}
-    - {fileID: 0}
-  - Planets:
-    - {fileID: 0}
-    - {fileID: 0}
-  - Planets:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - Planets:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  minimumAngle: 50
---- !u!114 &2802125480637036235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802125480637036276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 0
-  serverOnly: 1
   visible: 0
   m_AssetId: d800faf3a00e8ef4cbfd1b31fa7237f6
   hasSpawned: 0

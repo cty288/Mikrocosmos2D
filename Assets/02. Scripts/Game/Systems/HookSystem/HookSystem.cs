@@ -458,9 +458,11 @@ namespace Mikrocosmos {
                           //  animator.SetTrigger("SwitchItem");
                         }
                         else {
-                            animator.animator.SetBool("Hooking", true);
+                          //  animator.animator.SetBool("Hooking", true);
                         }
-                    }else {
+                        animator.animator.SetBool("Hooking", true);
+                    }
+                    else {
                         animator.animator.SetBool("Hooking", false);
                     }
                 }else {

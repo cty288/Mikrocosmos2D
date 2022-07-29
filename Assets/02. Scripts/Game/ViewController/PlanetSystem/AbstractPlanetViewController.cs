@@ -17,8 +17,13 @@ namespace Mikrocosmos
         IHaveGravityViewController {
          Dictionary<string, GameObject> ClientBuyBubbles { get; }
          Dictionary<string, GameObject> ClientSellBubbles { get; }
-
+        public GameObject Target { get; set; }
          float OrbitalProgress { get; set; }
+
+         public float X { get; set; }
+         public float Z { get; set; }
+
+         public float OrbitalSpeed { get; set; }
     }
     public abstract class AbstractPlanetViewController : AbstractNetworkedController<Mikrocosmos>, IPlanetViewController
     {
@@ -102,7 +107,7 @@ namespace Mikrocosmos
 
             if (isServer)
             {
-                if (canOvalRotate && target) {
+                if (canOvalRotate && Target) {
                     OvalRotate();
                 }
                 
@@ -137,8 +142,8 @@ namespace Mikrocosmos
 
             this.RegisterEvent<OnServerPlanetDestroyBuyItem>(OnServerPlanetDestroyBuyItem)
                 .UnRegisterWhenGameObjectDestroyed(gameObject, true);
-            if (target) {
-                distance = Vector3.Distance(target.transform.position, transform.position);
+            if (Target) {
+                distance = Vector3.Distance(Target.transform.position, transform.position);
             } 
         }
 
@@ -354,15 +359,36 @@ namespace Mikrocosmos
         }
 
         #region Rotation
-        public GameObject target;
+        [field: SerializeField]
+        public GameObject Target { get; set; }
 
-        public float speed = 100;
+        [FormerlySerializedAs("speed")] public float orbitalSpeed = 100;
+
+        public float OrbitalSpeed {
+            get => orbitalSpeed;
+            set => orbitalSpeed = value;
+        }
+
+
         [field: FormerlySerializedAs("progress")]
         public float OrbitalProgress { get; set; }
-      
+      [SerializeField]
         float distance = 0;
-        public float x = 5;
-        public float z = 7;
+        
+        [SerializeField]
+        private float x = 5;
+
+        public float X {
+            get => x;
+            set => x = value;
+        }
+        [SerializeField]
+        private float z = 7;
+         public float Z{
+            get => z;
+            set => z = value;
+        }
+        
 
         private Rigidbody2D rigidbody;
 
@@ -471,16 +497,16 @@ namespace Mikrocosmos
         void OvalRotate()
         {
 
-            OrbitalProgress += (Time.fixedDeltaTime * speed);
+            OrbitalProgress += (Time.fixedDeltaTime * orbitalSpeed);
             OrbitalProgress %= 360;
             Vector3 p = new Vector3(x * Mathf.Cos(OrbitalProgress * Mathf.Deg2Rad), z * Mathf.Sin(OrbitalProgress * Mathf.Deg2Rad) * distance, 0);
             if (GravityModel.MoveMode == MoveMode.ByPhysics)
             {
-                rigidbody.MovePosition(target.transform.position + p);
+                rigidbody.MovePosition(Target.transform.position + p);
             }
             else
             {
-                transform.position = target.transform.position + p;
+                transform.position = Target.transform.position + p;
             }
 
         }

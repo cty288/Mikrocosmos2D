@@ -206,8 +206,12 @@ namespace Mikrocosmos
             {
                 return;
             }
-            int currentSlot = inventorySystem.GetCurrentSlot();
-            inventorySystem.ServerSwitchSlot(currentSlot + (up ? -1 : 1));
+
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Hook")) {
+                int currentSlot = inventorySystem.GetCurrentSlot();
+                inventorySystem.ServerSwitchSlot(currentSlot + (up ? -1 : 1));
+            }
+            
         }
 
         /// <summary>
@@ -217,14 +221,16 @@ namespace Mikrocosmos
         [Command]
         private void CmdPressShortCut(int index)
         {
-            if (gameProgressSystem.GameState != GameState.InGame)
-            {
+            if (gameProgressSystem.GameState != GameState.InGame) {
                 return;
-            }            
-            int backpackCapacity = inventorySystem.GetSlotCount();
-            if (index < backpackCapacity && index!= inventorySystem.GetCurrentSlot()) {
-                inventorySystem.ServerSwitchSlot(index);
             }
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Hook")) {
+                int backpackCapacity = inventorySystem.GetSlotCount();
+                if (index < backpackCapacity && index != inventorySystem.GetCurrentSlot()) {
+                    inventorySystem.ServerSwitchSlot(index);
+                }
+            }
+            
         }
 
         public void RecoverCanControl(float time) {
