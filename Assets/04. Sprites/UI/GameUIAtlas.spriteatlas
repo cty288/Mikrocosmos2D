@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GameUIAvatar
+  m_Name: GameUIAtlas
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -39,6 +39,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: 4a8656a6dfdc20a44aa681868d59caa8, type: 3}
     - {fileID: 102900000, guid: 1e11d983ed64ed14bb066f5d67948cd9, type: 3}
     - {fileID: 102900000, guid: 1e11d983ed64ed14bb066f5d67948cd9, type: 3}
+    - {fileID: 102900000, guid: b7b33aa92afb8084bb398fd0910f487f, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -55,22 +56,30 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 664c71228183a5f44abd610feeb63b17, type: 3}
   - {fileID: 21300000, guid: 012c567277e9ccb4a8f7d3d25705bfbd, type: 3}
   - {fileID: 21300000, guid: eaa15ce2c361b414094e21fbeb6f1041, type: 3}
+  - {fileID: 21300000, guid: 2374ec83ab9656144b69e5643ffc63fe, type: 3}
   - {fileID: 21300000, guid: 75ba1124e851bba49a20e3a0dfb3c609, type: 3}
   - {fileID: 21300000, guid: 10c0bd24756381945ae73d6ce8450a11, type: 3}
   - {fileID: 21300000, guid: 443d9f249148d1a4293bfbe1a215f16b, type: 3}
   - {fileID: 21300000, guid: 2f05113480c76094a8b88bf6dc8c6242, type: 3}
   - {fileID: 21300000, guid: d78eca3424931db46994af685160c2cd, type: 3}
   - {fileID: 21300000, guid: db2aba94ee027e74988c592923c8232a, type: 3}
+  - {fileID: 21300000, guid: b9945ea452e5f7b42a5f6cbcba2211b3, type: 3}
   - {fileID: 21300000, guid: d99f3fc40a3250b4786b76033ce45ffc, type: 3}
   - {fileID: 21300000, guid: b65e13959152d6645bb2c278f4516816, type: 3}
+  - {fileID: 21300000, guid: de0f5e9547d34ea4698d272a33359bb1, type: 3}
   - {fileID: 21300000, guid: 7a766a06493f46a42977512c86fe3f0e, type: 3}
+  - {fileID: 21300000, guid: ae9ab9468c405274da74c0d7ba70d737, type: 3}
   - {fileID: 21300000, guid: 0d97e696089774648afcb80d17752161, type: 3}
+  - {fileID: 21300000, guid: 1ca5b0f6a1c8e804f950caee5b83155d, type: 3}
   - {fileID: 21300000, guid: f7db73077bbc41746890e41ad2c07382, type: 3}
+  - {fileID: 21300000, guid: 11efef279e694574d8f9dc4f2dfbb5fd, type: 3}
   - {fileID: 21300000, guid: e3b30b477d942d5498afa3170112a4de, type: 3}
   - {fileID: 21300000, guid: 40762e4797cb7a1418415b92a5f16915, type: 3}
   - {fileID: 21300000, guid: 7e44ae97b378f9c41891f6626c5a008f, type: 3}
   - {fileID: 21300000, guid: b0b410b7d9e0670418daea7460fbc57c, type: 3}
   - {fileID: 21300000, guid: 47594cd78b362cc439132b6a5a6b43b3, type: 3}
+  - {fileID: 21300000, guid: a8dab7e712e050f40877f1e6acaa0997, type: 3}
+  - {fileID: 21300000, guid: d21b8818a8c4c8a4d837532b70f5d4f1, type: 3}
   - {fileID: 21300000, guid: dd5f5a58a9c572342bc7d723463f6a02, type: 3}
   - {fileID: 21300000, guid: 50b96168e5523584e8fa9dfaaeb9e77a, type: 3}
   - {fileID: 21300000, guid: 40cb0f88b645e274494b42113d7db5ad, type: 3}
@@ -86,6 +95,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 6e709ffa28a4c084ca29cbcc62bc2bc1, type: 3}
   - {fileID: 21300000, guid: 6c61b40b2a7325846b504bc25281c358, type: 3}
   - {fileID: 21300000, guid: d838f16bc49025c449d05a9665138ba4, type: 3}
+  - {fileID: 21300000, guid: 4d442a7bc5d3e30408f3340d3c5c59fa, type: 3}
   - {fileID: 21300000, guid: 651ea49b915d82e41b6b862c2eabca51, type: 3}
   - {fileID: 21300000, guid: 2c05a80c217e5894c90e895265dd81e5, type: 3}
   - {fileID: 21300000, guid: 4ada401cecb05014687ee5957d76a7e9, type: 3}
@@ -105,6 +115,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f0c8fdcd39110f9468a709b0bc6da257, type: 3}
   - {fileID: 21300000, guid: 10d1955e7ecbef141bbd71060970a441, type: 3}
   - {fileID: 21300000, guid: 3517b5afe826422408f719e398b623a2, type: 3}
+  - {fileID: 21300000, guid: 601417bf1ac672440b2708aada4590fd, type: 3}
   - {fileID: 21300000, guid: 432945df5d5a0424c97ae2a53f98821a, type: 3}
   - {fileID: 21300000, guid: 1b14b6df3f7cd164c8170c45c832d0d4, type: 3}
   - {fileID: 21300000, guid: 7a741cdf2879bac42800fe46c9aebbb8, type: 3}
@@ -120,22 +131,30 @@ SpriteAtlas:
   - Loading_21
   - alert message 6
   - begin5
+  - item description - text box
   - alert message 1
   - alert message 5
   - Loading_22
   - Loading_011
   - Loading_4
   - end cartoon
+  - item description - image frame
   - team1_filled
   - Loading_6
+  - item description - left
   - Loading_5
+  - item description - star empty
   - ending rod
+  - item description - name box
   - Loading_29
+  - item description - star box
   - Loading_2
   - alert message 3
   - begin6
   - Loading_20
   - team1_empty
+  - item description - right
+  - item description - combined right body
   - team2_empty
   - Loading_23
   - affinity_bg
@@ -151,6 +170,7 @@ SpriteAtlas:
   - Loading_24
   - background layer-01
   - Loading_15
+  - item description - star full
   - ending score board
   - begin2
   - Loading_27
@@ -170,9 +190,10 @@ SpriteAtlas:
   - begin1
   - ending blue bar
   - affinity_bg2
+  - item description - main body
   - Loading_8
   - ending first place
   - ending photoframe
   m_RenderDataMap: {}
-  m_Tag: GameUIAvatar
+  m_Tag: GameUIAtlas
   m_IsVariant: 0

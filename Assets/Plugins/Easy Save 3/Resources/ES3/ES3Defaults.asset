@@ -62,6 +62,7 @@ MonoBehaviour:
     - PackageToolsEditor
     - Mirror.Editor
     - Mirror.CompilerSymbols
+    - Mikrocosmos.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

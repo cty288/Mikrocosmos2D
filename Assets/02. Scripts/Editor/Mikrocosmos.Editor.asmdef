@@ -1,0 +1,19 @@
+{
+    "name": "Mikrocosmos.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:10099b0883875204680d203f7c09c098",
+        "GUID:a43262df4631c9a429c1276a4139db16"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
