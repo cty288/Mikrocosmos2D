@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3925672366
+CRC: 3706975279
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 490de20e607d05fed60c016083cc5f16
+    Hash: 96425e5f45ecb0376f23873b5dc0cf61
   TypeTreeHash:
     serializedVersion: 2
     Hash: b3e7d1d77aff20d5258da537cb185520
@@ -91,7 +91,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
 Assets:
-- Assets/04. Sprites/Items/General/ItemSpriteAtlas_General.spriteatlas
+- Assets/03. Prefabs/Game/Items/DefaultPack/Goods/Temporary/Banana/DottedOutlineBanana.mat
 - Assets/04. Sprites/Items/General/Pickaxe/PickaxeOpenSprite_0.png
 - Assets/06 Animations/Items/General/Pickaxe/Pickaxe.anim
 - Assets/03. Prefabs/Game/Items/General/Pickaxe/Pickaxe.prefab
@@ -110,5 +110,5 @@ Assets:
 - Assets/04. Sprites/Items/General/Pickaxe/PickaxeOpenSprite_5.png
 Dependencies:
 - D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/fonts
-- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/goods/default
 - D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/goods_inventory
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/others

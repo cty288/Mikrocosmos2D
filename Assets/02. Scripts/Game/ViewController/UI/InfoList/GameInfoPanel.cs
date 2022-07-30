@@ -7,8 +7,7 @@ using MikroFramework.ResKit;
 using UnityEngine;
 using UnityEngine.U2D;
 
-namespace Mikrocosmos
-{
+namespace Mikrocosmos {
     public class GameInfoPanel : AbstractMikroController<Mikrocosmos> {
         [SerializeField] private List<GameObject> InfoElementPrefabs;
 
@@ -16,13 +15,13 @@ namespace Mikrocosmos
 
         private Dictionary<string, InfoElement> infoNameToElement = new Dictionary<string, InfoElement>();
         private ResLoader resLoader;
-        
-        
+
+
         private void Awake() {
             this.RegisterEvent<OnInfoStartOrUpdate>(OnInfoStartOrUpdate).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnInfoStop>(OnInfoStop).UnRegisterWhenGameObjectDestroyed(gameObject);
             layoutGroup = transform.Find("List/LayoutGroup");
-            ResLoader.Create((loader => resLoader = loader ));
+            ResLoader.Create((loader => resLoader = loader));
         }
 
         private void OnDestroy() {
@@ -35,6 +34,7 @@ namespace Mikrocosmos
                 if (infoElement) {
                     infoElement.StopInfo();
                 }
+
                 infoNameToElement.Remove(e.InfoName);
             }
         }
@@ -43,27 +43,26 @@ namespace Mikrocosmos
             Sprite iconSprite = null;
             Sprite infoContainerSpriteName = null;
             Sprite infoSliderSprite = null;
-            SpriteAtlas atlas = resLoader.LoadSync<SpriteAtlas>("info", $"InfoSpriteAtlas");
-        
+
             if (!string.IsNullOrEmpty(e.Info.InfoElementIconAssetName)) {
-                iconSprite = atlas.GetSprite($"{e.Info.InfoElementIconAssetName}");
+                iconSprite = resLoader.LoadSync<Sprite>("info", $"{e.Info.InfoElementIconAssetName}");
             }
 
             if (!string.IsNullOrEmpty(e.Info.InfoContainerSpriteAssetName)) {
-                infoContainerSpriteName = atlas.GetSprite($"{e.Info.InfoContainerSpriteAssetName}");
+                infoContainerSpriteName = resLoader.LoadSync<Sprite>("info", $"{e.Info.InfoContainerSpriteAssetName}");
             }
 
             if (!string.IsNullOrEmpty(e.Info.InfoContainerSliderAssetName)) {
-                infoSliderSprite = atlas.GetSprite($"{e.Info.InfoContainerSliderAssetName}");
+                infoSliderSprite = resLoader.LoadSync<Sprite>("info", $"{e.Info.InfoContainerSliderAssetName}");
             }
 
             if (!infoNameToElement.ContainsKey(e.Info.Name)) {
 
                 // GameObject elementPrefab = resLoader.LoadSync<GameObject>("info_elements", e.Info.InfoElementPrefabAssetName);
                 GameObject elementPrefab =
-                    resLoader.LoadSync<GameObject>($"resources://{e.Info.InfoElementPrefabAssetName}");
-                
-                InfoElement spawnedInfoElement =  Instantiate(elementPrefab, layoutGroup)
+                    resLoader.LoadSync<GameObject>("info", $"{e.Info.InfoElementPrefabAssetName}");
+
+                InfoElement spawnedInfoElement = Instantiate(elementPrefab, layoutGroup)
                     .GetComponent<InfoElement>();
                 spawnedInfoElement.transform.SetAsFirstSibling();
 
@@ -71,8 +70,8 @@ namespace Mikrocosmos
 
                 infoNameToElement.Add(e.Info.Name, spawnedInfoElement);
                 spawnedInfoElement.SetInfo(new Info() {
-                    AutoDestroyWhenTimeUp =e.Info.AutoDestroyWhenTimeUp,
-                    Description =  e.Info.Description,
+                    AutoDestroyWhenTimeUp = e.Info.AutoDestroyWhenTimeUp,
+                    Description = e.Info.Description,
                     InfoIconSprite = iconSprite,
                     InfoContainerSprite = infoContainerSpriteName,
                     Name = e.Info.Name,
@@ -85,8 +84,7 @@ namespace Mikrocosmos
             else {
                 InfoElement infoElement = infoNameToElement[e.Info.Name];
                 if (infoElement) {
-                    infoElement.SetInfo(new Info()
-                    {
+                    infoElement.SetInfo(new Info() {
                         AutoDestroyWhenTimeUp = e.Info.AutoDestroyWhenTimeUp,
                         Description = e.Info.Description,
                         InfoIconSprite = iconSprite,
@@ -95,7 +93,7 @@ namespace Mikrocosmos
                         ShowRemainingTime = e.Info.ShowRemainingTime,
                         InfoContainerSprite = infoContainerSpriteName,
                         Title = e.Info.Title,
-                        InfoSliderSprite = infoSliderSprite                        
+                        InfoSliderSprite = infoSliderSprite
                     }, true);
                 }
                 else {
@@ -103,6 +101,7 @@ namespace Mikrocosmos
                 }
             }
         }
+
 
         public void InfoElementSelfDestroy(string name) {
             if (infoNameToElement.ContainsKey(name)) {
@@ -114,6 +113,6 @@ namespace Mikrocosmos
             }
         }
 
-      
+      }
     }
-}
+

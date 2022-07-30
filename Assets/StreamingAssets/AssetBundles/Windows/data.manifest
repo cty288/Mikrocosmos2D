@@ -1,0 +1,25 @@
+ManifestFileVersion: 0
+CRC: 2554109051
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4608894fb24c34aea0ddb1051eeeadb2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 341b63baec26c30bf2745a1c4aeed684
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: f20e9dd21104eaa48813b32046ca1c91, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Mikrocosmos
+  ClassName: Mikrocosmos.GoodsPropertiesItem
+- AssemblyName: Mikrocosmos
+  ClassName: Mikrocosmos.ItemTradeProperties
+- AssemblyName: Mikrocosmos
+  ClassName: Mikrocosmos.UseableItemProperties
+Assets:
+- Assets/10. Data/GoodsData/Default/GoodsProperties.asset
+Dependencies: []

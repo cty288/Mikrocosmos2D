@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1742579898
+CRC: 204457879
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0dfa4623aa6170609b076ce64575c685
+    Hash: bc37e774d10e2292de11b6db47d1c9ad
   TypeTreeHash:
     serializedVersion: 2
     Hash: d8be55dc5b083501af8ee6d6e29761c7
@@ -57,4 +57,5 @@ Assets:
 - Assets/09.Fonts/Orbitron/Orbitron-Black.ttf
 - Assets/09.Fonts/Orbitron/Orbitron-Medium.ttf
 - Assets/09.Fonts/Orbitron/Orbitron-SemiBold SDF.asset
-Dependencies: []
+Dependencies:
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/others

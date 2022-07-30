@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 28225364
+CRC: 3664299461
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: bdfc3a7f789fb6ecb106e2062b80414c
+    Hash: c8dd66ade41d6e21d01cd8bda7a1f235
   TypeTreeHash:
     serializedVersion: 2
     Hash: f4f998499f1bc5ee0a2f434b66deb29c
@@ -97,7 +97,6 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/04. Sprites/Planets/Default/MapUI/white wood 1-01.png
 - Assets/03. Prefabs/Game/Planets/Default/Water1Planet.prefab
-- Assets/04. Sprites/Planets/Default/PlanetsAtlas_Dafeult.spriteatlas
 - Assets/04. Sprites/Planets/Default/MapUI/white wood 2-01.png
 - Assets/04. Sprites/Planets/Default/water 2-01.png
 - Assets/04. Sprites/Planets/Default/MapUI/white earth 3-01.png
@@ -131,3 +130,4 @@ Assets:
 Dependencies:
 - D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/goods/default
 - D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/planets/general
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/others

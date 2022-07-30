@@ -1,0 +1,47 @@
+ManifestFileVersion: 0
+CRC: 3938075096
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: dc8e3cfbc9cdfa0c77d42d97b1ae9097
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9f6c88cc6d3653398f3fd5196515f87d
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 687078895
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.RenderPipelines.Universal.Runtime
+  ClassName: UnityEngine.Rendering.Universal.LightUtility/LightMeshVertex
+Assets:
+- Assets/TextMesh Pro/Shaders/TMP_SDF.shader
+- Assets/07. Materials/VisionStaticBackground.mat
+- Assets/VisionEffect/Materials/vision_entity_text.mat
+- Assets/Mirror/Editor/Icon/MirrorIcon.png
+- Assets/VisionEffect/Shaders/VisionStaticBackground.shader
+- Assets/VisionEffect/Materials/vision_entity_text_black.mat
+- Assets/05. Shaders/Map/DottedOutline.shader
+- Assets/VisionEffect/Materials/vision_entity_text_green.mat
+- Assets/VisionEffect/Shaders/VisionEntity.shader
+- Assets/02. Scripts/Game/ViewController/Visions/FOV Vision.prefab
+- Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader
+- Assets/VisionEffect/Materials/vision_entity.mat
+- Assets/04. Sprites/UI/GameCanvas/EscapeHint/circle ring.png
+Dependencies: []

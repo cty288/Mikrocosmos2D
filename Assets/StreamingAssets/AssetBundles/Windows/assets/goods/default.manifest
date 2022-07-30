@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2522606150
+CRC: 4219367678
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 88c69fb19543bd244ae6ba19a3a038d5
+    Hash: d7579bfb901548641e9bec89586811b1
   TypeTreeHash:
     serializedVersion: 2
     Hash: a0a994a848cb5c6b4f4c3b7b9d31c026
@@ -147,6 +147,7 @@ Assets:
 - Assets/04. Sprites/Items/DefaultPack/Goods/Eye/KrowEye2/KrowEye2Sprite_8.png
 - Assets/04. Sprites/Items/DefaultPack/Goods/FirePlant/FirePlant/FirePlantSprite_3.png
 - Assets/04. Sprites/Items/DefaultPack/Goods/Eye/KrowEye1/KrowEye1Sprite_3.png
+- Assets/06 Animations/Thruster.controller
 - Assets/03. Prefabs/Game/Items/DefaultPack/Goods/RawMaterials/Flower/Flower.prefab
 - Assets/06 Animations/Items/Default/FirePlant/Using.anim
 - Assets/04. Sprites/Items/DefaultPack/Goods/RawMaterials/SeaweedFruit/SeaweedFruitSprite_01.png
@@ -178,7 +179,6 @@ Assets:
 - Assets/03. Prefabs/Game/Items/DefaultPack/Goods/RawMaterials/Kindle/Kindle.prefab
 - Assets/04. Sprites/Items/DefaultPack/Goods/Eye/KrowEye1/KrowEye1Sprite_9.png
 - Assets/06 Animations/Items/Default/StoneShield/StoneShieldWave.controller
-- Assets/03. Prefabs/Game/Items/DefaultPack/Goods/Temporary/Banana/DottedOutlineBanana.mat
 - Assets/06 Animations/Items/Default/CactusShotgun/CactusShotgun.controller
 - Assets/04. Sprites/Items/DefaultPack/Goods/CactusShotgun/CactusShotgunSprite_5.png
 - Assets/04. Sprites/Items/DefaultPack/Goods/BirdCannon/BirdCannon/BirdCannonSprite_12.png
@@ -189,9 +189,8 @@ Assets:
 - Assets/06 Animations/Items/Default/JellyGun/JellyGun.controller
 - Assets/03. Prefabs/Game/Items/DefaultPack/Goods/Thruster/DottedOutlineThruster.mat
 - Assets/03. Prefabs/Game/Items/DefaultPack/Goods/Temporary/Banana2/Banana.prefab
-- Assets/04. Sprites/Items/DefaultPack/ItemAtlas_Default.spriteatlasv2
-- Assets/04. Sprites/Items/DefaultPack/Goods/StoneShield/StoneShield/StoneShieldSprite_15.png
 - Assets/04. Sprites/Items/DefaultPack/Goods/StoneShield/StoneShield/StoneShieldSprite_6.png
+- Assets/04. Sprites/Items/DefaultPack/Goods/StoneShield/StoneShield/StoneShieldSprite_15.png
 - Assets/06 Animations/Items/Default/KrowEye/MapUITeam1.anim
 - Assets/06 Animations/Items/Default/KrowEye/KrowEye.controller
 - Assets/04. Sprites/Items/DefaultPack/Goods/StoneShield/StoneWave/StoneWaveSprite_3.png
@@ -400,3 +399,4 @@ Assets:
 Dependencies:
 - D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/fonts
 - D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/goods_inventory
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/others

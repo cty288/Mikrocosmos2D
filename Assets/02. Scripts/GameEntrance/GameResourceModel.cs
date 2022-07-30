@@ -5,6 +5,7 @@ using System.Linq;
 using MikroFramework.Architecture;
 using MikroFramework.ResKit;
 using MikroFramework.Utilities;
+using Mirror;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -89,7 +90,9 @@ namespace Mikrocosmos
                     allGameObjects = request.allAssets.Select((o => o as GameObject)).ToList();
                 }
 
-                result.AddRange(allGameObjects.Where((o => o.GetComponent<IPlanetModel>() != null)));
+
+                result.AddRange((allGameObjects.Where((o => o.GetComponent<NetworkIdentity>() != null))).Select((o =>
+                    resLoader.LoadSync<GameObject>(itemBundle, o.name))));
             }
 
             onFinished?.Invoke(result);
@@ -130,8 +133,9 @@ namespace Mikrocosmos
                 if (!ResManager.IsSimulationModeLogic) {
                     allGameObjects = request.allAssets.Select((o => o as GameObject)).ToList();
                 }
-               
-                result.AddRange(allGameObjects.Where((o => o.GetComponent<IPlanetModel>() != null)));
+
+                result.AddRange((allGameObjects.Where((o => o.GetComponent<NetworkIdentity>() != null))).Select((o =>
+                    resLoader.LoadSync<GameObject>(planetBundle, o.name))));
             }
 
             onFinished?.Invoke(result);

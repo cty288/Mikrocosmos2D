@@ -1,5 +1,5 @@
 {
-  "Version": "1.0",
+  "Version": "1.1",
   "ABMD5List": [
     {
       "AssetName": "audio",
@@ -144,9 +144,19 @@
     },
     {
       "AssetName": "info",
-      "MD5": "73c403fc8d390dcc28038f7db4c95b8b",
-      "FileSize": 202.581055,
+      "MD5": "fc9fe5deb3cecfce0b8fc9ade4e748fc",
+      "FileSize": 214.833008,
       "assetDatas": [
+        {
+          "Name": "MissionInfoElement",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "WarningInfoElement",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.GameObject"
+        },
         {
           "Name": "InfoBar_Green",
           "OwnerBundleName": "info",
@@ -248,11 +258,6 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
-          "Name": "InfoSpriteAtlas",
-          "OwnerBundleName": "info",
-          "AssetType": "UnityEngine.U2D.SpriteAtlas"
-        },
-        {
           "Name": "SendEggMissionInfoIcon",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.Texture2D"
@@ -316,6 +321,78 @@
           "Name": "scroll8-01",
           "OwnerBundleName": "info",
           "AssetType": "UnityEngine.Texture2D"
+        }
+      ]
+    },
+    {
+      "AssetName": "others",
+      "MD5": "3e969bd079d6dc2bbe6e72b398e42461",
+      "FileSize": 688.6963,
+      "assetDatas": [
+        {
+          "Name": "FOV Vision",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "circle ring",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "DottedOutline",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Shader"
+        },
+        {
+          "Name": "VisionStaticBackground",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "MirrorIcon",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "TMP_Bitmap",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Shader"
+        },
+        {
+          "Name": "TMP_SDF",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Shader"
+        },
+        {
+          "Name": "vision_entity",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "vision_entity_text",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "vision_entity_text_black",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "vision_entity_text_green",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Material"
+        },
+        {
+          "Name": "VisionEntity",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Shader"
+        },
+        {
+          "Name": "VisionStaticBackground",
+          "OwnerBundleName": "others",
+          "AssetType": "UnityEngine.Shader"
         }
       ]
     },
@@ -513,14 +590,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "874ca1b133368a6ed050f46a34fe527d",
-      "FileSize": 1.92382813,
+      "MD5": "eff018fe9f52b53bfb812024516c98db",
+      "FileSize": 1.96191406,
       "assetDatas": []
     },
     {
       "AssetName": "assets/fonts",
-      "MD5": "b0e4b719f65058572a67c59ae7349211",
-      "FileSize": 32866.5938,
+      "MD5": "89b1d4ec54693075dfaecc96ee8c9aaf",
+      "FileSize": 32788.875,
       "assetDatas": [
         {
           "Name": "SourceHanSansHW-VF",
@@ -713,8 +790,8 @@
     },
     {
       "AssetName": "assets/goods/default",
-      "MD5": "2e3edf45d092f63e64a7a4013d6a8da2",
-      "FileSize": 2802.289,
+      "MD5": "be3aafd82fc51244997a40add9bee7c5",
+      "FileSize": 2798.05078,
       "assetDatas": [
         {
           "Name": "BirdCannon",
@@ -905,11 +982,6 @@
           "Name": "BananaTemp",
           "OwnerBundleName": "assets/goods/default",
           "AssetType": "UnityEngine.GameObject"
-        },
-        {
-          "Name": "DottedOutlineBanana",
-          "OwnerBundleName": "assets/goods/default",
-          "AssetType": "UnityEngine.Material"
         },
         {
           "Name": "Banana",
@@ -1682,11 +1754,6 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
-          "Name": "ItemAtlas_Default",
-          "OwnerBundleName": "assets/goods/default",
-          "AssetType": "UnityEngine.U2D.SpriteAtlas"
-        },
-        {
           "Name": "BirdCannon",
           "OwnerBundleName": "assets/goods/default",
           "AssetType": "UnityEditor.Animations.AnimatorController"
@@ -1980,14 +2047,24 @@
           "Name": "Using",
           "OwnerBundleName": "assets/goods/default",
           "AssetType": "UnityEngine.AnimationClip"
+        },
+        {
+          "Name": "Thruster",
+          "OwnerBundleName": "assets/goods/default",
+          "AssetType": "UnityEditor.Animations.AnimatorController"
         }
       ]
     },
     {
       "AssetName": "assets/goods/general",
-      "MD5": "6c8afa86b48162b1e621013f2259e84e",
-      "FileSize": 884.0947,
+      "MD5": "77e69b95d9f5e045e19694ea1ca0f401",
+      "FileSize": 851.259766,
       "assetDatas": [
+        {
+          "Name": "DottedOutlineBanana",
+          "OwnerBundleName": "assets/goods/general",
+          "AssetType": "UnityEngine.Material"
+        },
         {
           "Name": "Pickaxe",
           "OwnerBundleName": "assets/goods/general",
@@ -2007,11 +2084,6 @@
           "Name": "ValveTeam2",
           "OwnerBundleName": "assets/goods/general",
           "AssetType": "UnityEngine.GameObject"
-        },
-        {
-          "Name": "ItemSpriteAtlas_General",
-          "OwnerBundleName": "assets/goods/general",
-          "AssetType": "UnityEngine.U2D.SpriteAtlas"
         },
         {
           "Name": "PickaxeOpenSprite_0",
@@ -2077,8 +2149,8 @@
     },
     {
       "AssetName": "assets/planets/default",
-      "MD5": "cc615427e8deb0f22e91223379f0cb09",
-      "FileSize": 1400.59082,
+      "MD5": "0ff16f91a235baa8baf473d81ef626e7",
+      "FileSize": 847.001953,
       "assetDatas": [
         {
           "Name": "Earth1Planet",
@@ -2236,11 +2308,6 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
-          "Name": "PlanetsAtlas_Dafeult",
-          "OwnerBundleName": "assets/planets/default",
-          "AssetType": "UnityEngine.U2D.SpriteAtlas"
-        },
-        {
           "Name": "water 2-01",
           "OwnerBundleName": "assets/planets/default",
           "AssetType": "UnityEngine.Texture2D"
@@ -2249,8 +2316,8 @@
     },
     {
       "AssetName": "assets/planets/general",
-      "MD5": "8a2a716af0c10c249374fb6e1299b927",
-      "FileSize": 1281.582,
+      "MD5": "7e933c00c232ead86a433aed5f17b63f",
+      "FileSize": 606.943359,
       "assetDatas": [
         {
           "Name": "BuyBubbleBG",
@@ -2288,11 +2355,6 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
-          "Name": "PlanetAtlas_General",
-          "OwnerBundleName": "assets/planets/general",
-          "AssetType": "UnityEngine.U2D.SpriteAtlas"
-        },
-        {
           "Name": "speech bubble buy-01",
           "OwnerBundleName": "assets/planets/general",
           "AssetType": "UnityEngine.Texture2D"
@@ -2321,19 +2383,54 @@
           "Name": "upgrade_icon_217143",
           "OwnerBundleName": "assets/planets/general",
           "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "affinity_bg",
+          "OwnerBundleName": "assets/planets/general",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "affinity_bg2",
+          "OwnerBundleName": "assets/planets/general",
+          "AssetType": "UnityEngine.Texture2D"
+        },
+        {
+          "Name": "BuyBubbleAppear",
+          "OwnerBundleName": "assets/planets/general",
+          "AssetType": "UnityEngine.AnimationClip"
+        },
+        {
+          "Name": "BuyBubbleBG",
+          "OwnerBundleName": "assets/planets/general",
+          "AssetType": "UnityEditor.Animations.AnimatorController"
+        },
+        {
+          "Name": "BuyBubbleIdle",
+          "OwnerBundleName": "assets/planets/general",
+          "AssetType": "UnityEngine.AnimationClip"
+        },
+        {
+          "Name": "BuyBubbleTriggered",
+          "OwnerBundleName": "assets/planets/general",
+          "AssetType": "UnityEngine.AnimationClip"
+        },
+        {
+          "Name": "SellBubbleAppear",
+          "OwnerBundleName": "assets/planets/general",
+          "AssetType": "UnityEngine.AnimationClip"
+        },
+        {
+          "Name": "SellBubbleBG",
+          "OwnerBundleName": "assets/planets/general",
+          "AssetType": "UnityEditor.Animations.AnimatorController"
         }
       ]
     },
     {
       "AssetName": "assets/planets/tutorial",
-      "MD5": "c4b8fdfc15d3f3bc21a876b4313547bd",
-      "FileSize": 318.040039,
+      "MD5": "628ab698cdacfdae41b2bd2077521d08",
+      "FileSize": 317.998047,
       "assetDatas": [
-        {
-          "Name": "PlanetAtlas_Tutorial",
-          "OwnerBundleName": "assets/planets/tutorial",
-          "AssetType": "UnityEngine.U2D.SpriteAtlas"
-        },
         {
           "Name": "TutorialPlanet1",
           "OwnerBundleName": "assets/planets/tutorial",

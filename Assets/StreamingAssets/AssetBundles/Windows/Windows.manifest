@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3022568043
+CRC: 160005801
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -13,36 +13,44 @@ AssetBundleManifest:
       Dependencies: {}
     Info_3:
       Name: info
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: assets/fonts
     Info_4:
-      Name: assets/fonts
+      Name: assets/goods_inventory
       Dependencies: {}
     Info_5:
+      Name: assets/goods/default
+      Dependencies:
+        Dependency_0: assets/goods_inventory
+        Dependency_1: assets/fonts
+        Dependency_2: others
+    Info_6:
       Name: assets/planets/default
       Dependencies:
-        Dependency_0: assets/planets/general
-        Dependency_1: assets/goods/default
-    Info_6:
+        Dependency_0: assets/goods/default
+        Dependency_1: assets/planets/general
+        Dependency_2: others
+    Info_7:
       Name: assets/planets/general
       Dependencies:
         Dependency_0: assets/fonts
-    Info_7:
-      Name: assets/planets/tutorial
-      Dependencies: {}
+        Dependency_1: others
     Info_8:
       Name: assets/goods/general
       Dependencies:
-        Dependency_0: assets/fonts
-        Dependency_1: assets/goods/default
-        Dependency_2: assets/goods_inventory
+        Dependency_0: assets/goods_inventory
+        Dependency_1: assets/fonts
+        Dependency_2: others
     Info_9:
-      Name: assets/goods/default
+      Name: assets/fonts
       Dependencies:
-        Dependency_0: assets/fonts
-        Dependency_1: assets/goods_inventory
+        Dependency_0: others
     Info_10:
-      Name: assets/goods_inventory
+      Name: data
       Dependencies: {}
     Info_11:
-      Name: data
+      Name: assets/planets/tutorial
+      Dependencies: {}
+    Info_12:
+      Name: others
       Dependencies: {}

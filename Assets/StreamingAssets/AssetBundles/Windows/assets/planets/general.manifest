@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3913068557
+CRC: 2936242927
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 15f0c7b6249ac9d7b31594c3754dce80
+    Hash: f2b83d35d7b67d21ef24d9775d79f233
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 46d7d7378478284a20f9f9b11fa9d8dc
+    Hash: 7aac5208ccb06ce7579878429936e7ff
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -16,8 +16,6 @@ ClassTypes:
 - Class: 21
   Script: {instanceID: 0}
 - Class: 28
-  Script: {instanceID: 0}
-- Class: 48
   Script: {instanceID: 0}
 - Class: 61
   Script: {instanceID: 0}
@@ -83,11 +81,17 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/04. Sprites/Planets/GeneralUI/UI weapon.png
 - Assets/04. Sprites/Planets/GeneralUI/speech bubble buy-01.png
+- Assets/06 Animations/UI/Trading/BuyBubbleIdle.anim
+- Assets/06 Animations/UI/Trading/BuyBubbleBG.controller
+- Assets/06 Animations/UI/Trading/BuyBubbleTriggered.anim
+- Assets/06 Animations/UI/Trading/SellBubbleAppear.anim
 - Assets/03. Prefabs/Game/Planets/Utilities/BuyBubbleBG.prefab
 - Assets/04. Sprites/Planets/GeneralUI/UI Buff.png
 - Assets/04. Sprites/Planets/GeneralUI/3 second UI.png
 - Assets/04. Sprites/Planets/GeneralUI/upgrade_icon_217143.png
-- Assets/04. Sprites/Planets/GeneralUI/PlanetAtlas_General.spriteatlas
+- Assets/04. Sprites/UI/Trading/affinity_bg2.png
+- Assets/06 Animations/UI/Trading/BuyBubbleAppear.anim
+- Assets/06 Animations/UI/Trading/SellBubbleBG.controller
 - Assets/03. Prefabs/Game/Planets/Utilities/Canvas.prefab
 - Assets/04. Sprites/Planets/GeneralUI/MapMine.png
 - Assets/04. Sprites/Planets/GeneralUI/MapPlanet1.png
@@ -95,5 +99,7 @@ Assets:
 - Assets/04. Sprites/Planets/GeneralUI/speech bubble sell-01.png
 - Assets/04. Sprites/Planets/GeneralUI/sword_icon-icons.com_64425.png
 - Assets/04. Sprites/Planets/GeneralUI/MapPlanet2.png
+- Assets/04. Sprites/UI/Trading/affinity_bg.png
 Dependencies:
 - D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/assets/fonts
+- D:/Unity Projects/Mikrocosmos2D/Assets/StreamingAssets/AssetBundles/Windows/others
