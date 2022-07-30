@@ -132,9 +132,14 @@
     },
     {
       "AssetName": "info",
-      "MD5": "19861811ef1cc3521ac628ebc89f739a",
-      "FileSize": 194.804688,
+      "MD5": "965108fa5a8e70fadd2e3d4842470a17",
+      "FileSize": 224.80957,
       "assetDatas": [
+        {
+          "Name": "InfoSpriteAtlas",
+          "OwnerBundleName": "info",
+          "AssetType": "UnityEngine.U2D.SpriteAtlas"
+        },
         {
           "Name": "InfoBar_Green",
           "OwnerBundleName": "info",
@@ -196,9 +201,9 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
-          "Name": "InfoSpriteAtlas",
+          "Name": "WantedInfoIcon",
           "OwnerBundleName": "info",
-          "AssetType": "UnityEngine.U2D.SpriteAtlas"
+          "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "SendEggMissionInfoIcon",
@@ -411,123 +416,123 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "0caced064834da04b7c08c9102b1e9bf",
-      "FileSize": 1.66308594,
+      "MD5": "83e7870eb4978d71c30ca3ae9c0e2522",
+      "FileSize": 1.67675781,
       "assetDatas": []
     },
     {
-      "AssetName": "assets/goods",
-      "MD5": "ab3f1000d59eeb5dc0b04faac7dc437e",
-      "FileSize": 297.333984,
+      "AssetName": "assets/goods_inventory",
+      "MD5": "85a6a05e7ea38d284235055c5fe92408",
+      "FileSize": 297.328125,
       "assetDatas": [
         {
           "Name": "ItemInventoryAtlas",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.U2D.SpriteAtlas"
         },
         {
           "Name": "BananaSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "BirdCannonSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "CactusShotgunSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "EarthMushroomSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "FireOreSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "FirePlantSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "FlowerSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "JellyGunSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "KindleSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "KrowEyeSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "LeafKnifeSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "MaskSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "MetalBallSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "PickaxeSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "PoisonSpearSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "SeaweedFruitSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "StatelliteSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "StoneShieldSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "SunflowerSonSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "ThrusterSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },
         {
           "Name": "TolietSprite",
-          "OwnerBundleName": "assets/goods",
+          "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         }
       ]

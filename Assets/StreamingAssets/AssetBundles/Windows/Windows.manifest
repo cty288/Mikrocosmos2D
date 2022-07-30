@@ -1,19 +1,19 @@
 ManifestFileVersion: 0
-CRC: 2792549643
+CRC: 2790286922
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: assets/goods
-      Dependencies: {}
-    Info_1:
       Name: buff_icons
       Dependencies: {}
-    Info_2:
+    Info_1:
       Name: audio
       Dependencies: {}
-    Info_3:
+    Info_2:
       Name: profile
       Dependencies: {}
-    Info_4:
+    Info_3:
       Name: info
+      Dependencies: {}
+    Info_4:
+      Name: assets/goods_inventory
       Dependencies: {}

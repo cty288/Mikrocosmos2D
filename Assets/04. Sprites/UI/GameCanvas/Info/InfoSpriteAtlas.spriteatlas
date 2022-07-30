@@ -32,13 +32,11 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: feed796ad22abca4f806903940c2ee9e, type: 3}
-    - {fileID: 102900000, guid: 5747028dead1d804d9513adf2afc6364, type: 3}
-    - {fileID: 102900000, guid: 5808b443f3d1a8148930e49674ae534a, type: 3}
-    - {fileID: 2800000, guid: c5866289705a71740a2bd894ddbba531, type: 3}
     - {fileID: 2800000, guid: 8ce1d6a28ec0523499897f6f5feb7820, type: 3}
+    - {fileID: 102900000, guid: 2f1662fb98a556948841cad7c66e86d5, type: 3}
     - {fileID: 2800000, guid: 5a35d33b95f3edd42a6248f0f3c0755c, type: 3}
-    - {fileID: 102900000, guid: 6bbdb6aaf6486ae4d97617f90688ebc7, type: 3}
+    - {fileID: 2800000, guid: c5866289705a71740a2bd894ddbba531, type: 3}
+    - {fileID: 102900000, guid: 61777dfb94a368942a53999762058d96, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -56,6 +54,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: c3c0f08711920d743b9fc4b45de3116a, type: 3}
   - {fileID: 21300000, guid: ac224bc709f39e24fb521847a65d91d6, type: 3}
   - {fileID: 21300000, guid: c621e4d70e9fa454796fcd13c10740d3, type: 3}
+  - {fileID: 21300000, guid: 9ad29178a9468204f9a5cb788fed6335, type: 3}
   - {fileID: 21300000, guid: 2459157847948654f83f1ef809c75e57, type: 3}
   - {fileID: 21300000, guid: 7562bad8713d18444835504695cb2e4b, type: 3}
   - {fileID: 21300000, guid: 8a7234f8ade27fd4984405776aa7e2bd, type: 3}
@@ -91,6 +90,7 @@ SpriteAtlas:
   - scroll1-01
   - click6-01
   - InfoBar_Green
+  - WantedInfoIcon
   - StrangeMeteorMissionInfoIcon
   - InfoIcon_Yellow
   - scroll5-01

@@ -25,6 +25,8 @@ namespace Mikrocosmos
         private BindableProperty<float> clientHorizontal = new BindableProperty<float>(0);
         private BindableProperty<float> clientVertical = new BindableProperty<float>(0);
 
+        private SpriteRenderer wantedIcon;
+
         private Vector2 clientPreviousMousePosition = Vector2.zero;
         private ISpaceshipConfigurationModel GetModel()
         {
@@ -39,6 +41,7 @@ namespace Mikrocosmos
             selfMotionAnimator = transform.Find("VisionControl/SelfSprite").GetComponent<Animator>();
             inventorySystem = GetComponent<IPlayerInventorySystem>();
             selfSprites.Add(transform.Find("VisionControl/SelfSprite").GetComponent<SpriteRenderer>());
+            wantedIcon = transform.Find("WantedIcon").GetComponent<SpriteRenderer>();
             selfSprites.AddRange(selfSprites[0].GetComponentsInChildren<SpriteRenderer>());
             buffSystem = GetComponent<IBuffSystem>();
             animator = GetComponent<Animator>();
@@ -73,6 +76,7 @@ namespace Mikrocosmos
                 switch (e.BountyType) {
                     case BountyType.Opponent:
                         targetSprite = mapSpritesWhenHunted[1];
+                        wantedIcon.enabled = true;
                         break;
                     case BountyType.Self:
                         targetSprite = mapSpritesWhenHunted[2];
@@ -88,6 +92,7 @@ namespace Mikrocosmos
         }
         private void ChangeToNormalMapSprite() {
             Transform mapPlayer = transform.Find("MapPlayer");
+            wantedIcon.enabled = false;
             if (this.GetSystem<IRoomMatchSystem>().ClientGetMatchInfoCopy().Team ==
                 ThisSpaceshipTeam) {
                

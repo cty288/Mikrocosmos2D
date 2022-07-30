@@ -186,8 +186,9 @@ namespace Mikrocosmos
                 Name = $"CriminalUpdate_{criminalName}",
                 RemainingTime = 10f,
                 ShowRemainingTime = false,
-                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
-                Title = Localization.GetFormat("BOUNTY_KILLED", criminalName, hunterName, bounty)
+                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL,
+                Title = Localization.GetFormat("BOUNTY_KILLED", criminalName, hunterName, bounty),
+                InfoElementIconAssetName = "WantedInfoIcon"
             });
             this.SendEvent<OnClientSpaceshipCriminalityUpdate>(new OnClientSpaceshipCriminalityUpdate() {
                 Criminality = 0,
@@ -205,7 +206,8 @@ namespace Mikrocosmos
                 RemainingTime = -1f,
                 //Title = Localization.Get("GAME_INFO_EYE_DETECT"),
                 ShowRemainingTime = false,
-                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL
+                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL,
+                InfoElementIconAssetName = "WantedInfoIcon"
             };
             switch (bountyType) {
                 case BountyType.Self:
@@ -239,7 +241,8 @@ namespace Mikrocosmos
                 RemainingTime = -1f,
                 //Title = Localization.Get("GAME_INFO_EYE_DETECT"),
                 ShowRemainingTime = false,
-                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL
+                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_WARNING_NORMAL,
+                InfoElementIconAssetName = "WantedInfoIcon"
             };
             switch (bountyType) {
                 case BountyType.Self:

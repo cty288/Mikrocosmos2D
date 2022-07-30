@@ -157,8 +157,8 @@ GameObject:
   - component: {fileID: 6054194443123657830}
   - component: {fileID: 1143647513593684491}
   - component: {fileID: 2776012292038823149}
-  - component: {fileID: 4551563409841241683}
   - component: {fileID: 2377751096598039479}
+  - component: {fileID: 3487597187530568411}
   m_Layer: 0
   m_Name: SpaceMinecart
   m_TagString: Untagged
@@ -217,6 +217,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  destinations:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
   teamPlayersInRange: 0000000000000000
   mapPointer: {fileID: 3671635426418008418, guid: 78625a07735ceb04da6b5c5c532118f2, type: 3}
   mapPathSpeed: 1
@@ -388,32 +391,6 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 0
   animator: {fileID: 7928538854501262038}
---- !u!61 &4551563409841241683
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342861027360944214}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.27276802}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6.11, y: 4.151989}
-  m_EdgeRadius: 0
 --- !u!70 &2377751096598039479
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -430,6 +407,48 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.66, y: 7.68}
   m_Direction: 0
+--- !u!60 &3487597187530568411
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342861027360944214}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 3.1249924, y: 1.6213436}
+      - {x: 1.735343, y: 2.0999486}
+      - {x: -0.25884002, y: 1.9504815}
+      - {x: -0.97727394, y: 2.2557106}
+      - {x: -3.2319345, y: 1.5280628}
+      - {x: -3.3226795, y: 0.34480476}
+      - {x: -2.3889923, y: 0.7592392}
+      - {x: -2.5551758, y: -0.84882164}
+      - {x: -3.3588476, y: -0.5402832}
+      - {x: -3.0306287, y: -1.9055059}
+      - {x: 0.91910744, y: -2.4833565}
+      - {x: 1.4728012, y: -2.3181267}
+      - {x: 3.233263, y: -1.7516823}
+      - {x: 3.2751884, y: -0.58763313}
+      - {x: 2.3678436, y: -0.69644547}
+      - {x: 2.3151932, y: 0.56490517}
+      - {x: 3.2354078, y: 0.6745147}
 --- !u!1 &2032012498312585053
 GameObject:
   m_ObjectHideFlags: 0

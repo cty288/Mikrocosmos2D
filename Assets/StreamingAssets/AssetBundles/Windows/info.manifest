@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4227371639
+CRC: 1651144459
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d42b26d7f8a9f0c862ba9e9d665f733f
+    Hash: f6f9652ed22792251ec014292d217d6f
   TypeTreeHash:
     serializedVersion: 2
     Hash: c29c357128feff56790ec9816c4fc93d
@@ -17,20 +17,21 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoIcon_Pink.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoIcon_Green.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoBar_Purple.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoBar_Pink.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoProgress_Pink.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoProgress_Purple.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoBar_Yellow.png
-- Assets/04. Sprites/UI/GameCanvas/Info/Missions/StrangeMeteorMissionInfoIcon.png
-- Assets/04. Sprites/UI/GameCanvas/Info/Missions/SendEggMissionInfoIcon.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoIcon_Yellow.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoIcon_Purple.png
-- Assets/04. Sprites/UI/GameCanvas/Info/Missions/SpaceMinecartMissionInfoIcon.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoBar_Green.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoIcon_Pink.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoIcon_Green.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoBar_Purple.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoBar_Pink.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoProgress_Pink.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoProgress_Purple.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoBar_Yellow.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/Missions/StrangeMeteorMissionInfoIcon.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/Missions/SendEggMissionInfoIcon.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoIcon_Yellow.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoIcon_Purple.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/Missions/SpaceMinecartMissionInfoIcon.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoBar_Green.png
 - Assets/04. Sprites/UI/GameCanvas/Info/InfoSpriteAtlas.spriteatlas
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoProgress_Green.png
-- Assets/04. Sprites/UI/GameCanvas/Info/BasicInfoSprites/InfoProgress_Yellow.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoProgress_Green.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BountyHunter/WantedInfoIcon.png
+- Assets/04. Sprites/UI/GameCanvas/Info/InfoSystem/BasicInfoSprites/InfoProgress_Yellow.png
 Dependencies: []

@@ -45,7 +45,9 @@ namespace Mikrocosmos {
 
         private void OnReadyToEnterGameplayScene(OnClientReadyToEnterGameplayScene e) {
             ObjGameReadyToStartBG.SetActive(true);
-            ObjGameReadyToStartBG.GetComponent<Image>().DOFade(1, 2f);
+            ObjGameReadyToStartBG.GetComponent<Image>().DOFade(1, 2f).OnComplete((() => {
+                ObjGameReadyToStartBG.transform.GetChild(0).GetComponent<Image>().DOFade(1, 0.5f);
+            }));
         }
 
         private void OnClientGameModeChanged(OnClientGameModeChanged e) {
