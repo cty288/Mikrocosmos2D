@@ -19,6 +19,7 @@ namespace Mikrocosmos
         [SerializeField]
         private float fadeOutTIme = 10f;
         
+        
 
         private void Awake() {
             this.RegisterEvent<OnDescriptionItemAdd>(OnDescriptionItemAdd).UnRegisterWhenGameObjectDestroyed(gameObject);

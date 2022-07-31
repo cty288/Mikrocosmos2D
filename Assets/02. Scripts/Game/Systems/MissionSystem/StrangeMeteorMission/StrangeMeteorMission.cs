@@ -64,7 +64,7 @@ namespace Mikrocosmos
             }
         }
 
-        protected override void OnMissionStop(bool runOutOfTime) {
+        protected override int OnMissionStop(bool runOutOfTime) {
             float totalFillForTeam1 = 0, totalFillForTeam2 = 0;
             foreach (StrangeMeteorViewController meteor in activeMeteors) {
                 totalFillForTeam1 += meteor.ActualFill;
@@ -91,6 +91,8 @@ namespace Mikrocosmos
                 })).ToList();
                 AnnounceWinners(winners, winningTeam);
             }
+
+            return winningTeam;
         }
     }
 }

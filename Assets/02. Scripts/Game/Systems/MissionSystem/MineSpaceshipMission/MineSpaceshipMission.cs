@@ -43,7 +43,9 @@ namespace Mikrocosmos
             
         }
 
+        private int winningTeam = -1;
         private void OnReachDestination(OnMinespaceshipReachDestination e) {
+            winningTeam = e.WinningTeam;
             if (e.WinningTeam != -1)
             {
                 List<PlayerMatchInfo> matchInfo =
@@ -60,13 +62,15 @@ namespace Mikrocosmos
             StopMission(false);
         }
 
-        protected override void OnMissionStop(bool runOutOfTime) {
+        protected override int OnMissionStop(bool runOutOfTime) {
             if (runOutOfTime) {
                 ClientMessagerForDestroyedObjects.Singleton.ServerSpawnParticleOnClient(
                     spaceMinecraftInstance.transform.position, 0);
                 NetworkServer.Destroy(spaceMinecraftInstance);
               
             }
+
+            return winningTeam;
         }
     }
 }

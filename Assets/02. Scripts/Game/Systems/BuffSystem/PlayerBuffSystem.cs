@@ -146,7 +146,9 @@ namespace Mikrocosmos
         private void OnServerSpaceshipOverweight(OnServerSpaceshipOverweight e) {
             if (e.Spaceship == gameObject && !buffSystem.HasBuff<OverweightDeBuff>()) {
                 buffSystem.AddBuff<OverweightDeBuff>(new OverweightDeBuff(1,
-                    UntilAction.Allocate(() => rigidbody.mass < 80)));
+                    UntilAction.Allocate(() => {
+                        return rigidbody==null || rigidbody.mass < 80;
+                    })));
             }
         }
 

@@ -6814,7 +6814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 1, g: 1, b: 1, a: 1}
-  padding: 60
+  padding: {x: 0, y: 780}
 --- !u!114 &872660648
 MonoBehaviour:
   m_ObjectHideFlags: 0

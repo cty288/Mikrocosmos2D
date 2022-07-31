@@ -31,6 +31,7 @@ namespace Mikrocosmos
         public GameObject MissionGameObject;
         public string MissionName;
         public bool Finished;
+        public int WinningTeam;
     }
 
     public struct OnMissionStart {
@@ -51,6 +52,8 @@ namespace Mikrocosmos
   
     public struct ClientMissionReadyToStartInfo {
         public string MissionName;
+
+        public float waitTIme;
         /*
         public string MissionDescriptionLocalized;
         public string MissionNameLocalized;*/
@@ -90,55 +93,24 @@ namespace Mikrocosmos
     }
 
     public interface IGameMissionSystem : ISystem {
-
+        IMission StartMission(float waitTime);
+        void StopMission(IMission mission);
     }
-    public class GameMissionSystem : AbstractNetworkedSystem, IGameMissionSystem {
+    public class GameMissionSystem : AbstractMissionSystem {
         [SerializeField] private int averageGapTimeBetweenMissions = 120;
-        [SerializeField] private List<GameObject> allMissions;
-
-        private IGameProgressSystem progressSystem;
-        private IRoomMatchSystem roomMatchSystem;
+      
         private int nextMissionRemainingTime = 0;
-        private IGlobalTradingSystem globalTradingSystem;
-        
-        private void Awake() {
-            Mikrocosmos.Interface.RegisterSystem<IGameMissionSystem>(this);
-        }
+
+
+       
 
         public override void OnStartServer() {
             base.OnStartServer();
-            progressSystem = this.GetSystem<IGameProgressSystem>();
-            this.globalTradingSystem = this.GetSystem<IGlobalTradingSystem>();
-            allMissions.Shuffle();
-            
             StartCoroutine(WaitToSwitchMission());
-            roomMatchSystem = this.GetSystem<IRoomMatchSystem>();
-            this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
-            this.RegisterEvent<OnMissionAnnounceWinners>(OnMissionAnnounceWinners)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
 
         }
 
-        [ServerCallback]
-        private void OnMissionAnnounceWinners(OnMissionAnnounceWinners e) {
-            List<NetworkMainGamePlayer> allPlayers = this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfo(true)
-                .Select(info => info.Identity.connectionToClient.identity.GetComponent<NetworkMainGamePlayer>())
-                .ToList();
-
-            Dictionary<NetworkMainGamePlayer, List<string>> allPlayersWithLocalizedRewards = RewardsFactory.Singleton.AssignRewardsToPlayers(allPlayers, e.Winners, e.Difficulty, e.WinningTeam);
-            int difficulty = (Mathf.CeilToInt(e.Difficulty / 0.333334f));
-            
-            List<string> winnerNames = new List<string>();
-            foreach (NetworkMainGamePlayer winner in e.Winners) {
-                winnerNames.Add(winner.matchInfo.Name);
-            }
-
-            foreach (NetworkMainGamePlayer player in allPlayersWithLocalizedRewards.Keys) {
-                TargetNotifyRewardsGenerated(player.connectionToClient, allPlayersWithLocalizedRewards[player], winnerNames,
-                    e.MissionNameLocalizedKey, difficulty);
-            }
-        }
-
+        
       
         private IEnumerator WaitToSwitchMission() {
             while (progressSystem.GameState!= GameState.InGame) {
@@ -147,116 +119,29 @@ namespace Mikrocosmos
             
             nextMissionRemainingTime = Random.Range(averageGapTimeBetweenMissions - 20,
                 averageGapTimeBetweenMissions + 21);
+            
             RpcNotifyClientNextMissionCountdown(globalTradingSystem.GetRelativeAffinityWithTeam(1),
                 nextMissionRemainingTime + 10);
             yield return new WaitForSeconds(nextMissionRemainingTime);
            
       
-            if (progressSystem.GetGameProgress() < 1) {
+            if (progressSystem.GameProgress < 1 && ongoingMissions.Count==0) {
                 if (allMissions.Count > 0) {
-                    GameObject nextMission = Instantiate(allMissions[0]);
-                    allMissions.RemoveAt(0);
-                    NetworkServer.Spawn(nextMission);
-                    IMission mission = nextMission.GetComponent<IMission>();
-                    RpcNotifyMissionStart(new ClientMissionReadyToStartInfo() {
-                        MissionName = mission.MissionName
-                    });
-                    yield return new WaitForSeconds(10);
-                    SwitchToMission(mission, nextMission);
+                    StartMission(10);
                 }
             }
-            
         }
-
-       
-
         
-       
 
+    
 
-        private void SwitchToMission(IMission mission, GameObject missionGameObject) {
-            StartCoroutine(MissionMaximumTimeCheck(mission, missionGameObject));
-            mission.OnMissionStart(progressSystem.GetGameProgress(), roomMatchSystem.GetActivePlayerNumber());
-            this.SendEvent<OnMissionStart>(new OnMissionStart(){MissionName = mission.MissionName});
-            RpcNotifyMissionAlreadytart(new ClientMissionStartInfo() {
-                MissionDescriptionLocalizedKey = mission.MissionDescriptionLocalizedKey(),
-                MissionMaximumTime = mission.MaximumTime,
-                MissionName = mission.MissionName,
-                MissionNameLocalizedKey = mission.MissionNameLocalizedKey(),
-                MissionInfoBarAssetName = mission.MissionBarAssetName,
-                MissionSliderAssetName = mission.MissionSliderBGName
-            });
-        }
-
-        private IEnumerator MissionMaximumTimeCheck(IMission mission, GameObject missionGameObject) {
-            if (mission.MaximumTime > 0) {
-                yield return new WaitForSeconds(mission.MaximumTime);
-                if (!mission.IsFinished) {
-                    mission.StopMission(true);
-                }
-            }
-        }
-
-
-        private void OnMissionStop(OnMissionStop e) {
-            RpcNotifyMissionStop(new ClientMissionStopInfo() {MissionName = e.Mission.MissionName});
-            if (progressSystem.GetGameProgress() < 1) {
+        protected override void OnMissionStopped(OnMissionStop e) {
+            if (progressSystem.GameProgress < 1) {
                 StartCoroutine(WaitToSwitchMission());
             }
         }
         
-
-        [ClientRpc]
-        private void RpcNotifyMissionStart(ClientMissionReadyToStartInfo info) {
-            Debug.Log($"Client Mission Start Info: {info.MissionName}");
-            this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage() {
-                Name = info.MissionName,
-                Title = Localization.Get("GAME_MISSION_UPCOMING"),
-                RemainingTime = 10,
-                AutoDestroyWhenTimeUp = false,
-                ShowRemainingTime = true,
-                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
-                
-            });
-
-            //this.GetSystem<IAudioSystem>().PlaySound("MissionUpcoming", SoundType.Sound2D);
-        }
-
-        [ClientRpc]
-        private void RpcNotifyMissionAlreadytart(ClientMissionStartInfo info)
-        {
-            this.GetSystem<IClientInfoSystem>().AddOrUpdateInfo(new ClientInfoMessage()
-            {
-                Name = info.MissionName,
-                Title = Localization.Get(info.MissionNameLocalizedKey),
-                Description = Localization.Get(info.MissionDescriptionLocalizedKey),
-                RemainingTime = info.MissionMaximumTime,
-                AutoDestroyWhenTimeUp = false,
-                ShowRemainingTime = true,
-                InfoElementPrefabAssetName = InfoElementPrefabNames.ICON_INFO_NORMAL,
-                InfoElementIconAssetName = info.MissionName + "InfoIcon",
-                InfoContainerSpriteAssetName = info.MissionInfoBarAssetName,
-                InfoContainerSliderAssetName = info.MissionSliderAssetName
-            });
-        }
-
-        [ClientRpc]
-        private void RpcNotifyMissionStop(ClientMissionStopInfo info) {
-            this.GetSystem<IClientInfoSystem>().StopInfo(info.MissionName);
-        }
-
-        [TargetRpc]
-        private void TargetNotifyRewardsGenerated(NetworkConnection conn, List<string> rewardNames, List<string> winnerNames, string missionNameLocalizedKey,
-            int difficultyLevel) {
-            this.SendEvent<OnClientRewardsGeneratedForMission>(new OnClientRewardsGeneratedForMission() {
-                DifficultyLevel = difficultyLevel,
-                MissionNameLocalized = Localization.Get(missionNameLocalizedKey),
-                RewardNames = rewardNames,
-                WinnerNames = winnerNames
-            });
-        }
-
-
+        
         [ClientRpc]
         private void RpcNotifyClientNextMissionCountdown(float currentTeam1Affinity, float time) {
             this.SendEvent<OnClientNextCountdown>(new OnClientNextCountdown() {

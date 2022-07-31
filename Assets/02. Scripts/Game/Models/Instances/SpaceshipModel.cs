@@ -38,6 +38,13 @@ namespace Mikrocosmos
         public NetworkIdentity Killer;
     }
 
+    public struct OnPlayerTakeDamage
+    {
+        public NetworkIdentity SpaceshipIdentity;
+        public NetworkIdentity Killer;
+        public int Damage;
+    }
+
     public struct OnClientSpaceshipHooked {
         public NetworkIdentity identity;
         public bool hasAuthority;
@@ -315,6 +322,13 @@ namespace Mikrocosmos
         [ServerCallback]
         public override void OnServerTakeDamage(int oldHealth, NetworkIdentity damageDealer, int newHealth) {
            // int healthReceived = newHealth - oldHealth;
+           if (newHealth < oldHealth) {
+               this.SendEvent<OnPlayerTakeDamage>(new OnPlayerTakeDamage() {
+                   Killer = damageDealer,
+                   SpaceshipIdentity = netIdentity,
+                   Damage = oldHealth - newHealth
+               });
+           }
            if (newHealth <= 0 && oldHealth> 0) {
                this.SendEvent<OnSpaceshipRequestDropItems>(new OnSpaceshipRequestDropItems() {
                    NumberItemRequest = 99999,

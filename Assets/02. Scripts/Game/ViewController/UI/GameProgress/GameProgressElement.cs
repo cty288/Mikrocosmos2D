@@ -25,7 +25,7 @@ namespace Mikrocosmos
         }
 
         public void StartProgress(float duration) {
-            transform.sizeDelta = new Vector2((1320f/gameProgressSystem.MaximumGameTime/60f) * duration, transform.sizeDelta.y);
+            transform.sizeDelta = new Vector2((1320f/12/60f) * duration, transform.sizeDelta.y);
             fillTween = slider.DOValue(1, duration).SetEase(Ease.Linear);
             fillImage = slider.fillRect.GetComponent<Image>();
         }

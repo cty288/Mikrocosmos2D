@@ -112,7 +112,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 1
   visible: 0
-  m_AssetId: 
+  m_AssetId: d800faf3a00e8ef4cbfd1b31fa7237f6
   hasSpawned: 0
 --- !u!1 &2802125479658402463
 GameObject:
@@ -145,7 +145,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2802125480154994508}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2802125479658402461
 MonoBehaviour:
@@ -163,11 +163,11 @@ MonoBehaviour:
   syncInterval: 0.1
   <GameState>k__BackingField: 0
   gameStartCountdown: 3
+  finalCountDown: 60
+  categoryWinningTypes: 00000000010000000200000003000000
   globalTimerUpdateFrequencyInSeconds: 60
   maximumGameTime: 12
-  finalCountDown: 60
   finalCountdownMoneyThresholdPerPlayer: 1500
-  categoryWinningTypes: 00000000010000000200000003000000
 --- !u!114 &2802125479658402460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,7 +418,7 @@ Transform:
   - {fileID: 2802125481552046093}
   - {fileID: 2802125481330135661}
   m_Father: {fileID: 2802125480154994508}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2802125479752100681
 MonoBehaviour:
@@ -560,11 +560,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2802125479737562501}
+  - {fileID: 2802125480383470341}
   - {fileID: 2802125479658402450}
   - {fileID: 2802125481340713600}
   - {fileID: 2802125479752100683}
   - {fileID: 2802125480372729192}
-  - {fileID: 2802125480383470341}
   - {fileID: 2802125481660833097}
   - {fileID: 2802125480894274086}
   - {fileID: 2802125480799680977}
@@ -664,7 +664,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2802125480154994508}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2802125480372729198
 MonoBehaviour:
@@ -732,7 +732,7 @@ Transform:
   m_Children:
   - {fileID: 2802125480654404283}
   m_Father: {fileID: 2802125480154994508}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2802125480383470363
 MonoBehaviour:
@@ -748,7 +748,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  averageGapTimeBetweenMissions: 90
   allMissions:
   - {fileID: 9103995473384659610, guid: 2d25986b6b26e2643b2b3003b6c1cad1, type: 3}
   - {fileID: 9103995473384659610, guid: 48f6aee518c82624ab32ba298544ee5b, type: 3}
@@ -756,6 +755,7 @@ MonoBehaviour:
   - {fileID: 9103995473384659610, guid: 771f5301e00c40f479d10efdafbe6ec1, type: 3}
   - {fileID: 9103995473384659610, guid: 48f6aee518c82624ab32ba298544ee5b, type: 3}
   - {fileID: 9103995473384659610, guid: 2d25986b6b26e2643b2b3003b6c1cad1, type: 3}
+  averageGapTimeBetweenMissions: 90
 --- !u!114 &2802125480383470362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1223,7 +1223,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2802125480154994508}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2802125481340713603
 MonoBehaviour:

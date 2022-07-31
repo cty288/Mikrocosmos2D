@@ -57,18 +57,20 @@ namespace Mikrocosmos
         public void StopMission(bool runOutOfTime = true)
         {
             IsFinished = true;
+          
+            int winningTeam = OnMissionStop(runOutOfTime);
             this.SendEvent<OnMissionStop>(new OnMissionStop()
             {
                 Mission = this,
                 MissionGameObject = gameObject,
                 MissionName = MissionName,
-                Finished = runOutOfTime
+                Finished = runOutOfTime,
+                WinningTeam = winningTeam
             });
-            OnMissionStop(runOutOfTime);
             NetworkServer.Destroy(gameObject);
         }
 
-        protected abstract void OnMissionStop(bool runOutOfTime = true);
+        protected abstract int OnMissionStop(bool runOutOfTime = true);
 
 
     }

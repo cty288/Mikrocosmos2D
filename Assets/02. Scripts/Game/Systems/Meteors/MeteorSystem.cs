@@ -43,11 +43,11 @@ namespace Mikrocosmos
                 yield return new WaitForSeconds(meteorSpawnInterval);
 
                 meteorMaximumCount =
-                    Mathf.Clamp(Mathf.RoundToInt(meteorMaximumCountPerPlayer * (1-gameProgressSystem.GetGameProgress())), roomMatchSystem.GetActivePlayerNumber() * meteorMaximumCountPerPlayer/2,
+                    Mathf.Clamp(Mathf.RoundToInt(meteorMaximumCountPerPlayer * (1-gameProgressSystem.GameProgress)), roomMatchSystem.GetActivePlayerNumber() * meteorMaximumCountPerPlayer/2,
                         roomMatchSystem.GetActivePlayerNumber() * meteorMaximumCountPerPlayer * 2);
 
                 meteorSpawnInterval =
-                    (Mathf.RoundToInt(meteorSpawnInterval * (1 + gameProgressSystem.GetGameProgress())));
+                    (Mathf.RoundToInt(meteorSpawnInterval * (1 + gameProgressSystem.GameProgress)));
                
                 if (activeMeteors.Count < meteorMaximumCount) {
                     SpawnMeteor();

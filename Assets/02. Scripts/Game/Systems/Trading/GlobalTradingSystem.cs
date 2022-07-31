@@ -101,6 +101,8 @@ namespace Mikrocosmos
         private float totalAffinityWithTeam1;
         private float totalAffinityWithTeam2;
 
+        protected float relativeAffinityWithTeam1;
+        protected float relativeAffinityWithTeam2;
         private void Awake() {
             Mikrocosmos.Interface.RegisterSystem<IGlobalTradingSystem>(this);
         }
@@ -109,15 +111,28 @@ namespace Mikrocosmos
             base.OnStartServer();
             //register self to the system on the server
 
-            List<IPlanetModel> planetModels = new List<IPlanetModel>();
-
-            GameObject[] allPlanetObjects = GameObject.FindGameObjectsWithTag("Planet");
             
-             allPlanetObjects.Select((o => o.GetComponent<IPlanetModel>())).ToList()
-                    .ForEach(p => planetModels.Add(p));
+            this.RegisterEvent<OnAllPlanetsSpawned>(OnAllPlanetsSpawned).UnRegisterWhenGameObjectDestroyed(gameObject);
+            
 
-             HashSet<GameObject> tempAllGoodsSet = new HashSet<GameObject>();
-             
+            this.RegisterEvent<OnServerPlanetGenerateSellItem>(OnPlanetGenerateSellItem)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnPlanetGenerateBuyItem)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            
+            this.RegisterEvent<OnServerAffinityWithTeam1Changed>(OnAffinityWithTeam1Changed).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnAllPlanetsSpawned(OnAllPlanetsSpawned e) {
+            List<GameObject> allPlanetObjects = e.AllPlanets;
+            
+            List<IPlanetModel> planetModels = new List<IPlanetModel>();
+            allPlanetObjects.Select((o => o.GetComponent<IPlanetModel>())).ToList()
+                .ForEach(p => planetModels.Add(p));
+
+            HashSet<GameObject> tempAllGoodsSet = new HashSet<GameObject>();
+
             foreach (var planet in planetModels) {
                 foreach (var sellItem in planet.SellItemList) {
                     tempAllGoodsSet.Add(sellItem.GoodPrefab);
@@ -125,23 +140,18 @@ namespace Mikrocosmos
             }
 
             allGoodsPrefabsInThisGame = tempAllGoodsSet.ToList();
-             
-             allPlanets = new List<IPlanetTradingSystem>();
-             allPlanetObjects.Select((o => o.GetComponent<IPlanetTradingSystem>())).ToList()
+
+            allPlanets = new List<IPlanetTradingSystem>();
+            allPlanetObjects.Select((o => o.GetComponent<IPlanetTradingSystem>())).ToList()
                 .ForEach(p => allPlanets.Add(p));
-
-            this.RegisterEvent<OnServerPlanetGenerateSellItem>(OnPlanetGenerateSellItem)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
-
-            this.RegisterEvent<OnServerPlanetGenerateBuyingItem>(OnPlanetGenerateBuyItem)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
-
-            this.RegisterEvent<OnServerAffinityWithTeam1Changed>(OnAffinityWithTeam1Changed).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
         private void OnAffinityWithTeam1Changed(OnServerAffinityWithTeam1Changed e) {
             totalAffinityWithTeam1 += e.ChangeAmount;
             totalAffinityWithTeam2 -= e.ChangeAmount;
+
+            relativeAffinityWithTeam1 = CalculateRelativeAffinityWithTeam(1);
+            relativeAffinityWithTeam2 = CalculateRelativeAffinityWithTeam(2);
         }
 
         private void OnPlanetGenerateBuyItem(OnServerPlanetGenerateBuyingItem e) {
@@ -222,7 +232,7 @@ namespace Mikrocosmos
             return totalAffinityWithTeam2;
         }
 
-        public float GetRelativeAffinityWithTeam(int team) {
+        protected float CalculateRelativeAffinityWithTeam(int team) {
             float relativeAffinityWithTeam1 = 0;
             foreach (var planet in allPlanets) {
                 relativeAffinityWithTeam1 += planet.GetAffinityWithTeam(1);
@@ -235,6 +245,13 @@ namespace Mikrocosmos
             }
 
             return 1 - relativeAffinityWithTeam1;
+        }
+        public float GetRelativeAffinityWithTeam(int team) {
+            if (team == 1) {
+                return relativeAffinityWithTeam1;
+            }
+
+            return relativeAffinityWithTeam2;
         }
 
         /// <summary>

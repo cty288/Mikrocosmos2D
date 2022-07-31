@@ -12,7 +12,7 @@ namespace Mirror
     public class NetworkPingDisplay : MonoBehaviour
     {
         public Color color = Color.white;
-        public int padding = 2;
+        public Vector2 padding = new Vector2(2,2);
         int width = 150;
         int height = 25;
 
@@ -23,7 +23,7 @@ namespace Mirror
 
             // show rtt in bottom right corner, right aligned
             GUI.color = color;
-            Rect rect = new Rect(Screen.width - width - padding, Screen.height - height - padding, width, height);
+            Rect rect = new Rect(Screen.width - width - padding.x, Screen.height - height - padding.y, width, height);
             GUIStyle style = GUI.skin.GetStyle("Label");
             style.alignment = TextAnchor.MiddleRight;
             GUI.Label(rect, $"RTT: {Math.Round(NetworkTime.rtt * 1000)}ms", style);

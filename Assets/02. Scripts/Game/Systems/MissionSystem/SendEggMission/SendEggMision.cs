@@ -65,7 +65,7 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        protected override void OnMissionStop(bool runOutOfTime) {
+        protected override int OnMissionStop(bool runOutOfTime) {
             if (winningTeam != -1 && !runOutOfTime) {
                 List<PlayerMatchInfo> matchInfo =
                     this.GetSystem<IRoomMatchSystem>().ServerGetAllPlayerMatchInfoByTeamID(winningTeam);
@@ -75,7 +75,9 @@ namespace Mikrocosmos
                 })).ToList();
                 AnnounceWinners(winners, winningTeam);
             }
-           
+
+            return winningTeam;
+
         }
 
         [ClientRpc]

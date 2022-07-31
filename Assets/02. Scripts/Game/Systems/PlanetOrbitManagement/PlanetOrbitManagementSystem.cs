@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
 using Mirror;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -23,11 +24,16 @@ namespace Mikrocosmos
         public List<GameObject> FixedPlanets;
         public OrbitalInfo OrbitalInfo;
     }
+
+    public struct OnAllPlanetsSpawned {
+        public List<GameObject> AllPlanets;
+    }
     public class PlanetOrbitManagementSystem : AbstractNetworkedSystem {
         [SerializeField] private List<OrbitalGroup> orbitalGroups;
         [SerializeField] private float minimumAngle = 50;
         [SerializeField] private List<GameObject> allAvailablePlanets;
-        
+
+        private List<GameObject> allPlanets = new List<GameObject>();
 
         private void Awake() {
             //iterate through fixPlanets in each orbital group and remove them from the allAvailablePlanets list
@@ -74,8 +80,11 @@ namespace Mikrocosmos
                         planetViewController.OrbitalProgress = angle;
                     }
                     NetworkServer.Spawn(planet);
+                    allPlanets.Add(planet);
                 }
             }
+
+            this.SendEvent<OnAllPlanetsSpawned>(new OnAllPlanetsSpawned(){AllPlanets = allPlanets});
         }
     }
 }

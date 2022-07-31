@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MikroFramework.Architecture;
+using MikroFramework.Event;
 using MikroFramework.ResKit;
 using MikroFramework.Singletons;
 using Polyglot;
@@ -9,14 +11,30 @@ using UnityEngine.U2D;
 
 namespace Mikrocosmos
 {
-    public  class DescriptionFactory : MonoMikroSingleton<DescriptionFactory> {
+    public  class DescriptionFactory : MonoMikroSingleton<DescriptionFactory>, IController {
 
         private ResLoader resLoader;
+        protected string lastGoodsName = "";
         private void Awake() {
             ResLoader.Create((loader => resLoader = loader));
+            this.RegisterEvent<OnDescriptionRemoved>(OnDescriptionRemoved).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        private void OnDescriptionRemoved(OnDescriptionRemoved e) {
+            if (e.Type == DescriptionType.Item) {
+                lastGoodsName = "";
+            }
+        }
+
+        protected override void OnBeforeDestroy() {
+            base.OnBeforeDestroy();
+            resLoader.ReleaseAllAssets();
         }
 
         public DescriptionItem GetGoodsDescriptionItem(string prefabAssetName, GoodsRarity rarity, string goodsName, string description, string hintGameObjectPrefabAssetName) {
+            if (lastGoodsName == goodsName) {
+                return null;
+            }
             GameObject spawnedDescriptionPrefab = null;
            
             spawnedDescriptionPrefab = resLoader.LoadSync<GameObject>("description", prefabAssetName);
@@ -43,14 +61,19 @@ namespace Mikrocosmos
                     descriptionPanel.SetInfo(sprite, nameLocalized, descriptionLocalized, hintGameObject);
                     DescriptionItem descriptionItem = new DescriptionItem()
                         { DescriptionType = DescriptionType.Item, SpawnedDescriptionPanel = descriptionPanel };
-                   
+                    lastGoodsName = goodsName;
                     return descriptionItem;
+                    
                 }
 
                 return null;
 
             }
             return null;
+        }
+
+        public IArchitecture GetArchitecture() {
+            return Mikrocosmos.Interface;
         }
     }
 }
