@@ -182,28 +182,7 @@ namespace Mikrocosmos
 
        
 
-        private void HotUpdateItemConfig(GstuSpreadSheet e) {
-
-
-            foreach (GoodsPropertiesItem goodsData in goodsProperties.GoodsDatas) {
-                var cells = e.rows[goodsData.Name];
-                goodsData.TradingProperties.BasicBuyPrice = int.Parse(cells[1].value);
-                goodsData.TradingProperties.BasicSellPrice = int.Parse(cells[2].value);
-                goodsData.TradingProperties.Rarity = (GoodsRarity) Enum.Parse(typeof(GoodsRarity), cells[3].value);
-                goodsData.UseableProperties.CanBeUsed = bool.Parse(cells[4].value);
-                goodsData.UseableProperties.UseMode = (ItemUseMode)Enum.Parse(typeof(ItemUseMode), cells[5].value);
-                goodsData.UseableProperties.UseFrequency = float.Parse(cells[6].value);
-                goodsData.UseableProperties.MaxDurability = int.Parse(cells[7].value);
-                goodsData.Damage = int.Parse(cells[8].value);
-                goodsData.SelfMass = float.Parse(cells[9].value);
-                goodsData.AdditionalMassWhenHooked = float.Parse(cells[10].value);
-                goodsData.DroppableFromBackpack = bool.Parse(cells[11].value);
-                goodsData.CanAbsorbToBackpack = bool.Parse(cells[12].value);
-                goodsData.CanBeAddedToInventory = bool.Parse(cells[13].value);
-            }
-
-            goodsPropertiesTable.Add(goodsProperties.GoodsDatas);
-        }
+       
 
         public GoodsPropertiesItem FindGoodsPropertiesByPrefabName(string name) {
             IEnumerable<GoodsPropertiesItem> results = goodsPropertiesTable.NameIndex.Get(name);

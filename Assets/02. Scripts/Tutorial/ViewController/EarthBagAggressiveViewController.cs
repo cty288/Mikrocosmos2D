@@ -39,6 +39,10 @@ namespace Mikrocosmos
         }
 
 
+        protected override DescriptionItem GetDescription() {
+            return null;
+        }
+
         protected override void Update() {
             base.Update();
             if (isClient) {

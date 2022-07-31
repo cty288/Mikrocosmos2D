@@ -43,6 +43,10 @@ namespace Mikrocosmos
             this.transform.position += new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
         }
 
+        protected override DescriptionItem GetDescription() {
+            return null;
+        }
+
         private void OnEntityTakeDamage(OnEntityTakeDamage e)
         {
             if (e.Entity == Model) {

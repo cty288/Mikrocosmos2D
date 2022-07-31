@@ -4,17 +4,31 @@ using System.Collections.Generic;
 using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
+using MikroFramework.ResKit;
 using MikroFramework.TimeSystem;
 using Mirror;
+using Polyglot;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
+using UnityEngine.U2D;
 
 namespace Mikrocosmos
 {
+    public static class DescriptionLayoutFinder {
+
+        public static GameObject cashedLayout = null;
+        public static GameObject GetLayout() {
+            if (cashedLayout) {
+                return cashedLayout;
+            }
+            cashedLayout = GameObject.FindGameObjectWithTag("DescriptionLayout");
+            return cashedLayout;
+        }
+    }
     public abstract class AbstractGoodsViewController : AbstractCanCreateShadeEntity, IGoodsViewController, ICanBeMaskedViewController {
 
-      
+        private ResLoader resLoader;
         private ShadowCaster2D shadeCaster;
 
         [SerializeField] private Material buyMaterial;
@@ -36,6 +50,7 @@ namespace Mikrocosmos
         {
             base.OnStartClient();
             this.GetComponent<SpriteRenderer>().enabled = false;
+            ResLoader.Create((loader => resLoader = loader));
             this.GetSystem<ITimeSystem>().AddDelayTask(0.1f, () => {
                 if (this) {
                     this.GetComponent<SpriteRenderer>().enabled = true;
@@ -52,6 +67,12 @@ namespace Mikrocosmos
          
             ClientUpdateCanBeMasked();
         
+        }
+
+        private void OnDestroy() {
+            if (resLoader != null) {
+                resLoader.ReleaseAllAssets();
+            }
         }
 
         private void OnClientBuyGoods(OnClientGoodsTransactionStatusChanged e) {
@@ -148,38 +169,41 @@ namespace Mikrocosmos
             return false;
         }
 
-        /*
-        private void OnTriggerStay2D(Collider2D col) {
-            if (isServer) {
-                if (this.GetSystem<IGameProgressSystem>().GameState != GameState.InGame) {
-                    return;
-                }
-                if (col.gameObject.CompareTag("PlayerAbsorbTrigger")) {
-                    if (GoodsModel.AbsorbedToBackpack && !waitingToCheckAbsorbing && Model.HookState == HookState.Freed   && GoodsModel.TransactionFinished && !absorbing)
-                    {
-                        absorbSpaceship = col.transform.parent.gameObject;
-                        if (absorbSpaceship.TryGetComponent<IPlayerInventorySystem>(out var playerInventorySystem))
-                        {
-                            if (playerInventorySystem.ServerCheckCanAddToBackpack(GoodsModel, out var slot)) {
-                                waitingToCheckAbsorbing = true;
-                                this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
-                                    waitingToCheckAbsorbing = false;
-                                    if ( this && !absorbing)
-                                    {
-
-                                        if (Mathf.Abs(Vector2.Distance(transform.position, absorbSpaceship.transform.position)) <= 20)
-                                        {
-                                            absorbing = true;
-                                        }
-                                    }
-                                });
-                            }
-                        }
-
-                    }
-                }
+        [ClientCallback]
+        protected override DescriptionItem GetDescription() {
+            string prefabAssetName = "";
+            if (GoodsModel.GoodRarity == GoodsRarity.RawResource) {
+                prefabAssetName = "DescriptionPanel_Raw";
             }
-        }*/
+            else {
+                prefabAssetName = "DescriptionPanel_General";
+            }
+
+            DescriptionItem item = DescriptionFactory.Singleton.GetGoodsDescriptionItem(prefabAssetName,
+                GoodsModel.GoodRarity,
+                GoodsModel.Name, GetDescriptionText(), GetHintAssetName());
+
+            if (item != null) {
+                OnDescriptionGenerated(item);
+            }
+
+            return item;
+        }
+
+        [ClientCallback]
+        protected virtual DescriptionItem OnDescriptionGenerated(DescriptionItem descriptionItem) {
+            return descriptionItem;
+        }
+
+        [ClientCallback]
+        protected virtual string GetDescriptionText() {
+            return Localization.Get($"DESCRIPTION_{Model.Name}");
+        }
+
+        [ClientCallback]
+        protected virtual string GetHintAssetName() {
+            return "LeftClick";
+        }
 
         protected override void OnCollisionEnter2D(Collision2D collision) {
             base.OnCollisionEnter2D(collision);

@@ -89,6 +89,8 @@ namespace Mikrocosmos
             rigidbody.velocity = Vector2.zero;
         }
 
+       
+
         public override void OnStartServer() {
             base.OnStartServer();
             poolable = GetComponent<PoolableNetworkedGameObject>();
@@ -148,6 +150,11 @@ namespace Mikrocosmos
                 DestroySelf();
             }
         }
+
+        protected override DescriptionItem GetDescription() {
+            return null;
+        }
+
         [ServerCallback]
         protected virtual void OnServerSpaceshipHit(int damage, GameObject spaceship) {
 

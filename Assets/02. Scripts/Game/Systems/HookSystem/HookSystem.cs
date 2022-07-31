@@ -175,6 +175,7 @@ namespace Mikrocosmos {
                             HookedItem = nextItem.GetComponent<IHookableViewController>();
                             HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                             HookedItem.Model.TryHook(netIdentity);
+                           
                             HookedItem.OnEntitySwitched(true);                            
                             animator.animator.SetBool("Hooking", true);
                         }
@@ -248,6 +249,7 @@ namespace Mikrocosmos {
                     HookedItem = nextItem.GetComponent<IHookableViewController>();
                     HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                     HookedItem.Model.TryHook(netIdentity);
+                  
                     if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
                         HookedItem.OnEntitySwitched(true, 0.51f);
                     }
@@ -453,6 +455,7 @@ namespace Mikrocosmos {
                         HookedItem = nextItem.GetComponent<IHookableViewController>();
                         HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
                         HookedItem.Model.TryHook(netIdentity);
+                      
                         HookedItem.OnEntitySwitched(true);
                         if (oldIdentity) {
                           //  animator.SetTrigger("SwitchItem");
@@ -484,7 +487,8 @@ namespace Mikrocosmos {
                             model.OnItemStopUsed();
                         }
                     }
-                    
+                  
+
                     oldIdentity.GetComponent<IHookableViewController>().OnEntitySwitched(false);
                     //NetworkServer.UnSpawn(oldIdentity.gameObject);
                     //oldIdentity.gameObject.SetActive(false);
@@ -710,7 +714,10 @@ namespace Mikrocosmos {
 
                         UpdateHookCollisions(false);
                         model.OnServerHooked();
-
+                        if (HookedItem != null) {
+                            HookedItem.OnServerHooked();
+                        }
+                       
                         this.model.ServerUpdateMass();
                         return true;
                     }

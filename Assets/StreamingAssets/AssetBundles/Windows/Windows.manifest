@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2790286922
+CRC: 1132078578
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -17,3 +17,10 @@ AssetBundleManifest:
     Info_4:
       Name: assets/goods_inventory
       Dependencies: {}
+    Info_5:
+      Name: assets/fonts
+      Dependencies: {}
+    Info_6:
+      Name: description
+      Dependencies:
+        Dependency_0: assets/fonts

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.Architecture;
@@ -33,11 +34,15 @@ namespace Mikrocosmos
         private void TargetOnHookIdentityChanged(string newHookName)
         {
             if (hasAuthority) {
-                this.SendEvent<OnClientHookIdentityChanged>(new OnClientHookIdentityChanged()
-                {
+                this.SendEvent<OnClientHookIdentityChanged>(new OnClientHookIdentityChanged() {
                     NewHookItemName = newHookName
                 });
                 ClientHookedItemName.Value = newHookName;
+                if (String.IsNullOrEmpty(newHookName)) {
+                    this.SendEvent<OnDescriptionRemoved>(new OnDescriptionRemoved() {
+                        Type  = DescriptionType.Item
+                    });
+                }
             }
            
         }

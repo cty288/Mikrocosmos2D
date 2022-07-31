@@ -131,6 +131,28 @@
       ]
     },
     {
+      "AssetName": "description",
+      "MD5": "f2473728b3585e0761a5060a099377ae",
+      "FileSize": 2136.832,
+      "assetDatas": [
+        {
+          "Name": "DescriptionPanel_General",
+          "OwnerBundleName": "description",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "DescriptionPanel_Raw",
+          "OwnerBundleName": "description",
+          "AssetType": "UnityEngine.GameObject"
+        },
+        {
+          "Name": "LeftClick",
+          "OwnerBundleName": "description",
+          "AssetType": "UnityEngine.GameObject"
+        }
+      ]
+    },
+    {
       "AssetName": "info",
       "MD5": "965108fa5a8e70fadd2e3d4842470a17",
       "FileSize": 224.80957,
@@ -416,9 +438,21 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "83e7870eb4978d71c30ca3ae9c0e2522",
-      "FileSize": 1.67675781,
+      "MD5": "73efd32d631b09c2350ff8c3753a5d59",
+      "FileSize": 1.75292969,
       "assetDatas": []
+    },
+    {
+      "AssetName": "assets/fonts",
+      "MD5": "b8f53b9590b1dc15319406a9e9c7edda",
+      "FileSize": 9346.634,
+      "assetDatas": [
+        {
+          "Name": "SourceHanSansHW-VF",
+          "OwnerBundleName": "assets/fonts",
+          "AssetType": "TMPro.TMP_FontAsset"
+        }
+      ]
     },
     {
       "AssetName": "assets/goods_inventory",

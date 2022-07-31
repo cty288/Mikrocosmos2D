@@ -41,7 +41,7 @@ Material:
     - _LineDisplacement: 2.01
     - _LineSpeed: 11.08
     - _Scale: 1.01
-    - _Strength: 0.5
+    - _Strength: 0
     - _WaveAmount: 25
     - _WaveDisplacement: 3.23
     - _WaveSpeed: 25

@@ -50,6 +50,10 @@ namespace Mikrocosmos
             transform.localScale = new Vector3(scale, scale, scale);
         }
 
+        protected override DescriptionItem GetDescription() {
+            return null;
+        }
+
         protected override void Update() {
             base.Update();
             if (isServer) {

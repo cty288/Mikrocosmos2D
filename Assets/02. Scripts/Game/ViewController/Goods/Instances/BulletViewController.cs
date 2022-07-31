@@ -33,4 +33,8 @@ public class BulletViewController : BasicEntityViewController {
             }
         }
     }
+
+    protected override DescriptionItem GetDescription() {
+        return null;
+    }
 }

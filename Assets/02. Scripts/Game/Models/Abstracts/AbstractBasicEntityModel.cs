@@ -101,6 +101,8 @@ namespace Mikrocosmos
             return false;
         }
 
+       
+
         [field: SerializeField] public bool canDealMomentumDamage { get; set; } = true;
 
 
@@ -136,7 +138,7 @@ namespace Mikrocosmos
         protected virtual void OnServerBeforeUnHooked(bool isUnhookedByHookButton) {
 
         }
-
+    
         [ServerCallback]
         public virtual void OnServerHooked() {
 
@@ -261,10 +263,11 @@ namespace Mikrocosmos
        // private LayerMask clientOriginalLayer;
         protected virtual void OnHookStateChanged(HookState oldState, HookState newState) {
             if (newState == HookState.Hooked) {
-               
-
                 //gameObject.layer = LayerMask.NameToLayer("ClientHookedItem");
                 OnClientHooked();
+                if (HookedByIdentity&& HookedByIdentity.hasAuthority) {
+                    OnOwnerHooked();
+                }
             }
 
             if (newState == HookState.Freed)
@@ -276,9 +279,10 @@ namespace Mikrocosmos
             }
         }
 
-        
-
       
+        protected virtual void OnOwnerHooked() {
+
+        }
         public abstract void OnClientHooked();
         
         

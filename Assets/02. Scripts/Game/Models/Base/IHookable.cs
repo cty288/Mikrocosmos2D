@@ -39,8 +39,11 @@ namespace Mikrocosmos
         bool TryHook(NetworkIdentity hookedBy);
 
         void OnServerHooked();
-         
-        bool canDealMomentumDamage { get; set; }
+
+       
+
+
+       bool canDealMomentumDamage { get; set; }
 
         /// <summary>
         /// This should only called by the hook

@@ -13,6 +13,10 @@ using NetworkTransform = Mirror.NetworkTransform;
 
 namespace Mikrocosmos
 {
+
+ 
+
+    
   
 
     /// <summary>
@@ -26,6 +30,7 @@ namespace Mikrocosmos
         public float HookedRotationZOffset { get; }
 
         public void OnEntitySwitched(bool switchTo, float switchedToWaitTime = 0f);
+        public void OnServerHooked();
     }
 
     public interface IHaveMomentumViewController {
@@ -84,24 +89,32 @@ namespace Mikrocosmos
                         if (this) {
                             transform.DOScale(originalScale, 0.3f);
                         }
-                       
                     });
                 }
+
                 else {
                     transform.DOScale(originalScale, 0.3f);
                 }
-               
 
+                if (Model.HookedByIdentity) {
+                    TargetOnHookedOrSwitchedTo(Model.HookedByIdentity.connectionToClient);
+                }
+                //        OnServerEntitySwitchedTo();
             }
             else {
                 NetworkServer.UnSpawn(gameObject);
                 gameObject.SetActive(false);
-               // transform.DOScale(Vector3.zero, 0.3f).OnComplete(() =>
-               // {
-                    
-                //});
+              
             }
         }
+
+        public void OnServerHooked() {
+            if (Model.HookedByIdentity) {
+                TargetOnHookedOrSwitchedTo(Model.HookedByIdentity.connectionToClient);
+            }
+        }
+
+
 
 
         protected Rigidbody2D rigidbody;
@@ -109,6 +122,7 @@ namespace Mikrocosmos
         protected NetworkTransform networkTransform;
         protected NetworkRigidbody2D networkRigidbody;
 
+       
 
      
 
@@ -160,34 +174,6 @@ namespace Mikrocosmos
                 }
             }
 
-            /*
-            if (isClientOnly) {
-                if (Model.HookState == HookState.Hooked && Model.HookedByIdentity.hasAuthority) {
-                    networkRigidbody.syncVelocity = false;
-                    networkTransform.syncPosition = false;
-                    networkTransform.syncRotation = false;
-
-                    Transform hookedByTr = Model.HookedByIdentity.transform.Find("HookTransform");
-                    
-                    if (hookedByTr) {
-                        hookedByTr.localPosition = HookedPositionOffset;
-                       
-                       //rigidbody.MovePosition(Vector2.Lerp(transform.position, hookedByTr.position, 20 * Time.fixedDeltaTime));
-                       transform.position = hookedByTr.position;
-                        transform.rotation = Quaternion.Euler(hookedByTr.rotation.eulerAngles +
-                                                                  new Vector3(0, 0, HookedRotationZOffset));
-                    }
-                }
-                else
-                {
-                    networkRigidbody.syncVelocity = true;
-                    networkTransform.syncPosition = true;
-                    networkTransform.syncRotation = true;
-                }
-            }*/
-
-        
-
         }
 
         
@@ -226,7 +212,16 @@ namespace Mikrocosmos
             
         }
 
-        
+        [TargetRpc]
+        protected virtual void TargetOnHookedOrSwitchedTo(NetworkConnection conn) {
+            DescriptionItem description = GetDescription();
+            if (description != null) {
+                this.SendCommand<AddOrUpdateDescriptionCommand>(new AddOrUpdateDescriptionCommand(description));
+            }
+        }
+
+        protected abstract DescriptionItem GetDescription();
+
         IEnumerator NonPhysicsForceCalculation(IDamagable targetModel,Rigidbody2D targetRigidbody) {
             float waitTime = 0.02f;
             Vector2 offset = Vector2.zero;

@@ -114,6 +114,10 @@ namespace Mikrocosmos
         }
 
 
+        protected override DescriptionItem GetDescription() {
+            return null;
+        }
+
         protected override void Update() {
             base.Update();
             if (model.Team1MinusTeam2PlayerDifference != 0) {

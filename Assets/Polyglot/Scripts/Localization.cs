@@ -10,7 +10,7 @@ namespace Polyglot
     [CreateAssetMenu(fileName = "Localization.asset", menuName = "Polyglot Localization")]
     public class Localization : ScriptableObject
     {
-        private const string KeyNotFound = "[{0}]";
+        public const string KeyNotFound = "KEY_NOT_FOUND";
 
         [SerializeField]
         private LocalizationDocument polyglotDocument = null;

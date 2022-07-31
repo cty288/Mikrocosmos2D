@@ -315,5 +315,9 @@ namespace Mikrocosmos
             }
           
         }
+
+        protected override DescriptionItem GetDescription() {
+            return null;
+        }
     }
 }

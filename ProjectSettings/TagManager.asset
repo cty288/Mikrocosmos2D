@@ -18,6 +18,7 @@ TagManager:
   - Origin
   - Team2ValveSpawn
   - Team1ValveSpawn
+  - DescriptionLayout
   layers:
   - Default
   - TransparentFX
