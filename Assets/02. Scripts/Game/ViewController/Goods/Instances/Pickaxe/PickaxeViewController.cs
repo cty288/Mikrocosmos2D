@@ -24,8 +24,11 @@ namespace Mikrocosmos
                 SlotNumber = slotNumber,
                 UsePreviousSprite = true
             });
-        
-          
+            
+        }
+
+        protected override string GetHintAssetName() {
+            return "";
         }
 
         protected override void OnCollisionEnter2D(Collision2D collision) {

@@ -11,39 +11,45 @@ namespace Mikrocosmos
     public class GameProgressElement : AbstractMikroController<Mikrocosmos> {
         private RectTransform transform;
         private Slider slider;
-        private Tween fillTween;
         private Image fillImage;
-        private IGameProgressSystem gameProgressSystem;
+        private Vector2 progressStartEnd = Vector2.zero;
+
+        [SerializeField] private Color[] progressColors;
         private void Awake() {
             transform = GetComponent<RectTransform>();
             slider = GetComponent<Slider>();
-            gameProgressSystem = this.GetSystem<IGameProgressSystem>();
-        }
-
-        private void Start() {
-           
-        }
-
-        public void StartProgress(float duration) {
-            transform.sizeDelta = new Vector2((1320f/12/60f) * duration, transform.sizeDelta.y);
-            fillTween = slider.DOValue(1, duration).SetEase(Ease.Linear);
             fillImage = slider.fillRect.GetComponent<Image>();
         }
-        public void EndProgress(Color targetColor, Action onComplete) {
-            if (fillTween != null) {
-                fillTween.Pause();
-                fillTween.Kill(false);
+
+
+        public void SetUpInfo(float progressStartAt, float progressEndAt) {
+            progressStartEnd = new Vector2(progressStartAt, progressEndAt);
+        }
+
+        public void UpdateProgress(float totalProgress, float affinityWithTeam1) {
+            //total progress is between progressStartEnd.x and progressStartEnd.y, so we need to scale it to 0 and 1
+            float progress = (totalProgress - progressStartEnd.x) / (progressStartEnd.y - progressStartEnd.x);
+            progress = Mathf.Clamp01(progress);
+            slider.DOValue(progress, 0.3f);
+            float a = fillImage.color.a;
+            float scaledAffinity = (affinityWithTeam1 - 0.5f) * 2;
+            if (affinityWithTeam1 < 0.5f) {
+                scaledAffinity = affinityWithTeam1 * 2;
             }
-            if (slider.value < 1f) {
-                slider.DOValue(1, 0.5f).SetEase(Ease.Linear).OnComplete(() => {
-                    fillImage.DOColor(targetColor, 0.7f).OnComplete((() => onComplete?.Invoke()));
-                });
+
+            Color targetColor;
+            //lerp the color between progressColors[0], white, and progressColors[1] according to affinityWithTeam1. When affinityWithTeam1 is 1, the color is progressColors[0], and when affinityWithTeam1 is 0, the color is progressColors[1]
+            if (affinityWithTeam1 > 0.5f) {
+                targetColor = progressColors[0];
+                fillImage.DOColor(Color.Lerp(new Color(1,1,1, a), new Color(targetColor.r, targetColor.g, targetColor.b, a), scaledAffinity), 0.3f);
             }
             else {
-                fillImage.DOColor(targetColor, 0.7f).OnComplete((() => onComplete?.Invoke())); ;
+                targetColor = progressColors[1];
+                fillImage.DOColor(Color.Lerp(new Color(1, 1, 1, a), new Color(targetColor.r, targetColor.g, targetColor.b, a), scaledAffinity), 0.3f);
             }
-            
-            
+
         }
+
+        
     }
 }

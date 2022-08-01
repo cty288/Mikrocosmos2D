@@ -46,6 +46,8 @@ namespace Mikrocosmos
 
         [SerializeField]
         protected SpriteRenderer[] visionAffectedSpritesOnMap;
+
+
         public override void OnStartClient()
         {
             base.OnStartClient();

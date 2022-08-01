@@ -61,8 +61,8 @@ MonoBehaviour:
     - Polyglot.Editor
     - PackageToolsEditor
     - Mirror.Editor
-    - Mirror.CompilerSymbols
     - Mikrocosmos.Editor
+    - Mirror.CompilerSymbols
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

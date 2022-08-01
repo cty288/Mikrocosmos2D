@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 1143647513593684491}
   - component: {fileID: 2776012292038823149}
   - component: {fileID: 2377751096598039479}
-  - component: {fileID: 3487597187530568411}
+  - component: {fileID: -4297147835210946424}
   m_Layer: 0
   m_Name: SpaceMinecart
   m_TagString: Untagged
@@ -407,8 +407,8 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.66, y: 7.68}
   m_Direction: 0
---- !u!60 &3487597187530568411
-PolygonCollider2D:
+--- !u!61 &-4297147835210946424
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -420,7 +420,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0000009536743, y: 0.087031364}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -430,25 +430,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 3.1249924, y: 1.6213436}
-      - {x: 1.735343, y: 2.0999486}
-      - {x: -0.25884002, y: 1.9504815}
-      - {x: -0.97727394, y: 2.2557106}
-      - {x: -3.2319345, y: 1.5280628}
-      - {x: -3.3226795, y: 0.34480476}
-      - {x: -2.3889923, y: 0.7592392}
-      - {x: -2.5551758, y: -0.84882164}
-      - {x: -3.3588476, y: -0.5402832}
-      - {x: -3.0306287, y: -1.9055059}
-      - {x: 0.91910744, y: -2.4833565}
-      - {x: 1.4728012, y: -2.3181267}
-      - {x: 3.233263, y: -1.7516823}
-      - {x: 3.2751884, y: -0.58763313}
-      - {x: 2.3678436, y: -0.69644547}
-      - {x: 2.3151932, y: 0.56490517}
-      - {x: 3.2354078, y: 0.6745147}
+  serializedVersion: 2
+  m_Size: {x: 6.443472, y: 4.40217}
+  m_EdgeRadius: 0
 --- !u!1 &2032012498312585053
 GameObject:
   m_ObjectHideFlags: 0

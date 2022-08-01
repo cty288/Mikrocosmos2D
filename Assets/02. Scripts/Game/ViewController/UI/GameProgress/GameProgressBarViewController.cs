@@ -5,111 +5,128 @@ using DG.Tweening;
 using MikroFramework.Architecture;
 using MikroFramework.Event;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 namespace Mikrocosmos
 {
     public class GameProgressBarViewController : AbstractMikroController<Mikrocosmos> {
         private GameProgressElement ongoingElement = null;
         private HorizontalLayoutGroup layoutGroup;
-        [SerializeField] private Color[] progressBarColors = new Color[3];
-        [SerializeField] private GameObject gameProgressElement = null;
+        private ContentSizeFitter contentSizeFitter;
 
-        private bool canFadeOut = false;
-        private bool faded = false;
-        private float fadeTimer = 8f;
-        private bool fullMapOpening = false;
+        [FormerlySerializedAs("gameProgressElement")] [SerializeField] private GameObject gameProgressElementPrefab = null;
+        [SerializeField] private GameObject gameMissionElementPrefab = null;
+
+        private List<float> gameMissionCutoffPoint = new List<float>();
+        
+        private List<GameProgressElement> gameProgressProgressBars = new List<GameProgressElement>();
+        private List<MissionProgressElement> gameMissionElements = new List<MissionProgressElement>();
+
+        
+
         private void Awake() {
-            this.RegisterEvent<OnClientNextCountdown>(OnNewCountdownGenerated)
+            this.RegisterEvent<OnClientMissionTimeCutoffGenerated>(OnClientMissionTimeCutoffGenerated)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnClientBeginGameCountdownStart>(OnClientBeginGameCountdownStart)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnStandardGameProgressChanged>(OnStandardGameProgressChanged)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnProgressMissionFinished>(OnProgressMissionFinished)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
             layoutGroup = GetComponentInChildren<HorizontalLayoutGroup>(true);
-            this.RegisterEvent<OnFullMapCanvasOpen>(OnFullMapCanvasOpen).UnRegisterWhenGameObjectDestroyed(gameObject);
-            this.RegisterEvent<OnFullMapCanvasClose>(OnFullMapCanvasClosed)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            contentSizeFitter = layoutGroup.GetComponent<ContentSizeFitter>();
+
+        }
+        
+        private void OnProgressMissionFinished(OnProgressMissionFinished e) {
+            if (e.MissionIndex >= gameMissionElements.Count) {
+                return;
+            }
+            MissionProgressElement missionElement = gameMissionElements[e.MissionIndex];
+            missionElement.OnMissionProgressStop(e.WinTeam);
+            missionElement.GetComponent<Animator>().SetTrigger("Stop");
         }
 
-        private void OnFullMapCanvasClosed(OnFullMapCanvasClose obj) {
-            fullMapOpening = false;
-        }
-
-        private void OnFullMapCanvasOpen(OnFullMapCanvasOpen e) {
-            FadeIn();
-            fullMapOpening = true;
-            
-        }
-
-        private void Update() {
-            if (canFadeOut && !fullMapOpening) {
-                fadeTimer -= Time.deltaTime;
-                if (fadeTimer <= 0 && !faded) {
-                    faded = true;
-                    fadeTimer = 8f;
-                    FadeOut();
+        private void OnStandardGameProgressChanged(OnStandardGameProgressChanged e) {
+            if (!e.Info.IsReachMissionPoint && !e.Info.IsReachGameEndPoint) {
+                GameProgressElement progressBar = gameProgressProgressBars[e.Info.NextMissionIndex];
+                progressBar.UpdateProgress(e.Progress, e.Info.Affinity);
+                return;
+            }else {
+                //stop ongoing bar first
+                GameProgressElement ongoingElement = gameProgressProgressBars[e.Info.NextMissionIndex];
+                ongoingElement.GetComponent<Animator>().SetTrigger("End");
+                ongoingElement.UpdateProgress(e.Progress, e.Info.Affinity);
+                if (!e.Info.IsReachGameEndPoint && e.Info.NextMissionIndex < gameMissionElements.Count) { //start next mission
+                    MissionProgressElement missionElement = gameMissionElements[e.Info.NextMissionIndex];
+                    missionElement.GetComponent<Animator>().SetTrigger("Start");
                 }
             }
         }
 
-        private void OnNewCountdownGenerated(OnClientNextCountdown e) {
-            canFadeOut = false;
-            if (ongoingElement) {
-                Color color = e.ShowAffinityForLastTime
-                    ? (e.Team1Affinity >= 0.5f ? progressBarColors[1] : progressBarColors[2])
-                    : progressBarColors[0];
-
-                ongoingElement.EndProgress(color, () => {
-                    ongoingElement = Instantiate(gameProgressElement, layoutGroup.transform).GetComponent<GameProgressElement>();
-                    ongoingElement.transform.SetAsLastSibling();
-                    ongoingElement.StartProgress(e.remainingTime);
-                    StartCoroutine(CheckNeedExpandPanel());
-                });
-            }
-            else {
-                ongoingElement = Instantiate(gameProgressElement, layoutGroup.transform).GetComponent<GameProgressElement>();
-                ongoingElement.transform.SetAsLastSibling();
-                ongoingElement.StartProgress(e.remainingTime);
-                StartCoroutine(CheckNeedExpandPanel());
-            }
-
-            if (e.ShowAffinityForLastTime) {
-                StartCoroutine(ChangeCanFadeOut(10f, true));
-            }
-           
-            StartCoroutine(ChangeCanFadeOut(Mathf.Max(e.remainingTime - 20, 0), false));
+        private void OnClientBeginGameCountdownStart(OnClientBeginGameCountdownStart e) {
+            StartCoroutine(StartFirstProgressBar(e.Time));
         }
 
-        private IEnumerator CheckNeedExpandPanel() {
-            yield return null;
-            RectTransform ongoingTransform = ongoingElement.GetComponent<RectTransform>();
-            if (ongoingTransform.anchoredPosition.x + ongoingTransform.sizeDelta.x/2  >= 1070f) {
-                layoutGroup.childForceExpandWidth = true;
-                layoutGroup.childControlWidth = true;
-                LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
-            }
-        }
-
-        private IEnumerator ChangeCanFadeOut(float time, bool canFade) {
+        private IEnumerator StartFirstProgressBar(float time) {
             yield return new WaitForSeconds(time);
-            canFadeOut = canFade;
-            if (!canFadeOut) {
-                FadeIn();
-            }
+            gameProgressProgressBars[0].GetComponent<Animator>().SetTrigger("Start");
         }
 
-        private void FadeIn() {
-            faded = false;
-            fadeTimer = 8f;
-            Image[] images = GetComponentsInChildren<Image>(true);
-            foreach (Image image in images) {
-                image.DOFade(1, 0.7f);
-            }
+        private void OnClientMissionTimeCutoffGenerated(OnClientMissionTimeCutoffGenerated e) {
+            gameMissionCutoffPoint = e.cutoffs;
+            StartCoroutine(SetupMissionCutoffs(gameMissionCutoffPoint));
+            
         }
 
-        private void FadeOut() {
-            Image[] images = GetComponentsInChildren<Image>(true);
-            foreach (Image image in images)
-            {
-                image.DOFade(0, 0.7f);
+        private IEnumerator SetupMissionCutoffs(List<float> cutoffs) {
+            for (int i = 0; i < cutoffs.Count; i++) {
+                float progressStartAt = i == 0 ? 0 : cutoffs[i - 1];
+                float progressEndAt = cutoffs[i];
+                var progressBarElement = Instantiate(gameProgressElementPrefab, layoutGroup.transform).GetComponent<GameProgressElement>();
+                progressBarElement.transform.SetAsLastSibling();
+                gameProgressProgressBars.Add(progressBarElement);
+                progressBarElement.SetUpInfo(progressStartAt, progressEndAt);
+                yield return null;
+                CorrectLayoutSize();
+
+                var missionElement = Instantiate(gameMissionElementPrefab, layoutGroup.transform).GetComponent<MissionProgressElement>();
+                missionElement.transform.SetAsLastSibling();
+                gameMissionElements.Add(missionElement);
+                yield return null;
+                CorrectLayoutSize();
             }
+          
+
+            //spawn an additional progress bar for the last mission
+            var progressBarElementLast = Instantiate(gameProgressElementPrefab, layoutGroup.transform).GetComponent<GameProgressElement>();
+            progressBarElementLast.transform.SetAsLastSibling();
+            gameProgressProgressBars.Add(progressBarElementLast);
+            progressBarElementLast.SetUpInfo(cutoffs[^1], 1);
+            yield return null;
+            CorrectLayoutSize();
+            yield return null;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
+        }
+
+
+        private void CorrectLayoutSize() {
+            if (contentSizeFitter.horizontalFit == ContentSizeFitter.FitMode.Unconstrained) {
+                return;
+            }
+            //get left of the layout group
+            var rect = layoutGroup.GetComponent<RectTransform>();
+            var left = rect.offsetMin.x;
+            if (left <= 0) {
+                contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+                //set left and right to 0
+                rect.SetLeft(0);
+                rect.SetRight(0);
+            }
+
         }
     }
     

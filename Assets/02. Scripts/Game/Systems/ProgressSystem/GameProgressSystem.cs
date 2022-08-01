@@ -107,7 +107,8 @@ namespace Mikrocosmos
         /// <returns></returns>
         public Vector4 GetGameMapSize();
 
-     
+        
+
         public GameState GameState { get; }
     }
     public class GameProgressSystem : AbstractGameProgressSystem {
@@ -180,5 +181,7 @@ namespace Mikrocosmos
             }
             protected set {}
         }
+
+        
     }
 }

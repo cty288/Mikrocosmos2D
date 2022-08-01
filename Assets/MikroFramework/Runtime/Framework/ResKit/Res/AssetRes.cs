@@ -113,7 +113,7 @@ namespace MikroFramework.ResKit
             }
 
             Asset = null;
-            resLoader.ReleaseAllAssets();
+         //   resLoader.ReleaseAllAssets();
             resLoader = null;
         }
 

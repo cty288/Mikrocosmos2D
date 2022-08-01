@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 8345480255462355403}
   - component: {fileID: -4471552787630732282}
   - component: {fileID: 8892936709293747504}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Metal1Planet
   m_TagString: Planet
   m_Icon: {fileID: 0}
@@ -220,6 +220,7 @@ MonoBehaviour:
   - <GoodPrefab>k__BackingField: {fileID: 2947802309723529383, guid: f7ce9b6a0414bf942a68adbeb7b5315a, type: 3}
     <RealPriceOffset>k__BackingField: 0
   <PlanetType>k__BackingField: 0
+  <Name>k__BackingField: 
 --- !u!114 &8345480255462355403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,9 +239,9 @@ MonoBehaviour:
   sellBubblePrefab: {fileID: 8416530306867068099, guid: 7851bcc193bcb4c438a0fde2e3fba744, type: 3}
   initialProgress: 0
   selfRotationSpeed: 6
-  target: {fileID: 0}
-  speed: 1.3
-  progress: 0
+  <Target>k__BackingField: {fileID: 0}
+  orbitalSpeed: 1.3
+  distance: 0
   x: 60
   z: 1.5
   momentumOffset: 30
@@ -306,6 +307,7 @@ MonoBehaviour:
   - 0.1
   sellItemCount: 1
   buyItemCount: 2
+  sellItemMaxCountdown: 3
   currentBuyItemLists: []
   currentSellItemLists: []
 --- !u!1 &8920545920613749354

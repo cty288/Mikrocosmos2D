@@ -12,14 +12,25 @@ namespace Mikrocosmos
         public ClientProgressInfo Info;
     }
 
+    public struct OnClientMissionTimeCutoffGenerated {
+        public List<float> cutoffs;
+    }
+
+    public struct OnProgressMissionFinished {
+        public int WinTeam;
+        public int MissionIndex;
+    }
+
     public struct ClientProgressInfo {
         public bool IsReachMissionPoint;
         public float Affinity;
+        public int NextMissionIndex;
         public bool IsReachGameEndPoint;
-        public ClientProgressInfo(bool isReachMissionPoint, float affinity, bool isReachGameEndPoint = false) {
+        public ClientProgressInfo(bool isReachMissionPoint, float affinity, int nextMissionIndex, bool isReachGameEndPoint = false) {
             this.IsReachMissionPoint = isReachMissionPoint;
             this.Affinity = affinity;
             this.IsReachGameEndPoint = isReachGameEndPoint;
+            this.NextMissionIndex = nextMissionIndex;
         }
         
     }
@@ -33,8 +44,8 @@ namespace Mikrocosmos
         [SerializeField] private float gameProgressIncreasmentPerTransactionRevenue = 0.00067f;
         [SerializeField] private float gameProgressIncreasmentPerDamageToPlayer = 0.0005f;
 
-     
-      
+        
+        [SerializeField]
         protected List<float> missionStartAtProgress = new List<float>();
 
         protected int MissionCount {
@@ -54,6 +65,8 @@ namespace Mikrocosmos
                 currentGameProgress = value;
             }
         }
+
+     
 
         private IGameMissionSystem gameMissionSystem;
         private IMission ongoingMission = null;
@@ -77,9 +90,14 @@ namespace Mikrocosmos
             this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnPlayerTakeDamage>(OnPlayerTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<OnNetworkedMainGamePlayerConnected>(OnNetworkedMainGamePlayerConnected).UnRegisterWhenGameObjectDestroyed(gameObject);
+            
         }
 
-        
+        private void OnNetworkedMainGamePlayerConnected(OnNetworkedMainGamePlayerConnected e) {
+            TargetOnGameProgressCutOffGenerated(e.connection, missionStartAtProgress);
+        }
+
 
         private void OnPlayerTakeDamage(OnPlayerTakeDamage e) {
            
@@ -108,11 +126,11 @@ namespace Mikrocosmos
                         currentGameProgress = 1;
                         StartFinalCountDown();
                         RpcOnStandardGameProgressChanged(currentGameProgress,
-                            new ClientProgressInfo(false, team1Affinity, true));
+                            new ClientProgressInfo(false, team1Affinity,MissionCount, true));
                     }else {
                         currentGameProgress += rawProgress;
                         RpcOnStandardGameProgressChanged(currentGameProgress,
-                            new ClientProgressInfo(false, team1Affinity));
+                            new ClientProgressInfo(false, team1Affinity, MissionCount));
                     }
                 }
                 else {
@@ -122,14 +140,14 @@ namespace Mikrocosmos
                         lastMissionIndex++;
                       
                         RpcOnStandardGameProgressChanged(currentGameProgress,
-                            new ClientProgressInfo(true, team1Affinity));
+                            new ClientProgressInfo(true, team1Affinity, lastMissionIndex));
                         //TODO: start mission
                         ongoingMission = gameMissionSystem.StartMission(10);
                     }
                     else {
                         currentGameProgress += rawProgress;
                         RpcOnStandardGameProgressChanged(currentGameProgress,
-                            new ClientProgressInfo(false, team1Affinity));
+                            new ClientProgressInfo(false, team1Affinity, lastMissionIndex+1));
                     }
                 }                    
             }
@@ -138,20 +156,31 @@ namespace Mikrocosmos
         private void OnMissionStop(OnMissionStop e) {
             if (e.Mission == ongoingMission) {
                 ongoingMission = null;
-                RpcOnProgressMissionFinished(e.WinningTeam);
+                RpcOnProgressMissionFinished(e.WinningTeam, lastMissionIndex);
             }
         }        
 
         [ClientRpc]
         private void RpcOnStandardGameProgressChanged(float newProgress, ClientProgressInfo info) {
-
+            
             this.SendEvent<OnStandardGameProgressChanged>(new OnStandardGameProgressChanged()
                 {Progress = newProgress, Info = info});
         }
 
         [ClientRpc]
-        private void RpcOnProgressMissionFinished(int winningTeam) {
+        private void RpcOnProgressMissionFinished(int winningTeam, int previousMissionIndex) {
+            this.SendEvent<OnProgressMissionFinished>(new OnProgressMissionFinished() {
+                MissionIndex = previousMissionIndex,
+                WinTeam = winningTeam
+            });
+        }
 
+
+        [TargetRpc]
+        private void TargetOnGameProgressCutOffGenerated(NetworkConnection conn, List<float> missionTimeCutoffs) {
+            this.SendEvent<OnClientMissionTimeCutoffGenerated>(new OnClientMissionTimeCutoffGenerated() {
+                cutoffs = missionTimeCutoffs
+            });
         }
     }
 }

@@ -176,6 +176,8 @@ namespace Mikrocosmos
             return new Vector4(minX, maxX, minY, maxY);
         }
 
+       
+
 
         [ClientRpc]
         protected void RpcOnFinialCountDownStarted(float time)
