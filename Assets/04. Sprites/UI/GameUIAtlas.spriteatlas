@@ -119,6 +119,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 6430572c787ef9649a12e7cbbbc7dc1a, type: 3}
   - {fileID: 21300000, guid: af77213cf56013a419bada3d3b2c3632, type: 3}
   - {fileID: 21300000, guid: be50ac8cae4457f408168e777ced940a, type: 3}
+  - {fileID: 21300000, guid: 5a8ced9cda8de664ea8df801fbd440a4, type: 3}
   - {fileID: 21300000, guid: 094349cc88574874eaa57507fca1c623, type: 3}
   - {fileID: 21300000, guid: 91f25fccf85d5fc46ad4cc94bae2a2c7, type: 3}
   - {fileID: 21300000, guid: b46892dcc920f5a4ca47821fd864b44d, type: 3}
@@ -211,6 +212,7 @@ SpriteAtlas:
   - Loading_32
   - ending badge
   - ending third place
+  - progress bar - mask
   - left handle
   - aliens used
   - Loading_13

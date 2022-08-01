@@ -48,6 +48,7 @@ namespace Mikrocosmos
             MissionProgressElement missionElement = gameMissionElements[e.MissionIndex];
             missionElement.OnMissionProgressStop(e.WinTeam);
             missionElement.GetComponent<Animator>().SetTrigger("Stop");
+            gameProgressProgressBars[e.MissionIndex+1].GetComponent<Animator>().SetTrigger("Start");
         }
 
         private void OnStandardGameProgressChanged(OnStandardGameProgressChanged e) {
