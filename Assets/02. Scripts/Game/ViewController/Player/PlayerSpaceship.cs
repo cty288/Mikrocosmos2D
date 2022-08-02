@@ -129,7 +129,6 @@ namespace Mikrocosmos
 
         [Command]
         private void CmdUpdateCanControl(bool isControl) {
-           
             isControlling = isControl;
         }
 

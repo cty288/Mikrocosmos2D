@@ -16,6 +16,8 @@ namespace Mikrocosmos
         [SerializeField] private Color[] teamColors;
        
         [SerializeField] private List<GameObject> hitByObjectParticles;
+
+        
         public override void OnStartClient() {
             base.OnStartClient();
             this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnClientAffinityWithTeam1Changed)

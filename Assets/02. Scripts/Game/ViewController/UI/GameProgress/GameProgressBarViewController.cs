@@ -100,13 +100,16 @@ namespace Mikrocosmos
                 yield return null;
                 CorrectLayoutSize();
             }
-          
-
-            //spawn an additional progress bar for the last mission
             var progressBarElementLast = Instantiate(gameProgressElementPrefab, layoutGroup.transform).GetComponent<GameProgressElement>();
             progressBarElementLast.transform.SetAsLastSibling();
             gameProgressProgressBars.Add(progressBarElementLast);
-            progressBarElementLast.SetUpInfo(cutoffs[^1], 1);
+            if (cutoffs.Count >= 1) {
+                //spawn an additional progress bar for the last mission
+                progressBarElementLast.SetUpInfo(cutoffs[^1], 1);
+            }
+            else {
+                progressBarElementLast.SetUpInfo(0, 1);
+            }
             yield return null;
             CorrectLayoutSize();
             yield return null;

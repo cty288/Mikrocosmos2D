@@ -113,8 +113,8 @@ namespace MikroFramework.ResKit
             }
 
             Asset = null;
-         //   resLoader.ReleaseAllAssets();
-            resLoader = null;
+            resLoader.ReleaseAllAssets();
+            //resLoader = new ResLoader();
         }
 
         public override void RecycleToCache() {

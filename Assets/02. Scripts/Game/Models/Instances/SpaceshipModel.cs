@@ -9,9 +9,13 @@ using Random = UnityEngine.Random;
 
 namespace Mikrocosmos
 {
-    public struct OnMassChanged
-    {
+    public struct OnMassChanged {
         public float newMass;
+    }
+
+    public struct OnClientMassUpdated {
+        public float SelfMass;
+        public float OverWeightThreshold;
     }
 
     public struct OnEscapeCounterChanged {
@@ -108,6 +112,8 @@ namespace Mikrocosmos
         public int EscapeCounter { get; private set; }
 
         private float escapeLossTimer = 0f;
+
+        private float overweightThreshold = 0;
 
         [SerializeField] private float minimumAcceleration = 20;
 
@@ -253,7 +259,12 @@ namespace Mikrocosmos
                     totalMass = SelfMass + BackpackMass;
                 }
             }
-            RefreshAcceleration(totalMass);
+           
+            if (isServer) {
+                RefreshAcceleration(totalMass);
+                TargetUpdateMass(totalMass - SelfMass, overweightThreshold);
+            }
+            
             return totalMass;
         }
 
@@ -263,10 +274,9 @@ namespace Mikrocosmos
 
         private void RefreshAcceleration(float totalMass) {
             Acceleration = Mathf.Max(minimumAcceleration, InitialAcceleration - totalMass * AccelerationDecreasePerMass);
-            if (totalMass>=80) {
+            if (totalMass -SelfMass >= overweightThreshold) {
                 this.SendEvent<OnServerSpaceshipOverweight>(new OnServerSpaceshipOverweight() {
                     Spaceship = gameObject,
-                    Tolerance = 15,
                     SpaceshipModel = this,
                     MinimumAcceleration = minimumAcceleration
                 });
@@ -296,7 +306,9 @@ namespace Mikrocosmos
             startAcceleration = InitialAcceleration;
             unscaledMaxSpeed = MaxSpeed;
             unscaledInitialAcceleration = InitialAcceleration;
-
+            overweightThreshold =
+                ((startAcceleration - SelfMass * AccelerationDecreasePerMass) - minimumAcceleration * 1.5f) /
+                AccelerationDecreasePerMass;
 
         }
        
@@ -366,6 +378,14 @@ namespace Mikrocosmos
         }
 
 
+        [TargetRpc]
+        private void TargetUpdateMass(float currentMass, float overWeightThreshold) {
+            this.SendEvent<OnClientMassUpdated>(new OnClientMassUpdated() {
+                OverWeightThreshold = overWeightThreshold,
+                SelfMass = currentMass
+            });
+        }
+
         public override void OnClientMaxHealthChange(int oldMaxHealth, int newMaxHealth) {
             base.OnClientMaxHealthChange(oldMaxHealth, newMaxHealth);
             this.SendEvent<OnClientSpaceshipHealthChange>(new OnClientSpaceshipHealthChange()
@@ -379,7 +399,6 @@ namespace Mikrocosmos
 
     public struct OnServerSpaceshipOverweight {
         public GameObject Spaceship;
-        public float Tolerance;
         public ISpaceshipConfigurationModel SpaceshipModel;
         public float MinimumAcceleration;
     }

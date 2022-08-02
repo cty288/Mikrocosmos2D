@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 659920331
+CRC: 2041485810
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2a5d8d0850cd314f80e8ec7d7fad190d
+    Hash: 5af5e693fab1190547c546975ca55451
   TypeTreeHash:
     serializedVersion: 2
     Hash: c29c357128feff56790ec9816c4fc93d
@@ -32,7 +32,7 @@ Assets:
 - Assets/04. Sprites/Items/ItemInventorySprite/BananaSprite.png
 - Assets/04. Sprites/Items/ItemInventorySprite/TolietSprite.png
 - Assets/04. Sprites/Items/ItemInventorySprite/BirdCannonSprite.png
-- Assets/04. Sprites/Items/ItemInventorySprite/SunflowerSonSprite.png
+- Assets/04. Sprites/Items/ItemInventorySprite/SunFlowerSonSprite.png
 - Assets/04. Sprites/Items/ItemInventorySprite/MaskSprite.png
 - Assets/04. Sprites/Items/ItemInventorySprite/PickaxeSprite.png
 - Assets/04. Sprites/Items/ItemInventorySprite/JellyGunSprite.png

@@ -27,7 +27,12 @@ namespace Mikrocosmos
 
         public Sprite GetSpriteElementFromAsset(int assetIndex) {
             if (cashedSprites.ContainsKey(assetIndex)) {
-                return cashedSprites[assetIndex];
+                if (!cashedSprites[assetIndex]) {
+                    cashedSprites.Clear();
+                }
+                else {
+                    return cashedSprites[assetIndex];
+                }
             }
             SpriteAtlas atlas = resLoader.LoadSync<SpriteAtlas>("profile", $"AvatarAtlas");
             Sprite sprite = atlas.GetSprite($"profile{assetIndex}");

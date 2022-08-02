@@ -13,14 +13,17 @@ namespace Mikrocosmos
     public class FinalCountdownViewController : AbstractMikroController<Mikrocosmos> {
 
         private Animator animator;
+        private Animator countdownAnimator;
         private TMP_Text finalCountdownText;
-        private TMP_Text playerWinText;
+        
         private float remainingTime = 0;
+        private bool isTieTimer = false;
         private void Awake() {
             animator = GetComponent<Animator>();
-            finalCountdownText = transform.Find("FinalCountdownTimer").GetComponent<TMP_Text>();
-            playerWinText = transform.Find("PlayerWinText").GetComponent<TMP_Text>();
+            finalCountdownText = transform.Find("CountdownFrame/FinalCountdownTimer").GetComponent<TMP_Text>();
+            countdownAnimator = transform.Find("CountdownFrame").GetComponent<Animator>();
 
+            
             this.RegisterEvent<OnClientFinalCountdownTimerStart>(OnFinalCountdownStart)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
@@ -33,14 +36,14 @@ namespace Mikrocosmos
         }
 
         private void OnClientGameEnd(OnClientGameEnd obj) {
-            finalCountdownText.gameObject.SetActive(false);
+            countdownAnimator.SetTrigger("End");
+         //finalCountdownText.gameObject.SetActive(false);
         }
 
         private void OnTieTimerStart(OnTieTimerStart e) {
-            playerWinText.gameObject.SetActive(true);
-            playerWinText.text = "";
-            playerWinText.text += $"{Localization.Get("GAME_COUNTDOWN_TIE")}";
-            this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => playerWinText.gameObject.SetActive(false));
+            finalCountdownText.text += $"{Localization.Get("GAME_COUNTDOWN_TIE")}";
+            isTieTimer = true;
+            this.GetSystem<ITimeSystem>().AddDelayTask(1f, () => isTieTimer = false);
             remainingTime = e.Time;
         }
 
@@ -48,20 +51,24 @@ namespace Mikrocosmos
             if (remainingTime > 0) {
                 remainingTime -= Time.deltaTime;
                 remainingTime = Mathf.Max(0, remainingTime);
-                
-                finalCountdownText.text = $"{Mathf.CeilToInt(remainingTime)}";
+                if (!isTieTimer) {
+                    finalCountdownText.text = $"{Mathf.CeilToInt(remainingTime)}";
+                }
+             
             }
         }
 
         
 
         private void OnFinalCountdownStart(OnClientFinalCountdownTimerStart e) {
-            finalCountdownText.gameObject.SetActive(true);
+            // finalCountdownText.gameObject.SetActive(true);
+            countdownAnimator.SetTrigger("Start");
             animator.SetTrigger("Start");
             remainingTime = e.Time;
         }
 
         private void OnFinalCountdownEnd(OnClientFinalCountDownTimerEnds e) {
+            /*
             finalCountdownText.gameObject.SetActive(false);
             playerWinText.gameObject.SetActive(true);
             playerWinText.text = "";
@@ -74,10 +81,7 @@ namespace Mikrocosmos
                 }
               
             }
-
-            playerWinText.text += $" {Localization.Get("GAME_COUNTDOWN_WIN")}";
+            */
         }
-
-        
     }
 }

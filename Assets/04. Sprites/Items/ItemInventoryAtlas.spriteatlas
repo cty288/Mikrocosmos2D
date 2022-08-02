@@ -60,7 +60,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f29ef2afd321cf245a37ea7c6ee41b10, type: 3}
   - {fileID: 21300000, guid: 0ee527bf9e76e4e499ffa295e03a43ef, type: 3}
   m_PackedSpriteNamesToIndex:
-  - SunflowerSonSprite
+  - SunFlowerSonSprite
   - ThrusterSprite
   - MetalBallSprite
   - FireOreSprite

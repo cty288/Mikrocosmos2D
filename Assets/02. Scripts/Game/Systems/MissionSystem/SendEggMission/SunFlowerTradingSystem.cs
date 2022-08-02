@@ -204,7 +204,7 @@ namespace Mikrocosmos
                 int buyTime = BuyItemMaxTime;
 
             
-                currentBuyItemLists.Add(new TradingItemInfo(currentBuyingItemConfig, currentBuyingItem, currentBuyingItemObject, currentBuyingItemPrice)
+                currentBuyItemLists.Add(new TradingItemInfo(currentBuyingItemConfig, currentBuyingItem, currentBuyingItemObject, currentBuyingItemPrice, -1f)
                 {
                     buyTime = buyTime
                 });

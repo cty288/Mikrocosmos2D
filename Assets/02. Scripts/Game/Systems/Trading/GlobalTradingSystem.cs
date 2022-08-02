@@ -53,6 +53,7 @@ namespace Mikrocosmos
 
     public class GlobalTradingSystem : AbstractNetworkedSystem, IGlobalTradingSystem {
         private List<IPlanetTradingSystem> allPlanets;
+        private IGameProgressSystem gameProgressSystem;
 
         [SerializeField] private List<CompoundResourceRecipe> compoundResourceRecipes;
 
@@ -111,7 +112,13 @@ namespace Mikrocosmos
             base.OnStartServer();
             //register self to the system on the server
 
-            
+            allPlanets = new List<IPlanetTradingSystem>();
+            List<GameObject> preExistingPlanets = GameObject.FindGameObjectsWithTag("Planet").ToList();
+            gameProgressSystem = this.GetSystem<IGameProgressSystem>();
+            RegisterPlanets(preExistingPlanets);
+          
+
+
             this.RegisterEvent<OnAllPlanetsSpawned>(OnAllPlanetsSpawned).UnRegisterWhenGameObjectDestroyed(gameObject);
             
 
@@ -124,26 +131,25 @@ namespace Mikrocosmos
             this.RegisterEvent<OnServerAffinityWithTeam1Changed>(OnAffinityWithTeam1Changed).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
-        private void OnAllPlanetsSpawned(OnAllPlanetsSpawned e) {
-            List<GameObject> allPlanetObjects = e.AllPlanets;
-            
+        private void RegisterPlanets(List<GameObject> planets) {
             List<IPlanetModel> planetModels = new List<IPlanetModel>();
-            allPlanetObjects.Select((o => o.GetComponent<IPlanetModel>())).ToList()
+            planets.Select((o => o.GetComponent<IPlanetModel>())).ToList()
                 .ForEach(p => planetModels.Add(p));
-
             HashSet<GameObject> tempAllGoodsSet = new HashSet<GameObject>();
-
             foreach (var planet in planetModels) {
                 foreach (var sellItem in planet.SellItemList) {
                     tempAllGoodsSet.Add(sellItem.GoodPrefab);
                 }
             }
-
-            allGoodsPrefabsInThisGame = tempAllGoodsSet.ToList();
-
-            allPlanets = new List<IPlanetTradingSystem>();
-            allPlanetObjects.Select((o => o.GetComponent<IPlanetTradingSystem>())).ToList()
+            planets.Select((o => o.GetComponent<IPlanetTradingSystem>())).ToList()
                 .ForEach(p => allPlanets.Add(p));
+            allGoodsPrefabsInThisGame.AddRange(tempAllGoodsSet.ToList());
+        }
+
+        
+        private void OnAllPlanetsSpawned(OnAllPlanetsSpawned e) {
+            List<GameObject> allPlanetObjects = e.AllPlanets;
+            RegisterPlanets(allPlanetObjects);
         }
 
         private void OnAffinityWithTeam1Changed(OnServerAffinityWithTeam1Changed e) {
@@ -215,6 +221,10 @@ namespace Mikrocosmos
         public float CalculateAffinityIncreasmentForOneTrade(float currentAffinityPrecent, bool IsPlanetBuy, int price) {
             float baseValue = TradingCurve.Evaluate(currentAffinityPrecent);
             baseValue =  Mathf.Clamp((price / (float) standardPrice), 0.1f, 2f) * baseValue;
+            
+            if (gameProgressSystem.GameProgress >= 1) {
+                baseValue *= 2;
+            }
 
             if (IsPlanetBuy) {
                // baseValue *= 1.5f;
@@ -222,6 +232,7 @@ namespace Mikrocosmos
             return baseValue;
         }
 
+        
 
         [ServerCallback]
         public float GetTotalAffinityWithTeam(int team) {

@@ -27,8 +27,8 @@ namespace Mikrocosmos
         private bool mapIconCanAlwaysSeenByLocalPlayer;
         //private GameObject playerNameShade;
 
-        private int minInnerRadius = 28;
-        private int minOuterRadius = 35;
+        private int minInnerRadius ;
+        private int minOuterRadius ;
 
         private int currentMinInnerRadius;
         private int currentMinOuterRadius;
@@ -38,6 +38,12 @@ namespace Mikrocosmos
             fovVision = transform.Find("VisionControl/FOV Vision").gameObject;
             mapVisionRenderLight = transform.Find("VisionControl/VisionRenderLight - FullMap").gameObject;
             mapFovVision = transform.Find("VisionControl/FOV Vision - FullMap").gameObject;
+            minInnerRadius = (int) fovVision.GetComponent<Light2D>().pointLightInnerRadius;
+            minOuterRadius = (int) fovVision.GetComponent<Light2D>().pointLightOuterRadius;
+
+            mapFovVision.GetComponent<Light2D>().pointLightInnerRadius = minInnerRadius;
+            mapFovVision.GetComponent<Light2D>().pointLightOuterRadius = minOuterRadius;
+
             currentMinInnerRadius = minInnerRadius;
             currentMinOuterRadius = minOuterRadius;
             

@@ -132,8 +132,8 @@
     },
     {
       "AssetName": "description",
-      "MD5": "f2473728b3585e0761a5060a099377ae",
-      "FileSize": 2136.832,
+      "MD5": "158bbbc33624d3c63b6c329008af766e",
+      "FileSize": 2173.94434,
       "assetDatas": [
         {
           "Name": "DescriptionPanel_General",
@@ -438,14 +438,14 @@
     },
     {
       "AssetName": "Windows",
-      "MD5": "73efd32d631b09c2350ff8c3753a5d59",
+      "MD5": "b116d020d32b4df9b415c13f1477ac0d",
       "FileSize": 1.75292969,
       "assetDatas": []
     },
     {
       "AssetName": "assets/fonts",
-      "MD5": "b8f53b9590b1dc15319406a9e9c7edda",
-      "FileSize": 9346.634,
+      "MD5": "b61128d4958902d33e0871c1b12809a2",
+      "FileSize": 29809.23,
       "assetDatas": [
         {
           "Name": "SourceHanSansHW-VF",
@@ -456,8 +456,8 @@
     },
     {
       "AssetName": "assets/goods_inventory",
-      "MD5": "85a6a05e7ea38d284235055c5fe92408",
-      "FileSize": 297.328125,
+      "MD5": "ccdc475b74097318d743040819ed3205",
+      "FileSize": 297.327148,
       "assetDatas": [
         {
           "Name": "ItemInventoryAtlas",
@@ -555,7 +555,7 @@
           "AssetType": "UnityEngine.Texture2D"
         },
         {
-          "Name": "SunflowerSonSprite",
+          "Name": "SunFlowerSonSprite",
           "OwnerBundleName": "assets/goods_inventory",
           "AssetType": "UnityEngine.Texture2D"
         },

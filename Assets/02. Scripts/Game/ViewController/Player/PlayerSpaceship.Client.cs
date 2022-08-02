@@ -166,13 +166,14 @@ namespace Mikrocosmos
                         
                         hookWhenEmptyReleased = false;
                       //  minHookPressTimer = 0;
-                      if (animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking")) {
+                      if (animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking") && DamagableModel.CurrentHealth > 0) {
                           if (ThisSpaceshipTeam == 2) {
                               this.GetSystem<IAudioSystem>().PlaySound("Team2Hook", SoundType.Sound2D);
                           }
                       }
 
                     }
+                   
                     hookSystem.CmdPressHookButton();
                 }
 

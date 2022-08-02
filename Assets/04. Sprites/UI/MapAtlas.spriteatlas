@@ -44,24 +44,31 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 2800000, guid: 928b30e90587bd4458f2a9577e0d228a, type: 3}
-    - {fileID: 2800000, guid: 9c2c2ccb404136e4599a0ba36c46c854, type: 3}
-    - {fileID: 2800000, guid: c72fe754f8ed5864a891c3b497ad1b36, type: 3}
-    - {fileID: 2800000, guid: ffcd8b0b23a38054a8b2016cbf697ae0, type: 3}
     - {fileID: 2800000, guid: 7f4ac730e9adea147a7fb50d7d089123, type: 3}
+    - {fileID: 102900000, guid: 1299d6562488a67489f6ed50ff51b965, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 7f4ac730e9adea147a7fb50d7d089123, type: 3}
+  - {fileID: 21300000, guid: b2ebed01767f93742843f945be5d6e8e, type: 3}
+  - {fileID: 21300000, guid: c6ebf4120993525468286d72ea9d3457, type: 3}
+  - {fileID: 21300000, guid: 1844a0426f81309489e68158b56afeb5, type: 3}
   - {fileID: 21300000, guid: c72fe754f8ed5864a891c3b497ad1b36, type: 3}
+  - {fileID: 21300000, guid: a1b649f40f5d81f45a4197dc6caf4b0b, type: 3}
+  - {fileID: 21300000, guid: 28d088697e47f2b40bb67708b5f420b0, type: 3}
   - {fileID: 21300000, guid: 928b30e90587bd4458f2a9577e0d228a, type: 3}
   - {fileID: 21300000, guid: ffcd8b0b23a38054a8b2016cbf697ae0, type: 3}
   - {fileID: 21300000, guid: 9c2c2ccb404136e4599a0ba36c46c854, type: 3}
   m_PackedSpriteNamesToIndex:
   - menu_bg
+  - backpack overload - full
+  - countdown time
+  - backpack overload - empty
   - MinimapBg
+  - new small map ring
+  - anchor sign
   - MinimapBorder
   - 9bea509bfa7013287df023b5026808a
   - MapOrbits

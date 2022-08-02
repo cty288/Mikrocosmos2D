@@ -118,7 +118,7 @@ namespace Mikrocosmos {
         [SerializeField]
         private NetworkAnimator animator;
 
-       
+        private IBuffSystem buffSystem;
 
         private IPlayerInventorySystem inventorySystem;
 
@@ -138,7 +138,7 @@ namespace Mikrocosmos {
             binRigidbody = GetComponent<Rigidbody2D>();
        
             inventorySystem = GetComponent<IPlayerInventorySystem>();
-
+            buffSystem = GetComponent<IBuffSystem>();
             this.RegisterEvent<OnItemRobbed>(OnRobbed).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnSwitchItemSlot>(OnServerSwitchItemSlot).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnHookItemSwitched>(OnHookItemSwitched).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -149,9 +149,7 @@ namespace Mikrocosmos {
         }
 
 
-        
-
-
+      
         [ServerCallback]
         private void OnItemDropped(OnItemDropped e) {
             if (e.Identity == netIdentity) {
@@ -306,6 +304,10 @@ namespace Mikrocosmos {
 
         [Command]
         public void CmdPressHookButton() {
+            if (buffSystem.HasBuff<DieBuff>())
+            {
+                return;
+            }
             holdingHookButton = true;
             if (HookedItem == null) {
                 ServerReleaseHookButton();
@@ -345,6 +347,9 @@ namespace Mikrocosmos {
         [ServerCallback]
         private void ServerReleaseHookButton() {
             holdingHookButton = false;
+            if (buffSystem.HasBuff<DieBuff>()) {
+                return;
+            }
             HookAction targetAction = CheckHookAction();
             if (!animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Hook"))
             {

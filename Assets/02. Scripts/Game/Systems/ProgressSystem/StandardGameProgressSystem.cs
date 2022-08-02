@@ -53,7 +53,9 @@ namespace Mikrocosmos
                 return missionStartAtProgress.Count;
             }
         }
-        
+
+        [SerializeField]
+        protected Vector2Int missionCountRange = new Vector2Int(3, 5);
 
         protected int lastMissionIndex = -1;
         
@@ -73,7 +75,7 @@ namespace Mikrocosmos
 
         public override void OnStartServer() {
             base.OnStartServer();
-            float missionCount = Random.Range(3, 6);
+            float missionCount = Random.Range(missionCountRange.x, missionCountRange.y + 1);
             //evenly distribute mission to progress between 0.1 to 0.9, but add some offsets
             float lastProgress = 0f;
             float averageProgress = 1f / (missionCount + 1);
@@ -83,10 +85,13 @@ namespace Mikrocosmos
                 missionStartAtProgress.Add(lastProgress);
             }
 
-            gameMissionSystem = this.GetSystem<IGameMissionSystem>();
-            if (gameMissionSystem == null) {
-                Debug.LogError("GameMissionSystem is required for StandardGameProgressSystem!");
+            if (missionCount > 0) {
+                gameMissionSystem = this.GetSystem<IGameMissionSystem>();
+                if (gameMissionSystem == null) {
+                    Debug.LogError("GameMissionSystem is required for StandardGameProgressSystem!");
+                }
             }
+           
             this.RegisterEvent<OnServerTransactionFinished>(OnServerTransactionFinished).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnPlayerTakeDamage>(OnPlayerTakeDamage).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<OnMissionStop>(OnMissionStop).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -101,7 +106,7 @@ namespace Mikrocosmos
 
         private void OnPlayerTakeDamage(OnPlayerTakeDamage e) {
            
-            if (e.Killer.TryGetComponent<PlayerSpaceship>(out PlayerSpaceship killer)) {
+            if (e.Killer && e.Killer.TryGetComponent<PlayerSpaceship>(out PlayerSpaceship killer)) {
                 if (e.SpaceshipIdentity.TryGetComponent<PlayerSpaceship>(out PlayerSpaceship victim)) {
                     if (killer.ThisSpaceshipTeam != victim.ThisSpaceshipTeam) {
                         AddProgress(e.Damage * (gameProgressIncreasmentPerDamageToPlayer /

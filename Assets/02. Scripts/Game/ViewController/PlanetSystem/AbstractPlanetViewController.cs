@@ -28,7 +28,7 @@ namespace Mikrocosmos
     public abstract class AbstractPlanetViewController : AbstractNetworkedController<Mikrocosmos>, IPlanetViewController
     {
 
-
+        [SerializeField] private bool showSellCountdown = true;
         public ICanBuyPackage BuyPackageModel { get; protected set; }
         public ICanSellPackage SellPackageModel { get; protected set; }
         public IHaveGravity GravityModel { get; protected set; }
@@ -206,24 +206,24 @@ namespace Mikrocosmos
                 }
                 
                 GameObject sellBubble = GenerateSellBubble(e.Price, generatedName, previousName,
-                    generatedGoods.GoodRarity == GoodsRarity.RawResource, e.RepeatSellCountdownRemainingTime);
+                    generatedGoods.GoodRarity == GoodsRarity.RawResource,showSellCountdown, e.RepeatSellCountdownRemainingTime);
                 
                 if (sellBubble) {
                     
                     sellBubble.GetComponent<PlanetSellBubble>().ServerGoodsSelling = generatedGoods;
                     sellBubble.GetComponent<PlanetSellBubble>().ServerGoodsObjectSelling = e.GeneratedItem;
                     e.GeneratedItem.GetComponent<IGoodsViewController>().FollowingPoint = sellBubble.transform.Find("SellItemSpawnPos");
-                    RpcGenerateSellBubble(e.Price, generatedName, previousName, generatedGoods.GoodRarity == GoodsRarity.RawResource, e.RepeatSellCountdownRemainingTime);
+                    RpcGenerateSellBubble(e.Price, generatedName, previousName, generatedGoods.GoodRarity == GoodsRarity.RawResource, e.RepeatSellCountdownRemainingTime, showSellCountdown);
                 }
 
                 if (!e.CountTowardsGlobalIItemList) {
                     RpcGenerateSellBubble(e.Price, generatedName, previousName,
-                        generatedGoods.GoodRarity == GoodsRarity.RawResource, e.RepeatSellCountdownRemainingTime);
+                        generatedGoods.GoodRarity == GoodsRarity.RawResource, e.RepeatSellCountdownRemainingTime, showSellCountdown);
                 }
             }
         }
 
-        private GameObject GenerateSellBubble(int price,string bubbleToGenerate,  string bubbleToDestroy, bool isRaw, float repeatSellRemainingTime) {
+        private GameObject GenerateSellBubble(int price,string bubbleToGenerate,  string bubbleToDestroy, bool isRaw, bool showSellRemainingTime, float repeatSellRemainingTime) {
             GameObject oldBubble = null;
             if (!String.IsNullOrEmpty(bubbleToDestroy)) {
                 if (ClientSellBubbles.ContainsKey(bubbleToDestroy)) {
@@ -247,7 +247,7 @@ namespace Mikrocosmos
             }
             
             
-            sellBubble.GetComponent<PlanetSellBubble>().SetInfo(price,repeatSellRemainingTime, isRaw);
+            sellBubble.GetComponent<PlanetSellBubble>().SetInfo(price,repeatSellRemainingTime, showSellRemainingTime, isRaw);
            
             ClientSellBubbles.Add(bubbleToGenerate, sellBubble);
             return sellBubble;
@@ -321,9 +321,9 @@ namespace Mikrocosmos
         }
 
         [ClientRpc]
-        private void RpcGenerateSellBubble(int price, string bubbleToGenerate, string bubbleToDestroy, bool isRaw, float repeatSellRemainingTime) {
+        private void RpcGenerateSellBubble(int price, string bubbleToGenerate, string bubbleToDestroy, bool isRaw, float repeatSellRemainingTime, bool showSellRemainingTime) {
             if (isClientOnly) {
-                GenerateSellBubble(price, bubbleToGenerate, bubbleToDestroy, isRaw, repeatSellRemainingTime);
+                GenerateSellBubble(price, bubbleToGenerate, bubbleToDestroy, isRaw,showSellRemainingTime, repeatSellRemainingTime);
             }
         }
 
@@ -336,7 +336,7 @@ namespace Mikrocosmos
         }
         private void OnClientPlanetAffinityWithTeam1Changed(OnClientPlanetAffinityWithTeam1Changed e)
         {
-            if (e.PlanetIdentity == netIdentity) {
+            if (e.PlanetIdentity == netIdentity && tradingSlider) {
                 if (e.NewAffinity <= 0.2) {
                     team1TradeProgressText.enabled = false;
                     team2TradeProgressText.enabled = true;

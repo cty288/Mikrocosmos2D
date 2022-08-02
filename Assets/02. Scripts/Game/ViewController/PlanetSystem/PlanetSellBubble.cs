@@ -86,7 +86,7 @@ namespace Mikrocosmos
         }
 
 
-        public void SetInfo(int pirce, float repeatSellRemainingTime, bool isRaw = false) {
+        public void SetInfo(int pirce, float repeatSellRemainingTime, bool showRemainingTime, bool isRaw = false) {
             Price = pirce;
             priceText.text = Price.ToString();
 
@@ -110,7 +110,7 @@ namespace Mikrocosmos
             }
 
             if (repeatSellRemainingTimeSliderParent) {
-                if (repeatSellRemainingTime > 0) {
+                if (repeatSellRemainingTime > 0 && showRemainingTime) {
                     repeatSellRemainingTimeSliderParent.gameObject.SetActive(true);
                     if (this.repeatSellRemainingTime > 0) {
                         repeatSellRemainingTimeSlider.DOFillAmount(0.65f, 0.1f);

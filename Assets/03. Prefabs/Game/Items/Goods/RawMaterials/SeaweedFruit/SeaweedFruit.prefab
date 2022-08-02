@@ -324,5 +324,5 @@ MonoBehaviour:
   visionAffectedSpritesOnMap: []
   <CanBeMasked>k__BackingField: 1
   <AlsoMaskedOnMap>k__BackingField: 0
-  DurabilityCountSprite: {fileID: 0}
-  speedIncreasePercentage: 0.15
+  DurabilityCountColor: {r: 0, g: 0, b: 0, a: 0}
+  speedIncreasePercentage: 0.1

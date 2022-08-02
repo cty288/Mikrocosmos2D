@@ -11,8 +11,7 @@ namespace Mikrocosmos
      
         public float SpeedMultiplier => speedMultiplier;
 
-        public PermanentSpeedBuff(float speedMultiplier, int currentLevel=0, int currentProgress=1): base(currentLevel, currentProgress)
-        {
+        public PermanentSpeedBuff(float speedMultiplier, int currentLevel=0, int currentProgress=1): base(currentLevel, currentProgress) {
             this.speedMultiplier = speedMultiplier;
          
         }

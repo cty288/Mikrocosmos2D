@@ -106,8 +106,9 @@ namespace MikroFramework.ResKit
             if (AssetBundle != null) {
                 AssetBundle.Unload(true);
 
-               // resLoader.ReleaseAllAssets();
+                resLoader.ReleaseAllAssets();
                 resLoader = null;
+              //  resLoader = new ResLoader();
             }
 
 

@@ -31,6 +31,8 @@ namespace Mikrocosmos
             }
         }
 
+        
+
         public override void OnStartClient() {
             base.OnStartClient();
             this.RegisterEvent<OnClientGoodsTransactionStatusChanged>(OnTransactionStatusChanged).UnRegisterWhenGameObjectDestroyed(gameObject, true);
@@ -41,7 +43,9 @@ namespace Mikrocosmos
 
         }
 
-        
+        protected override string GetHintAssetName() {
+            return "";
+        }
 
         private void OnTransactionStatusChanged(OnClientGoodsTransactionStatusChanged e) {
             if (e.Goods == GoodsModel) {

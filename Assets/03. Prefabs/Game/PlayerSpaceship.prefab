@@ -921,7 +921,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   <MoveMode>k__BackingField: 0
-  <MaxSpeed>k__BackingField: 30
+  <MaxSpeed>k__BackingField: 36
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
   <AdditionalMassWhenHookedMultiplier>k__BackingField: 1
@@ -945,7 +945,7 @@ MonoBehaviour:
   minimumAcceleration: 30
   <DieDizzyTime>k__BackingField: 10
   <RespawnInvincibleTime>k__BackingField: 5
-  <InitialAcceleration>k__BackingField: 85
+  <InitialAcceleration>k__BackingField: 102
   <SelfMass>k__BackingField: 10
   <AccelerationDecreasePerMass>k__BackingField: 0.5
   <AffectedByGravity>k__BackingField: 1
@@ -6526,12 +6526,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7155862405861106046, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
+      propertyPath: m_FalloffIntensity
+      value: 0.273
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155862405861106046, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
       propertyPath: m_PointLightInnerRadius
-      value: 28
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7155862405861106046, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
       propertyPath: m_PointLightOuterRadius
-      value: 35
+      value: 74
       objectReference: {fileID: 0}
     - target: {fileID: 7155862405861106046, guid: 8f7de70d3aabd724db9afc1f7fcd1644, type: 3}
       propertyPath: m_ApplyToSortingLayers.Array.size

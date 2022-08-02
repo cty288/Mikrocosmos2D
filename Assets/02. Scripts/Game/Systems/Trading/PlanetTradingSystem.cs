@@ -95,7 +95,7 @@ namespace Mikrocosmos
         public bool sellTimeCountdownTriggered;
         public float sellTimeCountdown;
 
-        public TradingItemInfo(GoodsConfigure currentItemConfig, IGoods currentItem, GameObject currentItemGameObject, int currentItemPrice, bool sellTimeCountdownTriggered = false, float sellTimeCountdown = 2f)
+        public TradingItemInfo(GoodsConfigure currentItemConfig, IGoods currentItem, GameObject currentItemGameObject, int currentItemPrice, float sellTimeCountdown, bool sellTimeCountdownTriggered = false )
         {
             this.currentItemConfig = currentItemConfig;
             this.currentItem = currentItem;
@@ -140,7 +140,8 @@ namespace Mikrocosmos
         [SerializeField]
         private List<TradingItemInfo> currentSellItemLists = new List<TradingItemInfo>();
 
-     
+        [SerializeField] private bool countTowardsGlobalItemList = true;
+
         private void Awake()
         {
             buyPackageModel = GetComponent<ICanBuyPackage>();
@@ -252,9 +253,11 @@ namespace Mikrocosmos
             }
         }
 
-
+        [SerializeField] private bool countAffinity = true;
         public void ChangeAffinity(float changeAmount, int team) {
-
+            if (!countAffinity) {
+                return;
+            }
             if (team == 1)
             {
                 float previousAffinity = affinityWithTeam1;
@@ -438,9 +441,9 @@ namespace Mikrocosmos
                 currentSellingItemPrice = Mathf.Max(currentSellingItemPrice, 1);
                 currentSellingItem.RealPrice = currentSellingItemPrice;
 
-
+                
                 TradingItemInfo newInfo = new TradingItemInfo(currentSellingItemConfig, currentSellingItem,
-                    currentSellingItemObject, currentSellingItemPrice, triggerCountdown);
+                    currentSellingItemObject, currentSellingItemPrice, sellItemMaxCountdown,triggerCountdown);
                 currentSellItemLists.Add(newInfo);
                 
 
@@ -449,7 +452,7 @@ namespace Mikrocosmos
                     GeneratedItem = currentSellingItemObject,
                     ParentPlanet = this.gameObject,
                     Price = currentSellingItemPrice,
-                    CountTowardsGlobalIItemList = true,
+                    CountTowardsGlobalIItemList = countTowardsGlobalItemList,
                     PreviousItem = previousSellingItem,
                     RepeatSellCountdownRemainingTime = triggerCountdown?  newInfo.sellTimeCountdown: -1
                 });
@@ -539,7 +542,7 @@ namespace Mikrocosmos
                 {
                     buyTime = Random.Range(10, BuyItemMaxTime + 6);
                 }
-                currentBuyItemLists.Add(new TradingItemInfo(currentBuyingItemConfig, currentBuyingItem, currentBuyingItemObject, currentBuyingItemPrice)
+                currentBuyItemLists.Add(new TradingItemInfo(currentBuyingItemConfig, currentBuyingItem, currentBuyingItemObject, currentBuyingItemPrice, sellItemMaxCountdown)
                 {
                     buyTime = buyTime
                 });
@@ -549,7 +552,7 @@ namespace Mikrocosmos
                     GeneratedItem = currentBuyingItemObject,
                     ParentPlanet = this.gameObject,
                     Price = currentBuyingItemPrice,
-                    CountTowardsGlobalIItemList = true,
+                    CountTowardsGlobalIItemList = countTowardsGlobalItemList,
                     PreviousItem = previousBuyingItemGameObject,
                     MaxTime = buyTime
                 });

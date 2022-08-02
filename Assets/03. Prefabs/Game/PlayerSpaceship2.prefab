@@ -158,7 +158,7 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 3
-  m_FalloffIntensity: 0.754
+  m_FalloffIntensity: 0.22
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1.84
   m_LightVolumeIntensity: 0.15
@@ -210,8 +210,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 28
-  m_PointLightOuterRadius: 35
+  m_PointLightInnerRadius: 40
+  m_PointLightOuterRadius: 74
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -5957,7 +5957,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   <MoveMode>k__BackingField: 0
-  <MaxSpeed>k__BackingField: 30
+  <MaxSpeed>k__BackingField: 36
   <CanBeHooked>k__BackingField: 1
   <CanBeAddedToInventory>k__BackingField: 0
   <AdditionalMassWhenHookedMultiplier>k__BackingField: 1
@@ -5981,7 +5981,7 @@ MonoBehaviour:
   minimumAcceleration: 30
   <DieDizzyTime>k__BackingField: 10
   <RespawnInvincibleTime>k__BackingField: 5
-  <InitialAcceleration>k__BackingField: 85
+  <InitialAcceleration>k__BackingField: 102
   <SelfMass>k__BackingField: 10
   <AccelerationDecreasePerMass>k__BackingField: 0.5
   <AffectedByGravity>k__BackingField: 1
@@ -11275,6 +11275,10 @@ PrefabInstance:
     - target: {fileID: 481041332993962963, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: m_Name
       value: PlayerInfoCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 623387098172900922, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1426008559985661586, guid: a112bc8436ef0344b967cecb717ed921, type: 3}
       propertyPath: positionRelativeTo

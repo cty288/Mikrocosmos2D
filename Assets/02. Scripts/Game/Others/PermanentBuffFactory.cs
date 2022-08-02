@@ -23,14 +23,14 @@ namespace Mikrocosmos
                     buffSystem.AddBuff<PermanentHealthBuff>(new PermanentHealthBuff(0.2f, initialLevel, progressInLevel));
                     break;
                 case PermanentBuffType.PowerUp:
-                    buffSystem.AddBuff<PermanentPowerUpBuff>(new PermanentPowerUpBuff(0.1f, initialLevel, progressInLevel));
+                    buffSystem.AddBuff<PermanentPowerUpBuff>(new PermanentPowerUpBuff(0.15f, initialLevel, progressInLevel));
                     break;
                 case PermanentBuffType.Speed:
-                    buffSystem.AddBuff<PermanentSpeedBuff>(new PermanentSpeedBuff(0.15f, initialLevel, progressInLevel));
+                    buffSystem.AddBuff<PermanentSpeedBuff>(new PermanentSpeedBuff(0.1f, initialLevel, progressInLevel));
                     break;
                 case PermanentBuffType.VisionExpansion:
                     buffSystem.AddBuff<PermanentVisionExpansionBuff>(
-                        new PermanentVisionExpansionBuff(0.2f, initialLevel, progressInLevel));
+                        new PermanentVisionExpansionBuff(0.15f, initialLevel, progressInLevel));
                     break;
             }
         }
