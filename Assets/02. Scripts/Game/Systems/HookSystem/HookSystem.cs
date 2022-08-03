@@ -229,49 +229,67 @@ namespace Mikrocosmos {
         private void OnCurrentBackPackItemRemoved(OnBackpackItemRemoved e) {
             if (e.Identity == netIdentity)
             {
-
-                NetworkIdentity oldIdentity = HookedNetworkIdentity;
-
-
-                if (e.CurrentCount>0 && e.NextObject) {
-
-                    GameObject nextItem = e.NextObject;
-                    nextItem.SetActive(true);
-                    NetworkServer.Spawn(nextItem);
-
-
-                    
-                    nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>(true).transform.position;
-
-                    
-                    HookedItem = nextItem.GetComponent<IHookableViewController>();
-                    HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
-                    HookedItem.Model.TryHook(netIdentity);
-                  
-                    if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot")) {
-                        HookedItem.OnEntitySwitched(true, 0.51f);
-                    }
-                    else {
-                        HookedItem.OnEntitySwitched(true);
-                    }
-                    
-                    animator.animator.SetBool("Hooking", true);
-
+                if (!e.OldObject) {
+                    return;
                 }
-                else
-                {
-                    animator.animator.SetBool("Hooking", false);
-                    HookedItem = null;
-                    HookedNetworkIdentity = null;
+                
+                NetworkIdentity previousHookedIdentity = HookedNetworkIdentity;
+                NetworkIdentity removedIdentity = e.OldObject.GetComponent<NetworkIdentity>();
+                //removed from current slot
+                if (removedIdentity == HookedNetworkIdentity) {
+                    if (e.CurrentCount > 0 && e.NextObject) {
+
+                        GameObject nextItem = e.NextObject;
+                        nextItem.SetActive(true);
+                        NetworkServer.Spawn(nextItem);
+
+
+
+                        nextItem.transform.position = GetComponentInChildren<Trigger2DCheck>(true).transform.position;
+
+
+                        HookedItem = nextItem.GetComponent<IHookableViewController>();
+                        HookedNetworkIdentity = nextItem.GetComponent<NetworkIdentity>();
+                        HookedItem.Model.TryHook(netIdentity);
+
+                        if (animator.animator.GetCurrentAnimatorStateInfo(0).IsName("Shoot"))
+                        {
+                            HookedItem.OnEntitySwitched(true, 0.51f);
+                        }
+                        else
+                        {
+                            HookedItem.OnEntitySwitched(true);
+                        }
+
+                        animator.animator.SetBool("Hooking", true);
+
+                    }
+                    else
+                    {
+                        animator.animator.SetBool("Hooking", false);
+                        HookedItem = null;
+                        HookedNetworkIdentity = null;
+                    }
+
+                    this.SendEvent<OnHookItemSwitched>(new OnHookItemSwitched()
+                    {
+                        NewIdentity = HookedNetworkIdentity,
+                        OldIdentity = previousHookedIdentity,
+                        OwnerIdentity = netIdentity
+                    });
+                    
+                }
+                else {
+                   
                 }
 
+                if (removedIdentity && removedIdentity.GetComponent<IHookable>().HookedByIdentity) {
+                    e.OldObject.GetComponent<IHookable>().UnHookByHook(false, false);
+                }
+               
 
-                this.SendEvent<OnHookItemSwitched>(new OnHookItemSwitched()
-                {
-                    NewIdentity = HookedNetworkIdentity,
-                    OldIdentity = oldIdentity,
-                    OwnerIdentity = netIdentity
-                });
+
+               
 
               
                 UpdateHookCollisions(false);
@@ -610,7 +628,7 @@ namespace Mikrocosmos {
             IGoods targetGoods = targetBubble.ServerGoodsSelling;
             GameObject targetObj = targetBubble.ServerGoodsObjectSelling;
             if (targetGoods.TryHook(netIdentity)) {
-                inventorySystem.ServerAddToBackpack(targetGoods.Name, targetObj);
+                inventorySystem.ServerAddToBackpack(targetGoods.Name, targetObj, (o)=>{});
             }
 
             return true;

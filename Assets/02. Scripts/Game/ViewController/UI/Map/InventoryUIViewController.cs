@@ -62,7 +62,7 @@ namespace Mikrocosmos
         private List<GameObject> allItemSlots = new List<GameObject>();
 
         private ResLoader resLoader;
-
+        private SpriteAtlas atlas;
         private int slotCount = 0;
         private void Awake()
         {
@@ -74,6 +74,10 @@ namespace Mikrocosmos
             initialBackPackBG = transform.Find("InitialBackPackBG");
 
             ResLoader.Create((loader => resLoader = loader));
+        }
+
+        private void Start() {
+             atlas = resLoader.LoadSync<SpriteAtlas>("assets/goods_inventory", $"ItemInventoryAtlas");
         }
 
         private void OnDestroy() {
@@ -181,7 +185,7 @@ namespace Mikrocosmos
                     itemDurabilityImage.enabled = true;
                     
                     itemImage.color = new Color(1, 1, 1, 1);
-                    SpriteAtlas atlas = resLoader.LoadSync<SpriteAtlas>("assets/goods_inventory", $"ItemInventoryAtlas");
+                   
 
                     Sprite sprite = atlas.GetSprite(slot.SpriteName);
                     //Sprite  = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);

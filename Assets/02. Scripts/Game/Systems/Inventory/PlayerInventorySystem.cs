@@ -68,9 +68,11 @@ namespace Mikrocosmos
     public interface IPlayerInventorySystem : ISystem {
         void ServerHookToBackpack(string name, GameObject gameObject);
 
-        void ServerAddToBackpack(string name, GameObject gameObject);
-        void ServerRemoveFromCurrentBackpack();
-        void ServerRemoveFromBackpack(string name);
+        void ServerAddToBackpack(string name, GameObject gameObject, Action<GameObject> onFailedToAdd);
+        GameObject ServerRemoveFromCurrentBackpack();
+        GameObject ServerRemoveFromBackpack(string name);
+
+        GameObject ServerRemoveFromBackpack(int index);
 
         void ServerRemoveFromBackpack(GameObject obj);
         void ServerDropFromBackpack(string name);
@@ -259,7 +261,7 @@ namespace Mikrocosmos
         }
 
         [ServerCallback]
-        public void ServerAddToBackpack(string name, GameObject gameObject) {
+        public void ServerAddToBackpack(string name, GameObject gameObject, Action<GameObject> onFailedToAdd) {
            ServerCheckCanAddToBackpack(gameObject.GetComponent<IGoods>(), out BackpackSlot slot, out int index);
            bool hookSuccess = true;
             if (slot != null)
@@ -306,94 +308,96 @@ namespace Mikrocosmos
                 TargetOnInventoryUpdate(backpackItems, currentIndex);
                 GetComponent<ISpaceshipConfigurationModel>().ServerUpdateMass();
             }
+            else {
+                onFailedToAdd?.Invoke(gameObject);
+            }
         }
 
 
         [ServerCallback]
-        public void ServerRemoveFromCurrentBackpack() {
+        public GameObject ServerRemoveFromCurrentBackpack() {
             if (currentIndex < backpackItems.Count) {
                 BackpackSlot slot = backpackItems[currentIndex];
-                if (slot!=null && slot.Count > 0) {
+                return ServerRemoveFromBackpack(slot, 1).FirstOrDefault();
+            }
 
+            return null;
+        }
+
+        public GameObject ServerRemoveFromBackpack(string name) {
+            BackpackSlot slot = FindItemStackInBackpack(name, out int index);
+            return ServerRemoveFromBackpack(slot,1).FirstOrDefault();
+        }        
+
+        public GameObject ServerRemoveFromBackpack(int index) {
+            if (currentIndex < backpackItems.Count) {
+                BackpackSlot slot = backpackItems[index];
+                return ServerRemoveFromBackpack(slot,1).FirstOrDefault();
+            }
+
+            return null;
+        }
+        public void ServerRemoveFromBackpack(GameObject obj) {
+            IGoods goods = obj.GetComponent<IGoods>();
+            if (goods != null)
+            {
+                BackpackSlot slot = FindItemStackInBackpack(goods.Name, out int index);
+                ServerRemoveFromBackpack(obj, slot);
+            }
+        }
+        private List<GameObject> ServerRemoveFromBackpack(BackpackSlot slot, int number) {
+            List<GameObject> retResult = new List<GameObject>();
+            if (slot != null && slot.Count > 0) {
+                for (int i = 0; i < number; i++) {
+                    if (slot.StackedObjects.Count <= 0) {
+                        break;
+                    }
                     GameObject oldObj = slot.StackedObjects[0];
                     slot.StackedObjects.RemoveAt(0);
-
                     GameObject nextObject = null;
                     if (slot.StackedObjects.Count > 0) {
                         nextObject = slot.StackedObjects[0];
                     }
-                    this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved() {
+                    this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved()
+                    {
                         CurrentCount = slot.Count,
                         PrefabName = slot.PrefabName,
                         Identity = netIdentity,
                         NextObject = nextObject,
                         OldObject = oldObj
                     });
+                    retResult.Add(oldObj);
                 }
-                TargetOnInventoryUpdate(backpackItems,currentIndex);
             }
-           
+            TargetOnInventoryUpdate(backpackItems, currentIndex);
+            return retResult;
         }
-
-        public void ServerRemoveFromBackpack(string name) {
-            BackpackSlot slot = FindItemStackInBackpack(name, out int index);
-            if (slot != null && slot.Count > 0)
-            {
-
-                GameObject oldObj = slot.StackedObjects[0];
-                slot.StackedObjects.RemoveAt(0);
-
-
-                BackpackSlot currentSlot = backpackItems[currentIndex];
-                GameObject nextObject = null;
+        private void ServerRemoveFromBackpack(GameObject oldObj, BackpackSlot slot) {
+            if (slot != null && slot.Count > 0) {
                 
-                if (currentSlot.StackedObjects.Count > 0) {
-                    nextObject = currentSlot.StackedObjects[0];
+                if (slot.StackedObjects.Contains(oldObj)) {
+                    slot.StackedObjects.Remove(oldObj);
+                }
+
+                GameObject nextObject = null;
+
+                if (slot.StackedObjects.Count > 0)
+                {
+                    nextObject = slot.StackedObjects[0];
                 }
                 this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved()
                 {
-                    CurrentCount = currentSlot.Count,
-                    PrefabName = currentSlot.PrefabName,
+                    CurrentCount = slot.Count,
+                    PrefabName = slot.PrefabName,
                     Identity = netIdentity,
                     NextObject = nextObject,
                     OldObject = oldObj
                 });
             }
             TargetOnInventoryUpdate(backpackItems, currentIndex);
-
         }
 
-        public void ServerRemoveFromBackpack(GameObject obj) {
-            IGoods goods = obj.GetComponent<IGoods>();
-            if (goods != null) {
-                BackpackSlot slot = FindItemStackInBackpack(goods.Name, out int index);
-
-                if (slot != null && slot.Count > 0) {
-                    GameObject oldObj = null;
-                    if (slot.StackedObjects.Contains(obj)) {
-                        slot.StackedObjects.Remove(obj);
-                        oldObj = obj;
-                    }
-
-
-                    BackpackSlot currentSlot = backpackItems[currentIndex];
-                    GameObject nextObject = null;
-
-                    if (currentSlot.StackedObjects.Count > 0)
-                    {
-                        nextObject = currentSlot.StackedObjects[0];
-                    }
-                    this.SendEvent<OnBackpackItemRemoved>(new OnBackpackItemRemoved()
-                    {
-                        CurrentCount = currentSlot.Count,
-                        PrefabName = currentSlot.PrefabName,
-                        Identity = netIdentity,
-                        NextObject = nextObject,
-                        OldObject = oldObj
-                    });
-                }
-            }
-        }
+       
 
         [ServerCallback]
         public void ServerDropFromBackpack(string name) {

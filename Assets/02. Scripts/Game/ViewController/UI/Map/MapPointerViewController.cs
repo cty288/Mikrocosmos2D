@@ -47,13 +47,13 @@ namespace Mikrocosmos
             affinityText = pointer.Find("AffinityText").GetComponent<TMP_Text>();
             distanceText = pointer.Find("DistanceText").GetComponent<TMP_Text>();
             // pointerBG = transform.Find("Pointer/PointerBG").GetComponent<Image>();
-          
+            this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnAffinityWithTeam1Changed)
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
             BindedGameObject = gameObject;
         }
 
         private void OnEnable() {
-            this.RegisterEvent<OnClientPlanetAffinityWithTeam1Changed>(OnAffinityWithTeam1Changed)
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+          
         }
 
 
@@ -96,12 +96,19 @@ namespace Mikrocosmos
                 else {
                     pointerSprite = teamSprites[1];
                 }
-                affinityText.text = Mathf.RoundToInt((e.NewAffinity * 100)).ToString();
+
+                if (team == 1) {
+                    affinityText.text = Mathf.RoundToInt((e.NewAffinity * 100)).ToString();
+                }
+                else {
+                    affinityText.text = Mathf.RoundToInt(((1-e.NewAffinity) * 100)).ToString();
+                }
+                
             }
         }
         
         private void UpdateAffinitySpriteText() {
-            float affinity = targetPlanet.GetAffinityWithTeam(team);
+            float affinity = targetPlanet.GetAffinityWithTeam(1);
             if (affinity >= 0.5)
             {
                 pointerSprite = teamSprites[0];
@@ -110,7 +117,14 @@ namespace Mikrocosmos
             {
                 pointerSprite = teamSprites[1];
             }
-            affinityText.text = Mathf.RoundToInt((affinity * 100)).ToString();
+            if (team == 1)
+            {
+                affinityText.text = Mathf.RoundToInt((affinity * 100)).ToString();
+            }
+            else
+            {
+                affinityText.text = Mathf.RoundToInt(((1 - affinity) * 100)).ToString();
+            }
         }
 
         public string Name { get; set; }

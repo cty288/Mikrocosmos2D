@@ -261,7 +261,7 @@ namespace Mikrocosmos
                         GoodsModel.IsAbsorbing = false;
                         if (absorbSpaceship.TryGetComponent<IPlayerInventorySystem>(out var playerInventorySystem))
                         {
-                            playerInventorySystem.ServerAddToBackpack(GoodsModel.Name, gameObject);
+                            playerInventorySystem.ServerAddToBackpack(GoodsModel.Name, gameObject, (o)=>{});
                         }
                         absorbSpaceship = null;
                     } 

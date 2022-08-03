@@ -15,9 +15,17 @@ namespace Mikrocosmos
 
         private ResLoader resLoader;
         protected string lastGoodsName = "";
+        private SpriteAtlas atlas;
         private void Awake() {
             ResLoader.Create((loader => resLoader = loader));
             this.RegisterEvent<OnDescriptionRemoved>(OnDescriptionRemoved).UnRegisterWhenGameObjectDestroyed(gameObject);
+            atlas = resLoader.LoadSync<SpriteAtlas>("assets/goods_inventory", $"ItemInventoryAtlas");
+            resLoader.LoadSync<GameObject>("description", "DescriptionPanel_General");
+            resLoader.LoadSync<GameObject>("description", "DescriptionPanel_Raw");
+        }
+        
+        private void Start() {
+            
         }
 
         private void OnDescriptionRemoved(OnDescriptionRemoved e) {
@@ -42,7 +50,7 @@ namespace Mikrocosmos
             GameObject descriptionLayout = DescriptionLayoutFinder.GetLayout();
             if (descriptionLayout)
             {
-                SpriteAtlas atlas = resLoader.LoadSync<SpriteAtlas>("assets/goods_inventory", $"ItemInventoryAtlas");
+              
                 Sprite sprite = atlas.GetSprite($"{goodsName}Sprite");
                 string nameLocalized = Localization.Get($"NAME_{goodsName}");
                 string descriptionLocalized = description;

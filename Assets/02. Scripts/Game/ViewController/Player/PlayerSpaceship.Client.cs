@@ -121,102 +121,139 @@ namespace Mikrocosmos
         }
 
         [SerializeField] private List<ParticleSystem> particles;
+
+        private Dictionary<string, List<GameObject>> tempItemStorage = new Dictionary<string, List<GameObject>>();
         protected override void Update()
         {
             base.Update();
-            
+            if (isServer) {
+                if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                    if (hookSystem.HookedItem!=null && !hookSystem.HookedItem.Model.CanBeAddedToInventory) {
+                        hookSystem.HookedItem.Model.UnHook(false);
+                    }
+                    var slots = inventorySystem.BackpackItems;
+                    foreach (BackpackSlot slot in slots) {
+                        if (slot.Count <= 0) {
+                            continue;
+                        }
+                        if (!tempItemStorage.ContainsKey(slot.PrefabName)) {
+                            tempItemStorage.Add(slot.PrefabName, new List<GameObject>());
+                        }
+
+                        while (slot.Count > 0) {
+                            GameObject obj = inventorySystem.ServerRemoveFromBackpack(slot.PrefabName);
+                            tempItemStorage[slot.PrefabName].Add(obj);
+                            NetworkServer.UnSpawn(obj);
+                            obj.SetActive(false);
+                        }
+                    }
+                }
+
+                if (Input.GetKeyDown(KeyCode.RightShift)) {
+                    foreach (string key in tempItemStorage.Keys) {
+                        foreach (GameObject o in tempItemStorage[key]) {
+                            inventorySystem.ServerAddToBackpack(key, o, (obj) => {
+                                obj.SetActive(true);
+                                obj.transform.position = transform.position;
+                                NetworkServer.Spawn(obj);
+                            });
+                        }
+                    }
+                    tempItemStorage.Clear();
+                }
+            }
             if (hasAuthority && isClient)
             {
                 
                     if (Input.GetMouseButtonDown(1)) {
-                    if (Model.HookState == HookState.Freed) {
-                        CmdUpdateCanControl(true);
-                    }
-                    else {
-                        CmdUpdateCanControl(false);
-                        GetModel().CmdIncreaseEscapeCounter();
-                    }
-                }
-
-
-                if (Model.HookState == HookState.Freed) {
-                    clientHorizontal.Value = Input.GetAxis("Horizontal");
-                    clientVertical.Value = Input.GetAxis("Vertical");
-                }
-                else {
-                    clientHorizontal.Value = 0;
-                    clientVertical.Value = 0;
-                }
-               
-                if (Input.GetMouseButtonDown(0)) {
-                    CmdUpdateUsing(true);
-                }
-
-                if (Input.GetMouseButtonUp(0)) {
-                    CmdUpdateUsing(false);
-                }
-
-
-                //take item & put item (not shoot)
-                if (Input.GetKeyDown(KeyCode.Space) && !DebugCanvas.IsOpening) {
-                    if (gameProgressSystem.GameState != GameState.InGame) {
-                        return;
-                    }
-
-                    if (!hookSystem.HookedNetworkIdentity) {
-                        
-                        hookWhenEmptyReleased = false;
-                      //  minHookPressTimer = 0;
-                      if (animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking") && DamagableModel.CurrentHealth > 0) {
-                          if (ThisSpaceshipTeam == 2) {
-                              this.GetSystem<IAudioSystem>().PlaySound("Team2Hook", SoundType.Sound2D);
-                          }
-                      }
-
-                    }
-                   
-                    hookSystem.CmdPressHookButton();
-                }
-
-                if (Input.GetKeyUp(KeyCode.Space) && !DebugCanvas.IsOpening)
-                {
-                    if (gameProgressSystem.GameState != GameState.InGame) {
-                        return;
-                    }
-                    if (!hookWhenEmptyReleased) {
-                        hookWhenEmptyReleased = true;
-                    }
-                    else {
-                        //if (minHookPressTimer > minHookPressTimeInterval) {
-                        hookSystem.CmdReleaseHookButton();
-                       // }
-                        
-                    }
-                }
-
-                if (Input.GetMouseButtonUp(1)) {
-                    CmdUpdateCanControl(false);
-                }
-
-                
-                ClientCheckMouseScroll();
-
-                for (int i = 48; i <= 57; i++) {
-                    if (Input.GetKeyDown((KeyCode) i)) {
-                        //48 - 0 -> slot 9
-                        //49 - 1 -> slot 0
-                        //50 - 2 -> slot 1
-                        int index = 0;
-                        if (i == 48) {
-                            index = 9;
+                        if (Model.HookState == HookState.Freed) {
+                            CmdUpdateCanControl(true);
                         }
                         else {
-                            index = i - 49;
+                            CmdUpdateCanControl(false);
+                            GetModel().CmdIncreaseEscapeCounter();
+                        }
+                    }
+
+
+                    if (Model.HookState == HookState.Freed) {
+                        clientHorizontal.Value = Input.GetAxis("Horizontal");
+                        clientVertical.Value = Input.GetAxis("Vertical");
+                    }
+                    else {
+                        clientHorizontal.Value = 0;
+                        clientVertical.Value = 0;
+                    }
+               
+                    if (Input.GetMouseButtonDown(0)) {
+                        CmdUpdateUsing(true);
+                    }
+
+                    if (Input.GetMouseButtonUp(0)) {
+                        CmdUpdateUsing(false);
+                    }
+
+
+                    //take item & put item (not shoot)
+                    if (Input.GetKeyDown(KeyCode.Space) && !DebugCanvas.IsOpening) {
+                        if (gameProgressSystem.GameState != GameState.InGame) {
+                            return;
                         }
 
-                        CmdPressShortCut(index);
+                        if (!hookSystem.HookedNetworkIdentity) {
+                        
+                            hookWhenEmptyReleased = false;
+                            //  minHookPressTimer = 0;
+                            if (animator.GetCurrentAnimatorStateInfo(0).IsName("UnHooking") && DamagableModel.CurrentHealth > 0) {
+                                if (ThisSpaceshipTeam == 2) {
+                                    this.GetSystem<IAudioSystem>().PlaySound("Team2Hook", SoundType.Sound2D);
+                                }
+                            }
+
+                        }
+                   
+                        hookSystem.CmdPressHookButton();
                     }
-                }
+
+                    if (Input.GetKeyUp(KeyCode.Space) && !DebugCanvas.IsOpening)
+                    {
+                        if (gameProgressSystem.GameState != GameState.InGame) {
+                            return;
+                        }
+                        if (!hookWhenEmptyReleased) {
+                            hookWhenEmptyReleased = true;
+                        }
+                        else {
+                            //if (minHookPressTimer > minHookPressTimeInterval) {
+                            hookSystem.CmdReleaseHookButton();
+                            // }
+                        
+                        }
+                    }
+
+                    if (Input.GetMouseButtonUp(1)) {
+                        CmdUpdateCanControl(false);
+                    }
+
+                
+                    ClientCheckMouseScroll();
+
+                    for (int i = 48; i <= 57; i++) {
+                        if (Input.GetKeyDown((KeyCode) i)) {
+                            //48 - 0 -> slot 9
+                            //49 - 1 -> slot 0
+                            //50 - 2 -> slot 1
+                            int index = 0;
+                            if (i == 48) {
+                                index = 9;
+                            }
+                            else {
+                                index = i - 49;
+                            }
+
+                            CmdPressShortCut(index);
+                        }
+                    }
             }
 
 

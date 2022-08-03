@@ -112,7 +112,14 @@ namespace Mikrocosmos
         [ServerCallback]
         public void UnHook(bool isUnHookedByHookButton) {
             if (HookedByIdentity) {
-                HookedByIdentity.GetComponent<IHookSystem>().UnHook(isUnHookedByHookButton);
+                IHookSystem hookSystem = HookedByIdentity.GetComponent<IHookSystem>();
+                if (hookSystem.HookedNetworkIdentity == netIdentity) {
+                    HookedByIdentity.GetComponent<IHookSystem>().UnHook(isUnHookedByHookButton);
+                }
+                else {
+                    UnHookByHook(false, false);
+                }
+              
             }
         }
 
