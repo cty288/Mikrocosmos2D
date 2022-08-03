@@ -124,10 +124,11 @@ namespace Mikrocosmos
         protected override void Update()
         {
             base.Update();
+            
             if (hasAuthority && isClient)
             {
-
-                if (Input.GetMouseButtonDown(1)) {
+                
+                    if (Input.GetMouseButtonDown(1)) {
                     if (Model.HookState == HookState.Freed) {
                         CmdUpdateCanControl(true);
                     }

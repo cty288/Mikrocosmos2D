@@ -185,9 +185,7 @@ namespace Mikrocosmos
         [ServerCallback]
         private void ServerRotate(Vector2 mousePos)
         {
-            if (Vector3.Distance(mousePos, transform.position) < 5) {
-                return;
-            }
+           
             Vector2 dir = new Vector2(transform.position.x, transform.position.y) - mousePos;
             float angle = Mathf.Atan2(dir.y, dir.x) * (180 / Mathf.PI) + 90;
             if (gameProgressSystem!=null && gameProgressSystem.GameState != GameState.InGame)

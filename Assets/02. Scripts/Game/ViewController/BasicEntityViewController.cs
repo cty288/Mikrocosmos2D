@@ -249,7 +249,9 @@ namespace Mikrocosmos
                     force *= 2;
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
-                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum), netIdentity);
+                    NetworkIdentity damageDealer = !Model.LastHookedByIdentity? netIdentity : Model.LastHookedByIdentity;
+                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum),  
+                        damageDealer);
                         //    NetworkRoomManager.singleton.
                 }
             }
@@ -285,7 +287,9 @@ namespace Mikrocosmos
                     force *= 2;
                     float excessiveMomentum = targetModel.TakeRawMomentum(force.magnitude, 0);
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
-                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum), netIdentity);
+                    NetworkIdentity damageDealer = !Model.LastHookedByIdentity ? netIdentity : Model.LastHookedByIdentity;
+                    targetModel.TakeRawDamage(targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum),
+                        damageDealer);
                 }
 
             }

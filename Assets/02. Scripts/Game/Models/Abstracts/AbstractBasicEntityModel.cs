@@ -47,7 +47,9 @@ namespace Mikrocosmos
         [field: SyncVar, SerializeField]
         public NetworkIdentity HookedByIdentity { get; protected set; }
 
-     
+        [field: SerializeField]
+        public NetworkIdentity LastHookedByIdentity { get; protected set; }
+
 
         [field: SerializeField]
         public Transform HookedByTransform { get; protected set; }
@@ -78,6 +80,7 @@ namespace Mikrocosmos
             if (CanBeHooked &&  ServerCheckCanHook(hookedBy)) {
                 HookState = HookState.Hooked;
                 HookedByIdentity = hookedBy;
+                LastHookedByIdentity = HookedByIdentity;
                 this.SendEvent<OnServerObjectHookStateChanged>(new OnServerObjectHookStateChanged()
                 {
                     Identity = netIdentity,

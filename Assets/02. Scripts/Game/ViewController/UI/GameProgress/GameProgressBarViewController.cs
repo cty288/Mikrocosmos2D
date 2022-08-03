@@ -19,6 +19,7 @@ namespace Mikrocosmos
 
         [FormerlySerializedAs("gameProgressElement")] [SerializeField] private GameObject gameProgressElementPrefab = null;
         [SerializeField] private GameObject gameMissionElementPrefab = null;
+        [SerializeField] private GameObject countdownProgressElementPrefab;
 
         private List<float> gameMissionCutoffPoint = new List<float>();
         
@@ -59,8 +60,14 @@ namespace Mikrocosmos
             }else {
                 //stop ongoing bar first
                 GameProgressElement ongoingElement = gameProgressProgressBars[e.Info.NextMissionIndex];
-                ongoingElement.GetComponent<Animator>().SetTrigger("End");
-                ongoingElement.UpdateProgress(e.Progress, e.Info.Affinity);
+                if (!e.Info.IsReachGameEndPoint) {
+                    ongoingElement.GetComponent<Animator>().SetTrigger("End");
+                    ongoingElement.UpdateProgress(e.Progress, e.Info.Affinity);
+                }
+                else {
+                    ongoingElement.GetComponent<Animator>().SetTrigger("Start");
+                }
+                
                 if (!e.Info.IsReachGameEndPoint && e.Info.NextMissionIndex < gameMissionElements.Count) { //start next mission
                     MissionProgressElement missionElement = gameMissionElements[e.Info.NextMissionIndex];
                     missionElement.GetComponent<Animator>().SetTrigger("Start");
@@ -100,11 +107,15 @@ namespace Mikrocosmos
                 yield return null;
                 CorrectLayoutSize();
             }
-            var progressBarElementLast = Instantiate(gameProgressElementPrefab, layoutGroup.transform).GetComponent<GameProgressElement>();
+
+            GameObject lastProgressPrefab =
+                cutoffs.Count > 0 ? countdownProgressElementPrefab : gameProgressElementPrefab;
+            
+            var progressBarElementLast = Instantiate(lastProgressPrefab, layoutGroup.transform).GetComponent<GameProgressElement>();
             progressBarElementLast.transform.SetAsLastSibling();
             gameProgressProgressBars.Add(progressBarElementLast);
             if (cutoffs.Count >= 1) {
-                //spawn an additional progress bar for the last mission
+                //spawn an additional progress bar for the last 60s
                 progressBarElementLast.SetUpInfo(cutoffs[^1], 1);
             }
             else {

@@ -676,7 +676,8 @@ namespace Mikrocosmos {
 
                 IHookable model = vc.Model;
 
-                if (model.CanBeHooked) {
+                
+                if (model.CanBeHooked && model.HookedByIdentity!= netIdentity) { //prevent hook an absorbed item
                     NetworkIdentity oldIdentity = HookedNetworkIdentity;
                     if (model.HookedByIdentity && model.HookedByIdentity != netIdentity) {
                         this.SendEvent<OnItemRobbed>(new OnItemRobbed()

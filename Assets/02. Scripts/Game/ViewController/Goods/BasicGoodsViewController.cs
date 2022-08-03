@@ -40,7 +40,7 @@ namespace Mikrocosmos
                 }
             }
          
-            victim.TakeRawDamage(damage, Model.HookedByIdentity);
+            victim.TakeRawDamage(damage, Model.LastHookedByIdentity);
         }
 
         [ServerCallback]

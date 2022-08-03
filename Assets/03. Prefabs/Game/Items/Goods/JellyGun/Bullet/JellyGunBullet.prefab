@@ -523,12 +523,13 @@ MonoBehaviour:
   <AdditionalMassWhenHookedMultiplier>k__BackingField: 2
   <HookState>k__BackingField: 0
   <HookedByIdentity>k__BackingField: {fileID: 0}
+  <LastHookedByIdentity>k__BackingField: {fileID: 0}
   <HookedByTransform>k__BackingField: {fileID: 0}
   <canDealMomentumDamage>k__BackingField: 0
   <Acceleration>k__BackingField: 0
   <SelfMass>k__BackingField: 0.5
   <Damage>k__BackingField: 10
-  <DamageReducedBySpeed>k__BackingField: 1
+  <DamageReducedBySpeed>k__BackingField: 0
   <Name>k__BackingField: JellyBullet
 --- !u!114 &4329412435070151956
 MonoBehaviour:

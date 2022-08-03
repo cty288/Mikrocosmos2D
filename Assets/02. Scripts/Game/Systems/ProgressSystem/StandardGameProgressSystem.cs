@@ -48,6 +48,7 @@ namespace Mikrocosmos
         [SerializeField]
         protected List<float> missionStartAtProgress = new List<float>();
 
+        private bool countdownStarted = false;
         protected int MissionCount {
             get {
                 return missionStartAtProgress.Count;
@@ -78,11 +79,15 @@ namespace Mikrocosmos
             float missionCount = Random.Range(missionCountRange.x, missionCountRange.y + 1);
             //evenly distribute mission to progress between 0.1 to 0.9, but add some offsets
             float lastProgress = 0f;
-            float averageProgress = 1f / (missionCount + 1);
-            for (int i = 0; i < missionCount; i++) {
+            float averageProgress = 1f / (missionCount) ;
+            for (int i = 0; i < missionCount - 1; i++) {
                 lastProgress = Mathf.Clamp(lastProgress + averageProgress + Random.Range(-averageProgress / 4, averageProgress / 4), 0.1f,
-                    0.9f);
+                    0.8f);
                 missionStartAtProgress.Add(lastProgress);
+            }
+
+            if (missionCount > 0) {
+                missionStartAtProgress.Add(1);
             }
 
             if (missionCount > 0) {
@@ -122,12 +127,13 @@ namespace Mikrocosmos
         }
 
         private void AddProgress(float rawProgress) {
-            if (currentGameProgress < 1 && ongoingMission == null) {
+            if (!countdownStarted && ongoingMission == null) {
                 float team1Affinity = globalTradingSystem.GetRelativeAffinityWithTeam(1);
                 
                 if (lastMissionIndex + 1 >= MissionCount) {
                     //judge if game stop
-                    if (currentGameProgress + rawProgress >= 1) {
+                    if (currentGameProgress + rawProgress >= 1 && !countdownStarted) {
+                        countdownStarted = true;
                         currentGameProgress = 1;
                         StartFinalCountDown();
                         RpcOnStandardGameProgressChanged(currentGameProgress,
@@ -162,6 +168,7 @@ namespace Mikrocosmos
             if (e.Mission == ongoingMission) {
                 ongoingMission = null;
                 RpcOnProgressMissionFinished(e.WinningTeam, lastMissionIndex);
+                AddProgress(0.0001f);
             }
         }        
 

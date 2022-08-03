@@ -44,6 +44,7 @@ namespace Mikrocosmos
         
         [field: SerializeField] public bool DestroyedBySun { get; set; } = true;
         [field: SerializeField] public bool AbsorbedToBackpack { get; set; } = false;
+        public bool IsAbsorbing { get; set; } = false;
 
 
         public abstract void OnAddedToBackpack();

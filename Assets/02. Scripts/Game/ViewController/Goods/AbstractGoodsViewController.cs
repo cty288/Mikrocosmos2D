@@ -132,7 +132,7 @@ namespace Mikrocosmos
         }
 
         private GameObject absorbSpaceship;
-        private bool absorbing = false;
+        
         private bool waitingToCheckAbsorbing = false;
 
         [ServerCallback]
@@ -147,7 +147,7 @@ namespace Mikrocosmos
                 }
                 
                 if (GoodsModel.AbsorbedToBackpack && !waitingToCheckAbsorbing && Model.HookState == HookState.Freed &&
-                    GoodsModel.TransactionFinished && !absorbing) {
+                    GoodsModel.TransactionFinished && !GoodsModel.IsAbsorbing) {
                    
                   
                     if (invneInventorySystem.ServerCheckCanAddToBackpack(GoodsModel, out var slot, out int index)) {
@@ -155,11 +155,11 @@ namespace Mikrocosmos
                         
                         this.GetSystem<ITimeSystem>().AddDelayTask(0.5f, () => {
                             waitingToCheckAbsorbing = false;
-                            if (this && !absorbing) {
+                            if (this && !GoodsModel.IsAbsorbing) {
                                 absorbSpaceship = absorbedTarget;
                                 if (Mathf.Abs(Vector2.Distance(transform.position,
                                         absorbSpaceship.transform.position)) <= 15) {
-                                    absorbing = true;
+                                    GoodsModel.IsAbsorbing = true;
                                 }
                             }
                         });
@@ -242,14 +242,14 @@ namespace Mikrocosmos
                     transform.position = FollowingPoint.position;
                 }
 
-                if (absorbing && absorbSpaceship && GoodsModel.AbsorbedToBackpack) {
+                if (GoodsModel.IsAbsorbing && absorbSpaceship && GoodsModel.AbsorbedToBackpack) {
                     if (Model.HookState != HookState.Freed || Model.Frozen) {
-                        absorbing = false;
+                        GoodsModel.IsAbsorbing = false;
                         absorbSpaceship = null;
                         return;
                     }
                     if (Vector2.Distance(transform.position, absorbSpaceship.transform.position) > 15) {
-                        absorbing = false;
+                        GoodsModel.IsAbsorbing = false;
                         absorbSpaceship = null;
                         return;
                     }                    
@@ -258,7 +258,7 @@ namespace Mikrocosmos
                         5f * Time.fixedDeltaTime));
 
                     if (Vector2.Distance(transform.position, absorbSpaceship.transform.position) <= 5) {
-                        absorbing = false;
+                        GoodsModel.IsAbsorbing = false;
                         if (absorbSpaceship.TryGetComponent<IPlayerInventorySystem>(out var playerInventorySystem))
                         {
                             playerInventorySystem.ServerAddToBackpack(GoodsModel.Name, gameObject);
@@ -280,7 +280,7 @@ namespace Mikrocosmos
         protected override void Update() {
             base.Update();
             if (GoodsModel.TransactionFinished) {
-                collider.isTrigger = absorbing;
+                collider.isTrigger = GoodsModel.IsAbsorbing;
                 if (shadeCaster) {
                     shadeCaster.castsShadows = true;
                 }

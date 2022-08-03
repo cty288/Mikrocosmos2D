@@ -34,6 +34,7 @@ namespace Mikrocosmos
 
         NetworkIdentity HookedByIdentity { get; }
 
+        NetworkIdentity LastHookedByIdentity { get; }
         Transform HookedByTransform { get; }
 
         bool TryHook(NetworkIdentity hookedBy);

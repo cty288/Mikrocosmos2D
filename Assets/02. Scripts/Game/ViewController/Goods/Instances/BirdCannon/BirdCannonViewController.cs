@@ -98,7 +98,7 @@ namespace Mikrocosmos
                 }
 
                 
-                bullet.GetComponent<BasicBulletViewController>().SetShotoer(Model.HookedByIdentity,GetComponent<Collider2D>(), buffSystem);
+                bullet.GetComponent<BasicBulletViewController>().SetShotoer(Model.LastHookedByIdentity,GetComponent<Collider2D>(), buffSystem);
                 bullet.GetComponent<Rigidbody2D>().AddForce(-transform.right * shootForce, ForceMode2D.Impulse);
                 bullet.transform.rotation = transform.rotation;
             }

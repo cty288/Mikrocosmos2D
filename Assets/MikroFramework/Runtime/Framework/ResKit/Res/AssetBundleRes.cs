@@ -111,8 +111,6 @@ namespace MikroFramework.ResKit
               //  resLoader = new ResLoader();
             }
 
-
-            
             AssetBundle = null;
         }
 

@@ -24,6 +24,8 @@ namespace Mikrocosmos
 
         public bool AbsorbedToBackpack { get; set; }
 
+        public bool IsAbsorbing { get; set; }
+
         public void OnAddedToBackpack();
 
         int RealPrice { get; set; }

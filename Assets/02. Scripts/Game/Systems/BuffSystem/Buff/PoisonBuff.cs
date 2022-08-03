@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MikroFramework.ActionKit;
+using Mirror;
 using Polyglot;
 using UnityEngine;
 
@@ -9,12 +10,12 @@ namespace Mikrocosmos
     public class PoisonFrequentBuff : TimedFrequentBuff, IStackableBuff<PoisonFrequentBuff>
     {
         public int DamagePerFrq { get; set; }
-        public PoisonFrequentBuff(float maxDuration, float frequency, int damagePerFrq, IBuffSystem owner) : base(maxDuration, frequency,
+        public PoisonFrequentBuff(float maxDuration, float frequency, int damagePerFrq, NetworkIdentity damageDealer, IBuffSystem owner) : base(maxDuration, frequency,
             CallbackAction.Allocate(() =>
             {
                 if (owner.GetOwnerObject().TryGetComponent<IDamagable>(out IDamagable damagable))
                 {
-                    damagable.TakeRawDamage(damagePerFrq, null);
+                    damagable.TakeRawDamage(damagePerFrq, damageDealer);
                 }
             }) ) {
             DamagePerFrq = damagePerFrq;

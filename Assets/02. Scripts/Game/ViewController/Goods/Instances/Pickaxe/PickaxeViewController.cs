@@ -83,7 +83,7 @@ namespace Mikrocosmos
                                              pickaxeModel.DamageToMeteors;
                     }
                     targetModel.OnReceiveExcessiveMomentum(excessiveMomentum);
-                    targetModel.TakeRawDamage(0,Model.HookedByIdentity,targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
+                    targetModel.TakeRawDamage(0,Model.LastHookedByIdentity,targetModel.GetDamageFromExcessiveMomentum(excessiveMomentum));
                 }
 
             }
